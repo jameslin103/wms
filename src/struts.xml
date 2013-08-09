@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+   <constant name="struts.ui.theme" value="simple"></constant>
+	<constant name="struts.url.includeParams" value="none"></constant>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false"></constant>
+	<constant name="struts.multipart.parser" value="jakarta"></constant>
+	<constant name="struts.multipart.maxSize" value="10701096" />
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<constant name="struts.locale" value="zh_CN"></constant>  
+	<constant name="struts.configuration.xm.reload" value="true"/>
+	<!--该属性指定处理MIME-typemultipart/form-data，文件上传--> 
+	<constant name="struts.multipart.parser" value="cos"/> 
+	<constant name="struts.multipart.parser" value="pell"/>
+	<constant name="struts.multipart.parser" value="jakarta"/>
+	<!--该属性指定Struts2文件上传中整个请求内容允许的最大字节数-->
+	<constant name="struts.multipart.maxSize" value="2097152"/>
+	
+		
+    
+	<package name="wms" extends="struts-default" >
+		<interceptors>
+			<interceptor-stack name="appInterceptor">
+				<interceptor-ref name="store">
+					<param name="operationMode">STORE</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="appInterceptor" />
+		<global-results>
+			<result>/login.jsp</result>
+		
+		</global-results>
+		
+		
+		<action name="userLogin" class="cn.fm.web.action.user.LoginAction" method="userLogin">  
+            <result name="input">/login.jsp</result>
+            <result name="success">/dashboard.jsp</result> 
+        </action>
+         <action name="loginOut"  class="cn.fm.web.action.user.BuyerLogoutAction" method="loginOut">
+            <result name="success" type="redirectAction">
+            	 <param name="actionName">userLogin</param>
+            </result>
+        </action>
+         <action name="updateBuyerPassword" class="cn.fm.web.action.company.UpdatePasswordAction" method="updatePassword">
+            <result name="success" type="redirectAction">
+            	 <param name="actionName">userLogin</param> 
+            </result>
+        </action>  
+        
+        
+        
+        
+        <action name="userInfo" class="cn.fm.web.action.company.UserAction" method="userInfo">  
+            <result  name="success">../excel/InputExcel.jsp</result>
+        </action>  
+        <action name="outPut" class="cn.fm.web.action.company.OutAction">
+            <result name="success">../excel/OutExcel.jsp</result>
+        </action>  
+       
+
+
+	</package>
+
+</struts>
+
