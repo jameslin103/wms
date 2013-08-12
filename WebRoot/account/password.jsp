@@ -30,8 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <form action="updateBuyerPassword" method="post">
               	<s:hidden value='%{#session.user.username}' name="buyer.username" id="username"/>
               	<s:hidden value="%{#session.user.password}" id="password" name="buyer.password"/>
-              	
-                <s:password cssClass="input-block-level"  placeholder="旧密码" id="psd" name="newPassword"/>
+                <s:password cssClass="input-block-level"  placeholder="旧密码" id="psd" name="oldPassword"/><s:label id="oldPassword_labe"/>
                	<s:password cssClass="input-block-level"  placeholder="新密码" id="new_psd" name="newPassword"/>
                	<s:password cssClass="input-block-level"  placeholder="新密码（确认）" id="rple_psd"/>
                 <button class="btn btn-primary" type="submit">提交</button>

@@ -4,12 +4,19 @@ function Ctrl($scope) {
 }
 $(document).ready(function(){
 	$("#psd").mouseout(function(){
-		$("#psd").css("background-color","#E9E9E4");
-		$("#psd").val("");
-		if($("#psd").text()==""){
-			alert($("#psd").value());
+		var oldPassword=$("#password").val();
+		 $("[name='txt']").val("111");
+		alert(oldPassword);
+		var newPassword=$("#psd").val();
+		
+		if(oldPassword==""){
+			$("#oldPassword_labe").val("请输入旧密码!").css("color","red");
 		}
-		 
+		if($("#psd").text()==""){
+			//alert($("#psd").val());
+			$("#psd").css("background-color","#E9E9E4");
+		}
+		 	
 	});
 	
 	
