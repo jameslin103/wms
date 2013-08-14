@@ -16,14 +16,14 @@ public class EmployeeServiceTest {
 	public static void setUpBeforeClass() throws Exception {
 		try {
 			ApplicationContext cxt = new ClassPathXmlApplicationContext("beans.xml");
-			employeeService = (EmployeeService)cxt.getBean("employeeServiceBean");
+			employeeService = (EmployeeService)cxt.getBean("employeeServiceImpl");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Test public void exsit(){
-		System.out.println(employeeService.exist("sdfdsf"));
+		System.out.println(employeeService.exist("alax"));
 	}
 	
 	@Test public void delete(){

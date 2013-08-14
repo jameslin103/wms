@@ -1,5 +1,6 @@
 package cn.fm.bean.company;
 
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 
 @SuppressWarnings("serial")
 @Entity
@@ -55,6 +57,8 @@ public class EnterpriseEmployees implements Serializable{
 	private Date  startContractDeadline;
 	/*合同期限 终止*/
 	private Date  endContractDeadline;
+	/*是否参保*/
+	private  Integer whetherGinseng;
 	/*参保类型  0.医保   1.  社保 2.  公积金*/
 	private Integer  ginsengProtectType;
 	/*参保性质  0新增  1续保*/
@@ -284,10 +288,19 @@ public class EnterpriseEmployees implements Serializable{
 	}
 	@Column(length=1,nullable=false)
 	public Integer getPseudoDelete() {
+		if(pseudoDelete==null)
+			 pseudoDelete=0;
 		return pseudoDelete;
 	}
 	public void setPseudoDelete(Integer pseudoDelete) {
 		this.pseudoDelete = pseudoDelete;
+	}
+	@Column(length=2,nullable=false)
+	public Integer getWhetherGinseng() {
+		return whetherGinseng;
+	}
+	public void setWhetherGinseng(Integer whetherGinseng) {
+		this.whetherGinseng = whetherGinseng;
 	}
 	
 		

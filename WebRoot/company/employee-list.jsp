@@ -4,108 +4,98 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml">  
   <head>
-    <base href="<%=basePath%>">
-  <title>富民人力银行派遣系统</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%@ include file="/help/public_css_js.jsp" %>
-
+	  <base href="<%=basePath%>"/>
+	  <title>富民人力银行派遣系统</title>
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	  <%@ include file="/help/public_css_js.jsp" %>
 </head>
 <body>
 
-	<div id="container">
+<div id="container">
+	<div id="header">	
     	<jsp:include page="../dashboard.jsp"></jsp:include>
     </div>
 
-		<div id="main"> 
+	<div id="main"> 
       <div class="row-fluid">
-
         <div id="center-pane">
           <ul class="nav nav-tabs">
-            <li class="active">
-              <a href="#">员工</a>
-            </li>            
-            <li><a href="salary-with-month.jsp">工资</a></li>
+            <li><a href="index.html">综合</a></li>
+            <li class="active"><a href="employee-list.html">员工档案</a></li>
+            <li><a href="salary-with-month.html">工资预算表</a></li>
+            <li><a href="insurance-with-month.html">增减员与参保明细</a></li>
+            <li><a href="balance-detail.html">资金往来</a></li>            
           </ul>
           
           <ul class="normal action-container clearfix">
-            <li><a href="employee-step1-of-create.jsp">增员</a></li>
+            <li>新员工档案：</li>
+            <li><a href="employee-step1-of-create.html">批量录入</a>，</li>
+            <li><a href="#info-for-check" data-toggle="modal">单个录入</a></li>
             <li>&nbsp;/&nbsp;</li>
-            <li>多项操作：<a href="#">（全选）</a></li>
-            <li><a href="#form-for-insurance" data-toggle="modal">批量参保设置</a></li>
-            <li>，</li>
-            <li><a href="#form-for-reduction" data-toggle="modal">批量减员</a></li>
-            <li>，</li>
-            <li><a href="#form-for-fee" data-toggle="modal">批量修改服务费</a></li>
-            <li class="right"><a href="../doc/全部员工信息表.xls" class="btn btn-primary">下载全部员工信息</a></li>
+            <li>查看：</li>
+            <li><a href="#">参保</a>，</li>
+            <li><a href="#">未参保</a>，</li>
+            <li><a href="#">离职员工</a>，</li>
+            <li><a href="#">隐藏信息</a></li>
+            <li class="right"><a href="../doc/全部员工信息表.xls" class="btn btn-primary">下载全体在职员工信息</a></li>
+            <li class="right">
+              <form class="navbar-form pull-left" action="employee-search-result.html">
+                <input type="text" placeholder="输入姓名"/>
+                <input type="checkbox"/>&nbsp;全站
+                <button type="submit" class="btn">搜索</button>
+              </form>
+            </li>
           </ul>
 
-          <form action="">
-            <table class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th rowspan="2" width="">&nbsp;</th>
-                  <th rowspan="2" width="">序</th>
-                  <th rowspan="2" width="">姓名</th>
-                  <th rowspan="2" width="">性别</th>
-                  <th rowspan="2" width="">身份证</th>
-                  <th rowspan="2" width="">电话</th>
-                  <th rowspan="2" width="">服务费<br>（元）</th>
-                  <th colspan="2" width="">参保</th>
-                  <th rowspan="2" width="">哪月起<br>参保</th>
-                  <th rowspan="2" width="">基数设置</th>
-                  <th colspan="6" class="center">基数（元）（未填写表示没有参保）</th>
-                  <th rowspan="2" width="">个税缴纳</th>
-                  <th rowspan="2" width=""><a href="#">在职<br>状态</a></th>
-                  <th rowspan="2" width="">工资发到</th>
-                  <th rowspan="2" width="">操作</th>
-                </tr>
-                <tr>
-                  <th>是否</th>
-                  <th>性质</th>
-                  <th>社会<br>保险</th>
-                  <th>生育<br>保险</th>
-                  <th>工伤</th>
-                  <th>基本<br>医疗保险</th>
-                  <th>住房<br>公积金</th>
-                  <th>大病<br>统筹</th>
-                </tr>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th rowspan="2" width="">序</th>
+                <th rowspan="2" width="">姓名</th>
+                <th rowspan="2" width="">性别</th>
+                <th rowspan="2" width="">户口</th>
+                <th rowspan="2" width="">婚姻</th>
+                <th rowspan="2" width="">照片</th>
+                <th rowspan="2" width="">身份证</th>
+                <th rowspan="2" width="">电话</th>
+                <th rowspan="2" width="">服务费<br>（元）</th>
+                <th colspan="2" width="">参保</th>
+                <th rowspan="2" width="">哪月起<br>参保</th>
+                <th rowspan="2" width="">五险一金基数设置</th>
+                <th rowspan="2" width="">个税缴纳</th>
+                <th rowspan="2" width="">操作</th>
+              </tr>
+              <tr>
+                <th>是否</th>
+                <th>性质</th>
+              </tr>
 
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <input type="checkbox">
-                  </td>
-                  <td>1</td>
-                  <td><a href="salary-list-of-employee.jsp">某某人</a></td>
-                  <td>男</td>
-                  <td>132562345698756231</td>
-                  <td>13356899685</td>
-                  <td>30</td>
-                  <td>是</td>
-                  <td>新增</td>
-                  <td>2013年7月</td>
-                  <td>默认</td>
-                  <td>1200</td>
-                  <td>2086.25</td>
-                  <td>2086.25</td>
-                  <td>2086.25</td>
-                  <td>2086.25</td>
-                  <td>60</td>
-                  <td>企业缴</td>
-                  <td>离职</td>
-                  <td>2013年9月</td>
-                  <td>
-                    <a href="#info-for-check" data-toggle="modal">修改</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-          </form>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><a href="employee-personal-info.html">某某人</a></td>
+                <td>男</td>
+                <td>非农</td>
+                <td>已婚</td>
+                <td>有</td>
+                <td>132562345698756231</td>
+                <td>13356899685</td>
+                <td>30</td>
+                <td>是</td>
+                <td>新增</td>
+                <td>2013年7月</td>
+                <td>默认</td>
+                <td>企业缴</td>
+                <td>
+                  <a href="#info-for-check" data-toggle="modal">修改</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
           <div class="pagination">
             <ul>
@@ -127,338 +117,188 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </div>
     </div>
 
-		<div id="footer"></div>
+	<div id="footer"></div>
 
 </div>
-	<!-- Modal -->
-  <div id="info-for-check" class="modal hide fade modal-of-info-for-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<!-- Modal AddEnterpriseEmpoloyess-->
+  <div id="info-for-check" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3 id="myModalLabel">员工信息</h3>
     </div>
     <div class="modal-body">  
-      <form action="" method="post">
+      <s:form action="addEnterpriseEmployees" method="post">
         <div class="row-fluid">
           <div class="input-container">
             <label>合同编号</label>
-            <input type="text" name="contract-number">
+            <s:textfield name="enterpriseEmployees.contractNo" />
+            
           </div>
 
           <div class="input-container">
             <label>姓名</label>
-            <input type="text" name="name">
+            <s:textfield name="enterpriseEmployees.employeesName" />
           </div>
 
           <div class="input-container">
             <label>身份证</label>
-            <input type="text" name="shenfenzheng">
+             <s:textfield name="enterpriseEmployees.cardNumber" />
           </div>
 
           <div class="input-container">
             <label>性别</label>
-            <input type="radio" name="sex" value="1" checked="checked">男，
-            <input type="radio" name="sex" value="0">女
+            <input type="radio" name="enterpriseEmployees.employeesSex" value="1" checked="checked"/>男
+            <input type="radio" name="enterpriseEmployees.employeesSex" value="0"/>女
           </div>
 
           <div class="input-container">
-            <label>是否有照片</label>
-            <input type="radio" name="photo" value="1"  checked="checked">无，
-            <input type="radio" name="photo" value="0">有
+            <label>户口性质</label>
+            <input type="radio" name="enterpriseEmployees.householdRegister" value="1" checked="checked"/>非农
+            <input type="radio" name="enterpriseEmployees.householdRegister" value="0"/>农村
+          </div>
+
+          <div class="input-container">
+            <label>是否有照片？</label>
+            <input type="radio" name="enterpriseEmployees.photo" value="1"  checked="checked"/>无
+            <input type="radio" name="enterpriseEmployees.photo" value="0"/>有
           </div>
 
           <div class="input-container">
             <label>电话</label>
-            <input type="text" name="tel">
+            <s:textfield name="enterpriseEmployees.phone" />
           </div>
           
           <div class="input-container">
             <label>家庭住址</label>
-            <input type="text" name="address">
+            <s:textfield name="enterpriseEmployees.homeAddress" />
           </div>
 
           <div class="input-container">
             <label>银行卡号</label>
-            <input type="text" name="cardnumber">
+             <s:textfield name="enterpriseEmployees.bankCardNumber" />
           </div>
 
           <div class="input-container">
             <label>开户银行</label>
-            <select>
-              <option>工商</option>
-              <option>农行</option>
-              <option>兴业</option>
-            </select>
+            <s:select list="#{1:'工商',2:'农行',3:'兴业'}" name="enterpriseEmployees.bank" label="abc" listKey="key"
+             listValue="value"  headerKey="0" headerValue="-请选择-"/> 
           </div>
 
           <div class="input-container">
             <label>籍贯</label>
-            <input type="text" name="">
+            <s:textfield name="enterpriseEmployees.nativePlace" />
+          </div>
+
+          <div class="input-container">
+            <label>行业</label>
+            <s:select list="#{1:'计算机与信息',2:'制造业',3:'财政金融'}" name="enterpriseEmployees.industry" label="abc" listKey="key"
+             listValue="value"  headerKey="0" headerValue="-请选择-"/> 
+          </div>
+
+          <div class="input-container">
+            <label>岗位</label>
+             <s:select list="#{1:'销售',2:'生产'}" name="enterpriseEmployees.jobs" label="abc" listKey="key"
+             listValue="value"  headerKey="0" headerValue="-请选择-"/> 
+
           </div>
 
           <div class="input-container">
             <label>婚姻状况</label>
-            <input type="radio" name="ismarried" value="1"  checked="checked">未婚，
-            <input type="radio" name="ismarried" value="0">已婚
+            <input type="radio" name="enterpriseEmployees.maritalStatus" value="1"  checked="checked"/>未婚，
+            <input type="radio" name="enterpriseEmployees.maritalStatus" value="0"/>已婚
           </div>
 
           <div class="input-container">
             <label>文化程度</label>
-            <select>
-              <option value="">博士</option>
-              <option value="" >研究生</option>
-              <option value="">本科</option>
-              <option value="">大专</option>
-              <option value="">中专</option>
-              <option value="">高中</option>
-              <option value="">初中</option>
-              <option value="">小学</option>
-            </select>
+            <s:select list="#{1:'博士',2:'研究生',3:'本科',4:'大专',5:'中专',6:'高中',7:'初中',8:'小学'}" name="enterpriseEmployees.jobs" label="abc" listKey="key"
+             listValue="value"  headerKey="0" headerValue="-请选择-"/> 
           </div>
 
           <div class="input-container">
             <label>合同期限</label>
             起：
-            <select class="span2">
-              <option value="">2014年</option>
-              <option value="" selected>2013年</option>
-              <option value="">2012年</option>
-            </select>
-            <select class="span2">
-              <option value="">7月</option>
-              <option value="" selected>8月</option>
-              <option value="">9月</option>
-            </select> 
-            <select class="span2">
-              <option value="">15日</option>
-              <option value="" selected>19日</option>
-              <option value="">22日</option>
-            </select> 
+           <s:textfield id="d11" type="text" name="enterpriseEmployees.startContractDeadline"/>
+			<img onclick="WdatePicker({el:'d11'})" src="images/datePicker.gif" width="16" height="22" />
           </div>
 
           <div class="input-container">
             止：
-            <select class="span2">
-              <option value="">2014年</option>
-              <option value="" selected>2013年</option>
-              <option value="">2012年</option>
-            </select>
-            <select class="span2">
-              <option value="">7月</option>
-              <option value="" selected>8月</option>
-              <option value="">9月</option>
-            </select> 
-            <select class="span2">
-              <option value="">15日</option>
-              <option value="" selected>19日</option>
-              <option value="">22日</option>
-            </select> 
+           <s:textfield id="d11" type="text" name="enterpriseEmployees.endContractDeadline"/>
+			<img onclick="WdatePicker({el:'d11'})" src="images/datePicker.gif" width="16" height="22" />
           </div>
 
           <div class="input-container">
             <label>是否参保?</label>
-            <input type="radio" name="has-insurance" value="1"  checked="checked">是，
-            <input type="radio" name="has-insurance" value="0">否
+            <input type="radio" name="enterpriseEmployees.whetherGinseng" value="1"  checked="checked"/>是，
+            <input type="radio" name="enterpriseEmployees.whetherGinseng" value="0"/>否
           </div>
 
           <div class="input-container">
             <label>参保类型</label>
-            <input type="checkbox" name="">医保，
-            <input type="checkbox" name="">社保，
-            <input type="checkbox" name="">公积金
+            <s:checkboxlist list="#{'1':'医保', '2':'社保', '3':'公积金'}" name="enterpriseEmployees.ginsengProtectType"  labelposition="left" />
           </div>
 
           <div class="input-container">
             <label>参保性质</label>
-            <input type="radio" name="type-of-insurance" value="1"  checked="checked">新增，
-            <input type="radio" name="type-of-insurance" value="0">续保
+            <input type="radio" name="enterpriseEmployees.ginsengProtectNature" value="1"  checked="checked"/>新增，
+            <input type="radio" name="enterpriseEmployees.ginsengProtectNature" value="0"/>续保
           </div>
 
           <div class="input-container">
-            <label>从哪一月开始参保？</label>
-            <select class="span2">
-              <option value="">2014年</option>
-              <option value="" selected>2013年</option>
-              <option value="">2012年</option>
-            </select>
-
-            <select class="span2">
-              <option value="">7月</option>
-              <option value="" selected>8月</option>
-              <option value="">9月</option>
-            </select>  
+            <label>开始参保日期:</label>
+           	<s:textfield id="d11" type="text" name="enterpriseEmployees.cinsengDate"/>
+			<img onclick="WdatePicker({el:'d11'})" src="images/datePicker.gif" width="16" height="22" />
           </div>
 
           <div class="input-container">
             <label>参保基数</label>
-            <input type="radio" name="base-of-insurance" value="1"  checked="checked">默认基数，
-            <input type="radio" name="base-of-insurance" value="0">个性设置
+            <input type="radio" name="enterpriseEmployees.base" value="1"  checked="checked"/>默认基数，
+            <input type="radio" name="enterpriseEmployees.base" value="0"/>个性设置
           </div>
 
           <div class="input-container">
             <label>社会保险基数</label>
-            <input type="text" name="">
+            <s:textfield name="enterpriseEmployees.socialInsurance" />
           </div>
           <div class="input-container">
             <label>生育保险基数</label>
-            <input type="text" name="">
+           <s:textfield name="enterpriseEmployees.fertilityInsurance" />
           </div>
           <div class="input-container">
             <label>工伤基数</label>
-            <input type="text" name="">
+            <s:textfield name="enterpriseEmployees.inductrialBase" />
           </div>
           <div class="input-container">
             <label>基本医疗保险基数</label>
-            <input type="text" name="">
+            <s:textfield name="enterpriseEmployees. basicMedical" />
           </div>
           <div class="input-container">
             <label>住房公积金基数</label>
-            <input type="text" name="">
+            <s:textfield name="enterpriseEmployees.housingFund" />
           </div>
 
           <div class="input-container">
             <label>个税缴纳方式?</label>
-            <input type="radio" name="status-of-tax" value="1" checked="checked">个人缴纳，
-            <input type="radio" name="status-of-tax" value="0">企业缴纳
+            <input type="radio" name="enterpriseEmployees.paymentWay" value="1" checked="checked"/>个人缴纳，
+            <input type="radio" name="enterpriseEmployees.paymentWay" value="0"/>企业缴纳
           </div>
 
           <div class="input-container">
-            <label>在职状态?</label>
-            <input type="radio" name="status-of-job" value="1" checked="checked">在职，
-            <input type="radio" name="status-of-job" value="0">离职
-          </div>
-
-          <div class="input-container">
-            <label>工资发到哪一个月？</label>
-            <select class="span2">
-              <option value="">2014年</option>
-              <option value="" selected>2013年</option>
-              <option value="">2012年</option>
-            </select>
-            <select class="span2">
-              <option value="">7月</option>
-              <option value="" selected>8月</option>
-              <option value="">9月</option>
-            </select>  
-          </div>
-          <div class="input-container">
-            <label>服务费</label>
-            <input type="text" name="">
-          </div>
-          <div class="input-container">
-            <button type="button" class="btn btn-primary">提交</button>
-          </div>
-        </div>
-      </form>              
-    </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-  </div>
-
-  <div id="form-for-insurance
-" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">批量参保设置</h3>
-    </div>
-    <div class="modal-body">
-      <form action="">
-        <div class="row-fluid">
-          <div class="input-container">
-            <label>从哪一月开始参保？</label>
-            <select class="span4">
-              <option value="">2014年</option>
-              <option value="" selected>2013年</option>
-              <option value="">2012年</option>
-            </select>
-            <select class="span4">
-              <option value="">7月</option>
-              <option value="" selected>8月</option>
-              <option value="">9月</option>
-            </select>  
-          </div>
-
-          <div class="input-container">
-            <label>参保类型</label>
-            <input type="checkbox" name="">医保，
-            <input type="checkbox" name="">社保，
-            <input type="checkbox" name="">公积金，
-            <input type="checkbox" name="">大病统筹
-          </div>
-
-          <div class="input-container">
-            <label>参保性质</label>
-            <input type="radio" name="has-insurance" value="1"  checked="checked">新增，
-            <input type="radio" name="has-insurance" value="0">续保
-          </div>
-
-          <div class="input-container">
-            <button type="button" class="btn btn-primary">提交</button>
-          </div>
-
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-  </div>
-
-  <div id="form-for-reduction" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">批量减员</h3>
-    </div>
-    <div class="modal-body">
-      <form action="">
-        <div class="row-fluid">
-
-          <div class="input-container">
-            <label>工资发到哪一个月？</label>
-            <select class="span4">
-              <option value="">2014年</option>
-              <option value="" selected>2013年</option>
-              <option value="">2012年</option>
-            </select>
-            <select class="span4">
-              <option value="">7月</option>
-              <option value="" selected>8月</option>
-              <option value="">9月</option>
-            </select>  
+            <label>状态?</label>
+            <s:checkbox name="enterpriseEmployees.pseudoDelete" />隐藏
           </div>
           
           <div class="input-container">
-            <button type="button" class="btn btn-primary">提交</button>
-          </div>
-
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-  </div>
-
-  <div id="form-for-fee" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">批量修改服务费</h3>
-    </div>
-    <div class="modal-body">
-      <form action="">
-        <div class="row-fluid">
-
-          <div class="input-container">
             <label>服务费</label>
-            <input type="text" name="">
+            <s:textfield name="enterpriseEmployees.serviceCost" />
           </div>
           
           <div class="input-container">
-            <button type="button" class="btn btn-primary">提交</button>
+            <s:submit cssClass="btn btn-primary" value="提交"/>
           </div>
-
+          
         </div>
-      </form>
+      </s:form>              
     </div>
     <div class="modal-footer">
       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

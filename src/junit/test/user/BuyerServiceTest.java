@@ -4,15 +4,12 @@ package junit.test.user;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import cn.fm.bean.user.Buyer;
 import cn.fm.bean.user.ContactInfo;
-
-
 import cn.fm.service.user.BuyerService;
 
 
@@ -20,18 +17,17 @@ import cn.fm.service.user.BuyerService;
 
 public class BuyerServiceTest {
 	private static BuyerService buyerService;
-	
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		try {
 			ApplicationContext cxt = new ClassPathXmlApplicationContext("beans.xml");
 			buyerService = (BuyerService)cxt.getBean("buyerServiceImpl");
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 
 	@Test
 	public void testSave() {

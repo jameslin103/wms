@@ -1,4 +1,10 @@
 
+h3 { font-size: 18px; }
+
+.red { color: red; }
+.blue { color: blue; }
+.bold { font-weight: bold; }
+.align-right { text-align: right; }
 
 ol.normal { list-style: none outside none; margin: 0px; padding: 0px; }
 ul.normal { list-style: none outside none; margin: 0px; padding: 0px; }
@@ -8,6 +14,7 @@ table .with-brief .contact { display: block; margin-top: 10px; font-size: 80%; }
 table.normal th,
 table.normal td { padding: 5px; border: 1px solid #000; white-space: nowrap; }
 th.center, td.center { text-align: center; }
+td.align-right { text-align: right; }
 td span.em { color: red; font-weight: bold; }
 table.table-of-thead { float: left; }        
 div.table-of-tbody { width: 600px; overflow: auto; }
@@ -53,7 +60,7 @@ form .input-container input[type="checkbox"] { margin: -5px 5px 0 0; margin-righ
 #header .user li:last-child { border-right: none; }
 #header .user a { display: block; }
 
-#sub-header { padding: 10px; }
+#sub-header { padding: 10px; margin-bottom: 10px; }
 #sub-header h2 { line-height: 24px; font-size: 24px; float: left; margin: 0px; padding: 0px; }
 #sub-header .date { float: right; }
 
@@ -69,6 +76,7 @@ form .input-container input[type="checkbox"] { margin: -5px 5px 0 0; margin-righ
 #center-pane .action-container  a { float: left; }
 #center-pane .action-container .select-for-year  { margin: 0px; }
 #center-pane .action-container .select-for-year  select { margin: 0px; width: 100px; }
+#center-pane .action-container input { margin: 0px; } 
 
 #center-pane-info { margin-bottom: 20px; }
 #center-pane-info .inner { padding: 10px; }
