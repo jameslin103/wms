@@ -1,0 +1,119 @@
+﻿<!doctype html>
+<html ng-app>
+    <head>
+        <script src="http://code.angularjs.org/angular-1.0.1.min.js">
+	<script src="jquery-1.3.2.min.js"></script>
+	<script language="javascript" type="text/javascript" src="WdatePicker.js"></script>
+
+    </head>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		$("#list").click(function() {
+			alert("Hello world!");
+		});
+	});
+	</script>
+    <body>
+
+	<input id="d11" type="text" />
+	<img onclick="WdatePicker({el:'d11'})"             			src="skin/datePicker.gif" width="16" height="22" align="absmiddle"/>
+
+
+
+
+        Your name: <input type="text" ng-model="yourname" placeholder="World">
+        <hr>
+        Hello {{yourname || 'World'}}!
+
+
+	<ul>
+    <li>
+        <span>Nexus S</span>
+        <p>
+        Fast just got faster with Nexus S.
+        </p>
+    </li>
+    <li>
+        <span>Motorola XOOM™ with Wi-Fi</span>
+        <p>
+        The Next, Next Generation tablet.
+        </p>
+    </li>
+</ul>
+	Search: <input ng-model="query">
+	Sort by:
+	<select ng-model="orderProp">
+  		<option value="name">Alphabetical</option>
+  		<option value="age">Newest</option>
+	</select>
+
+
+<ul class="phones">
+  <li ng-repeat="phone in phones | filter:query | orderBy:orderProp">
+    {{phone.name}}
+    <p>{{phone.snippet}}</p>
+  </li>
+</ul>
+
+	<form name="myForm">
+  <div class="control-group" ng-class="{error: myForm.name.$invalid}">
+    <label>Name</label>
+    <input type="text" name="name" ng-model="project.name" required>
+    <span ng-show="myForm.name.$error.required" class="help-inline">
+        Required</span>
+  </div>
+ 
+  <div class="control-group" ng-class="{error: myForm.site.$invalid}">
+    <label>Website</label>
+    <input type="url" name="site" ng-model="project.site" required>
+    <span ng-show="myForm.site.$error.required" class="help-inline">
+        Required</span>
+    <span ng-show="myForm.site.$error.url" class="help-inline">
+        Not a URL</span>
+  </div>
+ 
+  <label>Description</label>
+  <textarea name="description" ng-model="project.description"></textarea>
+ 
+  <br>
+  <a href="#/" class="btn">Cancel</a>
+  <button ng-click="save()" ng-disabled="isClean() || myForm.$invalid"
+          class="btn btn-primary">Save</button>
+  <button ng-click="destroy()"
+          ng-show="project.$id" class="btn btn-danger">Delete</button>
+</form>
+
+
+ <div ng-controller="GreetCtrl">
+      Hello {{name}}!
+    </div>
+    <div ng-controller="ListCtrl">
+      <ol>
+        <li ng-repeat="name in names">{{name}}</li>
+      </ol>
+    </div>
+
+	<div id="list">Delete</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	美好的事物总是离不开被墙的命运，让我们静静地期待那一天的来临… 也让我们在各自行业的努力，让下一代、下一代、下一代…（希望N<=1，如果	N>=4，我做鬼也放不过你们！）不再拥有这一天。
+
+
+    </body>
+</html>
