@@ -235,7 +235,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
           <div class="input-container">
             <label>参保类型</label>
-            <s:checkboxlist list="#{'1':'医保', '2':'社保', '3':'公积金'}" name="enterpriseEmployees.ginsengProtectType"  labelposition="left" />
+            <s:checkboxlist list="#{'1':'医保', '2':'社保', '3':'公积金'}" name="enterpriseEmployees.ginsengProtectType"  labelposition="left" key="0"/>
           </div>
 
           <div class="input-container">
@@ -285,7 +285,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
           <div class="input-container">
             <label>状态?</label>
-            <s:checkbox name="enterpriseEmployees.pseudoDelete" />隐藏
+            <s:checkbox name="enterpriseEmployees.pseudoDelete" value="0" />隐藏
           </div>
           
           <div class="input-container">

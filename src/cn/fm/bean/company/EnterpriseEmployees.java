@@ -78,7 +78,7 @@ public class EnterpriseEmployees implements Serializable{
 	/*伪删除  0 隐藏    1显示*/
 	private Integer  pseudoDelete;
 	
-	
+	private Date     createDate=new Date();
 	
 	
 	
@@ -89,49 +89,49 @@ public class EnterpriseEmployees implements Serializable{
 	public void setEmployeesId(Integer employeesId) {
 		this.employeesId = employeesId;
 	}
-	@Column(length=30,nullable=false)
+	@Column(length=30)
 	public String getEmployeesName() {
 		return employeesName;
 	}
 	public void setEmployeesName(String employeesName) {
 		this.employeesName = employeesName;
 	}
-	@Column(length=2,nullable=false)
+	@Column(length=2)
 	public Integer getEmployeesSex() {
 		return employeesSex;
 	}
 	public void setEmployeesSex(Integer employeesSex) {
 		this.employeesSex = employeesSex;
 	}
-	@Column(length=2,nullable=false)
+	@Column(length=2)
 	public Integer getHouseholdRegister() {
 		return householdRegister;
 	}
 	public void setHouseholdRegister(Integer householdRegister) {
 		this.householdRegister = householdRegister;
 	}
-	@Column(length=20,nullable=false)
+	@Column(length=20)
 	public String getNativePlace() {
 		return nativePlace;
 	}
 	public void setNativePlace(String nativePlace) {
 		this.nativePlace = nativePlace;
 	}
-	@Column(length=1,nullable=false)
+	@Column(length=1)
 	public Integer getPhoto() {
 		return photo;
 	}
 	public void setPhoto(Integer photo) {
 		this.photo = photo;
 	}
-	@Column(length=19,nullable=false,unique=true)
+	@Column(length=19,unique=true)
 	public String getCardNumber() {
 		return cardNumber;
 	}
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
-	@Column(length=15,nullable=false)
+	@Column(length=15)
 	public String getPhone() {
 		return phone;
 	}
@@ -139,170 +139,189 @@ public class EnterpriseEmployees implements Serializable{
 		this.phone = phone;
 	}
 	
-	@Column(length=30,nullable=false)
+	@Column(length=30)
 	public Double getServiceCost() {
 		return serviceCost;
 	}
 	public void setServiceCost(Double serviceCost) {
 		this.serviceCost = serviceCost;
 	}
-	@Column(length=1,nullable=false)
+	@Column(length=1)
 	public Integer getSocialInsurance() {
 		return socialInsurance;
 	}
 	public void setSocialInsurance(Integer socialInsurance) {
 		this.socialInsurance = socialInsurance;
 	}
-	@Column(length=1,nullable=false)
+	@Column(length=1)
 	public Integer getFertilityInsurance() {
 		return fertilityInsurance;
 	}
 	public void setFertilityInsurance(Integer fertilityInsurance) {
 		this.fertilityInsurance = fertilityInsurance;
 	}
-	@Column(length=20,nullable=false)
+	@Column(length=20)
 	public String getContractNo() {
 		return contractNo;
 	}
 	public void setContractNo(String contractNo) {
 		this.contractNo = contractNo;
 	}
-	@Column(length=30,nullable=false)
+	@Column(length=30)
 	public String getHomeAddress() {
 		return homeAddress;
 	}
 	public void setHomeAddress(String homeAddress) {
 		this.homeAddress = homeAddress;
 	}
-	@Column(length=20,nullable=false)
+	@Column(length=20)
 	public String getBankCardNumber() {
 		return bankCardNumber;
 	}
 	public void setBankCardNumber(String bankCardNumber) {
 		this.bankCardNumber = bankCardNumber;
 	}
-	@Column(length=20,nullable=false)
+	@Column(length=20)
 	public String getBank() {
 		return bank;
 	}
 	public void setBank(String bank) {
 		this.bank = bank;
 	}
-	@Column(length=20,nullable=false)
+	@Column(length=20)
 	public String getIndustry() {
 		return industry;
 	}
 	public void setIndustry(String industry) {
 		this.industry = industry;
 	}
-	@Column(length=20,nullable=false)
+	@Column(length=20)
 	public String getJobs() {
 		return jobs;
 	}
 	public void setJobs(String jobs) {
 		this.jobs = jobs;
 	}
-	@Column(length=1,nullable=false)
+	@Column(length=1)
 	public Integer getMaritalStatus() {
 		return maritalStatus;
 	}
 	public void setMaritalStatus(Integer maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
-	@Column(length=20,nullable=false)
+	@Column(length=20)
 	public Integer getLevelEducation() {
 		return levelEducation;
 	}
 	public void setLevelEducation(Integer levelEducation) {
 		this.levelEducation = levelEducation;
 	}
-	@Temporal(TemporalType.TIMESTAMP) @Column(nullable=false)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getStartContractDeadline() {
 		return startContractDeadline;
 	}
 	public void setStartContractDeadline(Date startContractDeadline) {
 		this.startContractDeadline = startContractDeadline;
 	}
-	@Temporal(TemporalType.DATE) @Column(nullable=false)
+	@Temporal(TemporalType.DATE)
 	public Date getEndContractDeadline() {
 		return endContractDeadline;
 	}
 	public void setEndContractDeadline(Date endContractDeadline) {
 		this.endContractDeadline = endContractDeadline;
 	}
-	@Column(length=1,nullable=false)
+	@Column(length=1)
 	public Integer getGinsengProtectType() {
 		return ginsengProtectType;
 	}
 	public void setGinsengProtectType(Integer ginsengProtectType) {
-		this.ginsengProtectType = ginsengProtectType;
+		int protectType=Integer.valueOf(ginsengProtectType);
+		if(protectType==0)
+		{
+			this.ginsengProtectType=0;
+		}else{
+			this.ginsengProtectType = ginsengProtectType;
+		}
+		
 	}
-	@Column(length=1,nullable=false)
+	@Column(length=1)
 	public Integer getGinsengProtectNature() {
 		return ginsengProtectNature;
 	}
 	public void setGinsengProtectNature(Integer ginsengProtectNature) {
 		this.ginsengProtectNature = ginsengProtectNature;
 	}
-	@Temporal(TemporalType.DATE) @Column(nullable=false)
+	@Temporal(TemporalType.DATE)
 	public Date getCinsengDate() {
 		return cinsengDate;
 	}
 	public void setCinsengDate(Date cinsengDate) {
 		this.cinsengDate = cinsengDate;
 	}
-	@Column(length=1,nullable=false)
+	@Column(length=1)
 	public Integer getBase() {
 		return base;
 	}
 	public void setBase(Integer base) {
 		this.base = base;
 	}
-	@Column(length=1,nullable=false)
+	@Column(length=1)
 	public Integer getPaymentWay() {
 		return paymentWay;
 	}
 	public void setPaymentWay(Integer paymentWay) {
 		this.paymentWay = paymentWay;
 	}
-	@Column(length=1,nullable=false)
+	@Column(length=1)
 	public Integer getInductrialBase() {
 		return inductrialBase;
 	}
 	public void setInductrialBase(Integer inductrialBase) {
 		this.inductrialBase = inductrialBase;
 	}
-	@Column(length=1,nullable=false)
+	@Column(length=1)
 	public Integer getHousingFund() {
 		return housingFund;
 	}
 	public void setHousingFund(Integer housingFund) {
 		this.housingFund = housingFund;
 	}
-	@Column(length=1,nullable=false)
+	@Column(length=1)
 	public Integer getBasicMedical() {
 		return basicMedical;
 	}
 	public void setBasicMedical(Integer basicMedical) {
+		if(Integer.valueOf(basicMedical)==null)
+			this.basicMedical=0;
 		this.basicMedical = basicMedical;
 	}
-	@Column(length=1,nullable=false)
+	@Column(length=1)
 	public Integer getPseudoDelete() {
 		if(pseudoDelete==null)
 			 pseudoDelete=0;
 		return pseudoDelete;
 	}
 	public void setPseudoDelete(Integer pseudoDelete) {
-		this.pseudoDelete = pseudoDelete;
+		int isDelete=Integer.valueOf(pseudoDelete);
+		if(isDelete==0){
+			this.pseudoDelete=0;
+		}else{
+			this.pseudoDelete = pseudoDelete;
+		}
+		
 	}
-	@Column(length=2,nullable=false)
+	@Column(length=2)
 	public Integer getWhetherGinseng() {
 		return whetherGinseng;
 	}
 	public void setWhetherGinseng(Integer whetherGinseng) {
 		this.whetherGinseng = whetherGinseng;
 	}
-	
-		
-	
+	@Temporal(TemporalType.DATE)
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 }

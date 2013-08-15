@@ -48,7 +48,7 @@
             	 <param name="actionName">userLogin</param>
             </result>
         </action>
-         <action name="updateBuyerPassword" class="cn.fm.web.action.company.UpdatePasswordAction" method="updatePassword">
+         <action name="updateBuyerPassword" class="cn.fm.web.action.user.UpdatePasswordAction" method="updatePassword">
             <result name="success" type="redirectAction">
             	 <param name="actionName">userLogin</param> 
             </result>
@@ -57,7 +57,14 @@
             <result name="success">/company/employee-list.jsp</result>
             <result name="input">/company/employee-list.jsp</result>
         </action>  
-        
+        <action name="addInsurancesTax" class="cn.fm.web.action.company.InsurancesTaxAction" method="addInsurancesTax">
+            <result name="success">/admin/tax.jsp</result>
+            <result name="input">/company/employee-list.jsp</result>
+        </action> 
+         <action name="addInsurancesBaseSettings" class="cn.fm.web.action.company.InsurancesBaseSettingsAction" method="addInsurancesBaseSettings">
+            <result name="success">/admin/tax-base.jsp</result>
+            <result name="input">/admin/tax-base.jsp</result>
+        </action> 
         
         
         <action name="userInfo" class="cn.fm.web.action.company.UserAction" method="userInfo">  

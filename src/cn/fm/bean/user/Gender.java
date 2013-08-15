@@ -2,9 +2,9 @@ package cn.fm.bean.user;
 
 public enum Gender {
 	MAN{
-		public String getName(){return "ÄÐ";}
+		public String getName(){return "ç”·";}
 	},WOMEN{
-		public String getName(){return "Å®";}
+		public String getName(){return "å¥³";}
 	};
 	public abstract String getName();
 }

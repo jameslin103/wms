@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">>
+    <base href="<%=basePath%>">
   <title>富民人力银行派遣系统</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%@ include file="/help/public_css_js.jsp" %>
@@ -16,8 +16,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 
 	<div id="container">
-    	<jsp:include page="../dashboard.jsp"></jsp:include>
-    </div>
+		<div id="header">
+    		<jsp:include page="../dashboard.jsp"></jsp:include>
+    	</div>
 
 		<div id="main"> 
       <div class="row-fluid">
@@ -25,12 +26,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="center-pane">
           <ul class="nav nav-tabs">
             <li>
-              <a href="tax.html">五险一金（税率）</a>
+              <a href="tax.jsp">五险一金（税率）</a>
             </li> 
-            <li class="active"><a href="tax-base.html">五险一金（基数）</a></li>        
-            <li><a href="tax-of-person.html">个税</a></li>        
+            <li class="active"><a href="tax-base.jsp">五险一金（基数）</a></li>        
+            <li><a href="tax-of-person.jsp">个税</a></li>        
           </ul>
-
+		
           <ul class="normal action-container clearfix">
             <li><a href="#info-for-check" data-toggle="modal">新建规则</a></li>
           </ul>
@@ -81,64 +82,56 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="modal-body">
       <div class="row-fluid">
-        <form action="" method="post">
+      <!-- ==================================================insurancesBaseSettings============================================== -->
+        <s:form action="addInsurancesBaseSettings" method="post">
           <div class="row-fluid">         
-
             <div class="input-container">
               <label>类型</label>
-              <input type="radio" name="type-of-insurance" value="1" checked="checked">市医保，
-              <input type="radio" name="type-of-insurance" value="0">省医保
+              <input type="radio" name="insurancesBaseSettings.insurancesType" value="1" checked="checked">市医保，
+              <input type="radio" name="insurancesBaseSettings.insurancesType" value="0">省医保
             </div>
 
             <div class="input-container">
               <label>社会保险基数</label>
-              <input type="text" name="">元
+              <s:textfield name="insurancesBaseSettings.socialInsurance"/>元
             </div>
 
             <div class="input-container">
               <label>生育保险基数</label>
-              <input  type="text" name="n">元
+              <s:textfield name="insurancesBaseSettings.birthInsurance"/>元
             </div>
 
             <div class="input-container">
               <label>工伤基数</label>
-              <input type="text" name="">元
+              <s:textfield name="insurancesBaseSettings.inductrialInjury"/>元
             </div>
 
             <div class="input-container">
               <label>住房公积金基数</label>
-              <input type="text" name="">元
+              <s:textfield name="insurancesBaseSettings.housingMPF"/>元
             </div>
 
             <div class="input-container">
               <label>基本医疗基数</label>
-              <input type="text" name="">元
+               <s:textfield name="insurancesBaseSettings.basicMedical"/>元
             </div>
 
             <div class="input-container">
               <label>大病统筹基数</label>
-              <input type="text" name="">元
+             <s:textfield name="insurancesBaseSettings.povertyStricken"/>元
             </div>
 
             <div class="input-container">
               <label>开始执行年月份</label>
-              <select class="span3">
-                <option value="">2014年</option>
-                <option value="" selected>2013年</option>
-                <option value="">2012年</option>
-              </select>
-              <select class="span2">
-                <option value="">7月</option>
-                <option value="" selected>8月</option>
-                <option value="">9月</option>
-              </select>  
+             <s:textfield id="d11" type="text" name="startDate"/>
+				<img onclick="WdatePicker({el:'d11'})" src="images/datePicker.gif" width="16" height="22" />
             </div>
 
             <div class="input-container">
-              <button type="button" class="btn btn-primary">提交</button>
+              <s:submit cssClass="btn btn-primary" value="提交"/>
             </div>
           </div>
-        </form>
+        </s:form>
       </div>
     </div>
     <div class="modal-footer">

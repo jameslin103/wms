@@ -13,12 +13,16 @@ public class EnterpriseEmployeesAction extends BaseAction {
 	
 	@Resource 
 	EnterpriseEmployeesService enterpriseEmployeesService;
-	EnterpriseEmployees  enterpriseEmployees=new EnterpriseEmployees();
+	EnterpriseEmployees  enterpriseEmployees;
 	
+	
+	
+
+	@SuppressWarnings("unused")
 	private String  addEnterpriseEmployees()
 	{
-		vialteFile();
-		if(enterpriseEmployees==null)return INPUT;
+		
+		if(enterpriseEmployees.getEmployeesName()==null || enterpriseEmployees.getEmployeesName().equals(""))return INPUT;
 			enterpriseEmployeesService.save(enterpriseEmployees);
 		
 		return SUCCESS;
@@ -38,6 +42,19 @@ public class EnterpriseEmployeesAction extends BaseAction {
 		{
 			this.addFieldError(enterpriseEmployees.getPhone(), "电话必填项*");
 			
+		}
+		if(StringUtil.isEmpty(enterpriseEmployees.getHomeAddress()))
+		{
+			this.addFieldError(enterpriseEmployees.getHomeAddress(), "家庭地址必填项*");
+			
+		}
+		if(StringUtil.isEmpty(enterpriseEmployees.getBankCardNumber()))
+		{
+			this.addFieldError(enterpriseEmployees.getBankCardNumber(), "银行卡号必填项*");
+		}
+		if(StringUtil.isEmpty(enterpriseEmployees.getBank()))
+		{
+			this.addFieldError(enterpriseEmployees.getBank(), "");
 		}
 	}
 	
