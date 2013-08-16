@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           
           <ul class="normal action-container clearfix">
             <li>新员工档案：</li>
-            <li><a href="employee-step1-of-create.html">批量录入</a>，</li>
+            <li><a href="company/employee-step1-of-create.jsp">批量录入</a>，</li>
             <li><a href="#info-for-check" data-toggle="modal">单个录入</a></li>
             <li>&nbsp;/&nbsp;</li>
             <li>查看：</li>
@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="#">隐藏信息</a></li>
             <li class="right"><a href="../doc/全部员工信息表.xls" class="btn btn-primary">下载全体在职员工信息</a></li>
             <li class="right">
-              <form class="navbar-form pull-left" action="employee-search-result.html">
+              <form class="navbar-form pull-left" action="company/employee-search-result.jsp">
                 <input type="text" placeholder="输入姓名"/>
                 <input type="checkbox"/>&nbsp;全站
                 <button type="submit" class="btn">搜索</button>
@@ -77,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <tbody>
               <tr>
                 <td>1</td>
-                <td><a href="employee-personal-info.html">某某人</a></td>
+                <td><a href="company/employee-personal-info.jsp">某某人</a></td>
                 <td>男</td>
                 <td>非农</td>
                 <td>已婚</td>
@@ -211,20 +211,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="input-container">
             <label>文化程度</label>
             <s:select list="#{1:'博士',2:'研究生',3:'本科',4:'大专',5:'中专',6:'高中',7:'初中',8:'小学'}" name="enterpriseEmployees.jobs" label="abc" listKey="key"
-             listValue="value"  headerKey="0" headerValue="-请选择-"/> 
+             listValue="value"  headerKey="0" headerValue="-=请选择=-"/> 
           </div>
 
           <div class="input-container">
             <label>合同期限</label>
             起：
-           <s:textfield id="d11" type="text" name="enterpriseEmployees.startContractDeadline"/>
-			<img onclick="WdatePicker({el:'d11'})" src="images/datePicker.gif" width="16" height="22" />
+           <s:textfield id="d11" name="enterpriseEmployees.startContractDeadline" onclick="WdatePicker()" cssClass="Wdate"/>
           </div>
 
           <div class="input-container">
             止：
-           <s:textfield id="d11" type="text" name="enterpriseEmployees.endContractDeadline"/>
-			<img onclick="WdatePicker({el:'d11'})" src="images/datePicker.gif" width="16" height="22" />
+           <s:textfield id="d11" name="enterpriseEmployees.endContractDeadline"  onclick="WdatePicker()" cssClass="Wdate"/>
           </div>
 
           <div class="input-container">
@@ -246,8 +244,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
           <div class="input-container">
             <label>开始参保日期:</label>
-           	<s:textfield id="d11" type="text" name="enterpriseEmployees.cinsengDate"/>
-			<img onclick="WdatePicker({el:'d11'})" src="images/datePicker.gif" width="16" height="22" />
+           	<s:textfield id="d11"  name="enterpriseEmployees.cinsengDate" onclick="WdatePicker()" cssClass="Wdate" />
           </div>
 
           <div class="input-container">
@@ -270,7 +267,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </div>
           <div class="input-container">
             <label>基本医疗保险基数</label>
-            <s:textfield name="enterpriseEmployees. basicMedical" />
+            <s:textfield name="enterpriseEmployees.basicMedical" />
           </div>
           <div class="input-container">
             <label>住房公积金基数</label>
@@ -285,7 +282,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
           <div class="input-container">
             <label>状态?</label>
-            <s:checkbox name="enterpriseEmployees.pseudoDelete" value="0" />隐藏
+            <input type="checkbox" name="enterpriseEmployees.pseudoDelete" value="0"/>隐藏
           </div>
           
           <div class="input-container">

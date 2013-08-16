@@ -16,8 +16,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 
   <div id="container">
+  	<div id="header">
    		<jsp:include page="../dashboard.jsp"></jsp:include>
-  </div>
+  	</div>
 
     <div id="main">
       <div class="row-fluid">
@@ -25,10 +26,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="center-pane">
           <ul class="nav nav-tabs">
             <li>
-              <a href="employee-list.html">员工</a>
+              <a href="company/employee-list.jsp">员工</a>
             </li>
             <li class="active">
-              <a href="salary-with-month.html">工资</a>
+              <a href="company/salary-with-month.jsp">工资</a>
             </li>
           </ul>
  
@@ -42,11 +43,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </select>
               </form>
             </li>
-            <li><a href="salary-step1-of-create.html">新建工资预算表</a></li>
+            <li><a href="company/salary-step1-of-create.jsp">新建工资预算表</a></li>
             <li>&nbsp;/&nbsp;</li>
-            <li><a href="salary-template.html">工资模板</a></li>
+            <li><a href="company/salary-template.jsp">工资模板</a></li>
             <li>&nbsp;/&nbsp;</li>
-            <li><a href="salary-list-of-customized-items.html">定制奖金与各种补贴</a></li>
+            <li><a href="company/salary-list-of-customized-items.jsp">定制奖金与各种补贴</a></li>
           </ul>
 
           <table class="table table-striped table-bordered">
@@ -83,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td>9480.00</td>
                 <td>60</td>
                 <td>600</td>
-                <td>15<br><a href="../task/employee-list-info1.html">查看</a></td>
+                <td>15<br><a href="task/employee-list-info1.jsp">查看</a></td>
                 <td>8<br><span class="em">（已发放）</span><br>2013年7月15日9时</td>
                 <td>2<br><span class="em">（已发放）</span><br>2013年7月15日9：30时</td>
                 <td>5<br><span class="em">（已发放）</span><br>2013年7月16日11时</td>
@@ -95,9 +96,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </ul>
                 </td>
                 <td>
-                  <a href="salary-list.html">修改</a>
+                  <a href="company/salary-list.jsp">修改</a>
                   <a href="">删除</a><br>
-                  <a href="salary-list.html">查看</a>
+                  <a href="company/salary-list.jsp">查看</a>
                   <a href="">下载</a>
                 </td>
               </tr>
@@ -112,7 +113,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td>9480.00</td>
                 <td>60</td>
                 <td>600</td>
-                <td>15<br><a href="../task/employee-list-info1.html">查看</a></td>
+                <td>15<br><a href="task/employee-list-info1.jsp">查看</a></td>
                 <td>8<br><span class="em">（已发放）</span><br>2013年7月15日9时</td>
                 <td>2<br></td>
                 <td>5</td>
@@ -124,9 +125,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </ul>
                 </td>
                 <td>
-                  <a href="salary-list.html">修改</a>
+                  <a href="company/salary-list.jsp">修改</a>
                   <a href="">删除</a><br>
-                  <a href="salary-list.html">查看</a>
+                  <a href="company/salary-list.jsp">查看</a>
                   <a href="">下载</a>
                 </td>
               </tr>

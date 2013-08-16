@@ -16,8 +16,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 
 	<div id="container">
-		<jsp:include page="../dashboard.jsp"></jsp:include>
-    </div>
+		<div id="header">
+			<jsp:include page="../dashboard.jsp"></jsp:include>
+	    </div>
 
 		<div id="main"> 
       <div class="row-fluid">
@@ -25,9 +26,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="center-pane" class="span9">
           <ul class="nav nav-tabs">
             <li>
-              <a href="tax.html">五险一金</a>
+              <a href="admin/tax.jsp">五险一金</a>
             </li> 
-            <li class="active"><a href="tax-of-person.html">个税</a></li>        
+            <li class="active"><a href="admin/tax-of-person.jsp">个税</a></li>        
           </ul>
 
           <p>由程序员协助制定，提醒，每个规则需要指定开始执行的年月份！</p>

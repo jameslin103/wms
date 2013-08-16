@@ -54,16 +54,23 @@
             </result>
         </action>  
          <action name="addEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="addEnterpriseEmployees">
-            <result name="success">/company/employee-list.jsp</result>
+            <result name="success" type="redirect">/company/employee-list.jsp</result>
             <result name="input">/company/employee-list.jsp</result>
         </action>  
         <action name="addInsurancesTax" class="cn.fm.web.action.company.InsurancesTaxAction" method="addInsurancesTax">
             <result name="success">/admin/tax.jsp</result>
-            <result name="input">/company/employee-list.jsp</result>
+            <result name="input">/admin/tax.jsp</result>
         </action> 
          <action name="addInsurancesBaseSettings" class="cn.fm.web.action.company.InsurancesBaseSettingsAction" method="addInsurancesBaseSettings">
             <result name="success">/admin/tax-base.jsp</result>
             <result name="input">/admin/tax-base.jsp</result>
+        </action> 
+         <action name="addEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="addEnterprise">
+            <result name="success" type="redirect">admin/company-list.jsp</result>
+            <result name="input" type="redirect">admin/company-list.jsp</result>
+        </action> 
+         <action name="viewEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterprise">
+            <result name="success">admin/company-list.jsp</result>
         </action> 
         
         

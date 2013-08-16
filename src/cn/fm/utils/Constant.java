@@ -20,6 +20,13 @@ public class Constant {
 	public static final String WMS_HOUR_TEXT = "小时";
 	public static final String WMS_MINUTE_TEXT = "分钟";
 	
+	public static final String WMS_CITY_HEALTH_CARE="市医保";
+	public static final String WMS_PROVINCIAL_HEALTH_CARE="省医保";
+	
+	public static final String WMS_SEX_MAILE="男";
+	public static final String WMS_SEX_WOMAN="女";
+	
+	
 	
 	
 	

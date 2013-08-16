@@ -35,7 +35,7 @@ public class Enterprise implements Serializable{
 	/*电子邮件*/
 	private  String   email;
 	/*状态	0.合约  1.暂停*/
-	private  Integer   state;
+	private  Integer   status;
 	
 	
 	
@@ -124,11 +124,11 @@ public class Enterprise implements Serializable{
 		this.email = email;
 	}
 	@Column(length=2,nullable=false)
-	public Integer getState() {
-		return state;
+	public Integer getStatus() {
+		return status;
 	}
-	public void setState(Integer state) {
-		this.state = state;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 }

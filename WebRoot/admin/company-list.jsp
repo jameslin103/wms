@@ -16,12 +16,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 
 	<div id="container">
-		<jsp:include page="../dashboard.jsp"></jsp:include>
-    </div>
+		<div id="header">
+			<jsp:include page="../dashboard.jsp"></jsp:include>
+   		</div>
 
 	<div id="main"> 
       <div class="row-fluid">
-
         <div id="center-pane">
           <ul class="nav nav-tabs">
             <li class="active">
@@ -32,7 +32,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <ul class="normal action-container clearfix">
             <li><a href="#info-for-check1" data-toggle="modal">添加新企业</a></li>
           </ul>
-
+		<!-- ======================================According to  Enterprise==================================== -->
+		
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
@@ -42,23 +43,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th width="12%">操作</th>
               </tr>
             </thead>
+             <s:iterator value="#request.enterpriseList" var="enterprise">
             <tbody>
               <tr>
-                <td>1</td>
-                <td class="with-complement">
-                  福建电信
-                  <span class="complement">林女士，电话：1391125864，QQ：96857563</span>                  
+                <td><s:property value="%{#enterprise.id}"/></td>
+                <td class="with-complement">	 
+                  <s:property value="%{#enterprise.fullName}"/>
+                  <span class="complement">
+	                    <s:property value="%{#enterprise.contact}"/>
+	                  	电话： <s:property value="%{#enterprise.phone}"/>
+	                  	QQ：   <s:property value="%{#enterprise.qq}"/>
+                  </span>                  
                 </td>
                 <td class="with-complement">
-                  倪姐，陈姐
+                  	倪姐，陈姐
                   <a href="#info-for-check2" data-toggle="modal" class="complement">增删负责人
                   </a>
                 </td>
                 <td><a href="#info-for-check1" data-toggle="modal">修改</a></td>
               </tr>
             </tbody>
+            </s:iterator>
           </table>
-
+		<!-- ================================================End According to  Enterprise=========================== -->
         </div>
       </div>
     </div>
@@ -66,93 +73,92 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div id="footer"></div>
 
 </div>
-  <div id="info-for-check1" class="modal hide fade modal-of-info-for-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div id="info-for-check1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3 id="myModalLabel">企业信息</h3>
     </div>
+     <!-- ==================================addEnterprise====================================== -->
     <div class="modal-body">
-  
-      <form action="" method="post">
+      <s:form action="addEnterprise" method="post">
         <div class="row-fluid"> 
           <div class="input-container">
             <label>简称</label>
-            <input type="text" name="short-name">
+            <s:textfield name="enterprise.rferred"/>
           </div>
 
           <div class="input-container">
             <label>全称</label>
-            <input type="text" name="name">
+             <s:textfield name="enterprise.fullName"/>
           </div>
 
           <div class="input-container">
             <label>法人代表</label>
-            <input type="text" name="person-in-charge">
+            <s:textfield name="enterprise.legalRepresentative"/>
           </div>
 
           <div class="input-container">
             <label>开户行</label>
-            <input type="text" name="">
+            <s:textfield name="enterprise.accountLine"/>
           </div>
 
           <div class="input-container">
             <label>企业银行账号</label>
-            <input type="text" name="">
+           <s:textfield name="enterprise.enterpriseBankAccount"/>
           </div>
 
           <div class="input-container">
             <label>地址</label>
-            <input type="text" name="adress">
+            <s:textfield name="enterprise.address"/>
           </div>
 
           <div class="input-container">
             <label>联系人</label>
-            <input type="text" name="contact">
+            <s:textfield name="enterprise.contact"/>
           </div>
 
           <div class="input-container">
             <label>电话</label>
-            <input type="text" name="tel">
+           <s:textfield name="enterprise.phone"/>
           </div>
           <div class="input-container">
             <label>QQ</label>
-            <input type="text" name="qq">
+            <s:textfield name="enterprise.qq"/>
           </div>
 
           <div class="input-container">
             <label>传真</label>
-            <input type="text" name="fax">
+           <s:textfield name="enterprise.fax"/>
           </div>
 
           <div class="input-container">
             <label>电子邮件</label>
-            <input type="text" name="email">
-          </div>
-
-          <div class="input-container">
-            <label>类型</label>
-            <input type="radio" name="type-of-insurance" value="1" checked="checked">市医保，
-            <input type="radio" name="type-of-insurance" value="0">省医保
+            <s:textfield name="enterprise.email"/>
           </div>
           
           <div class="input-container">
             <label>状态?</label>
-            <input type="radio" name="status" value="1" checked="checked">合约中，
-            <input type="radio" name="status" value="0">暂停
+            <input type="radio" name="enterprise.status" value="1" checked="checked">合约中，
+            <input type="radio" name="enterprise.status" value="0">暂停
           </div>
 
           <div class="input-container">
-            <button type="button" class="btn btn-primary">提交</button>
+            <s:submit cssClass="btn btn-primary" value="提交"/>
           </div>
         </div>
-      </form>
+      </s:form>
     </div>
+   
+   
+   
+   
+   
     <div class="modal-footer">
       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
   </div>
 
-  <div id="info-for-check2" class="modal hide fade modal-of-info-for-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div id="info-for-check2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3 id="myModalLabel">增删负责人</h3>

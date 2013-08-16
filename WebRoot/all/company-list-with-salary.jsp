@@ -8,27 +8,52 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-	<title>富民人力银行派遣系统</title>
+    
+   <title>富民人力银行派遣系统</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%@ include file="/help/public_css_js.jsp" %>
+
 </head>
 <body>
 
 	<div id="container">
-		<div id="header">
-			<jsp:include page="../dashboard.jsp"></jsp:include>
-		</div>
-
-		<div id="main"> 
+    	<div id="header">
+    		<jsp:include page="../dashboard.jsp"></jsp:include>
+    	</div>
+	<div id="main"> 
 			<div class="row-fluid">
 				<div id="center-pane">
 
           <ul class="nav nav-tabs">
             <li class="active">
-              <a href="#">工资</a>
+              <a href="company-list-with-saraly.html">工资</a>
             </li>            
-            <li><a href="company/company-list-with-insurance.jsp">增减员与参保</a></li>
-            <li><a href="company/salary-summary.jsp">资金往来</a></li>
+            <li><a href="company-list-with-insurance.html">增减员与参保</a></li>
+            <li><a href="company-list-with-balance.html">资金往来</a></li>
+          </ul>
+          
+          <ul class="normal action-container clearfix">
+            <li class="right">
+              <form action="" class="select-for-year" method="post">
+                <select>
+                  <option value="">2014年</option>
+                  <option value="" selected>2013年</option>
+                  <option value="">2012年</option>
+                </select>
+              </form>
+            </li>
+            <li><a href="#">1月</a>，</li>
+            <li><a href="#">2月</a>，</li>
+            <li><a href="#">3月</a>，</li>
+            <li><a href="#">4月</a>，</li>
+            <li><a href="#">5月</a>，</li>
+            <li><a href="#">6月</a>，</li>
+            <li><a href="#">7月</a>，</li>
+            <li><a href="#">8月</a>，</li>
+            <li><a href="#">9月</a>，</li>
+            <li><a href="#">10月</a>，</li>
+            <li><a href="#">11月</a>，</li>
+            <li><a href="#">12月</a></li>
           </ul>
 
           <table class="table table-striped table-bordered">
@@ -57,25 +82,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td>1</td>
                 <td>福建电信</td>
                 <td>
-                  某某工程工资
+                  <a href="../company/salary-list.html">某某工程工资</a>
                 </td>
                 <td>2013年1月</td>
                 <td>10435.50</td>
                 <td>9480.00</td>
                 <td>60</td>
                 <td>600</td>
-                <td>15<br><a href="task/employee-list-info1.jsp">查看</a></td>
+                <td>15<br><a href="../company/salary-with-bank-detail.html">查看</a></td>
                 <td>8<br><span class="em">（已发放）</span><br>2013年7月15日9时</td>
                 <td>2<br><span class="em">（已发放）</span><br>2013年7月15日9：30时</td>
                 <td>5<br><span class="em">（已发放）</span><br>2013年7月16日11时</td>
                 <td>
                   <ul>
                     <li>制作：倪姐，2013-07-18，9:00，</li>
-                    <li>
-                      审核：倪姐，2013-07-19，9:30，
-                      <a href="#info-for-check1" data-toggle="modal">操作</a>
-                    </li>
-                    <li>发放：小甘
+                    <li>发放：小柴
                       <a href="#info-for-check2" data-toggle="modal">操作</a>
                     </li>
                   </ul>
@@ -92,18 +113,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td>9480.00</td>
                 <td>60</td>
                 <td>600</td>
-                <td>15<br><a href="task/employee-list-info1.jsp">查看</a></td>
+                <td>15<br><a href="../company/salary-with-bank-detail.html">查看</a></td>
                 <td>8<br><span class="em">（已发放）</span><br>2013年7月15日9时</td>
                 <td>2<br><span class="em">（已发放）</span><br>2013年7月15日9：30时</td>
                 <td>5<br><span class="em">（已发放）</span><br>2013年7月16日11时</td>
                 <td>
                   <ul>
                     <li>制作：倪姐，2013-07-18，9:00，</li>
-                    <li>
-                      审核：倪姐，2013-07-19，9:30，
-                      <a href="#info-for-check1" data-toggle="modal">操作</a>
-                    </li>
-                    <li>发放：小甘
+                    <li>发放：小柴
                       <a href="#info-for-check2" data-toggle="modal">操作</a>
                     </li>
                   </ul>
@@ -195,7 +212,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <select class="span2">
               <option value="">9时</option>
               <option value="" selected>9时</option>
-              <option value="" >10时</option>
+              <option value="">10时</option>
             </select> 
           </div>    
 
@@ -219,7 +236,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <select class="span2">
               <option value="">9时</option>
               <option value="" selected>9时</option>
-              <option value="">10时</option>
+              <option value=""10>时</option>
             </select> 
           </div>
 
@@ -243,14 +260,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <select class="span2">
               <option value="">9时</option>
               <option value="" selected>9时</option>
-              <option value="">10时</option>
+              <option value=""10>时</option>
             </select> 
           </div>
-
-          <div class="input-container">
-            <label>说明</label>
-            <input type="text" name="">
-          </div> 
 
           <div class="input-container">
             <label>&nbsp;</label>
@@ -264,6 +276,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
   </div>
+
+  <script type="text/javascript" src="../js/jquery.js"></script>
+
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
 </body>
 
 </html>

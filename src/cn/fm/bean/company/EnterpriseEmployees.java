@@ -70,11 +70,11 @@ public class EnterpriseEmployees implements Serializable{
 	/*个税缴纳方式  0个人缴纳，  1企业缴纳*/
 	private Integer  paymentWay;
 	/*工伤基数*/
-	private Integer  inductrialBase;
+	private Double  inductrialBase;
 	/*住房公积金基数*/
-	private Integer  housingFund;
+	private Double  housingFund;
 	/*基本医疗保险基数*/
-	private Integer  basicMedical;
+	private Double  basicMedical;
 	/*伪删除  0 隐藏    1显示*/
 	private Integer  pseudoDelete;
 	
@@ -273,42 +273,32 @@ public class EnterpriseEmployees implements Serializable{
 		this.paymentWay = paymentWay;
 	}
 	@Column(length=1)
-	public Integer getInductrialBase() {
+	public Double getInductrialBase() {
 		return inductrialBase;
 	}
-	public void setInductrialBase(Integer inductrialBase) {
+	public void setInductrialBase(Double inductrialBase) {
 		this.inductrialBase = inductrialBase;
 	}
 	@Column(length=1)
-	public Integer getHousingFund() {
+	public Double getHousingFund() {
 		return housingFund;
 	}
-	public void setHousingFund(Integer housingFund) {
+	public void setHousingFund(Double housingFund) {
 		this.housingFund = housingFund;
 	}
 	@Column(length=1)
-	public Integer getBasicMedical() {
+	public Double getBasicMedical() {
 		return basicMedical;
 	}
-	public void setBasicMedical(Integer basicMedical) {
-		if(Integer.valueOf(basicMedical)==null)
-			this.basicMedical=0;
+	public void setBasicMedical(Double basicMedical) {
 		this.basicMedical = basicMedical;
 	}
 	@Column(length=1)
 	public Integer getPseudoDelete() {
-		if(pseudoDelete==null)
-			 pseudoDelete=0;
 		return pseudoDelete;
 	}
 	public void setPseudoDelete(Integer pseudoDelete) {
-		int isDelete=Integer.valueOf(pseudoDelete);
-		if(isDelete==0){
-			this.pseudoDelete=0;
-		}else{
-			this.pseudoDelete = pseudoDelete;
-		}
-		
+		this.pseudoDelete = pseudoDelete;
 	}
 	@Column(length=2)
 	public Integer getWhetherGinseng() {

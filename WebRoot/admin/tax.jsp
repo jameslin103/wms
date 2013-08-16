@@ -131,8 +131,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             <div class="input-container">
               <label>开始执行年月份</label>
-                <s:textfield id="d11" type="text" name="startDate"/>
-				<img onclick="WdatePicker({el:'d11'})" src="images/datePicker.gif" width="16" height="22" />
+                <s:textfield id="d11"  name="startDate" cssClass="Wdate" onclick="WdatePicker()"/>
             </div>
 
             <div class="input-container">

@@ -16,16 +16,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<div id="container">
 		<div id="header">	
-   		<jsp:include page="../dashboard.jsp"></jsp:include>
-    </div>
+   			<jsp:include page="../dashboard.jsp"></jsp:include>
+    	</div>
 
-	<div id="main"> 
+			<div id="main"> 
       <div class="row-fluid">
         <div id="center-pane">
           <ul class="nav nav-tabs">
-            <li><a href="employee-list.html">员工</a></li>
-            <li><a href="salary-with-month.html">工资</a></li>
-          </ul>
+            <li class="active"><a href="company/index.jsp">综合</a></li>
+            <li><a href="company/employee-list.jsp">员工档案</a></li>
+            <li><a href="company/salary-with-month.jsp">工资预算表</a></li>
+            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
+            <li><a href="company/balance-detail.jsp">资金往来</a></li>            
+          </ul>   
+          
         </div>
       </div>
     </div>

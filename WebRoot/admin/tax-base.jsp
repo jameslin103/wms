@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <a href="tax.jsp">五险一金（税率）</a>
             </li> 
             <li class="active"><a href="tax-base.jsp">五险一金（基数）</a></li>        
-            <li><a href="tax-of-person.jsp">个税</a></li>        
+            <li><a href="admin/tax-of-person.jsp">个税</a></li>        
           </ul>
 		
           <ul class="normal action-container clearfix">

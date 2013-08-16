@@ -30,7 +30,9 @@
 						      <b class="caret"></b>
 						    </a>
 								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-								  <li><a tabindex="-1" href="admin/company-list.jsp">企业相关</a></li>
+								  <li>
+								  	  <a tabindex="-1" href="viewEnterprise">企业相关</a>
+								  </li>
                 	<li><a tabindex="-1" href="../admin/tax.jsp">计税规则</a></li>
 									<li><a tabindex="-1" href="admin/authorization.jsp">权限分配</a></li>
 								</ul>
@@ -63,8 +65,8 @@
 		</div>
 		
 		<div id="footer">
-			<input id="d11" type="text" class="WdateDiv"/>
-			<img onclick="WdatePicker({el:'d11'})" src="images/datePicker.gif" width="16" height="22" />
+		  
+		
 		</div>
 	</div>
 

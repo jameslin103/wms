@@ -3,24 +3,61 @@ function Ctrl($scope) {
   $scope.user = {name: 'guest', last: 'visitor'};
 }
 $(document).ready(function(){
-	$("#psd").mouseout(function(){
-		var oldPassword=$("#password").val();
-		 $("[name='txt']").val("111");
-		alert(oldPassword);
-		var newPassword=$("#psd").val();
-		
-		if(oldPassword==""){
-			$("#oldPassword_labe").val("请输入旧密码!").css("color","red");
-		}
-		if($("#psd").text()==""){
-			//alert($("#psd").val());
-			$("#psd").css("background-color","#E9E9E4");
-		}
-		 	
-	});
+	validate();
 	
 	
 });
+
+function ajaxUpdateEnterprise()
+{
+		var aj = $.ajax( {    
+		    url:'updateEnterprise',// 跳转到 action    
+		    data:{    
+		           selRollBack : selRollBack,    
+		           selOperatorsCode : selOperatorsCode,    
+		           PROVINCECODE : PROVINCECODE,    
+		           pass2 : pass2  
+		    },    
+		    type:'post',    
+		    cache:false,    
+		    dataType:'json',    
+		    success:function(data) {    
+		        if(data.msg =="true" ){    
+		            alert("修改成功！");    
+		            window.location.reload();    
+		        }else{    
+		            view(data.msg);    
+		        }    
+		     },    
+		     error : function() {  
+		          alert("异常！");    
+		     }    
+	});  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function mousc()
 {
 	
