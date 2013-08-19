@@ -20,7 +20,7 @@ public class EnterpriseEmployees implements Serializable{
 	/*员工姓名 */
 	private String  employeesName;
 	/*员工性别*/
-	private Integer employeesSex;
+	private String employeesSex;
 	/*户口性质  0非农  1 农村*/
 	private Integer householdRegister;
 	/*籍贯*/
@@ -34,9 +34,9 @@ public class EnterpriseEmployees implements Serializable{
 	/*服务费用*/
 	private Double  serviceCost;
 	/*社会保险*/
-	private Integer  socialInsurance;
+	private Double  socialInsurance;
 	/*生育保险*/
-	private Integer  fertilityInsurance;
+	private Double  fertilityInsurance;
 	/*合同编号*/
 	private String  contractNo;
 	/*家庭住址*/
@@ -52,7 +52,7 @@ public class EnterpriseEmployees implements Serializable{
 	/*婚姻状况*/
 	private Integer  maritalStatus;
 	/*文化程度*/
-	private Integer  levelEducation;
+	private String  levelEducation;
 	/*合同期限 开始*/
 	private Date  startContractDeadline;
 	/*合同期限 终止*/
@@ -61,6 +61,16 @@ public class EnterpriseEmployees implements Serializable{
 	private  Integer whetherGinseng;
 	/*参保类型  0.医保   1.  社保 2.  公积金*/
 	private Integer  ginsengProtectType;
+	/*医保*/
+	private Integer  sociaSecurity;
+	/*社保 */
+	private Integer  healthCare;
+	/*公积金*/
+	private Integer  accumulationFund;
+	/*大病统筹*/
+	private Integer  seriousDisease;
+	/*大病统筹基数*/
+	private Double  seriousDiseaseBase;
 	/*参保性质  0新增  1续保*/
 	private Integer ginsengProtectNature;
 	/*参保日期*/
@@ -68,7 +78,7 @@ public class EnterpriseEmployees implements Serializable{
 	/*参保基数 0.默认基数 1.个性设置*/
 	private Integer  base;
 	/*个税缴纳方式  0个人缴纳，  1企业缴纳*/
-	private Integer  paymentWay;
+	private String  paymentWay;
 	/*工伤基数*/
 	private Double  inductrialBase;
 	/*住房公积金基数*/
@@ -97,10 +107,10 @@ public class EnterpriseEmployees implements Serializable{
 		this.employeesName = employeesName;
 	}
 	@Column(length=2)
-	public Integer getEmployeesSex() {
+	public String getEmployeesSex() {
 		return employeesSex;
 	}
-	public void setEmployeesSex(Integer employeesSex) {
+	public void setEmployeesSex(String employeesSex) {
 		this.employeesSex = employeesSex;
 	}
 	@Column(length=2)
@@ -124,7 +134,7 @@ public class EnterpriseEmployees implements Serializable{
 	public void setPhoto(Integer photo) {
 		this.photo = photo;
 	}
-	@Column(length=19,unique=true)
+	@Column(length=20)
 	public String getCardNumber() {
 		return cardNumber;
 	}
@@ -146,18 +156,18 @@ public class EnterpriseEmployees implements Serializable{
 	public void setServiceCost(Double serviceCost) {
 		this.serviceCost = serviceCost;
 	}
-	@Column(length=1)
-	public Integer getSocialInsurance() {
+	@Column(length=80)
+	public Double getSocialInsurance() {
 		return socialInsurance;
 	}
-	public void setSocialInsurance(Integer socialInsurance) {
+	public void setSocialInsurance(Double socialInsurance) {
 		this.socialInsurance = socialInsurance;
 	}
-	@Column(length=1)
-	public Integer getFertilityInsurance() {
+	@Column(length=80)
+	public Double getFertilityInsurance() {
 		return fertilityInsurance;
 	}
-	public void setFertilityInsurance(Integer fertilityInsurance) {
+	public void setFertilityInsurance(Double fertilityInsurance) {
 		this.fertilityInsurance = fertilityInsurance;
 	}
 	@Column(length=20)
@@ -209,11 +219,11 @@ public class EnterpriseEmployees implements Serializable{
 	public void setMaritalStatus(Integer maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
-	@Column(length=20)
-	public Integer getLevelEducation() {
+	@Column(length=30)
+	public String getLevelEducation() {
 		return levelEducation;
 	}
-	public void setLevelEducation(Integer levelEducation) {
+	public void setLevelEducation(String levelEducation) {
 		this.levelEducation = levelEducation;
 	}
 	@Temporal(TemporalType.TIMESTAMP)
@@ -235,14 +245,7 @@ public class EnterpriseEmployees implements Serializable{
 		return ginsengProtectType;
 	}
 	public void setGinsengProtectType(Integer ginsengProtectType) {
-		int protectType=Integer.valueOf(ginsengProtectType);
-		if(protectType==0)
-		{
-			this.ginsengProtectType=0;
-		}else{
-			this.ginsengProtectType = ginsengProtectType;
-		}
-		
+		this.ginsengProtectType = ginsengProtectType;
 	}
 	@Column(length=1)
 	public Integer getGinsengProtectNature() {
@@ -265,11 +268,11 @@ public class EnterpriseEmployees implements Serializable{
 	public void setBase(Integer base) {
 		this.base = base;
 	}
-	@Column(length=1)
-	public Integer getPaymentWay() {
+	@Column(length=10)
+	public String getPaymentWay() {
 		return paymentWay;
 	}
-	public void setPaymentWay(Integer paymentWay) {
+	public void setPaymentWay(String paymentWay) {
 		this.paymentWay = paymentWay;
 	}
 	@Column(length=1)
@@ -300,7 +303,7 @@ public class EnterpriseEmployees implements Serializable{
 	public void setPseudoDelete(Integer pseudoDelete) {
 		this.pseudoDelete = pseudoDelete;
 	}
-	@Column(length=2)
+	@Column(length=10)
 	public Integer getWhetherGinseng() {
 		return whetherGinseng;
 	}
@@ -314,4 +317,44 @@ public class EnterpriseEmployees implements Serializable{
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	@Column(length=1)
+	public Integer getSociaSecurity() {
+		return sociaSecurity;
+	}
+	
+	public void setSociaSecurity(Integer sociaSecurity) {
+		this.sociaSecurity = sociaSecurity;
+	}
+	@Column(length=1)
+	public Integer getHealthCare() {
+		return healthCare;
+	}
+	public void setHealthCare(Integer healthCare) {
+		this.healthCare = healthCare;
+	}
+	@Column(length=1)
+	public Integer getAccumulationFund() {
+		return accumulationFund;
+	}
+	public void setAccumulationFund(Integer accumulationFund) {
+		this.accumulationFund = accumulationFund;
+	}
+	@Column(length=1)
+	public Integer getSeriousDisease() {
+		return seriousDisease;
+	}
+	@Column(length=80)
+	public void setSeriousDisease(Integer seriousDisease) {
+		this.seriousDisease = seriousDisease;
+	}
+	@Column(length=80)
+	public Double getSeriousDiseaseBase() {
+		return seriousDiseaseBase;
+	}
+	public void setSeriousDiseaseBase(Double seriousDiseaseBase) {
+		this.seriousDiseaseBase = seriousDiseaseBase;
+	}
+	
+	
+
 }

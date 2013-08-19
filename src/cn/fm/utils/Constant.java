@@ -22,13 +22,20 @@ public class Constant {
 	
 	public static final String WMS_CITY_HEALTH_CARE="市医保";
 	public static final String WMS_PROVINCIAL_HEALTH_CARE="省医保";
-	
 	public static final String WMS_SEX_MAILE="男";
 	public static final String WMS_SEX_WOMAN="女";
+	public static final String WMS_XIN_ZENG="新增";
+	public static final String WMS_XU_BAO="续保";
+	public static final String WMS_FEI_NONG="非农";
+	public static final String WMS_NONG_YES="农村";
+	public static final String WMS_PHOTO_YES="有";
+	public static final String WMS_BASE_PERSON="个人缴纳";
+	public static final String WMS_BASE_ENTERPRISE="企业缴纳";
 	
 	
 	
-	
+	public static final String WMS_YES="是";
+	public static final String WMS_NO="否";
 	
 	
 }

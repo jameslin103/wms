@@ -40,8 +40,8 @@ public class DateUtil {
 	        if (StringUtil.isEmpty(strDate)) {
 	            return null;
 	        }
-	        DateFormat dateFormat;
-	        dateFormat = new SimpleDateFormat(formatType, Locale.ENGLISH);
+	       
+	        DateFormat dateFormat = new SimpleDateFormat(formatType, Locale.ENGLISH);
 	        dateFormat.setLenient(false);
 	        Date date = null;
 			try {

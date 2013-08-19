@@ -1,5 +1,5 @@
 /**
- * @author james
+ * @author jameslin
  * Excel数据导入数据库
  * @version 1.0
  */
@@ -10,8 +10,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-
+import java.util.Date;
+import java.util.List;
 
 import jxl.Cell;
 import jxl.CellType;
@@ -29,69 +29,109 @@ public class GenerateSqlFromExcel {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public static ArrayList generateStationBugSql(File formFile)
-			throws Exception {
-		InputStream in = null;
-		Workbook wb = null;
-		ArrayList list = new ArrayList();
+	public static List generateStationBugSql(File file,String fileName)throws Exception {
+		
+		InputStream inputStream= null;
+		Workbook workbook= null;
+		List list =new ArrayList();
 		
 		try {
-			if (formFile == null) {
+			if (file == null) 
+			{
 				throw new Exception("文件为空！");
 			}
 
-			in = new FileInputStream(formFile);
-			
-			wb = Workbook.getWorkbook(in);
-			
-			Sheet sheet[] = wb.getSheets();
-			if (sheet != null) {
-				for (int i = 0; i < sheet.length; i++) {
-					if (!sheet[i].getName().equalsIgnoreCase("User")) {						
-						throw new Exception("指定文件中不包含名称为User的sheet,请重新指定！");
+			inputStream= new FileInputStream(file);
+			workbook= Workbook.getWorkbook(inputStream);
+			Sheet sheet[] = workbook.getSheets();
+			if (sheet != null) 
+			{
+				for (int i = 0; i < sheet.length; i++)
+				{
+					if (!sheet[i].getName().equalsIgnoreCase(fileName))
+					{						
+						throw new Exception("指定文件中不包含名称为"+fileName+"格式文件名,请重新指定！");
 					}
-					for (int j = 1; j < sheet[i].getRows(); j++) {
-						String[] valStr = new String[8];
-						for (int k = 0; k < sheet[i].getColumns(); k++) {
-							Cell cell = sheet[i].getCell(k, j);
-							String content = "";
-							if (cell.getType() == CellType.DATE) {
-								DateCell dateCell = (DateCell) cell;
-								java.util.Date importdate = dateCell.getDate();/**如果excel是日期格式的话需要减去8小时*/
-								long eighthour = 8*60*60*1000;
-								SimpleDateFormat simpledate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-								/**在当前日期上减8小时*/
-								long time = importdate.getTime()-eighthour; 
-								java.util.Date date = new java.util.Date();
-								date.setTime(time);
-								content = simpledate.format(date); 
-							} else {
-								String tempcontent = (cell.getContents() == null ? ""
-										: cell.getContents());
-								content = tempcontent.trim().replace('\'', ' ');
-							}
-							valStr[k] = content;
-							
-						} 
-						list.add(j-1,valStr);
-					}
+					list=createSheet(sheet,i);
 				}
 			}
-			
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (wb != null) {
-				wb.close();
-			}
-			if (in != null) {
-				try {
-					in.close();
-				} catch (Exception e) {
-					e.printStackTrace();
+			closeDataFlow(workbook,inputStream);
+		}
+	}
+	/**
+	 * 创建单元格
+	 * @param sheet
+	 * @param i
+	 * @param list
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static List  createSheet(Sheet sheet[],int i)
+	{
+		List list=new ArrayList();
+		for (int j =2; j < sheet[i].getRows(); j++)
+		{
+			String[] valStr = new String[31];
+			for (int k = 0; k < sheet[i].getColumns(); k++) 
+			{
+				Cell cell = sheet[i].getCell(k, j);
+				String content = "";
+				if (cell.getType() == CellType.DATE) {
+					content=excelToDealWithDate(cell);
+				} else {
+					String tempcontent = (cell.getContents() == null ? "": cell.getContents());
+					content = tempcontent.trim().replace('\'', ' ');
 				}
+				valStr[k] = content;
+				
+			} 
+			list.add(j-2,valStr);
+		}
+		return list;
+	}
+	/**
+	 * excel日期格式转换
+	 * @param cell
+	 * @param content
+	 * @return
+	 */
+	public static String excelToDealWithDate(Cell cell)
+	{
+			String content="";
+			DateCell dateCell = (DateCell) cell;
+			java.util.Date importdate = dateCell.getDate();/**如果excel是日期格式的话需要减去8小时*/
+			long eighthour = 8*60*60*1000;
+			SimpleDateFormat simpledate = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME); 
+			/**在当前日期上减8小时*/
+			long time = importdate.getTime()-eighthour; 
+			Date date = new Date();
+			date.setTime(time);
+			content = simpledate.format(date); 
+			
+			return content;
+	}
+	
+	/**
+	 * 关闭数据流
+	 */
+	public static void closeDataFlow(Workbook workbook,InputStream inputStream)
+	{
+		if (workbook!= null) 
+		{
+			workbook.close();
+		}
+		if (inputStream!= null)
+		{
+			try 
+			{
+				inputStream.close();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}

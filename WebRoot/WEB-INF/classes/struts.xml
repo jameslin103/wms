@@ -10,7 +10,7 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="false"></constant>
 	<constant name="struts.multipart.parser" value="jakarta"></constant>
 	<constant name="struts.multipart.maxSize" value="10701096" />
-	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.devMode" value="false"/>
 	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
 	<constant name="struts.locale" value="zh_CN"></constant>  
 	<constant name="struts.configuration.xm.reload" value="true"/>
@@ -20,6 +20,7 @@
 	<constant name="struts.multipart.parser" value="jakarta"/>
 	<!--该属性指定Struts2文件上传中整个请求内容允许的最大字节数-->
 	<constant name="struts.multipart.maxSize" value="2097152"/>
+	
 	
 		
     
@@ -53,10 +54,7 @@
             	 <param name="actionName">userLogin</param> 
             </result>
         </action>  
-         <action name="addEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="addEnterpriseEmployees">
-            <result name="success" type="redirect">/company/employee-list.jsp</result>
-            <result name="input">/company/employee-list.jsp</result>
-        </action>  
+      
         <action name="addInsurancesTax" class="cn.fm.web.action.company.InsurancesTaxAction" method="addInsurancesTax">
             <result name="success">/admin/tax.jsp</result>
             <result name="input">/admin/tax.jsp</result>
@@ -68,10 +66,32 @@
          <action name="addEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="addEnterprise">
             <result name="success" type="redirect">admin/company-list.jsp</result>
             <result name="input" type="redirect">admin/company-list.jsp</result>
+        </action>       
+        <!-- excel Import Date -->
+        <action name="addImportExcelEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="addImportExcelEmployees">
+            <result name="input">company/employee-step1-of-create.jsp</result>
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterpriseEmployees</param>
+            </result>
         </action> 
-         <action name="viewEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterprise">
+         <action name="addEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="addEnterpriseEmployees">
+            <result name="success" type="redirect">/company/employee-list.jsp</result>
+            <result name="input">/company/employee-list.jsp</result>
+        </action>  
+         <action name="viewEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewEnterpriseEmployees">
+            <result name="success">/company/employee-list.jsp</result>
+        </action>  
+        
+        
+        
+        
+        
+        <action name="viewEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterprise">
             <result name="success">admin/company-list.jsp</result>
         </action> 
+        
+        
+        
         
         
         <action name="userInfo" class="cn.fm.web.action.company.UserAction" method="userInfo">  

@@ -1,9 +1,13 @@
 package cn.fm.web.action.company;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+
+import com.opensymphony.xwork2.Preparable;
 
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.service.company.EnterpriseEmployeesService;
@@ -13,7 +17,7 @@ import cn.fm.web.action.BaseAction;
 
 
 @SuppressWarnings("serial")
-public class EnterpriseEmployeesAction extends BaseAction {
+public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	@Resource 
 	private EnterpriseEmployeesService enterpriseEmployeesService;
@@ -22,8 +26,57 @@ public class EnterpriseEmployeesAction extends BaseAction {
 	private String    endContractDeadline;
 	private String    startContractDeadline;
 	private String    cinsengDate;  //参保日期
+	private File      file;
+	
 
 
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public void prepare() throws Exception {
+		
+		
+	}
+	public String  addEnterpriseEmployees()
+	{
+		
+		if(enterpriseEmployees==null || enterpriseEmployees.getEmployeesName()==null || enterpriseEmployees.getEmployeesName().equals(""))return INPUT;
+			enterpriseEmployeesService.save(enterpriseEmployees);
+		
+		
+		return SUCCESS;
+	}
+	
+	public String addImportExcelEmployees()
+	{
+		
+		enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表");
+		return SUCCESS;
+	}
+	public String viewEnterpriseEmployees(){
+		List<EnterpriseEmployees>  listEmployees=enterpriseEmployeesService.getAllEnterpriseEmployees();
+		System.out.println(listEmployees.size());
+		if(listEmployees.size()==0){
+			listEmployees=new ArrayList<EnterpriseEmployees>();
+		}
+		request.setAttribute("employees", listEmployees);
+		return SUCCESS;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	public void ConversionTypeFiled()
@@ -51,16 +104,6 @@ public class EnterpriseEmployeesAction extends BaseAction {
 		}
 	}
 
-	public String  addEnterpriseEmployees()
-	{
-
-		if(enterpriseEmployees.getEmployeesName()==null || enterpriseEmployees.getEmployeesName().equals(""))return INPUT;
-			enterpriseEmployeesService.save(enterpriseEmployees);
-		return SUCCESS;
-	}
-	
-	
-	
 	public void vialteFile(){
 		if(StringUtil.isEmpty(enterpriseEmployees.getEmployeesName())){
 			this.addFieldError(enterpriseEmployees.getEmployeesName(), "姓名必填*");
@@ -122,5 +165,8 @@ public class EnterpriseEmployeesAction extends BaseAction {
 	public void setCinsengDate(String cinsengDate) {
 		this.cinsengDate = cinsengDate;
 	}
+
+	
+	
 
 }

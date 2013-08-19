@@ -48,7 +48,8 @@ public class EnterpriseAction extends BaseAction {
 	public String  viewEnterprise()
 	{
 		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise();
-		System.out.println(enterpriseList.size());
+		if(enterpriseList.size()==0)
+			return SUCCESS;
 		request.setAttribute("enterpriseList", enterpriseList);
 		return SUCCESS;
 	}

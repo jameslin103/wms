@@ -16,22 +16,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 
 	<div id="container">
-  		 <jsp:include page="../dashboard.jsp"></jsp:include>
-    </div>
-
-		<div id="main"> 
+			<div id="header">
+  			 <jsp:include page="../dashboard.jsp"></jsp:include>
+   		 </div>
+	<div id="main"> 
       <div class="row-fluid">
         <div id="center-pane">
           <ul class="nav nav-tabs">
-            <li><a href="employee-list.html">员工</a></li>
-            <li><a href="salary-with-month.html">工资</a></li>
+            <li><a href="company/index.jsp">综合</a></li>
+            <li class="active"><a href="company/employee-list.jsp">员工档案</a></li>
+            <li><a href="company/salary-with-month.jsp">工资预算表</a></li>
+            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
           </ul>
-
           <div class="span4">
             <h3>批量上传新员工信息</h3>
               <div class="row-fluid">
-
-
                 <div class="alert alert-info">
                   <ol>
                     <li>
@@ -39,12 +38,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </li>
                     <li>
                       上传新增员工表
-                      <form  action="employee-step2-of-create.jsp" class="form-search">
-                        <input type="file"><br>
-                        <button type="submit" class="btn btn-primary">上传</button>
-                      </form>
+                      <s:form  action="addImportExcelEmployees" cssClass="form-search" method="post" enctype="multipart/form-data">
+                        <s:file name="file"/><br>
+                        <s:submit  cssClass="btn btn-primary" value="上传"/>
+                      </s:form>
                     </li>
                   </ol>
+                  <p class="red">备注：上传时，检查身份证号，如果重复载入，给予提醒！</p>
                 </div>
               </div>
           </div>
