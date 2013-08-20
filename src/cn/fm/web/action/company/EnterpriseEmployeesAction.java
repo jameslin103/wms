@@ -27,7 +27,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private String    startContractDeadline;
 	private String    cinsengDate;  //参保日期
 	private File      file;
-	
+	private Integer   employeesId;
 
 
 	public File getFile() {
@@ -36,6 +36,15 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 
 	public void setFile(File file) {
 		this.file = file;
+	}
+	
+
+	public Integer getEmployeesId() {
+		return employeesId;
+	}
+
+	public void setEmployeesId(Integer employeesId) {
+		this.employeesId = employeesId;
 	}
 
 	public void prepare() throws Exception {
@@ -60,7 +69,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	}
 	public String viewEnterpriseEmployees(){
 		List<EnterpriseEmployees>  listEmployees=enterpriseEmployeesService.getAllEnterpriseEmployees();
-		System.out.println(listEmployees.size());
 		if(listEmployees.size()==0){
 			listEmployees=new ArrayList<EnterpriseEmployees>();
 		}
@@ -68,17 +76,32 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		return SUCCESS;
 	}
 	
+	public String selectEnterpriseEmployeesWage()
+	{
+		EnterpriseEmployees employees=getAccordingToIdEmployees();
+		request.setAttribute("employees", employees);
+		return SUCCESS;
+	}
 	
+	public String viewEmployeeContract()
+	{
+		EnterpriseEmployees employees=getAccordingToIdEmployees();
+		request.setAttribute("employees", employees);
+		return SUCCESS;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	public EnterpriseEmployees getAccordingToIdEmployees(){
 
+		if(employeesId==null || employeesId==0)return null;
+		EnterpriseEmployees employees=enterpriseEmployeesService.getEnterpriseEmployees(employeesId);
+		if(employees==null)
+			employees=new EnterpriseEmployees();
+		
+		return employees;
+	}
+	
+	
+	
 	public void ConversionTypeFiled()
 	{
 		if(!StringUtil.isEmpty(this.startContractDeadline)){

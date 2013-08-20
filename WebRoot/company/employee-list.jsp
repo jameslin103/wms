@@ -23,11 +23,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row-fluid">
         <div id="center-pane">
           <ul class="nav nav-tabs">
-            <li><a href="index.html">综合</a></li>
-            <li class="active"><a href="employee-list.html">员工档案</a></li>
-            <li><a href="salary-with-month.html">工资预算表</a></li>
-            <li><a href="insurance-with-month.html">增减员与参保明细</a></li>
-            <li><a href="balance-detail.html">资金往来</a></li>            
+            <li><a href="company/index.jsp">综合</a></li>
+            <li class="active"><a href="company/employee-list.jsp">员工档案</a></li>
+            <li><a href="company/salary-with-month.jsp">工资预算表</a></li>
+            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
+            <li><a href="company/balance-detail.jsp">资金往来</a></li>            
           </ul>
           
           <ul class="normal action-container clearfix">
@@ -74,70 +74,59 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </tr>
 
             </thead>
-            <s:iterator value="#request.employees" var="employees">
+            <s:iterator value="#request.employees" var="emp">
             <tbody>
               <tr>
-                <td><s:property value="%{#employees.employeesId}"/></td>
-                <td><a href="company/employee-personal-info.jsp">
-               			 <s:property value="%{#employees.employeesName}"/>
+                <td><s:property value="%{#emp.employeesId}"/></td>  
+                <td>
+                	<s:hidden value="%{#emp.employeesId}" name="employeesId"/>
+                	<s:property value='<s:hidden value="{#emp.employeesId}"/>' />
+                    <a href="selectEnterpriseEmployeesWage?employeesId=<s:property value="%{#emp.employeesId}"/> ">
+               		 <s:property value="%{#emp.employeesName}"/> 
                		 </a>
                 </td>
                 <td>
-                	<s:if test="%{#employees.employeesSex}==0" >
-                		<s:property value="男"/>
-                	</s:if>
-                	<s:if test="%{#employees.employeesSex}==1" >
-                		<s:property value="女"/>
-                	</s:if>
+                	<s:property value="%{#emp.employeesSex}"/>
                 </td>
                 <td>
-                	<s:if test="employees.householdRegister=='0'" >
-                		<s:property value="非农"/>
+                	<s:if test="%{#emp.householdRegister==0}" >
+                		<span>非农</span>
                 	</s:if>
-                	<s:if test="%{#employees.householdRegister}=='1'" >
-                			<s:property value="农村"/>
-                		<s:property value="女"/>
-                	</s:if>
-                </td>
-                <td> 
-                	<s:property value="%{#employees.maritalStatus}"/>
-                	<s:set name="marital" value="%{#employees.maritalStatus}" />   
-                	<s:if test="#marital=='0'">
-                		<s:property value="已婚"/>
-                	</s:if>
-                	<s:else>
-                		<s:property value="未婚"/>
-                	</s:else>
-                </td>
-                <td>
-                	<s:if test="%{#employees.photo}==1">
-                		<s:property value="有"/>
-                	</s:if>
-                	<s:else>
-                		<s:property value="否"/>
-                	</s:else>
-                </td>
-                <td>
-               		 <s:property value="%{#employees.cardNumber}"/>
-                </td>
-                <td>
-                   <s:property value="%{#employees.phone}"/>
+                	<s:if test="%{#emp.householdRegister==1}" >
+                		<span>农村</span>
+             		</s:if>
                  </td>
-                <td><s:property value="%{#employees.serviceCost}"/></td>
-                
-                <td><s:property value="%{#employees.whetherGinseng}"/></td>
-                
-                <td>
-                	<s:if test="%{#employees.ginsengProtectNature}==1">
-                		<s:property value="新增"/>
+                <td> 
+                	<s:if test="%{#emp.maritalStatus==0}">
+                		<span>已婚</span>
                 	</s:if>
                 	<s:else>
-                		<s:property value="续保"/>
+                		<span>未婚</span>
                 	</s:else>
                 </td>
-                <td><s:property value="%{#employees.cinsengDate}"/></td>
+                <td>
+                	<s:if test="%{#emp.photo==1}">
+                		<span>有</span>
+                	</s:if>
+                	<s:else>
+                		<span>否</span>
+                	</s:else>
+                </td>
+                <td>
+               		 <s:property value="%{#emp.cardNumber}"/>
+                </td>
+                <td>
+                   <s:property value="%{#emp.phone}"/>
+                 </td>
+                <td><s:property value="%{#emp.serviceCost}"/></td>
+                
+                <td><s:property value="%{#emp.whetherGinseng}"/></td>
+                <td>
+                	<s:property value="%{#emp.ginsengProtectNature}"/>
+                </td>
+                <td><s:property value="%{#emp.cinsengDate}"/></td>
                 <td>默认</td>
-                <td><s:property value="%{#employees.paymentWay}"/></td>
+                <td><s:property value="%{#emp.paymentWay}"/></td>
                 <td>
                   <a href="#info-for-check" data-toggle="modal">修改</a>
                 </td>
@@ -282,7 +271,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
           <div class="input-container">
             <label>参保类型</label>
-            <s:checkboxlist list="#{'1':'医保', '2':'社保', '3':'公积金'}" name="enterpriseEmployees.ginsengProtectType"  labelposition="left" key="0"/>
+             <input type="checkbox" name="enterpriseEmployees.sociaSecurity" value="0"/>医保
+             <input type="checkbox" name="enterpriseEmployees.healthCare" value="0"/>社保
+             <input type="checkbox" name="enterpriseEmployees.accumulationFund" value="0"/>公积金
           </div>
 
           <div class="input-container">

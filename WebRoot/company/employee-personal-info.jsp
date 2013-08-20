@@ -19,196 +19,168 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div id="header">
   			 <jsp:include page="../dashboard.jsp"></jsp:include>
    		 </div>
-	<div id="main"> 
+		<div id="main"> 
       <div class="row-fluid">
+
         <div id="center-pane">
           <ul class="nav nav-tabs">
-            <li><a href="index.html">综合</a></li>
-            <li class="active"><a href="employee-list.html">员工档案</a></li>
-            <li><a href="salary-with-month.html">工资预算表</a></li>
-            <li><a href="insurance-with-month.html">增减员与参保明细</a></li>
+            <li><a href="company/index.jsp">综合</a></li>
+            <li class="active"><a href="company/employee-list.jsp">员工档案</a></li>
+            <li><a href="company/salary-with-month.jsp">工资预算表</a></li>
+            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
           </ul>
           
           <ul class="normal action-container clearfix">
-            <li>员工：张三</li>
+            <li>员工：<s:property value="%{#request.employees.employeesName}"/></li>
             <li>&nbsp;/&nbsp;</li>
             <li>查看各类明细：</li>
-            <li><a href="#employee-personal-salary.html">工资</a>，</li>
-            <li><a href="employee-personal-contract.html">合同</a>，</li>
-            <li><a href="employee-personal-info.html">基本信息</a>，</li>
+            <li><a href="company/employee-personal-salary.jsp">工资</a>，</li>
+            <li>
+            	<a href="viewEmployeeContract?employeesId=<s:property value="%{#request.employees.employeesId}"/>">合同</a>，
+            </li>
+            <li><a href="selectEnterpriseEmployeesWage?employeesId=<s:property value="%{#request.employees.employeesId}"/>">基本信息</a>，</li>
             <li>&nbsp;/&nbsp;</li>
             <li>操作：</li>
             <li><a href="#info-for-check" data-toggle="modal">修改</a></li>
           </ul>
           
-          <h3>2013年2月</h3>
+          <h3>基本信息</h3>
 
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th rowspan="2">工资</th>
-                <th rowspan="2">奖金</th>
-                <th rowspan="2">补贴</th>
-                <th rowspan="2">应发工资</th>
-                <th rowspan="2">社会保险基数</th>
-                <th colspan="2">养老保险</th>
-                <th colspan="2">失业保险</th>
-                <th rowspan="2">生育保险基数</th>
-                <th rowspan="2">生育（企业）</th>
-                <th rowspan="2">工伤基数</th>
-                <th rowspan="2">工伤（企业）</th>
-                <th colspan="3">基本医疗保险</th>
-                <th colspan="3">住房公积金</th>
-                <th rowspan="2">疾病统计</th>
-                <th colspan="2">小计</th>
-                <th rowspan="2">税前工资</th>
-                <th colspan="2">个税</th>
-                <th rowspan="2">服务费</th>
-                <th rowspan="2">合计（企业应付）</th>
-                <th rowspan="2">到卡金额</th>
+                <th>合同编号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>户口</th>
+                <th>婚姻</th>
+                <th>照片</th>
+                <th>身份证</th>
+                <th>电话</th>
+                <th>行业</th>
+                <th>岗位</th>
+                <th>服务费<br>（元）</th>
               </tr>
+            </thead>
+            <tbody>
               <tr>
-                <td>企业</td>
-                <td>个人</td>
-                <td>企业</td>
-                <td>个人</td>
-                <td>缴费基数</td>
-                <td>企业</td>
-                <td>个人</td>
-                <td>缴费基数</td>
-                <td>企业</td>
-                <td>个人</td>
-                <td>企业</td>
-                <td>个人</td>
-                <td>企业</td>
-                <td>个人</td>
+                <td><s:property value="#request.employees.contractNo"/></td>
+                <td><s:property value="#request.employees.employeesName"/></td>
+                <td><s:property value="#request.employees.employeesSex"/></td>
+                
+                <td>
+                	<s:if test="#request.employees.householdRegister=='0'">
+                		<span>非农</span>
+                	</s:if>
+                	<s:else>
+                		<span>农村</span>
+                	</s:else>
+                </td>
+                <td>
+                	<s:if test="#request.employees.maritalStatus=='0'">
+                		<span>已婚</span>
+                	</s:if>
+                	<s:else>
+                		<span>未婚</span>
+                	</s:else>
+                </td>
+                <td>
+                	<s:if test="#request.employees.photo=='1'">
+                		<span>有</span>
+                	</s:if>
+                	<s:else>
+                		<span>否</span>
+                	</s:else>
+                </td>
+                <td>
+                	<s:property value="%{#request.employees.cardNumber}"/>
+                </td>
+                <td>
+                	<s:property value="#request.employees.phone"/>
+                </td>
+                <td>
+                	<s:property value="#request.employees.industry"/>
+                </td>
+                <td>
+                	<s:property value="%{#request.employees.jobs}"/>
+                </td>
+                <td>
+                	<s:property value="#request.employees.serviceCost"/>
+                </td>
               </tr>
-            </thead>  
-            <thbody >
-              <tr>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>                
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-              </tr>
-            </thbody>
+            </tbody>
           </table>
           
-          <h3>2013年1月</h3>
+          <h3>五险一金</h3>
 
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th rowspan="2">工资</th>
-                <th rowspan="2">奖金</th>
-                <th rowspan="2">补贴</th>
-                <th rowspan="2">应发工资</th>
-                <th rowspan="2">社会保险基数</th>
-                <th colspan="2">养老保险</th>
-                <th colspan="2">失业保险</th>
-                <th rowspan="2">生育保险基数</th>
-                <th rowspan="2">生育（企业）</th>
-                <th rowspan="2">工伤基数</th>
-                <th rowspan="2">工伤（企业）</th>
-                <th colspan="3">基本医疗保险</th>
-                <th colspan="3">住房公积金</th>
-                <th rowspan="2">疾病统计</th>
-                <th colspan="2">小计</th>
-                <th rowspan="2">税前工资</th>
-                <th colspan="2">个税</th>
-                <th rowspan="2">服务费</th>
-                <th rowspan="2">合计（企业应付）</th>
-                <th rowspan="2">到卡金额</th>
+                <th colspan="2" width="">参保</th>
+                <th rowspan="2" width="">哪月起<br>参保</th>
+                <th rowspan="2" width="">基数设置</th>
+                <th colspan="6" class="center">基数（元）（未填写表示没有参保）</th>
+                <th rowspan="2" width="">个税缴纳</th>
               </tr>
               <tr>
-                <td>企业</td>
-                <td>个人</td>
-                <td>企业</td>
-                <td>个人</td>
-                <td>缴费基数</td>
-                <td>企业</td>
-                <td>个人</td>
-                <td>缴费基数</td>
-                <td>企业</td>
-                <td>个人</td>
-                <td>企业</td>
-                <td>个人</td>
-                <td>企业</td>
-                <td>个人</td>
+                <th>是否</th>
+                <th>性质</th>
+                <th>社会<br>保险</th>
+                <th>生育<br>保险</th>
+                <th>工伤</th>
+                <th>基本<br>医疗保险</th>
+                <th>住房<br>公积金</th>
+                <th>大病<br>统筹</th>
               </tr>
-            </thead>  
-            <thbody >
+
+            </thead>
+            <tbody>
               <tr>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>                
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
+                <td>
+                <s:if test="%{#request.employees.whetherGinseng}=='1'">
+                	<span>是</span>
+                </s:if>
+                <s:else>
+                	<span>否</span>
+                </s:else>
+              </td>
+                <td><s:property value="%{#request.employees.ginsengProtectNature}"/></td>
+                <td><s:property value="%{#request.employees.cinsengDate}"/></td>
+                <td>
+                	<s:if test="%{#request.employees.base}=='0'">
+                		<span>默认</span>
+                	</s:if>
+                	<s:else>
+                		<span>个性设置</span>
+                	</s:else>
+                </td>
+                <td><s:property value="%{#request.employees.socialInsurance}"/></td>
+                <td><s:property value="%{#request.employees.fertilityInsurance}"/></td>
+                <td><s:property value="%{#request.employees.inductrialBase}"/></td>
+                <td><s:property value="%{#request.employees.basicMedical}"/></td>
+                <td><s:property value="%{#request.employees.housingFund}"/></td>
+                <td><s:property value="%{#request.employees.seriousDiseaseBase}"/></td>
+                <td><s:property value="%{#request.employees.paymentWay}"/></td>
               </tr>
-            </thbody>
+            </tbody>
           </table>
-          
-          <div class="pagination">
-            <ul>
-              <li><a href="#">&laquo;</a></li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">6</a></li>
-              <li><a href="#">7</a></li>
-              <li><a href="#">8</a></li>
-              <li><a href="#">&raquo;</a></li>
-            </ul>
-          </div>
+
+          <h3>银行卡</h3>
+
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>开户行</th>
+                <th>卡号</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><s:property value="%{#request.employees.bank}"/></td>	
+                <td><s:property value="%{#request.employees.bankCardNumber}"/></td>
+              </tr>
+            </tbody>
+          </table>
 
         </div>
 
@@ -219,7 +191,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </div>
 	<!-- Modal -->
-  <div id="info-for-check" class="modal hide fade modal-of-info-for-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div id="info-for-check" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3 id="myModalLabel">员工信息</h3>
@@ -453,6 +425,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
   </div>
+
+  <script type="text/javascript" src="../js/jquery.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 </body>
 
 </html>

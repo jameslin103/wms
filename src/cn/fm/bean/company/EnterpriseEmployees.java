@@ -72,7 +72,7 @@ public class EnterpriseEmployees implements Serializable{
 	/*大病统筹基数*/
 	private Double  seriousDiseaseBase;
 	/*参保性质  0新增  1续保*/
-	private Integer ginsengProtectNature;
+	private String ginsengProtectNature;
 	/*参保日期*/
 	private Date  cinsengDate;
 	/*参保基数 0.默认基数 1.个性设置*/
@@ -247,11 +247,11 @@ public class EnterpriseEmployees implements Serializable{
 	public void setGinsengProtectType(Integer ginsengProtectType) {
 		this.ginsengProtectType = ginsengProtectType;
 	}
-	@Column(length=1)
-	public Integer getGinsengProtectNature() {
+	@Column(length=5)
+	public String getGinsengProtectNature() {
 		return ginsengProtectNature;
 	}
-	public void setGinsengProtectNature(Integer ginsengProtectNature) {
+	public void setGinsengProtectNature(String ginsengProtectNature) {
 		this.ginsengProtectNature = ginsengProtectNature;
 	}
 	@Temporal(TemporalType.DATE)

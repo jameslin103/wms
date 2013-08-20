@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="center-pane">
           <ul class="nav nav-tabs">
             <li>
-              <a href="company/employee-list.jsp">员工</a>
+              <a href="viewEnterpriseEmployees">员工</a>
             </li>
             <li class="active">
               <a href="company/salary-with-month.jsp">工资</a>

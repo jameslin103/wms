@@ -24,19 +24,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         <div id="center-pane">
           <ul class="nav nav-tabs">
-            <li><a href="index.html">综合</a></li>
-            <li class="active"><a href="employee-list.html">员工档案</a></li>
-            <li><a href="salary-with-month.html">工资预算表</a></li>
-            <li><a href="insurance-with-month.html">增减员与参保明细</a></li>
+            <li><a href="company/index.jsp">综合</a></li>
+            <li class="active"><a href="company/employee-list.jsp">员工档案</a></li>
+            <li><a href="company/salary-with-month.jsp">工资预算表</a></li>
+            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
           </ul>
           
           <ul class="normal action-container clearfix">
-            <li>员工：张三</li>
+            <li>员工：<s:property value="#request.employees.employeesName"/></li>
             <li>&nbsp;/&nbsp;</li>
             <li>查看各类明细：</li>
-            <li><a href="employee-personal-salary.html">工资</a>，</li>
-            <li><a href="employee-personal-contract.html">合同</a>，</li>
-            <li><a href="employee-personal-info.html">基本信息</a>，</li>
+            <li><a href="company/employee-personal-salary.jsp">工资</a>，</li>
+            <li><a href="viewEmployeeContract?employeesId=<s:property value="%{#request.employees.employeesId}"/>">合同</a>，</li>
+            <li><a href="selectEnterpriseEmployeesWage?employeesId=<s:property value="%{#request.employees.employeesId}"/>">基本信息</a>，</li>
             <li>&nbsp;/&nbsp;</li>
             <li>操作：</li>
             <li><a href="#info-for-check" data-toggle="modal">修改</a></li>
@@ -56,10 +56,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </thead>
             <tbody>
               <tr>
-                <td>1</td>
-                <td>20110203</td>
-                <td>20130201</td>
-                <td>20120101</td>
+                <td><s:property value="#request.employees.employeesId"/></td>
+                <td><s:property value="#request.employees.startContractDeadline"/></td>
+                <td><s:property value="#request.employees.endContractDeadline"/></td>
+                <td>2012-01-01</td>
                 <td></td>
               </tr>
               <tr>

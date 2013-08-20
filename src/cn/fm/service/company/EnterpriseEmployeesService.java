@@ -1,6 +1,7 @@
 package cn.fm.service.company;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 
 import cn.fm.bean.company.EnterpriseEmployees;
@@ -23,4 +24,8 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @return list
 	 */
 	public List<EnterpriseEmployees> getAllEnterpriseEmployees();
+	
+	public List<EnterpriseEmployees> getEnterpriseEmployeesSalaryDetail(Serializable entityId);
+	
+	public EnterpriseEmployees getEnterpriseEmployees(Integer entityId);
 }

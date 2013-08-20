@@ -1,6 +1,7 @@
 package cn.fm.service.company.impl;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				employees.setEmployeesSex(data[4].toString());
 				employees.setNativePlace(data[5].toString());
 				employees.setHomeAddress(data[6].toString());
-				employees.setMaritalStatus(data[7].toString()==null?null:data[7].equals(Constant.WMS_YES)?0:1);
+				employees.setMaritalStatus(data[7].toString()==null?null:data[7].equals(Constant.WMS_YES)?1:0);
 				employees.setLevelEducation(data[8].toString());
 				employees.setPhoto(data[9].toString()==null?null:data[9].equals(Constant.WMS_PHOTO_YES)?1:0);
 				employees.setCardNumber(data[10].toString());
@@ -64,7 +65,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				employees.setStartContractDeadline(data[14].toString()==null?null:DateUtil.StringToDate(data[14], DateUtil.FORMAT_DATE));
 				employees.setEndContractDeadline(data[15].toString()==null?null:DateUtil.StringToDate(data[15], DateUtil.FORMAT_DATE));
 				employees.setServiceCost(data[16].toString().equals("")?null:Double.valueOf(data[16]));
-				employees.setGinsengProtectNature(data[17].toString()==null?null:data[17].equals(Constant.WMS_XIN_ZENG)?1:0);
+				employees.setGinsengProtectNature(data[17].toString());
 				employees.setCinsengDate(data[18].toString()==null?null:DateUtil.StringToDate(data[18], DateUtil.FORMAT_DATE));
 				employees.setSociaSecurity(data[19].toString()==null?null:data[19].equals(Constant.WMS_YES)?1:0);
 				employees.setHealthCare(data[20].toString()==null?null:data[20].equals(Constant.WMS_YES)?1:0);
@@ -86,6 +87,16 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			e.printStackTrace();
 		}
 		
+	}
+
+	public List<EnterpriseEmployees> getEnterpriseEmployeesSalaryDetail(
+			Serializable entityId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public EnterpriseEmployees getEnterpriseEmployees(Integer entityId) {
+		return super.find(entityId);
 	}
 
 }

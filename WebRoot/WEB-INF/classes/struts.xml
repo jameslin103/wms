@@ -82,6 +82,15 @@
             <result name="success">/company/employee-list.jsp</result>
         </action>  
         
+         <action name="selectEnterpriseEmployeesWage" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="selectEnterpriseEmployeesWage">
+            <result name="success">company/employee-personal-info.jsp</result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewEnterpriseEmployees</param>
+            </result>
+        </action>  
+         <action name="viewEmployeeContract" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewEmployeeContract">
+            <result name="success">company/employee-personal-contract.jsp</result>
+        </action>
         
         
         
