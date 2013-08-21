@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 @SuppressWarnings("serial")
@@ -90,7 +92,7 @@ public class InsurancesBaseSettings implements Serializable{
 	public void setPovertyStricken(BigDecimal povertyStricken) {
 		this.povertyStricken = povertyStricken;
 	}
-	@Column(length=20)
+	@Temporal(TemporalType.DATE)
 	public Date getStartDate() {
 		return startDate;
 	}

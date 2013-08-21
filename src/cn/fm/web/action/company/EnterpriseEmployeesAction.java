@@ -28,7 +28,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private String    cinsengDate;  //参保日期
 	private File      file;
 	private Integer   employeesId;
-
+	private Integer   insurance;
+	private Integer   all;
 
 	public File getFile() {
 		return file;
@@ -45,6 +46,24 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 
 	public void setEmployeesId(Integer employeesId) {
 		this.employeesId = employeesId;
+	}
+	
+	
+	public Integer getInsurance() {
+		return insurance;
+	}
+
+	public void setInsurance(Integer insurance) {
+		this.insurance = insurance;
+	}
+	
+
+	public Integer getAll() {
+		return all;
+	}
+
+	public void setAll(Integer all) {
+		this.all = all;
 	}
 
 	public void prepare() throws Exception {
@@ -90,6 +109,26 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		return SUCCESS;
 	}
 	
+	
+	public String fildInsuranceEnterpriseEmployees()
+	{
+		
+		List<EnterpriseEmployees> listEmployees=enterpriseEmployeesService.findInsuranceEnterpriseEmployees(insurance);
+		if(listEmployees.size()==0)
+			listEmployees=new ArrayList<EnterpriseEmployees>();
+		request.setAttribute("employees", listEmployees);
+		return SUCCESS;
+	}
+	
+	public String fildAllEnterpriseEmployees()
+	{
+		
+		
+		return SUCCESS;
+	}
+	
+	
+	
 	public EnterpriseEmployees getAccordingToIdEmployees(){
 
 		if(employeesId==null || employeesId==0)return null;
@@ -100,7 +139,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		return employees;
 	}
 	
-	
+
 	
 	public void ConversionTypeFiled()
 	{
@@ -127,6 +166,12 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		}
 	}
 
+	
+	
+	
+	
+	
+	
 	public void vialteFile(){
 		if(StringUtil.isEmpty(enterpriseEmployees.getEmployeesName())){
 			this.addFieldError(enterpriseEmployees.getEmployeesName(), "姓名必填*");

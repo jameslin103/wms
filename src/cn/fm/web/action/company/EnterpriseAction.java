@@ -1,5 +1,6 @@
 package cn.fm.web.action.company;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -32,7 +33,7 @@ public class EnterpriseAction extends BaseAction {
 
 
 
-
+	
 
 
 	public String  addEnterprise()
@@ -49,10 +50,17 @@ public class EnterpriseAction extends BaseAction {
 	{
 		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise();
 		if(enterpriseList.size()==0)
-			return SUCCESS;
+			enterpriseList=new ArrayList<Enterprise>();
 		request.setAttribute("enterpriseList", enterpriseList);
 		return SUCCESS;
 	}
 	
-
+	public String toBeResponsibleEnterprise()
+	{
+		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise();
+		if(enterpriseList.size()==0)
+			enterpriseList=new ArrayList<Enterprise>();
+		request.setAttribute("enterpriseList", enterpriseList);
+		return SUCCESS;
+	}
 }

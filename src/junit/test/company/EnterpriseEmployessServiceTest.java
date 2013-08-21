@@ -1,12 +1,8 @@
 package junit.test.company;
 
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +29,8 @@ public class EnterpriseEmployessServiceTest {
 		
 		try {
 			ApplicationContext cxt=new ClassPathXmlApplicationContext("beans.xml");
-			//enterpriseEmployeesService=(EnterpriseEmployeesService)cxt.getBean("enterpriseEmployeesServiceImpl");
-			enterpriseService=(EnterpriseService)cxt.getBean("enterpriseServiceImpl");
+			enterpriseEmployeesService=(EnterpriseEmployeesService)cxt.getBean("enterpriseEmployeesServiceImpl");
+			//enterpriseService=(EnterpriseService)cxt.getBean("enterpriseServiceImpl");
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
@@ -43,6 +39,26 @@ public class EnterpriseEmployessServiceTest {
 		
 		
 	}
+	
+	@Test
+	public void testFildEmplyess()
+	{
+		List<EnterpriseEmployees> list=enterpriseEmployeesService.findInsuranceEnterpriseEmployees(1);
+		for (EnterpriseEmployees es : list) {
+			System.out.println(es.getEmployeesName());
+		}
+		
+	}
+	
+	@Test
+	public void testFindEmployess()
+	{
+		List<EnterpriseEmployees> list=enterpriseEmployeesService.findAllEnterpriseEmployees("刘", null);
+		for (EnterpriseEmployees es : list) {
+			System.out.println(es.getEmployeesName());
+		}
+	}
+	
 	@Test  
 	public void testSave()
 	{

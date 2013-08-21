@@ -20,10 +20,10 @@
 			<div id="header">
 				<ul class="user  normal clearfix">
 					<li>
-						<a href="account/password.jsp">某某员工</a>
+						<a href="account/password.jsp"><s:property value="%{#session.user.username}" /></a>
 					</li>
 					<li>
-						<a href="#">退出</a>
+						<a href="loginOut">退出</a>
 					</li>
 				</ul>
 				<div class="navbar">
@@ -36,7 +36,7 @@
 								<ul class="dropdown-menu" role="menu"
 									aria-labelledby="dropdownMenu">
 									<li>
-										<a tabindex="-1" href="company/list.jsp">我的企业</a>
+										<a tabindex="-1" href="toBeResponsibleEnterprise">我的企业</a>
 									</li>
 									<li>
 										<a tabindex="-1" href="#">所有企业</a>
@@ -50,10 +50,10 @@
 								<ul class="dropdown-menu" role="menu"
 									aria-labelledby="dropdownMenu">
 									<li>
-										<a tabindex="-1" href="admin/company-list.jsp">企业相关</a>
+										<a tabindex="-1" href="viewEnterprise">企业相关</a>
 									</li>
 									<li>
-										<a tabindex="-1" href="admin/tax.jsp">计税规则</a>
+										<a tabindex="-1" href="toViewTaxRules">计税规则</a>
 									</li>
 									<li>
 										<a tabindex="-1" href="admin/authorization.jsp">权限分配</a>
@@ -76,7 +76,14 @@
 					福建电信
 				</h2>
 				<div class="date">
-					2013年7月23日
+					<%
+						java.util.Date now = new java.util.Date();
+						Date currentTime = new Date();
+						java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
+								"yyyy年MM月dd日 ");
+						String dateString = formatter.format(currentTime);
+						out.println(dateString);
+					%>
 				</div>
 			</div>
 
@@ -89,7 +96,7 @@
 								<a href="company/index.jsp">综合</a>
 							</li>
 							<li>
-								<a href="company/employee-list.jsp">员工档案</a>
+								<a href="viewEnterpriseEmployees">员工档案</a>
 							</li>
 							<li class="active">
 								<a href="company/salary-with-month.jsp">工资预算表</a>
@@ -123,35 +130,32 @@
 								</tr>
 							</thead>
 							<tbody>
+							<s:iterator value="#request.customBonus" id="customBonus">
 								<tr>
-									<td>
-										1
+									<td width="10">
+										<s:property value="%{#customBonus.id}"/>
 									</td>
-									<td>
-										奖金
+									<td width="50">
+										<s:property value="%{#customBonus.bonusName}"/>
 									</td>
-									<td>
-										启用
+									<td width="20">
+										<s:if test="%{#customBonus.state==0}">
+												<span>禁用</span>
+										</s:if>
+										<s:elseif test="%{#customBonus.state==1}">
+												<span>启用</span>
+										</s:elseif>
+										<s:else>
+											<span>&nbsp;&nbsp;</span>
+										</s:else>
 									</td>
-									<td>
+									<td width="20">
 										<a href="#info-for-check" data-toggle="modal">修改</a>
 									</td>
 								</tr>
-								<tr>
-									<td>
-										2
-									</td>
-									<td>
-										--
-									</td>
-									<td>
-										--
-									</td>
-									<td>
-										--
-									</td>
-								</tr>
+							</s:iterator>
 							</tbody>
+							
 						</table>
 
 					</div>
@@ -175,21 +179,21 @@
 				</h3>
 			</div>
 			<div class="modal-body">
-				<form action="" method="post">
+				<s:form action="addCustomBonus" method="post">
 					<div class="row-fluid">
 						<div class="input-container">
 							<label>
 								名称
 							</label>
-							<input type="text" name="">
+							<s:textfield name="customBonus.bonusName"/>
 						</div>
 						<div class="input-container">
 							<label>
 								&nbsp;
 							</label>
-							<input type="radio" name="start" value="1" checked="checked">
+							<input type="radio" name="customBonus.state" value="1" checked="checked">
 							启用，
-							<input type="radio" name="start" value="0">
+							<input type="radio" name="customBonus.state" value="0">
 							停用
 						</div>
 
@@ -197,12 +201,10 @@
 							<label>
 								&nbsp;
 							</label>
-							<button type="button" class="btn btn-primary">
-								提交
-							</button>
+							<s:submit value="提交" cssClass="btn btn-primary" />
 						</div>
 					</div>
-				</form>
+				</s:form>
 			</div>
 			<div class="modal-footer">
 				<button class="btn" data-dismiss="modal" aria-hidden="true">

@@ -38,7 +38,7 @@
 								<ul class="dropdown-menu" role="menu"
 									aria-labelledby="dropdownMenu">
 									<li>
-										<a tabindex="-1" href="company/list.jsp">我的企业</a>
+										<a tabindex="-1" href="toBeResponsibleEnterprise">我的企业</a>
 									</li>
 									<li>
 										<a tabindex="-1" href="#">所有企业</a>
@@ -55,7 +55,7 @@
 										<a tabindex="-1" href="viewEnterprise">企业相关</a>
 									</li>
 									<li>
-										<a tabindex="-1" href="admin/tax.jsp">计税规则</a>
+										<a tabindex="-1" href="toViewTaxRules">计税规则</a>
 									</li>
 									<li>
 										<a tabindex="-1" href="admin/authorization.jsp">权限分配</a>
@@ -67,7 +67,7 @@
 								<a href="all/company-list-with-salary.jsp">汇总</a>
 							</li>
 							<li>
-								<a href="help/index.html">帮助</a>
+								<a href="help/index.jsp">帮助</a>
 							</li>
 						</ul>
 					</div>
@@ -91,10 +91,10 @@
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
 							<li class="active">
-								<a href="tax.jsp">五险一金（税率）</a>
+								<a href="toViewTaxRules">五险一金（税率）</a>
 							</li>
 							<li>
-								<a href="admin/tax-base.jsp">五险一金（基数）</a>
+								<a href="viewInsurancesBaseSettings">五险一金（基数）</a>
 							</li>
 							<li>
 								<a href="admin/tax-of-person.jsp">个税</a>
@@ -161,59 +161,70 @@
 										个人
 									</th>
 									<th>
-										个人
+										企业
 									</th>
 									<th>
 										个人
 									</th>
 								</tr>
 							</thead>
+							<s:iterator value="#request.insurancesTax" var="insurancesTax">
 							<tbody>
 								<tr>
 									<td>
-										1
+										<s:property value="%{#insurancesTax.id}"/>
 									</td>
 									<td>
-										8%
+									<s:property value="%{#insurancesTax.endowmentInsurance}"/>%
 									</td>
 									<td>
-										8%
+									<s:property value="%{#insurancesTax.personalEndowmentInsurance}"/>%
 									</td>
 									<td>
-										1%
+									<s:property value="%{#insurancesTax.unemploymentInsurance}"/>%
 									</td>
 									<td>
-										1%
+									<s:property value="%{#insurancesTax.personalUnemploymentInsurance}"/>%
 									</td>
 									<td>
-										0.7%
+									<s:property value="%{#insurancesTax.birthEnterprise}"/>%
 									</td>
 									<td>
-										0.50%
+									<s:property value="%{#insurancesTax.injuriesEnterprise}"/>%
 									</td>
 									<td>
-										8%
+									<s:property value="%{#insurancesTax.medicalEnterprise}"/>%
 									</td>
 									<td>
-										2%
+									<s:property value="%{#insurancesTax.personalEnterprise}"/>%
+										
 									</td>
 									<td>
-										12%
+									<s:property value="%{#insurancesTax.housingFundEnterprise}"/>%
 									</td>
 									<td>
-										12%
+									<s:property value="%{#insurancesTax.personalHousingFund}"/>%
 									</td>
 									<td>
-										2013年3月
+										<s:property value="%{#insurancesTax.startDate}"/>
 									</td>
-									<td>
-										市医保
+									<td><div> 
+										</div>
+													<span>市医保</span>			
+										
+										<s:elseif test="#request.insurancesTax.InsurancesType=='1'">
+											<span>省医保</span>
+										</s:elseif>
+										<s:else>	
+													XXXXXX
+										</s:else>
 									</td>
 									<td>
 										<a href="#info-for-check" data-toggle="modal">修改</a>
 									</td>
 								</tr>
 							</tbody>
+							</s:iterator>
 						</table>
 
 					</div>
@@ -245,10 +256,10 @@
 									类型
 								</label>
 								<input type="radio" name="insurancesTax.insurancesType"
-									value="1" checked="checked">
+									value="0" checked="checked">
 								市医保，
 								<input type="radio" name="insurancesTax.insurancesType"
-									value="0">
+									value="1">
 								省医保
 							</div>
 
@@ -286,12 +297,46 @@
 
 							<div class="input-container">
 								<label>
-									----------
+									生育（企业）
 								</label>
-								<input type="text" name="">
+								<s:textfield name="insurancesTax.birthEnterprise" />
 								%
 							</div>
-
+							<div class="input-container">
+								<label>
+									工伤（企业）
+								</label>
+								<s:textfield name="insurancesTax.injuriesEnterprise" />
+								%
+							</div>
+							<div class="input-container">
+								<label>
+									基本医疗保险（企业）
+								</label>
+								<s:textfield name="insurancesTax.medicalEnterprise" />
+								%
+							</div>
+							<div class="input-container">
+								<label>
+									基本医疗保险（个人）
+								</label>
+								<s:textfield name="insurancesTax.personalEnterprise" />
+								%
+							</div>
+							<div class="input-container">
+								<label>
+									住房公积金（个人）
+								</label>
+								<s:textfield name="insurancesTax.personalHousingFund" />
+								%
+							</div>
+							<div class="input-container">
+								<label>
+									住房公积金（公司）
+								</label>
+								<s:textfield name="insurancesTax.housingFundEnterprise" />
+								%
+							</div>
 							<div class="input-container">
 								<label>
 									开始执行年月份

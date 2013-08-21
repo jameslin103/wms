@@ -15,6 +15,7 @@ import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.utils.Constant;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.GenerateSqlFromExcel;
+import cn.fm.utils.StringUtil;
 
 @Service @Transactional
 public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmployees> implements EnterpriseEmployeesService {
@@ -27,16 +28,34 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees> getAllEnterpriseEmployees()
 	{
-		List<EnterpriseEmployees> listEnterpriseEmployees=new ArrayList<EnterpriseEmployees>();
 		Query query = em.createQuery("select e from EnterpriseEmployees e ");
-		listEnterpriseEmployees=query.getResultList();
-		return listEnterpriseEmployees;
+		return query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<EnterpriseEmployees>  findAllEnterpriseEmployees(String employessName,Integer all)
+	{
+		if(StringUtil.isEmpty(employessName))return null;
+		Query query;
+		if(!employessName.equals("")  && all!=null){
+			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like '%?1%' and e.id=1 ");
+		}else{
+			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like '% ?1 %' ");
+		}
+			
+		query =query.setParameter(1, employessName);
+		return query.getResultList();
 	}
 	
 	
-	
-	
-	
+	@SuppressWarnings("unchecked")
+	public List<EnterpriseEmployees> findInsuranceEnterpriseEmployees(Integer  insurance)
+	{
+		Query query = em.createQuery("select e from EnterpriseEmployees e where e.whetherGinseng=?1");
+		
+		List<EnterpriseEmployees>  list=query.setParameter(1, insurance).getResultList();
+		return list;
+	}
 	
 	/**
 	 * 批量导入企业员工

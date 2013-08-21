@@ -28,4 +28,8 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	public List<EnterpriseEmployees> getEnterpriseEmployeesSalaryDetail(Serializable entityId);
 	
 	public EnterpriseEmployees getEnterpriseEmployees(Integer entityId);
+	
+	public List<EnterpriseEmployees> findInsuranceEnterpriseEmployees(Integer  insurance);
+	
+	public List<EnterpriseEmployees>  findAllEnterpriseEmployees(String employessName,Integer all);
 }

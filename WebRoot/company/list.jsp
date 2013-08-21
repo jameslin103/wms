@@ -17,10 +17,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="container">
 		<div id="header">
       <ul class="user normal clearfix">
-        <li><a href="account/password.jsp">某某员工</a></li>
-        <li><a href="#">退出</a></li>
+        <li><a href="account/password.jsp"><s:property value="%{#session.user.username}" /></a></li>
+        <li><a href="loginOut">退出</a></li>
       </ul>
-      
       <div class="navbar">
         <div class="navbar-inner">
           <div class="container">
@@ -32,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                  <li><a tabindex="-1" href="company/list.jsp">我的企业</a></li>
+                  <li><a tabindex="-1" href="toBeResponsibleEnterprise">我的企业</a></li>
                   <li><a tabindex="-1" href="#">所有企业</a></li>
                 </ul>
               </li>
@@ -43,8 +42,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                  <li><a tabindex="-1" href="admin/company-list.jsp">企业相关</a></li>
-                  <li><a tabindex="-1" href="admin/tax.jsp">计税规则</a></li>
+                  <li><a tabindex="-1" href="viewEnterprise">企业相关</a></li>
+                  <li><a tabindex="-1" href="toViewTaxRules">计税规则</a></li>
                   <li><a tabindex="-1" href="admin/authorization.jsp">权限分配</a></li>   
                 </ul>
               </li>
@@ -68,7 +67,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <div id="sub-header" class="clearfix">
       <div class="date">
-        2013年7月23日
+        
+			<%
+				java.util.Date now = new java.util.Date();
+				Date currentTime = new Date();
+				java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
+						"yyyy年MM月dd日 ");
+				String dateString = formatter.format(currentTime);
+				out.println(dateString);
+			%>
       </div>
     </div>
 	<div id="main"> 
@@ -77,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="center-pane">
           <ul class="nav nav-tabs">
             <li class="active">
-              <a href="#">我负责的企业</a>
+              <a href="toBeResponsibleEnterprise">我负责的企业</a>
             </li>   
             <li>
               <a href="#">所有企业</a>
@@ -99,17 +106,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th>员工</th>
               </tr>
             </thead>
+            
+            <s:iterator value="#request.enterpriseList" var="enterprise">
             <tbody>
               <tr>
-                <td>1</td>
+                <td><s:property value="%{#enterprise.id}"/></td>
                 <td class="with-complement">
-                  <a href="company/index.jsp">福建电信</a>
-                  <span class="complement">林女士，电话：1391125864，QQ：96857563</span>
-                  <a href="#info-of-company" data-toggle="modal">详细信息</a>，
+                  <a href="company/index.jsp"><s:property value="%{#enterprise.fullName}"/></a>
+                  <span class="complement">
+                  		<s:property value="%{#enterprise.contact}"/>
+                  		电话:<s:property value="%{#enterprise.phone}"/>
+                  		QQ：<s:property value="%{#enterprise.qq}"/>
+                  </span>
+                  <a href="#info-of-company" data-toggle="modal" >详细信息</a>，
                   <a href="#info-for-check" data-toggle="modal">修改联系人</a>
                 </td>
-                <td><a href="company/balance-detail.jsp">-200</a></td>
-                <td><a href="company/employee-list.jsp">100</a></td>
+                <td><a href="company/balance-detail.jsp">-20000</a></td>
+                <td><a href="company/employee-list.jsp">30000</a></td>
                 <td>
                   <ol>
                     <li><a href="company/salary-with-sum-of-categories.jsp">工资预算表1</a>（待发放）</li>
@@ -117,30 +130,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li><a href="company/salary-with-sum-of-categories.jsp">工资预算表1</a>（待发放）</li>
                   </ol>
                 </td>
-                <td><a href="company/insurance-with-employee-list.jsp">增员1人，减员2人，参保3人</a></td>
+                <td><a href="company/insurance-with-employee-list.jsp">增员5人，减员8人，参保10人</a></td>
                 <td>倪姐</td>
               </tr>
               <tr>
-                <td>2</td>
-                <td class="with-complement">
-                  <a href="index.html">中国银行</a>
-                  <span class="complement">林女士，电话：1391125864，QQ：96857563</span>
-                  <a href="#info-of-company" data-toggle="modal">详细信息</a>，
-                  <a href="#info-for-check" data-toggle="modal">修改联系人</a>
-                </td>
-                <td>-200</td>
-                <td>100</td>
-                <td>
-                  <ol>
-                    <li><a href="company/salary-with-sum-of-categories.jsp">工资预算表1</a>（待发放）</li>
-                    <li><a href="company/salary-with-sum-of-categories.jsp">工资预算表1</a>（已发放）</li>
-                    <li><a href="company/salary-with-sum-of-categories.jsp">工资预算表1</a>（待发放）</li>
-                  </ol>
-                </td>
-                <td><a href="company/insurance-with-employee-list.jsp">增员1人，减员2人，参保3人</a></td>
-                <td>晓彬</td>
-              </tr>
             </tbody>
+            </s:iterator>
           </table>
           
         </div>         

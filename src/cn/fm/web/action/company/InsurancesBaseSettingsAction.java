@@ -1,5 +1,8 @@
 package cn.fm.web.action.company;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import cn.fm.bean.company.InsurancesBaseSettings;
@@ -23,6 +26,21 @@ public class InsurancesBaseSettingsAction extends BaseAction {
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
+	
+	public InsurancesBaseSettings getInsurancesBaseSettings() {
+		return insurancesBaseSettings;
+	}
+
+	public void setInsurancesBaseSettings(
+			InsurancesBaseSettings insurancesBaseSettings) {
+		this.insurancesBaseSettings = insurancesBaseSettings;
+	}
+
+	public void setInsurancesBaseSettingsService(
+			InsurancesBaseSettingsService insurancesBaseSettingsService) {
+		this.insurancesBaseSettingsService = insurancesBaseSettingsService;
+	}
+
 	/**
 	 * addInsurancesTax
 	 * @return SUCCESS
@@ -38,6 +56,13 @@ public class InsurancesBaseSettingsAction extends BaseAction {
 			}
 		}
 		return SUCCESS;
-		
+	}
+	public String viewInsurancesBaseSettings()
+	{
+		List<InsurancesBaseSettings> insurancesBaseSettings=insurancesBaseSettingsService.getAllInsurancesBase();
+		if(insurancesBaseSettings.size()==0)
+			insurancesBaseSettings=new ArrayList<InsurancesBaseSettings>();
+		request.setAttribute("insurancesBase", insurancesBaseSettings);
+		return SUCCESS;
 	}
 }

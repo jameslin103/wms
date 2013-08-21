@@ -17,8 +17,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div id="container">
 	<div id="header">
       <ul class="user  normal clearfix">
-        <li><a href="account/password.jsp">某某员工</a></li>
-        <li><a href="">退出</a></li>
+        <li><a href="account/password.jsp"><s:property value="%{#session.user.username}" /></a></li>
+        <li><a href="loginOut">退出</a></li>
       </ul>
       <div class="navbar">
         <div class="navbar-inner">
@@ -26,23 +26,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <ul class="nav">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                企业
+           		     企业
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                <li><a tabindex="-1" href="list.jsp">我的企业</a></li>
+                <li><a tabindex="-1" href="toBeResponsibleEnterprise">我的企业</a></li>
                 <li><a tabindex="-1" href="#">所有企业</a></li>
               </ul>
             </li>
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                管理
+            	    管理
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                <li><a tabindex="-1" href="admin/company-list.jsp">企业相关</a></li>
-                <li><a tabindex="-1" href="admin/tax.jsp">计税规则</a></li>
+                <li><a tabindex="-1" href="viewEnterprise">企业相关</a></li>
+                <li><a tabindex="-1" href="toViewTaxRules">计税规则</a></li>
                 <li><a tabindex="-1" href="admin/authorization.jsp">权限分配</a></li>              
               </ul>
             </li>
@@ -56,7 +56,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div id="sub-header" class="clearfix">
       <h2>福建电信</h2>
       <div class="date">
-        2013年7月23日
+        	<%
+				java.util.Date now = new java.util.Date();
+				Date currentTime = new Date();
+				java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy年MM月dd日 ");
+				String dateString = formatter.format(currentTime);
+				out.println(dateString);
+			%>
+        	
       </div>
     </div>	
 
@@ -65,7 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="center-pane">
           <ul class="nav nav-tabs">
             <li><a href="company/index.jsp">综合</a></li>
-            <li class="active"><a href="company/employee-list.jsp">员工档案</a></li>
+            <li class="active"><a href="viewEnterpriseEmployees">员工档案</a></li>
             <li><a href="company/salary-with-month.jsp">工资预算表</a></li>
             <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
             <li><a href="company/balance-detail.jsp">资金往来</a></li>            
@@ -77,17 +84,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="#info-for-check" data-toggle="modal">单个录入</a></li>
             <li>&nbsp;/&nbsp;</li>
             <li>查看：</li>
-            <li><a href="#">参保</a>，</li>
-            <li><a href="#">未参保</a>，</li>
+            <li><a href="fildInsuranceEnterpriseEmployees?insurance=1">参保</a>，</li>
+            <li><a href="fildInsuranceEnterpriseEmployees?insurance=0">未参保</a>，</li>
             <li><a href="#">离职员工</a>，</li>
             <li><a href="#">隐藏信息</a></li>
             <li class="right"><a href="doc/全部员工信息表.xls" class="btn btn-primary">下载全体在职员工信息</a></li>
             <li class="right">
-              <form class="navbar-form pull-left" action="company/employee-search-result.jsp">
-                <input type="text" placeholder="输入姓名"/>
-                <input type="checkbox"/>&nbsp;全站
-                <button type="submit" class="btn">搜索</button>
-              </form>
+              <s:form cssClass="navbar-form pull-left" action="fildAllEnterpriseEmployees" method="post">
+                <s:textfield name="enterpriseEmployees.employessName" placeholder="输入姓名"/>
+                <input type="checkbox" name="all"/>&nbsp;全站
+                <s:submit type="submit" cssClass="btn" value="搜索"/>
+              </s:form>
             </li>
           </ul>
 
@@ -115,7 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </tr>
 
             </thead>
-            <s:iterator value="#request.employees" var="emp">
+            <s:iterator value="#request.employees" id="emp">
             <tbody>
               <tr>
                 <td><s:property value="%{#emp.employeesId}"/></td>  
@@ -161,19 +168,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  </td>
                 <td><s:property value="%{#emp.serviceCost}"/></td>
                 
-                <td><s:property value="%{#emp.whetherGinseng}"/></td>
+                <td>
+                <s:if test="%{#emp.whetherGinseng==1}">
+                		<span>是</span>
+                	</s:if>
+                	<s:elseif test="%{#emp.whetherGinseng==0}">
+                		<span>否</span>
+                	</s:elseif>
+                	<s:else>
+                		<span>&nbsp;&nbsp;</span>
+                	</s:else>
+				</td>
                 <td>
                 	<s:property value="%{#emp.ginsengProtectNature}"/>
                 </td>
                 <td><s:property value="%{#emp.cinsengDate}"/></td>
                 <td>
-                	<s:if test="%{#emp.base=='0'}">
+                	<s:if test="%{#emp.base==0}">
                 		默认
                 	</s:if>
-                	<s:if test="%{#emp.base=='1'}">
+                	<s:if test="%{#emp.base==1}">
                 		个性设置
                 	</s:if>
                 </td>
+                 <td><s:property value="%{#emp.paymentWay}"/></td>
                 <td>
                   <a href="#info-for-check" data-toggle="modal">修改</a>
                 </td>

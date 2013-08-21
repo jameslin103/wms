@@ -19,10 +19,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div id="header">
 				<ul class="user normal clearfix">
 					<li>
-						<a href="account/password.jsp">某某员工</a>
+						<a href="account/password.jsp"><s:property value="%{#session.user.username}" /></a>
 					</li>
 					<li>
-						<a href="#">退出</a>
+						<a href="loginOut">退出</a>
 					</li>
 				</ul>
 				<div class="navbar">
@@ -35,7 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<ul class="dropdown-menu" role="menu"
 									aria-labelledby="dropdownMenu">
 									<li>
-										<a tabindex="-1" href="company/list.jsp">我的企业</a>
+										<a tabindex="-1" href="toBeResponsibleEnterprise">我的企业</a>
 									</li>
 									<li>
 										<a tabindex="-1" href="#">所有企业</a>
@@ -49,10 +49,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<ul class="dropdown-menu" role="menu"
 									aria-labelledby="dropdownMenu">
 									<li>
-										<a tabindex="-1" href="company/company-list.jsp">企业相关</a>
+										<a tabindex="-1" href="viewEnterprise">企业相关</a>
 									</li>
 									<li>
-										<a tabindex="-1" href="admin/tax-base.jsp">计税规则</a>
+										<a tabindex="-1" href="toViewTaxRules">计税规则</a>
 									</li>
 									<li>
 										<a tabindex="-1" href="admin/authorization.jsp">权限分配</a>
@@ -76,7 +76,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					计税规则
 				</h2>
 				<div class="date">
-					2013年7月23日
+					<%
+					java.util.Date now = new java.util.Date();
+					Date currentTime = new Date();
+					java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
+							"yyyy年MM月dd日 ");
+					String dateString = formatter.format(currentTime);
+					out.println(dateString);
+			%>
 				</div>
 			</div>
 			<div id="main">
@@ -85,10 +92,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
 							<li>
-								<a href="admin/tax.jsp">五险一金（税率）</a>
+								<a href="toViewTaxRules">五险一金（税率）</a>
 							</li>
 							<li class="active">
-								<a href="admin/tax-base.jsp">五险一金（基数）</a>
+								<a href="viewInsurancesBaseSettings">五险一金（基数）</a>
 							</li>
 							<li>
 								<a href="admin/tax-of-person.jsp">个税</a>
@@ -140,37 +147,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									</th>
 								</tr>
 							</thead>
+							<s:iterator value="#request.insurancesBase" var="base">
 							<tbody>
 								<tr>
 									<td>
-										1
+										<s:property value="%{#base.id}"/>
 									</td>
 									<td>
-										1200
+										<s:property value="%{#base.socialInsurance}"/>
 									</td>
 									<td>
-										2086.25
+										<s:property value="%{#base.birthInsurance}"/>
 									</td>
 									<td>
-										2086.25
+										<s:property value="%{#base.inductrialInjury}"/>
 									</td>
 									<td>
-										2086.25
+										<s:property value="%{#base.basicMedical}"/>
 									</td>
 									<td>
-										2086.25
+										<s:property value="%{#base.housingMPF}"/>
 									</td>
 									<td>
-										60
+										<s:property value="%{#base.povertyStricken}"/>
 									</td>
 									<td>
-										2013年7月
+										<s:property value="%{#base.startDate}"/>
 									</td>
 									<td>
 										<a href="#info-for-check" data-toggle="modal">修改</a>
 									</td>
 								</tr>
 							</tbody>
+							</s:iterator>
 						</table>
 
 					</div>
@@ -260,9 +269,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<label>
 									开始执行年月份
 								</label>
-								<s:textfield id="d11" type="text" name="startDate" />
-								<img onclick="WdatePicker({el:'d11'})"
-									src="images/datePicker.gif" width="16" height="22" />
+								<s:textfield id="d11" type="text" name="startDate"  onclick="WdatePicker()" cssClass="Wdate"/>
 							</div>
 
 							<div class="input-container">

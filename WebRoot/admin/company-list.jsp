@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                  <li><a tabindex="-1" href="../company/list.html">我的企业</a></li>
+                  <li><a tabindex="-1" href="toBeResponsibleEnterprise">我的企业</a></li>
                   <li><a tabindex="-1" href="#">所有企业</a></li>
                 </ul>
               </li>
@@ -43,13 +43,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                   <li><a tabindex="-1" href="viewEnterprise">企业相关</a></li>
-                  <li><a tabindex="-1" href="admin/tax.jsp">计税规则</a></li>
-                  <li><a tabindex="-1" href="authorization.html">权限分配</a></li>
+                  <li><a tabindex="-1" href="toViewTaxRules">计税规则</a></li>
+                  <li><a tabindex="-1" href="company/authorization.jsp">权限分配</a></li>
                 </ul>
               </li>
               
-              <li><a href="../all/company-list-with-salary.html">汇总</a></li>
-              <li><a href="../help/index.html">帮助</a></li>
+              <li><a href="all/company-list-with-salary.jsp">汇总</a></li>
+              <li><a href="help/index.jsp">帮助</a></li>
             </ul>
         </div>        
       </div>

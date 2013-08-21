@@ -55,14 +55,7 @@
             </result>
         </action>  
       
-        <action name="addInsurancesTax" class="cn.fm.web.action.company.InsurancesTaxAction" method="addInsurancesTax">
-            <result name="success">/admin/tax.jsp</result>
-            <result name="input">/admin/tax.jsp</result>
-        </action> 
-         <action name="addInsurancesBaseSettings" class="cn.fm.web.action.company.InsurancesBaseSettingsAction" method="addInsurancesBaseSettings">
-            <result name="success">/admin/tax-base.jsp</result>
-            <result name="input">/admin/tax-base.jsp</result>
-        </action> 
+       
          <action name="addEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="addEnterprise">
             <result name="success" type="redirect">admin/company-list.jsp</result>
             <result name="input" type="redirect">admin/company-list.jsp</result>
@@ -87,22 +80,63 @@
             <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterpriseEmployees</param>
             </result>
-        </action>  
+        </action> 
+         <action name="fildInsuranceEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="fildInsuranceEnterpriseEmployees">
+             <result name="success">company/employee-list.jsp</result>
+        </action>
+        
+        <action name="fildAllEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="fildAllEnterpriseEmployees">
+             <result name="success">company/employee-search-result.jsp</result>
+        </action>
+        
          <action name="viewEmployeeContract" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewEmployeeContract">
             <result name="success">company/employee-personal-contract.jsp</result>
         </action>
         
         
         
-        
+       <!-- Enterprise  -->
         <action name="viewEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterprise">
             <result name="success">admin/company-list.jsp</result>
         </action> 
+         <action name="toBeResponsibleEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="toBeResponsibleEnterprise">
+            <result name="success">company/list.jsp</result>
+        </action>
         
+        <!-- InsurancesTaxAction  -->
+        <action name="toViewTaxRules" class="cn.fm.web.action.company.InsurancesTaxAction" method="toViewTaxRules">
+            <result name="success">admin/tax.jsp</result>
+        </action>
+         <action name="addInsurancesTax" class="cn.fm.web.action.company.InsurancesTaxAction" method="addInsurancesTax">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">toViewTaxRules</param>
+            </result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">toViewTaxRules</param>
+            </result>
+        </action> 
+         <action name="addInsurancesBaseSettings" class="cn.fm.web.action.company.InsurancesBaseSettingsAction" method="addInsurancesBaseSettings">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewInsurancesBaseSettings</param>
+            </result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewInsurancesBaseSettings</param>
+            </result>
+        </action> 
+        <action name="viewInsurancesBaseSettings" class="cn.fm.web.action.company.InsurancesBaseSettingsAction" method="viewInsurancesBaseSettings">
+            <result name="success">/admin/tax-base.jsp</result>
+        </action> 
         
+        <!-- CustomBonus  -->
         
-        
-        
+        <action name="viewCustomBonus" class="cn.fm.web.action.company.CustomBonusAction" method="viewCustomBonus">
+            <result name="success">company/salary-list-of-customized-items.jsp</result>
+        </action> 
+        <action name="addCustomBonus" class="cn.fm.web.action.company.CustomBonusAction" method="addCustomBonus">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewCustomBonus</param>
+            </result>
+        </action> 
         <action name="userInfo" class="cn.fm.web.action.company.UserAction" method="userInfo">  
             <result  name="success">../excel/InputExcel.jsp</result>
         </action>  

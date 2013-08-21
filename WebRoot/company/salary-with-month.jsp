@@ -21,10 +21,10 @@
 			<div id="header">
 				<ul class="user normal clearfix">
 					<li>
-						<a href="account/password.jsp">某某员工</a>
+						<a href="account/password.jsp"><s:property value="%{#session.user.username}" /></a>
 					</li>
 					<li>
-						<a href="#">退出</a>
+						<a href="loginOut">退出</a>
 					</li>
 				</ul>
 
@@ -39,7 +39,7 @@
 									<ul class="dropdown-menu" role="menu"
 										aria-labelledby="dropdownMenu">
 										<li>
-											<a tabindex="-1" href="company/list.jsp">我的企业</a>
+											<a tabindex="-1" href="toBeResponsibleEnterprise">我的企业</a>
 										</li>
 										<li>
 											<a tabindex="-1" href="#">所有企业</a>
@@ -53,10 +53,10 @@
 									<ul class="dropdown-menu" role="menu"
 										aria-labelledby="dropdownMenu">
 										<li>
-											<a tabindex="-1" href="admin/company-list.jsp">企业相关</a>
+											<a tabindex="-1" href="viewEnterprise">企业相关</a>
 										</li>
 										<li>
-											<a tabindex="-1" href="admin/tax.jsp">计税规则</a>
+											<a tabindex="-1" href="toViewTaxRules">计税规则</a>
 										</li>
 										<li>
 											<a tabindex="-1" href="admin/authorization.jsp">权限分配</a>
@@ -81,7 +81,13 @@
 					福建电信
 				</h2>
 				<div class="date">
-					2013年7月23日
+				<%
+					java.util.Date now = new java.util.Date();
+					Date currentTime = new Date();
+					java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy年MM月dd日 ");
+					String dateString = formatter.format(currentTime);
+					out.println(dateString);
+				%>
 				</div>
 			</div>
 			<div id="main">
@@ -93,7 +99,7 @@
 								<a href="company/index.jsp">综合</a>
 							</li>
 							<li>
-								<a href="company/employee-list.jsp">员工档案</a>
+								<a href="viewEnterpriseEmployees">员工档案</a>
 							</li>
 							<li class="active">
 								<a href="company/salary-with-month.jsp">工资预算表</a>
@@ -135,7 +141,7 @@
 								&nbsp;/&nbsp;
 							</li>
 							<li>
-								<a href="company/salary-list-of-customized-items.jsp">定制奖金与各种补贴</a>
+								<a href="viewCustomBonus">定制奖金与各种补贴</a>
 							</li>
 						</ul>
 
