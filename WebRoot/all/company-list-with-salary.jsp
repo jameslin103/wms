@@ -18,18 +18,75 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<div id="container">
     	<div id="header">
-    		<jsp:include page="../dashboard.jsp"></jsp:include>
-    	</div>
+			<ul class="user normal clearfix">
+        <li><a href="account/password.jsp">某某员工</a></li>
+				<li><a href="#">退出</a></li>
+			</ul>
+
+			<div class="navbar">
+			  <div class="navbar-inner">
+			    <div class="container">
+			      <a class="brand" href="#">富民</a>
+						<ul class="nav">
+						  <li class="dropdown">
+						    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						      企业
+						      <b class="caret"></b>
+						    </a>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+								  <li><a tabindex="-1" href="company/list.jsp">我的企业</a></li>
+								  <li><a tabindex="-1" href="#">所有企业</a></li>
+								</ul>
+						  </li>
+
+						  <li class="dropdown">
+						    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						      管理
+						      <b class="caret"></b>
+						    </a>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+								  <li><a tabindex="-1" href="admin/company-list.jsp">企业相关</a></li>
+                	<li><a tabindex="-1" href="admin/tax.jsp">计税规则</a></li>
+                  <li>
+                    <a tabindex="-1" href="admin/authorization.jsp">权限分配</a>
+                  </li> 
+								</ul>
+						  </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              	    汇总
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                  <li><a tabindex="-1" href="all/company-list-with-salary.jsp">工资预算表</a></li>
+                  <li><a tabindex="-1" href="all/company-list-with-insurance.jsp">增减员与参保</a></li>
+                  <li><a tabindex="-1" href="all/company-list-with-balance.jsp">资金往来</a></li>                 
+                </ul>
+              </li>
+              <li><a href="help/index.jsp">帮助</a></li>
+						</ul>
+			    </div>
+			  </div>
+			</div>
+  	</div>
+		
+		<div id="sub-header" class="clearfix">
+      <h2>2013年8月</h2>  
+			<div class="date">
+				2013年7月23日
+			</div>
+		</div>
+
 	<div id="main"> 
 			<div class="row-fluid">
 				<div id="center-pane">
 
           <ul class="nav nav-tabs">
             <li class="active">
-              <a href="company-list-with-saraly.html">工资</a>
+              <a href="company/company-list-with-saraly.jsp">工资</a>
             </li>            
-            <li><a href="company-list-with-insurance.html">增减员与参保</a></li>
-            <li><a href="company-list-with-balance.html">资金往来</a></li>
+            <li><a href="all/company-list-with-insurance.jsp">增减员与参保</a></li>
+            <li><a href="all/company-list-with-balance.jsp">资金往来</a></li>
           </ul>
           
           <ul class="normal action-container clearfix">
@@ -82,14 +139,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td>1</td>
                 <td>福建电信</td>
                 <td>
-                  <a href="../company/salary-list.html">某某工程工资</a>
+                  <a href="company/salary-list.jsp">某某工程工资</a>
                 </td>
                 <td>2013年1月</td>
                 <td>10435.50</td>
                 <td>9480.00</td>
                 <td>60</td>
                 <td>600</td>
-                <td>15<br><a href="../company/salary-with-bank-detail.html">查看</a></td>
+                <td>15<br><a href="company/salary-with-bank-detail.jsp">查看</a></td>
                 <td>8<br><span class="em">（已发放）</span><br>2013年7月15日9时</td>
                 <td>2<br><span class="em">（已发放）</span><br>2013年7月15日9：30时</td>
                 <td>5<br><span class="em">（已发放）</span><br>2013年7月16日11时</td>
@@ -113,7 +170,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td>9480.00</td>
                 <td>60</td>
                 <td>600</td>
-                <td>15<br><a href="../company/salary-with-bank-detail.html">查看</a></td>
+                <td>15<br><a href="company/salary-with-bank-detail.jsp">查看</a></td>
                 <td>8<br><span class="em">（已发放）</span><br>2013年7月15日9时</td>
                 <td>2<br><span class="em">（已发放）</span><br>2013年7月15日9：30时</td>
                 <td>5<br><span class="em">（已发放）</span><br>2013年7月16日11时</td>
@@ -276,10 +333,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
   </div>
-
-  <script type="text/javascript" src="../js/jquery.js"></script>
-
-	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
 </body>
 
 </html>

@@ -15,20 +15,65 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 
-  <div id="container">
-  		<div id="header">
-   		<jsp:include page="../dashboard.jsp"></jsp:include>
-  </div>
+	<div id="container">
+		<div id="header">
+			<ul class="user normal clearfix">
+        <li><a href="account/password.jsp">某某员工</a></li>
+				<li><a href="#">退出</a></li>
+			</ul>
 
-    <div id="main">
-     <div class="row-fluid">
+			<div class="navbar">
+			  <div class="navbar-inner">
+			    <div class="container">
+			      <a class="brand" href="#">富民</a>
+						<ul class="nav">
+						  <li class="dropdown">
+						    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						      企业
+						      <b class="caret"></b>
+						    </a>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+								  <li><a tabindex="-1" href="company/list.jsp">我的企业</a></li>
+								  <li><a tabindex="-1" href="#">所有企业</a></li>
+								</ul>
+						  </li>
+
+						  <li class="dropdown">
+						    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						      管理
+						      <b class="caret"></b>
+						    </a>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+								  <li><a tabindex="-1" href="admin/company-list.jsp">企业相关</a></li>
+                	<li><a tabindex="-1" href="admin/tax.jsp">计税规则</a></li>
+                  <li>
+                    <a tabindex="-1" href="admin/authorization.jsp">权限分配</a>
+                  </li>
+								</ul>
+						  </li>
+
+						  <li><a href="all/company-list-with-salary.jsp">汇总</a></li>
+              <li><a href="help/index.jsp">帮助</a></li>
+						</ul>
+			    </div>
+			  </div>
+			</div>
+  	</div>
+		
+    <div id="sub-header" class="clearfix">
+      <h2>福建电信</h2>
+      <div class="date">2013年7月23日</div>
+    </div>
+
+		<div id="main"> 
+			<div class="row-fluid">
 				<div id="center-pane">
          <ul class="nav nav-tabs">
-            <li><a href="index.html">综合</a></li>
-            <li><a href="employee-list.html">员工档案</a></li>
-            <li class="active"><a href="salary-with-month.html">工资预算表</a></li>
-            <li><a href="insurance-with-month.html">增减员与参保明细</a></li>
-            <li><a href="balance-detail.html">资金往来</a></li>            
+            <li><a href="company/index.jsp">综合</a></li>
+            <li><a href="company/employee-list.jsp">员工档案</a></li>
+            <li class="active"><a href="company/salary-with-month.jsp">工资预算表</a></li>
+            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
+            <li><a href="company/balance-detail.jsp">资金往来</a></li>            
           </ul>
  
           <ul class="normal action-container clearfix">
@@ -36,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="#">民生银行</a>，</li>
             <li><a href="#">他行</a>，</li>
             <li><a href="#">现金</a></li>
-            <li class="right"><a href="../doc/工资发放表_民生他行现金.xls" class="btn btn-primary">下载Excel表格</a></li>
+            <li class="right"><a href="doc/工资发放表_民生他行现金.xls" class="btn btn-primary">下载Excel表格</a></li>
           </ul>
 
           <table class="table table-striped table-bordered">
@@ -97,7 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 
 		<div id="footer"></div>
-</div>
+	</div>
 </body>
 
 </html>
