@@ -125,8 +125,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 	<s:property value="%{#emp.ginsengProtectNature}"/>
                 </td>
                 <td><s:property value="%{#emp.cinsengDate}"/></td>
-                <td>默认</td>
-                <td><s:property value="%{#emp.paymentWay}"/></td>
+                <td>
+                	<s:if test="%{#emp.base=='0'}">
+                		默认
+                	</s:if>
+                	<s:if test="%{#emp.base=='1'}">
+                		个性设置
+                	</s:if>
+                </td>
                 <td>
                   <a href="#info-for-check" data-toggle="modal">修改</a>
                 </td>
