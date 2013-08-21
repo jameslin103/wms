@@ -1,7 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -17,74 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		<div id="container">
 			<div id="header">
-				<ul class="user normal clearfix">
-					<li>
-						<a href="account/password.jsp"><s:property value="%{#session.user.username}" /></a>
-					</li>
-					<li>
-						<a href="loginOut">退出</a>
-					</li>
-				</ul>
-				<div class="navbar">
-					<div class="navbar-inner">
-						<a class="brand" href="#">富民</a>
-						<ul class="nav">
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									企业 <b class="caret"></b> </a>
-								<ul class="dropdown-menu" role="menu"
-									aria-labelledby="dropdownMenu">
-									<li>
-										<a tabindex="-1" href="toBeResponsibleEnterprise">我的企业</a>
-									</li>
-									<li>
-										<a tabindex="-1" href="#">所有企业</a>
-									</li>
-								</ul>
-							</li>
-
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									管理 <b class="caret"></b> </a>
-								<ul class="dropdown-menu" role="menu"
-									aria-labelledby="dropdownMenu">
-									<li>
-										<a tabindex="-1" href="viewEnterprise">企业相关</a>
-									</li>
-									<li>
-										<a tabindex="-1" href="toViewTaxRules">计税规则</a>
-									</li>
-									<li>
-										<a tabindex="-1" href="admin/authorization.jsp">权限分配</a>
-									</li>
-								</ul>
-							</li>
-
-							<li>
-								<a href="all/company-list-with-salary.jsp">汇总</a>
-							</li>
-							<li>
-								<a href="help/index.jsp">帮助</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<div id="sub-header" class="clearfix">
-				<h2>
-					计税规则
-				</h2>
-				<div class="date">
-					<%
-					java.util.Date now = new java.util.Date();
-					Date currentTime = new Date();
-					java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
-							"yyyy年MM月dd日 ");
-					String dateString = formatter.format(currentTime);
-					out.println(dateString);
-			%>
-				</div>
+				<jsp:include page="../layout/header.jsp" />
 			</div>
 			<div id="main">
 				<div class="row-fluid">
@@ -148,37 +83,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								</tr>
 							</thead>
 							<s:iterator value="#request.insurancesBase" var="base">
-							<tbody>
-								<tr>
-									<td>
-										<s:property value="%{#base.id}"/>
-									</td>
-									<td>
-										<s:property value="%{#base.socialInsurance}"/>
-									</td>
-									<td>
-										<s:property value="%{#base.birthInsurance}"/>
-									</td>
-									<td>
-										<s:property value="%{#base.inductrialInjury}"/>
-									</td>
-									<td>
-										<s:property value="%{#base.basicMedical}"/>
-									</td>
-									<td>
-										<s:property value="%{#base.housingMPF}"/>
-									</td>
-									<td>
-										<s:property value="%{#base.povertyStricken}"/>
-									</td>
-									<td>
-										<s:property value="%{#base.startDate}"/>
-									</td>
-									<td>
-										<a href="#info-for-check" data-toggle="modal">修改</a>
-									</td>
-								</tr>
-							</tbody>
+								<tbody>
+									<tr>
+										<td>
+											<s:property value="%{#base.id}" />
+										</td>
+										<td>
+											<s:property value="%{#base.socialInsurance}" />
+										</td>
+										<td>
+											<s:property value="%{#base.birthInsurance}" />
+										</td>
+										<td>
+											<s:property value="%{#base.inductrialInjury}" />
+										</td>
+										<td>
+											<s:property value="%{#base.basicMedical}" />
+										</td>
+										<td>
+											<s:property value="%{#base.housingMPF}" />
+										</td>
+										<td>
+											<s:property value="%{#base.povertyStricken}" />
+										</td>
+										<td>
+											<s:property value="%{#base.startDate}" />
+										</td>
+										<td>
+											<a href="#info-for-check" data-toggle="modal">修改</a>
+										</td>
+									</tr>
+								</tbody>
 							</s:iterator>
 						</table>
 
@@ -269,7 +204,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<label>
 									开始执行年月份
 								</label>
-								<s:textfield id="d11" type="text" name="startDate"  onclick="WdatePicker()" cssClass="Wdate"/>
+								<s:textfield id="d11" type="text" name="startDate"
+									onclick="WdatePicker()" cssClass="Wdate" />
 							</div>
 
 							<div class="input-container">

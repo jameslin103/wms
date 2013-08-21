@@ -1,338 +1,571 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
-   <title>富民人力银行派遣系统</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<%@ include file="/help/public_css_js.jsp" %>
+	<head>
+		<base href="<%=basePath%>">
 
-</head>
-<body>
+		<title>富民人力银行派遣系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<%@ include file="/help/public_css_js.jsp"%>
 
-	<div id="container">
-    	<div id="header">
-			<ul class="user normal clearfix">
-        <li><a href="account/password.jsp">某某员工</a></li>
-				<li><a href="#">退出</a></li>
-			</ul>
+	</head>
+	<body>
 
-			<div class="navbar">
-			  <div class="navbar-inner">
-			    <div class="container">
-			      <a class="brand" href="#">富民</a>
-						<ul class="nav">
-						  <li class="dropdown">
-						    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						      企业
-						      <b class="caret"></b>
-						    </a>
-								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-								  <li><a tabindex="-1" href="company/list.jsp">我的企业</a></li>
-								  <li><a tabindex="-1" href="#">所有企业</a></li>
-								</ul>
-						  </li>
+		<div id="container">
+			<div id="header">
+				<jsp:include page="../layout/header.jsp" />
+			</div>
+			<div id="main">
+				<div class="row-fluid">
+					<div id="center-pane">
 
-						  <li class="dropdown">
-						    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						      管理
-						      <b class="caret"></b>
-						    </a>
-								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-								  <li><a tabindex="-1" href="admin/company-list.jsp">企业相关</a></li>
-                	<li><a tabindex="-1" href="admin/tax.jsp">计税规则</a></li>
-                  <li>
-                    <a tabindex="-1" href="admin/authorization.jsp">权限分配</a>
-                  </li> 
-								</ul>
-						  </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              	    汇总
-                  <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                  <li><a tabindex="-1" href="all/company-list-with-salary.jsp">工资预算表</a></li>
-                  <li><a tabindex="-1" href="all/company-list-with-insurance.jsp">增减员与参保</a></li>
-                  <li><a tabindex="-1" href="all/company-list-with-balance.jsp">资金往来</a></li>                 
-                </ul>
-              </li>
-              <li><a href="help/index.jsp">帮助</a></li>
+						<ul class="nav nav-tabs">
+							<li class="active">
+								<a href="company/company-list-with-saraly.jsp">工资</a>
+							</li>
+							<li>
+								<a href="all/company-list-with-insurance.jsp">增减员与参保</a>
+							</li>
+							<li>
+								<a href="all/company-list-with-balance.jsp">资金往来</a>
+							</li>
 						</ul>
-			    </div>
-			  </div>
-			</div>
-  	</div>
-		
-		<div id="sub-header" class="clearfix">
-      <h2>2013年8月</h2>  
-			<div class="date">
-				2013年7月23日
-			</div>
-		</div>
 
-	<div id="main"> 
-			<div class="row-fluid">
-				<div id="center-pane">
+						<ul class="normal action-container clearfix">
+							<li class="right">
+								<form action="" class="select-for-year" method="post">
+									<select>
+										<option value="">
+											2014年
+										</option>
+										<option value="" selected>
+											2013年
+										</option>
+										<option value="">
+											2012年
+										</option>
+									</select>
+								</form>
+							</li>
+							<li>
+								<a href="#">1月</a>，
+							</li>
+							<li>
+								<a href="#">2月</a>，
+							</li>
+							<li>
+								<a href="#">3月</a>，
+							</li>
+							<li>
+								<a href="#">4月</a>，
+							</li>
+							<li>
+								<a href="#">5月</a>，
+							</li>
+							<li>
+								<a href="#">6月</a>，
+							</li>
+							<li>
+								<a href="#">7月</a>，
+							</li>
+							<li>
+								<a href="#">8月</a>，
+							</li>
+							<li>
+								<a href="#">9月</a>，
+							</li>
+							<li>
+								<a href="#">10月</a>，
+							</li>
+							<li>
+								<a href="#">11月</a>，
+							</li>
+							<li>
+								<a href="#">12月</a>
+							</li>
+						</ul>
 
-          <ul class="nav nav-tabs">
-            <li class="active">
-              <a href="company/company-list-with-saraly.jsp">工资</a>
-            </li>            
-            <li><a href="all/company-list-with-insurance.jsp">增减员与参保</a></li>
-            <li><a href="all/company-list-with-balance.jsp">资金往来</a></li>
-          </ul>
-          
-          <ul class="normal action-container clearfix">
-            <li class="right">
-              <form action="" class="select-for-year" method="post">
-                <select>
-                  <option value="">2014年</option>
-                  <option value="" selected>2013年</option>
-                  <option value="">2012年</option>
-                </select>
-              </form>
-            </li>
-            <li><a href="#">1月</a>，</li>
-            <li><a href="#">2月</a>，</li>
-            <li><a href="#">3月</a>，</li>
-            <li><a href="#">4月</a>，</li>
-            <li><a href="#">5月</a>，</li>
-            <li><a href="#">6月</a>，</li>
-            <li><a href="#">7月</a>，</li>
-            <li><a href="#">8月</a>，</li>
-            <li><a href="#">9月</a>，</li>
-            <li><a href="#">10月</a>，</li>
-            <li><a href="#">11月</a>，</li>
-            <li><a href="#">12月</a></li>
-          </ul>
+						<table class="table table-striped table-bordered">
+							<thead>
+								<tr>
+									<th rowspan="2">
+										序
+									</th>
+									<th rowspan="2">
+										企业
+									</th>
+									<th rowspan="2">
+										工资预算表
+										<br>
+										名称
+									</th>
+									<th rowspan="2" style="text-align: center">
+										工资所属月份
+									</th>
+									<th colspan="4" style="text-align: center">
+										工资预算表汇总信息
+									</th>
+									<th colspan="4" style="text-align: center">
+										发放明细
+									</th>
+									<th colspan="1" style="text-align: center">
+										状态
+									</th>
+								</tr>
+								<th>
+									开票
+									<br>
+									总额（元）
+								</th>
+								<th>
+									工资
+									<br>
+									总额（元）
+								</th>
+								<th>
+									服务费
+									<br>
+									总额（元）
+								</th>
+								<th>
+									五险一金
+									<br>
+									总额（元）
+								</th>
+								<th>
+									发放
+									<br>
+									人数（人）
+								</th>
+								<th>
+									民生
+									<br>
+									银行（人）
+								</th>
+								<th>
+									他行
+									<br>
+									（人）
+								</th>
+								<th>
+									现金（人）
+								</th>
+								<th>
+									（制作、审核、实际发放）
+								</th>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										1
+									</td>
+									<td>
+										福建电信
+									</td>
+									<td>
+										<a href="company/salary-list.jsp">某某工程工资</a>
+									</td>
+									<td>
+										2013年1月
+									</td>
+									<td>
+										10435.50
+									</td>
+									<td>
+										9480.00
+									</td>
+									<td>
+										60
+									</td>
+									<td>
+										600
+									</td>
+									<td>
+										15
+										<br>
+										<a href="company/salary-with-bank-detail.jsp">查看</a>
+									</td>
+									<td>
+										8
+										<br>
+										<span class="em">（已发放）</span>
+										<br>
+										2013年7月15日9时
+									</td>
+									<td>
+										2
+										<br>
+										<span class="em">（已发放）</span>
+										<br>
+										2013年7月15日9：30时
+									</td>
+									<td>
+										5
+										<br>
+										<span class="em">（已发放）</span>
+										<br>
+										2013年7月16日11时
+									</td>
+									<td>
+										<ul>
+											<li>
+												制作：倪姐，2013-07-18，9:00，
+											</li>
+											<li>
+												发放：小柴
+												<a href="#info-for-check2" data-toggle="modal">操作</a>
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										2
+									</td>
+									<td>
+										福建电信
+									</td>
+									<td>
+										某某工程工资
+									</td>
+									<td>
+										2013年1月
+									</td>
+									<td>
+										10435.50
+									</td>
+									<td>
+										9480.00
+									</td>
+									<td>
+										60
+									</td>
+									<td>
+										600
+									</td>
+									<td>
+										15
+										<br>
+										<a href="company/salary-with-bank-detail.jsp">查看</a>
+									</td>
+									<td>
+										8
+										<br>
+										<span class="em">（已发放）</span>
+										<br>
+										2013年7月15日9时
+									</td>
+									<td>
+										2
+										<br>
+										<span class="em">（已发放）</span>
+										<br>
+										2013年7月15日9：30时
+									</td>
+									<td>
+										5
+										<br>
+										<span class="em">（已发放）</span>
+										<br>
+										2013年7月16日11时
+									</td>
+									<td>
+										<ul>
+											<li>
+												制作：倪姐，2013-07-18，9:00，
+											</li>
+											<li>
+												发放：小柴
+												<a href="#info-for-check2" data-toggle="modal">操作</a>
+											</li>
+										</ul>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th rowspan="2">序</th>
-                <th rowspan="2">企业</th>
-                <th rowspan="2">工资预算表<br>名称</th>
-                <th rowspan="2" style="text-align:center">工资所属月份</th>
-                <th colspan="4" style="text-align:center">工资预算表汇总信息</th>
-                <th colspan="4" style="text-align:center">发放明细</th>
-                <th colspan="1" style="text-align:center">状态</th>
-              </tr>
-                <th>开票<br>总额（元）</th>
-                <th>工资<br>总额（元）</th>
-                <th>服务费<br>总额（元）</th>
-                <th>五险一金<br>总额（元）</th>
-                <th>发放<br>人数（人）</th>
-                <th>民生<br>银行（人）</th>
-                <th>他行<br>（人）</th>
-                <th>现金（人）</th>
-                <th>（制作、审核、实际发放）</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>福建电信</td>
-                <td>
-                  <a href="company/salary-list.jsp">某某工程工资</a>
-                </td>
-                <td>2013年1月</td>
-                <td>10435.50</td>
-                <td>9480.00</td>
-                <td>60</td>
-                <td>600</td>
-                <td>15<br><a href="company/salary-with-bank-detail.jsp">查看</a></td>
-                <td>8<br><span class="em">（已发放）</span><br>2013年7月15日9时</td>
-                <td>2<br><span class="em">（已发放）</span><br>2013年7月15日9：30时</td>
-                <td>5<br><span class="em">（已发放）</span><br>2013年7月16日11时</td>
-                <td>
-                  <ul>
-                    <li>制作：倪姐，2013-07-18，9:00，</li>
-                    <li>发放：小柴
-                      <a href="#info-for-check2" data-toggle="modal">操作</a>
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>福建电信</td>
-                <td>
-                  某某工程工资
-                </td>
-                <td>2013年1月</td>
-                <td>10435.50</td>
-                <td>9480.00</td>
-                <td>60</td>
-                <td>600</td>
-                <td>15<br><a href="company/salary-with-bank-detail.jsp">查看</a></td>
-                <td>8<br><span class="em">（已发放）</span><br>2013年7月15日9时</td>
-                <td>2<br><span class="em">（已发放）</span><br>2013年7月15日9：30时</td>
-                <td>5<br><span class="em">（已发放）</span><br>2013年7月16日11时</td>
-                <td>
-                  <ul>
-                    <li>制作：倪姐，2013-07-18，9:00，</li>
-                    <li>发放：小柴
-                      <a href="#info-for-check2" data-toggle="modal">操作</a>
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="pagination">
-            <ul>
-              <li><a href="#">&laquo;</a></li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">6</a></li>
-              <li><a href="#">7</a></li>
-              <li><a href="#">8</a></li>
-              <li><a href="#">&raquo;</a></li>
-            </ul>
-          </div>
+						<div class="pagination">
+							<ul>
+								<li>
+									<a href="#">&laquo;</a>
+								</li>
+								<li>
+									<a href="#">1</a>
+								</li>
+								<li>
+									<a href="#">2</a>
+								</li>
+								<li>
+									<a href="#">3</a>
+								</li>
+								<li>
+									<a href="#">4</a>
+								</li>
+								<li>
+									<a href="#">5</a>
+								</li>
+								<li>
+									<a href="#">6</a>
+								</li>
+								<li>
+									<a href="#">7</a>
+								</li>
+								<li>
+									<a href="#">8</a>
+								</li>
+								<li>
+									<a href="#">&raquo;</a>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
+
+			<div id="footer"></div>
 		</div>
 
-		<div id="footer"></div>
-	</div>
+		<div id="info-for-check1" class="modal hide fade" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">
+					×
+				</button>
+				<h3 id="myModalLabel">
+					审核
+				</h3>
+			</div>
 
-  <div id="info-for-check1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">审核</h3>
-    </div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<form action="" method="post">
+						<div class="input-container">
+							<label>
+								&nbsp;
+							</label>
+							<input type="radio" name="start" value="1" checked="checked">
+							通过，
+							<input type="radio" name="start" value="0">
+							不通过
+						</div>
 
-    <div class="modal-body">
-      <div class="row-fluid">
-        <form action="" method="post">
-            <div class="input-container">
-              <label>&nbsp;</label>
-              <input type="radio" name="start" value="1" checked="checked">通过，
-              <input type="radio" name="start" value="0">不通过
-            </div>    
+						<div class="input-container">
+							<label>
+								补充说明
+							</label>
+							<input type="text" name="">
+						</div>
 
-            <div class="input-container">
-              <label>补充说明</label>
-              <input type="text" name="">
-            </div> 
+						<div class="input-container">
+							<label>
+								&nbsp;
+							</label>
+							<button type="button" class="btn btn-primary">
+								提交
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
 
-            <div class="input-container">
-              <label>&nbsp;</label>
-              <button type="button" class="btn btn-primary">提交</button>
-            </div>
-        </form>
-      </div>
-    </div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">
+					Close
+				</button>
+			</div>
+		</div>
 
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-  </div>
+		<div id="info-for-check2" class="modal hide fade" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">
+					×
+				</button>
+				<h3 id="myModalLabel">
+					发放情况
+				</h3>
+			</div>
 
-  <div id="info-for-check2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">发放情况</h3>
-    </div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<form action="" method="post">
+						<div class="input-container">
+							<label>
+								民生银行
+							</label>
+							<select class="span3">
+								<option value="">
+									2014年
+								</option>
+								<option value="" selected>
+									2013年
+								</option>
+								<option value="">
+									2012年
+								</option>
+							</select>
+							<select class="span2">
+								<option value="">
+									7月
+								</option>
+								<option value="" selected>
+									8月
+								</option>
+								<option value="">
+									9月
+								</option>
+							</select>
+							<select class="span2">
+								<option value="">
+									15日
+								</option>
+								<option value="" selected>
+									19日
+								</option>
+								<option value="">
+									22日
+								</option>
+							</select>
+							<select class="span2">
+								<option value="">
+									9时
+								</option>
+								<option value="" selected>
+									9时
+								</option>
+								<option value="">
+									10时
+								</option>
+							</select>
+						</div>
 
-    <div class="modal-body">
-      <div class="row-fluid">
-        <form action="" method="post">
-          <div class="input-container">
-            <label>民生银行</label>
-            <select class="span3">
-              <option value="">2014年</option>
-              <option value="" selected>2013年</option>
-              <option value="">2012年</option>
-            </select>
-            <select class="span2">
-              <option value="">7月</option>
-              <option value="" selected>8月</option>
-              <option value="">9月</option>
-            </select> 
-            <select class="span2">
-              <option value="">15日</option>
-              <option value="" selected>19日</option>
-              <option value="">22日</option>
-            </select> 
-            <select class="span2">
-              <option value="">9时</option>
-              <option value="" selected>9时</option>
-              <option value="">10时</option>
-            </select> 
-          </div>    
+						<div class="input-container">
+							<label>
+								他行
+							</label>
+							<select class="span3">
+								<option value="">
+									2014年
+								</option>
+								<option value="" selected>
+									2013年
+								</option>
+								<option value="">
+									2012年
+								</option>
+							</select>
+							<select class="span2">
+								<option value="">
+									7月
+								</option>
+								<option value="" selected>
+									8月
+								</option>
+								<option value="">
+									9月
+								</option>
+							</select>
+							<select class="span2">
+								<option value="">
+									15日
+								</option>
+								<option value="" selected>
+									19日
+								</option>
+								<option value="">
+									22日
+								</option>
+							</select>
+							<select class="span2">
+								<option value="">
+									9时
+								</option>
+								<option value="" selected>
+									9时
+								</option>
+								<option value=""10>
+									时
+								</option>
+							</select>
+						</div>
 
-          <div class="input-container">
-            <label>他行</label>
-            <select class="span3">
-              <option value="">2014年</option>
-              <option value="" selected>2013年</option>
-              <option value="">2012年</option>
-            </select>
-            <select class="span2">
-              <option value="">7月</option>
-              <option value="" selected>8月</option>
-              <option value="">9月</option>
-            </select> 
-            <select class="span2">
-              <option value="">15日</option>
-              <option value="" selected>19日</option>
-              <option value="">22日</option>
-            </select> 
-            <select class="span2">
-              <option value="">9时</option>
-              <option value="" selected>9时</option>
-              <option value=""10>时</option>
-            </select> 
-          </div>
+						<div class="input-container">
+							<label>
+								现金
+							</label>
+							<select class="span3">
+								<option value="">
+									2014年
+								</option>
+								<option value="" selected>
+									2013年
+								</option>
+								<option value="">
+									2012年
+								</option>
+							</select>
+							<select class="span2">
+								<option value="">
+									7月
+								</option>
+								<option value="" selected>
+									8月
+								</option>
+								<option value="">
+									9月
+								</option>
+							</select>
+							<select class="span2">
+								<option value="">
+									15日
+								</option>
+								<option value="" selected>
+									19日
+								</option>
+								<option value="">
+									22日
+								</option>
+							</select>
+							<select class="span2">
+								<option value="">
+									9时
+								</option>
+								<option value="" selected>
+									9时
+								</option>
+								<option value=""10>
+									时
+								</option>
+							</select>
+						</div>
 
-          <div class="input-container">
-            <label>现金</label>
-            <select class="span3">
-              <option value="">2014年</option>
-              <option value="" selected>2013年</option>
-              <option value="">2012年</option>
-            </select>
-            <select class="span2">
-              <option value="">7月</option>
-              <option value="" selected>8月</option>
-              <option value="">9月</option>
-            </select> 
-            <select class="span2">
-              <option value="">15日</option>
-              <option value="" selected>19日</option>
-              <option value="">22日</option>
-            </select> 
-            <select class="span2">
-              <option value="">9时</option>
-              <option value="" selected>9时</option>
-              <option value=""10>时</option>
-            </select> 
-          </div>
+						<div class="input-container">
+							<label>
+								&nbsp;
+							</label>
+							<button type="button" class="btn btn-primary">
+								提交
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
 
-          <div class="input-container">
-            <label>&nbsp;</label>
-            <button type="button" class="btn btn-primary">提交</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-  </div>
-</body>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">
+					Close
+				</button>
+			</div>
+		</div>
+	</body>
 
 </html>
