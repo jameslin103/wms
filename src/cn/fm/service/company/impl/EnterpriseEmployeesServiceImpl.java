@@ -40,10 +40,10 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		if(!employessName.equals("")  && all!=null){
 			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like '%?1%' and e.id=1 ");
 		}else{
-			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like '% ?1 %' ");
+			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like ?1 ");
 		}
 			
-		query =query.setParameter(1, employessName);
+		query =query.setParameter(1, " '%"+employessName+"%' ");
 		return query.getResultList();
 	}
 	
