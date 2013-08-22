@@ -18,74 +18,9 @@
 	<body>
 		<div id="container">
 			<div id="header">
-				<ul class="user  normal clearfix">
-					<li>
-						<a href="account/password.jsp"><s:property value="%{#session.user.username}" /></a>
-					</li>
-					<li>
-						<a href="loginOut">退出</a>
-					</li>
-				</ul>
-				<div class="navbar">
-					<div class="navbar-inner">
-						<a class="brand" href="#">富民</a>
-						<ul class="nav">
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									企业 <b class="caret"></b> </a>
-								<ul class="dropdown-menu" role="menu"
-									aria-labelledby="dropdownMenu">
-									<li>
-										<a tabindex="-1" href="toBeResponsibleEnterprise">我的企业</a>
-									</li>
-									<li>
-										<a tabindex="-1" href="#">所有企业</a>
-									</li>
-								</ul>
-							</li>
-
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									管理 <b class="caret"></b> </a>
-								<ul class="dropdown-menu" role="menu"
-									aria-labelledby="dropdownMenu">
-									<li>
-										<a tabindex="-1" href="viewEnterprise">企业相关</a>
-									</li>
-									<li>
-										<a tabindex="-1" href="toViewTaxRules">计税规则</a>
-									</li>
-									<li>
-										<a tabindex="-1" href="admin/authorization.jsp">权限分配</a>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<a href="all/company-list-with-salary.jsp">汇总</a>
-							</li>
-							<li>
-								<a href="help/index.jsp">帮助</a>
-							</li>
-						</ul>
-					</div>
-				</div>
+				<jsp:include page="../layout/header.jsp" />
 			</div>
 
-			<div id="sub-header" class="clearfix">
-				<h2>
-					福建电信
-				</h2>
-				<div class="date">
-					<%
-						java.util.Date now = new java.util.Date();
-						Date currentTime = new Date();
-						java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
-								"yyyy年MM月dd日 ");
-						String dateString = formatter.format(currentTime);
-						out.println(dateString);
-					%>
-				</div>
-			</div>
 
 			<div id="main">
 				<div class="row-fluid">
@@ -130,32 +65,32 @@
 								</tr>
 							</thead>
 							<tbody>
-							<s:iterator value="#request.customBonus" id="customBonus">
-								<tr>
-									<td width="10">
-										<s:property value="%{#customBonus.id}"/>
-									</td>
-									<td width="50">
-										<s:property value="%{#customBonus.bonusName}"/>
-									</td>
-									<td width="20">
-										<s:if test="%{#customBonus.state==0}">
+								<s:iterator value="#request.customBonus" id="customBonus">
+									<tr>
+										<td width="10">
+											<s:property value="%{#customBonus.id}" />
+										</td>
+										<td width="50">
+											<s:property value="%{#customBonus.bonusName}" />
+										</td>
+										<td width="20">
+											<s:if test="%{#customBonus.state==0}">
 												<span>禁用</span>
-										</s:if>
-										<s:elseif test="%{#customBonus.state==1}">
+											</s:if>
+											<s:elseif test="%{#customBonus.state==1}">
 												<span>启用</span>
-										</s:elseif>
-										<s:else>
-											<span>&nbsp;&nbsp;</span>
-										</s:else>
-									</td>
-									<td width="20">
-										<a href="#info-for-check" data-toggle="modal">修改</a>
-									</td>
-								</tr>
-							</s:iterator>
+											</s:elseif>
+											<s:else>
+												<span>&nbsp;&nbsp;</span>
+											</s:else>
+										</td>
+										<td width="20">
+											<a href="#info-for-check" data-toggle="modal">修改</a>
+										</td>
+									</tr>
+								</s:iterator>
 							</tbody>
-							
+
 						</table>
 
 					</div>
@@ -185,13 +120,14 @@
 							<label>
 								名称
 							</label>
-							<s:textfield name="customBonus.bonusName"/>
+							<s:textfield name="customBonus.bonusName" />
 						</div>
 						<div class="input-container">
 							<label>
 								&nbsp;
 							</label>
-							<input type="radio" name="customBonus.state" value="1" checked="checked">
+							<input type="radio" name="customBonus.state" value="1"
+								checked="checked">
 							启用，
 							<input type="radio" name="customBonus.state" value="0">
 							停用
