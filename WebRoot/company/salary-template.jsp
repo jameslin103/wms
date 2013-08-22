@@ -55,24 +55,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td><s:property value="%{#salary.templateName}"/></td>
                 <td>
                   <ol>
-                  	  <s:generator separator="," val="%{#salary.subsidyList}" var="sub">  
-					     <s:iterator>
+                  	  <s:generator separator="," val="%{#salary.subsidyList}" var="sub" /> 
+					   <s:iterator status="sl" value="#request.sub" id="sal">
+					   		<s:iterator value="#request.customBonus" id="customBonus">
+					   			<s:if test="#request.sal==#customBonus.id">
+   	 								<li><s:property value="%{#customBonus.bonusName}"/></li><br/>
+   	 							</s:if>
+   	 							<s:else>
 
-					     		  <s:property/>
-									
-					     			
-					         
-					      </s:iterator>  
-					     </s:generator>  
-					     
-					     
-                		<s:iterator value="#request.customBonus" id="customBonus">
-                			<s:if test="%{#customBonus.id}"></s:if>
-                		
-                		
-                		</s:iterator>
-                  		<li><s:property value="%{#salary.subsidyList}"/></li>
-               
+   	 							
+   	 							</s:else>
+                			</s:iterator>
+						</s:iterator>            
                   </ol>
                 </td>
                 <td>
