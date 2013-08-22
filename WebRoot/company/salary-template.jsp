@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">>
+    <base href="<%=basePath%>">
   <title>富民人力银行派遣系统</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%@ include file="/help/public_css_js.jsp" %>
@@ -25,10 +25,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="center-pane">
           <ul class="nav nav-tabs">
             <li>
-              <a href="employee-list.html">员工</a>
+              <a href="viewEnterpriseEmployees">员工</a>
             </li>
             <li class="active">
-              <a href="salary-with-month.html">工资</a>
+              <a href="company/salary-with-month.jsp">工资</a>
             </li>
           </ul>
  
@@ -48,51 +48,67 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th>操作</th>
               </tr>
             </thead>
+            <s:iterator value="#request.salaryTemplate" id="salary">
             <tbody>
               <tr>
-                <td>1</td>
-                <td>某某模板</td>
+                <td><s:property value="%{#salary.id}"/></td>
+                <td><s:property value="%{#salary.templateName}"/></td>
                 <td>
                   <ol>
-                    <li>满勤奖</li>
-                    <li>高温补贴</li>
-                    <li>伙食补贴</li>
+                  	  <s:generator separator="," val="%{#salary.subsidyList}" var="sub">  
+					     <s:iterator>
+
+					     		  <s:property/>
+									
+					     			
+					         
+					      </s:iterator>  
+					     </s:generator>  
+					     
+					     
+                		<s:iterator value="#request.customBonus" id="customBonus">
+                			<s:if test="%{#customBonus.id}"></s:if>
+                		
+                		
+                		</s:iterator>
+                  		<li><s:property value="%{#salary.subsidyList}"/></li>
+               
                   </ol>
                 </td>
-                <td></td>
-                <td></td>
-                <td>停用</td>
+                <td>
+                <s:if test="%{#salary.fiveInsurances==1}">
+                	<span>是</span>
+                </s:if>
+               	<s:elseif test="%{#salary.fiveInsurances==0}">
+               		<span>否</span>
+               	</s:elseif>
+                <s:else>
+                </s:else>
+                </td>
+                <td>
+                <s:if test="%{#salary.tax==1}">
+                	<span>是</span>
+                </s:if>
+               	<s:elseif test="%{#salary.tax==0}">
+               		<span>否</span>
+               	</s:elseif>
+                <s:else>
+                </s:else>
+                <td>
+                	<s:if test="%{#salary.status==1}">
+                	<span>启用</span>
+                </s:if>
+               	<s:elseif test="%{#salary.status==0}">
+               		<span>禁用</span>
+               	</s:elseif>
+                <s:else>
+                </s:else>
+                
+                </td>
                 <td><a href="#info-for-check" data-toggle="modal">修改</a></td>
               </tr>
-              <tr>
-                <td>2</td>
-                <td>某某模板</td>
-                <td>
-                  <ol>
-                    <li>季度奖</li>
-                    <li>话费补贴</li>
-                    <li>伙食补贴</li>
-                  </ol>
-                </td>
-                <td></td>
-                <td></td>
-                <td>停用</td>
-                <td><a href="#info-for-check" data-toggle="modal">修改</a></td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>某某模板</td>
-                <td>
-                  <ol>
-                    <li>伙食补贴</li>
-                  </ol>
-                </td>
-                <td></td>
-                <td></td>
-                <td>停用</td>
-                <td><a href="#info-for-check" data-toggle="modal">修改</a></td>
-              </tr>                            
             </tbody>
+            </s:iterator>
           </table>
         </div>
   
@@ -109,57 +125,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <h3 id="myModalLabel">新建/修改工资模板</h3>
       </div>
       <div class="modal-body">
-        <form action="" method="post">
+      <!-- =============================addSalaryTemplate==================================== -->
+        <s:form action="addSalaryTemplate" method="post">
           <div class="row-fluid">
             <div class="input-container">
               <label>名称</label>
-              <input type="text" name="">
+              	<s:textfield name="salaryTemplate.templateName"/>
             </div>
-
-
+			
+			<s:iterator value="#request.customBonus" id="customBonus">
             <div class="input-container">
               <label class="checkbox">&nbsp;</label> 
-              <input type="checkbox" value="remember-me">满勤奖
+              <input type="checkbox" value="<s:property value='%{#customBonus.id}'/>" name="salaryTemplate.subsidyList" >
+              <s:property value="%{#customBonus.bonusName}"/>
             </div>
-            <div class="input-container">
-              <label class="checkbox">&nbsp;</label> 
-              <input type="checkbox" value="remember-me">季度奖
-            </div>
-            <div class="input-container">
-              <label class="checkbox">&nbsp;</label> 
-              <input type="checkbox" value="remember-me">伙食补贴
-            </div>                    
-            <div class="input-container">
-              <label class="checkbox">&nbsp;</label> 
-              <input type="checkbox" value="remember-me">高温补贴
-            </div>  
-            <div class="input-container">
-              <label class="checkbox">&nbsp;</label> 
-              <input type="checkbox" value="remember-me">住宿补贴
-            </div>                  
+            </s:iterator>        
 
             <div class="input-container">
               <label>&nbsp;</label>
-              <input type="radio" name="insurance" value="1" checked="checked">包含五险一金，
-              <input type="radio" name="insurance" value="0">不包含
+              <input type="radio" name="salaryTemplate.fiveInsurances" value="1" checked="checked">包含五险一金，
+              <input type="radio" name="salaryTemplate.fiveInsurances" value="0">不包含
             </div>
             <div class="input-container">
               <label>&nbsp;</label>
-              <input type="radio" name="personl" value="1" checked="checked">包含个税，
-              <input type="radio" name="personl" value="0">不包含
+              <input type="radio" name="salaryTemplate.tax" value="1" checked="checked">包含个税，
+              <input type="radio" name="salaryTemplate.tax" value="0">不包含
             </div>
             <div class="input-container">
               <label>&nbsp;</label>
-              <input type="radio" name="start" value="1" checked="checked">启用，
-              <input type="radio" name="start" value="0">停用
+              <input type="radio" name="salaryTemplate.status" value="1" checked="checked">启用，
+              <input type="radio" name="salaryTemplate.status" value="0">停用
             </div>                    
 
             <div class="input-container">
               <label>&nbsp;</label>
-              <button type="button" class="btn btn-primary">提交</button>
+              <s:submit value="提交" cssClass="btn btn-primary"/>
             </div>
           </div>
-        </form>              
+        </s:form>              
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

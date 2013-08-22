@@ -103,7 +103,7 @@
             <result name="success" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
             </result>
-            <result name="input" type="redirectActionredirect">
+            <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
             </result>
         </action> 
@@ -142,6 +142,23 @@
             	<param name="actionName">viewCustomBonus</param>
             </result>
         </action> 
+        <action name="viewSalaryTemplate" class="cn.fm.web.action.company.SalaryTemplateAction" method="viewSalaryTemplate">
+            <result name="success" >company/salary-template.jsp</result>
+        </action> 
+        <action name="addSalaryTemplate" class="cn.fm.web.action.company.SalaryTemplateAction" method="addSalaryTemplate">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewSalaryTemplate</param>
+            </result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewSalaryTemplate</param>
+            </result>
+        </action>
+        
+        
+        
+        
+        
+        
         <action name="userInfo" class="cn.fm.web.action.company.UserAction" method="userInfo">  
             <result  name="success">../excel/InputExcel.jsp</result>
         </action>  

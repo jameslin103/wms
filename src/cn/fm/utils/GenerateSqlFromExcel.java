@@ -33,7 +33,7 @@ public class GenerateSqlFromExcel {
 		
 		InputStream inputStream= null;
 		Workbook workbook= null;
-		List list =new ArrayList();
+		ArrayList list =new ArrayList();
 		
 		try {
 			if (file == null) 
@@ -71,9 +71,9 @@ public class GenerateSqlFromExcel {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static List  createSheet(Sheet sheet[],int i)
+	public static ArrayList createSheet(Sheet sheet[],int i)
 	{
-		List list=new ArrayList();
+		ArrayList list=new ArrayList();
 		for (int j =2; j < sheet[i].getRows(); j++)
 		{
 			String[] valStr = new String[31];

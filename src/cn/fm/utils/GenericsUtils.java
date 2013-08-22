@@ -7,29 +7,29 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * ·ºĞÍ¹¤¾ßÀà
+ * æ³›å‹å·¥å…·ç±»
  * @author jameslin
  *
  */
 public class GenericsUtils {
 	/**  
-     * Í¨¹ı·´Éä,»ñµÃÖ¸¶¨ÀàµÄ¸¸ÀàµÄ·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ. ÈçBuyerServiceBean extends DaoSupport<Buyer>  
+     * é€šè¿‡åå°„,è·å¾—æŒ‡å®šç±»çš„çˆ¶ç±»çš„æ³›å‹å‚æ•°çš„å®é™…ç±»å‹. å¦‚BuyerServiceBean extends DaoSupport<Buyer>  
      *  
-     * @param clazz clazz ĞèÒª·´ÉäµÄÀà,¸ÃÀà±ØĞë¼Ì³Ğ·¶ĞÍ¸¸Àà
-     * @param index ·ºĞÍ²ÎÊıËùÔÚË÷Òı,´Ó0¿ªÊ¼.  
-     * @return ·¶ĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ, Èç¹ûÃ»ÓĞÊµÏÖParameterizedType½Ó¿Ú£¬¼´²»Ö§³Ö·ºĞÍ£¬ËùÒÔÖ±½Ó·µ»Ø<code>Object.class</code>
+     * @param clazz clazz éœ€è¦åå°„çš„ç±»,è¯¥ç±»å¿…é¡»ç»§æ‰¿èŒƒå‹çˆ¶ç±»
+     * @param index æ³›å‹å‚æ•°æ‰€åœ¨ç´¢å¼•,ä»0å¼€å§‹.  
+     * @return èŒƒå‹å‚æ•°çš„å®é™…ç±»å‹, å¦‚æœæ²¡æœ‰å®ç°ParameterizedTypeæ¥å£ï¼Œå³ä¸æ”¯æŒæ³›å‹ï¼Œæ‰€ä»¥ç›´æ¥è¿”å›<code>Object.class</code>
      */  
     @SuppressWarnings("unchecked")
 	public static Class getSuperClassGenricType(Class clazz, int index) {    
-        Type genType = clazz.getGenericSuperclass();//µÃµ½·ºĞÍ¸¸Àà  
-        //Èç¹ûÃ»ÓĞÊµÏÖParameterizedType½Ó¿Ú£¬¼´²»Ö§³Ö·ºĞÍ£¬Ö±½Ó·µ»ØObject.class   
+        Type genType = clazz.getGenericSuperclass();//å¾—åˆ°æ³›å‹çˆ¶ç±»  
+        //å¦‚æœæ²¡æœ‰å®ç°ParameterizedTypeæ¥å£ï¼Œå³ä¸æ”¯æŒæ³›å‹ï¼Œç›´æ¥è¿”å›Object.class   
         if (!(genType instanceof ParameterizedType)) {
             return Object.class;   
         }  
-        //·µ»Ø±íÊ¾´ËÀàĞÍÊµ¼ÊÀàĞÍ²ÎÊıµÄType¶ÔÏóµÄÊı×é,Êı×éÀï·ÅµÄ¶¼ÊÇ¶ÔÓ¦ÀàĞÍµÄClass, ÈçBuyerServiceBean extends DaoSupport<Buyer,Contact>¾Í·µ»ØBuyerºÍContactÀàĞÍ   
+        //è¿”å›è¡¨ç¤ºæ­¤ç±»å‹å®é™…ç±»å‹å‚æ•°çš„Typeå¯¹è±¡çš„æ•°ç»„,æ•°ç»„é‡Œæ”¾çš„éƒ½æ˜¯å¯¹åº”ç±»å‹çš„Class, å¦‚BuyerServiceBean extends DaoSupport<Buyer,Contact>å°±è¿”å›Buyerå’ŒContactç±»å‹   
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();                   
         if (index >= params.length || index < 0) { 
-        	 throw new RuntimeException("ÄãÊäÈëµÄË÷Òı"+ (index<0 ? "²»ÄÜĞ¡ÓÚ0" : "³¬³öÁË²ÎÊıµÄ×ÜÊı"));
+        	 throw new RuntimeException("ä½ è¾“å…¥çš„ç´¢å¼•"+ (index<0 ? "ä¸èƒ½å°äº0" : "è¶…å‡ºäº†å‚æ•°çš„æ€»æ•°"));
         }      
         if (!(params[index] instanceof Class)) {
             return Object.class;   
@@ -37,21 +37,21 @@ public class GenericsUtils {
         return (Class) params[index];
     }
 	/**  
-     * Í¨¹ı·´Éä,»ñµÃÖ¸¶¨ÀàµÄ¸¸ÀàµÄµÚÒ»¸ö·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ. ÈçBuyerServiceBean extends DaoSupport<Buyer>  
+     * é€šè¿‡åå°„,è·å¾—æŒ‡å®šç±»çš„çˆ¶ç±»çš„ç¬¬ä¸€ä¸ªæ³›å‹å‚æ•°çš„å®é™…ç±»å‹. å¦‚BuyerServiceBean extends DaoSupport<Buyer>  
      *  
-     * @param clazz clazz ĞèÒª·´ÉäµÄÀà,¸ÃÀà±ØĞë¼Ì³Ğ·ºĞÍ¸¸Àà
-     * @return ·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ, Èç¹ûÃ»ÓĞÊµÏÖParameterizedType½Ó¿Ú£¬¼´²»Ö§³Ö·ºĞÍ£¬ËùÒÔÖ±½Ó·µ»Ø<code>Object.class</code>
+     * @param clazz clazz éœ€è¦åå°„çš„ç±»,è¯¥ç±»å¿…é¡»ç»§æ‰¿æ³›å‹çˆ¶ç±»
+     * @return æ³›å‹å‚æ•°çš„å®é™…ç±»å‹, å¦‚æœæ²¡æœ‰å®ç°ParameterizedTypeæ¥å£ï¼Œå³ä¸æ”¯æŒæ³›å‹ï¼Œæ‰€ä»¥ç›´æ¥è¿”å›<code>Object.class</code>
      */  
     @SuppressWarnings("unchecked")
 	public static Class getSuperClassGenricType(Class clazz) {
     	return getSuperClassGenricType(clazz,0);
     }
 	/**  
-     * Í¨¹ı·´Éä,»ñµÃ·½·¨·µ»ØÖµ·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ. Èç: public Map<String, Buyer> getNames(){}
+     * é€šè¿‡åå°„,è·å¾—æ–¹æ³•è¿”å›å€¼æ³›å‹å‚æ•°çš„å®é™…ç±»å‹. å¦‚: public Map<String, Buyer> getNames(){}
      *  
-     * @param Method method ·½·¨
-     * @param int index ·ºĞÍ²ÎÊıËùÔÚË÷Òı,´Ó0¿ªÊ¼.
-     * @return ·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ, Èç¹ûÃ»ÓĞÊµÏÖParameterizedType½Ó¿Ú£¬¼´²»Ö§³Ö·ºĞÍ£¬ËùÒÔÖ±½Ó·µ»Ø<code>Object.class</code>
+     * @param Method method æ–¹æ³•
+     * @param int index æ³›å‹å‚æ•°æ‰€åœ¨ç´¢å¼•,ä»0å¼€å§‹.
+     * @return æ³›å‹å‚æ•°çš„å®é™…ç±»å‹, å¦‚æœæ²¡æœ‰å®ç°ParameterizedTypeæ¥å£ï¼Œå³ä¸æ”¯æŒæ³›å‹ï¼Œæ‰€ä»¥ç›´æ¥è¿”å›<code>Object.class</code>
      */ 
     @SuppressWarnings("unchecked")
 	public static Class getMethodGenericReturnType(Method method, int index) {
@@ -60,17 +60,17 @@ public class GenericsUtils {
     	    ParameterizedType type = (ParameterizedType) returnType;
     	    Type[] typeArguments = type.getActualTypeArguments();
             if (index >= typeArguments.length || index < 0) { 
-            	 throw new RuntimeException("ÄãÊäÈëµÄË÷Òı"+ (index<0 ? "²»ÄÜĞ¡ÓÚ0" : "³¬³öÁË²ÎÊıµÄ×ÜÊı"));
+            	 throw new RuntimeException("ä½ è¾“å…¥çš„ç´¢å¼•"+ (index<0 ? "ä¸èƒ½å°äº0" : "è¶…å‡ºäº†å‚æ•°çš„æ€»æ•°"));
             } 
     	    return (Class)typeArguments[index];
     	}
     	return Object.class;
     }
 	/**  
-     * Í¨¹ı·´Éä,»ñµÃ·½·¨·µ»ØÖµµÚÒ»¸ö·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ. Èç: public Map<String, Buyer> getNames(){}
+     * é€šè¿‡åå°„,è·å¾—æ–¹æ³•è¿”å›å€¼ç¬¬ä¸€ä¸ªæ³›å‹å‚æ•°çš„å®é™…ç±»å‹. å¦‚: public Map<String, Buyer> getNames(){}
      *  
-     * @param Method method ·½·¨
-     * @return ·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ, Èç¹ûÃ»ÓĞÊµÏÖParameterizedType½Ó¿Ú£¬¼´²»Ö§³Ö·ºĞÍ£¬ËùÒÔÖ±½Ó·µ»Ø<code>Object.class</code>
+     * @param Method method æ–¹æ³•
+     * @return æ³›å‹å‚æ•°çš„å®é™…ç±»å‹, å¦‚æœæ²¡æœ‰å®ç°ParameterizedTypeæ¥å£ï¼Œå³ä¸æ”¯æŒæ³›å‹ï¼Œæ‰€ä»¥ç›´æ¥è¿”å›<code>Object.class</code>
      */ 
     @SuppressWarnings("unchecked")
 	public static Class getMethodGenericReturnType(Method method) {
@@ -78,18 +78,18 @@ public class GenericsUtils {
     }
     
 	/**  
-     * Í¨¹ı·´Éä,»ñµÃ·½·¨ÊäÈë²ÎÊıµÚindex¸öÊäÈë²ÎÊıµÄËùÓĞ·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ. Èç: public void add(Map<String, Buyer> maps, List<String> names){}
+     * é€šè¿‡åå°„,è·å¾—æ–¹æ³•è¾“å…¥å‚æ•°ç¬¬indexä¸ªè¾“å…¥å‚æ•°çš„æ‰€æœ‰æ³›å‹å‚æ•°çš„å®é™…ç±»å‹. å¦‚: public void add(Map<String, Buyer> maps, List<String> names){}
      *  
-     * @param Method method ·½·¨
-     * @param int index µÚ¼¸¸öÊäÈë²ÎÊı
-     * @return ÊäÈë²ÎÊıµÄ·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ¼¯ºÏ, Èç¹ûÃ»ÓĞÊµÏÖParameterizedType½Ó¿Ú£¬¼´²»Ö§³Ö·ºĞÍ£¬ËùÒÔÖ±½Ó·µ»Ø¿Õ¼¯ºÏ
+     * @param Method method æ–¹æ³•
+     * @param int index ç¬¬å‡ ä¸ªè¾“å…¥å‚æ•°
+     * @return è¾“å…¥å‚æ•°çš„æ³›å‹å‚æ•°çš„å®é™…ç±»å‹é›†åˆ, å¦‚æœæ²¡æœ‰å®ç°ParameterizedTypeæ¥å£ï¼Œå³ä¸æ”¯æŒæ³›å‹ï¼Œæ‰€ä»¥ç›´æ¥è¿”å›ç©ºé›†åˆ
      */ 
     @SuppressWarnings("unchecked")
 	public static List<Class> getMethodGenericParameterTypes(Method method, int index) {
     	List<Class> results = new ArrayList<Class>();
     	Type[] genericParameterTypes = method.getGenericParameterTypes();
     	if (index >= genericParameterTypes.length ||index < 0) {
-             throw new RuntimeException("ÄãÊäÈëµÄË÷Òı"+ (index<0 ? "²»ÄÜĞ¡ÓÚ0" : "³¬³öÁË²ÎÊıµÄ×ÜÊı"));
+             throw new RuntimeException("ä½ è¾“å…¥çš„ç´¢å¼•"+ (index<0 ? "ä¸èƒ½å°äº0" : "è¶…å‡ºäº†å‚æ•°çš„æ€»æ•°"));
         } 
     	Type genericParameterType = genericParameterTypes[index];
     	if(genericParameterType instanceof ParameterizedType){
@@ -104,21 +104,21 @@ public class GenericsUtils {
     	return results;
     }
 	/**  
-     * Í¨¹ı·´Éä,»ñµÃ·½·¨ÊäÈë²ÎÊıµÚÒ»¸öÊäÈë²ÎÊıµÄËùÓĞ·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ. Èç: public void add(Map<String, Buyer> maps, List<String> names){}
+     * é€šè¿‡åå°„,è·å¾—æ–¹æ³•è¾“å…¥å‚æ•°ç¬¬ä¸€ä¸ªè¾“å…¥å‚æ•°çš„æ‰€æœ‰æ³›å‹å‚æ•°çš„å®é™…ç±»å‹. å¦‚: public void add(Map<String, Buyer> maps, List<String> names){}
      *  
-     * @param Method method ·½·¨
-     * @return ÊäÈë²ÎÊıµÄ·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ¼¯ºÏ, Èç¹ûÃ»ÓĞÊµÏÖParameterizedType½Ó¿Ú£¬¼´²»Ö§³Ö·ºĞÍ£¬ËùÒÔÖ±½Ó·µ»Ø¿Õ¼¯ºÏ
+     * @param Method method æ–¹æ³•
+     * @return è¾“å…¥å‚æ•°çš„æ³›å‹å‚æ•°çš„å®é™…ç±»å‹é›†åˆ, å¦‚æœæ²¡æœ‰å®ç°ParameterizedTypeæ¥å£ï¼Œå³ä¸æ”¯æŒæ³›å‹ï¼Œæ‰€ä»¥ç›´æ¥è¿”å›ç©ºé›†åˆ
      */ 
     @SuppressWarnings("unchecked")
 	public static List<Class> getMethodGenericParameterTypes(Method method) {
     	return getMethodGenericParameterTypes(method, 0);
     }
 	/**  
-     * Í¨¹ı·´Éä,»ñµÃField·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ. Èç: public Map<String, Buyer> names;
+     * é€šè¿‡åå°„,è·å¾—Fieldæ³›å‹å‚æ•°çš„å®é™…ç±»å‹. å¦‚: public Map<String, Buyer> names;
      *  
-     * @param Field field ×Ö¶Î
-     * @param int index ·ºĞÍ²ÎÊıËùÔÚË÷Òı,´Ó0¿ªÊ¼.
-     * @return ·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ, Èç¹ûÃ»ÓĞÊµÏÖParameterizedType½Ó¿Ú£¬¼´²»Ö§³Ö·ºĞÍ£¬ËùÒÔÖ±½Ó·µ»Ø<code>Object.class</code>
+     * @param Field field å­—æ®µ
+     * @param int index æ³›å‹å‚æ•°æ‰€åœ¨ç´¢å¼•,ä»0å¼€å§‹.
+     * @return æ³›å‹å‚æ•°çš„å®é™…ç±»å‹, å¦‚æœæ²¡æœ‰å®ç°ParameterizedTypeæ¥å£ï¼Œå³ä¸æ”¯æŒæ³›å‹ï¼Œæ‰€ä»¥ç›´æ¥è¿”å›<code>Object.class</code>
      */ 
     @SuppressWarnings("unchecked")
 	public static Class getFieldGenericType(Field field, int index) {
@@ -128,18 +128,18 @@ public class GenericsUtils {
     	    ParameterizedType aType = (ParameterizedType) genericFieldType;
     	    Type[] fieldArgTypes = aType.getActualTypeArguments();
     	    if (index >= fieldArgTypes.length || index < 0) { 
-    	    	throw new RuntimeException("ÄãÊäÈëµÄË÷Òı"+ (index<0 ? "²»ÄÜĞ¡ÓÚ0" : "³¬³öÁË²ÎÊıµÄ×ÜÊı"));
+    	    	throw new RuntimeException("ä½ è¾“å…¥çš„ç´¢å¼•"+ (index<0 ? "ä¸èƒ½å°äº0" : "è¶…å‡ºäº†å‚æ•°çš„æ€»æ•°"));
             } 
     	    return (Class)fieldArgTypes[index];
     	}
     	return Object.class;
     }
 	/**  
-     * Í¨¹ı·´Éä,»ñµÃField·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ. Èç: public Map<String, Buyer> names;
+     * é€šè¿‡åå°„,è·å¾—Fieldæ³›å‹å‚æ•°çš„å®é™…ç±»å‹. å¦‚: public Map<String, Buyer> names;
      *  
-     * @param Field field ×Ö¶Î
-     * @param int index ·ºĞÍ²ÎÊıËùÔÚË÷Òı,´Ó0¿ªÊ¼.
-     * @return ·ºĞÍ²ÎÊıµÄÊµ¼ÊÀàĞÍ, Èç¹ûÃ»ÓĞÊµÏÖParameterizedType½Ó¿Ú£¬¼´²»Ö§³Ö·ºĞÍ£¬ËùÒÔÖ±½Ó·µ»Ø<code>Object.class</code>
+     * @param Field field å­—æ®µ
+     * @param int index æ³›å‹å‚æ•°æ‰€åœ¨ç´¢å¼•,ä»0å¼€å§‹.
+     * @return æ³›å‹å‚æ•°çš„å®é™…ç±»å‹, å¦‚æœæ²¡æœ‰å®ç°ParameterizedTypeæ¥å£ï¼Œå³ä¸æ”¯æŒæ³›å‹ï¼Œæ‰€ä»¥ç›´æ¥è¿”å›<code>Object.class</code>
      */ 
     @SuppressWarnings("unchecked")
 	public static Class getFieldGenericType(Field field) {

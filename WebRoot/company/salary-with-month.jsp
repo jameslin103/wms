@@ -66,7 +66,7 @@
 								&nbsp;/&nbsp;
 							</li>
 							<li>
-								<a href="company/salary-template.jsp">工资模板</a>
+								<a href="viewSalaryTemplate">工资模板</a>
 							</li>
 							<li>
 								&nbsp;/&nbsp;
