@@ -40,8 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </ul>
         </div>        
       </div>
-    <div id="sub-header" class="clearfix">
-      <h2>福建电信</h2>
+     <div id="sub-header" class="clearfix">
       <div class="date">
         	<%
 				java.util.Date now = new java.util.Date();

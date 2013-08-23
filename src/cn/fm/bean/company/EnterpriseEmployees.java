@@ -90,7 +90,7 @@ public class EnterpriseEmployees implements Serializable{
 	
 	private Date     createDate=new Date();
 	
-	
+	private Enterprise  enterprise;
 	
 	@Id @GeneratedValue
 	public Integer getEmployeesId() {
@@ -353,6 +353,15 @@ public class EnterpriseEmployees implements Serializable{
 	}
 	public void setSeriousDiseaseBase(Double seriousDiseaseBase) {
 		this.seriousDiseaseBase = seriousDiseaseBase;
+	}
+/*	 @ManyToOne(cascade = CascadeType.REFRESH)  
+	    // JoinColumn表示外键的列  
+	    @JoinColumn(name="enterpriseId")  */
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
 	}
 	
 	

@@ -20,6 +20,13 @@
 		<div id="container">
 			<div id="header">
 				<jsp:include page="../layout/header.jsp"></jsp:include>
+
+				<div id="sub-header" class="clearfix">
+					<h2>
+						<s:property value="%{#session.enterprise.fullName}" />
+					</h2>
+				</div>
+
 			</div>
 			<div id="main">
 				<div class="row-fluid">
@@ -33,7 +40,7 @@
 								<a href="viewEnterpriseEmployees">员工档案</a>
 							</li>
 							<li class="active">
-								<a href="company/salary-with-month.jsp">工资预算表</a>
+								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li>
 								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
@@ -46,21 +53,12 @@
 						<ul class="normal action-container clearfix">
 							<li class="right">
 								<form action="" class="select-for-year" method="post">
-									<select>
-										<option value="">
-											2014年
-										</option>
-										<option value="" selected>
-											2013年
-										</option>
-										<option value="">
-											2012年
-										</option>
-									</select>
+									 日期:<input id="d11"	name="salaryDate" onclick="WdatePicker()"
+									  class="Wdate" style="width: 110px;height: 25px;" />
 								</form>
 							</li>
 							<li>
-								<a href="company/salary-step1-of-create.jsp">新建工资预算表</a>
+								<a href="newSalaryBudgetTable">新建工资预算表</a>
 							</li>
 							<li>
 								&nbsp;/&nbsp;
@@ -90,18 +88,19 @@
 									</th>
 								</tr>
 							</thead>
+							<s:iterator value="#request.createSalaryBudgetTable" id="sal">
 							<tbody>
 								<tr>
 									<td>
-										一月
+										<s:property value="%{#sal.salaryDate}"/>
 									</td>
 									<td>
 										<ol>
 											<li>
-												<a href="company/salary-with-sum-of-categories.jsp">某某项目12月工资</a>
-											</li>
-											<li>
-												某某项目11月工资
+												<a href="company/salary-with-sum-of-categories.jsp">
+													<s:property value="%{#sal.name}"/>
+													<s:property value="%{#sal.salaryDate}"/>月												
+												</a>
 											</li>
 										</ol>
 									</td>
@@ -147,7 +146,7 @@
 								</tr>
 
 							</tbody>
-
+							</s:iterator>
 						</table>
 
 					</div>

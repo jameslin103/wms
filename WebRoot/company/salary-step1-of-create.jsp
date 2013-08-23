@@ -22,92 +22,68 @@
 				<jsp:include page="../layout/header.jsp" />
 			</div>
 
-			<div id="main">
-				<div class="row-fluid">
-					<div id="center-pane">
-						<ul class="nav nav-tabs">
-							<li>
-								<a href="employee-list.html">员工</a>
-							</li>
-							<li>
-								<a href="salary-with-month.html">工资</a>
-							</li>
-						</ul>
+	<div id="main"> 
+      <div class="row-fluid">
+        <div id="center-pane">
+          <ul class="nav nav-tabs">
+            <li><a href="company/index.jsp">综合</a></li>
+            <li><a href="viewEnterpriseEmployees">员工档案</a></li>
+            <li class="active"><a href="viewSalaryBudgetTable">工资预算表</a></li>
+            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
+          </ul>
+			<div class="span4">
+            <h3>1/3&nbsp;新建工资预算表信息</h3>
+            <s:form action="addSalaryBudgetTable" method="post">
+              <div class="row-fluid">
+                <div class="input-container">
+                  <label>名称</label>
+                  <s:textfield name="createSalaryBudgetTable.name"/>
+                </div>
 
-						<div class="span4">
-							<h3>
-								1/3&nbsp;新建工资预算表信息
-							</h3>
-							<form action="salary-step2-of-create.html" method="post">
-								<div class="row-fluid">
-									<div class="input-container">
-										<label>
-											名称
-										</label>
-										<input type="text" name="">
-									</div>
+                <div class="input-container">
+                  <label>选择模板</label>
+                   <s:select  headerValue="--请选择--" headerKey="0" 
+            			 list="%{#request.salaryTemplates}" name="createSalaryBudgetTable.temple" 
+            			 listKey="templateName" listValue="templateName">
+             	   </s:select> 
+                </div>
 
-									<div class="input-container">
-										<label>
-											选择模板
-										</label>
-										<select>
-											<option value="">
-												模板1
-											</option>
-											<option value="" selected>
-												模板2
-											</option>
-											<option value="">
-												模板3
-											</option>
-										</select>
-									</div>
+                <div class="input-container">
+                  <label>生成哪月工资？</label>
+                  <s:textfield id="d11"	name="salaryDate" onclick="WdatePicker()" cssClass="Wdate" />
+                </div>
 
-									<div class="input-container">
-										<label>
-											生成哪月工资？
-										</label>
-										<select class="span3">
-											<option value="">
-												2014年
-											</option>
-											<option value="" selected>
-												2013年
-											</option>
-											<option value="">
-												2012年
-											</option>
-										</select>
-										<select class="span3">
-											<option value="">
-												7月
-											</option>
-											<option value="" selected>
-												8月
-											</option>
-											<option value="">
-												9月
-											</option>
-										</select>
-									</div>
 
-									<div class="input-container">
-										<button type="submit" class="btn btn-primary">
-											提交
-										</button>
-									</div>
+                <div class="input-container">
+                  <label>选择与其他工资表合并计税</label>
+                  <select>
+                    <option value="">无</option>
+                    <option value="">某某工资表1</option>
+                    <option value="">某某工资表2</option>
+                    <option value="">某某工资表3</option>
+                    <option value="">某某工资表4</option>
+                  </select>
+                </div>
 
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
+                <div class="input-container">
+                  <label>补充说明</label>
+                  <textarea rows="3" name="createSalaryBudgetTable.note"></textarea>
+                </div>
 
-			<div id="footer"></div>
+                <div class="input-container">
+                  <s:submit   value="提交" cssClass="btn btn-primary" />
+                </div>
 
-		</div>
-	</body>
+              </div>
+            </s:form>   
+          </div>
+        </div>
+      </div>
+    </div>
+
+		<div id="footer"></div>
+
+</div>
+</body>
 
 </html>

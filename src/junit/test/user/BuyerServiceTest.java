@@ -31,9 +31,9 @@ public class BuyerServiceTest {
 
 	@Test
 	public void testSave() {
-		Buyer buyer = new Buyer("alax","123456","test@sina.com");
+		Buyer buyer = new Buyer("刘备","1235","test@sina.com");
 		ContactInfo contactInfo = new ContactInfo();
-		contactInfo.setAddress("北京市");
+		contactInfo.setAddress("福州市");
 		contactInfo.setMobile("13671323507");
 		contactInfo.setPhone("0591-81815642");
 		contactInfo.setPostalcode("350001");

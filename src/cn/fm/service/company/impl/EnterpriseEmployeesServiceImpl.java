@@ -2,7 +2,6 @@ package cn.fm.service.company.impl;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -32,13 +31,18 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		return query.getResultList();
 	}
 	
+	/**
+	 * 根据姓名查询企业员工或者全站的员工在某个企业
+	 *   select * from buyer AS o where o.regTime >='2013/03/03' and o.regTime<='2013/08/03';
+	 *   select * from enterpriseemployees as e where e.employeesName like '%刘%' and e.employeesId;
+	 */
 	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees>  findAllEnterpriseEmployees(String employessName,Integer all)
 	{
 		if(StringUtil.isEmpty(employessName))return null;
 		Query query;
 		if(!employessName.equals("")  && all!=null){
-			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like '%?1%' and e.id=1 ");
+			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like '%?1%' and e.employeesId=1 ");
 		}else{
 			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like ?1 ");
 		}
@@ -113,9 +117,14 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		// TODO Auto-generated method stub
 		return null;
 	}
+	/**
+	 * 根据id查找一个实体
+	 * 
+	 */
 
 	public EnterpriseEmployees getEnterpriseEmployees(Integer entityId) {
 		return super.find(entityId);
 	}
-
+	
+	
 }

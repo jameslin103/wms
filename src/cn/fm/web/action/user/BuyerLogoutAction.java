@@ -9,7 +9,7 @@ public class BuyerLogoutAction extends BaseAction {
 	public String loginOut() {
 		
 		request.getSession().removeAttribute("user");
-		
+		request.getSession().removeAttribute("enterprise");
 		return SUCCESS;
 	}
 

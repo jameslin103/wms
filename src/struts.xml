@@ -107,6 +107,10 @@
             	<param name="actionName">viewEnterprise</param>
             </result>
         </action> 
+        <action name="viewEnterpriseDetailed" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterpriseDetailed">
+            <result name="success">company/index.jsp</result>
+        </action>
+        
         
         <!-- InsurancesTaxAction  -->
         <action name="toViewTaxRules" class="cn.fm.web.action.company.InsurancesTaxAction" method="toViewTaxRules">
@@ -142,6 +146,8 @@
             	<param name="actionName">viewCustomBonus</param>
             </result>
         </action> 
+        
+        <!-- Template 2013-08-23 -->
         <action name="viewSalaryTemplate" class="cn.fm.web.action.company.SalaryTemplateAction" method="viewSalaryTemplate">
             <result name="success" >company/salary-template.jsp</result>
         </action> 
@@ -153,7 +159,20 @@
             	<param name="actionName">viewSalaryTemplate</param>
             </result>
         </action>
-        
+        <action name="viewSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="viewSalaryBudgetTable">
+            <result name="success" >company/salary-with-month.jsp</result>
+        </action> 
+        <action name="addSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="addSalaryBudgetTable">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewSalaryBudgetTable</param>
+            </result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewSalaryBudgetTable</param>
+            </result>
+        </action> 
+         <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
+            <result name="success" >company/salary-step1-of-create.jsp</result>
+        </action> 
         
         
         

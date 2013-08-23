@@ -39,7 +39,7 @@ public class SalaryTemplate implements Serializable {
 	
 	private List<String>  subsidys=new ArrayList<String>();
 	
-	
+//	private CreateSalaryBudgetTable   createSalaryBudgetTable;
 	
 	@Id @GeneratedValue
 	public Integer getId() {
@@ -105,5 +105,15 @@ public class SalaryTemplate implements Serializable {
 	public void setSubsidys(List<String> subsidys) {
 		this.subsidys = subsidys;
 	}
+	/* @OneToOne(cascade={CascadeType.ALL}) 
+	    @JoinColumn(name="id") 
+	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
+		return createSalaryBudgetTable;
+	}
+
+	public void setCreateSalaryBudgetTable(
+			CreateSalaryBudgetTable createSalaryBudgetTable) {
+		this.createSalaryBudgetTable = createSalaryBudgetTable;
+	}*/
 	
 }

@@ -72,9 +72,8 @@
 											<s:property value="%{#enterprise.id}" />
 										</td>
 										<td class="with-complement">
-											<a href="company/index.jsp"><s:property
-													value="%{#enterprise.fullName}" />
-											</a>
+											<a href="viewEnterpriseDetailed?enterpriseId=<s:property value="%{#enterprise.id}"/>">
+											<s:property  value="%{#enterprise.fullName}" /></a>
 											<span class="complement"> <s:property
 													value="%{#enterprise.contact}" /> 电话:<s:property
 													value="%{#enterprise.phone}" /> QQ：<s:property

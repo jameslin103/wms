@@ -1,6 +1,8 @@
 package cn.fm.bean.company;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,6 +39,7 @@ public class Enterprise implements Serializable{
 	/*状态	0.合约  1.暂停*/
 	private  Integer   status;
 	
+	private Set<EnterpriseEmployees> enterpriseEmployess=new HashSet<EnterpriseEmployees>();
 	
 	
 	@Id @GeneratedValue
@@ -130,5 +133,16 @@ public class Enterprise implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-
+/*	 @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "enterprise") */ 
+	public Set<EnterpriseEmployees> getEnterpriseEmployess() {
+		return enterpriseEmployess;
+	}
+	public void setEnterpriseEmployess(Set<EnterpriseEmployees> enterpriseEmployess) {
+		this.enterpriseEmployess = enterpriseEmployess;
+	}
+	public void addEnterpriseEmployess(EnterpriseEmployees enterpriseEmployees)
+	{
+		enterpriseEmployees.setEnterprise(this);
+		this.enterpriseEmployess.add(enterpriseEmployees);
+	}
 }
