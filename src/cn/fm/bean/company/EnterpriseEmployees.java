@@ -59,8 +59,6 @@ public class EnterpriseEmployees implements Serializable{
 	private Date  endContractDeadline;
 	/*是否参保*/
 	private  Integer whetherGinseng;
-	/*参保类型  0.医保   1.  社保 2.  公积金*/
-	private Integer  ginsengProtectType;
 	/*医保*/
 	private Integer  sociaSecurity;
 	/*社保 */
@@ -88,9 +86,11 @@ public class EnterpriseEmployees implements Serializable{
 	/*伪删除  0 隐藏    1显示*/
 	private Integer  pseudoDelete;
 	
+	private Integer  enterpriseId;
+	
 	private Date     createDate=new Date();
 	
-	private Enterprise  enterprise;
+	//private Enterprise  enterprise;
 	
 	@Id @GeneratedValue
 	public Integer getEmployeesId() {
@@ -240,13 +240,6 @@ public class EnterpriseEmployees implements Serializable{
 	public void setEndContractDeadline(Date endContractDeadline) {
 		this.endContractDeadline = endContractDeadline;
 	}
-	@Column(length=1)
-	public Integer getGinsengProtectType() {
-		return ginsengProtectType;
-	}
-	public void setGinsengProtectType(Integer ginsengProtectType) {
-		this.ginsengProtectType = ginsengProtectType;
-	}
 	@Column(length=5)
 	public String getGinsengProtectNature() {
 		return ginsengProtectNature;
@@ -354,15 +347,28 @@ public class EnterpriseEmployees implements Serializable{
 	public void setSeriousDiseaseBase(Double seriousDiseaseBase) {
 		this.seriousDiseaseBase = seriousDiseaseBase;
 	}
+	@Column(length=30)
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+	
+	
+	
+	
+	
+	
 /*	 @ManyToOne(cascade = CascadeType.REFRESH)  
 	    // JoinColumn表示外键的列  
 	    @JoinColumn(name="enterpriseId")  */
-	public Enterprise getEnterprise() {
+/*	public Enterprise getEnterprise() {
 		return enterprise;
 	}
 	public void setEnterprise(Enterprise enterprise) {
 		this.enterprise = enterprise;
-	}
+	}*/
 	
 	
 

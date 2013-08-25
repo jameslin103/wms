@@ -29,7 +29,7 @@ public class GenerateSqlFromExcel {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public static List generateStationBugSql(File file,String fileName)throws Exception {
+	public static ArrayList generateStationBugSql(File file,String fileName,int number)throws Exception {
 		
 		InputStream inputStream= null;
 		Workbook workbook= null;
@@ -52,7 +52,7 @@ public class GenerateSqlFromExcel {
 					{						
 						throw new Exception("指定文件中不包含名称为"+fileName+"格式文件名,请重新指定！");
 					}
-					list=createSheet(sheet,i);
+					list=createSheet(sheet,i,number);
 				}
 			}
 			return list;
@@ -64,19 +64,19 @@ public class GenerateSqlFromExcel {
 		}
 	}
 	/**
-	 * 创建单元格
+	 * 获取工作簿
 	 * @param sheet
 	 * @param i
 	 * @param list
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static ArrayList createSheet(Sheet sheet[],int i)
+	public static ArrayList createSheet(Sheet sheet[],int i,int number)
 	{
 		ArrayList list=new ArrayList();
 		for (int j =2; j < sheet[i].getRows(); j++)
 		{
-			String[] valStr = new String[31];
+			String[] valStr = new String[number];
 			for (int k = 0; k < sheet[i].getColumns(); k++) 
 			{
 				Cell cell = sheet[i].getCell(k, j);

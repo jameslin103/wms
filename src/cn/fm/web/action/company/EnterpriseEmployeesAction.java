@@ -1,17 +1,23 @@
 package cn.fm.web.action.company;
 
 import java.io.File;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import com.opensymphony.xwork2.Preparable;
 
+import cn.fm.bean.PageView;
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.utils.DateUtil;
+import cn.fm.utils.ExcelFileGenerator;
 import cn.fm.utils.StringUtil;
 import cn.fm.web.action.BaseAction;
 
@@ -79,18 +85,31 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		
 		return SUCCESS;
 	}
-	
+	/**
+	 * excel批量导入
+	 * @return success
+	 */
 	public String addImportExcelEmployees()
 	{
-		
-		enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表");
+		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
+		if(enterprise==null || enterprise.getId()==null)return INPUT;
+		enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",34,enterprise.getId());
 		return SUCCESS;
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public String viewEnterpriseEmployees(){
 		List<EnterpriseEmployees>  listEmployees=enterpriseEmployeesService.getAllEnterpriseEmployees();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("createDate", "desc");
+		PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+		pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), pageView.getMaxresult(), orderby));
 		if(listEmployees.size()==0){
 			listEmployees=new ArrayList<EnterpriseEmployees>();
 		}
+		request.setAttribute("pageView", pageView);
 		request.setAttribute("employees", listEmployees);
 		return SUCCESS;
 	}
@@ -139,6 +158,43 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		return employees;
 	}
 	
+	/**  
+	* @Name: export
+	* @Description:导出excel的报表数据
+	* @Author: 刘洋（作者）
+	* @Version: V1.00 （版本号）
+	* @Create Date: 2011-12-31 （创建日期）
+	* @Parameters: 无
+	* @Return: 无
+	*/
+	public String export(){
+		//获取导出的表头和数据
+		//获取表头,存放到ArrayList filedName对象中(登录名	用户姓名	性别	联系电话	是否在职)
+		ArrayList<String> filedName = enterpriseEmployeesService.getExcelFiledNameList(); 
+		Enterprise  enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
+		ArrayList<EnterpriseEmployees> filedData = enterpriseEmployeesService.getExcelFiledDataList(enterpriseEmployees,enterprise.getId());
+		try {
+			//获取输出流
+			OutputStream out = response.getOutputStream();
+			//重置输出流
+			response.reset();
+			//设置导出Excel报表的导出形式
+			response.setContentType("application/vnd.ms-excel");
+			ExcelFileGenerator generator = new ExcelFileGenerator(filedName,filedData);
+			generator.expordExcel(out);
+			//设置输出形式
+			System.setOut(new PrintStream(out));
+			//刷新输出流
+			out.flush();
+			//关闭输出流
+			if(out!=null){
+				out.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	
 	public void ConversionTypeFiled()

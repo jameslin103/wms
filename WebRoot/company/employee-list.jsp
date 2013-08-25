@@ -11,8 +11,21 @@
 	<head>
 		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
+		<script type="text/javascript">
+		function topage(page){
+			
+			var form = document.getElementById("myform");
+			alert(form);
+			form.page.value=page;
+			form.submit();
+		}
+		
+		</script>
+		
+		
+		
 	</head>
 	<body>
 
@@ -26,7 +39,8 @@
 					</h2>
 				</div>
 			</div>
-
+	<s:form action="viewEnterpriseEmployees" method="post" id="myform">
+		<s:hidden name="page"/>
 			<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">
@@ -237,45 +251,22 @@
 						</table>
 
 						<div class="pagination">
-							<ul>
-								<li>
-									<a href="#">&laquo;</a>
-								</li>
-								<li>
-									<a href="#">1</a>
-								</li>
-								<li>
-									<a href="#">2</a>
-								</li>
-								<li>
-									<a href="#">3</a>
-								</li>
-								<li>
-									<a href="#">4</a>
-								</li>
-								<li>
-									<a href="#">5</a>
-								</li>
-								<li>
-									<a href="#">6</a>
-								</li>
-								<li>
-									<a href="#">7</a>
-								</li>
-								<li>
-									<a href="#">8</a>
-								</li>
-								<li>
-									<a href="#">&raquo;</a>
-								</li>
-							</ul>
+						<font color="blue">  当前页:第${pageView.currentpage}页 | 总记录数:${pageView.totalrecord}条 | 每页显示:${pageView.maxresult}条 | 总页数:${pageView.totalpage}页</font>　
+						<s:iterator begin="%{#request.pageView.pageindex.startindex}" end="%{#request.pageView.pageindex.endindex}" var="wp">
+    					<s:if test="%{#request.pageView.currentpage==wp}">
+	    					<b>
+	    						<font color="blue">第${wp}页</font>
+	    					</b>
+    					</s:if>
+   						 <s:if test="%{#request.pageView.currentpage!=wp}">
+   						 	<a href="javascript:topage('${wp}')" >第${wp}页</a>
+   						 </s:if>
+						</s:iterator>
 						</div>
-
 					</div>
-
 				</div>
 			</div>
-
+</s:form>
 			<div id="footer"></div>
 
 		</div>
