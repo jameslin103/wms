@@ -34,7 +34,7 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	
 	public List<EnterpriseEmployees>  findAllEnterpriseEmployees(String employessName,Integer all);
 	
-	public ArrayList<EnterpriseEmployees> getExcelFiledDataList(EnterpriseEmployees enterpriseEmployees,int enterpriseId);
+	public List<EnterpriseEmployees> getExcelFiledDataList(EnterpriseEmployees enterpriseEmployees,int enterpriseId);
 	
-	public ArrayList<String> getExcelFiledNameList();
+	public List<String> getExcelFiledNameList();
 }

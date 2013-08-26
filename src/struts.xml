@@ -64,12 +64,34 @@
             	<param name="actionName">viewEnterpriseEmployees</param>
             </result>
         </action> 
+          <action name="exportExcel" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="exportExcel">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterpriseEmployees</param>
+            </result>
+        </action> 
+        
+        <action name="employeesFileExcelTempl" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="employeesFileExcelTempl">  
+           <!-- 配置结果类型为stream的结果 -->  
+          <result name="success" type="stream">  
+               <!-- 指定被下载文件的文件类型 -->  
+               <param name="contentType">application/vnd.ms-excel</param>  
+               <!-- 指定下载文件的文件位置 -->  
+               <param name="contentDisposition">attachment;filename="${excelName}"</param>  
+               <param name="inputName">downloadFile</param>
+               <param name="bufferSize">1024</param>
+           </result>  
+       </action>  
+        
+        
          <action name="addEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="addEnterpriseEmployees">
             <result name="success" type="redirect">/company/employee-list.jsp</result>
             <result name="input">/company/employee-list.jsp</result>
         </action>  
          <action name="viewEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewEnterpriseEmployees">
             <result name="success">/company/employee-list.jsp</result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewEnterpriseEmployees</param>
+            </result>
         </action>  
         
          <action name="selectEnterpriseEmployeesWage" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="selectEnterpriseEmployeesWage">

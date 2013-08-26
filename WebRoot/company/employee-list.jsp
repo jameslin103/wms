@@ -21,11 +21,7 @@
 			form.page.value=page;
 			form.submit();
 		}
-		
 		</script>
-		
-		
-		
 	</head>
 	<body>
 
@@ -91,7 +87,7 @@
 								<a href="#">隐藏信息</a>
 							</li>
 							<li class="right">
-								<a href="doc/全部员工信息表.xls" class="btn btn-primary">下载全体在职员工信息</a>
+								<a href="exportExcel" class="btn btn-primary">下载全体在职员工信息</a>
 							</li>
 							<li class="right">
 								<s:form cssClass="navbar-form pull-left"
@@ -259,7 +255,7 @@
 	    					</b>
     					</s:if>
    						 <s:if test="%{#request.pageView.currentpage!=wp}">
-   						 	<a href="javascript:topage('${wp}')" >第${wp}页</a>
+   						 	<a href="javascript:topage('${wp}')">第${wp}页</a>
    						 </s:if>
 						</s:iterator>
 						</div>

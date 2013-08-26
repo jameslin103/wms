@@ -1,14 +1,18 @@
 package cn.fm.web.action.company;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.Preparable;
 
@@ -18,6 +22,7 @@ import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.ExcelFileGenerator;
+import cn.fm.utils.ExportExcelUtils;
 import cn.fm.utils.StringUtil;
 import cn.fm.web.action.BaseAction;
 
@@ -36,6 +41,27 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private Integer   employeesId;
 	private Integer   insurance;
 	private Integer   all;
+	private String inputPath;  
+	private String excelName;
+	
+	 //工程目录下的模板文件名称
+    String employeeFileName ="员工基本信息表.xls";
+	
+    
+    
+    
+	 public String getExcelName() {
+		return excelName;
+	}
+	public void setExcelName(String excelName) throws UnsupportedEncodingException {
+		this.excelName = new String(excelName.getBytes("ISO8859-1"), "utf-8");
+	}
+	public String getInputPath() {  
+	       return inputPath;  
+	 }  
+	 public void setInputPath(String inputPath) {  
+	        this.inputPath = inputPath;  
+	 }  
 
 	public File getFile() {
 		return file;
@@ -76,6 +102,27 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		
 		
 	}
+	
+	  public InputStream getDownloadFile()  
+	   {  
+	        return ServletActionContext.getServletContext().getResourceAsStream("/doc/"+employeeFileName);  
+	        
+	        
+	    }  
+	    public String employeesFileExcelTempl()
+	    {  
+	    
+	    	try {
+				excelName = new String(employeeFileName.getBytes(), "iso8859-1");//解决中文 文件名问题
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	return SUCCESS;
+	    }
+	
+	
+	
 	public String  addEnterpriseEmployees()
 	{
 		
@@ -161,18 +208,18 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	/**  
 	* @Name: export
 	* @Description:导出excel的报表数据
-	* @Author: 刘洋（作者）
+	* @Author: jameslin（作者）
 	* @Version: V1.00 （版本号）
-	* @Create Date: 2011-12-31 （创建日期）
+	* @Create Date: 2013-08-25（创建日期）
 	* @Parameters: 无
 	* @Return: 无
 	*/
-	public String export(){
+	public String exportExcel(){
 		//获取导出的表头和数据
-		//获取表头,存放到ArrayList filedName对象中(登录名	用户姓名	性别	联系电话	是否在职)
-		ArrayList<String> filedName = enterpriseEmployeesService.getExcelFiledNameList(); 
+		//获取表头,存放到ArrayList filedName对象中()
+		List<String> filedName = enterpriseEmployeesService.getExcelFiledNameList(); 
 		Enterprise  enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
-		ArrayList<EnterpriseEmployees> filedData = enterpriseEmployeesService.getExcelFiledDataList(enterpriseEmployees,enterprise.getId());
+		List<EnterpriseEmployees> filedData =enterpriseEmployeesService.getExcelFiledDataList(enterpriseEmployees,enterprise.getId());
 		try {
 			//获取输出流
 			OutputStream out = response.getOutputStream();
@@ -180,7 +227,10 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			response.reset();
 			//设置导出Excel报表的导出形式
 			response.setContentType("application/vnd.ms-excel");
+			
 			ExcelFileGenerator generator = new ExcelFileGenerator(filedName,filedData);
+			ExportExcelUtils<EnterpriseEmployees>  exp=new ExportExcelUtils<EnterpriseEmployees>();
+			
 			generator.expordExcel(out);
 			//设置输出形式
 			System.setOut(new PrintStream(out));
@@ -192,6 +242,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			e.getClass();
+			e.toString();
 		}
 		return null;
 	}

@@ -143,13 +143,13 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	* @Parameters: 无
 	* @Return: ArrayList(Excel标题集数据)
 	*/
-	public ArrayList<String> getExcelFiledNameList() {
+	public List<String> getExcelFiledNameList() {
 		String [] titles = {"序","合同编号","姓名",	"性别",	"籍贯",	"户口性质",	"家庭住址",	"婚姻",	"文化程度","照片",	"身份证"	,"电话",	"行业",	"岗位",	
 				"开户银行",	"卡号","合同期限(起)","合同期限(止)","服务费（元）","参保性质","是否参保","哪月起参保？","社保","医保","公积金","大病统筹",
 				"参考默认","社会保险","生育保险","工伤","基本医疗保险","住房公积金","大病统筹","缴纳方式"};
 	
 		
-		ArrayList<String> filedName = new ArrayList<String>();
+		List<String> filedName = new ArrayList<String>();
 		for(int i=0;i<titles.length;i++){
 			String title = titles[i];
 			filedName.add(title);
@@ -167,16 +167,16 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	* @Return: ArrayList(Excel标题集数据)
 	*/
 	@SuppressWarnings("unchecked")
-	public ArrayList<EnterpriseEmployees> getExcelFiledDataList(EnterpriseEmployees enterpriseEmployees,int enterpriseId)
+	public List<EnterpriseEmployees> getExcelFiledDataList(EnterpriseEmployees enterpriseEmployees,int enterpriseId)
 	{
 
-		ArrayList<EnterpriseEmployees> enterpriseEmployeesListDatePO=null;
-		Query query=em.createQuery("select e from EnterpriseEmployees where e.enterprise=?1");
+		List<EnterpriseEmployees> enterpriseEmployeesListDatePO=null;
+		Query query=em.createQuery("select e from EnterpriseEmployees e where e.enterpriseId=?1");
 		query.setParameter(1, enterpriseId);
-		enterpriseEmployeesListDatePO=(ArrayList<EnterpriseEmployees>) query.getResultList();
+		enterpriseEmployeesListDatePO=query.getResultList();
 		List<EnterpriseEmployees> employeesListVO = this.enterpriseEmployeesPOListToVOList(enterpriseEmployeesListDatePO);
 
-		return (ArrayList<EnterpriseEmployees>) employeesListVO;
+		return  employeesListVO;
 	}
 	/**  
 	* @Name: elecUserPOListToVOList

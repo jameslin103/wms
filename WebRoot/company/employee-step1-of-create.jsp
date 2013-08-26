@@ -13,7 +13,16 @@
 		<title>富民人力银行派遣系统</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<%@ include file="/help/public_css_js.jsp"%>
-
+		<script language="JavaScript">  
+			function checkfm(form){  
+			    if (trim(form.file.value)==""){  
+			        alert("请选择文件！");
+			        form.file.focus();  
+			        return false;  
+			    }  
+			    return true;  
+		}  
+	</script>  
 	</head>
 	<body>
 
@@ -46,12 +55,11 @@
 								<div class="alert alert-info">
 									<ol>
 										<li>
-											<a href="../doc/增员表.xls">下载增员Excel表格</a>
+											<a href="employeesFileExcelTempl">下载增员Excel表格</a>
 										</li>
 										<li>
 											上传新增员工表
-											<s:form action="addImportExcelEmployees"
-												cssClass="form-search" method="post"
+											<s:form action="addImportExcelEmployees" cssClass="form-search" method="post"
 												enctype="multipart/form-data">
 												<s:file name="file" />
 												<br>
