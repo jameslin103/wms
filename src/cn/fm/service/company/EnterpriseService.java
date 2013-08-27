@@ -8,6 +8,14 @@ import cn.fm.service.base.DAO;
 
 public interface EnterpriseService extends DAO<Enterprise> {
 
-	public List<Enterprise> getAllEnterprise();
+	public List<Enterprise> getAllEnterprise(Integer userId);
+	
+	
+	/**
+	 * 统计多少员工
+	 * @param enterpriseId
+	 * @return
+	 */
+	public long getCountEmployees(Integer enterpriseId);
 	
 }

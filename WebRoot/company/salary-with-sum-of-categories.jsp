@@ -17,6 +17,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 <div id="container">
 	 <div id="header">
      		<jsp:include page="../layout/header.jsp"></jsp:include>
+     		<div id="sub-header" class="clearfix">
+					<h2>
+						<s:property value="%{#session.enterprise.fullName}" />
+					</h2>
+			</div>
+     		
     </div>
 
     <div id="main">
@@ -25,9 +31,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="center-pane">
           <ul class="nav nav-tabs">
             <li><a href="company/index.jsp">综合</a></li>
-            <li><a href="company/employee-list.jsp">员工档案</a></li>
+            <li><a href="viewEnterpriseEmployees">员工档案</a></li>
             <li class="active"><a href="company/salary-with-month.jsp">工资预算表</a></li>
-            <li><a href="insurance-with-month.jsp">增减员与参保明细</a></li>
+            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
           </ul>
  
           <table class="table table-striped table-bordered">
@@ -55,13 +61,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <tbody>
               <tr>
                 <td>
-                  某某工程工资
+                	 火星计划工程工资
                 </td>
-                <td>2013年1月</td>
-                <td>某某工资预算表</td>
+                <td>2013年8月</td>
+                <td>火星计划工资预算表</td>
                 <td>市医保</td>
-                <td>10435.50</td>
-                <td>9480.00</td>
+                <td>100000</td>
+                <td>8888.000</td>
                 <td>60</td>
                 <td>600</td>
                 <td>15<br><a href="company/salary-with-bank-detail.jsp">查看</a></td>
@@ -70,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td>5<br><span class="em">（已发放）</span><br>2013年7月16日11时</td>
                 <td>
                   <ul>
-                    <li>制作：倪姐，2013-07-18，9:00</li>
+                    <li>制作：倪姐，2013-08-10，9:00</li>
                     <li>发放：小柴</li>
                   </ul>
                 </td>

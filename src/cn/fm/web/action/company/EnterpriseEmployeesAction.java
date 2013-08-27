@@ -41,8 +41,11 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private Integer   employeesId;
 	private Integer   insurance;
 	private Integer   all;
-	private String inputPath;  
-	private String excelName;
+	private String    inputPath;  
+	private String    excelName;
+	private Integer   enterpriseId;
+	
+	
 	
 	 //工程目录下的模板文件名称
     String employeeFileName ="员工基本信息表.xls";
@@ -50,7 +53,13 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
     
     
     
-	 public String getExcelName() {
+	 public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+	public String getExcelName() {
 		return excelName;
 	}
 	public void setExcelName(String excelName) throws UnsupportedEncodingException {
@@ -148,15 +157,27 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 * @return
 	 */
 	public String viewEnterpriseEmployees(){
-		List<EnterpriseEmployees>  listEmployees=enterpriseEmployeesService.getAllEnterpriseEmployees();
+		Enterprise enter=(Enterprise)request.getSession().getAttribute("enterprise");
+		if(enter!=null)this.setEnterpriseId(enter.getId());
+		List<EnterpriseEmployees>  listEmployees=enterpriseEmployeesService.getAllEnterpriseEmployees(this.enterpriseId);
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("createDate", "desc");
-		PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
-		pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), pageView.getMaxresult(), orderby));
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(this.enterpriseId!=null)
+		{
+			jpql.append(" o.enterpriseId=? ");
+			params.add(this.enterpriseId);
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+		
 		if(listEmployees.size()==0){
 			listEmployees=new ArrayList<EnterpriseEmployees>();
 		}
-		request.setAttribute("pageView", pageView);
+		
 		request.setAttribute("employees", listEmployees);
 		return SUCCESS;
 	}

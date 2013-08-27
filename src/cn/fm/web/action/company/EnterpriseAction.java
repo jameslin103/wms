@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import com.opensymphony.xwork2.Preparable;
 
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.web.action.BaseAction;
 
@@ -61,7 +62,8 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	
 	public String  viewEnterprise()
 	{
-		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise();
+		
+		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(1);
 		if(enterpriseList.size()==0)
 			enterpriseList=new ArrayList<Enterprise>();
 		request.setAttribute("enterpriseList", enterpriseList);
@@ -70,10 +72,12 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	
 	public String toBeResponsibleEnterprise()
 	{
-		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise();
+		 WmsUser user=(WmsUser)request.getSession().getAttribute("user");
+		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(user.getUserId());
 		if(enterpriseList.size()==0)
 			enterpriseList=new ArrayList<Enterprise>();
 		request.setAttribute("enterpriseList", enterpriseList);
+		
 		return SUCCESS;
 	}
 	public String viewEnterpriseDetailed()
@@ -85,5 +89,6 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		request.getSession().setAttribute("enterprise", enterprise);
 		return SUCCESS;
 	}
+
 
 }

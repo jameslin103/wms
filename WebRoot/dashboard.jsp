@@ -5,7 +5,7 @@
 	<div id="header">
 		<ul class="user normal clearfix">
 			<li>
-				<a href="account/password.jsp"><s:property value="%{#session.user.username}" />
+				<a href="account/password.jsp">用户:&nbsp;&nbsp;<s:property value="%{#session.user.username}" />
 				</a>
 			</li>
 			<li>

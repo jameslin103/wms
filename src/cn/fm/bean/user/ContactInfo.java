@@ -21,7 +21,9 @@ public class ContactInfo implements Serializable{
 	/** 电话号码**/
 	private String mobile;
 	/**所属用户**/
-	private Buyer buyer;
+	private WmsUser wmsUser;
+	
+	
 	@Id @GeneratedValue
 	public Integer getContactid() {
 		return contactid;
@@ -29,7 +31,7 @@ public class ContactInfo implements Serializable{
 	public void setContactid(Integer contactid) {
 		this.contactid = contactid;
 	}
-	@Column(length=100,nullable=false)
+	@Column(length=100)
 	public String getAddress() {
 		return address;
 	}
@@ -43,7 +45,7 @@ public class ContactInfo implements Serializable{
 	public void setPostalcode(String postcode) {
 		this.postalcode = postcode;
 	}
-	@Column(length=20)
+	@Column(length=13)
 	public String getPhone() {
 		return phone;
 	}
@@ -58,11 +60,11 @@ public class ContactInfo implements Serializable{
 		this.mobile = mobile;
 	}
 	@OneToOne(mappedBy="contactInfo",cascade=CascadeType.REFRESH)
-	public Buyer getBuyer() {
-		return buyer;
+	public WmsUser getWmsUser() {
+		return wmsUser;
 	}
-	public void setBuyer(Buyer buyer) {
-		this.buyer = buyer;
+	public void setWmsUser(WmsUser wmsUser) {
+		this.wmsUser = wmsUser;
 	}
 	@Override
 	public int hashCode() {

@@ -70,11 +70,17 @@
 										</td>
 										<td class="with-complement">
 											倪姐，陈姐
-											<a href="#info-for-check2" data-toggle="modal"
-												class="complement">增删负责人 </a>
+											<s:hidden value='%{#enterprise.id}' id="enterId"/>
+											<a href="#info-for-check2" data-toggle="modal"   class="complement" >增删负责人 </a>
 										</td>
 										<td>
-											<a href="#info-for-check1" data-toggle="modal">修改</a>
+											<s:hidden value="%{#enterprise.id}"  id="update"/>
+											<s:hidden value="%{#enterprise.contact}" />
+											<s:hidden value="%{#enterprise.phone}" />
+											<s:hidden value="%{#enterprise.qq}" />
+											
+																						
+											<a href="#info-for-check1"  data-toggle="modal" id="updateto">修改</a>
 										</td>
 									</tr>
 								</tbody>
@@ -107,76 +113,76 @@
 							<label>
 								简称
 							</label>
-							<s:textfield name="enterprise.rferred" />
+							<s:textfield name="enterprise.rferred"  value="%{#enterprise.rferred}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								全称
 							</label>
-							<s:textfield name="enterprise.fullName" />
+							<s:textfield name="enterprise.fullName" value="%{#enterprise.fullName}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								法人代表
 							</label>
-							<s:textfield name="enterprise.legalRepresentative" />
+							<s:textfield name="enterprise.legalRepresentative"  value="%{#enterprise.legalRepresentative}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								开户行
 							</label>
-							<s:textfield name="enterprise.accountLine" />
+							<s:textfield name="enterprise.accountLine"  value="%{#enterprise.accountLine}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								企业银行账号
 							</label>
-							<s:textfield name="enterprise.enterpriseBankAccount" />
+							<s:textfield name="enterprise.enterpriseBankAccount"  value="%{#enterprise.enterpriseBankAccount}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								地址
 							</label>
-							<s:textfield name="enterprise.address" />
+							<s:textfield name="enterprise.address"  value="%{#enterprise.address}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								联系人
 							</label>
-							<s:textfield name="enterprise.contact" />
+							<s:textfield name="enterprise.contact"  value="%{#enterprise.contact}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								电话
 							</label>
-							<s:textfield name="enterprise.phone" />
+							<s:textfield name="enterprise.phone"  value="%{#enterprise.phone}"/>
 						</div>
 						<div class="input-container">
 							<label>
 								QQ
 							</label>
-							<s:textfield name="enterprise.qq" />
+							<s:textfield name="enterprise.qq"  value="%{#enterprise.qq}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								传真
 							</label>
-							<s:textfield name="enterprise.fax" />
+							<s:textfield name="enterprise.fax"  value="%{#enterprise.fax}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								电子邮件
 							</label>
-							<s:textfield name="enterprise.email" />
+							<s:textfield name="enterprise.email"  value="%{#enterprise.email}"/>
 						</div>
 
 						<div class="input-container">
@@ -226,7 +232,7 @@
 							<label>
 								企业名称
 							</label>
-							福建电信
+							<s:property value="%{#enterprise.fullName}"/>
 						</div>
 
 						<div class="input-container">

@@ -8,21 +8,21 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import cn.fm.bean.user.Buyer;
 import cn.fm.bean.user.ContactInfo;
-import cn.fm.service.user.BuyerService;
+import cn.fm.bean.user.WmsUser;
+import cn.fm.service.user.WmsUserService;
 
 
 
 
-public class BuyerServiceTest {
-	private static BuyerService buyerService;
+public class WmsUserServiceTest {
+	private static WmsUserService wmsUserService;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		try {
 			ApplicationContext cxt = new ClassPathXmlApplicationContext("beans.xml");
-			buyerService = (BuyerService)cxt.getBean("buyerServiceImpl");
+			wmsUserService = (WmsUserService)cxt.getBean("wmsUserServiceImpl");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -31,15 +31,15 @@ public class BuyerServiceTest {
 
 	@Test
 	public void testSave() {
-		Buyer buyer = new Buyer("刘备","1235","test@sina.com");
+		WmsUser wmsUser = new WmsUser("关羽","123","guanyu@sina.com");
 		ContactInfo contactInfo = new ContactInfo();
 		contactInfo.setAddress("福州市");
-		contactInfo.setMobile("13671323507");
-		contactInfo.setPhone("0591-81815642");
+		contactInfo.setMobile("13289252236");
+		contactInfo.setPhone("0591-33706589");
 		contactInfo.setPostalcode("350001");
-		buyer.setContactInfo(contactInfo);
-		buyer.setRealname("县政府");
-		buyerService.save(buyer);
+		wmsUser.setContactInfo(contactInfo);
+		//wmsUser.setRealname("三国");
+		wmsUserService.save(wmsUser);
 	}
 
 	@Test
@@ -47,8 +47,18 @@ public class BuyerServiceTest {
 	{
 		
 	
-		boolean falg=buyerService.exsit("jameslin");
+		boolean falg=wmsUserService.exsit("jameslin");
 		System.out.println(falg);
+		
+	}
+
+	@Test
+	public void find()
+	{
+		
+	
+		WmsUser wms=wmsUserService.find("13809505940");
+		System.out.println(wms.getPhone());
 		
 	}
 	@SuppressWarnings("unchecked")
@@ -56,9 +66,9 @@ public class BuyerServiceTest {
 	public void testUsername()
 	{
 
-		List<Buyer> listBuyer=new ArrayList<Buyer>();
-		listBuyer=buyerService.getBuyerInfo("jameslin","jameslin110","jameslin666");
-		for (Buyer buyer : listBuyer) {
+		List<WmsUser> listWmsUser=new ArrayList<WmsUser>();
+		listWmsUser=wmsUserService.getWmsUserInfo("jameslin","jameslin110","jameslin666");
+		for (WmsUser buyer : listWmsUser) {
 			System.out.println(buyer.getEmail());
 		}
 		
@@ -67,8 +77,8 @@ public class BuyerServiceTest {
 	@Test
 	public void testGetfall()
 	{
-		List<Buyer> listBuyer=new ArrayList<Buyer>();
-		listBuyer=buyerService.getAllByuer();
+		List<WmsUser> listBuyer=new ArrayList<WmsUser>();
+		listBuyer=wmsUserService.getAllWmsUser();
 		System.out.println(listBuyer.size());
 		
 	}

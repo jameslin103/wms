@@ -4,10 +4,13 @@ package cn.fm.bean.company;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -90,7 +93,7 @@ public class EnterpriseEmployees implements Serializable{
 	
 	private Date     createDate=new Date();
 	
-	//private Enterprise  enterprise;
+	private Enterprise  enterprise;
 	
 	@Id @GeneratedValue
 	public Integer getEmployeesId() {
@@ -356,14 +359,10 @@ public class EnterpriseEmployees implements Serializable{
 	}
 	
 	
-	
-	
-	
-	
-/*	 @ManyToOne(cascade = CascadeType.REFRESH)  
+	/* @ManyToOne(cascade = CascadeType.REFRESH)  
 	    // JoinColumn表示外键的列  
-	    @JoinColumn(name="enterpriseId")  */
-/*	public Enterprise getEnterprise() {
+	    @JoinColumn(name="enterpriseId")  
+	public Enterprise getEnterprise() {
 		return enterprise;
 	}
 	public void setEnterprise(Enterprise enterprise) {

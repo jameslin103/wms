@@ -110,6 +110,11 @@
 											<s:property value="%{#base.startDate}" />
 										</td>
 										<td>
+											<s:hidden value="%{#base.id}"/>
+											<s:hidden value="%{#base.inductrialInjury}"/>
+											<s:hidden value="%{#base.povertyStricken}"/>
+											<s:hidden value="%{#base.inductrialInjury}"/>
+											
 											<a href="#info-for-check" data-toggle="modal">修改</a>
 										</td>
 									</tr>
@@ -156,7 +161,8 @@
 								<label>
 									社会保险基数
 								</label>
-								<s:textfield name="insurancesBaseSettings.socialInsurance" />
+								<s:property value="%{#insurancesBaseSettings.socialInsurance}"/>
+								<s:textfield name="insurancesBaseSettings.socialInsurance" value="%{#insurancesBaseSettings.socialInsurance}"/>
 								元
 							</div>
 
@@ -164,7 +170,7 @@
 								<label>
 									生育保险基数
 								</label>
-								<s:textfield name="insurancesBaseSettings.birthInsurance" />
+								<s:textfield name="insurancesBaseSettings.birthInsurance" value="%{#insurancesBaseSettings.birthInsurance}"/>
 								元
 							</div>
 
@@ -172,7 +178,7 @@
 								<label>
 									工伤基数
 								</label>
-								<s:textfield name="insurancesBaseSettings.inductrialInjury" />
+								<s:textfield name="insurancesBaseSettings.inductrialInjury" value="%{#insurancesBaseSettings.inductrialInjury}"/>
 								元
 							</div>
 
@@ -180,7 +186,7 @@
 								<label>
 									住房公积金基数
 								</label>
-								<s:textfield name="insurancesBaseSettings.housingMPF" />
+								<s:textfield name="insurancesBaseSettings.housingMPF" value="%{#insurancesBaseSettings.housingMPF}"/>
 								元
 							</div>
 
@@ -188,7 +194,7 @@
 								<label>
 									基本医疗基数
 								</label>
-								<s:textfield name="insurancesBaseSettings.basicMedical" />
+								<s:textfield name="insurancesBaseSettings.basicMedical" value="%{#insurancesBaseSettings.basicMedical}"/>
 								元
 							</div>
 
@@ -196,7 +202,7 @@
 								<label>
 									大病统筹基数
 								</label>
-								<s:textfield name="insurancesBaseSettings.povertyStricken" />
+								<s:textfield name="insurancesBaseSettings.povertyStricken" value="%{#insurancesBaseSettings.povertyStricken}"/>
 								元
 							</div>
 

@@ -3,10 +3,15 @@ package cn.fm.bean.company;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -28,10 +33,14 @@ public class CreateSalaryBudgetTable implements Serializable {
 	/*创建日期*/
 	private Date    createDate=new Date();
 	
-	
+	//private Integer enterpriseId;
 	
 	//private SalaryTemplate  salaryTemplate;
-
+	
+	 
+	private Enterprise enterprise;
+	
+	
 	@Id @GeneratedValue
 	public Integer getId() {
 		return id;
@@ -88,6 +97,17 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	 @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })@JoinColumn(name = "enterpriseId")
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
+	
+	
+	
+	
 /*
 	@OneToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},mappedBy="createSalaryBudgetTable")
 	public SalaryTemplate getSalaryTemplate() {
@@ -98,5 +118,32 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.salaryTemplate = salaryTemplate;
 	}
 	*/
+	
+	
+	   @Override  
+	    public int hashCode() {  
+	        final int prime = 31;  
+	        int result = 1;  
+	        result = prime * result + ((id == null) ? 0 : id.hashCode());  
+	        return result;  
+	    }  
+	  
+	    @Override  
+	    public boolean equals(Object obj) {  
+	        if (this == obj)  
+	            return true;  
+	        if (obj == null)  
+	            return false;  
+	        if (getClass() != obj.getClass())  
+	            return false;  
+	        CreateSalaryBudgetTable table = (CreateSalaryBudgetTable) obj;  
+	        if (id== null) {  
+	            if (table.id != null)  
+	                return false;  
+	        } else if (!id.equals(table.id))  
+	            return false;  
+	        return true;  
+	    }  
+	  
 	
 }

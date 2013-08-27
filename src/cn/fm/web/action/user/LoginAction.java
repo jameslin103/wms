@@ -1,8 +1,8 @@
 package cn.fm.web.action.user;
 
 import javax.annotation.Resource;
-import cn.fm.bean.user.Buyer;
-import cn.fm.service.user.BuyerService;
+import cn.fm.bean.user.WmsUser;
+import cn.fm.service.user.WmsUserService;
 import cn.fm.web.action.BaseAction;
 
 
@@ -11,32 +11,32 @@ import cn.fm.web.action.BaseAction;
 @SuppressWarnings("serial")
 public class LoginAction extends BaseAction{
 	
-		private Buyer buyer;
-		private Buyer loginUser;
+		private WmsUser wmsUser;
+		private WmsUser loginUser;
 		
 		@Resource
-		private BuyerService buyerSerivce;
+		private WmsUserService wmsUserService;
 		
-		public Buyer getBuyer() {
-			return buyer;
+		public WmsUser getWmsUser() {
+			return wmsUser;
 		}
-		public void setBuyer(Buyer buyer) {
-			this.buyer = buyer;
+		public void setWmsUser(WmsUser wmsUser) {
+			this.wmsUser = wmsUser;
 		}
 		
 		
 		public String userLogin()
 		{
-			if(buyer==null)return INPUT;
-			if (isInvalid(buyer.getUsername().trim()))
+			if(wmsUser==null)return INPUT;
+			if (isInvalid(wmsUser.getPhone().trim()))
 		            return INPUT;
-		    if (isInvalid(buyer.getPassword().trim()))
+		    if (isInvalid(wmsUser.getPassword().trim()))
 		            return INPUT;
-			boolean isCheckUser=buyerSerivce.checkUser(buyer.getUsername(), buyer.getPassword());
+			boolean isCheckUser=wmsUserService.checkUser(wmsUser.getPhone(), wmsUser.getPassword());
 			if(isCheckUser!=true){
 				return INPUT;	
 			}
-			loginUser=buyerSerivce.find(buyer.getUsername().trim());
+			loginUser=wmsUserService.find(wmsUser.getPhone());
 			if( loginUser!=null){
 				request.getSession().setAttribute("user",loginUser);
 			}

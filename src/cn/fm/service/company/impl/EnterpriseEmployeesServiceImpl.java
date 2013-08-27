@@ -3,7 +3,6 @@ package cn.fm.service.company.impl;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -26,11 +25,13 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		super.save(entity);	
 	}
 
+
+	
 	@SuppressWarnings("unchecked")
-	public List<EnterpriseEmployees> getAllEnterpriseEmployees()
+	public List<EnterpriseEmployees> getAllEnterpriseEmployees(Integer enterpriseId)
 	{
-		Query query = em.createQuery("select e from EnterpriseEmployees e ");
-		return query.getResultList();
+		Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterpriseId=?1 ");
+		return query.setParameter(1, enterpriseId).getResultList();
 	}
 	
 	/**
@@ -44,7 +45,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		if(StringUtil.isEmpty(employessName))return null;
 		Query query;
 		if(!employessName.equals("")  && all!=null){
-			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like '%?1%' and e.employeesId=1 ");
+			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like ?1 and e.employeesId=1 ");
 		}else{
 			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like ?1 ");
 		}

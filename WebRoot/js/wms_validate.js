@@ -2,14 +2,28 @@ function Ctrl($scope) {
 
   $scope.user = {name: 'guest', last: 'visitor'};
 }
+
+
+
+
 $(document).ready(function(){
-	validate();
 	
+	$("#updateto").click(function (){
+		
+		alert($("#update").val());
+		
+	});
+	
+
 	
 });
 
+
+
+
 function ajaxUpdateEnterprise()
 {
+
 		var aj = $.ajax( {    
 		    url:'updateEnterprise',// 跳转到 action    
 		    data:{    

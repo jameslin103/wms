@@ -85,18 +85,18 @@
 											<a href="company/balance-detail.jsp">-20000</a>
 										</td>
 										<td>
-											<a href="company/employee-list.jsp">30000</a>
+											<a href="viewEnterpriseEmployees?enterpriseId=<s:property value="%{#enterprise.id}"/> "><s:property value="%{#enterprise.count}"/></a>
 										</td>
 										<td>
 											<ol>
 												<li>
-													<a href="company/salary-with-sum-of-categories.jsp">工资预算表1</a>（待发放）
+													<a href="company/salary-with-sum-of-categories.jsp">火星计划工资预算表1</a>（待发放）
 												</li>
 												<li>
-													<a href="company/salary-with-sum-of-categories.jsp">工资预算表1</a>（已发放）
+													<a href="company/salary-with-sum-of-categories.jsp">中国电信工资预算表3</a>（已发放）
 												</li>
 												<li>
-													<a href="company/salary-with-sum-of-categories.jsp">工资预算表1</a>（待发放）
+													<a href="company/salary-with-sum-of-categories.jsp">中国平安工资预算表5</a>（待发放）
 												</li>
 											</ol>
 										</td>

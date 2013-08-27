@@ -2,7 +2,6 @@ package cn.fm.service.company;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.fm.bean.company.EnterpriseEmployees;
@@ -24,7 +23,7 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * 查看所有企业员工
 	 * @return list
 	 */
-	public List<EnterpriseEmployees> getAllEnterpriseEmployees();
+	public List<EnterpriseEmployees> getAllEnterpriseEmployees(Integer enterpriseId);
 	
 	public List<EnterpriseEmployees> getEnterpriseEmployeesSalaryDetail(Serializable entityId);
 	
@@ -37,4 +36,5 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	public List<EnterpriseEmployees> getExcelFiledDataList(EnterpriseEmployees enterpriseEmployees,int enterpriseId);
 	
 	public List<String> getExcelFiledNameList();
+	
 }

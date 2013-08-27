@@ -29,8 +29,8 @@ public class EnterpriseEmployessServiceTest {
 		
 		try {
 			ApplicationContext cxt=new ClassPathXmlApplicationContext("beans.xml");
-			//enterpriseEmployeesService=(EnterpriseEmployeesService)cxt.getBean("enterpriseEmployeesServiceImpl");
-			enterpriseService=(EnterpriseService)cxt.getBean("enterpriseServiceImpl");
+			enterpriseEmployeesService=(EnterpriseEmployeesService)cxt.getBean("enterpriseEmployeesServiceImpl");
+			//enterpriseService=(EnterpriseService)cxt.getBean("enterpriseServiceImpl");
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
@@ -39,7 +39,17 @@ public class EnterpriseEmployessServiceTest {
 		
 		
 	}
-	
+	@Test
+	public void find()
+	{
+		List<EnterpriseEmployees> enterpriseEmployeesList=enterpriseEmployeesService.getAllEnterpriseEmployees(3);
+		System.out.println(enterpriseEmployeesList.size());
+		for (EnterpriseEmployees enterpriseEmployees : enterpriseEmployeesList) {
+			System.out.println(enterpriseEmployees.getHomeAddress());
+		}
+		
+		
+	}
 	@Test
 	public void testFindEmplyess()
 	{
@@ -95,9 +105,13 @@ public class EnterpriseEmployessServiceTest {
 	@Test
 	public void getAllEnterpris()
 	{
-		List<Enterprise> listEnterprise=enterpriseService.getAllEnterprise();
+		List<Enterprise> listEnterprise=enterpriseService.getAllEnterprise(1);
 		for (Enterprise enterprise : listEnterprise) {
 			System.out.println(enterprise.getAddress());
+			System.out.println(enterprise.getCount());
+			System.out.println(enterprise.getEmail());
+
+			
 		}
 		
 	}

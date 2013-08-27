@@ -3,7 +3,7 @@ package cn.fm.web.action.user;
 import cn.fm.web.action.BaseAction;
 
 @SuppressWarnings("serial")
-public class BuyerLogoutAction extends BaseAction {
+public class WmsUserLogoutAction extends BaseAction {
 
 	
 	public String loginOut() {

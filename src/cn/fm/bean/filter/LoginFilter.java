@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-import cn.fm.bean.user.Buyer;
+import cn.fm.bean.user.WmsUser;
 
 public class LoginFilter implements Filter {
 
@@ -38,7 +38,7 @@ public class LoginFilter implements Filter {
 			return;
 		}
 		//2、从session(globle_user)对象中获取当前登录的用户
-		Buyer elecUser = (Buyer) request.getSession().getAttribute("user");
+		WmsUser elecUser = (WmsUser) request.getSession().getAttribute("user");
 		if(elecUser!=null){
 			//如果从session中获取的用户对象不为空，则放行
 			chain.doFilter(request, response);
