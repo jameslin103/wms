@@ -1,9 +1,9 @@
-package cn.fm.service.company;
+package cn.fm.service.salary;
 
 import java.util.List;
 
 import cn.fm.bean.company.CustomBonus;
-import cn.fm.bean.company.SalaryTemplate;
+import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.base.DAO;
 
 public interface SalaryTemplateService extends DAO<SalaryTemplate> {

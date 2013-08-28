@@ -7,10 +7,10 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 
-import cn.fm.bean.company.CreateSalaryBudgetTable;
-import cn.fm.bean.company.SalaryTemplate;
-import cn.fm.service.company.CreateSalaryBudgetTableService;
-import cn.fm.service.company.SalaryTemplateService;
+import cn.fm.bean.salary.CreateSalaryBudgetTable;
+import cn.fm.bean.salary.SalaryTemplate;
+import cn.fm.service.salary.CreateSalaryBudgetTableService;
+import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.utils.DateUtil;
 import cn.fm.web.action.BaseAction;
 

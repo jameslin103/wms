@@ -1,4 +1,4 @@
-package cn.fm.bean.company;
+package cn.fm.bean.salary;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 public class EmployeesSalaryDetail implements Serializable
 {
 	
-	private Integer  id;
+	private Integer  salaryId;
 	/*工资*/ 
 	private BigDecimal  wage;
 	
@@ -98,19 +98,19 @@ public class EmployeesSalaryDetail implements Serializable
 	/*到卡金额 */
 	private BigDecimal  moneyToCards;
 
-	private Date        createDate;
+	private Date        createDate=new Date();
 	
 	
 	
 	
 	
 	@Id @GeneratedValue
-	public Integer getId() {
-		return id;
+	public Integer getSalaryId() {
+		return salaryId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setSalaryId(Integer salaryId) {
+		this.salaryId = salaryId;
 	}
 	@Temporal(TemporalType.DATE)
 	public Date getCreateDate() {
@@ -121,7 +121,7 @@ public class EmployeesSalaryDetail implements Serializable
 		this.createDate = createDate;
 	}
 
-	@Column(precision=18,scale=2)
+	@Column(length=80,scale=2)
 	public BigDecimal getWage() {
 		return wage;
 	}
@@ -129,7 +129,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setWage(BigDecimal wage) {
 		this.wage = wage;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80,scale=2)
 	public BigDecimal getBonus() {
 		return bonus;
 	}
@@ -137,7 +137,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setBonus(BigDecimal bonus) {
 		this.bonus = bonus;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80,scale=2)
 	public BigDecimal getSubsidies() {
 		return subsidies;
 	}
@@ -145,7 +145,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setSubsidies(BigDecimal subsidies) {
 		this.subsidies = subsidies;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80,scale=2)
 	public BigDecimal getShouldPay() {
 		return shouldPay;
 	}
@@ -153,7 +153,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setShouldPay(BigDecimal shouldPay) {
 		this.shouldPay = shouldPay;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getSocialInsuranceBase() {
 		return socialInsuranceBase;
 	}
@@ -161,7 +161,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setSocialInsuranceBase(BigDecimal socialInsuranceBase) {
 		this.socialInsuranceBase = socialInsuranceBase;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getEnterprisePensionInsurance() {
 		return enterprisePensionInsurance;
 	}
@@ -169,7 +169,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterprisePensionInsurance(BigDecimal enterprisePensionInsurance) {
 		this.enterprisePensionInsurance = enterprisePensionInsurance;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getPersonalPensionInsurance() {
 		return personalPensionInsurance;
 	}
@@ -177,7 +177,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setPersonalPensionInsurance(BigDecimal personalPensionInsurance) {
 		this.personalPensionInsurance = personalPensionInsurance;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getEnterpriseUnemploymentInsurance() {
 		return enterpriseUnemploymentInsurance;
 	}
@@ -186,7 +186,7 @@ public class EmployeesSalaryDetail implements Serializable
 			BigDecimal enterpriseUnemploymentInsurance) {
 		this.enterpriseUnemploymentInsurance = enterpriseUnemploymentInsurance;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getPersonalUnemploymentInsurance() {
 		return personalUnemploymentInsurance;
 	}
@@ -195,7 +195,7 @@ public class EmployeesSalaryDetail implements Serializable
 			BigDecimal personalUnemploymentInsurance) {
 		this.personalUnemploymentInsurance = personalUnemploymentInsurance;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getBirthInsuranceBase() {
 		return birthInsuranceBase;
 	}
@@ -203,7 +203,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setBirthInsuranceBase(BigDecimal birthInsuranceBase) {
 		this.birthInsuranceBase = birthInsuranceBase;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getEnterpriseBirthInsurance() {
 		return enterpriseBirthInsurance;
 	}
@@ -211,7 +211,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterpriseBirthInsurance(BigDecimal enterpriseBirthInsurance) {
 		this.enterpriseBirthInsurance = enterpriseBirthInsurance;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getInductrialInjuryBase() {
 		return inductrialInjuryBase;
 	}
@@ -219,7 +219,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setInductrialInjuryBase(BigDecimal inductrialInjuryBase) {
 		this.inductrialInjuryBase = inductrialInjuryBase;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getEnterpriseInductrialInjuryBase() {
 		return enterpriseInductrialInjuryBase;
 	}
@@ -228,7 +228,7 @@ public class EmployeesSalaryDetail implements Serializable
 			BigDecimal enterpriseInductrialInjuryBase) {
 		this.enterpriseInductrialInjuryBase = enterpriseInductrialInjuryBase;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getMedicalPaymentBase() {
 		return medicalPaymentBase;
 	}
@@ -236,7 +236,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setMedicalPaymentBase(BigDecimal medicalPaymentBase) {
 		this.medicalPaymentBase = medicalPaymentBase;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getEnterpriseMedicalBase() {
 		return enterpriseMedicalBase;
 	}
@@ -244,7 +244,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterpriseMedicalBase(BigDecimal enterpriseMedicalBase) {
 		this.enterpriseMedicalBase = enterpriseMedicalBase;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getPersonalMedicalBase() {
 		return personalMedicalBase;
 	}
@@ -252,7 +252,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setPersonalMedicalBase(BigDecimal personalMedicalBase) {
 		this.personalMedicalBase = personalMedicalBase;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getHousingReserveBase() {
 		return HousingReserveBase;
 	}
@@ -260,7 +260,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setHousingReserveBase(BigDecimal housingReserveBase) {
 		HousingReserveBase = housingReserveBase;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getEnterpriseReserveBase() {
 		return enterpriseReserveBase;
 	}
@@ -268,7 +268,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterpriseReserveBase(BigDecimal enterpriseReserveBase) {
 		this.enterpriseReserveBase = enterpriseReserveBase;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getPersonalReserveBase() {
 		return personalReserveBase;
 	}
@@ -276,7 +276,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setPersonalReserveBase(BigDecimal personalReserveBase) {
 		this.personalReserveBase = personalReserveBase;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getMorbidityStatistics() {
 		return morbidityStatistics;
 	}
@@ -284,7 +284,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setMorbidityStatistics(BigDecimal morbidityStatistics) {
 		this.morbidityStatistics = morbidityStatistics;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getSubtotal() {
 		return subtotal;
 	}
@@ -292,7 +292,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setSubtotal(BigDecimal subtotal) {
 		this.subtotal = subtotal;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getEnterpriseSubtotal() {
 		return enterpriseSubtotal;
 	}
@@ -300,7 +300,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterpriseSubtotal(BigDecimal enterpriseSubtotal) {
 		this.enterpriseSubtotal = enterpriseSubtotal;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getPersonalSubtotal() {
 		return personalSubtotal;
 	}
@@ -308,7 +308,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setPersonalSubtotal(BigDecimal personalSubtotal) {
 		this.personalSubtotal = personalSubtotal;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getBeforeSalary() {
 		return beforeSalary;
 	}
@@ -316,7 +316,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setBeforeSalary(BigDecimal beforeSalary) {
 		this.beforeSalary = beforeSalary;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getTax() {
 		return tax;
 	}
@@ -324,7 +324,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setTax(BigDecimal tax) {
 		this.tax = tax;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getEnterpriseTax() {
 		return enterpriseTax;
 	}
@@ -332,7 +332,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterpriseTax(BigDecimal enterpriseTax) {
 		this.enterpriseTax = enterpriseTax;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getPersonalTax() {
 		return personalTax;
 	}
@@ -340,7 +340,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setPersonalTax(BigDecimal personalTax) {
 		this.personalTax = personalTax;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getServiceCharge() {
 		return serviceCharge;
 	}
@@ -348,7 +348,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setServiceCharge(BigDecimal serviceCharge) {
 		this.serviceCharge = serviceCharge;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getAggregate() {
 		return aggregate;
 	}
@@ -356,7 +356,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setAggregate(BigDecimal aggregate) {
 		this.aggregate = aggregate;
 	}
-	@Column(precision=18 ,scale=2)
+	@Column(length=80 ,scale=2)
 	public BigDecimal getMoneyToCards() {
 		return moneyToCards;
 	}

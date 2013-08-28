@@ -1,4 +1,4 @@
-package cn.fm.service.company.impl;
+package cn.fm.service.salary.impl;
 
 
 import java.util.ArrayList;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.fm.bean.company.CustomBonus;
-import cn.fm.bean.company.SalaryTemplate;
+import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.base.DaoSupport;
-import cn.fm.service.company.SalaryTemplateService;
+import cn.fm.service.salary.SalaryTemplateService;
 
 @Service @Transactional
 public class SalaryTemplateServiceImpl extends DaoSupport<SalaryTemplate> implements SalaryTemplateService {
@@ -54,7 +54,7 @@ public class SalaryTemplateServiceImpl extends DaoSupport<SalaryTemplate> implem
 		for (SalaryTemplate salPO : salaryTemplate) 
 		{
 			
-				salaryTemplateVO.setId(salPO.getId());
+				salaryTemplateVO.setTemplateId(salPO.getTemplateId());
 				salaryTemplateVO.setStatus(salPO.getStatus());
 				salaryTemplateVO.setFiveInsurances(salPO.getFiveInsurances());
 				salaryTemplateVO.setTax(salPO.getTax());

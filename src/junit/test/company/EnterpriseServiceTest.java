@@ -1,6 +1,9 @@
 package junit.test.company;
 
 
+import java.util.Iterator;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -11,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseService;
 public class EnterpriseServiceTest {
@@ -42,6 +46,25 @@ public class EnterpriseServiceTest {
 		em.close();  
 		factory.close(); 
 
+	}
+	@Test
+	public void find()
+	{
+		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(1);
+		for (Enterprise enterprise : enterpriseList) {
+			for ( CreateSalaryBudgetTable str : enterprise.getCreateSalaryBugetTables()) {
+			      System.out.println(str.getName());
+			      
+			}
+			
+		}
+		
+		Enterprise  en=enterpriseService.find(1);
+		
+		for (CreateSalaryBudgetTable str : en.getCreateSalaryBugetTables()) {
+			System.out.println(str.getName());
+		}
+		
 	}
 	
 

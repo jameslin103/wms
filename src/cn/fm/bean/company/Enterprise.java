@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.user.WmsUser;
 
 @SuppressWarnings("serial")
@@ -188,8 +189,7 @@ public class Enterprise implements Serializable{
 		this.count = count;
 	}
 	
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE },  
-                       fetch = FetchType.EAGER, mappedBy = "enterprise")  
+	@OneToMany( cascade =CascadeType.ALL,fetch=FetchType.LAZY , mappedBy = "enterprise")  
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBugetTables() {
 		return createSalaryBugetTables;
 	}

@@ -197,6 +197,11 @@
         </action> 
         
         
+        <!-- ===========Wage-budget-salary 2013-08-28============ -->
+         <action name="	" class="cn.fm.web.action.salary.WageBudgetSummaryAction" method="viewWageBudgetSummary">
+            <result name="success" >company/salary-with-sum-of-categories.jsp</result>
+        </action>
+        
         
         
         

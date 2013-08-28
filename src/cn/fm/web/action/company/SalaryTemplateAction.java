@@ -6,9 +6,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import cn.fm.bean.company.CustomBonus;
-import cn.fm.bean.company.SalaryTemplate;
+import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.company.CustomBonusServices;
-import cn.fm.service.company.SalaryTemplateService;
+import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.utils.StringUtil;
 import cn.fm.web.action.BaseAction;
 

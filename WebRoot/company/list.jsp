@@ -90,13 +90,20 @@
 										<td>
 											<ol>
 												<li>
-													<a href="company/salary-with-sum-of-categories.jsp">火星计划工资预算表1</a>（待发放）
+													<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#enterprise.id}"/> ">
+													
+													<s:iterator value="%{#enterprise.createSalaryBugetTables}" var="itmes">
+														<s:property value="#name"/>
+													</s:iterator>
+													<s:property value="#enterprise.createSalaryBugetTables.iterator().next().getName()"/>
+												
+													</a>（待发放）
 												</li>
 												<li>
-													<a href="company/salary-with-sum-of-categories.jsp">中国电信工资预算表3</a>（已发放）
+													<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#enterprise.id}"/> ">中国电信工资预算表3</a>（已发放）
 												</li>
 												<li>
-													<a href="company/salary-with-sum-of-categories.jsp">中国平安工资预算表5</a>（待发放）
+													<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#enterprise.id}"/> ">中国平安工资预算表5</a>（待发放）
 												</li>
 											</ol>
 										</td>

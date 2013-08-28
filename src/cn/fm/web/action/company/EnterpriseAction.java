@@ -62,8 +62,8 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	
 	public String  viewEnterprise()
 	{
-		
-		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(1);
+		WmsUser user=(WmsUser)request.getSession().getAttribute("user");
+		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(user.getUserId());
 		if(enterpriseList.size()==0)
 			enterpriseList=new ArrayList<Enterprise>();
 		request.setAttribute("enterpriseList", enterpriseList);
@@ -85,7 +85,6 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		if(this.enterpriseId==null || this.enterpriseId==0)return SUCCESS;
 		
 		Enterprise enterprise=enterpriseService.find(this.enterpriseId);
-		System.out.println(enterprise.getFullName().trim());
 		request.getSession().setAttribute("enterprise", enterprise);
 		return SUCCESS;
 	}

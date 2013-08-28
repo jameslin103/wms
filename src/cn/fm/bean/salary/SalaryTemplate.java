@@ -1,4 +1,4 @@
-package cn.fm.bean.company;
+package cn.fm.bean.salary;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 @Entity
 public class SalaryTemplate implements Serializable {
 
-	private Integer  id;
+	private Integer  templateId;
 	
 	/*名称*/
 	private String templateName;
@@ -42,14 +42,14 @@ public class SalaryTemplate implements Serializable {
 //	private CreateSalaryBudgetTable   createSalaryBudgetTable;
 	
 	@Id @GeneratedValue
-	public Integer getId() {
-		return id;
+	public Integer getTemplateId() {
+		return templateId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setTemplateId(Integer templateId) {
+		this.templateId = templateId;
 	}
-	@Column(length=20,nullable=false)
+	@Column(length=20)
 	public String getTemplateName() {
 		return templateName;
 	}

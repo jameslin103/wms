@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*"  pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
   <title>富民人力银行派遣系统</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta  http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<%@ include file="/help/public_css_js.jsp" %>
 
 </head>
@@ -19,10 +19,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      		<jsp:include page="../layout/header.jsp"></jsp:include>
      		<div id="sub-header" class="clearfix">
 					<h2>
-						<s:property value="%{#session.enterprise.fullName}" />
+						<s:property value="%{#request.session.enterprise.fullName}" />
 					</h2>
 			</div>
-     		
     </div>
 
     <div id="main">
@@ -32,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <ul class="nav nav-tabs">
             <li><a href="company/index.jsp">综合</a></li>
             <li><a href="viewEnterpriseEmployees">员工档案</a></li>
-            <li class="active"><a href="company/salary-with-month.jsp">工资预算表</a></li>
+            <li class="active"><a href="viewWageBudgetSummary">工资预算表</a></li>
             <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
           </ul>
  
@@ -58,36 +57,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th>现金（人）</th>
                 <th>（制作、实际发放）</th>
             </thead>
+            <s:iterator value="%{#request.wageBudgetSummarys}" id="wage">
             <tbody>
               <tr>
                 <td>
-                	 火星计划工程工资
+                	<s:property value="%{#wage.wageSheetName}"/>
                 </td>
-                <td>2013年8月</td>
-                <td>火星计划工资预算表</td>
-                <td>市医保</td>
-                <td>100000</td>
-                <td>8888.000</td>
-                <td>60</td>
-                <td>600</td>
-                <td>15<br><a href="company/salary-with-bank-detail.jsp">查看</a></td>
-                <td>8<br><span class="em">（已发放）</span><br>2013年7月15日9时</td>
-                <td>2<br><span class="em">（已发放）</span><br>2013年7月15日9：30时</td>
-                <td>5<br><span class="em">（已发放）</span><br>2013年7月16日11时</td>
+                <td><s:property value="%{#wage.wageMonth}"/></td>
+                <td><s:property value="%{#wage.mergeTax}"/></td>
+                <td><s:property value="%{#wage.nture}"/></td>
+                <td><s:property value="%{#wage.makeTotal}"/></td>
+                <td><s:property value="%{#wage.wageTotal}"/></td>
+                <td><s:property value="%{#wage.serviceTotal}"/></td>
+                <td><s:property value="%{#wage.fiveInsurancesTotal}"/></td>
+                <td><s:property value="%{#wage.issueNumber}"/><br>
+                <a href="company/salary-with-bank-detail.jsp">查看</a>
+                </td>
+                <td><s:property value="%{#wage.issueNumber}"/><br><span class="em">（已发放）</span>
+                <br>2013年7月15日9时</td>
+                <td><s:property value="%{#wage.heLines}"/><br><span class="em">（已发放）</span>
+                <br>2013年7月15日9：30时</td>
+                <td><s:property value="%{#wage.cash}"/><br><span class="em">（已发放）</span>
+                <br>2013年7月16日11时</td>
                 <td>
                   <ul>
-                    <li>制作：倪姐，2013-08-10，9:00</li>
+                    <li>制作:<s:property value="%{#wage.status}"/>
+                    </li>
                     <li>发放：小柴</li>
                   </ul>
                 </td>
                 <td>
                   <a href="#info-for-check" data-toggle="modal">修改</a>
                   <a href="">删除</a><br>
-                  <a href="salary-list.jsp">查看</a>
+                  <a href="company/salary-list.jsp">查看</a>
                   <a href="">下载</a>
                 </td>
               </tr>
             </tbody>
+            </s:iterator>
           </table>
         </div>
   

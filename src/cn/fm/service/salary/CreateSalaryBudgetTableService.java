@@ -1,8 +1,8 @@
-package cn.fm.service.company;
+package cn.fm.service.salary;
 
 import java.util.List;
 
-import cn.fm.bean.company.CreateSalaryBudgetTable;
+import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.service.base.DAO;
 
 public interface CreateSalaryBudgetTableService extends DAO<CreateSalaryBudgetTable> {

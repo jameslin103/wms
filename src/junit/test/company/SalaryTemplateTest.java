@@ -9,8 +9,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import cn.fm.bean.company.SalaryTemplate;
-import cn.fm.service.company.SalaryTemplateService;
+import cn.fm.bean.salary.SalaryTemplate;
+import cn.fm.service.salary.SalaryTemplateService;
 
 public class SalaryTemplateTest {
 
