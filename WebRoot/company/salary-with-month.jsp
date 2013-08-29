@@ -46,7 +46,8 @@
 								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
 							</li>
 							<li>
-								<a href="company/balance-detail.jsp">资金往来</a>
+							<s:property value='%{#request.session.enterprise.enterpriseId}'/>
+								<a href="viewWageBudgetSummary?enterpriseId=<s:property value='%{#request.session.enterprise.enterpriseId}'/>">资金往来</a>
 							</li>
 						</ul>
 
@@ -92,14 +93,17 @@
 							<tbody>
 								<tr>
 									<td>
-										<s:property value="%{#sal.salaryDate}"/>
+										<s:date name="%{#sal.salaryDate}" format="yyyy年MM月"/>
 									</td>
 									<td>
 										<ol>
 											<li>
-												<a href="company/salary-with-sum-of-categories.jsp">
+												<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#request.session.enterprise.id}"/>">
 													<s:property value="%{#sal.name}"/>
-													<s:property value="%{#sal.salaryDate}"/>月												
+													<s:set value="%{#sal.salaryDate}" var="date"/>
+													<s:property value="%{#sal.salaryDate}"/>
+													<s:property value="%{#date.substring(2,3)}"/>月工资	
+																						
 												</a>
 											</li>
 										</ol>
@@ -107,11 +111,11 @@
 									<td>
 										<ol>
 											<li>
-												某某项目1月工资
+												中国卫星项目3月工资
 												<span class="blue">（已发放）</span>
 											</li>
 											<li>
-												某某项目1月工资第二批
+												中国卫星项目3月工资第二批	
 												<span class="red">（资金已到位，待发放）</span>
 											</li>
 										</ol>

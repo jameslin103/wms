@@ -82,7 +82,7 @@
 											<a href="#info-for-check" data-toggle="modal">修改联系人</a>
 										</td>
 										<td>
-											<a href="company/balance-detail.jsp">-20000</a>
+											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.id}"/>">-20000</a>
 										</td>
 										<td>
 											<a href="viewEnterpriseEmployees?enterpriseId=<s:property value="%{#enterprise.id}"/> "><s:property value="%{#enterprise.count}"/></a>
@@ -143,25 +143,25 @@
 			<div class="modal-body">
 				<div class="row-fluid">
 					<p>
-						公司名称：福建电信
+						公司名称：福建枫叶
 					</p>
 					<p>
-						公司全称：福建电信有限公司
+						公司全称：福建枫叶有限公司
 					</p>
 					<p>
-						员工人数：200人
+						员工人数：2000人
 					</p>
 					<p>
 						公司地址：福建省鼓楼区某某路某某大楼230号
 					</p>
 					<p>
-						法人代表：某某人
+						法人代表：刘备
 					</p>
 					<p>
-						开户银行：某某银行
+						开户银行：民生银行
 					</p>
 					<p>
-						开户账号：xxxx-xxxx-xxxx-xxxx
+						开户账号：39584599758456987
 					</p>
 				</div>
 			</div>

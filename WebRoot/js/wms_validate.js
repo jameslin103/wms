@@ -7,17 +7,14 @@ function Ctrl($scope) {
 
 
 $(document).ready(function(){
-	
-	$("#updateto").click(function (){
-		
-		alert($("#update").val());
-		
+
+	$("#d11").blur(function (){
+		var date=$("#d11").val();
+		if(date!=""){
+			alert(date);
+		}
 	});
-	
-
-	
 });
-
 
 
 
@@ -25,7 +22,7 @@ function ajaxUpdateEnterprise()
 {
 
 		var aj = $.ajax( {    
-		    url:'updateEnterprise',// 跳转到 action    
+		    url:'findBeforeCurrentDateTemplate',// 跳转到 action    
 		    data:{    
 		           selRollBack : selRollBack,    
 		           selOperatorsCode : selOperatorsCode,    

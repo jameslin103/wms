@@ -3,7 +3,6 @@ package cn.fm.web.action.company;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 
@@ -26,6 +25,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 
 	private String salaryDate;
 	
+	private String error;
 	
 	
 	public String getSalaryDate() {
@@ -34,6 +34,15 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 
 	public void setSalaryDate(String salaryDate) {
 		this.salaryDate = salaryDate;
+	}
+	
+	
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
 	}
 
 	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
@@ -74,14 +83,24 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	
 	public String newSalaryBudgetTable()
 	{
-		List<SalaryTemplate> salaryTemplateList=salaryTemplateService.getAllSalaryTemplate();
+		List<SalaryTemplate> salaryTemplateList=salaryTemplateService.getAllSalaryTemplate(3);
 		if(salaryTemplateList.size()==0)
 			salaryTemplateList=new ArrayList<SalaryTemplate>();
 		request.setAttribute("salaryTemplates", salaryTemplateList);
 		return SUCCESS;
 	}
 	
+	public String findBeforeCurrentDateTemplate()
+	{
+		
+		List<CreateSalaryBudgetTable>  createSalaryBudgetTableList=salaryTemplateService.findBeforeCurrentDateTemplate(DateUtil.StringToDate(salaryDate, DateUtil.FORMAT_DATE),3);
+		if(createSalaryBudgetTableList.size()==0)
+			createSalaryBudgetTableList=new ArrayList<CreateSalaryBudgetTable>();
+		this.setError("true");
+		
+		return null;
 	
+	}
 	
 	
 	

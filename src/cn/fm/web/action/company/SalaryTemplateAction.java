@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import cn.fm.bean.company.CustomBonus;
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.company.CustomBonusServices;
 import cn.fm.service.salary.SalaryTemplateService;
@@ -53,7 +54,8 @@ public class SalaryTemplateAction extends BaseAction {
 	{
 		
 		List<CustomBonus> customBonus=customBonusService.getAllCustomBonus();
-		List<SalaryTemplate> salaryTemplate=salaryTemplateService.getAllSalaryTemplate();
+		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
+		List<SalaryTemplate> salaryTemplate=salaryTemplateService.getAllSalaryTemplate(enterprise.getId());
 		if(customBonus.size()==0)
 			salaryTemplate=new ArrayList<SalaryTemplate>();
 		if(customBonus.size()==0)
@@ -78,32 +80,4 @@ public class SalaryTemplateAction extends BaseAction {
 		
 	}
 	
-	public List<String>  customBonusName(List<CustomBonus> customBonus,List<SalaryTemplate>  salaryTemplate)
-	{
-		if(salaryTemplate.size()==0 || customBonus.size()==0)return null;
-		List<String>  bonusName=new ArrayList<String>();
-		for (SalaryTemplate sal : salaryTemplate) {
-			if(sal.getSubsidyList()!=null)
-			{
-				String[] subsidyList = sal.getSubsidyList().split(",");
-				for(String name:subsidyList)
-				{
-					for(CustomBonus cb:customBonus){
-						
-						if(name.trim().equals(cb.getId().toString().trim())){
-							bonusName.add(cb.getBonusName());
-						}
-					}
-					System.out.println(name.trim());
-				}
-				
-			}else{
-				
-				bonusName.add("");
-			}
-			
-		}
-		return bonusName;
-	}
-
 }

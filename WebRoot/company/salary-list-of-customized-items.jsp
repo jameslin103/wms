@@ -34,7 +34,7 @@
 								<a href="viewEnterpriseEmployees">员工档案</a>
 							</li>
 							<li class="active">
-								<a href="company/salary-with-month.jsp">工资预算表</a>
+								<a href="viewWageBudgetSummary">工资预算表</a>
 							</li>
 							<li>
 								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>

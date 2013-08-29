@@ -41,7 +41,16 @@ public class CreateSalaryBudgetTable implements Serializable {
 	 
 	private Enterprise enterprise;
 	
-	
+/*	
+	@Column(length=50)
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}*/
+
 	@Id @GeneratedValue
 	public Integer getBudgetId() {
 		return budgetId;

@@ -24,7 +24,7 @@
 	
 		
     
-	<package name="wms" extends="struts-default" >
+	<package name="wms" extends="struts-default,json-default" >
 		<interceptors>
 			<interceptor-stack name="appInterceptor">
 				<interceptor-ref name="store">
@@ -195,11 +195,28 @@
          <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
             <result name="success" >company/salary-step1-of-create.jsp</result>
         </action> 
+        <action name="findBeforeCurrentDateTemplate" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="findBeforeCurrentDateTemplate">
+            <result type="json">
+            	<param name=""></param>
+            </result>
+        </action> 
+        
         
         
         <!-- ===========Wage-budget-salary 2013-08-28============ -->
-         <action name="	" class="cn.fm.web.action.salary.WageBudgetSummaryAction" method="viewWageBudgetSummary">
+         <action name="viewWageBudgetSummary" class="cn.fm.web.action.salary.WageBudgetSummaryAction" method="viewWageBudgetSummary">
             <result name="success" >company/salary-with-sum-of-categories.jsp</result>
+        </action>
+        <action name="viewBalanceDetail" class="cn.fm.web.action.salary.BalanceDetailAction" method="viewBalanceDetail">
+            <result name="success" >company/balance-detail.jsp</result>
+        </action>
+         <action name="addBalanceDetail" class="cn.fm.web.action.salary.BalanceDetailAction" method="addBalanceDetail">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewBalanceDetail</param>
+            </result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewBalanceDetail</param>
+            </result>
         </action>
         
         

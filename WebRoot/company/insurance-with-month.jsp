@@ -43,7 +43,7 @@
 								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
 							</li>
 							<li>
-								<a href="company/balance-detail.jsp">资金往来</a>
+								<a href="viewBalanceDetail">资金往来</a>
 							</li>
 						</ul>
 

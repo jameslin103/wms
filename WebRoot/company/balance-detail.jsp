@@ -34,16 +34,16 @@
 								<a href="company/index.jsp">综合</a>
 							</li>
 							<li>
-								<a href="company/employee-list.jsp">员工档案</a>
+								<a href="viewEnterpriseEmployees">员工档案</a>
 							</li>
 							<li>
-								<a href="company/salary-with-month.jsp">工资预算表</a>
+								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li>
 								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
 							</li>
 							<li class="active">
-								<a href="company/balance-detail.jsp">资金往来</a>
+								<a href="viewBalanceDetail">资金往来</a>
 							</li>
 						</ul>
 
@@ -51,7 +51,7 @@
 							<thead>
 								<tr>
 									<th rowspan="2">
-										序
+										<s:property value=""/>
 									</th>
 									<th rowspan="2">
 										月份
@@ -99,37 +99,38 @@
 									</th>
 								</tr>
 							</thead>
+							<s:iterator value="%{#request.balanceDetails}" id="balanceDetail">
 							<tbody>
 								<tr>
 									<td rowspan="2">
-										1
+										<s:property value="%{#balanceDetail.detailId}"/>
 									</td>
 									<td>
-										2013年4月
+										<s:date name="%{#balanceDetail.yearMonth}" format="yyyy年MM月dd日"/>
 									</td>
 									<td>
-										0
+										<s:property value="%{#balanceDetail.balance}"/>
 									</td>
 									<td>
-										21000
+										<s:property value="%{#balanceDetail.ballotsToal}"/>
 									</td>
 									<td></td>
 									<td></td>
 									<td></td>
 									<td>
-										20000
+										<s:property value="%{#balanceDetail.receivedFunds}"/>
 									</td>
 									<td>
-										-1000
+										<s:property value="%{#balanceDetail.endingBalance}"/>
 									</td>
 									<td>
-										-500
+										<s:property value="%{#balanceDetail.wages}"/>
 									</td>
 									<td>
-										-300
+										<s:property value="%{#balanceDetail.serviceWith}"/>
 									</td>
 									<td>
-										-200
+										<s:property value="%{#balanceDetail.fiveFund}"/>
 									</td>
 									<td rowspan="2">
 										<a href="#info-for-check" data-toggle="modal">填写</a>
@@ -137,50 +138,11 @@
 								</tr>
 								<tr>
 									<td colspan="11" class="align-right">
-										备注显示在这里（倪姐，2013年8月6日，19:36）
-									</td>
-								</tr>
-								<tr>
-									<td rowspan="2">
-										2
-									</td>
-									<td>
-										2013年3月
-									</td>
-									<td>
-										-1000
-									</td>
-									<td>
-										21000
-									</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>
-										22000
-									</td>
-									<td>
-										0
-									</td>
-									<td>
-										500
-									</td>
-									<td>
-										300
-									</td>
-									<td>
-										200
-									</td>
-									<td rowspan="2">
-										<a href="#info-for-check" data-toggle="modal">填写</a>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="11" class="align-right">
-										备注显示在这里（倪姐，2013年8月6日，19:36）
+										备注:（<s:property value="%{#balanceDetail.note}"/>）
 									</td>
 								</tr>
 							</tbody>
+							</s:iterator>
 						</table>
 
 						<div class="pagination">
@@ -238,12 +200,13 @@
 
 			<div class="modal-body">
 				<div class="row-fluid">
-					<form action="" method="post">
+					<s:form action="addBalanceDetail" method="post">
+					<s:hidden value="%{#balanceDetail.detailId}" name="balanceDetail.detailId"></s:hidden>
 						<div class="input-container">
 							<label>
 								实收款项
 							</label>
-							<input type="text" name="">
+							<s:textfield name="balanceDetail.receivedFunds"  value="%{#balanceDetail.receivedFunds}"/>
 						</div>
 						<hr>
 						<h3>
@@ -253,36 +216,34 @@
 							<label>
 								工资
 							</label>
-							<input type="text" name="">
+							<s:textfield name="balanceDetail.wages" value="%{#balanceDetail.wages}"/>
 						</div>
 						<div class="input-container">
 							<label>
 								服务费
 							</label>
-							<input type="text" name="">
+							<s:textfield name="balanceDetail.serviceWith" value="%{#balanceDetail.serviceWith}"/>
 						</div>
 						<div class="input-container">
 							<label>
 								五险一金
 							</label>
-							<input type="text" name="">
+							<s:textfield name="balanceDetail.fiveFund" value="%{#balanceDetail.fiveFund}"/>
 						</div>
 						<hr>
 						<div class="input-container">
 							<label>
 								备注
 							</label>
-							<input type="text" name="">
+							<s:textfield name="balanceDetail.note" value="%{#balanceDetail.note}"/>
 						</div>
 						<div class="input-container">
 							<label>
 								&nbsp;
 							</label>
-							<button type="button" class="btn btn-primary">
-								提交
-							</button>
+							<s:submit value="提交" cssClass="btn btn-primary" />
 						</div>
-					</form>
+					</s:form>
 				</div>
 			</div>
 

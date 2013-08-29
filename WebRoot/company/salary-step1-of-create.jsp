@@ -37,7 +37,7 @@
               <div class="row-fluid">
                 <div class="input-container">
                   <label>名称</label>
-                  <s:textfield name="createSalaryBudgetTable.name"/>
+                  <s:textfield name="createSalaryBudgetTable.name" cssStyle="width: 220px;height:30px;"/>
                 </div>
 
                 <div class="input-container">
@@ -48,9 +48,9 @@
              	   </s:select> 
                 </div>
 
-                <div class="input-container">
+                <div class="input-container" >
                   <label>生成哪月工资？</label>
-                  <s:textfield id="d11"	name="salaryDate" onclick="WdatePicker()" cssClass="Wdate" />
+                  <s:textfield id="d11"	name="salaryDate" onclick="WdatePicker()" cssClass="Wdate" cssStyle="width: 220px;height:30px;"  />
                 </div>
 
 
@@ -67,7 +67,7 @@
 
                 <div class="input-container">
                   <label>补充说明</label>
-                  <textarea rows="3" name="createSalaryBudgetTable.note"></textarea>
+                  <textarea rows="3" name="createSalaryBudgetTable.note" style="width: 220px;"></textarea>
                 </div>
 
                 <div class="input-container">

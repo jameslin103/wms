@@ -8,7 +8,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
-import cn.fm.bean.salary.WageBudgetSummary;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 
 public class CreateSalaryBudgetTableServictTest {
@@ -38,5 +37,6 @@ public class CreateSalaryBudgetTableServictTest {
 		createSalaryBudgetTableService.save(createSalaryBudgetTable);
 		
 	}
+	
 
 }
