@@ -8,42 +8,43 @@ function Ctrl($scope) {
 
 $(document).ready(function(){
 
-	$("#d11").blur(function (){
-		var date=$("#d11").val();
-		if(date!=""){
-			alert(date);
-		}
-	});
+	ajaxfindBeforeCurrentDateTemplate();
 });
 
 
 
-function ajaxUpdateEnterprise()
+function ajaxfindBeforeCurrentDateTemplate()
 {
-
-		var aj = $.ajax( {    
-		    url:'findBeforeCurrentDateTemplate',// 跳转到 action    
-		    data:{    
-		           selRollBack : selRollBack,    
-		           selOperatorsCode : selOperatorsCode,    
-		           PROVINCECODE : PROVINCECODE,    
-		           pass2 : pass2  
-		    },    
-		    type:'post',    
-		    cache:false,    
-		    dataType:'json',    
-		    success:function(data) {    
-		        if(data.msg =="true" ){    
-		            alert("修改成功！");    
-		            window.location.reload();    
-		        }else{    
-		            view(data.msg);    
-		        }    
-		     },    
-		     error : function() {  
-		          alert("异常！");    
-		     }    
-	});  
+	$(".Wdate").blur(function (){
+		var template=$("#d11").val();
+		if(template!=""){
+			$.ajax( {    
+			    url:'findBeforeCurrentDateTemplate',// 跳转到 action  
+			    data:{ salaryDate:template},    
+			    type:'post',    
+			    cache:false,
+			    dataType:'json',    
+			    success:function(data){
+			        if(data.error=="true" ){
+			        	  $("#salaryTable").html("");
+			        	  $("#salaryTable").css('');
+			        	  $(data.createSalaryBudgetTableList).each(function(i, value){
+			        		  $("#salaryTable").append("<option value='" +value.budgetId+"'>"
+			        				  + value.name + "</option>");  
+			        	  });
+			        }else{    
+			        	 $("#salaryTable").html("");
+			        	 $("#salaryTable").append("<option >无数据</option>");
+			        	 //$("#salaryTable").css("background-color", "yellow");
+			        }    
+			     },    
+			     error : function() {  
+			          alert("异常！");    
+			     }    
+		});	
+		}
+	});
+  
 }
 
 

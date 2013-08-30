@@ -76,7 +76,7 @@ public class Enterprise implements Serializable{
 			this.status = status;
 	}
     
-	@ManyToMany(cascade=CascadeType.REFRESH,mappedBy="enterprise")//这里说明了关系维护端是student，teacher是关系被维护端  
+	@ManyToMany(cascade=CascadeType.REFRESH,fetch=FetchType.EAGER,mappedBy="enterprise")//这里说明了关系维护端是student，teacher是关系被维护端  
 	public Set<WmsUser> getUser() {
 		return user;
 	}
@@ -189,7 +189,7 @@ public class Enterprise implements Serializable{
 		this.count = count;
 	}
 	
-	@OneToMany( cascade =CascadeType.ALL,fetch=FetchType.LAZY , mappedBy = "enterprise")  
+	@OneToMany( cascade =CascadeType.ALL,fetch=FetchType.EAGER , mappedBy = "enterprise")  
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBugetTables() {
 		return createSalaryBugetTables;
 	}

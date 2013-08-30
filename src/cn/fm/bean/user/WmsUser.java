@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -51,7 +52,7 @@ public class WmsUser implements Serializable{
 	
 	
 	
-	  @ManyToMany(cascade = CascadeType.REFRESH)  
+	  @ManyToMany(cascade = CascadeType.REFRESH,fetch=FetchType.EAGER)  
 	  @JoinTable(name = "user_enterprise",
 			  inverseJoinColumns = @JoinColumn(name = "enterpriseId"),
 			  joinColumns = @JoinColumn(name = "userId")) //JoinTable就是定义中间表的名字以及关联字段名 

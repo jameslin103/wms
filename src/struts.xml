@@ -185,19 +185,33 @@
             <result name="success" >company/salary-with-month.jsp</result>
         </action> 
         <action name="addSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="addSalaryBudgetTable">
-            <result name="success" type="redirectAction">
-            	<param name="actionName">viewSalaryBudgetTable</param>
+            <result name="success" >company/salary-step2-of-create.jsp</result>
+            <result name="input" type="redirectAction"> 
+            	<param name="actionName">newSalaryBudgetTable</param>
             </result>
-            <result name="input" type="redirectAction">
-            	<param name="actionName">viewSalaryBudgetTable</param>
-            </result>
+        </action>
+        <action name="modfiySalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="modfiySalaryBudgetTable">
+               <result name="success">company/salary-step1-of-create.jsp</result>
+               <result name="input"> company/salary-step2-of-create.jsp</result>
+        </action> 
+        <action name="downloadSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="downloadSalaryBudgetTable">
+             <result name="success" type="stream">
+               <!-- 指定被下载文件的文件类型 -->
+               <param name="contentType">application/vnd.ms-excel</param>
+               <!-- 指定下载文件的文件位置 -->
+               <param name="contentDisposition">attachment;filename="${excelName}"</param>  
+               <param name="inputName">downloadFile</param>
+               <param name="bufferSize">1024</param>
+            </result>  
+            
+           
         </action> 
          <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
             <result name="success" >company/salary-step1-of-create.jsp</result>
         </action> 
         <action name="findBeforeCurrentDateTemplate" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="findBeforeCurrentDateTemplate">
-            <result type="json">
-            	<param name=""></param>
+            <result type="json" name="createSalaryBudgetTableList">
+            	
             </result>
         </action> 
         

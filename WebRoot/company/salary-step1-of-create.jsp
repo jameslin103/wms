@@ -20,6 +20,11 @@
 		<div id="container">
 			<div id="header">
 				<jsp:include page="../layout/header.jsp" />
+				<div id="sub-header" class="clearfix">
+					<h2>
+						<s:property value="%{#session.enterprise.fullName}" />
+					</h2>
+				</div>
 			</div>
 
 	<div id="main"> 
@@ -50,24 +55,22 @@
 
                 <div class="input-container" >
                   <label>生成哪月工资？</label>
-                  <s:textfield id="d11"	name="salaryDate" onclick="WdatePicker()" cssClass="Wdate" cssStyle="width: 220px;height:30px;"  />
+                  <s:textfield id="d11"	name="salaryDate" onclick="WdatePicker()" value="%{#createSalaryBudgetTable.salaryDate}" cssClass="Wdate" cssStyle="width: 220px;height:30px;"  />
                 </div>
 
 
                 <div class="input-container">
                   <label>选择与其他工资表合并计税</label>
-                  <select>
-                    <option value="">无</option>
-                    <option value="">某某工资表1</option>
-                    <option value="">某某工资表2</option>
-                    <option value="">某某工资表3</option>
-                    <option value="">某某工资表4</option>
+                  <select id="salaryTable" name="createSalaryBudgetTable.chooseTax" >
+                    <option value="%{#createSalaryBudgetTable.temple}">--请选择--</option>
                   </select>
                 </div>
 
                 <div class="input-container">
                   <label>补充说明</label>
-                  <textarea rows="3" name="createSalaryBudgetTable.note" style="width: 220px;"></textarea>
+                  <textarea rows="3" name="createSalaryBudgetTable.note"   style="width: 220px;">
+                  		<s:property value="%{#createSalaryBudgetTable.note}"/>
+                  </textarea>
                 </div>
 
                 <div class="input-container">

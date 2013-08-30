@@ -24,13 +24,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row-fluid">
         <div id="center-pane">
           <ul class="nav nav-tabs">
-            <li><a href="employee-list.html">员工</a></li>
-            <li><a href="salary-with-month.html">工资</a></li>
+            <li><a href="index.html">综合</a></li>
+            <li><a href="viewEnterpriseEmployees">员工档案</a></li>
+            <li class="active"><a href="viewSalaryBudgetTable">工资预算表</a></li>
+            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
           </ul>
  
           <div class="span4">
             <h3>3/3&nbsp;新建工资预算表信息</h3>
-            <form action="salary-list.html" method="post">
+            <form action="company/salary-list.jsp" method="post">
               <div class="row-fluid">
 
                 <div class="alert">
@@ -45,13 +47,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li>发放人数：15（人）；</li>                 
                     <li>本工资表中，3人没有工资！分别是：张三、王五</li>
                   </ul>
-                  <p><a href="salary-step2-of-create.html">重新导入数据</a></p>
+                  <p><a href="company/salary-step2-of-create.jsp">重新导入数据</a></p>
                 </div>
                 <hr>
 
                 <div>
                   <p>
-                    <a href="salary-with-month.html" class="btn btn-primary">信息正确，确认！</a>
+                    <a href="company/salary-with-month.jsp" class="btn btn-primary">信息正确，确认！</a>
 
                   </p>
                 </div>

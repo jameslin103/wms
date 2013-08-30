@@ -48,7 +48,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	
 	 //工程目录下的模板文件名称
-    String employeeFileName ="员工基本信息表.xls";
+   private String employeeFileName ="员工基本信息表.xls";
 	
     
     

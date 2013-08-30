@@ -2,10 +2,15 @@ package cn.fm.web.action.company;
 
 
 
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 
+import org.apache.struts2.ServletActionContext;
+
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
@@ -22,12 +27,35 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	private SalaryTemplateService           salaryTemplateService;
 	
 	private CreateSalaryBudgetTable      createSalaryBudgetTable;
+	
+	List<CreateSalaryBudgetTable>  createSalaryBudgetTableList;
+	
+	private String salaryFileName ="工资预算表.xls";
+	
+	private String excelName;
 
 	private String salaryDate;
 	
 	private String error;
 	
+	private String message; 
 	
+	
+	
+	
+	
+	 public String getExcelName() {
+		return excelName;
+	}
+	public void setExcelName(String excelName) {
+		this.excelName = excelName;
+	}
+	public String getMessage() {   
+	        return message;   
+	  }   
+	 public void setMessage(String message) {   
+	        this.message = message;   
+	 }   
 	public String getSalaryDate() {
 		return salaryDate;
 	}
@@ -43,6 +71,16 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 
 	public void setError(String error) {
 		this.error = error;
+	}
+
+	
+	public List<CreateSalaryBudgetTable> getCreateSalaryBudgetTableList() {
+		return createSalaryBudgetTableList;
+	}
+
+	public void setCreateSalaryBudgetTableList(
+			List<CreateSalaryBudgetTable> createSalaryBudgetTableList) {
+		this.createSalaryBudgetTableList = createSalaryBudgetTableList;
 	}
 
 	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
@@ -75,35 +113,69 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	
 	public String  addSalaryBudgetTable()
 	{
-		if(createSalaryBudgetTable==null)return INPUT;
+		if(createSalaryBudgetTable==null || createSalaryBudgetTable.getName()==null)return INPUT;
+		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
+		createSalaryBudgetTable.setEnterprise(enterprise);
 		createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
 		createSalaryBudgetTableService.save(createSalaryBudgetTable);
+		request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
 		return SUCCESS;
 	}
 	
 	public String newSalaryBudgetTable()
 	{
-		List<SalaryTemplate> salaryTemplateList=salaryTemplateService.getAllSalaryTemplate(3);
+		createSalaryBudgetTable=new CreateSalaryBudgetTable();
+		getSalaryTemplate(createSalaryBudgetTable);
+		return SUCCESS;
+	}
+	public void getSalaryTemplate(CreateSalaryBudgetTable createSalaryBudgetTable)
+	{
+		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
+		if(enterprise==null)return;
+		createSalaryBudgetTable.setEnterprise(enterprise);
+		List<SalaryTemplate> salaryTemplateList=salaryTemplateService.getAllSalaryTemplate(createSalaryBudgetTable.getEnterprise().getId());
 		if(salaryTemplateList.size()==0)
 			salaryTemplateList=new ArrayList<SalaryTemplate>();
 		request.setAttribute("salaryTemplates", salaryTemplateList);
-		return SUCCESS;
 	}
-	
 	public String findBeforeCurrentDateTemplate()
 	{
-		
-		List<CreateSalaryBudgetTable>  createSalaryBudgetTableList=salaryTemplateService.findBeforeCurrentDateTemplate(DateUtil.StringToDate(salaryDate, DateUtil.FORMAT_DATE),3);
-		if(createSalaryBudgetTableList.size()==0)
+		createSalaryBudgetTableList=salaryTemplateService.findBeforeCurrentDateTemplate(DateUtil.StringToDate(salaryDate, DateUtil.FORMAT_DATE),3);
+		if(createSalaryBudgetTableList.size()==0){
 			createSalaryBudgetTableList=new ArrayList<CreateSalaryBudgetTable>();
-		this.setError("true");
-		
-		return null;
+			this.setError("暂无记录");
+		}else{
+			this.setError("true");
+		}
+	
+		return "createSalaryBudgetTableList";
 	
 	}
+	public String modfiySalaryBudgetTable()
+	{
+		if(createSalaryBudgetTable==null)return INPUT;
+		getSalaryTemplate(createSalaryBudgetTable);
+		request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
+    	return SUCCESS;
+		
+	}
 	
-	
-	
-	
+	public String downloadSalaryBudgetTable()
+	{
+		
+		try {
+			excelName = new String(salaryFileName.getBytes(), "iso8859-1");//解决中文 文件名问题
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
+		
+	}
+	 public InputStream getDownloadFile()  
+	   {  
+	        return ServletActionContext.getServletContext().getResourceAsStream("/doc/"+salaryFileName);  
+	        
+	        
+	    }  
 
 }

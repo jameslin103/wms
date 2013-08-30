@@ -11,59 +11,66 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <title>富民人力银行派遣系统</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%@ include file="/help/public_css_js.jsp" %>
-
+	 <script type="text/javascript">
+	    function commit(){
+	        var myform=document.getElementById('myForm');
+	       	myform.submit();
+	        return false;
+    }
+    </script>
 </head>
 <body>
 
 	<div id="container">
   	<div id="header">
    		 <jsp:include page="../layout/header.jsp"/>
-  	</div>
+   		 	<div id="sub-header" class="clearfix">
+					<h2>
+						<s:property value="%{#session.enterprise.fullName}" />
+					</h2>
+			</div>
+  		</div>
 
-		<div id="main"> 
+			<div id="main"> 
       <div class="row-fluid">
         <div id="center-pane">
           <ul class="nav nav-tabs">
-            <li><a href="employee-list.html">员工</a></li>
-            <li><a href="salary-with-month.html">工资</a></li>
+            <li><a href="company/index.jsp">综合</a></li>
+            <li><a href="viewEnterpriseEmployees">员工档案</a></li>
+            <li class="active"><a href="viewSalaryBudgetTable">工资预算表</a></li>
+            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
           </ul>
 
           <div class="span4">
             <h3>2/3&nbsp;新建工资预算表信息</h3>
               <div class="row-fluid">
-
+              	<s:form action="modfiySalaryBudgetTable" method="post" id="myForm">
                 <div class="alert">
-                  <p>名称：某某工程项目结算工资补发</p>
-                  <p>模板：某某模板</p>
-                  <p>哪月：2013年7月</p>
-                  <p><a href="salary-step1-of-create.html">返回修改</a></p>
+                   <s:hidden value="%{#request.createSalaryBudgetTable.name}" name="createSalaryBudgetTable.name"/>
+                   <s:hidden value="%{#request.createSalaryBudgetTable.temple}" name="request.createSalaryBudgetTable.temple"/>
+                   <s:hidden value="%{#request.createSalaryBudgetTable.salaryDate}" name="request.createSalaryBudgetTable.salaryDate"/>
+                   <s:hidden value="%{#request.createSalaryBudgetTable.chooseTax}" name="request.createSalaryBudgetTable.chooseTax"/>
+                    <s:hidden value="%{#request.createSalaryBudgetTable.note}" name="request.createSalaryBudgetTable.note"/>
+                  <p>名称：<s:property value="%{#request.createSalaryBudgetTable.name}"/></p>
+                  <p>模板：<s:property value="%{#request.createSalaryBudgetTable.temple}"/></p>
+                  <p>哪月：<s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月"/></p>
+                  <p>合并计税工资表：<s:property value="%{#request.createSalaryBudgetTable.chooseTax}"/></p>
+                  <p><a href="javascript:commit()">返回修改</a></p>
                 </div>
+                </s:form>
                 <hr>
-
-                <h4>方式一</h4>
-                <div class="alert alert-info">
-                  <p>
-                    快速导入2013年3月工资数据，生成本次工资！
-                  </p>
-                  <p>
-                    <a href="salary-step3-of-create.html" class="btn btn-primary">
-                      导入数据
-                    </a>
-                  </p>
-                </div>
-
-                <h4>方式二</h4>
+                
                 <div class="alert alert-info">
                   <ol>
                     <li>
-                      <a href="../doc/工资预算表.xls">下载工资预算表</a>
+                      <a href="downloadSalaryBudgetTable">下载工资预算表</a>
                     </li>
                     <li>
-                      上传新工资预算表
-                      <form action="salary-step3-of-create.html" class="form-search">
+                      	上传新工资预算表
+                      <s:form action="company/salary-step3-of-create.jsp" class="form-search">
                         <input type="file"><br>
                         <button type="submit" class="btn btn-primary">上传</button>
-                      </form>
+                      </s:form>
                     </li>
                   </ol> 
                 </div>

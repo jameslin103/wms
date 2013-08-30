@@ -13,6 +13,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import cn.fm.bean.company.Enterprise;
+
 
 @SuppressWarnings("serial")
 @Entity
@@ -37,13 +39,25 @@ public class SalaryTemplate implements Serializable {
 	 
 	private   Date    createDate=new Date();
 	
+	private   Integer    enterpriseId;
+	
 	private List<String>  subsidys=new ArrayList<String>();
 	
 //	private CreateSalaryBudgetTable   createSalaryBudgetTable;
 	
+	
+	
 	@Id @GeneratedValue
 	public Integer getTemplateId() {
 		return templateId;
+	}
+	@Column(length=20)
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
 	}
 
 	public void setTemplateId(Integer templateId) {

@@ -17,25 +17,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div id="container">
   	 <div id="header">
    		<jsp:include page="../layout/header.jsp"/>
+   		<div id="sub-header" class="clearfix">
+					<h2>
+						<s:property value="%{#session.enterprise.fullName}" />
+					</h2>
+		</div>
     </div>
 
     <div id="main">
-      <div class="row-fluid">
+     <div class="row-fluid">
 
         <div id="center-pane">
           <ul class="nav nav-tabs">
-            <li>
-              <a href="viewEnterpriseEmployees">员工</a>
-            </li>
-            <li class="active">
-              <a href="company/salary-with-month.jsp">工资</a>
-            </li>
+            <li><a href="company/index.jsp">综合</a></li>
+            <li><a href="viewEnterpriseEmployees">员工档案</a></li>
+            <li class="active"><a href="viewSalaryBudgetTable">工资预算表</a></li>
+            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
           </ul>
  
           <ul class="normal action-container clearfix">
             <li><a href="#info-for-check" data-toggle="modal"> 新建工资模板</a></li>
           </ul>
-
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
@@ -48,10 +50,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th>操作</th>
               </tr>
             </thead>
-            <s:iterator value="#request.salaryTemplate" id="salary">
+            <s:iterator value="%{#request.salaryTemplate}" id="salary">
             <tbody>
               <tr>
-                <td><s:property value="%{#salary.id}"/></td>
+                <td><s:property value="%{#salary.templateId}"/></td>
                 <td><s:property value="%{#salary.templateName}"/></td>
                 <td>
                   <ol>
