@@ -9,6 +9,11 @@ function Ctrl($scope) {
 $(document).ready(function(){
 
 	ajaxfindBeforeCurrentDateTemplate();
+	valitate_xls();
+	
+	
+	
+	
 });
 
 
@@ -47,16 +52,32 @@ function ajaxfindBeforeCurrentDateTemplate()
   
 }
 
-
-
-
-
-
-
-
-
-
-
+function valitate_xls()
+{
+	$("#uploadFile").click(function()
+	{
+		var file=$("#filevalue").val();
+		if(file!='' && file!=undefined)
+		{
+			
+			var file_format=file.lastindexof(".")+1;
+			alert(file_format);
+		    if (file_format!='xlsx'  && file_format!='xls')
+		       {
+		         alert('不支持该格式文件请重新选择！！');
+		         file.val('');
+		         return false;
+		         
+		        }
+		    return false;
+		}
+		else
+		{
+			  alert('上传文件不能为空！！');
+			  return false;
+		}
+  });
+}
 
 
 

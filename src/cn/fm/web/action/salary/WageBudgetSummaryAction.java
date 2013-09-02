@@ -1,5 +1,6 @@
 package cn.fm.web.action.salary;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,25 +19,33 @@ public class WageBudgetSummaryAction extends BaseAction {
 	private WageBudgetSummaryService  wageBudgetSummaryService;
 	@Resource
 	EnterpriseService           enterpriseService;
-	private Integer         enterpriseId;
+	private Integer             enterpriseId;
+	private File                file;
 	
 	
 	
 	
 	
 	
-	
+	public File getFile() {
+		return file;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
+	public void setWageBudgetSummaryService(
+			WageBudgetSummaryService wageBudgetSummaryService) {
+		this.wageBudgetSummaryService = wageBudgetSummaryService;
+	}
+	public void setEnterpriseService(EnterpriseService enterpriseService) {
+		this.enterpriseService = enterpriseService;
+	}
 	public Integer getEnterpriseId() {
 		return enterpriseId;
 	}
 	public void setEnterpriseId(Integer enterpriseId) {
 		this.enterpriseId = enterpriseId;
 	}
-
-
-
-
-
 
 
 	public String viewWageBudgetSummary()

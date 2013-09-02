@@ -18,6 +18,9 @@ public class EmployeesSalaryDetail implements Serializable
 {
 	
 	private Integer  salaryId;
+	
+	private String   employeesName;
+	
 	/*工资*/ 
 	private BigDecimal  wage;
 	
@@ -97,7 +100,14 @@ public class EmployeesSalaryDetail implements Serializable
 
 	/*到卡金额 */
 	private BigDecimal  moneyToCards;
+	/**备注**/
+	private String      note;
 
+	@Column(length=80)
+	private Integer     enterpriseId;
+	@Column(length=80)
+	private Integer     empolyessId;
+	
 	private Date        createDate=new Date();
 	
 	
@@ -112,7 +122,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setSalaryId(Integer salaryId) {
 		this.salaryId = salaryId;
 	}
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -364,5 +374,39 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setMoneyToCards(BigDecimal moneyToCards) {
 		this.moneyToCards = moneyToCards;
 	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+
+	public Integer getEmpolyessId() {
+		return empolyessId;
+	}
+
+	public void setEmpolyessId(Integer empolyessId) {
+		this.empolyessId = empolyessId;
+	}
+
+	public String getEmployeesName() {
+		return employeesName;
+	}
+
+	public void setEmployeesName(String employeesName) {
+		this.employeesName = employeesName;
+	}
+
+
 	
 }

@@ -10,7 +10,8 @@ public interface WageBudgetSummaryService extends DAO<WageBudgetSummary> {
 	public List<WageBudgetSummary> getAllWageBudgetSummary(Integer budgetId);
 	
 	public void modify(WageBudgetSummary wageBudgetSummary);
-
+	
+	
 	
 	
 }

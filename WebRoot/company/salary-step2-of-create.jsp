@@ -67,9 +67,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </li>
                     <li>
                       	上传新工资预算表
-                      <s:form action="company/salary-step3-of-create.jsp" class="form-search">
-                        <input type="file"><br>
-                        <button type="submit" class="btn btn-primary">上传</button>
+                      <s:form action="uploadEmployeesSalaryDetail" cssClass="form-search" method="post">
+                        <input type="file" name="file" id="filevalue"><br>
+                        <s:submit  cssClass="btn btn-primary" id="uploadFile" value="上传"/>
                       </s:form>
                     </li>
                   </ol> 

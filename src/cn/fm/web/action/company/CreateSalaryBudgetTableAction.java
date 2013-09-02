@@ -2,14 +2,13 @@ package cn.fm.web.action.company;
 
 
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
-
 import org.apache.struts2.ServletActionContext;
-
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
@@ -39,7 +38,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	private String error;
 	
 	private String message; 
-	
+	private File   file;
 	
 	
 	
@@ -72,8 +71,14 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	public void setError(String error) {
 		this.error = error;
 	}
-
 	
+	
+	public File getFile() {
+		return file;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
 	public List<CreateSalaryBudgetTable> getCreateSalaryBudgetTableList() {
 		return createSalaryBudgetTableList;
 	}
@@ -113,13 +118,22 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	
 	public String  addSalaryBudgetTable()
 	{
-		if(createSalaryBudgetTable==null || createSalaryBudgetTable.getName()==null)return INPUT;
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
-		createSalaryBudgetTable.setEnterprise(enterprise);
-		createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
-		createSalaryBudgetTableService.save(createSalaryBudgetTable);
-		request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
-		return SUCCESS;
+		if(createSalaryBudgetTable==null || createSalaryBudgetTable.getName()==null)return INPUT;
+		if(createSalaryBudgetTable!=null && createSalaryBudgetTable.getBudgetId()!=null){
+			if(enterprise==null || enterprise.getId()==null)return INPUT;
+			createSalaryBudgetTable.setEnterprise(enterprise);
+			CreateSalaryBudgetTable CreateSalaryBudgetTablePO=new CreateSalaryBudgetTable();
+			CreateSalaryBudgetTablePO=createSalaryBudgetTable;
+			createSalaryBudgetTableService.update(CreateSalaryBudgetTablePO);
+			return SUCCESS;
+		}else{
+			createSalaryBudgetTable.setEnterprise(enterprise);
+			createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
+			createSalaryBudgetTableService.save(createSalaryBudgetTable);
+			request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
+			return SUCCESS;
+		}
 	}
 	
 	public String newSalaryBudgetTable()
@@ -172,10 +186,11 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		
 	}
 	 public InputStream getDownloadFile()  
-	   {  
+	 {  
 	        return ServletActionContext.getServletContext().getResourceAsStream("/doc/"+salaryFileName);  
 	        
 	        
-	    }  
+	 } 
+
 
 }

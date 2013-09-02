@@ -203,8 +203,12 @@
                <param name="inputName">downloadFile</param>
                <param name="bufferSize">1024</param>
             </result>  
-            
-           
+        </action> 
+        <action name="uploadEmployeesSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="uploadEmployeesSalaryDetail">
+               <result name="success">company/salary-step3-of-create.jsp</result>
+               <result name="input">company/salary-step2-of-create.jsp</result>
+               
+               
         </action> 
          <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
             <result name="success" >company/salary-step1-of-create.jsp</result>
