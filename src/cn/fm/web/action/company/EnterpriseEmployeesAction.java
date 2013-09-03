@@ -219,7 +219,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	public EnterpriseEmployees getAccordingToIdEmployees(){
 
 		if(employeesId==null || employeesId==0)return null;
-		EnterpriseEmployees employees=enterpriseEmployeesService.getEnterpriseEmployees(employeesId);
+		EnterpriseEmployees employees=enterpriseEmployeesService.findEnterpriseEmployees(employeesId);
 		if(employees==null)
 			employees=new EnterpriseEmployees();
 		
@@ -270,6 +270,18 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	}
 
 	
+	
+	public String  batchExcelDataEmployee()
+	{
+		
+		return SUCCESS;
+	}
+	
+	
+	/**
+	 * 日期转换格式
+	 */
+	
 	public void ConversionTypeFiled()
 	{
 		if(!StringUtil.isEmpty(this.startContractDeadline)){
@@ -299,7 +311,11 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	
 	
-	
+	/**
+	 * @author james
+	 * @date 2013-09-03
+	 * 校验字段
+	 */
 	
 	public void vialteFile(){
 		if(StringUtil.isEmpty(enterpriseEmployees.getEmployeesName())){

@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,36 +95,34 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		EmployeesSalaryDetail   employeesSalaryDetailVO=new EmployeesSalaryDetail();
 		employeesSalaryDetailVO.setEmployeesName(fileDate[0].toString());
 		employeesSalaryDetailVO.setWage(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setBonus(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setSubsidies(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setShouldPay(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setSocialInsuranceBase(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setEnterprisePensionInsurance(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setPersonalPensionInsurance(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setEnterpriseUnemploymentInsurance(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setPersonalUnemploymentInsurance(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setBirthInsuranceBase(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setEnterpriseBirthInsurance(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setInductrialInjuryBase(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setEnterpriseInductrialInjuryBase(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setMedicalPaymentBase(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setEnterpriseMedicalBase(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setPersonalMedicalBase(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setHousingReserveBase(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setEnterpriseReserveBase(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setPersonalReserveBase(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setMorbidityStatistics(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setSubtotal(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setEnterpriseSubtotal(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setPersonalSubtotal(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setBeforeSalary(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setTax(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setEnterpriseTax(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setPersonalTax(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setServiceCharge(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setAggregate(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setMoneyToCards(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setNote(fileDate[0].toString());
+		employeesSalaryDetailVO.setBonus(fileDate[2].toString()==null?null:new BigDecimal(fileDate[2]));
+		employeesSalaryDetailVO.setSubsidies(fileDate[3].toString()==null?null:new BigDecimal(fileDate[3]));
+		employeesSalaryDetailVO.setShouldPay(fileDate[4].toString()==null?null:new BigDecimal(fileDate[4]));
+		employeesSalaryDetailVO.setSocialInsuranceBase(fileDate[5].toString()==null?null:new BigDecimal(fileDate[5]));
+		employeesSalaryDetailVO.setEnterprisePensionInsurance(fileDate[6].toString()==null?null:new BigDecimal(fileDate[6]));
+		employeesSalaryDetailVO.setPersonalPensionInsurance(fileDate[7].toString()==null?null:new BigDecimal(fileDate[7]));
+		employeesSalaryDetailVO.setEnterpriseUnemploymentInsurance(fileDate[8].toString()==null?null:new BigDecimal(fileDate[8]));
+		employeesSalaryDetailVO.setPersonalUnemploymentInsurance(fileDate[9].toString()==null?null:new BigDecimal(fileDate[9]));
+		employeesSalaryDetailVO.setBirthInsuranceBase(fileDate[10].toString()==null?null:new BigDecimal(fileDate[10]));
+		employeesSalaryDetailVO.setEnterpriseBirthInsurance(fileDate[11].toString()==null?null:new BigDecimal(fileDate[11]));
+		employeesSalaryDetailVO.setInductrialInjuryBase(fileDate[12].toString()==null?null:new BigDecimal(fileDate[12]));
+		employeesSalaryDetailVO.setEnterpriseInductrialInjuryBase(fileDate[13].toString()==null?null:new BigDecimal(fileDate[13]));
+		employeesSalaryDetailVO.setMedicalPaymentBase(fileDate[14].toString()==null?null:new BigDecimal(fileDate[14]));
+		employeesSalaryDetailVO.setEnterpriseMedicalBase(fileDate[15].toString()==null?null:new BigDecimal(fileDate[15]));
+		employeesSalaryDetailVO.setPersonalMedicalBase(fileDate[16].toString()==null?null:new BigDecimal(fileDate[16]));
+		employeesSalaryDetailVO.setHousingReserveBase(fileDate[17].toString()==null?null:new BigDecimal(fileDate[17]));
+		employeesSalaryDetailVO.setEnterpriseReserveBase(fileDate[18].toString()==null?null:new BigDecimal(fileDate[18]));
+		employeesSalaryDetailVO.setPersonalReserveBase(fileDate[19].toString()==null?null:new BigDecimal(fileDate[19]));
+		employeesSalaryDetailVO.setMorbidityStatistics(fileDate[20].toString()==null?null:new BigDecimal(fileDate[20]));
+		employeesSalaryDetailVO.setEnterpriseSubtotal(fileDate[21].toString()==null?null:new BigDecimal(fileDate[21]));
+		employeesSalaryDetailVO.setPersonalSubtotal(fileDate[22].toString()==null?null:new BigDecimal(fileDate[22]));
+		employeesSalaryDetailVO.setBeforeSalary(fileDate[23].toString()==null?null:new BigDecimal(fileDate[23]));
+		employeesSalaryDetailVO.setEnterpriseTax(fileDate[24].toString()==null?null:new BigDecimal(fileDate[24]));
+		employeesSalaryDetailVO.setPersonalTax(fileDate[25].toString()==null?null:new BigDecimal(fileDate[25]));
+		employeesSalaryDetailVO.setServiceCharge(fileDate[26].toString()==null?null:new BigDecimal(fileDate[26]));
+		employeesSalaryDetailVO.setAggregate(fileDate[27].toString()==null?null:new BigDecimal(fileDate[27]));
+		employeesSalaryDetailVO.setMoneyToCards(fileDate[28].toString()==null?null:new BigDecimal(fileDate[28]));
+		employeesSalaryDetailVO.setNote(fileDate[29].toString());
 		return employeesSalaryDetailVO;
 	}
 	
@@ -154,9 +154,16 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		}
 	
 		return enterpriseEmployeesIsExistVO;
-}
+	}
 	
-	
+	@SuppressWarnings("unchecked")
+	public List<EmployeesSalaryDetail>  getAllEmployeesSalaryDetail(Integer enterpriseId,Integer employeesId)
+	{
+		Query query=em.createQuery("select e from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.empolyessId=?2");
+		
+		return query.setParameter(1, enterpriseId).setParameter(2, employeesId).getResultList();
+	}
+
 	
 	
 	

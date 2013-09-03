@@ -20,6 +20,8 @@ public class BalanceDetailAction extends BaseAction {
 	
 	private Integer				 enterpriseId;
 	
+	private Integer				 employeeId;
+	
 
 	public BalanceDetail getBalanceDetail() {
 		return balanceDetail;
@@ -36,10 +38,20 @@ public class BalanceDetailAction extends BaseAction {
 	public void setEnterpriseId(Integer enterpriseId) {
 		this.enterpriseId = enterpriseId;
 	}
+	
 				   
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
+
 	public String  viewBalanceDetail()
 	{
-		List<BalanceDetail> balanceDetailList=balanceDetailService.getAllBalanceDetail();
+		
+		List<BalanceDetail> balanceDetailList=balanceDetailService.getAllBalanceDetail(employeeId,enterpriseId);
 		if(balanceDetailList.size()==0)
 			balanceDetailList=new ArrayList<BalanceDetail>();
 		request.setAttribute("balanceDetails", balanceDetailList);

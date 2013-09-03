@@ -1,7 +1,7 @@
 package cn.fm.web.action.salary;
 
 import java.io.File;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
+import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.web.action.BaseAction;
 
@@ -18,17 +19,38 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	private EmployeesSalaryDetail employeesSalaryDetail;
 	@Resource
 	private EmployeesSalaryDetailService employeesSalaryDetailService;
+	@Resource
+	private EnterpriseEmployeesService   enterpriseEmployeesService;
+	
+	
 	private EnterpriseEmployees   enterpriseEmployees;
 	private Enterprise    enterprise;
 	private File file;
 	private Double   bonusTotal;
 	private Double   wargeTotal;
+	private Integer  enterpriseId;
+	private Integer  employeesId;
 	
 	
 	
 	
 	
-	
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+
+	public Integer getEmployeesId() {
+		return employeesId;
+	}
+
+	public void setEmployeesId(Integer employeesId) {
+		this.employeesId = employeesId;
+	}
+
 	public Double getBonusTotal() {
 		return bonusTotal;
 	}
@@ -105,17 +127,34 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		return SUCCESS;
 	}
 	
+	public String viewEmployeePersonalSalary()
+	{
+		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
+		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getAllEmployeesSalaryDetail( enterprise.getId(),employeesId);
+		if(employeesSalaryDetailList.size()==0)
+			employeesSalaryDetailList=new ArrayList<EmployeesSalaryDetail>();
+		
+		EnterpriseEmployees employees=enterpriseEmployeesService.findEnterpriseEmployees(employeesId);
+		request.setAttribute("employeesSalaryDetails", employeesSalaryDetailList);
+		request.setAttribute("employees", employees);
+		return SUCCESS;
+		
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public String updateSalaryEnterpriseEmployees()
+	{
+		try {
+			EnterpriseEmployees enterpriseEmployeesVO=new EnterpriseEmployees();
+			enterpriseEmployeesVO=enterpriseEmployees;
+			enterpriseEmployeesService.update(enterpriseEmployeesVO);
+		} catch (Exception e) {
+			return INPUT;
+			
+			
+		}
+		
+		
+		return SUCCESS;
+	}
 	
 }

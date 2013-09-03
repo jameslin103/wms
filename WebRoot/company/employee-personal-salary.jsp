@@ -24,16 +24,17 @@
 
 			<div id="main">
 				<div class="row-fluid">
+
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
 							<li>
-								<a href="index.jsp">综合</a>
+								<a href="company/index.jsp">综合</a>
 							</li>
 							<li class="active">
-								<a href="company/employee-list.jsp">员工档案</a>
+								<a href="viewEnterpriseEmployees">员工档案</a>
 							</li>
 							<li>
-								<a href="company/salary-with-month.jsp">工资预算表</a>
+								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li>
 								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
@@ -42,7 +43,7 @@
 
 						<ul class="normal action-container clearfix">
 							<li>
-								员工：张三
+								员工：<s:property value="%{#request.employees.employeesName}"/>
 							</li>
 							<li>
 								&nbsp;/&nbsp;
@@ -51,13 +52,15 @@
 								查看各类明细：
 							</li>
 							<li>
-								<a href="company/employee-personal-salary.jsp">工资</a>，
+								<a href="viewEmployeePersonalSalary?employeesId=<s:property value="%{#request.employees.employeesId}"/>">工资</a>，
 							</li>
 							<li>
-								<a href="viewEmployeeContract">合同</a>，
+								<a
+									href="viewEmployeeContract?employeesId=<s:property value="%{#request.employees.employeesId}"/>">合同</a>，
 							</li>
 							<li>
-								<a href="selectEnterpriseEmployeesWage">基本信息</a>，
+								<a
+									href="selectEnterpriseEmployeesWage?employeesId=<s:property value="%{#request.employees.employeesId}"/>">基本信息</a>，
 							</li>
 							<li>
 								&nbsp;/&nbsp;
@@ -68,415 +71,353 @@
 							<li>
 								<a href="#info-for-check" data-toggle="modal">修改</a>
 							</li>
+
 						</ul>
-
-						<h3>
-							2013年2月
-						</h3>
-
-						<table class="table table-striped table-bordered">
-							<thead>
-								<tr>
-									<th rowspan="2">
-										工资
-									</th>
-									<th rowspan="2">
-										奖金
-									</th>
-									<th rowspan="2">
-										补贴
-									</th>
-									<th rowspan="2">
-										应发工资
-									</th>
-									<th rowspan="2">
-										社会保险基数
-									</th>
-									<th colspan="2">
-										养老保险
-									</th>
-									<th colspan="2">
-										失业保险
-									</th>
-									<th rowspan="2">
-										生育保险基数
-									</th>
-									<th rowspan="2">
-										生育（企业）
-									</th>
-									<th rowspan="2">
-										工伤基数
-									</th>
-									<th rowspan="2">
-										工伤（企业）
-									</th>
-									<th colspan="3">
-										基本医疗保险
-									</th>
-									<th colspan="3">
-										住房公积金
-									</th>
-									<th rowspan="2">
-										疾病统计
-									</th>
-									<th colspan="2">
-										小计
-									</th>
-									<th rowspan="2">
-										税前工资
-									</th>
-									<th colspan="2">
-										个税
-									</th>
-									<th rowspan="2">
-										服务费
-									</th>
-									<th rowspan="2">
-										合计（企业应付）
-									</th>
-									<th rowspan="2">
-										到卡金额
-									</th>
-								</tr>
+						<s:if test="#request.employeesSalaryDetails.size()==0 ">
+							<table class="table table-striped table-bordered">
+				            <thead>
+			              	<tr>
+			                <th rowspan="2">工资</th>
+			                <th rowspan="2">奖金</th>
+			                <th rowspan="2">补贴</th>
+			                <th rowspan="2">应发工资</th>
+			                <th rowspan="2">社会保险基数</th>
+			                <th colspan="2">养老保险</th>
+			                <th colspan="2">失业保险</th>
+			                <th rowspan="2">生育保险基数</th>
+			                <th rowspan="2">生育（企业）</th>
+						    <th rowspan="2">工伤基数</th>
+			                <th rowspan="2">工伤（企业）</th>
+			                <th colspan="3">基本医疗保险</th>
+			                <th colspan="3">住房公积金</th>
+			                <th rowspan="2">疾病统计</th>
+			                <th colspan="2">小计</th>
+			                <th rowspan="2">税前工资</th>
+			                <th colspan="2">个税</th>
+			                <th rowspan="2">服务费</th>
+			                <th rowspan="2">合计（企业应付）</th>
+			                <th rowspan="2">到卡金额</th>
+			              </tr>
+			              <tr>
+			                <td>企业</td>
+			                <td>个人</td>
+			                <td>企业</td>
+			                <td>个人</td>
+			                <td>缴费基数</td>
+			                <td>企业</td>
+			                <td>个人</td>
+			                <td>缴费基数</td>
+			                <td>企业</td>
+			                <td>个人</td>
+			                <td>企业</td>
+			                <td>个人</td>
+			                <td>企业</td>
+			                <td>个人</td>
+			              </tr>
+			            </thead>  
+			            	<thbody>
 								<tr>
 									<td>
-										企业
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										个人
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										企业
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										个人
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										缴费基数
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										企业
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										个人
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										缴费基数
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										企业
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										个人
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										企业
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										个人
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										企业
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 									<td>
-										个人
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</td>
 								</tr>
-							</thead>
-							<thbody>
-							<tr>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-							</tr>
-							</thbody>
-						</table>
-
-						<h3>
-							2013年1月
-						</h3>
-
-						<table class="table table-striped table-bordered">
-							<thead>
-								<tr>
-									<th rowspan="2">
-										工资
-									</th>
-									<th rowspan="2">
-										奖金
-									</th>
-									<th rowspan="2">
-										补贴
-									</th>
-									<th rowspan="2">
-										应发工资
-									</th>
-									<th rowspan="2">
-										社会保险基数
-									</th>
-									<th colspan="2">
-										养老保险
-									</th>
-									<th colspan="2">
-										失业保险
-									</th>
-									<th rowspan="2">
-										生育保险基数
-									</th>
-									<th rowspan="2">
-										生育（企业）
-									</th>
-									<th rowspan="2">
-										工伤基数
-									</th>
-									<th rowspan="2">
-										工伤（企业）
-									</th>
-									<th colspan="3">
-										基本医疗保险
-									</th>
-									<th colspan="3">
-										住房公积金
-									</th>
-									<th rowspan="2">
-										疾病统计
-									</th>
-									<th colspan="2">
-										小计
-									</th>
-									<th rowspan="2">
-										税前工资
-									</th>
-									<th colspan="2">
-										个税
-									</th>
-									<th rowspan="2">
-										服务费
-									</th>
-									<th rowspan="2">
-										合计（企业应付）
-									</th>
-									<th rowspan="2">
-										到卡金额
-									</th>
-								</tr>
+								</thbody>	
+							</table>	
+						</s:if>
+						
+						<s:else>
+						<s:iterator value="#request.employeesSalaryDetails"	id="employeesSalaryDetail">
+					
+							<h3>
+								<s:date name="%{#employeesSalaryDetail.createDate}" format="yyyy年MM月dd"/>
+							</h3>
+							<table class="table table-striped table-bordered">
+								<thead>
+									<tr>
+										<th rowspan="2">
+											工资
+										</th>
+										<th rowspan="2">
+											奖金
+										</th>
+										<th rowspan="2">
+											补贴
+										</th>
+										<th rowspan="2">
+											应发工资
+										</th>
+										<th rowspan="2">
+											社会保险基数
+										</th>
+										<th colspan="2">
+											养老保险
+										</th>
+										<th colspan="2">
+											失业保险
+										</th>
+										<th rowspan="2">
+											生育保险基数
+										</th>
+										<th rowspan="2">
+											生育（企业）
+										</th>
+										<th rowspan="2">
+											工伤基数
+										</th>
+										<th rowspan="2">
+											工伤（企业）
+										</th>
+										<th colspan="3">
+											基本医疗保险
+										</th>
+										<th colspan="3">
+											住房公积金
+										</th>
+										<th rowspan="2">
+											疾病统计
+										</th>
+										<th colspan="2">
+											小计
+										</th>
+										<th rowspan="2">
+											税前工资
+										</th>
+										<th colspan="2">
+											个税
+										</th>
+										<th rowspan="2">
+											服务费
+										</th>
+										<th rowspan="2">
+											合计（企业应付）
+										</th>
+										<th rowspan="2">
+											到卡金额
+										</th>
+									</tr>
+									<tr>
+										<td>
+											企业
+										</td>
+										<td>
+											个人
+										</td>
+										<td>
+											企业
+										</td>
+										<td>
+											个人
+										</td>
+										<td>
+											缴费基数
+										</td>
+										<td>
+											企业
+										</td>
+										<td>
+											个人
+										</td>
+										<td>
+											缴费基数
+										</td>
+										<td>
+											企业
+										</td>
+										<td>个人</td>
+										<td>企业</td>
+										<td>个人	</td>
+										<td>企业	</td>
+										<td>个人	</td>
+									</tr>
+								</thead>
+								<thbody>
 								<tr>
 									<td>
-										企业
+										<s:property value="%{#employeesSalaryDetail.wage}" />
 									</td>
 									<td>
-										个人
+										<s:property value="%{#employeesSalaryDetail.bonus}" />
 									</td>
 									<td>
-										企业
+										<s:property value="%{#employeesSalaryDetail.subsidies}" />
 									</td>
 									<td>
-										个人
+										<s:property value="%{#employeesSalaryDetail.shouldPay}" />
 									</td>
 									<td>
-										缴费基数
+										<s:property
+											value="%{#employeesSalaryDetail.socialInsuranceBase}" />
 									</td>
 									<td>
-										企业
+										<s:property
+											value="%{#employeesSalaryDetail.enterprisePensionInsurance}" />
 									</td>
 									<td>
-										个人
+										<s:property
+											value="%{#employeesSalaryDetail.personalPensionInsurance}" />
 									</td>
 									<td>
-										缴费基数
+										<s:property
+											value="%{#employeesSalaryDetail.enterpriseUnemploymentInsurance}" />
 									</td>
 									<td>
-										企业
+										<s:property	value="%{#employeesSalaryDetail.personalUnemploymentInsurance}" />
 									</td>
 									<td>
-										个人
+										<s:property value="%{#employeesSalaryDetail.birthInsuranceBase}" />
 									</td>
 									<td>
-										企业
+										<s:property value="%{#employeesSalaryDetail.enterpriseBirthInsurance}" />
 									</td>
 									<td>
-										个人
+										<s:property
+											value="%{#employeesSalaryDetail.inductrialInjuryBase}" />
 									</td>
 									<td>
-										企业
+										<s:property
+											value="%{#employeesSalaryDetail.enterpriseInductrialInjuryBase}" />
 									</td>
 									<td>
-										个人
+										<s:property
+											value="%{#employeesSalaryDetail.medicalPaymentBase}" />
+									</td>
+									<td>
+										<s:property
+											value="%{#employeesSalaryDetail.enterpriseMedicalBase}" />
+									</td>
+									<td>
+										<s:property
+											value="%{#employeesSalaryDetail.personalMedicalBase}" />
+									</td>
+									<td>
+										<s:property
+											value="%{#employeesSalaryDetail.HousingReserveBase}" />
+									</td>
+									<td>
+										<s:property
+											value="%{#employeesSalaryDetail.enterpriseReserveBase}" />
+									</td>
+									<td>
+										<s:property
+											value="%{#employeesSalaryDetail.personalReserveBase}" />
+									</td>
+									<td>
+										<s:property
+											value="%{#employeesSalaryDetail.morbidityStatistics}" />
+									</td>
+									<td>
+										<s:property
+											value="%{#employeesSalaryDetail.enterpriseSubtotal}" />
+									</td>
+									<td>
+										<s:property value="%{#employeesSalaryDetail.personalSubtotal}" />
+									</td>
+									<td>
+										<s:property value="%{#employeesSalaryDetail.beforeSalary}" />
+									</td>
+									<td>
+										<s:property value="%{#employeesSalaryDetail.enterpriseTax}" />
+									</td>
+									<td>
+										<s:property value="%{#employeesSalaryDetail.personalTax}" />
+									</td>
+									<td>
+										<s:property value="%{#employeesSalaryDetail.serviceCharge}" />
+									</td>
+									<td>
+										<s:property value="%{#employeesSalaryDetail.aggregate}" />
+									</td>
+									<td>
+										<s:property value="%{#employeesSalaryDetail.moneyToCards}" />
 									</td>
 								</tr>
-							</thead>
-							<thbody>
-							<tr>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-								<td>
-									2000
-								</td>
-							</tr>
-							</thbody>
-						</table>
-
-						<div class="pagination">
+							  </thbody>
+							</table>
+						</s:iterator>
+					</s:else>
+	
+					<div class="pagination">
 							<ul>
 								<li>
 									<a href="#">&laquo;</a>
@@ -533,27 +474,28 @@
 				</h3>
 			</div>
 			<div class="modal-body">
-				<form action="" method="post">
+				<s:form action="updateSalaryEnterpriseEmployees" method="post">
+					<s:hidden value="%{#request.employees.employeesId}" name="enterpriseEmployees.employeesId"/>
 					<div class="row-fluid">
 						<div class="input-container">
 							<label>
 								合同编号
 							</label>
-							<input type="text" name="contract-number">
+							<s:textfield name="enterpriseEmployees.contractNo"  value="%{#request.employees.contractNo}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								姓名
 							</label>
-							<input type="text" name="name">
+							<s:textfield name="enterpriseEmployees.employeesName"  value="%{#request.employees.employeesName}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								身份证
 							</label>
-							<input type="text" name="shenfenzheng">
+							<s:textfield name="enterpriseEmployees.cardNumber"  value="%{#request.employees.cardNumber}"/>
 						</div>
 
 						<div class="input-container">
@@ -570,10 +512,10 @@
 							<label>
 								户口性质
 							</label>
-							<input type="radio" name="type-of-residence" value="1"
+							<input type="radio"  name="enterpriseEmployees.householdRegister" value="1"
 								checked="checked">
 							非农，
-							<input type="radio" name="type-of-residence" value="0">
+							<input type="radio"  name="enterpriseEmployees.householdRegister" value="0">
 							农村
 						</div>
 
@@ -581,9 +523,9 @@
 							<label>
 								是否有照片？
 							</label>
-							<input type="radio" name="photo" value="1" checked="checked">
+							<input type="radio"  name="enterpriseEmployees.photo" value="1" checked="checked">
 							无，
-							<input type="radio" name="photo" value="0">
+							<input type="radio"  name="enterpriseEmployees.photo" value="0">
 							有
 						</div>
 
@@ -591,21 +533,21 @@
 							<label>
 								电话
 							</label>
-							<input type="text" name="tel">
+							<s:textfield name="enterpriseEmployees.phone"  value="%{#request.employees.phone}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								家庭住址
 							</label>
-							<input type="text" name="address">
+							<s:textfield name="enterpriseEmployees.homeAddress"  value="%{#request.employees.homeAddress}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								银行卡号
 							</label>
-							<input type="text" name="cardnumber">
+							<s:textfield name="enterpriseEmployees.bankCardNumber"  value="%{#request.employees.bankCardNumber}"/>
 						</div>
 
 						<div class="input-container">
@@ -629,7 +571,7 @@
 							<label>
 								籍贯
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.nativePlace"  value="%{#request.employees.nativePlace}"/>
 						</div>
 
 						<div class="input-container">
@@ -667,9 +609,9 @@
 							<label>
 								婚姻状况
 							</label>
-							<input type="radio" name="ismarried" value="1" checked="checked">
+							<input type="radio" name="enterpriseEmployees.maritalStatus" value="1" checked="checked">
 							未婚，
-							<input type="radio" name="ismarried" value="0">
+							<input type="radio" name="enterpriseEmployees.maritalStatus" value="0">
 							已婚
 						</div>
 
@@ -710,76 +652,15 @@
 								合同期限
 							</label>
 							起：
-							<select class="span2">
-								<option value="">
-									2014年
-								</option>
-								<option value="" selected>
-									2013年
-								</option>
-								<option value="">
-									2012年
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									7月
-								</option>
-								<option value="" selected>
-									8月
-								</option>
-								<option value="">
-									9月
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									15日
-								</option>
-								<option value="" selected>
-									19日
-								</option>
-								<option value="">
-									22日
-								</option>
-							</select>
+							<input type="text" name="enterpriseEmployees.startContractDeadline" value="<s:date name='%{#request.employees.startContractDeadline}' format="yyyy-MM-dd"/>" 
+							id="d11" class="Wdate" onclick="WdatePicker()"/>
 						</div>
-
+						
 						<div class="input-container">
 							止：
-							<select class="span2">
-								<option value="">
-									2014年
-								</option>
-								<option value="" selected>
-									2013年
-								</option>
-								<option value="">
-									2012年
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									7月
-								</option>
-								<option value="" selected>
-									8月
-								</option>
-								<option value="">
-									9月
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									15日
-								</option>
-								<option value="" selected>
-									19日
-								</option>
-								<option value="">
-									22日
-								</option>
-							</select>
+							<input type="text" name="enterpriseEmployees.endContractDeadline" value="<s:date name='%{#request.employees.endContractDeadline}' format="yyyy-MM-dd"/>" 
+							id="d11" class="Wdate" onclick="WdatePicker()"/>
+							
 						</div>
 
 						<div class="input-container">
@@ -809,10 +690,9 @@
 							<label>
 								参保性质
 							</label>
-							<input type="radio" name="type-of-insurance" value="1"
-								checked="checked">
+							<input type="radio" name="enterpriseEmployees.sociaSecurity" value="1" checked="checked">
 							新增，
-							<input type="radio" name="type-of-insurance" value="0">
+							<input type="radio" name="enterpriseEmployees.sociaSecurity" value="0">
 							续保
 						</div>
 
@@ -820,39 +700,17 @@
 							<label>
 								从哪一月开始参保？
 							</label>
-							<select class="span2">
-								<option value="">
-									2014年
-								</option>
-								<option value="" selected>
-									2013年
-								</option>
-								<option value="">
-									2012年
-								</option>
-							</select>
-
-							<select class="span2">
-								<option value="">
-									7月
-								</option>
-								<option value="" selected>
-									8月
-								</option>
-								<option value="">
-									9月
-								</option>
-							</select>
+							<input type="text" name="enterpriseEmployees.cinsengDate" value="<s:date name='%{#request.employees.cinsengDate}' format="yyyy-MM-dd"/>" 
+							 id="d11" class="Wdate" onclick="WdatePicker()"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								参保基数
 							</label>
-							<input type="radio" name="base-of-insurance" value="1"
-								checked="checked">
+							<input type="radio" name="enterpriseEmployees.base" value="1" checked="checked">
 							默认基数，
-							<input type="radio" name="base-of-insurance" value="0">
+							<input type="radio" name="enterpriseEmployees.base" value="0">
 							个性设置
 						</div>
 
@@ -860,41 +718,40 @@
 							<label>
 								社会保险基数
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.socialInsurance"  value="%{#request.employees.socialInsurance}"/>
 						</div>
 						<div class="input-container">
 							<label>
 								生育保险基数
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.fertilityInsurance"  value="%{#request.employees.fertilityInsurance}"/>
 						</div>
 						<div class="input-container">
 							<label>
 								工伤基数
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.inductrialBase"  value="%{#request.employees.inductrialBase}"/>
 						</div>
 						<div class="input-container">
 							<label>
 								基本医疗保险基数
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.basicMedical"  value="%{#request.employees.basicMedical}"/>
 						</div>
 						<div class="input-container">
 							<label>
 								住房公积金基数
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.housingFund"  value="%{#request.employees.housingFund}"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								个税缴纳方式?
 							</label>
-							<input type="radio" name="status-of-tax" value="1"
-								checked="checked">
+							<input type="radio"  name="enterpriseEmployees.paymentWay" value="1" checked="checked">
 							个人缴纳，
-							<input type="radio" name="status-of-tax" value="0">
+							<input type="radio"  name="enterpriseEmployees.paymentWay"  value="0">
 							企业缴纳
 						</div>
 
@@ -902,7 +759,7 @@
 							<label>
 								状态?
 							</label>
-							<input type="checkbox" name="status-of-job" value="0">
+							<input type="checkbox" name="enterpriseEmployees.pseudoDelete" value="0">
 							隐藏
 						</div>
 
@@ -910,17 +767,15 @@
 							<label>
 								服务费
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.serviceCost"  value="%{#request.employees.serviceCost}"/>
 						</div>
 
 						<div class="input-container">
-							<button type="button" class="btn btn-primary">
-								提交
-							</button>
+							<s:submit value="提交" cssClass="btn btn-primary" />
 						</div>
 
 					</div>
-				</form>
+				</s:form>
 			</div>
 			<div class="modal-footer">
 				<button class="btn" data-dismiss="modal" aria-hidden="true">

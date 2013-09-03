@@ -63,7 +63,7 @@
 								新员工档案：
 							</li>
 							<li>
-								<a href="company/employee-step1-of-create.jsp">批量录入</a>，
+								<a href="batchExcelDataEmployee">批量录入</a>，
 							</li>
 							<li>
 								<a href="#info-for-check" data-toggle="modal">单个录入</a>
@@ -90,12 +90,10 @@
 								<a href="exportExcel" class="btn btn-primary">下载全体在职员工信息</a>
 							</li>
 							<li class="right">
-								<s:form cssClass="navbar-form pull-left"
-									action="fildAllEnterpriseEmployees" method="post">
-									<s:textfield name="enterpriseEmployees.employessName"
-										placeholder="输入姓名" />
-									<input type="checkbox" name="all" />&nbsp;全站
-                <s:submit type="submit" cssClass="btn" value="搜索" />
+								<s:form cssClass="navbar-form pull-left" action="fildAllEnterpriseEmployees" method="post">
+									<s:textfield name="enterpriseEmployees.employessName" placeholder="输入姓名" />
+									<input type="checkbox" name="all" value="1"/>&nbsp;全站
+                					<s:submit type="submit" cssClass="btn" value="搜索" />
 								</s:form>
 							</li>
 						</ul>
@@ -225,15 +223,15 @@
 											<s:property value="%{#emp.ginsengProtectNature}" />
 										</td>
 										<td>
-											<s:property value="%{#emp.cinsengDate}" />
+											<s:date name="%{#emp.cinsengDate}" format="yyyy年MM月dd"/>
 										</td>
 										<td>
 											<s:if test="%{#emp.base==0}">
-                		默认
-                	</s:if>
+						                		默认
+						                	</s:if>
 											<s:if test="%{#emp.base==1}">
-                		个性设置
-                	</s:if>
+						                		个性设置
+						                	</s:if>
 										</td>
 										<td>
 											<s:property value="%{#emp.paymentWay}" />

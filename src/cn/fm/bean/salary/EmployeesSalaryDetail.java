@@ -77,8 +77,7 @@ public class EmployeesSalaryDetail implements Serializable
 	
 	/*疾病统计 */
 	private BigDecimal  morbidityStatistics;
-	/*小计 */
-	private BigDecimal  subtotal;
+
 	/*小计- 企业  */
 	private BigDecimal  enterpriseSubtotal;
 	
@@ -87,11 +86,10 @@ public class EmployeesSalaryDetail implements Serializable
 
 	/*税前工资 */
 	private BigDecimal  beforeSalary;
-	/*个税  */
-	private BigDecimal  tax;
-	/*企业*/
+
+	/*企业 个税*/
 	private BigDecimal  enterpriseTax;
-	/*个人*/
+	/*个人 个税*/
 	private BigDecimal  personalTax;
 	/*服务费  */
 	private BigDecimal  serviceCharge;
@@ -295,14 +293,6 @@ public class EmployeesSalaryDetail implements Serializable
 		this.morbidityStatistics = morbidityStatistics;
 	}
 	@Column(length=80 ,scale=2)
-	public BigDecimal getSubtotal() {
-		return subtotal;
-	}
-
-	public void setSubtotal(BigDecimal subtotal) {
-		this.subtotal = subtotal;
-	}
-	@Column(length=80 ,scale=2)
 	public BigDecimal getEnterpriseSubtotal() {
 		return enterpriseSubtotal;
 	}
@@ -325,14 +315,6 @@ public class EmployeesSalaryDetail implements Serializable
 
 	public void setBeforeSalary(BigDecimal beforeSalary) {
 		this.beforeSalary = beforeSalary;
-	}
-	@Column(length=80 ,scale=2)
-	public BigDecimal getTax() {
-		return tax;
-	}
-
-	public void setTax(BigDecimal tax) {
-		this.tax = tax;
 	}
 	@Column(length=80 ,scale=2)
 	public BigDecimal getEnterpriseTax() {

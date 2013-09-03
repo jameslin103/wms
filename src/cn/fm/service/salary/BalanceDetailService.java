@@ -9,7 +9,7 @@ public interface BalanceDetailService extends DAO<BalanceDetail> {
 
 	
 	public void save(BalanceDetail balanceDetail);
-	public List<BalanceDetail>  getAllBalanceDetail();
+	public List<BalanceDetail>  getAllBalanceDetail(Integer enterpriseId,Integer employeeId);
 	public void  update(BalanceDetail balanceDetail,Integer detailId,Integer enterpriseId);
 	
 	

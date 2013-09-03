@@ -38,10 +38,10 @@
 								<a href="company/index.jsp">综合</a>
 							</li>
 							<li class="active">
-								<a href="company/employee-list.jsp">员工档案</a>
+								<a href="viewEnterpriseEmployees">员工档案</a>
 							</li>
 							<li>
-								<a href="company/salary-with-month.jsp">工资预算表</a>
+								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li>
 								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>

@@ -82,7 +82,7 @@
            </result>  
        </action>  
         
-        
+        <!-- ===========EnterpriseEmployess======== -->
          <action name="addEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="addEnterpriseEmployees">
             <result name="success" type="redirect">/company/employee-list.jsp</result>
             <result name="input">/company/employee-list.jsp</result>
@@ -92,6 +92,9 @@
             <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterpriseEmployees</param>
             </result>
+        </action>  
+        <action name="batchExcelDataEmployee" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="batchExcelDataEmployee">
+            <result name="success">company/employee-step1-of-create.jsp</result>
         </action>  
         
          <action name="selectEnterpriseEmployeesWage" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="selectEnterpriseEmployeesWage">
@@ -111,7 +114,17 @@
          <action name="viewEmployeeContract" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewEmployeeContract">
             <result name="success">company/employee-personal-contract.jsp</result>
         </action>
-        
+         <action name="viewEmployeePersonalSalary" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewEmployeePersonalSalary">
+            <result name="success">company/employee-personal-salary.jsp</result>
+        </action>
+        <action name="updateSalaryEnterpriseEmployees" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="updateSalaryEnterpriseEmployees">
+            <result name="success"  type="redirectAction">
+            	<param name="actionName">viewEmployeePersonalSalary</param>
+            </result>
+             <result name="input"  type="redirectAction">
+            	<param name="actionName">viewEmployeePersonalSalary</param>
+            </result>
+        </action> 
         
         
        <!-- Enterprise  -->
@@ -207,10 +220,9 @@
         <action name="uploadEmployeesSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="uploadEmployeesSalaryDetail">
                <result name="success">company/salary-step3-of-create.jsp</result>
                <result name="input">company/salary-step2-of-create.jsp</result>
-               
-               
+ 
         </action> 
-         <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
+        <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
             <result name="success" >company/salary-step1-of-create.jsp</result>
         </action> 
         <action name="findBeforeCurrentDateTemplate" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="findBeforeCurrentDateTemplate">
@@ -218,6 +230,8 @@
             	
             </result>
         </action> 
+         
+        
         
         
         

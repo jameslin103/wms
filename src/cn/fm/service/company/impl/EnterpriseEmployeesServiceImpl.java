@@ -50,7 +50,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like ?1 ");
 		}
 			
-		query =query.setParameter(1, " '%"+employessName+"%' ");
+		query =query.setParameter(1, " '% "+employessName+" %' ");
 		return query.getResultList();
 	}
 	
@@ -66,6 +66,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	
 	/**
 	 * 批量导入企业员工
+	 * 
 	 */
 	@SuppressWarnings({ "unchecked", "static-access" })
 	public void saveImportExcelEmployees(File file , String fiName,int number,int enterpriseId) {
@@ -130,8 +131,8 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 * 
 	 */
 
-	public EnterpriseEmployees getEnterpriseEmployees(Integer entityId) {
-		return super.find(entityId);
+	public EnterpriseEmployees findEnterpriseEmployees(Integer employeesId) {
+		return super.find(employeesId);
 	}
 	
 	/**  
@@ -234,4 +235,16 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		}
 		return employeesList;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

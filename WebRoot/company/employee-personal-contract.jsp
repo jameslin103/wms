@@ -53,7 +53,7 @@
 								查看各类明细：
 							</li>
 							<li>
-								<a href="company/employee-personal-salary.jsp">工资</a>，
+								<a href="viewEmployeePersonalSalary?employeesId=<s:property value="%{#request.employees.employeesId}"/>">工资</a>，
 							</li>
 							<li>
 								<a
@@ -104,32 +104,15 @@
 										<s:property value="#request.employees.employeesId" />
 									</td>
 									<td>
-										<s:property value="#request.employees.startContractDeadline" />
+										<s:date name="#request.employees.startContractDeadline" format="yyyy年MM月dd"/>
 									</td>
 									<td>
-										<s:property value="#request.employees.endContractDeadline" />
+										<s:date name="#request.employees.endContractDeadline" format="yyyy年MM月dd"/>
 									</td>
 									<td>
 										2012-01-01
 									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										2
-									</td>
-									<td>
-										20130203
-									</td>
-									<td>
-										20150201
-									</td>
-									<td>
-										20140101
-									</td>
-									<td>
-										续签
-									</td>
+									<td>续签</td>
 								</tr>
 							</tbody>
 						</table>

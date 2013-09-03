@@ -26,9 +26,9 @@ public class BalanceDetailServiceTest {
 	@Test
 	public void testAllBalanceDetail()
 	{
-		List<BalanceDetail> list=balanceDetailService.getAllBalanceDetail();
+		/*List<BalanceDetail> list=balanceDetailService.getAllBalanceDetail();
 		
-		System.out.println(list.size());
+		System.out.println(list.size());*/
 		
 		
 	}

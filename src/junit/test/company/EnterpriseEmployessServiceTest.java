@@ -61,7 +61,7 @@ public class EnterpriseEmployessServiceTest {
 	}
 	
 	@Test
-	public void testFindEmployess()
+	public void fildAllEnterpriseEmployees()
 	{
 		List<EnterpriseEmployees> list=enterpriseEmployeesService.findAllEnterpriseEmployees("刘", null);
 		for (EnterpriseEmployees es : list) {

@@ -14,6 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 <script type="text/javascript">
 	    function commit(){
 	        var myform=document.getElementById('myForm');
+	        
 	       	myform.submit();
 	        return false;
     }
@@ -68,6 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li>
                       	上传新工资预算表
                       <s:form action="uploadEmployeesSalaryDetail" cssClass="form-search" method="post">
+                      	<s:hidden name="file" value="file"></s:hidden>
                         <input type="file" name="file" id="filevalue"><br>
                         <s:submit  cssClass="btn btn-primary" id="uploadFile" value="上传"/>
                       </s:form>

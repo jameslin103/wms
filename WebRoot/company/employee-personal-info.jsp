@@ -31,10 +31,10 @@
 								<a href="company/index.jsp">综合</a>
 							</li>
 							<li class="active">
-								<a href="company/employee-list.jsp">员工档案</a>
+								<a href="viewEnterpriseEmployees">员工档案</a>
 							</li>
 							<li>
-								<a href="company/salary-with-month.jsp">工资预算表</a>
+								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li>
 								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
@@ -53,7 +53,7 @@
 								查看各类明细：
 							</li>
 							<li>
-								<a href="company/employee-personal-salary.jsp">工资</a>，
+								<a href="viewEmployeePersonalSalary?employeesId=<s:property value="%{#request.employees.employeesId}"/>">工资</a>，
 							</li>
 							<li>
 								<a
@@ -250,7 +250,7 @@
 										<s:property value="%{#request.employees.ginsengProtectNature}" />
 									</td>
 									<td>
-										<s:property value="%{#request.employees.cinsengDate}" />
+										<s:date name="%{#request.employees.cinsengDate}" format="yyyy年MM月dd"/>
 									</td>
 									<td>
 										<s:if test="%{#request.employees.base}=='0'">

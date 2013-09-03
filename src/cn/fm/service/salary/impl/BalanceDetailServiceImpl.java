@@ -15,9 +15,9 @@ import cn.fm.service.salary.BalanceDetailService;
 public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implements BalanceDetailService {
 	
 	@SuppressWarnings("unchecked")
-	public List<BalanceDetail>  getAllBalanceDetail()
+	public List<BalanceDetail>  getAllBalanceDetail(Integer enterpriseId,Integer employeeId)
 	{
-		Query query=em.createQuery(" select b from BalanceDetail b ");
+		Query query=em.createQuery(" select b from BalanceDetail b where b.enterpriseId=?1 and b.employeeId=?2");
 		
 		
 		return query.getResultList();

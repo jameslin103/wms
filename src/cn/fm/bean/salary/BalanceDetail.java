@@ -75,10 +75,23 @@ public class BalanceDetail implements Serializable{
 	@Column(length=80)
 	private Integer      enterpriseId;
 	
+	@Column(length=80)
+	private Integer      employeesId;
 	
 	
 	
 	
+	
+	public Integer getEmployeesId() {
+		return employeesId;
+	}
+
+
+	public void setEmployeesId(Integer employeesId) {
+		this.employeesId = employeesId;
+	}
+
+
 	public Integer getDetailId() {
 		return detailId;
 	}
