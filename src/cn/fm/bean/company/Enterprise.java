@@ -13,6 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.user.WmsUser;
 
@@ -20,7 +24,7 @@ import cn.fm.bean.user.WmsUser;
 @Entity
 public class Enterprise implements Serializable{
 	
-	private  Integer  id;
+	private  Integer  enterpriseId;
 	/*简称*/
 	private  String   rferred;
 	/*全称*/
@@ -56,25 +60,10 @@ public class Enterprise implements Serializable{
 	
 	private Set<CreateSalaryBudgetTable> createSalaryBugetTables=new HashSet<CreateSalaryBudgetTable>();
 	
+	private Set<BalanceDetail>  balanceDetails=new HashSet<BalanceDetail>();
 	
-	public Enterprise(){}
-    public Enterprise(String rferred, String fullName,
-			String legalRepresentative, String accountLine,
-			String enterpriseBankAccount, String address, String contact,
-			String phone, String qq, String fax, String email, Integer status) {
-			this.rferred = rferred;
-			this.fullName = fullName;
-			this.legalRepresentative = legalRepresentative;
-			this.accountLine = accountLine;
-			this.enterpriseBankAccount = enterpriseBankAccount;
-			this.address = address;
-			this.contact = contact;
-			this.phone = phone;
-			this.qq = qq;
-			this.fax = fax;
-			this.email = email;
-			this.status = status;
-	}
+	
+
     
 	@ManyToMany(cascade=CascadeType.REFRESH,fetch=FetchType.EAGER,mappedBy="enterprise")//这里说明了关系维护端是student，teacher是关系被维护端  
 	public Set<WmsUser> getUser() {
@@ -85,11 +74,11 @@ public class Enterprise implements Serializable{
 	}
 	
 	@Id @GeneratedValue
-	public Integer getId() {
-		return id;
+	public Integer getEnterpriseId() {
+		return enterpriseId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
 	}
 	@Column(length=20)
 	public String getRferred() {
@@ -207,7 +196,8 @@ public class Enterprise implements Serializable{
 	        this.createSalaryBugetTables.add(createSalaryBudgetTable);  
 	    } 
 	
-	/*@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "enterprise")  
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "enterprise")  
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<EnterpriseEmployees> getEnterpriseEmployess() {
 		return enterpriseEmployess;
 	}
@@ -218,5 +208,14 @@ public class Enterprise implements Serializable{
 	{
 		enterpriseEmployees.setEnterprise(this);
 		this.enterpriseEmployess.add(enterpriseEmployees);
-	}*/
+	}
+	@OneToMany(mappedBy = "enterprise",cascade=CascadeType.ALL,fetch=FetchType.EAGER)   
+	@NotFound(action=NotFoundAction.IGNORE)
+	public Set<BalanceDetail> getBalanceDetails(){
+		return balanceDetails;
+	}
+	public void setBalanceDetails(Set<BalanceDetail> balanceDetails) {
+		this.balanceDetails = balanceDetails;
+	}
+	
 }

@@ -63,9 +63,11 @@ public class EnterpriseEmployessServiceTest {
 	@Test
 	public void fildAllEnterpriseEmployees()
 	{
-		List<EnterpriseEmployees> list=enterpriseEmployeesService.findAllEnterpriseEmployees("刘", null);
+		List<EnterpriseEmployees> list=enterpriseEmployeesService.findAllEnterpriseEmployees(null, 1,3);
+		System.out.println(list.size());
 		for (EnterpriseEmployees es : list) {
 			System.out.println(es.getEmployeesName());
+			System.out.println(es.getEnterprise().getFullName());
 		}
 	}
 	

@@ -108,13 +108,13 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	{
 		
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
-		if(enterprise==null || enterprise.getId()==null)return INPUT;
-		List<EnterpriseEmployees>  enterpriseEmployees=employeesSalaryDetailService.uploadImportWageBudgetSummary(file, "工资预算表", 31, enterprise.getId());
+		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
+		List<EnterpriseEmployees>  enterpriseEmployees=employeesSalaryDetailService.uploadImportWageBudgetSummary(file, "工资预算表", 31, enterprise.getEnterpriseId());
 		if(enterpriseEmployees.size()>0){
 			request.setAttribute("enterpriseEmployees", enterpriseEmployees);
 			return INPUT;
 		}else{
-			List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.saveTempEmployeesSalaryDetail(file, "工资预算表", 31, enterprise.getId());
+			List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.saveTempEmployeesSalaryDetail(file, "工资预算表", 31, enterprise.getEnterpriseId());
 			for (EmployeesSalaryDetail employeesSalaryDetail : employeesSalaryDetailList) {
 				
 					wargeTotal+=Double.valueOf(employeesSalaryDetail.getWage().toString());
@@ -130,7 +130,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	public String viewEmployeePersonalSalary()
 	{
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
-		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getAllEmployeesSalaryDetail( enterprise.getId(),employeesId);
+		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getAllEmployeesSalaryDetail( enterprise.getEnterpriseId(),employeesId);
 		if(employeesSalaryDetailList.size()==0)
 			employeesSalaryDetailList=new ArrayList<EmployeesSalaryDetail>();
 		

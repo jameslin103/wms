@@ -50,7 +50,7 @@ public class InsurancesBaseSettings implements Serializable{
 	public void setInsurancesType(String insurancesType) {
 		this.insurancesType = insurancesType;
 	}
-	@Column(length=100)
+	@Column(length=60)
 	public BigDecimal getSocialInsurance() {
 		return socialInsurance;
 	}
@@ -64,28 +64,28 @@ public class InsurancesBaseSettings implements Serializable{
 	public void setBirthInsurance(BigDecimal birthInsurance) {
 		this.birthInsurance = birthInsurance;
 	}
-	@Column(precision=100 ,scale=2)
+	@Column(precision=60 ,scale=2)
 	public BigDecimal getInductrialInjury() {
 		return inductrialInjury;
 	}
 	public void setInductrialInjury(BigDecimal inductrialInjury) {
 		this.inductrialInjury = inductrialInjury;
 	}
-	@Column(precision=100 ,scale=2)
+	@Column(precision=60 ,scale=2)
 	public BigDecimal getHousingMPF() {
 		return housingMPF;
 	}
 	public void setHousingMPF(BigDecimal housingMPF) {
 		this.housingMPF = housingMPF;
 	}
-	@Column(precision=100 ,scale=2)
+	@Column(precision=60 ,scale=2)
 	public BigDecimal getBasicMedical() {
 		return basicMedical;
 	}
 	public void setBasicMedical(BigDecimal basicMedical) {
 		this.basicMedical = basicMedical;
 	}
-	@Column(precision=100 ,scale=2)
+	@Column(precision=60 ,scale=2)
 	public BigDecimal getPovertyStricken() {
 		return povertyStricken;
 	}

@@ -44,6 +44,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private String    inputPath;  
 	private String    excelName;
 	private Integer   enterpriseId;
+	private String    employessName;
 	
 	
 	
@@ -53,7 +54,13 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
     
     
     
-	 public Integer getEnterpriseId() {
+	 public String getEmployessName() {
+	return employessName;
+}
+public void setEmployessName(String employessName) {
+	this.employessName = employessName;
+}
+	public Integer getEnterpriseId() {
 		return enterpriseId;
 	}
 	public void setEnterpriseId(Integer enterpriseId) {
@@ -148,8 +155,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	public String addImportExcelEmployees()
 	{
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
-		if(enterprise==null || enterprise.getId()==null)return INPUT;
-		enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",34,enterprise.getId());
+		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
+		enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",34,enterprise);
 		return SUCCESS;
 	}
 	/**
@@ -158,7 +165,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 */
 	public String viewEnterpriseEmployees(){
 		Enterprise enter=(Enterprise)request.getSession().getAttribute("enterprise");
-		if(enter!=null)this.setEnterpriseId(enter.getId());
+		if(enter!=null)this.setEnterpriseId(enter.getEnterpriseId());
 		List<EnterpriseEmployees>  listEmployees=enterpriseEmployeesService.getAllEnterpriseEmployees(this.enterpriseId);
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("createDate", "desc");
@@ -166,7 +173,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		List<Object> params = new ArrayList<Object>();
 		if(this.enterpriseId!=null)
 		{
-			jpql.append(" o.enterpriseId=? ");
+			jpql.append(" o.enterprise.id=? ");
 			params.add(this.enterpriseId);
 			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
@@ -209,7 +216,12 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	public String fildAllEnterpriseEmployees()
 	{
-		
+		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
+		if(StringUtil.isEmpty(employessName) && all==null)return INPUT;
+			List<EnterpriseEmployees> enterpriseEmployeesList=enterpriseEmployeesService.findAllEnterpriseEmployees(employessName, all, enterprise.getEnterpriseId());
+			if(enterpriseEmployeesList==null ||enterpriseEmployeesList.size()==0)
+				enterpriseEmployeesList=new ArrayList<EnterpriseEmployees>();
+			request.setAttribute("enterpriseEmployeesList", enterpriseEmployeesList);
 		
 		return SUCCESS;
 	}
@@ -240,7 +252,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		//获取表头,存放到ArrayList filedName对象中()
 		List<String> filedName = enterpriseEmployeesService.getExcelFiledNameList(); 
 		Enterprise  enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
-		List<EnterpriseEmployees> filedData =enterpriseEmployeesService.getExcelFiledDataList(enterpriseEmployees,enterprise.getId());
+		List<EnterpriseEmployees> filedData =enterpriseEmployeesService.getExcelFiledDataList(enterpriseEmployees,enterprise.getEnterpriseId());
 		try {
 			//获取输出流
 			OutputStream out = response.getOutputStream();

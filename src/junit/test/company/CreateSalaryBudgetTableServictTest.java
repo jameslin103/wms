@@ -28,7 +28,7 @@ public class CreateSalaryBudgetTableServictTest {
 	{
 		CreateSalaryBudgetTable createSalaryBudgetTable=new CreateSalaryBudgetTable();
 		Enterprise en=new Enterprise();
-		en.setId(3);
+		en.setEnterpriseId(3);
 		createSalaryBudgetTable.setEnterprise(en);
 		createSalaryBudgetTable.setName("中国卫星发射");
 		createSalaryBudgetTable.setTemple("安装系统");

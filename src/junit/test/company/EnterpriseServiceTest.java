@@ -66,6 +66,15 @@ public class EnterpriseServiceTest {
 		}
 		
 	}
-	
+	@Test
+	public void findEnterpriseBalanceDetail()
+	{
+		Enterprise  en=enterpriseService.find(3);
+		System.out.println(en.getBalanceDetails().size());
+		
+		
+		
+		
+	}
 
 }

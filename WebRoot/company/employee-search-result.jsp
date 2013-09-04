@@ -20,6 +20,11 @@
 		<div id="container">
 			<div id="header">
 				<jsp:include page="../layout/header.jsp" />
+				<div id="sub-header" class="clearfix">
+					<h2>
+						<s:property value="%{#session.enterprise.fullName}" />
+					</h2>
+				</div>
 			</div>
 
 			<div id="main">
@@ -34,7 +39,7 @@
 								<a href="viewEnterpriseEmployees">员工档案</a>
 							</li>
 							<li>
-								<a href="company/salary-with-month.jsp">工资预算表</a>
+								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li>
 								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
@@ -78,37 +83,67 @@
 									</th>
 								</tr>
 							</thead>
+							<s:iterator value="#request.enterpriseEmployeesList" id="enterpriseEmployees">
 							<tbody>
 								<tr>
 									<td>
-										1
+										<s:property value="%{#enterpriseEmployees.employeesId}"/>
 									</td>
 									<td>
-										<a href="company/employee-personal-info.jsp">某某人</a>
+										<a href="selectEnterpriseEmployeesWage?employeesId=<s:property value='%{#enterpriseEmployees.employeesId}'/>">
+											<s:property value="%{#enterpriseEmployees.employeesName}"/>
+										</a>
 									</td>
 									<td>
-										福建电信
+										<s:property value="%{#enterpriseEmployees.enterprise.fullName}"/>
 									</td>
 									<td>
-										男
+										<s:property value="%{#enterpriseEmployees.employeesSex}"/>
 									</td>
 									<td>
-										非农
+										
+										<s:if test="#enterpriseEmployees.householdRegister==1 ">
+											非农
+										</s:if>
+										<s:elseif test="#enterpriseEmployees.householdRegister==0 ">
+											农村
+										</s:elseif>
+										<s:else>
+											&npsp;&npsp;&npsp;&npsp;
+										</s:else>
 									</td>
 									<td>
-										已婚
+										
+										<s:if test="#enterpriseEmployees.maritalStatus==1">
+											已婚
+										</s:if>
+										<s:elseif test="#enterpriseEmployees.maritalStatus==0">
+											未婚
+										</s:elseif>
+										<s:else>
+											&npsp;&npsp;&npsp;&npsp;
+										</s:else>
 									</td>
 									<td>
-										有
+										<s:if test="#enterpriseEmployees.photo==1">
+											有
+										</s:if>
+										<s:elseif test="#enterpriseEmployees.photo==0">
+											没有
+										</s:elseif>
+										<s:else>
+											&npsp;&npsp;&npsp;&npsp;
+										</s:else>
 									</td>
 									<td>
-										132562345698756231
+										<s:property value="%{#enterpriseEmployees.cardNumber}"/>
 									</td>
 									<td>
-										13356899685
+										<s:property value="%{#enterpriseEmployees.phone}"/>
 									</td>
 								</tr>
 							</tbody>
+							</s:iterator>
 						</table>
 
 					</div>

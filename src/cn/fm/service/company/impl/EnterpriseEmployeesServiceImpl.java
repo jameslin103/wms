@@ -9,6 +9,8 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.company.EnterpriseEmployeesService;
@@ -30,7 +32,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees> getAllEnterpriseEmployees(Integer enterpriseId)
 	{
-		Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterpriseId=?1 ");
+		Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterprise.id=?1 ");
 		return query.setParameter(1, enterpriseId).getResultList();
 	}
 	
@@ -40,18 +42,25 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 *   select * from enterpriseemployees as e where e.employeesName like '%刘%' and e.employeesId;
 	 */
 	@SuppressWarnings("unchecked")
-	public List<EnterpriseEmployees>  findAllEnterpriseEmployees(String employessName,Integer all)
+	public List<EnterpriseEmployees>  findAllEnterpriseEmployees(String employeesName,Integer all,Integer enterpriseId)
 	{
-		if(StringUtil.isEmpty(employessName))return null;
-		Query query;
-		if(!employessName.equals("")  && all!=null){
-			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like ?1 and e.employeesId=1 ");
-		}else{
-			query = em.createQuery("select e from EnterpriseEmployees e where e.employessName like ?1 ");
+		Query query = null;
+		if(!StringUtil.isEmpty(employeesName)  && all!=null)
+		{
+			query = em.createQuery("select e from EnterpriseEmployees e where e.employeesName like ?1")
+			.setParameter(1, "%"+employeesName+"%");
 		}
+		if(StringUtil.isEmpty(employeesName) && all!=null){
+			query = em.createQuery("select e from EnterpriseEmployees e");
+		}
+		if(all==null && !StringUtil.isEmpty(employeesName))
+		{
+			query = em.createQuery("select e from EnterpriseEmployees e where e.employeesName like ?1 and e.enterprise.id=?2 ")
+			.setParameter(1, "%"+employeesName+"%").setParameter(2, enterpriseId);
 			
-		query =query.setParameter(1, " '% "+employessName+" %' ");
-		return query.getResultList();
+		}
+		
+		 return query.getResultList();
 	}
 	
 	
@@ -69,7 +78,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 * 
 	 */
 	@SuppressWarnings({ "unchecked", "static-access" })
-	public void saveImportExcelEmployees(File file , String fiName,int number,int enterpriseId) {
+	public void saveImportExcelEmployees(File file , String fiName,int number, Enterprise enterprise) {
 		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
 		try {
 			List<String[]> arrayList=excel.generateStationBugSql(file,fiName,number);
@@ -110,7 +119,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				employees.setHousingFund(data[31].toString().equals("")?null:Double.valueOf(data[31]));
 				employees.setSeriousDiseaseBase(data[32].toString().equals("")?null:Double.valueOf(data[32]));
 				employees.setPaymentWay(data[33].toString());
-				employees.setEnterpriseId(enterpriseId);
+				employees.setEnterprise(enterprise);
 				
 				super.save(employees);	
 			}
@@ -173,7 +182,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	{
 
 		List<EnterpriseEmployees> enterpriseEmployeesListDatePO=null;
-		Query query=em.createQuery("select e from EnterpriseEmployees e where e.enterpriseId=?1");
+		Query query=em.createQuery("select e from EnterpriseEmployees e where e.enterprise.id=?1");
 		query.setParameter(1, enterpriseId);
 		enterpriseEmployeesListDatePO=query.getResultList();
 		List<EnterpriseEmployees> employeesListVO = this.enterpriseEmployeesPOListToVOList(enterpriseEmployeesListDatePO);
@@ -230,7 +239,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			enterpriseEmployeesVO.setHousingFund(employeesListVO.getHousingFund());
 			enterpriseEmployeesVO.setSeriousDiseaseBase(employeesListVO.getSeriousDiseaseBase());
 			enterpriseEmployeesVO.setPaymentWay(employeesListVO.getPaymentWay());
-			enterpriseEmployeesVO.setEnterpriseId(employeesListVO.getEnterpriseId());
+			//enterpriseEmployeesVO.setEnterpriseId(employeesListVO.getEnterpriseId());
 			employeesList.add(enterpriseEmployeesVO);
 		}
 		return employeesList;

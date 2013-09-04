@@ -4,12 +4,18 @@ package cn.fm.bean.company;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 
 @SuppressWarnings("serial")
@@ -86,11 +92,11 @@ public class EnterpriseEmployees implements Serializable{
 	/*伪删除  0 隐藏    1显示*/
 	private Integer  pseudoDelete;
 	
-	private Integer  enterpriseId;
+	//private Integer  enterpriseId;
 	
 	private Date     createDate=new Date();
 	
-	//private Enterprise  enterprise;
+	private Enterprise  enterprise;
 	
 	@Id @GeneratedValue
 	public Integer getEmployeesId() {
@@ -347,24 +353,25 @@ public class EnterpriseEmployees implements Serializable{
 	public void setSeriousDiseaseBase(Double seriousDiseaseBase) {
 		this.seriousDiseaseBase = seriousDiseaseBase;
 	}
-	@Column(length=30)
-	public Integer getEnterpriseId() {
-		return enterpriseId;
-	}
-	public void setEnterpriseId(Integer enterpriseId) {
-		this.enterpriseId = enterpriseId;
-	}
+//	@Column(length=30)
+//	public Integer getEnterpriseId() {
+//		return enterpriseId;
+//	}
+//	public void setEnterpriseId(Integer enterpriseId) {
+//		this.enterpriseId = enterpriseId;
+//	}
 	
 	
-	/* @ManyToOne(cascade = CascadeType.REFRESH)  
+	 @ManyToOne(cascade = CascadeType.ALL)  
 	    // JoinColumn表示外键的列  
 	    @JoinColumn(name="enterpriseId")  
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Enterprise getEnterprise() {
 		return enterprise;
 	}
 	public void setEnterprise(Enterprise enterprise) {
 		this.enterprise = enterprise;
-	}*/
+	}
 	
 	
 

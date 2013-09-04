@@ -121,7 +121,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
 		if(createSalaryBudgetTable==null || createSalaryBudgetTable.getName()==null)return INPUT;
 		if(createSalaryBudgetTable!=null && createSalaryBudgetTable.getBudgetId()!=null){
-			if(enterprise==null || enterprise.getId()==null)return INPUT;
+			if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
 			createSalaryBudgetTable.setEnterprise(enterprise);
 			CreateSalaryBudgetTable CreateSalaryBudgetTablePO=new CreateSalaryBudgetTable();
 			CreateSalaryBudgetTablePO=createSalaryBudgetTable;
@@ -147,7 +147,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
 		if(enterprise==null)return;
 		createSalaryBudgetTable.setEnterprise(enterprise);
-		List<SalaryTemplate> salaryTemplateList=salaryTemplateService.getAllSalaryTemplate(createSalaryBudgetTable.getEnterprise().getId());
+		List<SalaryTemplate> salaryTemplateList=salaryTemplateService.getAllSalaryTemplate(createSalaryBudgetTable.getEnterprise().getEnterpriseId());
 		if(salaryTemplateList.size()==0)
 			salaryTemplateList=new ArrayList<SalaryTemplate>();
 		request.setAttribute("salaryTemplates", salaryTemplateList);

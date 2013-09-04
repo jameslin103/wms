@@ -55,7 +55,7 @@ public class SalaryTemplateAction extends BaseAction {
 		
 		List<CustomBonus> customBonus=customBonusService.getAllCustomBonus();
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
-		List<SalaryTemplate> salaryTemplate=salaryTemplateService.getAllSalaryTemplate(enterprise.getId());
+		List<SalaryTemplate> salaryTemplate=salaryTemplateService.getAllSalaryTemplate(enterprise.getEnterpriseId());
 		if(customBonus.size()==0)
 			salaryTemplate=new ArrayList<SalaryTemplate>();
 		if(customBonus.size()==0)

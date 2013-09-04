@@ -4,12 +4,22 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+
+import cn.fm.bean.company.Enterprise;
 
 /**
  * 资金往来实体类
@@ -78,7 +88,7 @@ public class BalanceDetail implements Serializable{
 	@Column(length=80)
 	private Integer      employeesId;
 	
-	
+	private Enterprise   enterprise;
 	
 	
 	
@@ -229,6 +239,18 @@ public class BalanceDetail implements Serializable{
 
 	public void setEndingBalance(BigDecimal endingBalance) {
 		this.endingBalance = endingBalance;
+	}
+
+
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="enterpriseId")
+   @NotFound(action=NotFoundAction.IGNORE)
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
 	}
 	
 	

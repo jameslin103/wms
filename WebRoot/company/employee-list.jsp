@@ -15,9 +15,8 @@
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script type="text/javascript">
 		function topage(page){
-			
+		
 			var form = document.getElementById("myform");
-			alert(form);
 			form.page.value=page;
 			form.submit();
 		}
@@ -35,8 +34,7 @@
 					</h2>
 				</div>
 			</div>
-	<s:form action="viewEnterpriseEmployees" method="post" id="myform">
-		<s:hidden name="page"/>
+	
 			<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">
@@ -91,13 +89,15 @@
 							</li>
 							<li class="right">
 								<s:form cssClass="navbar-form pull-left" action="fildAllEnterpriseEmployees" method="post">
-									<s:textfield name="enterpriseEmployees.employessName" placeholder="输入姓名" />
+									
+									<input type="text" name="employessName" placeholder="输入姓名"/>
 									<input type="checkbox" name="all" value="1"/>&nbsp;全站
                 					<s:submit type="submit" cssClass="btn" value="搜索" />
 								</s:form>
 							</li>
 						</ul>
-
+					<s:form action="viewEnterpriseEmployees" method="post" id="myform">
+						<s:hidden name="page"/>
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -257,10 +257,11 @@
    						 </s:if>
 						</s:iterator>
 						</div>
+						</s:form>
 					</div>
 				</div>
 			</div>
-</s:form>
+
 			<div id="footer"></div>
 
 		</div>

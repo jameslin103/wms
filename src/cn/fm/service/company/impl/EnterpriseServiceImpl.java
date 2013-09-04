@@ -25,7 +25,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		enterpriseList=query.setParameter(1, userId).getResultList();
 		if(enterpriseList.size()>0){
 			for (Enterprise enterprise : enterpriseList) {
-				Long count=getCountEmployees(enterprise.getId());
+				Long count=getCountEmployees(enterprise.getEnterpriseId());
 				Enterprise enterpriseVO=new Enterprise();
 				enterpriseVO.setAccountLine(enterprise.getAccountLine());
 				enterpriseVO.setAddress(enterprise.getAddress());
@@ -34,7 +34,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 				enterpriseVO.setEnterpriseBankAccount(enterprise.getEnterpriseBankAccount());
 				enterpriseVO.setFax(enterprise.getFax());
 				enterpriseVO.setFullName(enterprise.getFullName());
-				enterpriseVO.setId(enterprise.getId());
+				enterpriseVO.setEnterpriseId(enterprise.getEnterpriseId());
 				enterpriseVO.setLegalRepresentative(enterprise.getLegalRepresentative());
 				enterpriseVO.setQq(enterprise.getQq());
 				enterpriseVO.setPhone(enterprise.getPhone());
@@ -60,7 +60,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 	public long  getCountEmployees(Integer enterpriseId)
 	{
 		
-		Query query = em.createQuery("select count(e) from EnterpriseEmployees e where e.enterpriseId=?1");
+		Query query = em.createQuery("select count(e) from EnterpriseEmployees e where e.enterprise.id=?1");
 		query.setParameter(1, enterpriseId);
 		return (Long) query.getSingleResult();
 	}

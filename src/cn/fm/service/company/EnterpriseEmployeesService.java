@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.service.base.DAO;
 
@@ -18,7 +19,7 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @param file
 	 * @param fiName
 	 */
-	public void saveImportExcelEmployees(File file , String fiName,int number,int enterpriseId);
+	public void saveImportExcelEmployees(File file , String fiName,int number,Enterprise enterprise);
 	/**
 	 * 查看所有企业员工
 	 * @return list
@@ -31,7 +32,7 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	
 	public List<EnterpriseEmployees> findInsuranceEnterpriseEmployees(Integer  insurance);
 	
-	public List<EnterpriseEmployees>  findAllEnterpriseEmployees(String employessName,Integer all);
+	public List<EnterpriseEmployees>  findAllEnterpriseEmployees(String employessName,Integer all,Integer enterpriseId);
 	
 	public List<EnterpriseEmployees> getExcelFiledDataList(EnterpriseEmployees enterpriseEmployees,int enterpriseId);
 	
