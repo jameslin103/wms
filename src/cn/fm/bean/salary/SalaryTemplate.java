@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -43,7 +46,7 @@ public class SalaryTemplate implements Serializable {
 	
 	private List<String>  subsidys=new ArrayList<String>();
 	
-//	private CreateSalaryBudgetTable   createSalaryBudgetTable;
+	private CreateSalaryBudgetTable   createSalaryBudgetTable;
 	
 	
 	
@@ -119,8 +122,8 @@ public class SalaryTemplate implements Serializable {
 	public void setSubsidys(List<String> subsidys) {
 		this.subsidys = subsidys;
 	}
-	/* @OneToOne(cascade={CascadeType.ALL}) 
-	    @JoinColumn(name="id") 
+	@OneToOne(cascade={CascadeType.ALL}) 
+	    @JoinColumn(name="budget_id") 
 	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
 		return createSalaryBudgetTable;
 	}
@@ -128,6 +131,6 @@ public class SalaryTemplate implements Serializable {
 	public void setCreateSalaryBudgetTable(
 			CreateSalaryBudgetTable createSalaryBudgetTable) {
 		this.createSalaryBudgetTable = createSalaryBudgetTable;
-	}*/
+	}
 	
 }

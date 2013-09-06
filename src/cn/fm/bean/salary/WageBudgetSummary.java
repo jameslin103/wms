@@ -196,7 +196,7 @@ public class WageBudgetSummary implements Serializable {
 		this.createDate = createDate;
 	}
 
-
+	
 	public CreateSalaryBudgetTable getCreateSalaryBudgerTable() {
 		return createSalaryBudgerTable;
 	}

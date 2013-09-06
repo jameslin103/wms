@@ -3,13 +3,17 @@ package cn.fm.service.user.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.base.DaoSupport;
+import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.user.WmsUserService;
 
 
@@ -90,7 +94,7 @@ public class WmsUserServiceImpl extends DaoSupport<WmsUser> implements WmsUserSe
 		return 	buyerList;	
 	}
 	@SuppressWarnings("unchecked")
-	public List getAllWmsUser()
+	public List<WmsUser> getAllWmsUser()
 	{
 		List<WmsUser> wmsUserList=new ArrayList<WmsUser>();
 		Query query = em.createQuery("select b from WmsUser b ");
@@ -102,6 +106,24 @@ public class WmsUserServiceImpl extends DaoSupport<WmsUser> implements WmsUserSe
 		Query query=em.createQuery("select w from WmsUser w where w.phone=?");
 		return (WmsUser)query.setParameter(1, phone).getSingleResult();
 	}
-
+	
+	/**
+	 * 查询这个企业的所有负责人
+	 * @param enterprise
+	 * @return
+	 */
+	public List<WmsUser>  getEnterpriseToBoWmsUser(List<Enterprise> enterprise)
+	{
+		
+		List<WmsUser>  wmsUserListVO=new ArrayList<WmsUser>();
+		if(enterprise.size()==0)return null;
+		for(Enterprise enter : enterprise){
+			Enterprise en=em.find(Enterprise.class, enter.getEnterpriseId());
+			for(WmsUser us :en.getUser()){
+				wmsUserListVO.add(us);
+			}
+		}
+		return wmsUserListVO;
+	}
 
 }

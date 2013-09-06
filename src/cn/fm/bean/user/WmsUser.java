@@ -14,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -52,10 +51,8 @@ public class WmsUser implements Serializable{
 	
 	
 	
-	  @ManyToMany(cascade = CascadeType.REFRESH,fetch=FetchType.EAGER)  
-	  @JoinTable(name = "user_enterprise",
-			  inverseJoinColumns = @JoinColumn(name = "enterpriseId"),
-			  joinColumns = @JoinColumn(name = "userId")) //JoinTable就是定义中间表的名字以及关联字段名 
+	 
+    @ManyToMany(cascade=CascadeType.REFRESH,fetch=FetchType.EAGER,mappedBy="user")          
 	public Set<Enterprise> getEnterprise() {
 		return enterprise;
 	}
@@ -72,7 +69,7 @@ public class WmsUser implements Serializable{
 		this.userId = userId;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP) @Column(nullable=false)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getRegTime() {
 		return regTime;
 	}
@@ -112,7 +109,7 @@ public class WmsUser implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@Column(length=8)
+	@Column(length=13)
 	public String getPhone() {
 		return phone;
 	}
@@ -148,16 +145,7 @@ public class WmsUser implements Serializable{
 	public void setVisible(Boolean visible) {
 		this.visible = visible;
 	}
-	  public void addEterprise(Enterprise  enterprise){  
-	        this.enterprise.add(enterprise);  
-	    }  
-	      
-	    public void removeEnterprise(Enterprise enterprise){  
-	         if(this.enterprise.contains(enterprise)){
-	             this.enterprise.remove(enterprise);  
-	         }  
-	    }  
-	
+
 	
 	
 	

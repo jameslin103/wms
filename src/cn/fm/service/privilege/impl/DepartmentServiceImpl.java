@@ -28,7 +28,7 @@ public class DepartmentServiceImpl extends DaoSupport<Department> implements Dep
 
 	@Override
 	public void save(Department entity) {
-		entity.setDepartmentid(UUID.randomUUID().toString());
+		//entity.setDepartmentid(UUID.randomUUID().toString());
 		super.save(entity);
 	}
 

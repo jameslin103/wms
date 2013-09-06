@@ -2,6 +2,8 @@ package cn.fm.service.user;
 
 import java.io.Serializable;
 import java.util.List;
+
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.base.DAO;
 
@@ -22,9 +24,16 @@ public interface WmsUserService extends DAO<WmsUser>{
 	public List getWmsUserInfo(Serializable ... usernames);
 
 	
-	public List getAllWmsUser();
+	public List<WmsUser> getAllWmsUser();
 	
 	
 	public WmsUser find(String phone);
+	
+	/**
+	 * 查询这个企业的所有负责人
+	 * @param enterprise
+	 * @return
+	 */
+	public List<WmsUser>  getEnterpriseToBoWmsUser(List<Enterprise> enterprise);
 	
 }

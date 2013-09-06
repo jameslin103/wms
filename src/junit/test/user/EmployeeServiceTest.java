@@ -27,7 +27,7 @@ public class EmployeeServiceTest {
 	}
 	
 	@Test public void delete(){
-		employeeService.delete("itcast");
+		employeeService.delete("james");
 	}
 	
 	@Test public void validate(){

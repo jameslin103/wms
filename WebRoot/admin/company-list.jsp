@@ -11,7 +11,7 @@
 	<head>
 		<base href="<%=basePath%>">
 		<title>富民人力银行派遣系统</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" >
 		<%@ include file="/help/public_css_js.jsp"%>
 
 	</head>
@@ -55,11 +55,11 @@
 									</th>
 								</tr>
 							</thead>
-							<s:iterator value="#request.enterpriseList" var="enterprise">
+							<s:iterator value="#request.enterpriseList" id="enterprise" status="en">
 								<tbody>
 									<tr>
 										<td>
-											<s:property value="%{#enterprise.id}" />
+											<s:property value="%{#enterprise.enterpriseId}" />
 										</td>
 										<td class="with-complement">
 											<s:property value="%{#enterprise.fullName}" />
@@ -69,7 +69,10 @@
 													value="%{#enterprise.qq}" /> </span>
 										</td>
 										<td class="with-complement">
-											倪姐，陈姐
+											<s:iterator value="#request.wmsUserList" id="user" status="us">
+												<s:property value="%{#user.username}" />
+												
+											</s:iterator>
 											<s:hidden value='%{#enterprise.id}' id="enterId"/>
 											<a href="#info-for-check2" data-toggle="modal"   class="complement" >增删负责人 </a>
 										</td>
@@ -240,26 +243,20 @@
 								当前负责人
 							</label>
 							<ul class="list-of-items-for-delete normal clearfix">
+							<s:iterator value="#request.wmsUserList" id="user" status="us">		
 								<li>
-									倪姐
+									<s:property value="%{#user.username}" />
 									<a href="#">X</a>
 								</li>
-								<li>
-									陈姐
-									<a href="#">X</a>
-								</li>
-								<li>
-									某某人
-									<a href="#">X</a>
-								</li>
+							</s:iterator>
 							</ul>
 						</div>
-
 						<div class="input-container">
 							<label>
 								搜索并添加负责人
 							</label>
-							<input type="text" name="">
+							<s:select list="%{#request.wmsUsers}" label="0" listKey="username"
+							 listValue="username"  headerKey="0" headerValue="-请选择-"/>
 						</div>
 
 						<div class="input-container">

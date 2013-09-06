@@ -2,6 +2,7 @@ package cn.fm.service.company.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Query;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.user.WmsUser;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.company.EnterpriseService;
 
@@ -16,13 +18,12 @@ import cn.fm.service.company.EnterpriseService;
 @Service @Transactional
 public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements EnterpriseService {
 
-	@SuppressWarnings("unchecked")
-	public List<Enterprise> getAllEnterprise(Integer userId)
+	
+	public List<Enterprise> getAllEnterprise(WmsUser user)
 	{
+		if(user==null)return null;
 		List<Enterprise> enterpriseListVO=new ArrayList<Enterprise>();
-		List<Enterprise> enterpriseList=new ArrayList<Enterprise>();
-		Query query = em.createQuery("select b from Enterprise b where b.userId=?1");
-		enterpriseList=query.setParameter(1, userId).getResultList();
+		Set<Enterprise>  enterpriseList=user.getEnterprise();
 		if(enterpriseList.size()>0){
 			for (Enterprise enterprise : enterpriseList) {
 				Long count=getCountEmployees(enterprise.getEnterpriseId());
@@ -40,7 +41,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 				enterpriseVO.setPhone(enterprise.getPhone());
 				enterpriseVO.setStatus(enterprise.getStatus());
 				enterpriseVO.setRferred(enterprise.getRferred());
-				enterpriseVO.setUserId(enterprise.getUserId());
+				//enterpriseVO.setUserId(enterprise.getUserId());
 				enterpriseVO.setCount(count);
 				
 				enterpriseListVO.add(enterpriseVO);
@@ -64,6 +65,38 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		query.setParameter(1, enterpriseId);
 		return (Long) query.getSingleResult();
 	}
-
+	
+	public void saveEnterprise(Enterprise enterprise){
+		
+		
+		super.save(enterprise);
+		
+	}
+	public List<Enterprise> getAllEnterprise(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	/**
+	 * 查询这个企业的所有负责人
+	 * @param enterprise
+	 * @return
+	 */
+	public List<WmsUser>  getEnterpriseToBoWmsUser(List<Enterprise> enterprise)
+	{
+		
+		List<WmsUser>  wmsUserListVO=new ArrayList<WmsUser>();
+		if(enterprise.size()==0)return null;
+		for(Enterprise enter : enterprise){
+			Enterprise en=em.find(Enterprise.class, enter.getEnterpriseId());
+			for(WmsUser us :en.getUser()){
+				WmsUser user=new WmsUser();
+				user=us;
+				wmsUserListVO.add(user);
+			}
+		}
+		return wmsUserListVO;
+	}
 
 }

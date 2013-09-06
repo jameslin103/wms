@@ -1,12 +1,7 @@
 package junit.test.company;
 
 
-import java.util.Iterator;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,36 +12,23 @@ import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseService;
+import cn.fm.service.user.WmsUserService;
 public class EnterpriseServiceTest {
 
 	static EnterpriseService  enterpriseService;
+	static WmsUserService     wmsUserService;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		try {
 			ApplicationContext cxt = new ClassPathXmlApplicationContext("beans.xml");
 			enterpriseService = (EnterpriseService)cxt.getBean("enterpriseServiceImpl");
+			//wmsUserService = (WmsUserService)cxt.getBean("wmsUserServiceImpl");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	@Test
-	
-	public void save()
-	{
-		//Enterprise enterprise=new Enterprise();
-//		enterprise.setFullName("火星计划");
-//		enterprise.setAddress("gouliu");
-//		enterprise.setContact("XXXXFFFF000202");
-	    EntityManagerFactory factory = Persistence.createEntityManagerFactory("EnterpriseServiceTest");  
-		EntityManager em = factory.createEntityManager();  
-		em.getTransaction().begin();  
-		WmsUser  user= em.find(WmsUser.class, 1);  
-		user.addEterprise(em.getReference(Enterprise.class, 1));  
-		em.getTransaction().commit();  
-		em.close();  
-		factory.close(); 
 
-	}
+
 	@Test
 	public void find()
 	{
@@ -69,12 +51,83 @@ public class EnterpriseServiceTest {
 	@Test
 	public void findEnterpriseBalanceDetail()
 	{
-		Enterprise  en=enterpriseService.find(3);
-		System.out.println(en.getBalanceDetails().size());
+		
+		//Enterprise  en=enterpriseService.find(1);
+		//enterpriseService.getAllEnterprise(1);
+		WmsUser  user=new WmsUser();
+		user.setUserId(1);
+		System.out.println(enterpriseService.getAllEnterprise(user).size());
 		
 		
+		//System.out.println(en.getBalanceDetails().size());
 		
 		
+	}
+	
+	@Test
+	public void saveEnterprise()
+	{
+		
+		Enterprise en=new Enterprise();
+		en.setAccountLine("69869784562456");
+		en.setAddress("罗星塔");
+		en.setFullName("枫叶科技有限公司");
+		WmsUser  user=new WmsUser();
+		user.setUserId(2);
+		en.addWmsUser(user);
+		enterpriseService.saveEnterprise(en);
+		
+	}
+	@Test
+	
+	public void findEnterprise()
+	{
+		
+	Enterprise	enterprise=enterpriseService.find(17);
+	
+	
+	System.out.println(enterprise.getUser().iterator().next().getUsername());
+	System.out.println(enterprise.getFullName());
+	
+	
+	
+	}
+	@Test
+	public void deleteEnterprise(){
+		Enterprise	enterprise=enterpriseService.find(13);
+		System.out.println(enterprise.getUser().size());
+		
+		for(WmsUser user : enterprise.getUser()){
+			
+			enterprise.getUser().remove(user);
+			//user.getEnterprise().remove(enterprise);
+			
+			
+		}
+		enterpriseService.delete(enterprise);
+		
+	}
+	
+	@Test
+	public void findUserToEnterprise()
+	{
+		
+	WmsUser user=wmsUserService.find(1);	
+	for(Enterprise enterprise:user.getEnterprise()){
+		System.out.println(user.getUserId());
+		System.out.println(enterprise.getFullName());
+	}
+	}
+	
+	@Test
+	public void findEnterpriseToBeWmsUser()
+	{
+		
+	Enterprise enter=enterpriseService.find(16);	
+	for(WmsUser user:enter.getUser()){
+		System.out.println(user.getUserId());
+		System.out.println(user.getUsername());
+	}
 	}
 
 }

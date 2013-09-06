@@ -92,8 +92,6 @@ public class EnterpriseEmployees implements Serializable{
 	/*伪删除  0 隐藏    1显示*/
 	private Integer  pseudoDelete;
 	
-	//private Integer  enterpriseId;
-	
 	private Date     createDate=new Date();
 	
 	private Enterprise  enterprise;
@@ -353,17 +351,8 @@ public class EnterpriseEmployees implements Serializable{
 	public void setSeriousDiseaseBase(Double seriousDiseaseBase) {
 		this.seriousDiseaseBase = seriousDiseaseBase;
 	}
-//	@Column(length=30)
-//	public Integer getEnterpriseId() {
-//		return enterpriseId;
-//	}
-//	public void setEnterpriseId(Integer enterpriseId) {
-//		this.enterpriseId = enterpriseId;
-//	}
 	
-	
-	 @ManyToOne(cascade = CascadeType.ALL)  
-	    // JoinColumn表示外键的列  
+	@ManyToOne(cascade = CascadeType.ALL)
 	    @JoinColumn(name="enterpriseId")  
 	@NotFound(action=NotFoundAction.IGNORE)
 	public Enterprise getEnterprise() {

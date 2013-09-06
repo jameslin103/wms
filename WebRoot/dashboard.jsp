@@ -11,7 +11,6 @@
 			<li>
 				<s:a href="loginOut">退出</s:a>
 			</li>
-
 		</ul>
 
 		<div class="navbar">

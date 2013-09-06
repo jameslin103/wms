@@ -9,7 +9,9 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.BalanceDetail;
+import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.service.salary.BalanceDetailService;
 
 public class BalanceDetailServiceTest {
@@ -44,6 +46,24 @@ public class BalanceDetailServiceTest {
 		balanceDetail.setWages(new BigDecimal(200));
 		balanceDetailService.update(balanceDetail, 2,3);
 
+		
+	}
+	@Test
+	public void save()
+	{
+		BalanceDetail balanceDetail=new BalanceDetail();
+		balanceDetail.setServiceWith(new BigDecimal(1000));
+		balanceDetail.setReceivedFunds(new BigDecimal(800));
+		balanceDetail.setNote("已完成配置");
+		balanceDetail.setFiveFund(new BigDecimal(300));
+		balanceDetail.setServiceWith(new BigDecimal(700));
+		balanceDetail.setWages(new BigDecimal(200));
+//		Enterprise en=new Enterprise();
+//		en.setEnterpriseId(1);
+//		balanceDetail.setEnterprise(en);
+//		balanceDetail.getEnterprise().getEnterpriseId();
+//		
+		balanceDetailService.save(balanceDetail);
 		
 	}
 

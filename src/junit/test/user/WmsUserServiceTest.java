@@ -4,10 +4,14 @@ package junit.test.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.user.ContactInfo;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.user.WmsUserService;
@@ -81,6 +85,29 @@ public class WmsUserServiceTest {
 		listBuyer=wmsUserService.getAllWmsUser();
 		System.out.println(listBuyer.size());
 		
+	}
+	@Test
+	public void findUserToEnterprise()
+	{
+		WmsUser user=wmsUserService.find(1);
+		Set<Enterprise> enterpriseList1=user.getEnterprise();
+		for(Enterprise en: enterpriseList1){
+			System.out.println(user.getUserId());
+			System.out.println(user.getUsername());
+			System.out.println(en.getFullName());
+		}
+	}
+	@Test
+	public void deleteWmsUser()
+	{
+		WmsUser user=wmsUserService.find(1);
+		
+		for(Enterprise en: user.getEnterprise()){
+			en.removeWmsUser(user);
+			wmsUserService.delete(en);
+		}
+		
+	
 	}
 	
 }

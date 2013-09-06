@@ -3,6 +3,7 @@ package cn.fm.service.company;
 import java.util.List;
 
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.user.WmsUser;
 import cn.fm.service.base.DAO;
 
 
@@ -17,5 +18,18 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	 * @return
 	 */
 	public long getCountEmployees(Integer enterpriseId);
+	
+	
+	public void saveEnterprise(Enterprise enterprise);
+	
+	public List<Enterprise> getAllEnterprise(WmsUser user);
+	
+	
+	/**
+	 * 查询这个企业的所有负责人
+	 * @param enterprise
+	 * @return
+	 */
+	public List<WmsUser>  getEnterpriseToBoWmsUser(List<Enterprise> enterprise);
 	
 }

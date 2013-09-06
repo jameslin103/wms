@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -33,22 +34,12 @@ public class CreateSalaryBudgetTable implements Serializable {
 	/*创建日期*/
 	private Date    createDate=new Date();
 	
-	//private Integer enterpriseId;
+	private SalaryTemplate  salaryTemplate;
 	
-	//private SalaryTemplate  salaryTemplate;
 	private WageBudgetSummary  wageBudgetSummary;
 	 
 	private Enterprise enterprise;
 	
-/*	
-	@Column(length=50)
-	public Integer getEnterpriseId() {
-		return enterpriseId;
-	}
-
-	public void setEnterpriseId(Integer enterpriseId) {
-		this.enterpriseId = enterpriseId;
-	}*/
 
 	@Id @GeneratedValue
 	public Integer getBudgetId() {
@@ -106,7 +97,8 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	 @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })@JoinColumn(name = "enterpriseId")
+	@ManyToOne(cascade = { CascadeType.MERGE})
+	@JoinColumn(name = "enterpriseId")
 	public Enterprise getEnterprise() {
 		return enterprise;
 	}
@@ -114,6 +106,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.enterprise = enterprise;
 	}
 
+	
 	 public WageBudgetSummary getWageBudgetSummary() {
 			return wageBudgetSummary;
 	 }
@@ -123,7 +116,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	  }
 	
 	
-/*
+
 	@OneToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},mappedBy="createSalaryBudgetTable")
 	public SalaryTemplate getSalaryTemplate() {
 		return salaryTemplate;
@@ -132,7 +125,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setSalaryTemplate(SalaryTemplate salaryTemplate) {
 		this.salaryTemplate = salaryTemplate;
 	}
-	*/
+	
 	
 	
 
@@ -151,7 +144,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	            return true;  
 	        if (obj == null)  
 	            return false;  
-	        if (getClass() != obj.getClass())  
+	        if (getClass() != obj.getClass())
 	            return false;  
 	        CreateSalaryBudgetTable table = (CreateSalaryBudgetTable) obj;  
 	        if (budgetId== null) {  

@@ -27,7 +27,7 @@ public class PrivilegeGroupServiceImpl extends DaoSupport<PrivilegeGroup> implem
 
 	@Override
 	public void save(PrivilegeGroup entity) {
-		entity.setGroupid(UUID.randomUUID().toString());
+		//entity.setGroupid(UUID.randomUUID().toString());
 		super.save(entity);
 	}
 	

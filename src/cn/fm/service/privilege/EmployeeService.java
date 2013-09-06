@@ -4,19 +4,18 @@ import cn.fm.bean.permissions.Employee;
 import cn.fm.service.base.DAO;
 
 
-
 public interface EmployeeService extends DAO<Employee> {
 	/**
-	 * 判断用户是否存在
+	 * 判断用户名是否存在
 	 * @param username 用户名
 	 * @return
 	 */
 	public boolean exist(String username);
 	/**
-	 *判断用户名密码是否正确
+	 * 判断用户名及密码是否正确
 	 * @param username 用户名
 	 * @param password 密码
-	 * * @return
+	 * @return
 	 */
 	public boolean validate(String username, String password);
 }

@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -15,8 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 
 import cn.fm.bean.company.Enterprise;
@@ -82,9 +79,7 @@ public class BalanceDetail implements Serializable{
 	@Column(length=100)
 	private String       note;
 
-	@Column(length=80)
-	private Integer      enterpriseId;
-	
+
 	@Column(length=80)
 	private Integer      employeesId;
 	
@@ -221,17 +216,6 @@ public class BalanceDetail implements Serializable{
 		this.note = note;
 	}
 
-
-	public Integer getEnterpriseId() {
-		return enterpriseId;
-	}
-
-
-	public void setEnterpriseId(Integer enterpriseId) {
-		this.enterpriseId = enterpriseId;
-	}
-
-
 	public BigDecimal getEndingBalance() {
 		return endingBalance;
 	}
@@ -241,18 +225,12 @@ public class BalanceDetail implements Serializable{
 		this.endingBalance = endingBalance;
 	}
 
-
-	@ManyToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="enterpriseId")
-   @NotFound(action=NotFoundAction.IGNORE)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+    @JoinColumn(name="enterpriseId",referencedColumnName = "enterpriseId")  
 	public Enterprise getEnterprise() {
 		return enterprise;
 	}
-
 	public void setEnterprise(Enterprise enterprise) {
 		this.enterprise = enterprise;
 	}
-	
-	
-	
 }

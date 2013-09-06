@@ -57,7 +57,7 @@ public class InsurancesBaseSettings implements Serializable{
 	public void setSocialInsurance(BigDecimal socialInsurance) {
 		this.socialInsurance = socialInsurance;
 	}
-	@Column(precision=100 ,scale=2)
+	@Column(precision=60 ,scale=2)
 	public BigDecimal getBirthInsurance() {
 		return birthInsurance;
 	}

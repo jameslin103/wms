@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -50,8 +52,6 @@ public class Enterprise implements Serializable{
 	/*状态	0.合约  1.暂停*/
 	private  Integer   status;
 	
-	private  Integer   userId;
-	
 	private  long      count;
 	
 	private Set<EnterpriseEmployees> enterpriseEmployess=new HashSet<EnterpriseEmployees>();
@@ -65,7 +65,10 @@ public class Enterprise implements Serializable{
 	
 
     
-	@ManyToMany(cascade=CascadeType.REFRESH,fetch=FetchType.EAGER,mappedBy="enterprise")//这里说明了关系维护端是student，teacher是关系被维护端  
+	 @ManyToMany(fetch=FetchType.EAGER)  
+	  @JoinTable(name = "user_enterprise",
+			   inverseJoinColumns =@JoinColumn (name ="user_id" ),//被维护端外键
+              joinColumns =  @JoinColumn (name ="enterprise_id" ))//维护端外键
 	public Set<WmsUser> getUser() {
 		return user;
 	}
@@ -73,7 +76,10 @@ public class Enterprise implements Serializable{
 		this.user = user;
 	}
 	
-	@Id @GeneratedValue
+	
+	
+	
+	@Id @GeneratedValue @Column(length=36)
 	public Integer getEnterpriseId() {
 		return enterpriseId;
 	}
@@ -164,21 +170,21 @@ public class Enterprise implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	@Column(length=50)
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
 	public long getCount() {
 		return count;
 	}
 	public void setCount(long count) {
 		this.count = count;
 	}
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy="enterprise")
+	public Set<BalanceDetail> getBalanceDetails(){
+		return balanceDetails;
+	}
+	public void setBalanceDetails(Set<BalanceDetail> balanceDetails) {
+		this.balanceDetails = balanceDetails;
+	}
 	
-	@OneToMany( cascade =CascadeType.ALL,fetch=FetchType.EAGER , mappedBy = "enterprise")  
+	@OneToMany( cascade =CascadeType.ALL,fetch=FetchType.EAGER , mappedBy = "enterprise")
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBugetTables() {
 		return createSalaryBugetTables;
 	}
@@ -187,20 +193,21 @@ public class Enterprise implements Serializable{
 		this.createSalaryBugetTables = createSalaryBugetTables;
 	}
 	
-	  public void setCreateSalaryBudgetTable(Set<CreateSalaryBudgetTable> createSalaryBudgetTable) {  
+	public void setCreateSalaryBudgetTable(Set<CreateSalaryBudgetTable> createSalaryBudgetTable) {  
 	        this.createSalaryBugetTables = createSalaryBudgetTable;  
-	    }  
+	 }  
 	  
-	    public void addCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable) {  
+	 public void addCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable) {  
 	    	createSalaryBudgetTable.setEnterprise(this);  
 	        this.createSalaryBugetTables.add(createSalaryBudgetTable);  
-	    } 
+	 } 
 	
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "enterprise")  
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "enterprise") 
 	@NotFound(action=NotFoundAction.IGNORE)
-	public Set<EnterpriseEmployees> getEnterpriseEmployess() {
+	public Set<EnterpriseEmployees> getEnterpriseEmployess(){
 		return enterpriseEmployess;
 	}
+	
 	public void setEnterpriseEmployess(Set<EnterpriseEmployees> enterpriseEmployess) {
 		this.enterpriseEmployess = enterpriseEmployess;
 	}
@@ -209,13 +216,23 @@ public class Enterprise implements Serializable{
 		enterpriseEmployees.setEnterprise(this);
 		this.enterpriseEmployess.add(enterpriseEmployees);
 	}
-	@OneToMany(mappedBy = "enterprise",cascade=CascadeType.ALL,fetch=FetchType.EAGER)   
-	@NotFound(action=NotFoundAction.IGNORE)
-	public Set<BalanceDetail> getBalanceDetails(){
-		return balanceDetails;
-	}
-	public void setBalanceDetails(Set<BalanceDetail> balanceDetails) {
-		this.balanceDetails = balanceDetails;
-	}
 	
+	
+	
+	/**
+	 * 添加企业负责人
+	 * @param wmsUser
+	 */
+	public void addWmsUser(WmsUser  wmsUser){
+	        this.user.add(wmsUser);  
+	}  
+	      
+	public void removeWmsUser(WmsUser wmsUser)
+	{  
+	   if(this.user.contains(wmsUser))
+	   {
+	             this.user.remove(wmsUser);  
+	     }  
+	}  
+		
 }
