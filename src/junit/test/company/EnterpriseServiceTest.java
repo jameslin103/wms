@@ -112,22 +112,33 @@ public class EnterpriseServiceTest {
 	public void findUserToEnterprise()
 	{
 		
-	WmsUser user=wmsUserService.find(1);	
-	for(Enterprise enterprise:user.getEnterprise()){
-		System.out.println(user.getUserId());
-		System.out.println(enterprise.getFullName());
-	}
+		WmsUser user=wmsUserService.find(1);	
+		for(Enterprise enterprise:user.getEnterprise()){
+			System.out.println(user.getUserId());
+			System.out.println(enterprise.getFullName());
+		}
 	}
 	
 	@Test
 	public void findEnterpriseToBeWmsUser()
 	{
 		
-	Enterprise enter=enterpriseService.find(16);	
-	for(WmsUser user:enter.getUser()){
-		System.out.println(user.getUserId());
-		System.out.println(user.getUsername());
+		Enterprise enter=enterpriseService.find(16);	
+		for(WmsUser user:enter.getUser()){
+			System.out.println(user.getUserId());
+			System.out.println(user.getUsername());
+		}
 	}
+	@Test
+	public void findEnterpriseToBeCreateSalaryBudgetTable()
+	{
+		
+		Enterprise enter=enterpriseService.find(16);
+		for(CreateSalaryBudgetTable cr : enter.getCreateSalaryBugetTables()){
+			System.out.println(cr.getName());
+		}
 	}
+	
+	
 
 }

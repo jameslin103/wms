@@ -7,8 +7,12 @@ import cn.fm.service.base.DAO;
 
 public interface CreateSalaryBudgetTableService extends DAO<CreateSalaryBudgetTable> {
 	public void save(CreateSalaryBudgetTable createSalaryBudgetTable);
-	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable();
-	
-	
+	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Integer enterpriseId);
+	/**
+	 * 更新工资预算表
+	 * @param createSalaryBudgetTable
+	 * @param budgerId
+	 */
+	public void updateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable,Integer budgerId);
 
 }

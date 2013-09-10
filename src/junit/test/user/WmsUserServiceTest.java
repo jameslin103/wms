@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.user.ContactInfo;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.user.WmsUserService;
@@ -77,7 +78,6 @@ public class WmsUserServiceTest {
 		}
 		
 	}
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetfall()
 	{
@@ -95,6 +95,12 @@ public class WmsUserServiceTest {
 			System.out.println(user.getUserId());
 			System.out.println(user.getUsername());
 			System.out.println(en.getFullName());
+			for(CreateSalaryBudgetTable c : en.getCreateSalaryBugetTables()){
+				System.out.println(en.getEnterpriseId());
+				System.out.println(c.getName());
+				
+			}
+			
 		}
 	}
 	@Test
@@ -109,5 +115,18 @@ public class WmsUserServiceTest {
 		
 	
 	}
-	
+	@Test
+	public  void update()
+	{
+		WmsUser wmsUser=wmsUserService.find(4);
+		WmsUser user=new WmsUser();
+		user.setUsername("孔子");
+		user.setPhone("123456");
+		user.setContactInfo(wmsUser.getContactInfo());
+		user.setUserId(wmsUser.getUserId());
+		
+		
+		
+		wmsUserService.update(wmsUser);
+	}
 }

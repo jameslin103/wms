@@ -79,6 +79,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 */
 	@SuppressWarnings({ "unchecked", "static-access" })
 	public void saveImportExcelEmployees(File file , String fiName,int number, Enterprise enterprise) {
+		
 		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
 		try {
 			List<String[]> arrayList=excel.generateStationBugSql(file,fiName,number);
@@ -119,7 +120,8 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				employees.setHousingFund(data[31].toString().equals("")?null:Double.valueOf(data[31]));
 				employees.setSeriousDiseaseBase(data[32].toString().equals("")?null:Double.valueOf(data[32]));
 				employees.setPaymentWay(data[33].toString());
-				employees.setEnterprise(enterprise);
+				if(enterprise!=null)employees.setEnterprise(em.find(Enterprise.class, enterprise.getEnterpriseId()));
+				
 				
 				super.save(employees);	
 			}
@@ -246,10 +248,63 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	}
 	
 	
+	/**
+	 * 统计新增人数
+	 * @param enterpriseId
+	 * @return
+	 */
+	public long newStaffCount(Integer enterpriseId){
+		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.ginsengProtectNature='新增' ");
+		query.setParameter(1, enterpriseId);
+		return (Long)query.getSingleResult();
+		
+	}
+	/**
+	 * 统计续保人数
+	 * @param enterpriseId
+	 * @return
+	 */
+	public long renewalPersonnel(Integer enterpriseId){
+		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.ginsengProtectNature='续保' ");
+		query.setParameter(1, enterpriseId);
+		return (Long)query.getSingleResult();
+		
+	}
+	/**
+	 * 统计参保人数
+	 * @param enterpriseId
+	 * @return
+	 */
+	public long ginsengPersonnel(Integer enterpriseId){
+		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.whetherGinseng=1 ");
+		query.setParameter(1, enterpriseId);
+		return (Long)query.getSingleResult();
+		
+	}
 	
+	@SuppressWarnings("unchecked")
+	public List<EnterpriseEmployees>  findWorkersIncreasedToEmployees(Integer enterpriseId)
+	{
+		Query query=em.createQuery("select e from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.whetherGinseng=1  and e.ginsengProtectNature='新增' order by employeesId asc ");
+		query.setParameter(1, enterpriseId);
+		return query.getResultList();
+	}
 	
-	
-	
+	/**
+	 * 查询新增或者续保，减员人员
+	 * @param enterpriseId
+	 * @param type
+	 * @return
+	 */
+	public List<EnterpriseEmployees>    findNewStaffAndRenewalEmployees(Integer enterpriseId,String type)
+	{
+		
+		Query query=em.createQuery("select e from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 " +
+				"and e.ginsengProtectNature like ?2 order by employeesId asc ");
+		query.setParameter(1, enterpriseId).setParameter(2, "%"+type+"%");
+		return query.getResultList();
+		
+	}
 	
 	
 	

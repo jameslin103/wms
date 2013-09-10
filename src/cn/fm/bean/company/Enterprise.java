@@ -14,16 +14,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
+import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.bean.user.WmsUser;
 
 @SuppressWarnings("serial")
 @Entity
+/**
+ * 企业实体类
+ */
 public class Enterprise implements Serializable{
 	
 	private  Integer  enterpriseId;
@@ -54,15 +60,29 @@ public class Enterprise implements Serializable{
 	
 	private  long      count;
 	
-	private Set<EnterpriseEmployees> enterpriseEmployess=new HashSet<EnterpriseEmployees>();
+
+	/**增员**/
+	private  long addCount;
+	
+	/**续保**/
+	private  long renewalCount;
+	
+	/**参保**/
+	private  long whetherGinsengCount;
+	     
+	
+	private Set<EnterpriseEmployees> enterpriseEmployees=new HashSet<EnterpriseEmployees>();
 	
 	private Set<WmsUser> user=new HashSet<WmsUser>();
 	
+	//工资预算表
 	private Set<CreateSalaryBudgetTable> createSalaryBugetTables=new HashSet<CreateSalaryBudgetTable>();
+	
 	
 	private Set<BalanceDetail>  balanceDetails=new HashSet<BalanceDetail>();
 	
-	
+	//工资模板
+	private Set<SalaryTemplate>  salaryTemplates=new HashSet<SalaryTemplate>();
 
     
 	 @ManyToMany(fetch=FetchType.EAGER)  
@@ -75,10 +95,14 @@ public class Enterprise implements Serializable{
 	public void setUser(Set<WmsUser> user) {
 		this.user = user;
 	}
-	
-	
-	
-	
+
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER ,mappedBy="enterprise")
+	public Set<SalaryTemplate> getSalaryTemplates() {
+		return salaryTemplates;
+	}
+	public void setSalaryTemplates(Set<SalaryTemplate> salaryTemplates) {
+		this.salaryTemplates = salaryTemplates;
+	}
 	@Id @GeneratedValue @Column(length=36)
 	public Integer getEnterpriseId() {
 		return enterpriseId;
@@ -170,6 +194,7 @@ public class Enterprise implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	@Transient
 	public long getCount() {
 		return count;
 	}
@@ -185,6 +210,7 @@ public class Enterprise implements Serializable{
 	}
 	
 	@OneToMany( cascade =CascadeType.ALL,fetch=FetchType.EAGER , mappedBy = "enterprise")
+	@OrderBy("budgetId asc")
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBugetTables() {
 		return createSalaryBugetTables;
 	}
@@ -204,17 +230,17 @@ public class Enterprise implements Serializable{
 	
 	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "enterprise") 
 	@NotFound(action=NotFoundAction.IGNORE)
-	public Set<EnterpriseEmployees> getEnterpriseEmployess(){
-		return enterpriseEmployess;
+	public Set<EnterpriseEmployees> getEnterpriseEmployees(){
+		return enterpriseEmployees;
 	}
 	
-	public void setEnterpriseEmployess(Set<EnterpriseEmployees> enterpriseEmployess) {
-		this.enterpriseEmployess = enterpriseEmployess;
+	public void setEnterpriseEmployees(Set<EnterpriseEmployees> enterpriseEmployees) {
+		this.enterpriseEmployees = enterpriseEmployees;
 	}
-	public void addEnterpriseEmployess(EnterpriseEmployees enterpriseEmployees)
+	public void addEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees)
 	{
 		enterpriseEmployees.setEnterprise(this);
-		this.enterpriseEmployess.add(enterpriseEmployees);
+		this.enterpriseEmployees.add(enterpriseEmployees);
 	}
 	
 	
@@ -234,5 +260,30 @@ public class Enterprise implements Serializable{
 	             this.user.remove(wmsUser);  
 	     }  
 	}  
-		
+	
+	
+	
+	@Transient
+	public long getAddCount() {
+		return addCount;
+	}
+	public void setAddCount(long addCount) {
+		this.addCount = addCount;
+	}
+	@Transient
+	public long getRenewalCount() {
+		return renewalCount;
+	}
+	public void setRenewalCount(long renewalCount) {
+		this.renewalCount = renewalCount;
+	}
+	@Transient
+	public long getWhetherGinsengCount() {
+		return whetherGinsengCount;
+	}
+	public void setWhetherGinsengCount(long whetherGinsengCount) {
+		this.whetherGinsengCount = whetherGinsengCount;
+	}
+	
+	
 }

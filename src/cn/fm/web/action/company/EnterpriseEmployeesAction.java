@@ -24,6 +24,7 @@ import cn.fm.utils.DateUtil;
 import cn.fm.utils.ExcelFileGenerator;
 import cn.fm.utils.ExportExcelUtils;
 import cn.fm.utils.StringUtil;
+import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
 
@@ -164,9 +165,9 @@ public void setEmployessName(String employessName) {
 	 * @return
 	 */
 	public String viewEnterpriseEmployees(){
-		Enterprise enter=(Enterprise)request.getSession().getAttribute("enterprise");
+		Enterprise enter=WebUtil.getEnterprise(request);
 		if(enter!=null)this.setEnterpriseId(enter.getEnterpriseId());
-		List<EnterpriseEmployees>  listEmployees=enterpriseEmployeesService.getAllEnterpriseEmployees(this.enterpriseId);
+		List<EnterpriseEmployees>  listEmployees=enterpriseEmployeesService.getAllEnterpriseEmployees(enter.getEnterpriseId());
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("createDate", "desc");
 		StringBuffer jpql = new StringBuffer("");
@@ -289,6 +290,37 @@ public void setEmployessName(String employessName) {
 		return SUCCESS;
 	}
 	
+	public String newStaffEmployees(){
+		
+		List<EnterpriseEmployees> enterpriseEmployeesList=enterpriseEmployeesService.findNewStaffAndRenewalEmployees(this.enterpriseId, "新增");
+		if(enterpriseEmployeesList.size()==0)
+			enterpriseEmployeesList=new ArrayList<EnterpriseEmployees>();
+		request.setAttribute("employees", enterpriseEmployeesList);
+		return SUCCESS;
+	}
+	
+	public String  renewalEmployees()
+	{
+		List<EnterpriseEmployees> enterpriseEmployeesList=enterpriseEmployeesService.findNewStaffAndRenewalEmployees(this.enterpriseId, "续保");
+		if(enterpriseEmployeesList.size()==0)
+			enterpriseEmployeesList=new ArrayList<EnterpriseEmployees>();
+		request.setAttribute("employees", enterpriseEmployeesList);
+		return SUCCESS;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * 日期转换格式
@@ -318,47 +350,10 @@ public void setEmployessName(String employessName) {
 				
 		}
 	}
+	
+	
+	
 
-	
-	
-	
-	
-	/**
-	 * @author james
-	 * @date 2013-09-03
-	 * 校验字段
-	 */
-	
-	public void vialteFile(){
-		if(StringUtil.isEmpty(enterpriseEmployees.getEmployeesName())){
-			this.addFieldError(enterpriseEmployees.getEmployeesName(), "姓名必填*");
-		}
-		if(StringUtil.isEmpty(enterpriseEmployees.getNativePlace())){
-			this.addFieldError(enterpriseEmployees.getNativePlace(), "籍贯必填项");
-		}
-		if(StringUtil.isEmpty(enterpriseEmployees.getCardNumber()))
-		{
-			this.addFieldError(enterpriseEmployees.getCardNumber(), "身份证必填项*");
-		}
-		if(StringUtil.isEmpty(enterpriseEmployees.getPhone()))
-		{
-			this.addFieldError(enterpriseEmployees.getPhone(), "电话必填项*");
-			
-		}
-		if(StringUtil.isEmpty(enterpriseEmployees.getHomeAddress()))
-		{
-			this.addFieldError(enterpriseEmployees.getHomeAddress(), "家庭地址必填项*");
-			
-		}
-		if(StringUtil.isEmpty(enterpriseEmployees.getBankCardNumber()))
-		{
-			this.addFieldError(enterpriseEmployees.getBankCardNumber(), "银行卡号必填项*");
-		}
-		if(StringUtil.isEmpty(enterpriseEmployees.getBank()))
-		{
-			this.addFieldError(enterpriseEmployees.getBank(), "");
-		}
-	}
 	public EnterpriseEmployeesService getEnterpriseEmployeesService() {
 		return enterpriseEmployeesService;
 	}

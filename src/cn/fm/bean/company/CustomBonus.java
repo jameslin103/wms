@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
 @SuppressWarnings("serial")
 @Entity
 /**
@@ -21,6 +22,7 @@ public class CustomBonus implements Serializable{
 	private String  bonusName;
 	private Integer state;
 	private Date     createDate=new Date();
+	
 	
 	
 	@Id @GeneratedValue

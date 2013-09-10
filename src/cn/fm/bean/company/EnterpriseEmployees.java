@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -91,6 +92,15 @@ public class EnterpriseEmployees implements Serializable{
 	private Double  basicMedical;
 	/*伪删除  0 隐藏    1显示*/
 	private Integer  pseudoDelete;
+	
+	/**增员**/
+	private  long addCount;
+	
+	/**续保**/
+	private  long renewalCount;
+	
+	/**参保**/
+	private  long whetherGinsengCount;
 	
 	private Date     createDate=new Date();
 	
@@ -362,6 +372,28 @@ public class EnterpriseEmployees implements Serializable{
 		this.enterprise = enterprise;
 	}
 	
+	@Transient
+	public long getAddCount() {
+		return addCount;
+	}
+	public void setAddCount(long addCount) {
+		this.addCount = addCount;
+	}
+	@Transient
+	public long getRenewalCount() {
+		return renewalCount;
+	}
+	public void setRenewalCount(long renewalCount) {
+		this.renewalCount = renewalCount;
+	}
+	@Transient
+	public long getWhetherGinsengCount() {
+		return whetherGinsengCount;
+	}
+	public void setWhetherGinsengCount(long whetherGinsengCount) {
+		this.whetherGinsengCount = whetherGinsengCount;
+	}
 	
-
+	
+	
 }

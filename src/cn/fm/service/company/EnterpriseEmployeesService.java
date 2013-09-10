@@ -1,3 +1,4 @@
+
 package cn.fm.service.company;
 
 import java.io.File;
@@ -38,6 +39,41 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	
 	public List<String> getExcelFiledNameList();
 	
-
+	
+	/**
+	 * 统计新增人数
+	 * @param enterpriseId
+	 * @return
+	 */
+	public long newStaffCount(Integer enterpriseId);
+	
+	/**
+	 * 统计续保人数
+	 * @param enterpriseId
+	 * @return
+	 */
+	public long renewalPersonnel(Integer enterpriseId);
+	
+	/**
+	 * 统计参保人数
+	 * @param enterpriseId
+	 * @return
+	 */
+	public long ginsengPersonnel(Integer enterpriseId);
+	
+	/**
+	 * 查询增员，减员，续保
+	 * @param enterpriseId
+	 * @return
+	 */
+	public List<EnterpriseEmployees>  findWorkersIncreasedToEmployees(Integer enterpriseId);
+	
+	/**
+	 * 帅选新增或者续保，减员人员
+	 * @param enterpriseId
+	 * @param type
+	 * @return
+	 */
+	public List<EnterpriseEmployees>    findNewStaffAndRenewalEmployees(Integer enterpriseId,String type);
 	
 }

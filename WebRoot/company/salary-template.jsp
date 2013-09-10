@@ -101,7 +101,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </s:else>
                 
                 </td>
-                <td><a href="#info-for-check" data-toggle="modal">修改</a></td>
+                <td>
+               	 <a href="#info-for-check" data-toggle="modal">修改</a>
+                </td>
               </tr>
             </tbody>
             </s:iterator>

@@ -45,16 +45,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="span4">
             <h3>2/3&nbsp;新建工资预算表信息</h3>
               <div class="row-fluid">
-              	<s:form action="modfiySalaryBudgetTable" method="post" id="myForm">
+              	<s:form action="returnToModifySalaryBudgetTable" method="post" id="myForm">
                 <div class="alert">
-                   <s:hidden value="%{#request.createSalaryBudgetTable.name}" name="createSalaryBudgetTable.name"/>
-                   <s:hidden value="%{#request.createSalaryBudgetTable.temple}" name="request.createSalaryBudgetTable.temple"/>
-                   <s:hidden value="%{#request.createSalaryBudgetTable.salaryDate}" name="request.createSalaryBudgetTable.salaryDate"/>
-                   <s:hidden value="%{#request.createSalaryBudgetTable.chooseTax}" name="request.createSalaryBudgetTable.chooseTax"/>
-                    <s:hidden value="%{#request.createSalaryBudgetTable.note}" name="request.createSalaryBudgetTable.note"/>
+                   <s:hidden value="%{#request.createSalaryBudgetTable.budgetId}" name="createSalaryBudgetTable.budgetId"/>
                   <p>名称：<s:property value="%{#request.createSalaryBudgetTable.name}"/></p>
                   <p>模板：<s:property value="%{#request.createSalaryBudgetTable.temple}"/></p>
-                  <p>哪月：<s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月"/></p>
+                  <p>哪月：<s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月" /></p>
                   <p>合并计税工资表：<s:property value="%{#request.createSalaryBudgetTable.chooseTax}"/></p>
                   <p><a href="javascript:commit()">返回修改</a></p>
                 </div>

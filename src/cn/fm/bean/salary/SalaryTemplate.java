@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,27 +43,28 @@ public class SalaryTemplate implements Serializable {
 	 
 	private   Date    createDate=new Date();
 	
-	private   Integer    enterpriseId;
-	
 	private List<String>  subsidys=new ArrayList<String>();
 	
 	private CreateSalaryBudgetTable   createSalaryBudgetTable;
 	
+	private Enterprise   enterprise;
+	
+	
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="enterpriseId")
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
 	
 	
 	@Id @GeneratedValue
+	@Column(length=36)
 	public Integer getTemplateId() {
 		return templateId;
 	}
-	@Column(length=20)
-	public Integer getEnterpriseId() {
-		return enterpriseId;
-	}
-
-	public void setEnterpriseId(Integer enterpriseId) {
-		this.enterpriseId = enterpriseId;
-	}
-
 	public void setTemplateId(Integer templateId) {
 		this.templateId = templateId;
 	}
@@ -132,5 +134,8 @@ public class SalaryTemplate implements Serializable {
 			CreateSalaryBudgetTable createSalaryBudgetTable) {
 		this.createSalaryBudgetTable = createSalaryBudgetTable;
 	}
+	
+
+	
 	
 }

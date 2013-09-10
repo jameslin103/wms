@@ -128,7 +128,12 @@
             	<param name="actionName">viewEmployeePersonalSalary</param>
             </result>
         </action> 
-        
+          <action name="newStaffEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="newStaffEmployees">
+            <result name="success">company/insurance-with-employee-list.jsp</result>
+        </action>
+         <action name="renewalEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="renewalEmployees">
+            <result name="success">company/insurance-with-employee-list.jsp</result>
+        </action>
         
        <!-- Enterprise  -->
         <action name="viewEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterprise">
@@ -147,6 +152,9 @@
         </action> 
         <action name="viewEnterpriseDetailed" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterpriseDetailed">
             <result name="success">company/index.jsp</result>
+        </action>
+        <action name="viewWorkersIncreased" class="cn.fm.web.action.company.EnterpriseAction" method="viewWorkersIncreased">
+            <result name="success">company/insurance-with-employee-list.jsp</result>
         </action>
         
         
@@ -206,7 +214,7 @@
             	<param name="actionName">newSalaryBudgetTable</param>
             </result>
         </action>
-        <action name="modfiySalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="modfiySalaryBudgetTable">
+        <action name="returnToModifySalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="returnToModifySalaryBudgetTable">
                <result name="success">company/salary-step1-of-create.jsp</result>
                <result name="input"> company/salary-step2-of-create.jsp</result>
         </action> 
@@ -227,6 +235,7 @@
         </action> 
         <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
             <result name="success" >company/salary-step1-of-create.jsp</result>
+            <result name="input">company/salary-step1-of-create.jsp</result>
         </action> 
         <action name="findBeforeCurrentDateTemplate" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="findBeforeCurrentDateTemplate">
             <result type="json" name="createSalaryBudgetTableList">

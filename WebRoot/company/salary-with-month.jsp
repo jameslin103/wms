@@ -46,7 +46,6 @@
 								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
 							</li>
 							<li>
-							<s:property value='%{#request.session.enterprise.enterpriseId}'/>
 								<a href="viewWageBudgetSummary?enterpriseId=<s:property value='%{#request.session.enterprise.enterpriseId}'/>">资金往来</a>
 							</li>
 						</ul>
@@ -54,7 +53,7 @@
 						<ul class="normal action-container clearfix">
 							<li class="right">
 								<form action="" class="select-for-year" method="post">
-									 日期:<input id="d11"	name="salaryDate" onclick="WdatePicker()"
+									 日期:<input id="d11" name="salaryDate" onclick="WdatePicker()"
 									  class="Wdate" style="width: 110px;height: 25px;" />
 								</form>
 							</li>
@@ -78,57 +77,30 @@
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
-									<th>
+									<th style="font-weight:bold; text-align: center;">
 										月份
 									</th>
-									<th>
+									<th style="font-weight:bold; text-align: center;">
 										工资制作
 									</th>
-									<th>
+									<th style="font-weight:bold; text-align: center;">
 										工资发放
 									</th>
 								</tr>
 							</thead>
-							<s:iterator value="#request.createSalaryBudgetTable" id="sal">
+							<s:iterator begin="1" end="12" id="mm">
 							<tbody>
 								<tr>
 									<td>
-										<s:date name="%{#sal.salaryDate}" format="yyyy年MM月"/>
+										<div style="font-weight:bold; text-align: center;"><s:property value="#mm" />月</div>
 									</td>
 									<td>
 										<ol>
 											<li>
 												<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#request.session.enterprise.id}"/>">
-													<s:property value="%{#sal.name}"/>
-													<s:set value="%{#sal.salaryDate}" var="date"/>
-													<s:property value="%{#sal.salaryDate}"/>
-													<s:property value="%{#date.substring(2,3)}"/>月工资	
-																						
+													某某项目12月工资							
 												</a>
-											</li>
-										</ol>
-									</td>
-									<td>
-										<ol>
-											<li>
-												中国卫星项目3月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												中国卫星项目3月工资第二批	
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
-										</ol>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										二月
-									</td>
-									<td>
-										<ol>
-											<li>
-												某某项目12月工资
+												
 											</li>
 											<li>
 												某某项目11月工资
@@ -148,7 +120,6 @@
 										</ol>
 									</td>
 								</tr>
-
 							</tbody>
 							</s:iterator>
 						</table>

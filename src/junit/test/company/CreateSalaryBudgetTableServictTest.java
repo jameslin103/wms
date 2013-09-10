@@ -1,6 +1,9 @@
 package junit.test.company;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -38,5 +41,17 @@ public class CreateSalaryBudgetTableServictTest {
 		
 	}
 	
+	@Test
+	public void update()
+	{
+		CreateSalaryBudgetTable createSalaryBudgetTable=new CreateSalaryBudgetTable();
+		createSalaryBudgetTable.setName("海西建设");
+		createSalaryBudgetTable.setNote("修改成功!!");
+		createSalaryBudgetTableService.updateSalaryBudgetTable(createSalaryBudgetTable,13);
+		
+		
+	}
 
+
+		
 }

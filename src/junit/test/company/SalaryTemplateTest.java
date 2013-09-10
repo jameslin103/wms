@@ -2,7 +2,6 @@ package junit.test.company;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -10,6 +9,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.utils.DateUtil;
@@ -80,6 +80,18 @@ public class SalaryTemplateTest {
 		List li=salaryTemplateService.findBeforeCurrentDateTemplate(DateUtil.StringToDate(date, DateUtil.FORMAT_DATE), 3);
 		
 		System.out.println(li.size());
+	}
+	@Test
+	public void save()
+	{
+		SalaryTemplate sal=new SalaryTemplate();
+		sal.setTemplateName("huoxinyihao");
+		sal.setTax(1);
+		Enterprise enterprise=new Enterprise();
+		enterprise.setEnterpriseId(16);
+		sal.setEnterprise(enterprise);
+		salaryTemplateService.save(sal);
+		
 	}
 
 }

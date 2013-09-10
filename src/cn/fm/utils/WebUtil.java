@@ -8,42 +8,34 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.user.WmsUser;
 
 
 /**
  * 
- * @author Administrator
+ * @author jameslin
+ * @date   2013-08-22
+ * @version 1.0
  *
  */
 public class WebUtil {
 	/**
-	 * »ñÈ¡µÇÂ¼Ô±¹¤
+	 * è·å–ç™»å½•å‘˜å·¥
 	 */
-//	public static Employee getEmployee(HttpServletRequest request){
-//		return (Employee) request.getSession().getAttribute("employee");
-//	}
-//	/**
-//	 * »ñÈ¡¹ºÎï³µ
-//	 * @param request
-//	 * @return
-//	 */
-//	public static BuyCart getBuyCart(HttpServletRequest request){
-//		return (BuyCart)request.getSession().getAttribute("buyCart");
-//	}
-//	/**
-//	 * »ñÈ¡µÇÂ¼ÓÃ»§
-//	 */
-//	public static Buyer getBuyer(HttpServletRequest request){
-//		return (Buyer) request.getSession().getAttribute("user");
-//	}
-	/**
-	 * É¾³ı¹ºÎï³µ
-	 */
-	public static void deleteBuyCart(HttpServletRequest request){
-		request.getSession().removeAttribute("buyCart");
+	public static WmsUser getWmsUser(HttpServletRequest request){
+		return (WmsUser) request.getSession().getAttribute("user");
 	}
+	
+	/**
+	 * è·å–å½“å‰çš„ä¼ä¸š
+	 */
+	public static Enterprise getEnterprise(HttpServletRequest request){
+		return (Enterprise) request.getSession().getAttribute("enterprise");
+	}
+
     /***
-     * »ñÈ¡URIµÄÂ·¾¶,ÈçÂ·¾¶Îªhttp://www.babasport.com/action/post.htm?method=add, µÃµ½µÄÖµÎª"/action/post.htm"
+     * è·å–URIçš„è·¯å¾„,å¦‚è·¯å¾„ä¸ºhttp://www.baidu.com/action/post.htm?method=add, å¾—åˆ°çš„å€¼ä¸º"/action/post.htm"
      * @param request
      * @return
      */
@@ -51,7 +43,7 @@ public class WebUtil {
         return request.getRequestURI();
     }
     /**
-     * »ñÈ¡ÍêÕûÇëÇóÂ·¾¶(º¬ÄÚÈİÂ·¾¶¼°ÇëÇó²ÎÊı)
+     * è·å–å®Œæ•´è¯·æ±‚è·¯å¾„(å«å†…å®¹è·¯å¾„åŠè¯·æ±‚å‚æ•°)
      * @param request
      * @return
      */
@@ -59,11 +51,11 @@ public class WebUtil {
         return getRequestURI(request) + (request.getQueryString() == null ? "" : "?"+ request.getQueryString());
     }
     /**
-     * Ìí¼Ócookie
+     * æ·»åŠ cookie
      * @param response
-     * @param name cookieµÄÃû³Æ
-     * @param value cookieµÄÖµ
-     * @param maxAge cookie´æ·ÅµÄÊ±¼ä(ÒÔÃëÎªµ¥Î»,¼ÙÈç´æ·ÅÈıÌì,¼´3*24*60*60; Èç¹ûÖµÎª0,cookie½«Ëæä¯ÀÀÆ÷¹Ø±Õ¶øÇå³ı)
+     * @param name cookieçš„åç§°
+     * @param value cookieçš„å€¼
+     * @param maxAge cookieå­˜æ”¾çš„æ—¶é—´(ä»¥ç§’ä¸ºå•ä½,å‡å¦‚å­˜æ”¾ä¸‰å¤©,å³3*24*60*60; å¦‚æœå€¼ä¸º0,cookieå°†éšæµè§ˆå™¨å…³é—­è€Œæ¸…é™¤)
      */
     public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {        
         Cookie cookie = new Cookie(name, value);
@@ -73,9 +65,9 @@ public class WebUtil {
     }
     
     /**
-     * »ñÈ¡cookieµÄÖµ
+     * è·å–cookieçš„å€¼
      * @param request
-     * @param name cookieµÄÃû³Æ
+     * @param name cookieçš„åç§°
      * @return
      */
     public static String getCookieByName(HttpServletRequest request, String name) {
@@ -99,12 +91,12 @@ public class WebUtil {
         return cookieMap;
     }
     /**
-     * È¥³ıhtml´úÂë
+     * å»é™¤htmlä»£ç 
      * @param inputString
      * @return
      */
     public static String HtmltoText(String inputString) {
-        String htmlStr = inputString; //º¬html±êÇ©µÄ×Ö·û´®
+        String htmlStr = inputString; //å«htmlæ ‡ç­¾çš„å­—ç¬¦ä¸²
         String textStr ="";
         java.util.regex.Pattern p_script;
         java.util.regex.Matcher m_script;
@@ -116,32 +108,32 @@ public class WebUtil {
         java.util.regex.Matcher m_ba;
         
         try {
-            String regEx_script = "<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>"; //¶¨ÒåscriptµÄÕıÔò±í´ïÊ½{»ò<script[^>]*?>[\\s\\S]*?<\\/script> }
-            String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>"; //¶¨ÒåstyleµÄÕıÔò±í´ïÊ½{»ò<style[^>]*?>[\\s\\S]*?<\\/style> }
-            String regEx_html = "<[^>]+>"; //¶¨ÒåHTML±êÇ©µÄÕıÔò±í´ïÊ½
+            String regEx_script = "<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>"; //å®šä¹‰scriptçš„æ­£åˆ™è¡¨è¾¾å¼{æˆ–<script[^>]*?>[\\s\\S]*?<\\/script> }
+            String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>"; //å®šä¹‰styleçš„æ­£åˆ™è¡¨è¾¾å¼{æˆ–<style[^>]*?>[\\s\\S]*?<\\/style> }
+            String regEx_html = "<[^>]+>"; //å®šä¹‰HTMLæ ‡ç­¾çš„æ­£åˆ™è¡¨è¾¾å¼
             String patternStr = "\\s+";
             
             p_script = Pattern.compile(regEx_script,Pattern.CASE_INSENSITIVE);
             m_script = p_script.matcher(htmlStr);
-            htmlStr = m_script.replaceAll(""); //¹ıÂËscript±êÇ©
+            htmlStr = m_script.replaceAll(""); //è¿‡æ»¤scriptæ ‡ç­¾
 
             p_style = Pattern.compile(regEx_style,Pattern.CASE_INSENSITIVE);
             m_style = p_style.matcher(htmlStr);
-            htmlStr = m_style.replaceAll(""); //¹ıÂËstyle±êÇ©
+            htmlStr = m_style.replaceAll(""); //è¿‡æ»¤styleæ ‡ç­¾
          
             p_html = Pattern.compile(regEx_html,Pattern.CASE_INSENSITIVE);
             m_html = p_html.matcher(htmlStr);
-            htmlStr = m_html.replaceAll(""); //¹ıÂËhtml±êÇ©
+            htmlStr = m_html.replaceAll(""); //è¿‡æ»¤htmlæ ‡ç­¾
             
             p_ba = Pattern.compile(patternStr,Pattern.CASE_INSENSITIVE);
             m_ba = p_ba.matcher(htmlStr);
-            htmlStr = m_ba.replaceAll(""); //¹ıÂË¿Õ¸ñ
+            htmlStr = m_ba.replaceAll(""); //è¿‡æ»¤ç©ºæ ¼
          
          textStr = htmlStr;
          
         }catch(Exception e) {
                     System.err.println("Html2Text: " + e.getMessage());
         }          
-        return textStr;//·µ»ØÎÄ±¾×Ö·û´®
+        return textStr;//è¿”å›æ–‡æœ¬å­—ç¬¦ä¸²
      }
 }

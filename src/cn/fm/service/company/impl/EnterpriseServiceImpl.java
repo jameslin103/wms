@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.company.EnterpriseService;
@@ -89,14 +90,15 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		List<WmsUser>  wmsUserListVO=new ArrayList<WmsUser>();
 		if(enterprise.size()==0)return null;
 		for(Enterprise enter : enterprise){
+		
 			Enterprise en=em.find(Enterprise.class, enter.getEnterpriseId());
-			for(WmsUser us :en.getUser()){
-				WmsUser user=new WmsUser();
-				user=us;
-				wmsUserListVO.add(user);
+			enter.setUser(en.getUser());
+			for(WmsUser us :enter.getUser()){
+				wmsUserListVO.add(us);
 			}
 		}
 		return wmsUserListVO;
 	}
+
 
 }

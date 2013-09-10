@@ -12,9 +12,11 @@ import org.apache.struts2.ServletActionContext;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
+import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.utils.DateUtil;
+import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
 @SuppressWarnings("serial")
@@ -24,6 +26,8 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	private CreateSalaryBudgetTableService createSalaryBudgetTableService;
 	@Resource
 	private SalaryTemplateService           salaryTemplateService;
+	@Resource
+	private EnterpriseService               enterpriseService;
 	
 	private CreateSalaryBudgetTable      createSalaryBudgetTable;
 	
@@ -105,8 +109,8 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	public String viewSalaryBudgetTable()
 	{
 		
-		List<CreateSalaryBudgetTable> createSalaryBudgetTableList=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable();
-		
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		List<CreateSalaryBudgetTable> createSalaryBudgetTableList=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(enterprise.getEnterpriseId());
 		if(createSalaryBudgetTableList.size()==0)
 			createSalaryBudgetTableList=new ArrayList<CreateSalaryBudgetTable>();
 		
@@ -118,40 +122,51 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	
 	public String  addSalaryBudgetTable()
 	{
-		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
-		if(createSalaryBudgetTable==null || createSalaryBudgetTable.getName()==null)return INPUT;
-		if(createSalaryBudgetTable!=null && createSalaryBudgetTable.getBudgetId()!=null){
-			if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-			createSalaryBudgetTable.setEnterprise(enterprise);
-			CreateSalaryBudgetTable CreateSalaryBudgetTablePO=new CreateSalaryBudgetTable();
-			CreateSalaryBudgetTablePO=createSalaryBudgetTable;
-			createSalaryBudgetTableService.update(CreateSalaryBudgetTablePO);
-			return SUCCESS;
-		}else{
-			createSalaryBudgetTable.setEnterprise(enterprise);
-			createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
-			createSalaryBudgetTableService.save(createSalaryBudgetTable);
+			Enterprise enterprise=WebUtil.getEnterprise(request);
+			if(createSalaryBudgetTable!=null && createSalaryBudgetTable.getBudgetId()!=null)
+			{
+				createSalaryBudgetTableService.updateSalaryBudgetTable(createSalaryBudgetTable, createSalaryBudgetTable.getBudgetId());
+			}else{
+				if(createSalaryBudgetTable==null || createSalaryBudgetTable.getName()==null)return INPUT;
+				if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
+				createSalaryBudgetTable.setEnterprise(enterprise);
+				createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
+				createSalaryBudgetTableService.save(createSalaryBudgetTable);
+				
+			}
 			request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
 			return SUCCESS;
-		}
 	}
-	
+	public String returnToModifySalaryBudgetTable()
+	{
+		if(createSalaryBudgetTable==null || createSalaryBudgetTable.getBudgetId()==null)return INPUT;
+		getSalaryTemplate();
+		createSalaryBudgetTable=createSalaryBudgetTableService.find(createSalaryBudgetTable.getBudgetId());
+		request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
+    	return SUCCESS;
+		
+	}
 	public String newSalaryBudgetTable()
 	{
 		createSalaryBudgetTable=new CreateSalaryBudgetTable();
-		getSalaryTemplate(createSalaryBudgetTable);
+		getSalaryTemplate();
 		return SUCCESS;
+		
 	}
-	public void getSalaryTemplate(CreateSalaryBudgetTable createSalaryBudgetTable)
+	/**
+	 * 当前企业底下的所有模板
+	 * @param createSalaryBudgetTable
+	 */
+	public void getSalaryTemplate()
 	{
-		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
+		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null)return;
-		createSalaryBudgetTable.setEnterprise(enterprise);
-		List<SalaryTemplate> salaryTemplateList=salaryTemplateService.getAllSalaryTemplate(createSalaryBudgetTable.getEnterprise().getEnterpriseId());
+		List<SalaryTemplate> salaryTemplateList=salaryTemplateService.getAllSalaryTemplate(enterprise.getEnterpriseId());
 		if(salaryTemplateList.size()==0)
 			salaryTemplateList=new ArrayList<SalaryTemplate>();
 		request.setAttribute("salaryTemplates", salaryTemplateList);
 	}
+	
 	public String findBeforeCurrentDateTemplate()
 	{
 		createSalaryBudgetTableList=salaryTemplateService.findBeforeCurrentDateTemplate(DateUtil.StringToDate(salaryDate, DateUtil.FORMAT_DATE),3);
@@ -165,14 +180,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		return "createSalaryBudgetTableList";
 	
 	}
-	public String modfiySalaryBudgetTable()
-	{
-		if(createSalaryBudgetTable==null)return INPUT;
-		getSalaryTemplate(createSalaryBudgetTable);
-		request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
-    	return SUCCESS;
-		
-	}
+
 	
 	public String downloadSalaryBudgetTable()
 	{

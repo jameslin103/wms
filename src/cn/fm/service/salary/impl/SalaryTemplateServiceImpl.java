@@ -35,11 +35,12 @@ public class SalaryTemplateServiceImpl extends DaoSupport<SalaryTemplate> implem
 		
 	}
 	/**
-	 * 获取一个集合
+	 * 获取当前企业的所有模板
+	 * 
 	 */
 	@SuppressWarnings("unchecked")
 	public List<SalaryTemplate> getAllSalaryTemplate(Integer enterpriseId) {
-		Query query=em.createQuery("select s from SalaryTemplate s where s.enterpriseId=?1");
+		Query query=em.createQuery("select s from SalaryTemplate s where s.enterprise.enterpriseId=?1");
 		return query.setParameter(1, enterpriseId).getResultList();
 	}
 	

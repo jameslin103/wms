@@ -14,6 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.utils.DateUtil;
@@ -118,12 +119,39 @@ public class EnterpriseEmployessServiceTest {
 		
 	}
 	
+	@Test
+	public void countSafft()
+	{
+		
+		
+		System.out.println(enterpriseEmployeesService.newStaffCount(16));
+		System.out.println(enterpriseEmployeesService.renewalPersonnel(16));
+		System.out.println(enterpriseEmployeesService.ginsengPersonnel(16));
+		
+		
+	}
+	@Test
+	public void  findWorkersIncreasedToEmployees()
+	{
+		
+		for (EnterpriseEmployees en : enterpriseEmployeesService.findWorkersIncreasedToEmployees(16)) {
+			
+			System.out.println(en.getEmployeesName());
+			
+		}		
+	}
 	
-	
-	
-	
-	
-	
+	@Test
+	public void findNewStaffAndRenewalEmployees()
+	{
+		
+		for (EnterpriseEmployees en : enterpriseEmployeesService.findNewStaffAndRenewalEmployees(16,"新增")) {
+			
+			System.out.println(en.getEmployeesName());
+			
+		}		
+		
+	}
 	
 	@Test 
 	public void testIsBean() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException

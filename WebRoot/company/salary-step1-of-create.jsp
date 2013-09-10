@@ -39,6 +39,7 @@
 			<div class="span4">
             <h3>1/3&nbsp;新建工资预算表信息</h3>
             <s:form action="addSalaryBudgetTable" method="post">
+            	<s:hidden value="%{#request.createSalaryBudgetTable.budgetId}" name="createSalaryBudgetTable.budgetId"/>
               <div class="row-fluid">
                 <div class="input-container">
                   <label>名称</label>
@@ -68,7 +69,7 @@
 
                 <div class="input-container">
                   <label>补充说明</label>
-                  <textarea rows="3" name="createSalaryBudgetTable.note"   style="width: 220px;">
+                  <textarea rows="3" name="createSalaryBudgetTable.note"   style="width: 220px;" >
                   		<s:property value="%{#createSalaryBudgetTable.note}"/>
                   </textarea>
                 </div>

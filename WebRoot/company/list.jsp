@@ -69,10 +69,10 @@
 								<tbody>
 									<tr>
 										<td>
-											<s:property value="%{#enterprise.id}" />
+											<s:property value="%{#enterprise.enterpriseId}" />
 										</td>
 										<td class="with-complement">
-											<a href="viewEnterpriseDetailed?enterpriseId=<s:property value="%{#enterprise.id}"/>">
+											<a href="viewEnterpriseDetailed?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">
 											<s:property  value="%{#enterprise.fullName}" /></a>
 											<span class="complement"> <s:property
 													value="%{#enterprise.contact}" /> 电话:<s:property
@@ -82,36 +82,39 @@
 											<a href="#info-for-check" data-toggle="modal">修改联系人</a>
 										</td>
 										<td>
-											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.id}"/>">-20000</a>
+											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">-20000</a>
 										</td>
 										<td>
-											<a href="viewEnterpriseEmployees?enterpriseId=<s:property value="%{#enterprise.id}"/> "><s:property value="%{#enterprise.count}"/></a>
+											<a href="viewEnterpriseEmployees?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/> "><s:property value="%{#enterprise.count}"/></a>
 										</td>
 										<td>
-											<ol>
-												<li>
-													<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#enterprise.id}"/> ">
-													
-													<s:iterator value="%{#enterprise.createSalaryBugetTables}" var="itmes">
-														<s:property value="#name"/>
+										<ol>
+											<s:iterator value="%{#request.enterprises}" id="en">
+												<s:iterator value="%{#en.createSalaryBugetTables}" id="cr">
+														 <s:if test="#en.enterpriseId==#enterprise.enterpriseId">
+														    <li>
+															    <a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/> ">
+															    	<s:property value="%{#cr.name}"/>（<s:property value="%{#cr.note}"/>）
+															    	</a>
+														    </li>
+														   </s:if>
+														</s:iterator>
 													</s:iterator>
-													<s:property value="#enterprise.createSalaryBugetTables.iterator().next().getName()"/>
-												
-													</a>（待发放）
-												</li>
-												<li>
-													<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#enterprise.id}"/> ">中国电信工资预算表3</a>（已发放）
-												</li>
-												<li>
-													<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#enterprise.id}"/> ">中国平安工资预算表5</a>（待发放）
-												</li>
 											</ol>
 										</td>
 										<td>
-											<a href="company/insurance-with-employee-list.jsp">增员5人，减员8人，参保10人</a>
+											<s:iterator value="%{#request.enterprises}" id="en">
+												 <s:if test="#en.enterpriseId==#enterprise.enterpriseId">
+													<a href="viewWorkersIncreased?enterpriseId=<s:property value="%{#en.enterpriseId}"/>">
+														增员<s:property value="%{#en.addCount}"/>人，
+														减员<s:property value="%{#en.renewalCount}"/>人，
+														参保<s:property value="%{#en.whetherGinsengCount}"/>人
+													</a>
+											</s:if>
+											</s:iterator>
 										</td>
 										<td>
-											倪姐
+											<s:property value="%{#username}"/>刘备
 										</td>
 									</tr>
 									<tr>

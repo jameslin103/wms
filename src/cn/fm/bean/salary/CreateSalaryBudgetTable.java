@@ -97,7 +97,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	@ManyToOne(cascade = { CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name = "enterpriseId")
 	public Enterprise getEnterprise() {
 		return enterprise;
@@ -106,7 +106,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.enterprise = enterprise;
 	}
 
-	
+	@OneToOne(cascade={CascadeType.REFRESH})
 	 public WageBudgetSummary getWageBudgetSummary() {
 			return wageBudgetSummary;
 	 }
@@ -117,7 +117,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 	
 
-	@OneToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},mappedBy="createSalaryBudgetTable")
+	@OneToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
 	public SalaryTemplate getSalaryTemplate() {
 		return salaryTemplate;
 	}
@@ -125,35 +125,6 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setSalaryTemplate(SalaryTemplate salaryTemplate) {
 		this.salaryTemplate = salaryTemplate;
 	}
-	
-	
-	
 
-
-	@Override  
-	    public int hashCode() {  
-	        final int prime = 31;  
-	        int result = 1;  
-	        result = prime * result + ((budgetId == null) ? 0 : budgetId.hashCode());  
-	        return result;  
-	    }  
-	  
-	    @Override  
-	    public boolean equals(Object obj) {  
-	        if (this == obj)  
-	            return true;  
-	        if (obj == null)  
-	            return false;  
-	        if (getClass() != obj.getClass())
-	            return false;  
-	        CreateSalaryBudgetTable table = (CreateSalaryBudgetTable) obj;  
-	        if (budgetId== null) {  
-	            if (table.budgetId != null)  
-	                return false;  
-	        } else if (!budgetId.equals(table.budgetId))  
-	            return false;  
-	        return true;  
-	    }  
-	  
 	
 }

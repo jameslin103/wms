@@ -19,6 +19,11 @@
 		<div id="container">
 			<div id="header">
 				<jsp:include page="../layout/header.jsp" />
+				<div id="sub-header" class="clearfix">
+					<h2>
+						<s:property value="%{#session.enterprise.fullName}" />
+					</h2>
+				</div>
 			</div>
 
 
@@ -31,10 +36,10 @@
 								<a href="company/index.jsp">综合</a>
 							</li>
 							<li>
-								<a href="company/employee-list.jsp">员工档案</a>
+								<a href="viewEnterpriseEmployees">员工档案</a>
 							</li>
 							<li>
-								<a href="company/salary-with-month.jsp">工资预算表</a>
+								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li class="active">
 								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
@@ -55,10 +60,10 @@
 								查看：
 							</li>
 							<li>
-								<a href="#">新增</a>，
+								<a href="newStaffEmployees?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>">新增</a>，
 							</li>
 							<li>
-								<a href="#">续保</a>，
+								<a href="renewalEmployees?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>">续保</a>，
 							</li>
 							<li>
 								<a href="#">减员</a>
@@ -125,57 +130,76 @@
 									</th>
 								</tr>
 							</thead>
+							
 							<tbody>
+							<s:iterator value="%{#request.employees}" id="emp">
 								<tr>
 									<td>
-										1
+										<s:property value="%{#emp.employeesId}"/>
 									</td>
 									<td>
-										刘备
+										<s:property value="%{#emp.employeesName}"/>
 									</td>
 									<td>
-										男
+										<s:property value="%{#emp.employeesSex}"/>
 									</td>
 									<td>
-										13958458965
+										<s:property value="%{#emp.phone}"/>
 									</td>
 									<td>
-										12856547156
+										<s:property value="%{#emp.cardNumber}"/>
 									</td>
 									<td>
-										福建福州
+										<s:property value="%{#emp.homeAddress}"/>
 									</td>
 									<td>
-										非农
+										<s:if test="%{#emp.householdRegister==0}">
+												<span>非农</span>
+										</s:if>
+										<s:elseif test="%{#emp.householdRegister==1}">
+												<span>农村</span>
+										</s:elseif>
+										</td>
+										<td>
+											<s:if test="%{#emp.maritalStatus==0}">
+												<span>已婚</span>
+											</s:if>
+											<s:else>
+												<span>未婚</span>
+											</s:else>
+										</td>
+									<td>
+										<s:property value="%{#emp.levelEducation}"/>
 									</td>
 									<td>
-										未婚
+										<s:date name="%{#emp.startContractDeadline}" format="yyyy.MM.dd"/>
+										——
+										<s:date name="%{#emp.endContractDeadline}" format="yyyy.MM.dd"/>
 									</td>
 									<td>
-										研究生
+										<s:if test="%{#emp.photo}==0">
+											没有
+										</s:if>
+										<s:elseif test="%{#emp.photo}==1">
+											有
+										</s:elseif>
 									</td>
 									<td>
-										2013.4.18——2016.4.17
-									</td>
-									<td>
-										有
-									</td>
-									<td>
-										新增
+										<s:property value="%{#emp.ginsengProtectNature}"/>
 									</td>
 									<td>
 										<ol>
 											<li>
-												医保
+												<s:property value="%{#emp.sociaSecurity}"/>
 											</li>
 											<li>
-												社保
+												<s:property value="%{#emp.healthCare}"/>
 											</li>
 											<li>
-												公积金
+												<s:property value="%{#emp.accumulationFund}"/>
 											</li>
 											<li>
-												大病统筹
+												<s:property value="%{#emp.seriousDisease}"/>
 											</li>
 										</ol>
 									</td>
@@ -189,7 +213,9 @@
 										<a href="#">删除</a>
 									</td>
 								</tr>
+								</s:iterator>
 							</tbody>
+							
 						</table>
 
 						<div class="pagination">
