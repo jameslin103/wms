@@ -83,7 +83,7 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	{
 		List<WmsUser> wmsUsers=wmsUserService.getAllWmsUser();
 		List<WmsUser> wmsUserList=enterpriseService.getEnterpriseToBoWmsUser(getWmsUserToBeEnterprise());
-		if(wmsUserList.size()==0)
+		if(wmsUserList.size()==0 || wmsUserList==null)
 			wmsUserList=new ArrayList<WmsUser>();
 		if(wmsUsers.size()==0)
 			wmsUsers=new ArrayList<WmsUser>();

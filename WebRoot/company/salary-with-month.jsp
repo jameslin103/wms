@@ -20,6 +20,7 @@
 		<div id="container">
 			<div id="header">
 				<jsp:include page="../layout/header.jsp"></jsp:include>
+				
 
 				<div id="sub-header" class="clearfix">
 					<h2>
@@ -90,35 +91,35 @@
 							</thead>
 							<s:iterator begin="1" end="12" id="mm">
 							<tbody>
+								
 								<tr>
 									<td>
 										<div style="font-weight:bold; text-align: center;"><s:property value="#mm" />月</div>
 									</td>
+									<s:iterator value="#request.createSalaryBudgetTable" id="sal">
 									<td>
 										<ol>
 											<li>
 												<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#request.session.enterprise.id}"/>">
-													某某项目12月工资							
+													<s:property value="%{#sal.name}"/>			
 												</a>
 												
-											</li>
-											<li>
-												某某项目11月工资
 											</li>
 										</ol>
 									</td>
 									<td>
 										<ol>
 											<li>
-												某某项目1月工资
+												xxx项目1月工资
 												<span class="blue">（已发放）</span>
 											</li>
 											<li>
-												某某项目1月工资第二批
+												judd项目1月工资第二批
 												<span class="red">（资金已到位，待发放）</span>
 											</li>
 										</ol>
 									</td>
+									</s:iterator>
 								</tr>
 							</tbody>
 							</s:iterator>

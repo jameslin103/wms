@@ -24,7 +24,7 @@
 	
 		
     
-	<package name="wms" extends="struts-default,json-default" >
+	<package name="wms" extends="struts-default,json-default,jasperreports-default" >
 		<interceptors>
 			<interceptor-stack name="appInterceptor">
 				<interceptor-ref name="store">
@@ -134,6 +134,11 @@
          <action name="renewalEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="renewalEmployees">
             <result name="success">company/insurance-with-employee-list.jsp</result>
         </action>
+         <action name="downloadInsuranceWithEmployeeList" class="cn.fm.web.action.company.InsuranceEmployeesReportAction" method="downloadInsuranceWithEmployeeList">
+            <result name="success"  type="jasper"></result>
+        </action>
+        
+        
         
        <!-- Enterprise  -->
         <action name="viewEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterprise">

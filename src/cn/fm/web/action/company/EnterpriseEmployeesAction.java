@@ -26,6 +26,7 @@ import cn.fm.utils.ExportExcelUtils;
 import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
+import cn.fm.web.action.ReportAction;
 
 
 @SuppressWarnings("serial")
@@ -307,9 +308,7 @@ public void setEmployessName(String employessName) {
 		request.setAttribute("employees", enterpriseEmployeesList);
 		return SUCCESS;
 	}
-	
-	
-	
+
 	
 	
 	

@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="insurance-with-employee-list" pageWidth="1500" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="1460" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="aa20f712-3df1-4c6e-9a64-4eb82b1c20c4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<variable name="variable1" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement uuid="4c2153e0-bc36-4f17-b15e-6a2adc0d6975" x="0" y="0" width="1302" height="42" forecolor="#333333"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑" size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["中国电信"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="41">
+			<staticText>
+				<reportElement uuid="4d47bec0-30b4-4a66-b4f0-e8075efd20ab" x="0" y="20" width="67" height="20" forecolor="#333333"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="微软雅黑" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[制表时间:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eb959c1a-60ab-4d82-95ae-b546d36d0756" x="0" y="0" width="67" height="20" forecolor="#333333"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="微软雅黑" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[数据时间:]]></text>
+			</staticText>
+			<textField pattern="yyyy年MM月份">
+				<reportElement uuid="768008ad-9063-4a1f-8ff7-fc2a4c3f6115" x="67" y="20" width="1235" height="20" forecolor="#333333"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="微软雅黑" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy年MM月份">
+				<reportElement uuid="d9536d92-1948-49af-89db-545ef8e77ed2" x="67" y="0" width="1235" height="20" forecolor="#333333"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="微软雅黑" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="e065ba30-217c-48c7-8087-3085cd0f1f15" mode="Opaque" x="0" y="0" width="22" height="60" forecolor="#333333" backcolor="#FF9966"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[序号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7e7dd13d-7576-4d8b-b645-6f23ce0dc836" mode="Opaque" x="22" y="0" width="45" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[姓名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9e9ee72c-8e96-4591-b439-2df34e46ee91" mode="Opaque" x="67" y="0" width="45" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[参保人]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d2a52f28-b6a6-45fa-b055-88d4b5f8e08d" mode="Opaque" x="112" y="0" width="45" height="60" forecolor="#333333" backcolor="#00FFFF"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[性别]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9866a830-c624-46e4-a324-22651811ece0" mode="Opaque" x="157" y="0" width="126" height="60" forecolor="#333333" backcolor="#FFFF66"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[身份证]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="23a69b0c-23e0-438e-a8e0-b0a41c2f2a40" mode="Opaque" x="283" y="0" width="105" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[联系电话]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="007bb9cb-9449-4996-9d6f-89685524f2aa" mode="Opaque" x="388" y="0" width="67" height="60" forecolor="#333333" backcolor="#FFFF66"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[社会保险基数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1cfa87ad-b2ce-4f79-b1c7-d69839423710" mode="Opaque" x="456" y="0" width="102" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[籍贯]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="92998ee1-625d-465b-8250-c075517722b1" mode="Opaque" x="736" y="0" width="104" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[文化程度]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="53c32e17-0b89-4d66-b29a-24066f419882" mode="Opaque" x="840" y="0" width="197" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[合同期限]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b0f70a85-b6cc-4f5f-ac4b-fbea51346ef8" mode="Opaque" x="1179" y="27" width="52" height="33" forecolor="#333333" backcolor="#0099FF"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[性质]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="25f7f6f2-81e6-4051-9492-1f6eeaa3c240" mode="Opaque" x="1231" y="27" width="50" height="33" forecolor="#333333" backcolor="#0099FF"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[类型]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e5142b3e-f409-4b1a-b651-dd653a971870" mode="Opaque" x="1364" y="0" width="96" height="60" forecolor="#333333" backcolor="#00CCCC"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[状态]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="521c55c4-bb17-471f-828a-103fed4d9877" mode="Opaque" x="1281" y="27" width="83" height="33" forecolor="#333333" backcolor="#0099FF"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[费用
+（元）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fcff7884-d6ac-47d5-84a7-edbaf6417c43" mode="Opaque" x="1109" y="0" width="70" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[大病统筹]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e0f09cf2-554e-4701-adf8-9f5a99d3da8a" mode="Opaque" x="1179" y="0" width="185" height="26" forecolor="#333333" backcolor="#33FF00"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[参保]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a81efba-9656-4d4d-9b9f-ac38d429b71a" mode="Opaque" x="1037" y="0" width="72" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[照片]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9aa45bc5-a696-4f84-9f0b-0fa21b50e9ac" mode="Opaque" x="558" y="0" width="100" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[户口]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4b0e48ee-59ce-4c55-baed-0738e63608e6" mode="Opaque" x="658" y="0" width="78" height="60" forecolor="#333333" backcolor="#FFFF66"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[婚姻]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="1" splitType="Stretch"/>
+	</detail>
+	<summary>
+		<band height="212" splitType="Stretch">
+			<textField>
+				<reportElement uuid="17008f7b-89a9-4992-bd75-fd5983dce13b" x="0" y="0" width="22" height="30" forecolor="#333333"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="微软雅黑" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[1]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8274e188-b588-4709-b76f-f488b1bb9cab" x="0" y="184" width="482" height="28" forecolor="#333333"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["主管审批:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bcef9e68-889e-4040-b001-dbc548d576bf" x="482" y="184" width="470" height="28" forecolor="#333333"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["审核:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b267d37d-3c90-4af1-a6a0-6e8a582bedea" x="952" y="184" width="350" height="28" forecolor="#333333"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="微软雅黑" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["制表:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b35122dd-43b9-4255-8e86-97016a83ffa8" x="22" y="0" width="45" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["刘备"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f5af4280-4895-4b38-af39-5db2f3f6ff4d" x="67" y="0" width="45" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["刘备"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="aa3f6c5f-846e-4fcf-9cd8-74f85ba0d5d2" x="112" y="0" width="45" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["男"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a4d9e272-45b5-4b6c-8a8b-f1c6d0bc9b04" x="157" y="0" width="126" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["350129584693213"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="37abb651-be9e-4803-92c3-c1122438c6aa" x="283" y="0" width="105" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["19865946859"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d1748371-af9a-4c91-91e5-b5c296a53c91" x="388" y="0" width="68" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["15000"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3308d5d2-2eca-46e7-bd7c-3b6cf3baa3e7" x="456" y="0" width="102" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["山东"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d5e23e94-e3f9-43a8-b155-f652b69fdf20" x="558" y="0" width="100" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["山东"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1a363ab1-fba4-4dbe-aca0-12adac516448" x="658" y="0" width="78" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["已婚"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="84c21846-7f9e-4878-b23d-28418b0da078" x="736" y="0" width="104" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["本科"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3123599d-a5d8-46f5-9f80-e73518ebcd2d" x="840" y="0" width="197" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["2013.09.12-2013.0-12.31"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8a931e60-f310-4ccd-abb0-bf97cb7889a5" x="1037" y="0" width="72" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["有"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="df47d73c-c801-460f-9c8e-b4129ddaa893" x="1179" y="0" width="52" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["新增"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fd22e356-1ef5-4e37-ae9a-641f2ee6f65c" x="1109" y="0" width="70" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["30"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="182fdecd-4e15-4014-9143-0a36f7d0729e" x="1231" y="0" width="50" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["新增"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b297f2d3-60ba-47ca-8d91-2354b3707a72" x="1281" y="0" width="83" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["3000.00"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="60c008b3-2ec8-4ec6-9211-db7aff7babc2" x="1364" y="0" width="96" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["已完成"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

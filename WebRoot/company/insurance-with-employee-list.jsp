@@ -48,7 +48,7 @@
 
 						<ul class="normal action-container clearfix">
 							<li class="right">
-								<a href="doc/社医保办理与减员表.xls" class="btn btn-primary">下载社医保办理与减员表</a>
+								<a href="downloadInsuranceWithEmployeeList" class="btn btn-primary">下载社医保办理与减员表</a>
 							</li>
 							<li>
 								2013年1月
