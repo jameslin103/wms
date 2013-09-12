@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import jxl.Cell;
 import jxl.CellType;
@@ -29,7 +28,7 @@ public class GenerateSqlFromExcel {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public static ArrayList generateStationBugSql(File file,String fileName,int number)throws Exception {
+	public static ArrayList generateStationBugSql(File file,String fileName,int number,int readRow)throws Exception {
 		
 		InputStream inputStream= null;
 		Workbook workbook= null;
@@ -50,9 +49,9 @@ public class GenerateSqlFromExcel {
 				{
 					if (!sheet[i].getName().equalsIgnoreCase(fileName))
 					{						
-						throw new Exception("指定文件中不包含名称为"+fileName+"格式文件名,请重新指定！");
+						throw new Exception("指定文件中不包含名称为: "+fileName+" 格式文件名,请重新指定！");
 					}
-					list=createSheet(sheet,i,number);
+					list=createSheet(sheet,i,number,readRow);
 				}
 			}
 			return list;
@@ -71,14 +70,15 @@ public class GenerateSqlFromExcel {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static ArrayList createSheet(Sheet sheet[],int i,int number)
+	public static ArrayList createSheet(Sheet sheet[],int i,int number,int readRow)
 	{
 		ArrayList list=new ArrayList();
-		for (int j =2; j < sheet[i].getRows(); j++)
+		for (int j =readRow; j < sheet[i].getRows(); j++)
 		{
 			String[] valStr = new String[number];
 			for (int k = 0; k < sheet[i].getColumns(); k++) 
 			{
+				if(sheet[i].getColumns()==0){}
 				Cell cell = sheet[i].getCell(k, j);
 				String content = "";
 				if (cell.getType() == CellType.DATE) {
@@ -90,7 +90,7 @@ public class GenerateSqlFromExcel {
 				valStr[k] = content;
 				
 			} 
-			list.add(j-2,valStr);
+			list.add(j-readRow,valStr);
 		}
 		return list;
 	}

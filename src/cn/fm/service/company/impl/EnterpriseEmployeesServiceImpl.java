@@ -78,11 +78,11 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 * 
 	 */
 	@SuppressWarnings({ "unchecked", "static-access" })
-	public void saveImportExcelEmployees(File file , String fiName,int number, Enterprise enterprise) {
+	public void saveImportExcelEmployees(File file , String fiName,int number,int readRow, Enterprise enterprise) {
 		
 		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
 		try {
-			List<String[]> arrayList=excel.generateStationBugSql(file,fiName,number);
+			List<String[]> arrayList=excel.generateStationBugSql(file,fiName,number,readRow);
 			if(arrayList==null)return;
 			for (int i = 0; i < arrayList.size(); i++) {
 				String[] data = arrayList.get(i);
@@ -108,9 +108,9 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				employees.setGinsengProtectNature(data[19].toString());
 				employees.setWhetherGinseng(data[20].toString()==null?null:data[20].equals(Constant.WMS_YES)?1:0);
 				employees.setCinsengDate(data[21].toString()==null?null:DateUtil.StringToDate(data[21], DateUtil.FORMAT_DATE));
-				employees.setHealthCare(data[22].toString()==null?null:data[22].equals(Constant.WMS_YES)?1:0);
-				employees.setSociaSecurity(data[23].toString()==null?null:data[23].equals(Constant.WMS_YES)?1:0);
-				employees.setAccumulationFund(data[24].toString()==null?null:data[24].equals(Constant.WMS_YES)?1:0);
+				employees.setHealthCare(data[22].toString()==null?"":data[22].toString());
+				employees.setSociaSecurity(data[23].toString()==null?null:data[23].toString());
+				employees.setAccumulationFund(data[24].toString()==null?null:data[24].toString());
 				employees.setSeriousDisease(data[25].toString()==null?null:data[25].equals(Constant.WMS_YES)?1:0);
 				employees.setBase(data[26].toString()==null?null:data[26].equals(Constant.WMS_YES)?1:0);
 				employees.setSocialInsurance(data[27].toString().equals("")?null:Double.valueOf(data[27]));
@@ -296,6 +296,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 * @param type
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees>    findNewStaffAndRenewalEmployees(Integer enterpriseId,String type)
 	{
 		
@@ -305,10 +306,70 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		return query.getResultList();
 		
 	}
+	/**
+	 * 批量上传增员；减员；并且与数据库匹配
+	 */
+	@SuppressWarnings({ "unchecked", "static-access" })
+	public boolean  batchIncreaseEmployees(File file , String fiName,int number,int readRow)
+	{
+		boolean flag=false;
+		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
+		
+			List<String[]> arrayList;
+			try {
+				arrayList = excel.generateStationBugSql(file,fiName,number,readRow);
+				if(arrayList==null)return false;
+				List<EnterpriseEmployees> employeesListPO=getAllEnterpriseEmployees();
+				for (int i = 0; i < arrayList.size(); i++)
+				{
+					String[] data = arrayList.get(i);
+					if(data.length!=0){
+					for(EnterpriseEmployees emp:employeesListPO){
+						String cardNumber=(data[7].toString())== null?"":data[7].toString();
+						if(StringUtil.isEmpty(cardNumber))return false;
+						if(cardNumber.equals(emp.getCardNumber())){
+							
+							emp.setSociaSecurity(data[10].toString()== null?"":data[10].toString());
+							emp.setHealthCare((data[11].toString())== null?"":data[11].toString());
+							emp.setAccumulationFund((data[12].toString())== null?"":data[12].toString());
+							emp.setGinsengProtectNature(data[13].toString()== null?"":data[13].toString());
+							emp.setCinsengDate(data[14].toString()== null?emp.getCreateDate():DateUtil.StringToDate(data[14].toString(), DateUtil.FORMAT_DATE));
+							emp.setNote(data[15].toString()== null?"":data[15].toString());
+
+							super.update(emp);
+							flag=true;
+						}
+						
+					}	
+				}
+			}
+				
+		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+		}
+	   return flag;
+	}
+	/**
+	 * 
+	 * @return 所有企业员工
+	 */
+	@SuppressWarnings("unchecked")
+	public List<EnterpriseEmployees> getAllEnterpriseEmployees()
+	{
+		Query query = em.createQuery("select e from EnterpriseEmployees e ");
+		return query.getResultList();
+	}
 	
 	
 	
 	
 	
 	
+	
+	
+	
+	
+
 }

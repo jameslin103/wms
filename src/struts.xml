@@ -113,7 +113,10 @@
              	<param name="actionName">viewEnterpriseEmployees</param>
              </result>
         </action>
-        
+         <action name="deleteEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="deleteEmployees">
+            <result name="success">company/insurance-with-employee-list.jsp</result>       	
+          
+        </action>
          <action name="viewEmployeeContract" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewEmployeeContract">
             <result name="success">company/employee-personal-contract.jsp</result>
         </action>
@@ -138,7 +141,32 @@
             <result name="success"  type="jasper"></result>
         </action>
         
+        <action name="viewInsuranceWithMonth" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewInsuranceWithMonth">
+            <result name="success">company/insurance-with-month.jsp</result>
+        </action>
+        <action name="downloadBatchIncreaseEmployeesExcel" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="downloadBatchIncreaseEmployeesExcel">
+            <!-- 配置结果类型为stream的结果 -->  
+          <result name="success" type="stream">  
+               <!-- 指定被下载文件的文件类型 -->  
+               <param name="contentType">application/vnd.ms-excel</param>  
+               <!-- 指定下载文件的文件位置 -->  
+               <param name="contentDisposition">attachment;filename="${excelName}"</param>
+               <param name="inputName">downloadFile</param>
+               <param name="bufferSize">1024</param>
+           </result>  
+        </action>
         
+        <!-- 批量增员减员续保 -->
+        <action name="batchIncreaseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="batchIncreaseEmployees">
+            <interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+             <result name="invalid.token">company/insurance-step1-of-create.jsp</result>
+            <result name="success">company/insurance-step2-of-create.jsp</result>
+            <result name="input">company/insurance-step1-of-create.jsp</result>
+        </action>
+        <action name="increaseEmployeesUI" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="increaseEmployeesUI">
+            <result name="success">company/insurance-step1-of-create.jsp</result>
+        </action>
         
        <!-- Enterprise  -->
         <action name="viewEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterprise">
@@ -160,7 +188,11 @@
         </action>
         <action name="viewWorkersIncreased" class="cn.fm.web.action.company.EnterpriseAction" method="viewWorkersIncreased">
             <result name="success">company/insurance-with-employee-list.jsp</result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">toBeResponsibleEnterprise</param>
+            </result>
         </action>
+      
         
         
         <!-- InsurancesTaxAction  -->

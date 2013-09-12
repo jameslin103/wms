@@ -141,16 +141,15 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	}
 	public String viewWorkersIncreased()
 	{
-		
-		List<EnterpriseEmployees> enterprisEmployeesList=enterpriseEmployeesService.findWorkersIncreasedToEmployees(this.enterpriseId);
+		if(enterprise.getEnterpriseId()==null)return INPUT;
+		List<EnterpriseEmployees> enterprisEmployeesList=enterpriseEmployeesService.findWorkersIncreasedToEmployees(enterprise.getEnterpriseId());
 		if(enterprisEmployeesList.size()==0)
 			enterprisEmployeesList=new ArrayList<EnterpriseEmployees>();
-		Enterprise enterprise=enterpriseService.find(this.enterpriseId);
-		request.getSession().setAttribute("enterprise", enterprise);
+		Enterprise enterprisePO=enterpriseService.find(enterprise.getEnterpriseId());
+		request.getSession().setAttribute("enterprise", enterprisePO);
 		request.setAttribute("employees", enterprisEmployeesList);
 		return SUCCESS;
 	}
-
 
 	
 }

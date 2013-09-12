@@ -105,7 +105,7 @@
 										<td>
 											<s:iterator value="%{#request.enterprises}" id="en">
 												 <s:if test="#en.enterpriseId==#enterprise.enterpriseId">
-													<a href="viewWorkersIncreased?enterpriseId=<s:property value="%{#en.enterpriseId}"/>">
+													<a href="viewWorkersIncreased?enterprise.enterpriseId=<s:property value="%{#en.enterpriseId}"/>">
 														增员<s:property value="%{#en.addCount}"/>人，
 														减员<s:property value="%{#en.renewalCount}"/>人，
 														参保<s:property value="%{#en.whetherGinsengCount}"/>人

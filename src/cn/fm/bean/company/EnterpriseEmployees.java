@@ -1,9 +1,6 @@
 package cn.fm.bean.company;
-
-
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -67,31 +63,41 @@ public class EnterpriseEmployees implements Serializable{
 	/*是否参保*/
 	private  Integer whetherGinseng;
 	/*医保*/
-	private Integer  sociaSecurity;
+	private String  sociaSecurity;
 	/*社保 */
-	private Integer  healthCare;
+	private String  healthCare;
 	/*公积金*/
-	private Integer  accumulationFund;
+	private String  accumulationFund;
 	/*大病统筹*/
 	private Integer  seriousDisease;
 	/*大病统筹基数*/
 	private Double  seriousDiseaseBase;
-	/*参保性质  0新增  1续保*/
+	
+	/*参保性质  0新增  1续保 2 减员*/
 	private String ginsengProtectNature;
+	
 	/*参保日期*/
 	private Date  cinsengDate;
+	
 	/*参保基数 0.默认基数 1.个性设置*/
 	private Integer  base;
+	
 	/*个税缴纳方式  0个人缴纳，  1企业缴纳*/
 	private String  paymentWay;
+	
 	/*工伤基数*/
 	private Double  inductrialBase;
+	
 	/*住房公积金基数*/
 	private Double  housingFund;
+	
 	/*基本医疗保险基数*/
 	private Double  basicMedical;
+	
 	/*伪删除  0 隐藏    1显示*/
 	private Integer  pseudoDelete;
+	
+	private String  note;
 	
 	/**增员**/
 	private  long addCount;
@@ -106,6 +112,18 @@ public class EnterpriseEmployees implements Serializable{
 	
 	private Enterprise  enterprise;
 	
+	
+	
+	
+	
+	
+	@Column(length=50)
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
 	@Id @GeneratedValue
 	public Integer getEmployeesId() {
 		return employeesId;
@@ -324,26 +342,26 @@ public class EnterpriseEmployees implements Serializable{
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	@Column(length=1)
-	public Integer getSociaSecurity() {
+	@Column(length=15)
+	public String getSociaSecurity() {
 		return sociaSecurity;
 	}
 	
-	public void setSociaSecurity(Integer sociaSecurity) {
+	public void setSociaSecurity(String sociaSecurity) {
 		this.sociaSecurity = sociaSecurity;
 	}
-	@Column(length=1)
-	public Integer getHealthCare() {
+	@Column(length=15)
+	public String getHealthCare() {
 		return healthCare;
 	}
-	public void setHealthCare(Integer healthCare) {
+	public void setHealthCare(String healthCare) {
 		this.healthCare = healthCare;
 	}
-	@Column(length=1)
-	public Integer getAccumulationFund() {
+	@Column(length=15)
+	public String getAccumulationFund() {
 		return accumulationFund;
 	}
-	public void setAccumulationFund(Integer accumulationFund) {
+	public void setAccumulationFund(String accumulationFund) {
 		this.accumulationFund = accumulationFund;
 	}
 	@Column(length=1)

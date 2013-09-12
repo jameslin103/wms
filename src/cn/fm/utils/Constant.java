@@ -26,6 +26,7 @@ public class Constant {
 	public static final String WMS_SEX_WOMAN="女";
 	public static final String WMS_XIN_ZENG="新增";
 	public static final String WMS_XU_BAO="续保";
+	public static final String WMS_JIAN_YUAN="减员";
 	public static final String WMS_FEI_NONG="非农";
 	public static final String WMS_NONG_YES="农村";
 	public static final String WMS_PHOTO_YES="有";

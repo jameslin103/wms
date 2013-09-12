@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +27,6 @@ import cn.fm.utils.ExportExcelUtils;
 import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
-import cn.fm.web.action.ReportAction;
 
 
 @SuppressWarnings("serial")
@@ -51,17 +51,23 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	
 	 //工程目录下的模板文件名称
-   private String employeeFileName ="员工基本信息表.xls";
+   private String employeeFileName;
 	
     
     
     
-	 public String getEmployessName() {
-	return employessName;
-}
-public void setEmployessName(String employessName) {
-	this.employessName = employessName;
-}
+	public String getEmployeeFileName() {
+		return employeeFileName;
+	}
+	public void setEmployeeFileName(String employeeFileName) {
+		this.employeeFileName = employeeFileName;
+	}
+	public String getEmployessName() {
+		return employessName;
+	}
+	public void setEmployessName(String employessName) {
+		this.employessName = employessName;
+	}
 	public Integer getEnterpriseId() {
 		return enterpriseId;
 	}
@@ -123,17 +129,16 @@ public void setEmployessName(String employessName) {
 	
 	  public InputStream getDownloadFile()  
 	   {  
-	        return ServletActionContext.getServletContext().getResourceAsStream("/doc/"+employeeFileName);  
+	        return ServletActionContext.getServletContext().getResourceAsStream("/doc/"+this.getEmployeeFileName());  
 	        
 	        
 	    }  
 	    public String employeesFileExcelTempl()
 	    {  
-	    
+	    	this.setEmployeeFileName("员工基本信息表.xls");
 	    	try {
 				excelName = new String(employeeFileName.getBytes(), "iso8859-1");//解决中文 文件名问题
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	    	return SUCCESS;
@@ -158,7 +163,7 @@ public void setEmployessName(String employessName) {
 	{
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-		enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",34,enterprise);
+		enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",34,2,enterprise);
 		return SUCCESS;
 	}
 	/**
@@ -309,13 +314,63 @@ public void setEmployessName(String employessName) {
 		return SUCCESS;
 	}
 
+	public String deleteEmployees()
+	{
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		if(enterpriseEmployees!=null)
+			enterpriseEmployeesService.delete((Serializable)enterpriseEmployees.getEmployeesId());
+		List<EnterpriseEmployees> enterprisEmployeesList=enterpriseEmployeesService.findWorkersIncreasedToEmployees(enterprise.getEnterpriseId());
+		if(enterprisEmployeesList.size()==0)
+			enterprisEmployeesList=new ArrayList<EnterpriseEmployees>();
+		request.setAttribute("employees", enterprisEmployeesList);
+		return SUCCESS;
+		
+	}
+	
+	public String viewInsuranceWithMonth()
+	{
+		
+		return SUCCESS;
+	}
+	/**
+	 * 批量增减员；进行数据库匹配识别
+	 * @return
+	 */
+	public String batchIncreaseEmployees()
+	{
+		
+		boolean falg=enterpriseEmployeesService.batchIncreaseEmployees(file ,"社医保增减员",16,1);
+		if(falg==false){
+			request.setAttribute("message", "数据有误上传失败!!");
+			return INPUT;
+			
+		}
+		
+		
+		return SUCCESS;
+	}
+	public String increaseEmployeesUI()
+	{
+		
+		return SUCCESS;
+	}
 	
 	
-	
-	
-	
-	
-	
+	/**
+	 * 下载社医保增减员模板
+	 * @return 下载文件名称
+	 */
+	public String downloadBatchIncreaseEmployeesExcel()
+	{
+		this.setEmployeeFileName("社医保增减员.xls");
+    	try {
+			excelName = new String(employeeFileName.getBytes(), "iso8859-1");//解决中文 文件名问题
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		return SUCCESS;
+	}
 	
 	
 	

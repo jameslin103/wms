@@ -24,9 +24,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="center-pane">
           <ul class="nav nav-tabs">
             <li><a href="index.jsp">综合</a></li>
-            <li><a href="employee-list.jsp">员工档案</a></li>
-            <li><a href="salary-with-month.jsp">工资预算表</a></li>
-            <li class="active"><a href="insurance-with-month.jsp">增减员与参保明细</a></li>
+            <li><a href="viewEnterpriseEmployees">员工档案</a></li>
+            <li><a href="viewSalaryBudgetTable">工资预算表</a></li>
+            <li class="active"><a href="viewInsuranceWithMonth">增减员与参保明细</a></li>
           </ul>
 
           <div class="span4">
@@ -37,14 +37,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="alert alert-info">
                   <ol>
                     <li>
-                      <a href="">下载Excel表格</a>
+                      <a href="downloadBatchIncreaseEmployeesExcel">下载Excel表格</a>
                     </li>
                     <li>
-                      上传增员（与续保）信息表
-                      <form  action="insurance-step2-of-create.jsp" class="form-search" method="post">
-                        <input type="file"><br>
-                        <button type="submit" class="btn btn-primary">上传</button>
-                      </form>
+                      	上传增员（与续保）信息表
+                      <s:form  action="batchIncreaseEmployees" cssClass="form-search" method="post"   enctype="multipart/form-data" >
+                        <input type="file" name="file"><br>
+                        <s:token/>
+                        <s:submit cssClass="btn btn-primary" value="上传"/>
+                      </s:form>
                     </li>
                   </ol>
                   <p class="red">备注：上传时，所有姓名，必须与数据库中已有的员工档案一致，重名用身份证号识别，如果无法识别，给予提醒！</p>

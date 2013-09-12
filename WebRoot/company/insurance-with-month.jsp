@@ -40,7 +40,7 @@
 								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li class="active">
-								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
+								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
 							</li>
 							<li>
 								<a href="viewBalanceDetail">资金往来</a>
@@ -64,7 +64,7 @@
 								</form>
 							</li>
 							<li>
-								<a href="company/insurance-step1-of-create.jsp">批量增员</a>（与续保）
+								<a href="increaseEmployeesUI">批量增员</a>（与续保）
 							</li>
 							<li>
 								&nbsp;/&nbsp;

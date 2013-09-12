@@ -44,7 +44,7 @@
 								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li>
-								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
+								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
 							</li>
 						</ul>
 						<div class="span4">

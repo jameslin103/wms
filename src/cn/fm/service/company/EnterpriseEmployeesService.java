@@ -20,7 +20,7 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @param file
 	 * @param fiName
 	 */
-	public void saveImportExcelEmployees(File file , String fiName,int number,Enterprise enterprise);
+	public void saveImportExcelEmployees(File file , String fiName,int number,int readRow,Enterprise enterprise);
 	/**
 	 * 查看所有企业员工
 	 * @return list
@@ -76,4 +76,5 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 */
 	public List<EnterpriseEmployees>    findNewStaffAndRenewalEmployees(Integer enterpriseId,String type);
 	
+	public boolean batchIncreaseEmployees(File file , String fiName,int number,int readRow);
 }

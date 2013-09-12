@@ -210,7 +210,7 @@
 										执行中
 									</td>
 									<td>
-										<a href="#">删除</a>
+										<a href="deleteEmployees?enterpriseEmployees.employeesId=<s:property value="%{#emp.employeesId}"/>">删除</a>
 									</td>
 								</tr>
 								</s:iterator>
