@@ -48,7 +48,14 @@ public class LoginAction extends BaseAction{
 		        return (value == null || value.length() == 0);
 		}
 	
-	
+	public String authorizationUser()
+	{
+		
+		
+		
+		
+		return SUCCESS;
+	}
 	
 	
 	

@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                  <li><a tabindex="-1" href="viewEnterprise">企业相关</a></li>
                   <li><a tabindex="-1" href="toViewTaxRules">计税规则</a></li>
-                  <li><a tabindex="-1" href="company/authorization.jsp">权限分配</a></li>            
+                  <li><a tabindex="-1" href="authorizationUser">权限分配</a></li>            
               </ul>
             </li>
             
@@ -45,8 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	<%
 				java.util.Date now = new java.util.Date();
 				Date currentTime = new Date();
-				java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
-						"yyyy年MM月dd日 ");
+				java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy年MM月dd日 ");
 				String dateString = formatter.format(currentTime);
 				out.println(dateString);
 			%>

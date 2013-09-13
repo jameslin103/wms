@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="employees" language="groovy" pageWidth="1000" pageHeight="842" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd9887ab-41be-4b66-b441-b6307ad5a781">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="8"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     `employeesId`,
+     `accumulationFund`,
+     `bank`,
+     `bankCardNumber`,
+     `base`,
+     `basicMedical`,
+     `cardNumber`,
+     `cinsengDate`,
+     `contractNo`,
+     `createDate`,
+     `employeesName`,
+     `employeesSex`,
+     `endContractDeadline`,
+     `fertilityInsurance`,
+     `ginsengProtectNature`,
+     `healthCare`,
+     `homeAddress`,
+     `householdRegister`,
+     `housingFund`,
+     `inductrialBase`,
+     `industry`,
+     `jobs`,
+     `levelEducation`,
+     `maritalStatus`,
+     `nativePlace`,
+     `paymentWay`,
+     `phone`,
+     `photo`,
+     `pseudoDelete`,
+     `seriousDisease`,
+     `seriousDiseaseBase`,
+     `serviceCost`,
+     `sociaSecurity`,
+     `socialInsurance`,
+     `startContractDeadline`,
+     `whetherGinseng`,
+     `enterpriseId`,
+     `note`
+FROM
+     `enterpriseemployees` enterpriseemployees]]>
+	</queryString>
+	<field name="employeesId" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="accumulationFund" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bank" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bankCardNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="base" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="basicMedical" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cardNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cinsengDate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contractNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="createDate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="employeesName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="employeesSex" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="endContractDeadline" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fertilityInsurance" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ginsengProtectNature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="healthCare" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="homeAddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="householdRegister" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="housingFund" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inductrialBase" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="industry" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jobs" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="levelEducation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="maritalStatus" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nativePlace" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="paymentWay" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="photo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pseudoDelete" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="seriousDisease" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="seriousDiseaseBase" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="serviceCost" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sociaSecurity" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="socialInsurance" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="startContractDeadline" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="whetherGinseng" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="enterpriseId" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="note" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="employeesId">
+		<groupExpression><![CDATA[$F{employeesId}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement uuid="490b4f13-0cef-40f9-bd72-e62ea5df4a74" style="SubTitle" x="47" y="13" width="506" height="24" forecolor="#333333"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{employeesId}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement uuid="97fdaeef-cf74-47e6-9cc0-f757dd3dbfde" mode="Opaque" x="0" y="13" width="36" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC"/>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement uuid="0b588cbc-65dd-4b90-96c4-c77dffc50cc0" x="-20" y="0" width="595" height="64"/>
+				<imageExpression><![CDATA["wood.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="200e1a63-5a3b-4969-ba68-5906c7126753" style="Title" x="0" y="5" width="263" height="33"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Wood Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d9b556d9-7f32-4ddf-a9bb-30d287bab816" style="SubTitle" x="63" y="39" width="200" height="22" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Wood SubTitle]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement uuid="12fa234b-0bf5-41c0-a376-b6c70cecab7c" positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="32de5c9b-e9ae-4403-81af-3354446f71c3" style="Column header" x="0" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[accumulationFund]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b1131d5a-1799-4778-a5f2-54c65c5fabd0" style="Column header" x="15" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[bank]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="239c1748-388d-4d6a-88cb-bfe51ee11d8c" style="Column header" x="30" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[bankCardNumber]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8bb723e9-7f3c-41ce-abd2-c69b9a1c4e60" style="Column header" x="45" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[base]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="84c6a5f8-cbca-458d-83b6-6a3554ca76f6" style="Column header" x="60" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[basicMedical]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cd3b1140-1194-426c-bf6c-6a20ade0fdb9" style="Column header" x="75" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[cardNumber]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="99a7faa8-9d76-4d9b-9296-7c844694c95c" style="Column header" x="90" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[cinsengDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2b1a2520-686a-4c63-8731-52ddc46618ff" style="Column header" x="105" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[contractNo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c5918426-b42c-442d-b254-df4030e68390" style="Column header" x="120" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[createDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18e54c99-5df8-4790-9263-e9ebd78dc5e3" style="Column header" x="135" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[employeesName]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="887f2878-9bad-4a56-9a38-6ee2971eac0c" style="Column header" x="150" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[employeesSex]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e705b721-d8a7-4113-9503-155ecf2c4ce2" style="Column header" x="165" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[endContractDeadline]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cc835e7b-655d-46ac-8ab8-16df325bc374" style="Column header" x="180" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[fertilityInsurance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="aeae0c12-149f-4ecf-83af-e46d9b963394" style="Column header" x="195" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[ginsengProtectNature]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cbd66ce2-ce8a-4fc7-8401-138ab47090f1" style="Column header" x="210" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[healthCare]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="52fcab31-40ae-4f44-bd38-13604b370187" style="Column header" x="225" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[homeAddress]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2dfece04-050b-4bc3-b9bd-1d1ec61aa53c" style="Column header" x="240" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[householdRegister]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f5bda420-ef89-440d-9440-dbce4346535f" style="Column header" x="255" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[housingFund]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d8cf51ce-7724-4554-8808-d3cfc7942b12" style="Column header" x="270" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[inductrialBase]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fc6c202d-6f18-456e-bf4b-85828027270c" style="Column header" x="285" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[industry]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3cc6e98d-f4cd-41cd-9f4f-fc3feae578bc" style="Column header" x="300" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[jobs]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3f25ae0e-ec4e-42c8-9554-4431f6c143ec" style="Column header" x="315" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[levelEducation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1a95a394-edff-4648-930c-ece70cddf174" style="Column header" x="330" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[maritalStatus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4b8df6c4-fd00-4594-a4dd-013534cd084c" style="Column header" x="345" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[nativePlace]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f479d0bf-4f88-4ac1-9028-c1216fe98937" style="Column header" x="360" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[paymentWay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="20d42f0a-3ebd-4638-9d71-0f610ad4615d" style="Column header" x="375" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[phone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b5ace044-e50d-4c9a-af28-45d44f6bcc90" style="Column header" x="390" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[photo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4cc7c337-3413-4f8d-8bba-4edca8dd715f" style="Column header" x="405" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[pseudoDelete]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d2da296f-a716-4404-b138-4a82185c6e40" style="Column header" x="420" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[seriousDisease]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9f02407b-aa70-4ebc-8a7f-fffe639ee2fa" style="Column header" x="435" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[seriousDiseaseBase]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b96b9b9-be26-4f98-963c-1cd40357555e" style="Column header" x="450" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[serviceCost]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c5f3bddd-9d5a-407b-b3dc-d6f086018a89" style="Column header" x="465" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[sociaSecurity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f1b482c8-fdc6-47bb-a6cd-249651f0435b" style="Column header" x="480" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[socialInsurance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8c07b373-c13f-4eb2-8d8e-4bb6bb6ae976" style="Column header" x="495" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[startContractDeadline]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6183d6b6-6385-428c-9d69-17bd6f901f05" style="Column header" x="510" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[whetherGinseng]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3da3bd89-d26b-4873-b5f2-c9de4438897d" style="Column header" x="525" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[enterpriseId]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c7765e9c-1430-440b-be69-739ad1c9a273" style="Column header" x="540" y="19" width="15" height="15"/>
+				<textElement/>
+				<text><![CDATA[note]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement uuid="48cae515-f7b3-448a-9450-ee77bc851dcd" positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="d70891d9-ad78-4af7-97b9-4b20d053faad" style="Detail" x="0" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{accumulationFund}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6931b7dc-5585-4770-af62-7d6b4b2a1fd9" style="Detail" x="15" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{bank}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d6bf9767-afee-49bb-8c86-c5a75ed886f6" style="Detail" x="30" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{bankCardNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c2d0817a-5070-4b6f-8739-698c621d71c3" style="Detail" x="45" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{base}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2bfc0a2d-4897-41a2-94fd-4cd97146cc06" style="Detail" x="60" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{basicMedical}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b610bb46-57a6-4f95-8da6-e3e6fa0ed974" style="Detail" x="75" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cardNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1280957f-eaf7-4826-b704-ee6f7c33e55f" style="Detail" x="90" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cinsengDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="53fd64e5-398c-4816-95e5-6da5afcb117b" style="Detail" x="105" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{contractNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="55711913-080a-4ceb-99a5-97a60d1a8731" style="Detail" x="120" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{createDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7b1cdfb2-8c84-4ffb-8ec1-0b2f48695da4" style="Detail" x="135" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{employeesName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bca26527-3f46-4587-8716-ae385cb377dd" style="Detail" x="150" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{employeesSex}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="da554504-b636-42c5-9d0f-c1d0b627b3f5" style="Detail" x="165" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{endContractDeadline}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a417e9c9-8299-4224-b0fe-f4d4f3a3144f" style="Detail" x="180" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fertilityInsurance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cef9bece-747c-4840-a509-404c15a92595" style="Detail" x="195" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ginsengProtectNature}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1f7a7866-15d7-4f14-a7bd-b03aaf61e809" style="Detail" x="210" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{healthCare}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="db32019c-4233-4504-9ec3-836ac2ebf65c" style="Detail" x="225" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{homeAddress}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="66bb68c5-3954-4232-bd48-846285edd0be" style="Detail" x="240" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{householdRegister}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="dbb24eba-fd41-4819-9abe-349b85194f1d" style="Detail" x="255" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{housingFund}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0ef9a9c1-3845-4451-b898-f265fbf16cdc" style="Detail" x="270" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{inductrialBase}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3099333c-ed13-4859-ab33-385f3a2f9a4d" style="Detail" x="285" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{industry}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="08c6ae3d-c895-45ce-a6e3-742138221a83" style="Detail" x="300" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{jobs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f8a408e7-5a9c-4362-9045-a529da8b2329" style="Detail" x="315" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{levelEducation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="164faeaa-35d1-4b9b-b277-c5313d6dfc66" style="Detail" x="330" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{maritalStatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f96ee96a-5021-442c-8f62-8da56a430f7e" style="Detail" x="345" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nativePlace}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="637dc1bf-4355-4309-b272-865733f27293" style="Detail" x="360" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{paymentWay}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9156c6ae-2c27-4249-adad-b3a780075b33" style="Detail" x="375" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="054284f9-53d7-4bb3-b736-3985d37e3226" style="Detail" x="390" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{photo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="63cba398-117a-4e48-9c38-dbb94da6dd06" style="Detail" x="405" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pseudoDelete}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ac76a1e9-b55c-4085-8934-0402ae4af830" style="Detail" x="420" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{seriousDisease}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="36e7508b-38d0-4a47-b84b-801e7c93b4f0" style="Detail" x="435" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{seriousDiseaseBase}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="db8847d2-2216-498e-aaf0-f1a0f4b9f163" style="Detail" x="450" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{serviceCost}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="47a078bd-ca00-4d57-90cf-43085bb72ca0" style="Detail" x="465" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{sociaSecurity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b16859af-e113-458e-a052-ecf266292132" style="Detail" x="480" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{socialInsurance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ccc050a6-7ff2-4c66-a8be-30e4a7edcebd" style="Detail" x="495" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{startContractDeadline}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="47f1890a-361a-445c-ac2e-fc63544981f7" style="Detail" x="510" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{whetherGinseng}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="10d7e8d8-d5ab-461a-ad3d-731a130611aa" style="Detail" x="525" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{enterpriseId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fc0434a6-9678-44a0-8aaa-59f9089d8c0a" style="Detail" x="540" y="0" width="15" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{note}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement uuid="07c33ebc-ecfe-46e1-afbf-0648d9c7eccb" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="3b738de9-820d-4cf2-90cb-637010a1e948" style="Column header" x="433" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="37c18e1b-36d6-4023-a3c3-3d506ee7541c" style="Column header" x="513" y="0" width="40" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="4eef8afd-21cf-4b48-8c8c-42741a1fe08b" style="Column header" x="0" y="0" width="197" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

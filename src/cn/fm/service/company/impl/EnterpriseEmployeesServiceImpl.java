@@ -323,12 +323,12 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				for (int i = 0; i < arrayList.size(); i++)
 				{
 					String[] data = arrayList.get(i);
-					if(data.length!=0){
+					if(data.length!=0 || !data.equals("")){
 					for(EnterpriseEmployees emp:employeesListPO){
 						String cardNumber=(data[7].toString())== null?"":data[7].toString();
+						if(StringUtil.isEmpty(emp.getCardNumber()))return false;
 						if(StringUtil.isEmpty(cardNumber))return false;
 						if(cardNumber.equals(emp.getCardNumber())){
-							
 							emp.setSociaSecurity(data[10].toString()== null?"":data[10].toString());
 							emp.setHealthCare((data[11].toString())== null?"":data[11].toString());
 							emp.setAccumulationFund((data[12].toString())== null?"":data[12].toString());

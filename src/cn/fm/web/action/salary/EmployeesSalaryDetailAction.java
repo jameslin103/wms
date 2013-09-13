@@ -109,12 +109,12 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-		List<EnterpriseEmployees>  enterpriseEmployees=employeesSalaryDetailService.uploadImportWageBudgetSummary(file, "工资预算表", 31, enterprise.getEnterpriseId());
+		List<EnterpriseEmployees>  enterpriseEmployees=employeesSalaryDetailService.uploadImportWageBudgetSummary(file, "工资预算表", 31,1, enterprise.getEnterpriseId());
 		if(enterpriseEmployees.size()>0){
 			request.setAttribute("enterpriseEmployees", enterpriseEmployees);
 			return INPUT;
 		}else{
-			List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.saveTempEmployeesSalaryDetail(file, "工资预算表", 31, enterprise.getEnterpriseId());
+			List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.saveTempEmployeesSalaryDetail(file, "工资预算表", 31,1, enterprise.getEnterpriseId());
 			for (EmployeesSalaryDetail employeesSalaryDetail : employeesSalaryDetailList) {
 				
 					wargeTotal+=Double.valueOf(employeesSalaryDetail.getWage().toString());

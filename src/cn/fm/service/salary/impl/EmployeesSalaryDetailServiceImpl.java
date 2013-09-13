@@ -30,14 +30,14 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * @date   2013-09-01
 	 */
 	@SuppressWarnings({ "unchecked", "static-access" })
-	public List<EnterpriseEmployees>   uploadImportWageBudgetSummary(File file , String fileName,int number,int enterpriseId)
+	public List<EnterpriseEmployees>   uploadImportWageBudgetSummary(File file , String fileName,int number,int readRows ,int enterpriseId)
 	{
 	
 		if(enterpriseId==0)return null;
 		List<EnterpriseEmployees>   enterpriseEmployeesIsExistVO=null;
 		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
 		try {
-			List<String[]> arrayList=excel.generateStationBugSql(file,fileName,number);
+			List<String[]> arrayList=excel.generateStationBugSql(file,fileName,number,readRows);
 			if(arrayList.size()==0)return null;
 			for (int i = 0; i < arrayList.size(); i++) {
 				String[] data = arrayList.get(i);
@@ -61,14 +61,14 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * @return employeesSalaryDetailListVO
 	 */
 	@SuppressWarnings({ "unchecked", "static-access" })
-	public List<EmployeesSalaryDetail> saveTempEmployeesSalaryDetail(File file , String fileName,int number,int enterpriseId)
+	public List<EmployeesSalaryDetail> saveTempEmployeesSalaryDetail(File file , String fileName,int number,int readRows,int enterpriseId)
 	{
 		List<EmployeesSalaryDetail> employeesSalaryDetailListVO=new ArrayList<EmployeesSalaryDetail>();
 
 		if(enterpriseId==0)return null;
 		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
 		try {
-			List<String[]> arrayList=excel.generateStationBugSql(file,fileName,number);
+			List<String[]> arrayList=excel.generateStationBugSql(file,fileName,number,readRows);
 			if(arrayList.size()==0)return null;
 			for (int i = 0; i < arrayList.size(); i++) {
 				String[] data = arrayList.get(i);

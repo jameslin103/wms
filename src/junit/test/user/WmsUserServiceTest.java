@@ -12,8 +12,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.permissions.Employee;
+import cn.fm.bean.permissions.PrivilegeGroup;
+import cn.fm.bean.permissions.SystemPrivilege;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.user.ContactInfo;
+import cn.fm.bean.user.Gender;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.user.WmsUserService;
 
@@ -129,4 +133,6 @@ public class WmsUserServiceTest {
 		
 		wmsUserService.update(wmsUser);
 	}
+	
+
 }

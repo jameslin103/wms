@@ -10,9 +10,9 @@ import cn.fm.service.base.DAO;
 public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail> {
 	
 	
-	public List<EnterpriseEmployees>  uploadImportWageBudgetSummary(File file , String fiName,int number,int enterpriseId);
+	public List<EnterpriseEmployees>  uploadImportWageBudgetSummary(File file , String fiName,int number,int readRows,int enterpriseId);
 
-	public List<EmployeesSalaryDetail> saveTempEmployeesSalaryDetail(File file , String fileName,int number,int enterpriseId);
+	public List<EmployeesSalaryDetail> saveTempEmployeesSalaryDetail(File file , String fileName,int number,int readRows,int enterpriseId);
 
 	public List<EmployeesSalaryDetail>  getAllEmployeesSalaryDetail(Integer enterpriseId,Integer employeesId);
 }

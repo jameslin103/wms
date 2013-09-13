@@ -19,13 +19,20 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 
+import net.sf.jasperreports.engine.JRBoxContainer;
+import net.sf.jasperreports.engine.base.JRBaseParagraph;
+import net.sf.jasperreports.engine.JRParagraphContainer;
+import net.sf.jasperreports.engine.base.JRBaseStaticText;
+//import net.sf.jasperreports.engine.base.JRBaseParagraph.paragraphContainer;
+
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.struts2.util.ServletContextAware;
 
 
 
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unused" })
 public abstract class ReportAction extends BaseAction implements ServletContextAware {
 	private static final String JASPER_FILS_PATH = "/report";
 	@Resource

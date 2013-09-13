@@ -43,7 +43,7 @@
 									<a tabindex="-1" href="toViewTaxRules">计税规则</a>
 								</li>
 								<li>
-									<a tabindex="-1" href="admin/authorization.jsp">权限分配</a>
+									<a tabindex="-1" href="authorizationUser">权限分配</a>
 								</li>
 							</ul>
 						</li>

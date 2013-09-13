@@ -40,6 +40,7 @@
 		</global-results>
 		
 		<!-- 用户登录 -->
+		
 		<action name="userLogin" class="cn.fm.web.action.user.LoginAction" method="userLogin">  
             <result name="input">/login.jsp</result>
             <result name="success">/dashboard.jsp</result> 
@@ -54,7 +55,9 @@
             	 <param name="actionName">userLogin</param> 
             </result>
         </action>  
-      
+      <action name="authorizationUser" class="cn.fm.web.action.user.LoginAction" method="authorizationUser">
+            <result name="success" >admin/authorization.jsp</result>
+        </action>  
        
                
         <!-- excel Import Date -->
@@ -137,7 +140,7 @@
          <action name="renewalEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="renewalEmployees">
             <result name="success">company/insurance-with-employee-list.jsp</result>
         </action>
-         <action name="downloadInsuranceWithEmployeeList" class="cn.fm.web.action.company.InsuranceEmployeesReportAction" method="downloadInsuranceWithEmployeeList">
+         <action name="downloadInsuranceWithEmployeeList" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="downloadInsuranceWithEmployeeList">
             <result name="success"  type="jasper"></result>
         </action>
         
