@@ -67,10 +67,13 @@
             	<param name="actionName">viewEnterpriseEmployees</param>
             </result>
         </action> 
-          <action name="exportExcel" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="exportExcel">
-            <result name="success" type="redirectAction">
-            	<param name="actionName">viewEnterpriseEmployees</param>
-            </result>
+        
+        <!-- 导出excel全体在职员工信息的报表数据 -->
+          <action name="exportEmployeesExcel" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="exportEmployeesExcel">
+            <result name="success"  type="jasper">   </result>     	
+           	<result name="input" type="redirectAction">
+           		<param name="actionName">viewEnterpriseEmployees</param>
+           	</result>
         </action> 
         
         <action name="employeesFileExcelTempl" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="employeesFileExcelTempl">  
@@ -142,6 +145,9 @@
         </action>
          <action name="downloadInsuranceWithEmployeeList" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="downloadInsuranceWithEmployeeList">
             <result name="success"  type="jasper"></result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewWorkersIncreased</param>
+            </result>
         </action>
         
         <action name="viewInsuranceWithMonth" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewInsuranceWithMonth">

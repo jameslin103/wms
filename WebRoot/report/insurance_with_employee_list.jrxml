@@ -3,162 +3,136 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString>
-		<![CDATA[SELECT
-  `employeesId`,
-  `accumulationFund`,
-  `bank`,
-  `bankCardNumber`,
-  `base`,
-  `basicMedical`,
-  `cardNumber`,
-  `cinsengDate`,
-  `contractNo`,
-  `createDate`,
-  `employeesName`,
-  `employeesSex`,
-  `endContractDeadline`,
-  `fertilityInsurance`,
-  `ginsengProtectNature`,
-  `healthCare`,
-  `homeAddress`,
-  `householdRegister`,
-  `housingFund`,
-  `inductrialBase`,
-  `industry`,
-  `jobs`,
-  `levelEducation`,
-  `maritalStatus`,
-  `nativePlace`,
-  `paymentWay`,
-  `phone`,
-  `photo`,
-  `pseudoDelete`,
-  `seriousDisease`,
-  `seriousDiseaseBase`,
-  `serviceCost`,
-  `sociaSecurity`,
-  `socialInsurance`,
-  `startContractDeadline`,
-  `whetherGinseng`,
-  `enterpriseId`,
-  `note`
-FROM
-  `enterpriseemployees` ;]]>
+	<parameter name="title" class="java.lang.String"/>
+	<parameter name="username" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[]]>
 	</queryString>
-	<field name="employeesId" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="accumulationFund" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[accumulationFund]]></fieldDescription>
+	</field>
+	<field name="addCount" class="java.lang.Long">
+		<fieldDescription><![CDATA[addCount]]></fieldDescription>
 	</field>
 	<field name="bank" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[bank]]></fieldDescription>
 	</field>
 	<field name="bankCardNumber" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[bankCardNumber]]></fieldDescription>
 	</field>
 	<field name="base" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[base]]></fieldDescription>
 	</field>
 	<field name="basicMedical" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[basicMedical]]></fieldDescription>
 	</field>
 	<field name="cardNumber" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[cardNumber]]></fieldDescription>
 	</field>
-	<field name="cinsengDate" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="cinsengDate" class="java.util.Date">
+		<fieldDescription><![CDATA[cinsengDate]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
 	</field>
 	<field name="contractNo" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[contractNo]]></fieldDescription>
 	</field>
-	<field name="createDate" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="createDate" class="java.util.Date">
+		<fieldDescription><![CDATA[createDate]]></fieldDescription>
+	</field>
+	<field name="employeesId" class="java.lang.Integer">
+		<fieldDescription><![CDATA[employeesId]]></fieldDescription>
 	</field>
 	<field name="employeesName" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[employeesName]]></fieldDescription>
 	</field>
 	<field name="employeesSex" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[employeesSex]]></fieldDescription>
 	</field>
-	<field name="endContractDeadline" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="endContractDeadline" class="java.util.Date">
+		<fieldDescription><![CDATA[endContractDeadline]]></fieldDescription>
+	</field>
+	<field name="enterprise" class="cn.fm.bean.company.Enterprise">
+		<fieldDescription><![CDATA[enterprise]]></fieldDescription>
 	</field>
 	<field name="fertilityInsurance" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[fertilityInsurance]]></fieldDescription>
 	</field>
 	<field name="ginsengProtectNature" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[ginsengProtectNature]]></fieldDescription>
 	</field>
 	<field name="healthCare" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[healthCare]]></fieldDescription>
 	</field>
 	<field name="homeAddress" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[homeAddress]]></fieldDescription>
 	</field>
 	<field name="householdRegister" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[householdRegister]]></fieldDescription>
 	</field>
 	<field name="housingFund" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[housingFund]]></fieldDescription>
 	</field>
 	<field name="inductrialBase" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[inductrialBase]]></fieldDescription>
 	</field>
 	<field name="industry" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[industry]]></fieldDescription>
 	</field>
 	<field name="jobs" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[jobs]]></fieldDescription>
 	</field>
 	<field name="levelEducation" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[levelEducation]]></fieldDescription>
 	</field>
 	<field name="maritalStatus" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[maritalStatus]]></fieldDescription>
 	</field>
 	<field name="nativePlace" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="paymentWay" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="phone" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="photo" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="pseudoDelete" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="seriousDisease" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="seriousDiseaseBase" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="serviceCost" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="sociaSecurity" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="socialInsurance" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="startContractDeadline" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="whetherGinseng" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="enterpriseId" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[nativePlace]]></fieldDescription>
 	</field>
 	<field name="note" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[note]]></fieldDescription>
+	</field>
+	<field name="paymentWay" class="java.lang.String">
+		<fieldDescription><![CDATA[paymentWay]]></fieldDescription>
+	</field>
+	<field name="phone" class="java.lang.String">
+		<fieldDescription><![CDATA[phone]]></fieldDescription>
+	</field>
+	<field name="photo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[photo]]></fieldDescription>
+	</field>
+	<field name="pseudoDelete" class="java.lang.Integer">
+		<fieldDescription><![CDATA[pseudoDelete]]></fieldDescription>
+	</field>
+	<field name="renewalCount" class="java.lang.Long">
+		<fieldDescription><![CDATA[renewalCount]]></fieldDescription>
+	</field>
+	<field name="seriousDisease" class="java.lang.Integer">
+		<fieldDescription><![CDATA[seriousDisease]]></fieldDescription>
+	</field>
+	<field name="seriousDiseaseBase" class="java.lang.Double">
+		<fieldDescription><![CDATA[seriousDiseaseBase]]></fieldDescription>
+	</field>
+	<field name="serviceCost" class="java.lang.Double">
+		<fieldDescription><![CDATA[serviceCost]]></fieldDescription>
+	</field>
+	<field name="sociaSecurity" class="java.lang.String">
+		<fieldDescription><![CDATA[sociaSecurity]]></fieldDescription>
+	</field>
+	<field name="socialInsurance" class="java.lang.Double">
+		<fieldDescription><![CDATA[socialInsurance]]></fieldDescription>
+	</field>
+	<field name="startContractDeadline" class="java.util.Date">
+		<fieldDescription><![CDATA[startContractDeadline]]></fieldDescription>
+	</field>
+	<field name="whetherGinseng" class="java.lang.Integer">
+		<fieldDescription><![CDATA[whetherGinseng]]></fieldDescription>
+	</field>
+	<field name="whetherGinsengCount" class="java.lang.Long">
+		<fieldDescription><![CDATA[whetherGinsengCount]]></fieldDescription>
 	</field>
 	<variable name="variable1" class="java.lang.String"/>
 	<background>
@@ -167,16 +141,16 @@ FROM
 	<title>
 		<band height="42" splitType="Stretch">
 			<textField>
-				<reportElement uuid="4c2153e0-bc36-4f17-b15e-6a2adc0d6975" x="0" y="0" width="1302" height="42" forecolor="#333333"/>
+				<reportElement uuid="4c2153e0-bc36-4f17-b15e-6a2adc0d6975" x="0" y="0" width="1460" height="42" forecolor="#333333"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑" size="24" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["中国电信"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="41">
+		<band height="66">
 			<staticText>
 				<reportElement uuid="4d47bec0-30b4-4a66-b4f0-e8075efd20ab" x="0" y="20" width="67" height="20" forecolor="#333333"/>
 				<textElement verticalAlignment="Middle" markup="none">
@@ -192,18 +166,32 @@ FROM
 				<text><![CDATA[数据时间:]]></text>
 			</staticText>
 			<textField pattern="yyyy年MM月份">
-				<reportElement uuid="768008ad-9063-4a1f-8ff7-fc2a4c3f6115" x="67" y="20" width="1235" height="20" forecolor="#333333"/>
+				<reportElement uuid="768008ad-9063-4a1f-8ff7-fc2a4c3f6115" x="67" y="20" width="1393" height="20" forecolor="#333333"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="微软雅黑" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy年MM月份">
-				<reportElement uuid="d9536d92-1948-49af-89db-545ef8e77ed2" x="67" y="0" width="1235" height="20" forecolor="#333333"/>
+				<reportElement uuid="d9536d92-1948-49af-89db-545ef8e77ed2" x="67" y="0" width="1393" height="20" forecolor="#333333"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="微软雅黑" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="de88601d-9a87-4618-8a9c-58ba25e12aaf" x="0" y="40" width="67" height="26"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[制表人:]]></text>
+			</staticText>
+			<textField pattern="yyyy年MM月份">
+				<reportElement uuid="f836fbef-462a-4e20-831c-eac340c394d6" x="67" y="40" width="1393" height="26" forecolor="#333333"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="微软雅黑" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{username}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -437,10 +425,7 @@ FROM
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="1" splitType="Stretch"/>
-	</detail>
-	<summary>
-		<band height="212" splitType="Stretch">
+		<band height="31" splitType="Stretch">
 			<textField>
 				<reportElement uuid="17008f7b-89a9-4992-bd75-fd5983dce13b" x="0" y="0" width="22" height="30" forecolor="#333333"/>
 				<box>
@@ -451,6 +436,95 @@ FROM
 				</textElement>
 				<textFieldExpression><![CDATA[$F{employeesId}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement uuid="b35122dd-43b9-4255-8e86-97016a83ffa8" x="22" y="0" width="45" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{employeesName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f5af4280-4895-4b38-af39-5db2f3f6ff4d" x="67" y="0" width="45" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{employeesName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="aa3f6c5f-846e-4fcf-9cd8-74f85ba0d5d2" x="112" y="0" width="45" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{employeesSex}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a4d9e272-45b5-4b6c-8a8b-f1c6d0bc9b04" x="157" y="0" width="126" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cardNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="37abb651-be9e-4803-92c3-c1122438c6aa" x="283" y="0" width="105" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d1748371-af9a-4c91-91e5-b5c296a53c91" x="388" y="0" width="68" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{basicMedical}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3308d5d2-2eca-46e7-bd7c-3b6cf3baa3e7" x="456" y="0" width="102" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nativePlace}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d5e23e94-e3f9-43a8-b155-f652b69fdf20" x="558" y="0" width="100" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{householdRegister}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1a363ab1-fba4-4dbe-aca0-12adac516448" x="658" y="0" width="78" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{maritalStatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="84c21846-7f9e-4878-b23d-28418b0da078" x="736" y="0" width="104" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{levelEducation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3123599d-a5d8-46f5-9f80-e73518ebcd2d" x="840" y="0" width="197" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{startContractDeadline}+"-"+$F{endContractDeadline}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8a931e60-f310-4ccd-abb0-bf97cb7889a5" x="1037" y="0" width="72" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="df47d73c-c801-460f-9c8e-b4129ddaa893" x="1179" y="0" width="52" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ginsengProtectNature}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fd22e356-1ef5-4e37-ae9a-641f2ee6f65c" x="1109" y="0" width="70" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{seriousDiseaseBase}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="182fdecd-4e15-4014-9143-0a36f7d0729e" x="1231" y="0" width="50" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{paymentWay}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b297f2d3-60ba-47ca-8d91-2354b3707a72" x="1281" y="0" width="83" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["3000.00"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="60c008b3-2ec8-4ec6-9211-db7aff7babc2" x="1364" y="0" width="96" height="30"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{note}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="212" splitType="Stretch">
 			<textField>
 				<reportElement uuid="8274e188-b588-4709-b76f-f488b1bb9cab" x="0" y="184" width="482" height="28" forecolor="#333333"/>
 				<box>
@@ -472,7 +546,7 @@ FROM
 				<textFieldExpression><![CDATA["审核:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="b267d37d-3c90-4af1-a6a0-6e8a582bedea" x="952" y="184" width="350" height="28" forecolor="#333333"/>
+				<reportElement uuid="b267d37d-3c90-4af1-a6a0-6e8a582bedea" x="952" y="184" width="508" height="28" forecolor="#333333"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#CCCCCC"/>
 				</box>
@@ -480,91 +554,6 @@ FROM
 					<font fontName="微软雅黑" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["制表:"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="b35122dd-43b9-4255-8e86-97016a83ffa8" x="22" y="0" width="45" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{employeesName}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="f5af4280-4895-4b38-af39-5db2f3f6ff4d" x="67" y="0" width="45" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["刘备"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="aa3f6c5f-846e-4fcf-9cd8-74f85ba0d5d2" x="112" y="0" width="45" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{employeesSex}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="a4d9e272-45b5-4b6c-8a8b-f1c6d0bc9b04" x="157" y="0" width="126" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{cardNumber}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="37abb651-be9e-4803-92c3-c1122438c6aa" x="283" y="0" width="105" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="d1748371-af9a-4c91-91e5-b5c296a53c91" x="388" y="0" width="68" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["15000"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="3308d5d2-2eca-46e7-bd7c-3b6cf3baa3e7" x="456" y="0" width="102" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{nativePlace}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="d5e23e94-e3f9-43a8-b155-f652b69fdf20" x="558" y="0" width="100" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["山东"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="1a363ab1-fba4-4dbe-aca0-12adac516448" x="658" y="0" width="78" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["已婚"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="84c21846-7f9e-4878-b23d-28418b0da078" x="736" y="0" width="104" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["本科"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="3123599d-a5d8-46f5-9f80-e73518ebcd2d" x="840" y="0" width="197" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["2013.09.12-2013.0-12.31"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="8a931e60-f310-4ccd-abb0-bf97cb7889a5" x="1037" y="0" width="72" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["有"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="df47d73c-c801-460f-9c8e-b4129ddaa893" x="1179" y="0" width="52" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["新增"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="fd22e356-1ef5-4e37-ae9a-641f2ee6f65c" x="1109" y="0" width="70" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["30"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="182fdecd-4e15-4014-9143-0a36f7d0729e" x="1231" y="0" width="50" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["新增"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="b297f2d3-60ba-47ca-8d91-2354b3707a72" x="1281" y="0" width="83" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["3000.00"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="60c008b3-2ec8-4ec6-9211-db7aff7babc2" x="1364" y="0" width="96" height="30"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["已完成"]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

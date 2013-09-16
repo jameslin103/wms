@@ -85,7 +85,7 @@
 								<a href="#">隐藏信息</a>
 							</li>
 							<li class="right">
-								<a href="exportExcel" class="btn btn-primary">下载全体在职员工信息</a>
+								<a href="exportEmployeesExcel" class="btn btn-primary">下载全体在职员工信息</a>
 							</li>
 							<li class="right">
 								<s:form cssClass="navbar-form pull-left" action="fildAllEnterpriseEmployees" method="post">

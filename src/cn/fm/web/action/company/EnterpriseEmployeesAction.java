@@ -8,8 +8,10 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -20,6 +22,7 @@ import com.opensymphony.xwork2.Preparable;
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.ExcelFileGenerator;
@@ -27,6 +30,7 @@ import cn.fm.utils.ExportExcelUtils;
 import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
+import cn.fm.web.action.ReportAction;
 
 
 @SuppressWarnings("serial")
@@ -244,51 +248,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		
 		return employees;
 	}
-	
-	/**  
-	* @Name: export
-	* @Description:导出excel的报表数据
-	* @Author: jameslin（作者）
-	* @Version: V1.00 （版本号）
-	* @Create Date: 2013-08-25（创建日期）
-	* @Parameters: 无
-	* @Return: 无
-	*/
-	public String exportExcel(){
-		//获取导出的表头和数据
-		//获取表头,存放到ArrayList filedName对象中()
-		List<String> filedName = enterpriseEmployeesService.getExcelFiledNameList(); 
-		Enterprise  enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
-		List<EnterpriseEmployees> filedData =enterpriseEmployeesService.getExcelFiledDataList(enterpriseEmployees,enterprise.getEnterpriseId());
-		try {
-			//获取输出流
-			OutputStream out = response.getOutputStream();
-			//重置输出流
-			response.reset();
-			//设置导出Excel报表的导出形式
-			response.setContentType("application/vnd.ms-excel");
-			
-			ExcelFileGenerator generator = new ExcelFileGenerator(filedName,filedData);
-			ExportExcelUtils<EnterpriseEmployees>  exp=new ExportExcelUtils<EnterpriseEmployees>();
-			
-			generator.expordExcel(out);
-			//设置输出形式
-			System.setOut(new PrintStream(out));
-			//刷新输出流
-			out.flush();
-			//关闭输出流
-			if(out!=null){
-				out.close();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			e.getClass();
-			e.toString();
-		}
-		return null;
-	}
-
-	
 	
 	public String  batchExcelDataEmployee()
 	{

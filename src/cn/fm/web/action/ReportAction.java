@@ -101,7 +101,8 @@ public abstract class ReportAction extends BaseAction implements ServletContextA
      * @param reportBeanList javabean List
      * @throws Exception
      */
-    public void downloadExcel(String jasperFileName,String downLoadFileName,Map<String,Object> parameters,List reportBeanList) throws Exception{
+    @SuppressWarnings("unchecked")
+	public void downloadExcel(String jasperFileName,String downLoadFileName,Map<String,Object> parameters,List reportBeanList) throws Exception{
     	ByteArrayOutputStream oStream = new ByteArrayOutputStream();
     	String currentPath=context.getRealPath(JASPER_FILS_PATH+"/"+jasperFileName);
     	JRDataSource dataSource = new JRBeanCollectionDataSource(reportBeanList);

@@ -1,151 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salary-with-bank-detail" pageWidth="900" pageHeight="842" columnWidth="860" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b90490cb-f2da-4549-b4e8-415554831a05">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salary-with-bank-detail" pageWidth="900" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="860" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b90490cb-f2da-4549-b4e8-415554831a05">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
-		<![CDATA[SELECT
-     `salaryId`,
-     `aggregate`,
-     `beforeSalary`,
-     `birthInsuranceBase`,
-     `bonus`,
-     `createDate`,
-     `employeesName`,
-     `empolyessId`,
-     `enterpriseBirthInsurance`,
-     `enterpriseId`,
-     `enterpriseInductrialInjuryBase`,
-     `enterpriseMedicalBase`,
-     `enterprisePensionInsurance`,
-     `enterpriseReserveBase`,
-     `enterpriseSubtotal`,
-     `enterpriseTax`,
-     `enterpriseUnemploymentInsurance`,
-     `housingReserveBase`,
-     `inductrialInjuryBase`,
-     `medicalPaymentBase`,
-     `moneyToCards`,
-     `morbidityStatistics`,
-     `note`,
-     `personalMedicalBase`,
-     `personalPensionInsurance`,
-     `personalReserveBase`,
-     `personalSubtotal`,
-     `personalTax`,
-     `personalUnemploymentInsurance`,
-     `serviceCharge`,
-     `shouldPay`,
-     `socialInsuranceBase`,
-     `subsidies`,
-     `wage`
-FROM
-     `employeessalarydetail` employeessalarydetail]]>
+	<parameter name="title" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[]]>
 	</queryString>
-	<field name="salaryId" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="accumulationFund" class="java.lang.String">
+		<fieldDescription><![CDATA[accumulationFund]]></fieldDescription>
 	</field>
-	<field name="aggregate" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="addCount" class="java.lang.Long">
+		<fieldDescription><![CDATA[addCount]]></fieldDescription>
 	</field>
-	<field name="beforeSalary" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="bank" class="java.lang.String">
+		<fieldDescription><![CDATA[bank]]></fieldDescription>
 	</field>
-	<field name="birthInsuranceBase" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="bankCardNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[bankCardNumber]]></fieldDescription>
 	</field>
-	<field name="bonus" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="base" class="java.lang.Integer">
+		<fieldDescription><![CDATA[base]]></fieldDescription>
 	</field>
-	<field name="createDate" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="basicMedical" class="java.lang.Double">
+		<fieldDescription><![CDATA[basicMedical]]></fieldDescription>
+	</field>
+	<field name="cardNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[cardNumber]]></fieldDescription>
+	</field>
+	<field name="cinsengDate" class="java.util.Date">
+		<fieldDescription><![CDATA[cinsengDate]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="contractNo" class="java.lang.String">
+		<fieldDescription><![CDATA[contractNo]]></fieldDescription>
+	</field>
+	<field name="createDate" class="java.util.Date">
+		<fieldDescription><![CDATA[createDate]]></fieldDescription>
+	</field>
+	<field name="employeesId" class="java.lang.Integer">
+		<fieldDescription><![CDATA[employeesId]]></fieldDescription>
 	</field>
 	<field name="employeesName" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[employeesName]]></fieldDescription>
 	</field>
-	<field name="empolyessId" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="employeesSex" class="java.lang.String">
+		<fieldDescription><![CDATA[employeesSex]]></fieldDescription>
 	</field>
-	<field name="enterpriseBirthInsurance" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="endContractDeadline" class="java.util.Date">
+		<fieldDescription><![CDATA[endContractDeadline]]></fieldDescription>
 	</field>
-	<field name="enterpriseId" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="enterprise" class="cn.fm.bean.company.Enterprise">
+		<fieldDescription><![CDATA[enterprise]]></fieldDescription>
 	</field>
-	<field name="enterpriseInductrialInjuryBase" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="fertilityInsurance" class="java.lang.Double">
+		<fieldDescription><![CDATA[fertilityInsurance]]></fieldDescription>
 	</field>
-	<field name="enterpriseMedicalBase" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="ginsengProtectNature" class="java.lang.String">
+		<fieldDescription><![CDATA[ginsengProtectNature]]></fieldDescription>
 	</field>
-	<field name="enterprisePensionInsurance" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="healthCare" class="java.lang.String">
+		<fieldDescription><![CDATA[healthCare]]></fieldDescription>
 	</field>
-	<field name="enterpriseReserveBase" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="homeAddress" class="java.lang.String">
+		<fieldDescription><![CDATA[homeAddress]]></fieldDescription>
 	</field>
-	<field name="enterpriseSubtotal" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="householdRegister" class="java.lang.Integer">
+		<fieldDescription><![CDATA[householdRegister]]></fieldDescription>
 	</field>
-	<field name="enterpriseTax" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="housingFund" class="java.lang.Double">
+		<fieldDescription><![CDATA[housingFund]]></fieldDescription>
 	</field>
-	<field name="enterpriseUnemploymentInsurance" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="inductrialBase" class="java.lang.Double">
+		<fieldDescription><![CDATA[inductrialBase]]></fieldDescription>
 	</field>
-	<field name="housingReserveBase" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="industry" class="java.lang.String">
+		<fieldDescription><![CDATA[industry]]></fieldDescription>
 	</field>
-	<field name="inductrialInjuryBase" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="jobs" class="java.lang.String">
+		<fieldDescription><![CDATA[jobs]]></fieldDescription>
 	</field>
-	<field name="medicalPaymentBase" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="levelEducation" class="java.lang.String">
+		<fieldDescription><![CDATA[levelEducation]]></fieldDescription>
 	</field>
-	<field name="moneyToCards" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="maritalStatus" class="java.lang.Integer">
+		<fieldDescription><![CDATA[maritalStatus]]></fieldDescription>
 	</field>
-	<field name="morbidityStatistics" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="nativePlace" class="java.lang.String">
+		<fieldDescription><![CDATA[nativePlace]]></fieldDescription>
 	</field>
 	<field name="note" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[note]]></fieldDescription>
 	</field>
-	<field name="personalMedicalBase" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="paymentWay" class="java.lang.String">
+		<fieldDescription><![CDATA[paymentWay]]></fieldDescription>
 	</field>
-	<field name="personalPensionInsurance" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="phone" class="java.lang.String">
+		<fieldDescription><![CDATA[phone]]></fieldDescription>
 	</field>
-	<field name="personalReserveBase" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="photo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[photo]]></fieldDescription>
 	</field>
-	<field name="personalSubtotal" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="pseudoDelete" class="java.lang.Integer">
+		<fieldDescription><![CDATA[pseudoDelete]]></fieldDescription>
 	</field>
-	<field name="personalTax" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="renewalCount" class="java.lang.Long">
+		<fieldDescription><![CDATA[renewalCount]]></fieldDescription>
 	</field>
-	<field name="personalUnemploymentInsurance" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="seriousDisease" class="java.lang.Integer">
+		<fieldDescription><![CDATA[seriousDisease]]></fieldDescription>
 	</field>
-	<field name="serviceCharge" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="seriousDiseaseBase" class="java.lang.Double">
+		<fieldDescription><![CDATA[seriousDiseaseBase]]></fieldDescription>
 	</field>
-	<field name="shouldPay" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="serviceCost" class="java.lang.Double">
+		<fieldDescription><![CDATA[serviceCost]]></fieldDescription>
 	</field>
-	<field name="socialInsuranceBase" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="sociaSecurity" class="java.lang.String">
+		<fieldDescription><![CDATA[sociaSecurity]]></fieldDescription>
 	</field>
-	<field name="subsidies" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="socialInsurance" class="java.lang.Double">
+		<fieldDescription><![CDATA[socialInsurance]]></fieldDescription>
 	</field>
-	<field name="wage" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="startContractDeadline" class="java.util.Date">
+		<fieldDescription><![CDATA[startContractDeadline]]></fieldDescription>
+	</field>
+	<field name="whetherGinseng" class="java.lang.Integer">
+		<fieldDescription><![CDATA[whetherGinseng]]></fieldDescription>
+	</field>
+	<field name="whetherGinsengCount" class="java.lang.Long">
+		<fieldDescription><![CDATA[whetherGinsengCount]]></fieldDescription>
 	</field>
 	<group name="salaryId">
-		<groupExpression><![CDATA[$F{salaryId}]]></groupExpression>
+		<groupExpression><![CDATA[]]></groupExpression>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
@@ -157,7 +146,7 @@ FROM
 				<textElement textAlignment="Center">
 					<font size="22" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["枫叶科技公司"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -179,15 +168,17 @@ FROM
 	</pageHeader>
 	<columnHeader>
 		<band height="35" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="327c94bd-7c69-4d95-ab99-6221cd8363f3" mode="Opaque" x="0" y="1" width="52" height="34" backcolor="#999999"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+			<textField>
+				<reportElement uuid="2474fa64-7988-4ca0-9b34-4b308430c49c" mode="Opaque" x="0" y="1" width="52" height="34" backcolor="#999999"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[序号]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["序号"]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement uuid="8399ea1e-c51f-473e-968c-6301a401b138" mode="Opaque" x="52" y="1" width="157" height="34" backcolor="#999999"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -195,6 +186,7 @@ FROM
 			</staticText>
 			<staticText>
 				<reportElement uuid="110b943b-24eb-4e16-973f-e814ab552ffb" mode="Opaque" x="209" y="1" width="157" height="34" backcolor="#999999"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -202,6 +194,7 @@ FROM
 			</staticText>
 			<staticText>
 				<reportElement uuid="b6c11b10-b67d-426a-ab69-ec70027ee933" mode="Opaque" x="366" y="1" width="157" height="34" backcolor="#999999"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -209,6 +202,7 @@ FROM
 			</staticText>
 			<staticText>
 				<reportElement uuid="63365889-c711-40bd-b460-84f80b2b033f" mode="Opaque" x="523" y="1" width="157" height="34" backcolor="#999999"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -216,6 +210,7 @@ FROM
 			</staticText>
 			<staticText>
 				<reportElement uuid="7b1576fe-03c3-4292-bc3e-fc7476c49c8c" mode="Opaque" x="680" y="1" width="180" height="34" backcolor="#999999"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -227,33 +222,39 @@ FROM
 		<band height="22" splitType="Stretch">
 			<textField>
 				<reportElement uuid="dc42e6f7-a8e5-4950-b209-ec97b6e5dda3" x="209" y="0" width="157" height="22"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{bonus}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cardNumber}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="ac6d57d6-a24c-4d1d-ade4-8c871d20d882" x="0" y="0" width="52" height="22"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{salaryId}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{employeesId}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="f6d2c08c-e330-4f45-8328-5493e298dc04" x="52" y="0" width="157" height="22"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{employeesName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{employeesName}==null) ? "/":$F{employeesName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="8c07db98-b40f-4a1f-a988-1db49bab3c31" x="700" y="0" width="160" height="22"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{moneyToCards}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{seriousDisease}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="9631ff5d-1e27-4960-8f08-db01f1575325" x="366" y="0" width="181" height="22"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseReserveBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bank}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="b0326998-d1f2-4fa5-ab1c-1822ee488e46" x="547" y="0" width="153" height="22"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{inductrialInjuryBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bankCardNumber}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -268,7 +269,7 @@ FROM
 			<textField>
 				<reportElement uuid="999a8d34-a7bb-4b04-801a-186da82575f0" x="808" y="43" width="52" height="22"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{salaryId}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{employeesId}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
