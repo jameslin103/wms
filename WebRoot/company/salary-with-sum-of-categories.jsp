@@ -71,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td><s:property value="%{#wage.serviceTotal}"/></td>
                 <td><s:property value="%{#wage.fiveInsurancesTotal}"/></td>
                 <td><s:property value="%{#wage.issueNumber}"/><br>
-                <a href="company/salary-with-bank-detail.jsp">查看</a>
+                <a href="viewSalaryWithBankDetail">查看</a>
                 </td>
                 <td><s:property value="%{#wage.issueNumber}"/><br><span class="em">（已发放）</span>
                 <br>2013年7月15日9时</td>
@@ -89,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td>
                   <a href="#info-for-check" data-toggle="modal">修改</a>
                   <a href="">删除</a><br>
-                  <a href="company/salary-list.jsp">查看</a>
+                  <a href="viewAllEmployeesSalaryDetail">查看</a>
                   <a href="">下载</a>
                 </td>
               </tr>

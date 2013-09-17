@@ -6,10 +6,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.struts2.ServletActionContext;
+
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseEmployeesService;
+import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.ReportAction;
 
@@ -17,7 +21,8 @@ import cn.fm.web.action.ReportAction;
 public class InsuranceEmployeesReportAction extends ReportAction {
 	@Resource
 	private EnterpriseEmployeesService  enterpriseEmployeesService;
-
+	@Resource
+	private EmployeesSalaryDetailService        employeesSalaryDetailService;
 	
 	
 	
@@ -87,6 +92,59 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		return null;
 
 	}
-
+	public String downloadEmployeesSalaryDetail()
+	{
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		WmsUser    user=WebUtil.getWmsUser(request);
+		if(enterprise.getEnterpriseId()==null)return INPUT;
+		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getAllEmployeesSalaryDetail(enterprise.getEnterpriseId(),26);
+		Map<String, Object> parameters=new HashMap<String, Object>();
+		parameters.put("fullname",enterprise.getFullName()); 
+		parameters.put("username",user.getUsername()); 
+		String sqlJasper="salaryDateail.jasper";
+		 
+		try {
+			downloadExcel(sqlJasper, "员工工资明细表", parameters,employeesSalaryDetailList);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String downloadBankIssueSalary()
+	{
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		WmsUser    user=WebUtil.getWmsUser(request);
+		if(enterprise.getEnterpriseId()==null)return INPUT;
+		String currentPath = ServletActionContext.getServletContext().getRealPath("");
+		String images= currentPath+"/images/fullname.jpg";
+		List<EnterpriseEmployees> employeesList=enterpriseEmployeesService.getAllEnterpriseEmployees(enterprise.getEnterpriseId());
+		Map<String, Object> parameters=new HashMap<String, Object>();
+		parameters.put("title",enterprise.getFullName()); 
+		parameters.put("username",user.getUsername()); 
+		parameters.put("image",images); 
+		String sqlJasper="salary-with-bank-detail.jasper";
+		 
+		try {
+			downloadExcel(sqlJasper, "银行发放信息表", parameters,employeesList);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

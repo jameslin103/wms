@@ -94,13 +94,13 @@
 								
 								<tr>
 									<td>
-										<div style="font-weight:bold; text-align: center;"><s:property value="#mm" />月</div>
+										<div style="font-weight:bold; text-align: center;"><s:property value="#mm"/>月</div>
 									</td>
 									<s:iterator value="#request.createSalaryBudgetTable" id="sal">
 									<td>
 										<ol>
 											<li>
-												<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#request.session.enterprise.id}"/>">
+												<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>">
 													<s:property value="%{#sal.name}"/>			
 												</a>
 												

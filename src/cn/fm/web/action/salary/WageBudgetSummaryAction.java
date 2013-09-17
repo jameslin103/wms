@@ -21,7 +21,7 @@ public class WageBudgetSummaryAction extends BaseAction {
 	EnterpriseService           enterpriseService;
 	private Integer             enterpriseId;
 	private File                file;
-	
+	private Integer   			budgetId;
 	
 	
 	
@@ -47,12 +47,22 @@ public class WageBudgetSummaryAction extends BaseAction {
 		this.enterpriseId = enterpriseId;
 	}
 
-
+	
+	public Integer getBudgetId() {
+		return budgetId;
+	}
+	public void setBudgetId(Integer budgetId) {
+		this.budgetId = budgetId;
+	}
+	/**
+	 * 当前企业下的某个项目工资预算表
+	 * @return
+	 */
 	public String viewWageBudgetSummary()
 	{	
 		if(this.enterpriseId==null || this.enterpriseId==0)return SUCCESS;
 		Enterprise enterprise=enterpriseService.find(this.enterpriseId);
-		List<WageBudgetSummary> wageBudgetSummaryList=wageBudgetSummaryService.getAllWageBudgetSummary(1);
+		List<WageBudgetSummary> wageBudgetSummaryList=wageBudgetSummaryService.getAllWageBudgetSummary(this.budgetId,enterpriseId);
 		if(wageBudgetSummaryList.size()==0)
 			wageBudgetSummaryList=new ArrayList<WageBudgetSummary>();
 		

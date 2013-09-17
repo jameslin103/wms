@@ -39,7 +39,7 @@
           
           <ul class="normal action-container clearfix">
             <li class="title">2013年1月工资明细</li>
-            <li class="right"><a href="#" class="btn btn-primary">下载Excel表格</a></li>
+            <li class="right"><a href="downloadEmployeesSalaryDetail" class="btn btn-primary">下载Excel表格</a></li>
           </ul>
 
           <table class="table table-striped table-bordered">
@@ -85,40 +85,42 @@
                 <td>个人</td>
               </tr>
             </thead>  
+            <s:iterator value="#request.employeesSalaryDetail" id="employeesSalaryDetail">
             <thbody >
               <tr>
-                <td>张三</td>
+                <td>刘备</td>
                 <td><a href="#info-for-check" data-toggle="modal">修改</a></td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>                
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>2000</td>
-                <td>30</td>
-                <td>2000</td>
-                <td>2000</td>
+                <td><s:property value="%{#employeesSalaryDetail.wage}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.bonus}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.subsidies}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.shouldPay}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.socialInsuranceBase}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.enterprisePensionInsurance}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.personalPensionInsurance}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.enterpriseUnemploymentInsurance}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.personalUnemploymentInsurance}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.birthInsuranceBase}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.enterpriseBirthInsurance}"/></td>                
+                <td><s:property value="%{#employeesSalaryDetail.inductrialInjuryBase}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.enterpriseInductrialInjuryBase}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.medicalPaymentBase}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.enterpriseMedicalBase}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.personalMedicalBase}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.HousingReserveBase}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.enterpriseReserveBase}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.personalReserveBase}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.morbidityStatistics}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.enterpriseSubtotal}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.personalSubtotal}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.beforeSalary}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.enterpriseTax}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.personalTax}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.serviceCharge}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.aggregate}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.moneyToCards}"/></td>
               </tr>
             </thbody>
+            </s:iterator>
           </table>
 
           <div class="pagination">

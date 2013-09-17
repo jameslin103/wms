@@ -67,7 +67,7 @@ public class EmployeesSalaryDetail implements Serializable
 	private BigDecimal  personalMedicalBase;
 	    
 	/*住房公积金-缴费基数*/
-	private BigDecimal  HousingReserveBase;
+	private BigDecimal  housingReserveBase;
 	 
 	/*住房公积金-企业 */
 	private BigDecimal  enterpriseReserveBase;
@@ -260,14 +260,16 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setPersonalMedicalBase(BigDecimal personalMedicalBase) {
 		this.personalMedicalBase = personalMedicalBase;
 	}
+	
 	@Column(length=80 ,scale=2)
 	public BigDecimal getHousingReserveBase() {
-		return HousingReserveBase;
+		return housingReserveBase;
 	}
 
 	public void setHousingReserveBase(BigDecimal housingReserveBase) {
-		HousingReserveBase = housingReserveBase;
+		this.housingReserveBase = housingReserveBase;
 	}
+
 	@Column(length=80 ,scale=2)
 	public BigDecimal getEnterpriseReserveBase() {
 		return enterpriseReserveBase;

@@ -31,10 +31,10 @@ public class CreateSalaryBudgetTableServictTest {
 	{
 		CreateSalaryBudgetTable createSalaryBudgetTable=new CreateSalaryBudgetTable();
 		Enterprise en=new Enterprise();
-//		en.setEnterpriseId(3);
-//		createSalaryBudgetTable.setEnterprise(en);
+		en.setEnterpriseId(16);
+		createSalaryBudgetTable.setEnterprise(en);
 		createSalaryBudgetTable.setName("中国卫星发射");
-		createSalaryBudgetTable.setTemple("安装系统");
+	
 
 		
 		createSalaryBudgetTableService.save(createSalaryBudgetTable);

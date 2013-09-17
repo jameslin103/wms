@@ -209,7 +209,7 @@ public class Enterprise implements Serializable{
 		this.balanceDetails = balanceDetails;
 	}
 	
-	@OneToMany( cascade =CascadeType.ALL,fetch=FetchType.EAGER , mappedBy = "enterprise")
+	@OneToMany( cascade =CascadeType.REFRESH,fetch=FetchType.EAGER , mappedBy = "enterprise")
 	@OrderBy("budgetId asc")
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBugetTables() {
 		return createSalaryBugetTables;

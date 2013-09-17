@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" pageWidth="1507" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="1467" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="aa20f712-3df1-4c6e-9a64-4eb82b1c20c4">
 	<property name="ireport.zoom" value="1.2100000000000024"/>
-	<property name="ireport.x" value="217"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[]]>
@@ -116,13 +116,13 @@
 	</background>
 	<title>
 		<band height="42" splitType="Stretch">
-			<textField>
-				<reportElement uuid="4c2153e0-bc36-4f17-b15e-6a2adc0d6975" x="0" y="0" width="1467" height="42" forecolor="#333333"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="微软雅黑" size="24" isBold="true"/>
+			<staticText>
+				<reportElement uuid="356fd08f-e58f-47b6-b13e-3bd913d3ec37" x="0" y="0" width="1467" height="42"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["2013.3月份各类费用预算表"]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[2013.3月份各类费用预算表]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -179,6 +179,7 @@
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -191,6 +192,7 @@
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -203,6 +205,7 @@
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -215,6 +218,7 @@
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -227,6 +231,7 @@
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -239,6 +244,7 @@
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -251,6 +257,7 @@
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -260,9 +267,10 @@
 			<staticText>
 				<reportElement uuid="1cfa87ad-b2ce-4f79-b1c7-d69839423710" mode="Opaque" x="292" y="0" width="100" height="20" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
-					<topPen lineWidth="0.75"/>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -272,8 +280,10 @@
 			<staticText>
 				<reportElement uuid="8dcdef10-83a4-48c3-a7a1-ef43c32dee43" mode="Opaque" x="292" y="20" width="50" height="20" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -283,8 +293,10 @@
 			<staticText>
 				<reportElement uuid="0335db98-b844-4c31-a13b-e24e609cc29e" mode="Opaque" x="342" y="20" width="50" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -294,8 +306,10 @@
 			<staticText>
 				<reportElement uuid="949f8dbb-34eb-470f-84cb-50c17ec0ade4" mode="Opaque" x="292" y="40" width="50" height="20" forecolor="#333333" backcolor="#FF3333"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -305,8 +319,10 @@
 			<staticText>
 				<reportElement uuid="8ba0abe6-975a-4e57-8331-0be285bf4e7e" mode="Opaque" x="342" y="40" width="50" height="20" forecolor="#333333" backcolor="#FF3333"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -316,9 +332,10 @@
 			<staticText>
 				<reportElement uuid="9aa45bc5-a696-4f84-9f0b-0fa21b50e9ac" mode="Opaque" x="392" y="0" width="100" height="20" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
-					<topPen lineWidth="0.75"/>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -328,8 +345,10 @@
 			<staticText>
 				<reportElement uuid="cd44b888-3063-470e-980c-01eb29ed39c7" mode="Opaque" x="392" y="20" width="50" height="20" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -339,8 +358,10 @@
 			<staticText>
 				<reportElement uuid="985feed2-254c-4986-8aa3-4e45b96ceab4" mode="Opaque" x="442" y="20" width="50" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -350,8 +371,10 @@
 			<staticText>
 				<reportElement uuid="7fb8df3b-0b5a-4219-8852-df256cf38a7a" mode="Opaque" x="392" y="40" width="50" height="20" forecolor="#333333" backcolor="#FF3333"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -361,8 +384,10 @@
 			<staticText>
 				<reportElement uuid="85164c0a-8525-4c79-a0cd-ffb52e82bc2d" mode="Opaque" x="442" y="40" width="50" height="20" forecolor="#333333" backcolor="#FF3333"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -372,9 +397,10 @@
 			<staticText>
 				<reportElement uuid="4b0e48ee-59ce-4c55-baed-0738e63608e6" mode="Opaque" x="492" y="0" width="45" height="60" forecolor="#333333" backcolor="#FFFF66"/>
 				<box>
-					<topPen lineWidth="0.75"/>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -384,9 +410,10 @@
 			<staticText>
 				<reportElement uuid="92998ee1-625d-465b-8250-c075517722b1" mode="Opaque" x="537" y="0" width="45" height="40" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
-					<topPen lineWidth="0.75"/>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -396,8 +423,10 @@
 			<staticText>
 				<reportElement uuid="984b4ff5-31e8-4fa1-87d5-c4c125210f5b" mode="Opaque" x="537" y="40" width="45" height="20" forecolor="#333333" backcolor="#FF3333"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -407,9 +436,10 @@
 			<staticText>
 				<reportElement uuid="8f2edf4a-167b-4ee4-9eac-f08945c4e694" mode="Opaque" x="582" y="0" width="45" height="60" forecolor="#333333" backcolor="#FFFF66"/>
 				<box>
-					<topPen lineWidth="0.75"/>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -419,9 +449,10 @@
 			<staticText>
 				<reportElement uuid="ba351712-2e4c-4be9-8d9e-219c04d5ba04" mode="Opaque" x="627" y="0" width="45" height="40" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
-					<topPen lineWidth="0.75"/>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -431,8 +462,10 @@
 			<staticText>
 				<reportElement uuid="48a44d88-d896-47e5-aa3f-b46969e05444" mode="Opaque" x="627" y="40" width="45" height="20" forecolor="#333333" backcolor="#FF3333"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -442,9 +475,10 @@
 			<staticText>
 				<reportElement uuid="53c32e17-0b89-4d66-b29a-24066f419882" mode="Opaque" x="672" y="0" width="170" height="20" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
-					<topPen lineWidth="0.75"/>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -454,8 +488,10 @@
 			<staticText>
 				<reportElement uuid="cd1dd355-2dee-4478-bd33-96c2891d6d69" mode="Opaque" x="742" y="20" width="50" height="20" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -476,8 +512,10 @@
 			<staticText>
 				<reportElement uuid="02e7c7b6-767c-4605-97d9-0d5fc7db848e" mode="Opaque" x="672" y="20" width="70" height="40" forecolor="#333333" backcolor="#FFFF66"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -487,8 +525,10 @@
 			<staticText>
 				<reportElement uuid="55210da6-bac1-4fcc-ba5f-6fd96be7c6cc" mode="Opaque" x="742" y="40" width="50" height="20" forecolor="#333333" backcolor="#FF3333"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -509,9 +549,10 @@
 			<staticText>
 				<reportElement uuid="adb3082c-9ec2-493b-bdf1-b39b7162b9b1" mode="Opaque" x="842" y="0" width="170" height="20" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
-					<topPen lineWidth="0.75"/>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -521,8 +562,10 @@
 			<staticText>
 				<reportElement uuid="b8935b9a-148e-4430-bac1-4352704f12c3" mode="Opaque" x="842" y="20" width="70" height="40" forecolor="#333333" backcolor="#FFFF66"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -532,8 +575,10 @@
 			<staticText>
 				<reportElement uuid="f06f8403-6dca-42d7-9f1c-e07e123d2a73" mode="Opaque" x="912" y="20" width="50" height="20" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -543,8 +588,10 @@
 			<staticText>
 				<reportElement uuid="33e64cd1-b6f1-4dc9-a2d8-83adb4c131d5" mode="Opaque" x="962" y="20" width="50" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -554,8 +601,10 @@
 			<staticText>
 				<reportElement uuid="03840883-38ac-40d2-ab49-f8e0822787e4" mode="Opaque" x="912" y="40" width="50" height="20" forecolor="#333333" backcolor="#FF3333"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -565,8 +614,10 @@
 			<staticText>
 				<reportElement uuid="ffdbd456-96b9-438d-a39b-fbdb8f414ae4" mode="Opaque" x="962" y="40" width="50" height="20" forecolor="#333333" backcolor="#FF3333"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -576,9 +627,11 @@
 			<staticText>
 				<reportElement uuid="fcff7884-d6ac-47d5-84a7-edbaf6417c43" mode="Opaque" x="1012" y="0" width="45" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -588,9 +641,10 @@
 			<staticText>
 				<reportElement uuid="e0f09cf2-554e-4701-adf8-9f5a99d3da8a" mode="Opaque" x="1057" y="0" width="100" height="40" forecolor="#333333" backcolor="#FF9966"/>
 				<box>
-					<topPen lineWidth="0.75"/>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -600,8 +654,10 @@
 			<staticText>
 				<reportElement uuid="b0f70a85-b6cc-4f5f-ac4b-fbea51346ef8" mode="Opaque" x="1057" y="40" width="50" height="20" forecolor="#333333" backcolor="#0099FF"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -611,8 +667,10 @@
 			<staticText>
 				<reportElement uuid="25f7f6f2-81e6-4051-9492-1f6eeaa3c240" mode="Opaque" x="1107" y="40" width="50" height="20" forecolor="#333333" backcolor="#0099FF"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -622,9 +680,10 @@
 			<staticText>
 				<reportElement uuid="3edf930a-2dc1-4037-898f-84f4ea21b97c" mode="Opaque" x="1157" y="0" width="45" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
-					<topPen lineWidth="0.75"/>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -637,6 +696,7 @@
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -646,8 +706,10 @@
 			<staticText>
 				<reportElement uuid="c2d03d98-dc1c-4042-8463-cb4e5e1b941d" mode="Opaque" x="1202" y="40" width="50" height="20" forecolor="#333333" backcolor="#99FF00"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -657,8 +719,10 @@
 			<staticText>
 				<reportElement uuid="e5142b3e-f409-4b1a-b651-dd653a971870" mode="Opaque" x="1252" y="40" width="50" height="20" forecolor="#333333" backcolor="#00CCCC"/>
 				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -695,6 +759,7 @@
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -704,185 +769,336 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField>
 				<reportElement uuid="8c651c4e-87da-4a90-a0f9-80ebbe959105" x="0" y="0" width="22" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{salaryId}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="db12749a-58d3-48d8-923b-9fcdaaa931fd" x="22" y="0" width="45" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{employeesName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="22e12876-f8cd-433e-b1ec-d6f90ccd3108" x="67" y="0" width="45" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{wage}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="4333da1d-65e7-41e1-abb1-d62285b92f4e" x="112" y="0" width="45" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<reportElement uuid="4333da1d-65e7-41e1-abb1-d62285b92f4e" x="112" y="0" width="46" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{bonus}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="9267d346-ad3a-48bf-a95e-64142bad3aec" x="157" y="0" width="45" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<reportElement uuid="9267d346-ad3a-48bf-a95e-64142bad3aec" x="158" y="0" width="44" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{subsidies}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="b5deae37-9b6b-4d70-a9d3-bb1b4810bb11" x="202" y="0" width="45" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<reportElement uuid="b5deae37-9b6b-4d70-a9d3-bb1b4810bb11" x="202" y="0" width="46" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{shouldPay}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="02ac80d6-85a7-47a7-8474-c71cde28ff28" x="247" y="0" width="45" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<reportElement uuid="02ac80d6-85a7-47a7-8474-c71cde28ff28" x="248" y="0" width="44" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{socialInsuranceBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="bee22aee-9394-4250-938f-476e797164df" x="292" y="0" width="50" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{enterprisePensionInsurance}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="d48fdaa6-b55c-473f-92d4-0eb9962de12d" x="342" y="0" width="50" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{personalPensionInsurance}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="2aa0aade-820c-4820-9dc3-a78dd6d23c1a" x="392" y="0" width="50" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{enterpriseUnemploymentInsurance}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="6109f5fb-0c96-4913-b335-3b753e56a586" x="442" y="0" width="50" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{personalUnemploymentInsurance}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="c5d41843-7ec2-4e08-a20c-493c5920b887" x="492" y="0" width="45" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{birthInsuranceBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="23ae213f-8488-445f-8eb7-9f196a956a7c" x="537" y="0" width="45" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{enterpriseBirthInsurance}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="ad0150df-7bba-4670-a739-13ad9c303f70" x="581" y="0" width="46" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<reportElement uuid="ad0150df-7bba-4670-a739-13ad9c303f70" x="582" y="0" width="45" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{inductrialInjuryBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="b9086ac2-f91c-4b0b-97cc-bf3ac1fa363a" x="627" y="0" width="45" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{enterpriseInductrialInjuryBase}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="07a24f58-1b92-48f6-8254-58e3aada960a" x="672" y="0" width="69" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<reportElement uuid="07a24f58-1b92-48f6-8254-58e3aada960a" x="672" y="0" width="70" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{medicalPaymentBase}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="bd7e5f82-63dc-4086-8afb-6aae5034a29e" x="741" y="0" width="51" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<reportElement uuid="bd7e5f82-63dc-4086-8afb-6aae5034a29e" x="742" y="0" width="50" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{enterpriseMedicalBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="8cc9cce0-bf3a-415e-898a-df0932280ebc" x="792" y="0" width="50" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{personalMedicalBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="a4c08699-3d32-4407-9a9d-6be2aa043a1d" x="842" y="0" width="70" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{housingReserveBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="97318563-8476-4392-a2b4-69588334df35" x="912" y="0" width="50" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{enterpriseReserveBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="0fc702f3-102c-47d3-b00a-463287888656" x="962" y="0" width="50" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{personalReserveBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="50df33f5-f513-42dd-b2ca-53d6cecb91e9" x="1012" y="0" width="45" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{morbidityStatistics}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="d583766c-b82d-4b9a-90eb-01a9499b7986" x="1057" y="0" width="50" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{enterpriseSubtotal}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="f565b639-d3d5-4f4b-88a5-8592dc870aad" x="1107" y="0" width="50" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{personalSubtotal}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="b40c720a-8c9e-45d5-92ca-43b09c58c120" x="1157" y="0" width="45" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{beforeSalary}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="89949668-6ae4-41f8-9a9f-d250bfbb6c05" x="1202" y="0" width="50" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{enterpriseTax}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="1524517e-4071-46ac-a1ed-9bfe9212cef1" x="1252" y="0" width="50" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{personalTax}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="919df6d8-faf5-4783-b1b7-809f69d9da73" x="1302" y="0" width="30" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{serviceCharge}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="8e4d39d5-c907-4536-a281-3d32d782a88b" x="1332" y="0" width="45" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<bottomPen lineWidth="0.5" lineColor="#666666"/>
+					<rightPen lineWidth="0.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{aggregate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="24097c24-6055-45be-b85d-fc6434a6643c" x="1377" y="0" width="90" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
-				<textElement/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{moneyToCards}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -891,8 +1107,11 @@
 		<band height="153" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="7e4c5c8f-35c2-4e04-89d1-764e31d032e8" x="0" y="0" width="67" height="125" forecolor="#333333"/>
-				<box>
-					<topPen lineWidth="0.75" lineColor="#CCCCCC"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.0" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#666666"/>
 				</box>
 				<textElement verticalAlignment="Top" markup="none">
 					<font fontName="微软雅黑" size="12" isBold="true"/>
@@ -901,8 +1120,11 @@
 			</staticText>
 			<textField>
 				<reportElement uuid="17008f7b-89a9-4992-bd75-fd5983dce13b" x="67" y="0" width="1400" height="125" forecolor="#333333"/>
-				<box>
-					<topPen lineWidth="0.75" lineColor="#CCCCCC"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.0" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Top">
 					<font fontName="微软雅黑" size="12" isBold="true"/>
@@ -911,30 +1133,30 @@
 			</textField>
 			<textField>
 				<reportElement uuid="8274e188-b588-4709-b76f-f488b1bb9cab" x="0" y="125" width="492" height="28" forecolor="#333333"/>
-				<box>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75" lineColor="#CCCCCC"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font fontName="微软雅黑" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["主管审批:"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="bcef9e68-889e-4040-b001-dbc548d576bf" x="492" y="125" width="470" height="28" forecolor="#333333"/>
-				<box>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75" lineColor="#CCCCCC"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font fontName="微软雅黑" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["审核:"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="b267d37d-3c90-4af1-a6a0-6e8a582bedea" x="962" y="125" width="505" height="28" forecolor="#333333"/>
-				<box>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75" lineColor="#CCCCCC"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font fontName="微软雅黑" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["制表:"]]></textFieldExpression>

@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="#">民生银行</a>，</li>
             <li><a href="#">他行</a>，</li>
             <li><a href="#">现金</a></li>
-            <li class="right"><a href="doc/工资发放表_民生他行现金.xls" class="btn btn-primary">下载Excel表格</a></li>
+            <li class="right"><a href="downloadBankIssueSalary" class="btn btn-primary">下载Excel表格</a></li>
           </ul>
 
           <table class="table table-striped table-bordered">

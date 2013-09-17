@@ -1,6 +1,5 @@
 package cn.fm.service.salary.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -8,7 +7,6 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
@@ -42,7 +40,7 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 		createSalaryBudgetTableVO.getCreateDate();
 		createSalaryBudgetTableVO.setName(createSalaryBudgetTable.getName());
 		createSalaryBudgetTableVO.setNote(createSalaryBudgetTable.getNote());
-		createSalaryBudgetTableVO.setTemple(createSalaryBudgetTable.getTemple());
+
 		
 		super.update(createSalaryBudgetTableVO);
 		

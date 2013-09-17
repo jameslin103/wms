@@ -49,8 +49,8 @@
                 <div class="input-container">
                   <label>选择模板</label>
                    <s:select  headerValue="--请选择--" headerKey="0" 
-            			 list="%{#request.salaryTemplates}" name="createSalaryBudgetTable.temple" 
-            			 listKey="templateName" listValue="templateName">
+            			 list="%{#request.salaryTemplates}" name="templateId" 
+            			 listKey="templateId" listValue="templateName">
              	   </s:select> 
                 </div>
 

@@ -14,5 +14,12 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 
 	public List<EmployeesSalaryDetail> saveTempEmployeesSalaryDetail(File file , String fileName,int number,int readRows,int enterpriseId);
 
+	/**
+	 * 获取当前企业的员工工资明细表
+	 * @param enterpriseId
+	 * @param employeesId
+	 * @return
+	 */
 	public List<EmployeesSalaryDetail>  getAllEmployeesSalaryDetail(Integer enterpriseId,Integer employeesId);
+	
 }

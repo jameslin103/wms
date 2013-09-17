@@ -68,7 +68,7 @@ public class SalaryTemplate implements Serializable {
 	public void setTemplateId(Integer templateId) {
 		this.templateId = templateId;
 	}
-	@Column(length=20)
+	@Column(length=100)
 	public String getTemplateName() {
 		return templateName;
 	}
@@ -124,8 +124,8 @@ public class SalaryTemplate implements Serializable {
 	public void setSubsidys(List<String> subsidys) {
 		this.subsidys = subsidys;
 	}
-	@OneToOne(cascade={CascadeType.ALL}) 
-	    @JoinColumn(name="budget_id") 
+	
+	@OneToOne(cascade={CascadeType.REFRESH},mappedBy="wageBudgetSummary")
 	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
 		return createSalaryBudgetTable;
 	}

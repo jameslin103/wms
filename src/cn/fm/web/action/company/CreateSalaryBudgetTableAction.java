@@ -44,7 +44,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	private String message; 
 	private File   file;
 	
-	
+	private Integer templateId;
 	
 	
 	 public String getExcelName() {
@@ -68,6 +68,12 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	}
 	
 	
+	public Integer getTemplateId() {
+		return templateId;
+	}
+	public void setTemplateId(Integer templateId) {
+		this.templateId = templateId;
+	}
 	public String getError() {
 		return error;
 	}
@@ -129,12 +135,18 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			}else{
 				if(createSalaryBudgetTable==null || createSalaryBudgetTable.getName()==null)return INPUT;
 				if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-				createSalaryBudgetTable.setEnterprise(enterprise);
+				Enterprise enterprisePO=enterpriseService.find(enterprise.getEnterpriseId());
+				SalaryTemplate salaryTemplatePO=salaryTemplateService.find(templateId);
+				salaryTemplatePO.setTemplateId(null);
+				enterprisePO.setEnterpriseId(null);
+				createSalaryBudgetTable.setEnterprise(enterprisePO);
+				createSalaryBudgetTable.setSalaryTemplate(salaryTemplatePO);
 				createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
+			
 				createSalaryBudgetTableService.save(createSalaryBudgetTable);
 				
 			}
-			request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
+			request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable);
 			return SUCCESS;
 	}
 	public String returnToModifySalaryBudgetTable()

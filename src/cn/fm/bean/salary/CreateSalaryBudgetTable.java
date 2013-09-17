@@ -23,8 +23,8 @@ public class CreateSalaryBudgetTable implements Serializable {
 	private Integer budgetId;
 	/*预算表名称*/
 	private String  name;
-	/*选择模板*/
-	private String  temple;
+	
+
 	/*生成哪月工资？*/
 	private Date    salaryDate;
 	/*选择与其他工资表合并计税*/
@@ -34,6 +34,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	/*创建日期*/
 	private Date    createDate=new Date();
 	
+	/*选择模板*/
 	private SalaryTemplate  salaryTemplate;
 	
 	private WageBudgetSummary  wageBudgetSummary;
@@ -57,14 +58,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	@Column(length=30)
-	public String getTemple() {
-		return temple;
-	}
-
-	public void setTemple(String temple) {
-		this.temple = temple;
-	}
+	
 	@Temporal(TemporalType.DATE)
 	public Date getSalaryDate() {
 		return salaryDate;
@@ -107,6 +101,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	}
 
 	@OneToOne(cascade={CascadeType.REFRESH})
+	@JoinColumn(name = "wageId")
 	 public WageBudgetSummary getWageBudgetSummary() {
 			return wageBudgetSummary;
 	 }
@@ -118,6 +113,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 
 	@OneToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
+	@JoinColumn(name="templateId")
 	public SalaryTemplate getSalaryTemplate() {
 		return salaryTemplate;
 	}

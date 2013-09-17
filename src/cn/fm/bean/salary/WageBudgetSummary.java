@@ -69,7 +69,11 @@ public class WageBudgetSummary implements Serializable {
 	
 	private Integer budgetId;
 	
+	private Integer enterpriseId;
+	
 	private CreateSalaryBudgetTable createSalaryBudgerTable;
+	
+	
 	
 	@Id @GeneratedValue
 	public Integer getWageId() {
@@ -193,7 +197,7 @@ public class WageBudgetSummary implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -201,9 +205,17 @@ public class WageBudgetSummary implements Serializable {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	@Column(length=36)
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
 
-	@OneToOne(cascade=CascadeType.ALL,mappedBy="wageBudgetSummary")
-	@JoinColumn(name="budgetId")
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+
+	@OneToOne(cascade=CascadeType.REFRESH,mappedBy="wageBudgetSummary")
+	@JoinColumn(name ="budgetId")
 	public CreateSalaryBudgetTable getCreateSalaryBudgerTable() {
 		return createSalaryBudgerTable;
 	}

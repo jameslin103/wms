@@ -156,6 +156,9 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		return enterpriseEmployeesIsExistVO;
 	}
 	
+	/**
+	 * 获取当前企业员工工资
+	 */
 	@SuppressWarnings("unchecked")
 	public List<EmployeesSalaryDetail>  getAllEmployeesSalaryDetail(Integer enterpriseId,Integer employeesId)
 	{

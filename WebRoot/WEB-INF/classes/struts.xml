@@ -149,6 +149,12 @@
             	<param name="actionName">viewWorkersIncreased</param>
             </result>
         </action>
+        <action name="downloadEmployeesSalaryDetail" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="downloadEmployeesSalaryDetail">
+            <result name="success"  type="jasper"></result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewWorkersIncreased</param>
+            </result>
+        </action>
         
         <action name="viewInsuranceWithMonth" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewInsuranceWithMonth">
             <result name="success">company/insurance-with-month.jsp</result>
@@ -254,7 +260,7 @@
         <action name="viewSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="viewSalaryBudgetTable">
             <result name="success" >company/salary-with-month.jsp</result>
         </action> 
-        <action name="addSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="addSalaryBudgetTable">
+        <action name="addSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="addSalaryBudgetTable" >
             <result name="success" >company/salary-step2-of-create.jsp</result>
             <result name="input" type="redirectAction"> 
             	<param name="actionName">newSalaryBudgetTable</param>
@@ -288,14 +294,13 @@
             	
             </result>
         </action> 
-         
-        
-        
-        
         
         <!-- ===========Wage-budget-salary 2013-08-28============ -->
          <action name="viewWageBudgetSummary" class="cn.fm.web.action.salary.WageBudgetSummaryAction" method="viewWageBudgetSummary">
-            <result name="success" >company/salary-with-sum-of-categories.jsp</result>
+            <result name="success">company/salary-with-sum-of-categories.jsp</result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">toBeResponsibleEnterprise</param>
+            </result>
         </action>
         <action name="viewBalanceDetail" class="cn.fm.web.action.salary.BalanceDetailAction" method="viewBalanceDetail">
             <result name="success" >company/balance-detail.jsp</result>
@@ -308,9 +313,19 @@
             	<param name="actionName">viewBalanceDetail</param>
             </result>
         </action>
+        <action name="viewAllEmployeesSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewAllEmployeesSalaryDetail">
+            <result name="success">company/salary-list.jsp</result>
+        </action>
+        <action name="viewSalaryWithBankDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewSalaryWithBankDetail">
+            <result name="success">company/salary-with-bank-detail.jsp</result>
+        </action>
         
-        
-        
+        <action name="downloadBankIssueSalary" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="downloadBankIssueSalary">
+            <result name="success"  type="jasper"></result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewSalaryWithBankDetail</param>
+            </result>
+        </action>
         
         <action name="userInfo" class="cn.fm.web.action.company.UserAction" method="userInfo">  
             <result  name="success">../excel/InputExcel.jsp</result>
