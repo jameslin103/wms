@@ -8,8 +8,10 @@ import javax.annotation.Resource;
 
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.service.company.EnterpriseEmployeesService;
+import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
@@ -17,12 +19,12 @@ import cn.fm.web.action.BaseAction;
 @SuppressWarnings("serial")
 public class EmployeesSalaryDetailAction extends BaseAction{
 
-	private EmployeesSalaryDetail employeesSalaryDetail;
 	@Resource
 	private EmployeesSalaryDetailService employeesSalaryDetailService;
 	@Resource
 	private EnterpriseEmployeesService   enterpriseEmployeesService;
-	
+	@Resource
+	private CreateSalaryBudgetTableService  createSalaryBudgetTableService; 
 	
 	private EnterpriseEmployees   enterpriseEmployees;
 	private Enterprise    enterprise;
@@ -31,11 +33,20 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	private Double   wargeTotal;
 	private Integer  enterpriseId;
 	private Integer  employeesId;
+	private Integer  budgetId;
 	
 	
 	
 	
 	
+	public Integer getBudgetId() {
+		return budgetId;
+	}
+
+	public void setBudgetId(Integer budgetId) {
+		this.budgetId = budgetId;
+	}
+
 	public Integer getEnterpriseId() {
 		return enterpriseId;
 	}
@@ -91,9 +102,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		this.file = file;
 	}
 
-	public void setEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail) {
-		this.employeesSalaryDetail = employeesSalaryDetail;
-	}
+
 
 	public void setEmployeesSalaryDetailService(EmployeesSalaryDetailService employeesSalaryDetailService) {
 		this.employeesSalaryDetailService = employeesSalaryDetailService;
@@ -110,21 +119,29 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-		List<EnterpriseEmployees>  enterpriseEmployees=employeesSalaryDetailService.uploadImportWageBudgetSummary(file, "工资预算表", 31,1, enterprise.getEnterpriseId());
-		if(enterpriseEmployees.size()>0){
-			request.setAttribute("enterpriseEmployees", enterpriseEmployees);
-			return INPUT;
-		}else{
-			List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.saveTempEmployeesSalaryDetail(file, "工资预算表", 31,1, enterprise.getEnterpriseId());
-			for (EmployeesSalaryDetail employeesSalaryDetail : employeesSalaryDetailList) {
+		try {
+			List<EnterpriseEmployees>  enterpriseEmployees=employeesSalaryDetailService.uploadImportWageBudgetSummary(file, "工资预算表", 33,3, enterprise.getEnterpriseId());
+			if(enterpriseEmployees==null)return INPUT;
+			if(enterpriseEmployees.size()>0){
+				request.setAttribute("enterpriseEmployees", enterpriseEmployees);
+				return INPUT;
+			}else{
+				List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.saveTempEmployeesSalaryDetail(file, "工资预算表", 33,3, enterprise.getEnterpriseId());
+				for (EmployeesSalaryDetail employeesSalaryDetail : employeesSalaryDetailList) {
+					
+						wargeTotal+=Double.valueOf(employeesSalaryDetail.getWage().toString());
+				}
+				request.setAttribute("wargeTotal", wargeTotal);
+				request.getSession().setAttribute("employeesSalaryDetail", employeesSalaryDetailList);
 				
-					wargeTotal+=Double.valueOf(employeesSalaryDetail.getWage().toString());
 			}
-			request.setAttribute("wargeTotal", wargeTotal);
-			request.getSession().setAttribute("employeesSalaryDetail", employeesSalaryDetailList);
-			
-			
+		} catch (Exception e) {
+			CreateSalaryBudgetTable cateteSalaryBugetTablePO=createSalaryBudgetTableService.find(this.budgetId);
+			request.setAttribute("createSalaryBudgetTable", cateteSalaryBugetTablePO);
+			e.printStackTrace();
+			return INPUT;
 		}
+		
 		return SUCCESS;
 	}
 	
@@ -179,6 +196,15 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		return SUCCESS;
 	}
 	
+	/**
+	 * 重新获取工资预算表当前新增的数据信息
+	 * @return
+	 */
+	public String toImportSalaryData()
+	{
+		
+		return SUCCESS;
+	}
 	
 	
 	

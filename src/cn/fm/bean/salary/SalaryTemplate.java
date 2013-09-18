@@ -125,7 +125,7 @@ public class SalaryTemplate implements Serializable {
 		this.subsidys = subsidys;
 	}
 	
-	@OneToOne(cascade={CascadeType.REFRESH},mappedBy="wageBudgetSummary")
+	@OneToOne(cascade={CascadeType.REFRESH,CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST},mappedBy="salaryTemplate")
 	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
 		return createSalaryBudgetTable;
 	}

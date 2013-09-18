@@ -45,7 +45,30 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 		super.update(createSalaryBudgetTableVO);
 		
 	}
-	
+	public boolean updateCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable)
+	{
+		if(createSalaryBudgetTable==null)return false;
+		boolean falag=true;
+		try {
+			Query query=em.createQuery("update CreateSalaryBudgetTable c set name=?1 ," +
+					" salaryDate=?2,chooseTax=?3 , note=?4, updateDate=?5  where c.budgetId=?6");
+			query.setParameter(1, createSalaryBudgetTable.getName())
+				.setParameter(2, createSalaryBudgetTable.getSalaryDate())
+				.setParameter(3, createSalaryBudgetTable.getChooseTax())
+				.setParameter(4, createSalaryBudgetTable.getNote())
+				.setParameter(5, createSalaryBudgetTable.getUpdateDate())
+				.setParameter(6, createSalaryBudgetTable.getBudgetId())
+			.executeUpdate();
+		} catch (Exception e) {
+			falag=false;
+			e.printStackTrace();
+			
+		}
+		
+		
+		return falag;
+		
+	}
 
 	
 	

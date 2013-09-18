@@ -42,6 +42,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			for (int i = 0; i < arrayList.size(); i++) {
 				String[] data = arrayList.get(i);
 				if(!StringUtil.isEmpty(data[0].toString())){
+					if(IsExistRepeatEmployees(data[0].toString(),enterpriseId)==null)return null;
 					if(IsExistRepeatEmployees(data[0].toString(),enterpriseId).size()>0){
 						enterpriseEmployeesIsExistVO=IsExistRepeatEmployees(data[0].toString(),enterpriseId);
 					}
@@ -141,6 +142,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		List<EnterpriseEmployees>   enterpriseEmployeesIsExistVO=new ArrayList<EnterpriseEmployees>();
 		EnterpriseEmployeesService  enterpriseEmployeesService = null;
 		List<EnterpriseEmployees> enterpriseEmployeesList=enterpriseEmployeesService.getAllEnterpriseEmployees(enterpriseId);
+		if(enterpriseEmployeesList==null)return null;
 		for (EnterpriseEmployees enterpriseEmployees : enterpriseEmployeesList)
 		{
 			if(!StringUtil.isEmpty(employeesName))

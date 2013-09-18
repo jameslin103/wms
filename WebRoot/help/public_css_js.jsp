@@ -3,6 +3,7 @@
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bootstrap-responsive.css"/>
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bootstrap.min.css"/>
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/layout.css"/> 
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/vip.css"/> 
   
   
   <%@ taglib uri="/struts-tags" prefix="s"%>

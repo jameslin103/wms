@@ -47,13 +47,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li>发放人数：15（人）；</li>                 
                     <li>本工资表中，3人没有工资！分别是：张三、王五</li>
                   </ul>
-                  <p><a href="company/salary-step2-of-create.jsp">重新导入数据</a></p>
+                  <p><a href="toImportSalaryData">重新导入数据</a></p>
                 </div>
                 <hr>
 
                 <div>
                   <p>
-                    <a href="company/salary-with-month.jsp" class="btn btn-primary">信息正确，确认！</a>
+                    <a href="viewSalaryBudgetTable" class="btn btn-primary">信息正确，确认！</a>
 
                   </p>
                 </div>

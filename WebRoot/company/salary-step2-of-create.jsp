@@ -49,11 +49,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="alert">
                    <s:hidden value="%{#request.createSalaryBudgetTable.budgetId}" name="createSalaryBudgetTable.budgetId"/>
                   <p>名称：<s:property value="%{#request.createSalaryBudgetTable.name}"/></p>
-                  <p>模板：<s:property value="%{#request.createSalaryBudgetTable.temple}"/></p>
+                  <p>模板：<s:property value="%{#request.createSalaryBudgetTable.salaryTemplate.templateName}"/></p>
                   <p>哪月：<s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月" /></p>
                   <p>合并计税工资表：<s:property value="%{#request.createSalaryBudgetTable.chooseTax}"/></p>
                   <p><a href="javascript:commit()">返回修改</a></p>
                 </div>
+                 <s:token/>
                 </s:form>
                 <hr>
                 
@@ -64,7 +65,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </li>
                     <li>
                       	上传新工资预算表
-                      <s:form action="uploadEmployeesSalaryDetail" cssClass="form-search" method="post">
+                      <s:form action="uploadEmployeesSalaryDetail" cssClass="form-search" method="post" enctype="multipart/form-data">
+                      	 <s:hidden value="%{#request.createSalaryBudgetTable.budgetId}" name="budgetId"/>
                       	<s:hidden name="file" value="file"></s:hidden>
                         <input type="file" name="file" id="filevalue"><br>
                         <s:submit  cssClass="btn btn-primary" id="uploadFile" value="上传"/>

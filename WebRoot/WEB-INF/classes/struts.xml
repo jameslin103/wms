@@ -36,7 +36,8 @@
 		<default-interceptor-ref name="appInterceptor" />
 		<global-results>
 			<result>/login.jsp</result>
-		
+			<result name="message">/share/message.jsp</result>
+			<result name="directUrl">/share/directUrl.jsp</result>
 		</global-results>
 		
 		<!-- 用户登录 -->
@@ -261,13 +262,20 @@
             <result name="success" >company/salary-with-month.jsp</result>
         </action> 
         <action name="addSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="addSalaryBudgetTable" >
+	           <interceptor-ref name="tokenSession" >  
+	               <param name="includeMethods"></param>  
+	          </interceptor-ref>  
+	         
             <result name="success" >company/salary-step2-of-create.jsp</result>
             <result name="input" type="redirectAction"> 
             	<param name="actionName">newSalaryBudgetTable</param>
             </result>
+           
         </action>
         <action name="returnToModifySalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="returnToModifySalaryBudgetTable">
-               <result name="success">company/salary-step1-of-create.jsp</result>
+                <interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+           		<interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+           		<result name="invalid.token">company/salary-step2-of-create.jsp</result>
                <result name="input"> company/salary-step2-of-create.jsp</result>
         </action> 
         <action name="downloadSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="downloadSalaryBudgetTable">
@@ -283,8 +291,14 @@
         <action name="uploadEmployeesSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="uploadEmployeesSalaryDetail">
                <result name="success">company/salary-step3-of-create.jsp</result>
                <result name="input">company/salary-step2-of-create.jsp</result>
- 
         </action> 
+         <action name="toImportSalaryData" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="toImportSalaryData">
+               <result name="success" type="redirectAction">
+               	<param name="actionName">returnToModifySalaryBudgetTable</param>
+               </result>
+              
+        </action> 
+        
         <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
             <result name="success" >company/salary-step1-of-create.jsp</result>
             <result name="input">company/salary-step1-of-create.jsp</result>

@@ -209,20 +209,16 @@ public class Enterprise implements Serializable{
 		this.balanceDetails = balanceDetails;
 	}
 	
-	@OneToMany( cascade =CascadeType.REFRESH,fetch=FetchType.EAGER , mappedBy = "enterprise")
+	@OneToMany(cascade ={CascadeType.REFRESH, CascadeType.REMOVE,CascadeType.PERSIST},fetch=FetchType.EAGER , mappedBy = "enterprise")
 	@OrderBy("budgetId asc")
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBugetTables() {
 		return createSalaryBugetTables;
 	}
-	public void setCreateSalaryBugetTables(
-			Set<CreateSalaryBudgetTable> createSalaryBugetTables) {
+	
+	public void setCreateSalaryBugetTables(Set<CreateSalaryBudgetTable> createSalaryBugetTables) {
 		this.createSalaryBugetTables = createSalaryBugetTables;
 	}
 	
-	public void setCreateSalaryBudgetTable(Set<CreateSalaryBudgetTable> createSalaryBudgetTable) {  
-	        this.createSalaryBugetTables = createSalaryBudgetTable;  
-	 }  
-	  
 	 public void addCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable) {  
 	    	createSalaryBudgetTable.setEnterprise(this);  
 	        this.createSalaryBugetTables.add(createSalaryBudgetTable);  

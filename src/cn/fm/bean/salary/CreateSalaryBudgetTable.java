@@ -34,6 +34,8 @@ public class CreateSalaryBudgetTable implements Serializable {
 	/*创建日期*/
 	private Date    createDate=new Date();
 	
+	private Date    updateDate=new Date();
+	
 	/*选择模板*/
 	private SalaryTemplate  salaryTemplate;
 	
@@ -50,7 +52,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setBudgetId(Integer budgetId) {
 		this.budgetId = budgetId;
 	}
-	@Column(length=30)
+	@Column(length=100)
 	public String getName() {
 		return name;
 	}
@@ -75,6 +77,15 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
 	@Column(length=10)
 	public String getChooseTax() {
 		return chooseTax;
@@ -91,7 +102,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	@ManyToOne(cascade = { CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.REFRESH},optional=true)
 	@JoinColumn(name = "enterpriseId")
 	public Enterprise getEnterprise() {
 		return enterprise;
@@ -112,7 +123,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 	
 
-	@OneToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
+	@OneToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=true)
 	@JoinColumn(name="templateId")
 	public SalaryTemplate getSalaryTemplate() {
 		return salaryTemplate;

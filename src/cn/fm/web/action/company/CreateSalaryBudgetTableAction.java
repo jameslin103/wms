@@ -125,30 +125,45 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		
 		return SUCCESS;
 	}
-	
+	/**
+	 * 新增工资预算表
+	 * @return
+	 */
 	public String  addSalaryBudgetTable()
 	{
 			Enterprise enterprise=WebUtil.getEnterprise(request);
+			CreateSalaryBudgetTable	createSalaryBudgetTablePO=null;
 			if(createSalaryBudgetTable!=null && createSalaryBudgetTable.getBudgetId()!=null)
 			{
-				createSalaryBudgetTableService.updateSalaryBudgetTable(createSalaryBudgetTable, createSalaryBudgetTable.getBudgetId());
+				createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
+				createSalaryBudgetTableService.updateCreateSalaryBudgetTable(createSalaryBudgetTable);
 			}else{
 				if(createSalaryBudgetTable==null || createSalaryBudgetTable.getName()==null)return INPUT;
 				if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
 				Enterprise enterprisePO=enterpriseService.find(enterprise.getEnterpriseId());
 				SalaryTemplate salaryTemplatePO=salaryTemplateService.find(templateId);
-				salaryTemplatePO.setTemplateId(null);
-				enterprisePO.setEnterpriseId(null);
 				createSalaryBudgetTable.setEnterprise(enterprisePO);
 				createSalaryBudgetTable.setSalaryTemplate(salaryTemplatePO);
 				createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
-			
-				createSalaryBudgetTableService.save(createSalaryBudgetTable);
+				try {
+					createSalaryBudgetTableService.save(createSalaryBudgetTable);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
 			}
-			request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable);
+			createSalaryBudgetTablePO=createSalaryBudgetTableService.find(createSalaryBudgetTable.getBudgetId());
+			if(createSalaryBudgetTablePO==null){
+				createSalaryBudgetTablePO=new CreateSalaryBudgetTable();
+			}
+			request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTablePO);
 			return SUCCESS;
 	}
+	/**
+	 * 
+	 * @return 返回修改页面
+	 */
 	public String returnToModifySalaryBudgetTable()
 	{
 		if(createSalaryBudgetTable==null || createSalaryBudgetTable.getBudgetId()==null)return INPUT;
@@ -158,6 +173,10 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
     	return SUCCESS;
 		
 	}
+	/**
+	 * 新建工资预算表
+	 * @return
+	 */
 	public String newSalaryBudgetTable()
 	{
 		createSalaryBudgetTable=new CreateSalaryBudgetTable();
@@ -165,6 +184,8 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		return SUCCESS;
 		
 	}
+
+	
 	/**
 	 * 当前企业底下的所有模板
 	 * @param createSalaryBudgetTable
@@ -211,6 +232,6 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	        
 	        
 	 } 
-
+	 
 
 }

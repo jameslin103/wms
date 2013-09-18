@@ -79,6 +79,7 @@
                 </div>
 
               </div>
+              <s:token></s:token>
             </s:form>   
           </div>
         </div>
