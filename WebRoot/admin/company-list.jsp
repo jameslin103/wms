@@ -73,17 +73,15 @@
 												<s:property value="%{#user.username}" />
 												
 											</s:iterator>
+											<s:set value="%{#enterprise.enterpriseId}" var="enterpriseId"></s:set>
 											<s:hidden value='%{#enterprise.id}' id="enterId"/>
-											<a href="#info-for-check2" data-toggle="modal"   class="complement" >增删负责人 </a>
+											<a href="#info-for-check2" data-toggle="modal"  onclick="findEnterpriseToUser('${enterpriseId}')" class="complement" >增删负责人 </a>
 										</td>
 										<td>
-											<s:hidden value="%{#enterprise.id}"  id="update"/>
-											<s:hidden value="%{#enterprise.contact}" />
-											<s:hidden value="%{#enterprise.phone}" />
-											<s:hidden value="%{#enterprise.qq}" />
 											
-																						
-											<a href="#info-for-check1"  data-toggle="modal" id="updateto">修改</a>
+											<div id="">										
+											<a href="#info-for-check3"  data-toggle="modal" id="updateto" onclick="modalEnterprise('${enterpriseId}')" >修改</a>
+											</div>	
 										</td>
 									</tr>
 								</tbody>
@@ -100,8 +98,7 @@
 		<div id="info-for-check1" class="modal hide fade" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					×
 				</button>
 				<h3 id="myModalLabel">
@@ -116,14 +113,127 @@
 							<label>
 								简称
 							</label>
-							<s:textfield name="enterprise.rferred"  value="%{#enterprise.rferred}"/>
+							<s:textfield name="enterprise.rferred" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								全称
 							</label>
-							<s:textfield name="enterprise.fullName" value="%{#enterprise.fullName}"/>
+							<s:textfield name="enterprise.fullName" />
+						</div>
+
+						<div class="input-container">
+							<label>
+								法人代表
+							</label>
+							<s:textfield name="enterprise.legalRepresentative"/>
+						</div>
+
+						<div class="input-container">
+							<label>
+								开户行
+							</label>
+							<s:textfield name="enterprise.accountLine" />
+						</div>
+
+						<div class="input-container">
+							<label>
+								企业银行账号
+							</label>
+							<s:textfield name="enterprise.enterpriseBankAccount" />
+						</div>
+
+						<div class="input-container">
+							<label>
+								地址
+							</label>
+							<s:textfield name="enterprise.address" />
+						</div>
+
+						<div class="input-container">
+							<label>
+								联系人
+							</label>
+							<s:textfield name="enterprise.contact" />
+						</div>
+
+						<div class="input-container">
+							<label>
+								电话
+							</label>
+							<s:textfield name="enterprise.phone" />
+						</div>
+						<div class="input-container">
+							<label>
+								QQ
+							</label>
+							<s:textfield name="enterprise.qq" />
+						</div>
+
+						<div class="input-container">
+							<label>
+								传真
+							</label>
+							<s:textfield name="enterprise.fax" />
+						</div>
+
+						<div class="input-container">
+							<label>
+								电子邮件
+							</label>
+							<s:textfield name="enterprise.email" />
+						</div>
+
+						<div class="input-container">
+							<label>
+								状态?
+							</label>
+							<input type="radio" name="enterprise.status" value="0"checked="checked">
+							合约中，
+							<input type="radio" name="enterprise.status" value="1">
+							暂停
+						</div>
+
+						<div class="input-container">
+							<s:submit cssClass="btn btn-primary" value="提交" />
+						</div>
+					</div>
+				</s:form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">
+					Close
+				</button>
+			</div>
+		</div>
+		<!-- =================================updateEnterprise====================================== -->
+		<div id="info-for-check3" class="modal hide fade" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					×
+				</button>
+				<h3 id="myModalLabel">
+					企业信息
+				</h3>
+			</div>
+			<div class="modal-body" id="updateEnterprise">
+				<s:form action="/updateEnterprise" method="post">
+				<s:hidden name="enterprise.enterpriseId" value=""></s:hidden>
+					<div class="row-fluid">
+						<div class="input-container">
+							<label>
+								简称
+							</label>
+							<s:textfield name="enterprise.rferred"  value=""/>
+						</div>
+
+						<div class="input-container">
+							<label>
+								全称
+							</label>
+							<s:textfield name="enterprise.fullName" value=""/>
 						</div>
 
 						<div class="input-container">
@@ -192,8 +302,7 @@
 							<label>
 								状态?
 							</label>
-							<input type="radio" name="enterprise.status" value="0"
-								checked="checked">
+							<input type="radio" name="enterprise.status" value="0">
 							合约中，
 							<input type="radio" name="enterprise.status" value="1">
 							暂停
@@ -205,18 +314,14 @@
 					</div>
 				</s:form>
 			</div>
-
-
-
-
-
 			<div class="modal-footer">
 				<button class="btn" data-dismiss="modal" aria-hidden="true">
 					Close
 				</button>
 			</div>
 		</div>
-
+		
+		
 		<div id="info-for-check2" class="modal hide fade" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
@@ -235,7 +340,7 @@
 							<label>
 								企业名称
 							</label>
-							<s:property value="%{#enterprise.fullName}"/>
+							<s:label value="" id="fullName"></s:label>
 						</div>
 
 						<div class="input-container">

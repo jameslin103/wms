@@ -331,9 +331,24 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		return SUCCESS;
 	}
 	
+	public String findIdToEmployees()
+	{
+		enterpriseEmployees=enterpriseEmployeesService.find(employeesId);
+		
+		return "enterpriseEmployees";
+	}
 	
-	
-	
+	public String updateEnterpriseEmployees()
+	{
+		if(enterpriseEmployees==null)return SUCCESS;
+		
+		String sex=Integer.parseInt(enterpriseEmployees.getEmployeesSex())==1?"男":"女";
+		String paymentWay= Integer.parseInt(enterpriseEmployees.getPaymentWay())==1?"个人":"企业";
+		enterpriseEmployees.setEmployeesSex(sex);
+		enterpriseEmployees.setPaymentWay(paymentWay);
+		enterpriseEmployeesService.updateEnterpriseEmployees(enterpriseEmployees);
+		return SUCCESS;
+	}
 	
 	/**
 	 * 日期转换格式

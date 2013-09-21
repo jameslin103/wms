@@ -4,8 +4,9 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-
-   <constant name="struts.ui.theme" value="simple"></constant>
+	<!-- 将struts2委托Spring管理 -->
+    <constant name="struts.objectFactory" value="spring"></constant>
+    <constant name="struts.ui.theme" value="simple"></constant>
 	<constant name="struts.url.includeParams" value="none"></constant>
 	<constant name="struts.enable.DynamicMethodInvocation" value="false"></constant>
 	<constant name="struts.multipart.parser" value="jakarta"></constant>
@@ -13,14 +14,14 @@
 	<constant name="struts.devMode" value="false"/>
 	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
 	<constant name="struts.locale" value="zh_CN"></constant>  
-	<constant name="struts.configuration.xm.reload" value="true"/>
 	<!--该属性指定处理MIME-typemultipart/form-data，文件上传--> 
 	<constant name="struts.multipart.parser" value="cos"/> 
 	<constant name="struts.multipart.parser" value="pell"/>
 	<constant name="struts.multipart.parser" value="jakarta"/>
 	<!--该属性指定Struts2文件上传中整个请求内容允许的最大字节数-->
 	<constant name="struts.multipart.maxSize" value="2097152"/>
-	
+	<!-- 当修改配置文件不需要重启服务，开发比较有用 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
 	
 		
     
@@ -35,16 +36,16 @@
 		</interceptors>
 		<default-interceptor-ref name="appInterceptor" />
 		<global-results>
-			<result>/login.jsp</result>
+			<result name="login">/login.jsp</result>
 			<result name="message">/share/message.jsp</result>
 			<result name="directUrl">/share/directUrl.jsp</result>
 		</global-results>
-		
+
 		<!-- 用户登录 -->
 		
 		<action name="userLogin" class="cn.fm.web.action.user.LoginAction" method="userLogin">  
             <result name="input">/login.jsp</result>
-            <result name="success">/dashboard.jsp</result> 
+            <result name="success">/dashboard.jsp</result>
         </action>
          <action name="loginOut"  class="cn.fm.web.action.user.WmsUserLogoutAction" method="loginOut">
             <result name="success" type="redirectAction">
@@ -93,7 +94,16 @@
          <action name="addEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="addEnterpriseEmployees">
             <result name="success" type="redirect">/company/employee-list.jsp</result>
             <result name="input">/company/employee-list.jsp</result>
-        </action>  
+        </action> 
+         <action name="findIdToEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="findIdToEmployees">
+            <result name="enterpriseEmployees" type="json"></result>
+        </action> 
+        <action name="updateEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="updateEnterpriseEmployees">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterpriseEmployees</param>
+            </result>
+        </action>
+         
          <action name="viewEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewEnterpriseEmployees">
             <result name="success">/company/employee-list.jsp</result>
             <result name="input" type="redirectAction">
@@ -199,6 +209,21 @@
             	<param name="actionName">viewEnterprise</param>
             </result>
         </action> 
+        <action name="findToIdEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="findToIdEnterprise">
+           <result type="json" name="enterpriseJson"></result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewEnterprise</param>
+            </result>
+        </action> 
+         <action name="updateEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterprise">
+           <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterprise</param>
+            </result>
+           <result name="input" type="redirectAction">
+            	<param name="actionName">viewEnterprise</param>
+            </result>
+        </action> 
+        
         <action name="viewEnterpriseDetailed" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterpriseDetailed">
             <result name="success">company/index.jsp</result>
         </action>
@@ -223,6 +248,17 @@
             	<param name="actionName">toViewTaxRules</param>
             </result>
         </action> 
+        <action name="findInsurancesTax" class="cn.fm.web.action.company.InsurancesTaxAction" method="findInsurancesTax">
+            <result name="insuranceTaxJson" type="json">
+            </result>
+            
+        </action> 
+         <action name="updateInsurancesTax" class="cn.fm.web.action.company.InsurancesTaxAction" method="updateInsurancesTax">
+            <result name="success" type="redirectAction">
+            <param name="actionName">toViewTaxRules</param>
+            </result>
+            
+        </action> 
          <action name="addInsurancesBaseSettings" class="cn.fm.web.action.company.InsurancesBaseSettingsAction" method="addInsurancesBaseSettings">
             <result name="success" type="redirectAction">
             	<param name="actionName">viewInsurancesBaseSettings</param>
@@ -231,6 +267,15 @@
             	<param name="actionName">viewInsurancesBaseSettings</param>
             </result>
         </action> 
+        <action name="findIdToBaseTax" class="cn.fm.web.action.company.InsurancesBaseSettingsAction" method="findIdToBaseTax">
+            <result name="insurancesBaseSettingsJosn" type="json"></result>
+        </action>
+        <action name="updateInsurancesBaseSettings" class="cn.fm.web.action.company.InsurancesBaseSettingsAction" method="updateInsurancesBaseSettings">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewInsurancesBaseSettings</param>
+            </result>
+        </action>
+        
         <action name="viewInsurancesBaseSettings" class="cn.fm.web.action.company.InsurancesBaseSettingsAction" method="viewInsurancesBaseSettings">
             <result name="success">/admin/tax-base.jsp</result>
         </action> 
@@ -267,9 +312,7 @@
 	          </interceptor-ref>  
 	         
             <result name="success" >company/salary-step2-of-create.jsp</result>
-            <result name="input" type="redirectAction"> 
-            	<param name="actionName">newSalaryBudgetTable</param>
-            </result>
+            <result name="input">company/salary-step1-of-create.jsp</result>
            
         </action>
         <action name="returnToModifySalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="returnToModifySalaryBudgetTable">
@@ -340,13 +383,7 @@
             	<param name="actionName">viewSalaryWithBankDetail</param>
             </result>
         </action>
-        
-        <action name="userInfo" class="cn.fm.web.action.company.UserAction" method="userInfo">  
-            <result  name="success">../excel/InputExcel.jsp</result>
-        </action>  
-        <action name="outPut" class="cn.fm.web.action.company.OutAction">
-            <result name="success">../excel/OutExcel.jsp</result>
-        </action>  
+     
        
 
 

@@ -18,9 +18,17 @@ public class InsurancesTaxAction extends BaseAction{
 	private InsurancesTaxService insurancesTaxService;
 	private InsurancesTax        insurancesTax;
 	private String                 startDate;
+	private Integer 			 taxId;
+	private InsurancesTax        insuranceTaxJson;
 	
-	
-	
+	public Integer getTaxId() {
+		return taxId;
+	}
+
+	public void setTaxId(Integer taxId) {
+		this.taxId = taxId;
+	}
+
 	public InsurancesTax getInsurancesTax() {
 		return insurancesTax;
 	}
@@ -31,6 +39,13 @@ public class InsurancesTaxAction extends BaseAction{
 	
 
 
+	public InsurancesTax getInsuranceTaxJson() {
+		return insuranceTaxJson;
+	}
+
+	public void setInsuranceTaxJson(InsurancesTax insuranceTaxJson) {
+		this.insuranceTaxJson = insuranceTaxJson;
+	}
 
 	public String getStartDate() {
 		return startDate;
@@ -53,12 +68,23 @@ public class InsurancesTaxAction extends BaseAction{
 	{
 		
 		List<InsurancesTax> insurancesTax=insurancesTaxService.getAllInsurancesTax();
-		System.out.println(insurancesTax.size());
 		if(insurancesTax.size()==0)
 			insurancesTax=new ArrayList<InsurancesTax>();
 		request.setAttribute("insurancesTax", insurancesTax);
 		return SUCCESS;
 		
 	}
-
+	public String findInsurancesTax()
+	{
+		
+		insuranceTaxJson=insurancesTaxService.find(taxId);
+		
+		return "insuranceTaxJson";
+	}
+	public String  updateInsurancesTax()
+	{
+		insurancesTaxService.updateInsurancesTax(insurancesTax);
+		return SUCCESS;
+	}
+	
 }

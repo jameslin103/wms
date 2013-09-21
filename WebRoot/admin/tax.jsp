@@ -153,22 +153,19 @@
 											%
 										</td>
 										<td>
-											<s:property value="%{#insurancesTax.startDate}" />
+											<s:date name="%{#insurancesTax.startDate}" format="yyyy年MM月dd日"/>
 										</td>
 										<td>
-											<div>
-											</div>
-											<span>市医保</span>
-
-											<s:elseif test="#request.insurancesTax.InsurancesType=='1'">
+											<s:if test="#insurancesTax.InsurancesType==0 ">
+												<span>市医保</span>
+											</s:if>
+											<s:elseif test="#insurancesTax.InsurancesType==1 ">
 												<span>省医保</span>
 											</s:elseif>
-											<s:else>	
-													XXXXXX
-										</s:else>
 										</td>
 										<td>
-											<a href="#info-for-check" data-toggle="modal">修改</a>
+											<s:set value="%{#insurancesTax.id}" var="id"></s:set>
+											<a href="#info-for-check1" onclick="findInsurancesTax('${id}')" data-toggle="modal">修改</a>
 										</td>
 									</tr>
 								</tbody>
@@ -182,12 +179,10 @@
 			<div id="footer"></div>
 
 		</div>
-		<!-- ====================================================insurancesTax============================================================= -->
-		<div id="info-for-check" class="modal hide fade" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<!-- ====================================================addinsurancesTax============================================================= -->
+		<div id="info-for-check" class="modal hide fade" tabindex="-1"	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					×
 				</button>
 				<h3 id="myModalLabel">
@@ -203,11 +198,116 @@
 								<label>
 									类型
 								</label>
-								<input type="radio" name="insurancesTax.insurancesType"
-									value="0" checked="checked">
+								<input type="radio" name="insurancesTax.insurancesType"	value="0" checked="checked">
 								市医保，
-								<input type="radio" name="insurancesTax.insurancesType"
-									value="1">
+								<input type="radio" name="insurancesTax.insurancesType"	value="1">
+								省医保
+							</div>
+
+							<div class="input-container">
+								<label>
+									养老保险（公司）
+								</label>
+								<s:textfield name="insurancesTax.endowmentInsurance" />	%
+							</div>
+
+							<div class="input-container">
+								<label>
+									养老保险（个人）
+								</label>
+								<s:textfield name="insurancesTax.personalEndowmentInsurance" />	%
+							</div>
+
+							<div class="input-container">
+								<label>
+									失业保险（公司）
+								</label>
+								<s:textfield name="insurancesTax.unemploymentInsurance" />%
+							</div>
+
+							<div class="input-container">
+								<label>
+									失业保险（个人）
+								</label>
+								<s:textfield name="insurancesTax.personalUnemploymentInsurance" />%
+							</div>
+
+							<div class="input-container">
+								<label>
+									生育（企业）
+								</label>
+								<s:textfield name="insurancesTax.birthEnterprise" />%
+							</div>
+							<div class="input-container">
+								<label>	工伤（企业）</label>
+								<s:textfield name="insurancesTax.injuriesEnterprise" />	%
+							</div>
+							<div class="input-container">
+								<label>
+									基本医疗保险（企业）
+								</label>
+								<s:textfield name="insurancesTax.medicalEnterprise" />
+								%
+							</div>
+							<div class="input-container">
+								<label>
+									基本医疗保险（个人）
+								</label>
+								<s:textfield name="insurancesTax.personalEnterprise" />
+								%
+							</div>
+							<div class="input-container">
+								<label>
+									住房公积金（个人）
+								</label>
+								<s:textfield name="insurancesTax.personalHousingFund" />
+								%
+							</div>
+							<div class="input-container">
+								<label>
+									住房公积金（公司）
+								</label>
+								<s:textfield name="insurancesTax.housingFundEnterprise" />
+								%
+							</div>
+							<div class="input-container">
+								<label>
+									开始执行年月份
+								</label>
+								<s:textfield id="d11" name="startDate" cssClass="Wdate"
+									onclick="WdatePicker()" />
+							</div>
+
+							<div class="input-container">
+								<s:submit type="button" cssClass="btn btn-primary" value="提交" />
+							</div>
+						</div>
+					</s:form>
+				</div>
+			</div>
+	</div>
+		<!-- =======================================update INsurancesTax================================================= -->
+			<div id="info-for-check1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					×
+				</button>
+				<h3 id="myModalLabel">
+					五险一金（税率）
+				</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<s:form action="/updateInsurancesTax.action" method="post">
+						<div class="row-fluid">
+							<s:hidden value="" name="insurancesTax.id"></s:hidden>
+							<div class="input-container">
+								<label>
+									类型
+								</label>
+								<input type="radio" name="insurancesTax.insurancesType"	value="0">
+								市医保，
+								<input type="radio" name="insurancesTax.insurancesType"	value="1">
 								省医保
 							</div>
 
@@ -289,8 +389,7 @@
 								<label>
 									开始执行年月份
 								</label>
-								<s:textfield id="d11" name="startDate" cssClass="Wdate"
-									onclick="WdatePicker()" />
+								<s:textfield id="d11" name="insurancesTax.startDate" cssClass="Wdate" onclick="WdatePicker()" />
 							</div>
 
 							<div class="input-container">
@@ -298,8 +397,9 @@
 							</div>
 						</div>
 					</s:form>
-				</div>
+				</div>	
 			</div>
+			
 			<div class="modal-footer">
 				<button class="btn" data-dismiss="modal" aria-hidden="true">
 					Close

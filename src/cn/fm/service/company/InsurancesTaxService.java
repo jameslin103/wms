@@ -11,4 +11,11 @@ public interface InsurancesTaxService extends DAO<InsurancesTax> {
 		
 		public List<InsurancesTax> getAllInsurancesTax();
 		
+		/**
+		 * 更新实体
+		 * @param insurancesTax
+		 * @return
+		 */
+		public boolean updateInsurancesTax(InsurancesTax insurancesTax);
+		
 }

@@ -237,7 +237,8 @@
 											<s:property value="%{#emp.paymentWay}" />
 										</td>
 										<td>
-											<a href="#info-for-check" data-toggle="modal">修改</a>
+											<s:set value="%{#emp.employeesId}" var="employeesId"></s:set>
+											<a href="#info-for-check1" onclick="findIdToEmployees('${employeesId}')" data-toggle="modal">修改</a>
 										</td>
 									</tr>
 								</tbody>
@@ -265,7 +266,7 @@
 			<div id="footer"></div>
 
 		</div>
-		<!-- Modal AddEnterpriseEmpoloyess-->
+		<!-- ================================== AddEnterpriseEmpoloyess ===============================-->
 		<div id="info-for-check" class="modal hide fade" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
@@ -563,6 +564,281 @@
 				</button>
 			</div>
 		</div>
+	
+	<!-- ================================== updateEnterpriseEmpoloyess ===============================-->
+		<div id="info-for-check1" class="modal hide fade" tabindex="-1"	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					×
+				</button>
+				<h3 id="myModalLabel">
+					员工信息
+				</h3>
+			</div>
+			<div class="modal-body">
+				<s:form action="updateEnterpriseEmployees" method="post">
+					<s:hidden name="enterpriseEmployees.employeesId"></s:hidden>
+					<div class="row-fluid">
+						<div class="input-container">
+							<label>
+								合同编号
+							</label>
+							<s:textfield name="enterpriseEmployees.contractNo" />
+
+						</div>
+
+						<div class="input-container">
+							<label>
+								姓名
+							</label>
+							<s:textfield name="enterpriseEmployees.employeesName" maxlength="19"/>
+						</div>
+
+						<div class="input-container">
+							<label>
+								身份证
+							</label>
+							<s:textfield name="enterpriseEmployees.cardNumber" maxlength="19"/>
+						</div>
+
+						<div class="input-container">
+							<label>
+								性别
+							</label>
+							<input type="radio" name="enterpriseEmployees.employeesSex"	value="1" />
+							男
+							<input type="radio" name="enterpriseEmployees.employeesSex"	value="0" />
+							女
+						</div>
+
+						<div class="input-container">
+							<label>
+								户口性质
+							</label>
+							<input type="radio" name="enterpriseEmployees.householdRegister"
+								value="1" checked="checked" />
+							非农
+							<input type="radio" name="enterpriseEmployees.householdRegister"
+								value="0" />
+							农村
+						</div>
+
+						<div class="input-container">
+							<label>
+								是否有照片？
+							</label>
+							<input type="radio" name="enterpriseEmployees.photo" value="1"
+								checked="checked" />
+							无
+							<input type="radio" name="enterpriseEmployees.photo" value="0" />
+							有
+						</div>
+
+						<div class="input-container">
+							<label>
+								电话
+							</label>
+							<s:textfield name="enterpriseEmployees.phone" maxlength="13"/>
+						</div>
+
+						<div class="input-container">
+							<label>
+								家庭住址
+							</label>
+							<s:textfield name="enterpriseEmployees.homeAddress" />
+						</div>
+
+						<div class="input-container">
+							<label>
+								银行卡号
+							</label>
+							<s:textfield name="enterpriseEmployees.bankCardNumber" maxlength="20"/>
+						</div>
+
+						<div class="input-container">
+							<label>
+								开户银行
+							</label>
+							<s:textfield name="enterpriseEmployees.bank" maxlength="30"/>
+						</div>
+
+						<div class="input-container">
+							<label>
+								籍贯
+							</label>
+							<s:textfield name="enterpriseEmployees.nativePlace" maxlength="20"/>
+						</div>
+
+						<div class="input-container">
+							<label>
+								行业
+							</label>
+							<s:textfield name="enterpriseEmployees.industry" maxlength="19"/>
+						</div>
+
+						<div class="input-container">
+							<label>
+								岗位
+							</label>
+							<s:textfield name="enterpriseEmployees.jobs" maxlength="19"/>
+						</div>
+
+						<div class="input-container">
+							<label>
+								婚姻状况
+							</label>
+							<input type="radio" name="enterpriseEmployees.maritalStatus" value="1" />
+							未婚，
+							<input type="radio" name="enterpriseEmployees.maritalStatus"value="0" />
+							已婚
+						</div>
+
+						<div class="input-container">
+							<label>
+								文化程度
+							</label>
+							<s:textfield name="enterpriseEmployees.levelEducation" maxlength="19"/>
+							
+						</div>
+
+						<div class="input-container">
+							<label>
+								合同期限
+							</label>
+							起：
+							<s:textfield id="d11"
+								name="enterpriseEmployees.startContractDeadline" onclick="WdatePicker()" cssClass="Wdate" />
+						</div>
+
+						<div class="input-container">
+							止：
+							<s:textfield id="d11"
+								name="enterpriseEmployees.endContractDeadline" onclick="WdatePicker()" cssClass="Wdate" />
+						</div>
+
+						<div class="input-container">
+							<label>
+								是否参保?
+							</label>
+							<input type="radio" name="enterpriseEmployees.whetherGinseng"
+								value="1" checked="checked" />
+							是，
+							<input type="radio" name="enterpriseEmployees.whetherGinseng"
+								value="0" />
+							否
+						</div>
+
+						<div class="input-container">
+							<label>	参保类型	</label>
+							<input type="checkbox" name="enterpriseEmployees.sociaSecurity"	value="0" />
+							医保
+							<input type="checkbox" name="enterpriseEmployees.healthCare" value="1" />
+							社保
+							<input type="checkbox" name="enterpriseEmployees.accumulationFund" value="2" />
+							公积金
+						</div>
+
+						<div class="input-container">
+							<label>
+								参保性质
+							</label>
+							<input type="radio"
+								name="enterpriseEmployees.ginsengProtectNature" value="1" checked="checked"/>
+							新增，
+							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="0" />
+							续保
+						</div>
+
+						<div class="input-container">
+							<label>
+								开始参保日期:
+							</label>
+							<s:textfield id="d11" name="enterpriseEmployees.cinsengDate"onclick="WdatePicker()" cssClass="Wdate" />
+						</div>
+
+						<div class="input-container">
+							<label>
+								参保基数
+							</label>
+							<input type="radio" name="enterpriseEmployees.base" value="1" checked="checked"/>
+							默认基数，
+							<input type="radio" name="enterpriseEmployees.base" value="0" />
+							个性设置
+						</div>
+
+						<div class="input-container">
+							<label>
+								社会保险基数
+							</label>
+							<s:textfield name="enterpriseEmployees.socialInsurance" />
+						</div>
+						<div class="input-container">
+							<label>
+								生育保险基数
+							</label>
+							<s:textfield name="enterpriseEmployees.fertilityInsurance" />
+						</div>
+						<div class="input-container">
+							<label>
+								工伤基数
+							</label>
+							<s:textfield name="enterpriseEmployees.inductrialBase" />
+						</div>
+						<div class="input-container">
+							<label>
+								基本医疗保险基数
+							</label>
+							<s:textfield name="enterpriseEmployees.basicMedical" />
+						</div>
+						<div class="input-container">
+							<label>
+								住房公积金基数
+							</label>
+							<s:textfield name="enterpriseEmployees.housingFund" />
+						</div>
+
+						<div class="input-container">
+							<label>
+								个税缴纳方式?
+							</label>
+							<input type="radio" name="enterpriseEmployees.paymentWay" value="1" checked="checked"/>
+							个人缴纳，
+							<input type="radio" name="enterpriseEmployees.paymentWay"value="0" />
+							企业缴纳
+						</div>
+
+						<div class="input-container">
+							<label>
+								状态?
+							</label>
+							<input type="checkbox" name="enterpriseEmployees.pseudoDelete" value="0" />
+							隐藏
+						</div>
+
+						<div class="input-container">
+							<label>
+								服务费
+							</label>
+							<input type="text" name="enterpriseEmployees.serviceCost" value="3000"/>
+						</div>
+
+						<div class="input-container">
+							<s:submit cssClass="btn btn-primary" value="提交" />
+						</div>
+
+					</div>
+				</s:form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">
+					Close
+				</button>
+			</div>
+		</div>
+	
+	
+	
+	
 	</body>
 
 </html>

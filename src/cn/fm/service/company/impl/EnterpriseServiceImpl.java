@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.fm.bean.company.Enterprise;
-import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.company.EnterpriseService;
@@ -62,7 +61,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 	public long  getCountEmployees(Integer enterpriseId)
 	{
 		
-		Query query = em.createQuery("select count(e) from EnterpriseEmployees e where e.enterprise.id=?1");
+		Query query = em.createQuery("select count(e) from EnterpriseEmployees e where e.enterprise.enterpriseId=?1");
 		query.setParameter(1, enterpriseId);
 		return (Long) query.getSingleResult();
 	}
@@ -99,6 +98,43 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		}
 		return wmsUserListVO;
 	}
-
+	public boolean updateEnterprise(Enterprise enterprise){
+		boolean flag=false;
+		try {
+			Query query=em.createQuery("update Enterprise set rferred=?1," +
+					" fullName=?2," +
+					"legalRepresentative=?3," +
+					"accountLine=?4," +
+					"enterpriseBankAccount=?5," +
+					"address=?6," +
+					"contact=?7," +
+					"phone=?8," +
+					"qq=?9," +
+					"fax=?10," +
+					"email=?11," +
+					"status=?12 where enterpriseId=?13");
+			query.setParameter(1, enterprise.getRferred())
+				 .setParameter(2, enterprise.getFullName())
+				 .setParameter(3, enterprise.getLegalRepresentative())
+				 .setParameter(4, enterprise.getAccountLine())
+				 .setParameter(5, enterprise.getEnterpriseBankAccount())
+				 .setParameter(6, enterprise.getAddress())
+				 .setParameter(7, enterprise.getContact())
+				 .setParameter(8, enterprise.getPhone())
+				 .setParameter(9, enterprise.getQq())
+				 .setParameter(10, enterprise.getFax())
+				 .setParameter(11, enterprise.getEmail())
+				 .setParameter(12, enterprise.getStatus())
+				 .setParameter(13, enterprise.getEnterpriseId())
+				 .executeUpdate();
+			flag=true;
+			
+		} catch (Exception e) {
+			flag=false;
+			e.printStackTrace();
+		}
+		
+		return flag;
+	}
 
 }

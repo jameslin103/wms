@@ -22,7 +22,7 @@ public class InsurancesTax implements Serializable{
 	
 	private  Integer id;
 	/*医保类型*/
-	private  Integer     InsurancesType;
+	private  Integer     insurancesType;
 	/*养老保险（公司）%*/
 	private  BigDecimal endowmentInsurance;
 	/*养老保险（个人）*/
@@ -64,10 +64,10 @@ public class InsurancesTax implements Serializable{
 	}
 	@Column(length=1)
 	public Integer getInsurancesType() {
-		return InsurancesType;
+		return insurancesType;
 	}
 	public void setInsurancesType(Integer insurancesType) {
-		InsurancesType = insurancesType;
+		this.insurancesType = insurancesType;
 	}
 	@Column(precision=5,scale=2)
 	public BigDecimal getEndowmentInsurance() {

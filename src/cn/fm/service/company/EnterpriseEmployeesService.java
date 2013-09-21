@@ -77,4 +77,13 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	public List<EnterpriseEmployees>    findNewStaffAndRenewalEmployees(Integer enterpriseId,String type);
 	
 	public boolean batchIncreaseEmployees(File file , String fiName,int number,int readRow);
+	
+	/**
+	 * 更新实体
+	 * @param enterpriseEmployees
+	 * @return
+	 */
+	public boolean updateEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees);
+	
+	
 }

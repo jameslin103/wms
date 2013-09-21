@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 import cn.fm.bean.user.WmsUser;
+import cn.fm.utils.WebUtil;
 
 public class LoginFilter implements Filter {
 
@@ -23,7 +24,8 @@ public class LoginFilter implements Filter {
 	public void init(FilterConfig arg0) throws ServletException {
 		list.add("/index.jsp");
 		list.add("/image.jsp");
-		//list.add("/system/elecMenuAction_home.do");
+		list.add("/login.jsp");
+		
 	}
 
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
@@ -38,8 +40,8 @@ public class LoginFilter implements Filter {
 			return;
 		}
 		//2、从session(globle_user)对象中获取当前登录的用户
-		WmsUser elecUser = (WmsUser) request.getSession().getAttribute("user");
-		if(elecUser!=null){
+		WmsUser user = WebUtil.getWmsUser(request);
+		if(user!=null){
 			//如果从session中获取的用户对象不为空，则放行
 			chain.doFilter(request, response);
 			return;

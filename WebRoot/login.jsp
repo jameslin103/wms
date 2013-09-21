@@ -25,8 +25,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="inner well">
             <form action="userLogin" method="post">
               <h2>富民派遣系统</h2>
-              <s:textfield name="wmsUser.phone" label="%{getText('username')}" maxlength="13" placeholder="手机号码" cssClass="input-block-level"/>
-              <s:password name="wmsUser.password" label="%{getText('password')}" maxlength="15" placeholder="密码"  cssClass="input-block-level"/>
+              <s:textfield name="wmsUser.phone" value="13809505940" label="%{getText('username')}" maxlength="13" placeholder="手机号码" cssClass="input-block-level"/>
+              <s:password name="wmsUser.password" value="123" label="%{getText('password')}" maxlength="15" placeholder="密码"  cssClass="input-block-level"/>
        
               <label class="checkbox">
                 <input type="checkbox" value="remember-me">请记住我  

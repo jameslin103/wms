@@ -107,15 +107,11 @@
 											<s:property value="%{#base.povertyStricken}" />
 										</td>
 										<td>
-											<s:property value="%{#base.startDate}" />
+											<s:date name="%{#base.startDate}" format="yyyy年MM月dd日"/>
 										</td>
 										<td>
-											<s:hidden value="%{#base.id}"/>
-											<s:hidden value="%{#base.inductrialInjury}"/>
-											<s:hidden value="%{#base.povertyStricken}"/>
-											<s:hidden value="%{#base.inductrialInjury}"/>
-											
-											<a href="#info-for-check" data-toggle="modal">修改</a>
+											<s:set value="%{#base.id}" var="baseId"></s:set>
+											<a href="#info-for-check1" onclick="findIdToBaseTax('${baseId}')" data-toggle="modal">修改</a>
 										</td>
 									</tr>
 								</tbody>
@@ -129,6 +125,7 @@
 			<div id="footer"></div>
 
 		</div>
+			<!-- ==================================================add insurancesBaseSettings============================================== -->
 		<div id="info-for-check" class="modal hide fade" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
@@ -142,7 +139,6 @@
 			</div>
 			<div class="modal-body">
 				<div class="row-fluid">
-					<!-- ==================================================insurancesBaseSettings============================================== -->
 					<s:form action="addInsurancesBaseSettings" method="post">
 						<div class="row-fluid">
 							<div class="input-container">
@@ -161,8 +157,7 @@
 								<label>
 									社会保险基数
 								</label>
-								<s:property value="%{#insurancesBaseSettings.socialInsurance}"/>
-								<s:textfield name="insurancesBaseSettings.socialInsurance" value="%{#insurancesBaseSettings.socialInsurance}"/>
+								<s:textfield name="insurancesBaseSettings.socialInsurance" />
 								元
 							</div>
 
@@ -170,7 +165,7 @@
 								<label>
 									生育保险基数
 								</label>
-								<s:textfield name="insurancesBaseSettings.birthInsurance" value="%{#insurancesBaseSettings.birthInsurance}"/>
+								<s:textfield name="insurancesBaseSettings.birthInsurance"/>
 								元
 							</div>
 
@@ -178,7 +173,7 @@
 								<label>
 									工伤基数
 								</label>
-								<s:textfield name="insurancesBaseSettings.inductrialInjury" value="%{#insurancesBaseSettings.inductrialInjury}"/>
+								<s:textfield name="insurancesBaseSettings.inductrialInjury" />
 								元
 							</div>
 
@@ -186,7 +181,7 @@
 								<label>
 									住房公积金基数
 								</label>
-								<s:textfield name="insurancesBaseSettings.housingMPF" value="%{#insurancesBaseSettings.housingMPF}"/>
+								<s:textfield name="insurancesBaseSettings.housingMPF" />
 								元
 							</div>
 
@@ -194,7 +189,7 @@
 								<label>
 									基本医疗基数
 								</label>
-								<s:textfield name="insurancesBaseSettings.basicMedical" value="%{#insurancesBaseSettings.basicMedical}"/>
+								<s:textfield name="insurancesBaseSettings.basicMedical" />
 								元
 							</div>
 
@@ -202,7 +197,7 @@
 								<label>
 									大病统筹基数
 								</label>
-								<s:textfield name="insurancesBaseSettings.povertyStricken" value="%{#insurancesBaseSettings.povertyStricken}"/>
+								<s:textfield name="insurancesBaseSettings.povertyStricken" />
 								元
 							</div>
 
@@ -210,8 +205,7 @@
 								<label>
 									开始执行年月份
 								</label>
-								<s:textfield id="d11" type="text" name="startDate"
-									onclick="WdatePicker()" cssClass="Wdate" />
+								<s:textfield id="d11" type="text" name="startDate"	onclick="WdatePicker()" cssClass="Wdate" />
 							</div>
 
 							<div class="input-container">
@@ -227,6 +221,105 @@
 				</button>
 			</div>
 		</div>
+		<!-- ==================================================update insurancesBaseSettings============================================== -->
+		<div id="info-for-check1" class="modal hide fade" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">
+					×
+				</button>
+				<h3 id="myModalLabel">
+					五险一金基数设置
+				</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<s:form action="updateInsurancesBaseSettings" method="post">
+						<s:hidden name="insurancesBaseSettings.id" value=""></s:hidden>
+						<div class="row-fluid">
+							<div class="input-container">
+								<label>
+									类型
+								</label>
+								<input type="radio" name="insurancesBaseSettings.insurancesType" value="1">
+								市医保，
+								<input type="radio" name="insurancesBaseSettings.insurancesType" value="0">
+								省医保
+							</div>
+
+							<div class="input-container">
+								<label>
+									社会保险基数
+								</label>
+								<s:textfield name="insurancesBaseSettings.socialInsurance" value=""/>
+								元
+							</div>
+
+							<div class="input-container">
+								<label>
+									生育保险基数
+								</label>
+								<s:textfield name="insurancesBaseSettings.birthInsurance" value=""/>
+								元
+							</div>
+
+							<div class="input-container">
+								<label>
+									工伤基数
+								</label>
+								<s:textfield name="insurancesBaseSettings.inductrialInjury" value=""/>
+								元
+							</div>
+
+							<div class="input-container">
+								<label>
+									住房公积金基数
+								</label>
+								<s:textfield name="insurancesBaseSettings.housingMPF" value=""/>
+								元
+							</div>
+
+							<div class="input-container">
+								<label>
+									基本医疗基数
+								</label>
+								<s:textfield name="insurancesBaseSettings.basicMedical" value=""/>
+								元
+							</div>
+
+							<div class="input-container">
+								<label>
+									大病统筹基数
+								</label>
+								<s:textfield name="insurancesBaseSettings.povertyStricken" value=""/>
+								元
+							</div>
+
+							<div class="input-container">
+								<label>
+									开始执行年月份
+								</label>
+								<s:textfield id="d11" type="text" name="insurancesBaseSettings.startDate"	onclick="WdatePicker()" cssClass="Wdate" />
+							</div>
+
+							<div class="input-container">
+								<s:submit cssClass="btn btn-primary" value="提交" />
+							</div>
+						</div>
+					</s:form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">
+					Close
+				</button>
+			</div>
+		</div>
+	
+	
+	
+	
 	</body>
 
 </html>

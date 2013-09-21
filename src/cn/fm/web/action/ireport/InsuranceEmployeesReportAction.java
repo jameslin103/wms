@@ -86,7 +86,6 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 			downloadExcel(sqlJasper, "全体在职员工信息表", parameters,employeesList);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

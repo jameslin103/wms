@@ -29,11 +29,19 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	private Enterprise        enterprise;
 	private Integer			  enterpriseId;
 	
+	private Enterprise enterpriseJson;
+	
 	private EnterpriseEmployees  enterpriseEmployees=new EnterpriseEmployees();
 	
 
 	
 	
+	public Enterprise getEnterpriseJson() {
+		return enterpriseJson;
+	}
+	public void setEnterpriseJson(Enterprise enterpriseJson) {
+		this.enterpriseJson = enterpriseJson;
+	}
 	public Integer getEnterpriseId() {
 		return enterpriseId;
 	}
@@ -71,7 +79,7 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	{
 		if(enterprise==null)return INPUT;
 		if(enterprise!=null){
-			WmsUser user=(WmsUser)request.getSession().getAttribute("user");
+			WmsUser user=WebUtil.getWmsUser(request);
 			enterprise.addWmsUser(user);
 			enterpriseService.save(enterprise);
 		}
@@ -81,9 +89,10 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	
 	public String  viewEnterprise()
 	{
+		WmsUser user=WebUtil.getWmsUser(request);
 		List<WmsUser> wmsUsers=wmsUserService.getAllWmsUser();
 		List<WmsUser> wmsUserList=enterpriseService.getEnterpriseToBoWmsUser(getWmsUserToBeEnterprise());
-		if(wmsUserList.size()==0 || wmsUserList==null)
+		if(wmsUserList==null || wmsUserList.size()==0)
 			wmsUserList=new ArrayList<WmsUser>();
 		if(wmsUsers.size()==0)
 			wmsUsers=new ArrayList<WmsUser>();
@@ -150,6 +159,21 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		request.setAttribute("employees", enterprisEmployeesList);
 		return SUCCESS;
 	}
-
+	public String findToIdEnterprise()
+	{
+		if(enterpriseId==null)return INPUT;
+		enterpriseJson=enterpriseService.find(enterpriseId);
+		if(enterpriseJson==null)
+			enterpriseJson=new Enterprise();
+		
+		return "enterpriseJson";
+	}
+	public String updateEnterprise()
+	{
+		
+		enterpriseService.updateEnterprise(enterprise);
+		
+		return SUCCESS;
+	}
 	
 }

@@ -361,6 +361,89 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		Query query = em.createQuery("select e from EnterpriseEmployees e ");
 		return query.getResultList();
 	}
+
+
+
+	public boolean updateEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
+		
+		try {
+			
+			Query query=em.createQuery("update EnterpriseEmployees set employeesName=?1," +
+					"employeesSex=?2," +
+					"householdRegister=?3," +
+					"nativePlace=?4," +
+					"photo=?5," +
+					"cardNumber=?6," +
+					"phone=?7," +
+					"serviceCost=?8," +
+					"socialInsurance=?9," +
+					"fertilityInsurance=?10," +
+					"contractNo=?11," +
+					"homeAddress=?12," +
+					"bankCardNumber=?13," +
+					"bank=?14," +
+					"industry=?15," +
+					"jobs=?16," +
+					"maritalStatus=?17," +
+					"levelEducation=?18," +
+					"startContractDeadline=?19," +
+					"endContractDeadline=?20," +
+					"whetherGinseng=?21," +
+					"sociaSecurity=?22," +
+					"healthCare=?23," +
+					"seriousDisease=?25," +
+					"seriousDiseaseBase=?26," +
+					"ginsengProtectNature=?27," +
+					"cinsengDate=?28," +
+					"base=?29," +
+					"paymentWay=?30," +
+					"inductrialBase=?31," +
+					"housingFund=?32," +
+					"basicMedical=?33," +
+					"pseudoDelete=?34 where employeesId=?35");
+			query.setParameter(1, enterpriseEmployees.getEmployeesName())
+			     .setParameter(2, enterpriseEmployees.getEmployeesSex())
+			     .setParameter(3, enterpriseEmployees.getHouseholdRegister())
+			     .setParameter(4, enterpriseEmployees.getNativePlace())
+			     .setParameter(5, enterpriseEmployees.getPhoto())
+			     .setParameter(6, enterpriseEmployees.getCardNumber())
+			     .setParameter(7, enterpriseEmployees.getPhone())
+			     .setParameter(8, enterpriseEmployees.getServiceCost())
+			     .setParameter(9, enterpriseEmployees.getSocialInsurance())
+			     .setParameter(10, enterpriseEmployees.getFertilityInsurance())
+			     .setParameter(11, enterpriseEmployees.getContractNo())
+			     .setParameter(12, enterpriseEmployees.getHomeAddress())
+			     .setParameter(13, enterpriseEmployees.getBankCardNumber())
+			     .setParameter(14, enterpriseEmployees.getBank())
+			     .setParameter(15, enterpriseEmployees.getIndustry())
+			     .setParameter(16, enterpriseEmployees.getJobs())
+			     .setParameter(17, enterpriseEmployees.getMaritalStatus())
+			     .setParameter(18, enterpriseEmployees.getLevelEducation())
+			     .setParameter(19, enterpriseEmployees.getStartContractDeadline())
+			     .setParameter(20, enterpriseEmployees.getEndContractDeadline())
+			     .setParameter(21, enterpriseEmployees.getWhetherGinseng())
+			     .setParameter(22, enterpriseEmployees.getSociaSecurity())
+			     .setParameter(23, enterpriseEmployees.getHealthCare())
+			     .setParameter(25, enterpriseEmployees.getSeriousDisease())
+			     .setParameter(26, enterpriseEmployees.getSeriousDiseaseBase())
+			     .setParameter(27, enterpriseEmployees.getGinsengProtectNature())
+			     .setParameter(28, enterpriseEmployees.getCinsengDate())
+			     .setParameter(29, enterpriseEmployees.getBase())
+			     .setParameter(30, enterpriseEmployees.getPaymentWay())
+			     .setParameter(31, enterpriseEmployees.getInductrialBase())
+			     .setParameter(32, enterpriseEmployees.getHousingFund())
+			     .setParameter(33, enterpriseEmployees.getBasicMedical())
+			     .setParameter(34, enterpriseEmployees.getPseudoDelete())
+			     .setParameter(35, enterpriseEmployees.getEmployeesId()).executeUpdate();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
 	
 	
 	

@@ -32,4 +32,11 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	 */
 	public List<WmsUser>  getEnterpriseToBoWmsUser(List<Enterprise> enterprise);
 	
+	/**
+	 * 更新企业
+	 * @param enterprise
+	 * @return
+	 */
+	public boolean updateEnterprise(Enterprise enterprise);
+	
 }

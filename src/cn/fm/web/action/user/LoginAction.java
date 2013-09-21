@@ -17,14 +17,25 @@ public class LoginAction extends BaseAction{
 		@Resource
 		private WmsUserService wmsUserService;
 		
+		
+		
+		
 		public WmsUser getWmsUser() {
 			return wmsUser;
 		}
+
 		public void setWmsUser(WmsUser wmsUser) {
 			this.wmsUser = wmsUser;
 		}
-		
-		
+
+		public WmsUser getLoginUser() {
+			return loginUser;
+		}
+
+		public void setLoginUser(WmsUser loginUser) {
+			this.loginUser = loginUser;
+		}
+
 		public String userLogin()
 		{
 			if(wmsUser==null)return INPUT;

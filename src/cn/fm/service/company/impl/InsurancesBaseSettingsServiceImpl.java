@@ -24,4 +24,34 @@ public class InsurancesBaseSettingsServiceImpl extends DaoSupport<InsurancesBase
 		return query.getResultList();
 		
 	}
+	
+	public boolean updateInsurancesBaseSettings(InsurancesBaseSettings insurancesBaseSettings)
+	{
+		try {
+			Query query =em.createQuery("update InsurancesBaseSettings set insurancesType=?1," +
+					"socialInsurance=?2," +
+					"birthInsurance=?3," +
+					"inductrialInjury=?4," +
+					"housingMPF=?5," +
+					"basicMedical=?6," +
+					"povertyStricken=?7," +
+					"startDate=?8 where id=?9");
+				query.setParameter(1, insurancesBaseSettings.getInsurancesType())
+					 .setParameter(2, insurancesBaseSettings.getSocialInsurance())
+					 .setParameter(3, insurancesBaseSettings.getBirthInsurance())
+					 .setParameter(4, insurancesBaseSettings.getInductrialInjury())
+					 .setParameter(5, insurancesBaseSettings.getHousingMPF())
+					 .setParameter(6, insurancesBaseSettings.getBasicMedical())
+					 .setParameter(7, insurancesBaseSettings.getPovertyStricken())
+					 .setParameter(8, insurancesBaseSettings.getStartDate())
+					 .setParameter(9, insurancesBaseSettings.getId()).executeUpdate();
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+			
+		return true;
+	}
 }

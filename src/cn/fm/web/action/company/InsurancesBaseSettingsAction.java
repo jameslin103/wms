@@ -15,10 +15,30 @@ import cn.fm.web.action.BaseAction;
 public class InsurancesBaseSettingsAction extends BaseAction {
 	@Resource
 	private InsurancesBaseSettingsService     insurancesBaseSettingsService;
-	private InsurancesBaseSettings   insurancesBaseSettings;
-	private String				  startDate;
+	private InsurancesBaseSettings            insurancesBaseSettings;
+	private String				  			  startDate;
+	private InsurancesBaseSettings		      insurancesBaseSettingsJosn;
+	private Integer 						  baseId; 
 	
 	
+	
+	public InsurancesBaseSettings getInsurancesBaseSettingsJosn() {
+		return insurancesBaseSettingsJosn;
+	}
+
+	public void setInsurancesBaseSettingsJosn(
+			InsurancesBaseSettings insurancesBaseSettingsJosn) {
+		this.insurancesBaseSettingsJosn = insurancesBaseSettingsJosn;
+	}
+
+	public Integer getBaseId() {
+		return baseId;
+	}
+
+	public void setBaseId(Integer baseId) {
+		this.baseId = baseId;
+	}
+
 	public String getStartDate() {
 		return startDate;
 	}
@@ -41,6 +61,10 @@ public class InsurancesBaseSettingsAction extends BaseAction {
 		this.insurancesBaseSettingsService = insurancesBaseSettingsService;
 	}
 
+	
+	
+	
+	
 	/**
 	 * addInsurancesTax
 	 * @return SUCCESS
@@ -63,6 +87,17 @@ public class InsurancesBaseSettingsAction extends BaseAction {
 		if(insurancesBaseSettings.size()==0)
 			insurancesBaseSettings=new ArrayList<InsurancesBaseSettings>();
 		request.setAttribute("insurancesBase", insurancesBaseSettings);
+		return SUCCESS;
+	}
+	
+	public String findIdToBaseTax()
+	{
+		insurancesBaseSettingsJosn=insurancesBaseSettingsService.find(baseId);
+		return "insurancesBaseSettingsJosn";
+	}
+	public String updateInsurancesBaseSettings()
+	{
+		insurancesBaseSettingsService.updateInsurancesBaseSettings(insurancesBaseSettings);
 		return SUCCESS;
 	}
 }
