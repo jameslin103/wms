@@ -78,8 +78,9 @@
 													value="%{#enterprise.contact}" /> 电话:<s:property
 													value="%{#enterprise.phone}" /> QQ：<s:property
 													value="%{#enterprise.qq}" /> </span>
-											<a href="#info-of-company" data-toggle="modal">详细信息</a>，
-											<a href="#info-for-check" data-toggle="modal">修改联系人</a>
+											<s:set var="enterpriseId" value="%{#enterprise.enterpriseId}"></s:set>
+											<a href="#info-of-company" onclick="modalEnterprise('${enterpriseId}')" data-toggle="modal">详细信息</a>，
+											<a href="#info-for-check" data-toggle="modal" onclick="modalEnterprise('${enterpriseId}')" >修改联系人</a>
 										</td>
 										<td>
 											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">-20000</a>
@@ -132,11 +133,9 @@
 
 		</div>
 
-		<div id="info-of-company" class="modal hide fade" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="info-of-company" class="modal hide fade" tabindex="-1"	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					×
 				</button>
 				<h3 id="myModalLabel">
@@ -146,25 +145,25 @@
 			<div class="modal-body">
 				<div class="row-fluid">
 					<p>
-						公司名称：福建枫叶
+						公司名称：<input type="text" name="enterprise.rferred" disabled="disabled"/>
 					</p>
 					<p>
-						公司全称：福建枫叶有限公司
+						公司全称：<input type="text" name="enterprise.fullName" disabled="disabled"/>
 					</p>
 					<p>
-						员工人数：2000人
+						员工人数：<input type="text" name="" value="2000" disabled="disabled"/>
 					</p>
 					<p>
-						公司地址：福建省鼓楼区某某路某某大楼230号
+						公司地址：<input type="text" name="enterprise.address" disabled="disabled"/>
 					</p>
 					<p>
-						法人代表：刘备
+						法人代表：<input type="text" name="enterprise.legalRepresentative" disabled="disabled"/>
 					</p>
 					<p>
-						开户银行：民生银行
+						开户银行：<input type="text" name="enterprise.accountLine" disabled="disabled"/>
 					</p>
 					<p>
-						开户账号：39584599758456987
+						开户账号：<input type="text" name="enterprise.enterpriseBankAccount" disabled="disabled"/>
 					</p>
 				</div>
 			</div>
@@ -187,59 +186,66 @@
 				</h3>
 			</div>
 			<div class="modal-body">
-				<form action="" method="post">
+				<s:form action="updateEnterprise" method="post">
+				
+				    <s:hidden name="enterprise.enterpriseId"></s:hidden>
+				    <s:hidden name="enterprise.legalRepresentative"></s:hidden>
+				    <s:hidden name="enterprise.accountLine"></s:hidden>
+				    <s:hidden name="enterprise.enterpriseBankAccount"></s:hidden>
+				    <s:hidden name="enterprise.accountLine"></s:hidden>
+				    <s:hidden name="enterprise.status" value=""></s:hidden>
+				    
 					<div class="row-fluid">
 						<p>
-							公司名称：福建电信
+							公司名称：<input type="text" name="enterprise.rferred" disabled="disabled"/>
 						</p>
 						<p>
-							公司全称：福建电信有限公司
+							公司全称：<input type="text" name="enterprise.fullName" disabled="disabled"/>
 						</p>
 						<p>
-							公司地址：福建省鼓楼区某某路某某大楼230号
+							公司地址：<input type="text" name="enterprise.address" disabled="disabled"/>
 						</p>
 
 						<div class="input-container">
 							<label>
 								联系人
 							</label>
-							<input type="text" name="contact">
+							<input type="text" name="enterprise.contact" maxlength="20">
 						</div>
 
 						<div class="input-container">
 							<label>
 								电话
 							</label>
-							<input type="text" name="tel">
+							<input type="text" name="enterprise.phone" maxlength="20">
 						</div>
 						<div class="input-container">
 							<label>
 								QQ
 							</label>
-							<input type="text" name="qq">
+							<input type="text" name="enterprise.qq" maxlength="20">
 						</div>
 
 						<div class="input-container">
 							<label>
 								传真
 							</label>
-							<input type="text" name="fax">
+							<input type="text" name="enterprise.fax" maxlength="20">
 						</div>
 
 						<div class="input-container">
 							<label>
 								电子邮件
 							</label>
-							<input type="text" name="email">
+							<input type="text" name="enterprise.email" maxlength="20">
 						</div>
 
 						<div class="input-container">
-							<button type="button" class="btn btn-primary">
-								提交
-							</button>
+							<s:submit cssClass="btn btn-primary"  value="提交" />
+								
 						</div>
 					</div>
-				</form>
+				</s:form>
 			</div>
 			<div class="modal-footer">
 				<button class="btn" data-dismiss="modal" aria-hidden="true">

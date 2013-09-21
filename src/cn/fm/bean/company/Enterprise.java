@@ -201,7 +201,7 @@ public class Enterprise implements Serializable{
 	public void setCount(long count) {
 		this.count = count;
 	}
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy="enterprise")
+	@OneToMany(cascade ={ CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.REMOVE} ,fetch = FetchType.EAGER,mappedBy="enterprise")
 	public Set<BalanceDetail> getBalanceDetails(){
 		return balanceDetails;
 	}

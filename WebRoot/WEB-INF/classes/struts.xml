@@ -193,6 +193,10 @@
         <action name="increaseEmployeesUI" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="increaseEmployeesUI">
             <result name="success">company/insurance-step1-of-create.jsp</result>
         </action>
+        <!-- 批量减员 -->
+        <action name="insuranceReductionUI" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="insuranceReductionUI">
+            <result name="success">company/insurance-step1-of-reduction.jsp</result>
+        </action>
         
        <!-- Enterprise  -->
         <action name="viewEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterprise">

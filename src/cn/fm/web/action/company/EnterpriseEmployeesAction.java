@@ -308,6 +308,11 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		
 		return SUCCESS;
 	}
+	public String insuranceReductionUI(){
+		
+		
+		return SUCCESS;
+	}
 	public String increaseEmployeesUI()
 	{
 		

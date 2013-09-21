@@ -70,7 +70,7 @@
 								&nbsp;/&nbsp;
 							</li>
 							<li>
-								<a href="company/insurance-step1-of-reduction.jsp">批量减员</a>
+								<a href="insuranceReductionUI">批量减员</a>
 							</li>
 						</ul>
 

@@ -16,7 +16,11 @@ $(document).ready(function(){
 	
 });
 
-
+/**
+ * json 请求查询企业信息
+ * @param enterpriseId
+ * @return
+ */
 function modalEnterprise(enterpriseId)
 {
 	if(enterpriseId!=null && enterpriseId!=undefined){
@@ -236,7 +240,6 @@ function findIdToEmployees(employeesId)
 		});	
 	}
 }
-
 
 
 

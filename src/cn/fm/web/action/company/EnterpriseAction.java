@@ -159,6 +159,10 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		request.setAttribute("employees", enterprisEmployeesList);
 		return SUCCESS;
 	}
+	/**
+	 * json 格式返回数据
+	 * @return Enterprise
+	 */
 	public String findToIdEnterprise()
 	{
 		if(enterpriseId==null)return INPUT;
@@ -175,5 +179,6 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		
 		return SUCCESS;
 	}
-	
+
+
 }

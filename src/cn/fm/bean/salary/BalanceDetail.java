@@ -225,8 +225,8 @@ public class BalanceDetail implements Serializable{
 		this.endingBalance = endingBalance;
 	}
 
-	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
-    @JoinColumn(name="enterpriseId",referencedColumnName = "enterpriseId")  
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH },optional=true)
+    @JoinColumn(name="detailId",referencedColumnName = "enterpriseId")  
 	public Enterprise getEnterprise() {
 		return enterprise;
 	}
