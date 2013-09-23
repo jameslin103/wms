@@ -100,7 +100,8 @@
 									<td>
 										<ol>
 											<li>
-												<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>">
+												<a href="viewWageBudgetSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
+												&budgetId=<s:property value="%{#sal.budgetId}"/>">
 													<s:property value="%{#sal.name}"/>			
 												</a>
 												

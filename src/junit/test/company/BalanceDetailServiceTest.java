@@ -44,7 +44,7 @@ public class BalanceDetailServiceTest {
 		balanceDetail.setFiveFund(new BigDecimal(300));
 		balanceDetail.setServiceWith(new BigDecimal(700));
 		balanceDetail.setWages(new BigDecimal(200));
-		balanceDetailService.update(balanceDetail, 2,3);
+		balanceDetailService.update(balanceDetail);
 
 		
 	}

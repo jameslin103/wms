@@ -44,7 +44,11 @@ public class BalanceDetail implements Serializable{
 	/**服务费总额（元）**/
 	@Column(length=80)
 	private BigDecimal	  serviceToal;
-
+	
+	/**应收款项 五险一金**/
+	@Column(length=80)
+	private BigDecimal     receivableFiveFund;
+	
 	/**实收款项（元）**/
 	@Column(length=80)
 	private BigDecimal     receivedFunds;
@@ -81,6 +85,12 @@ public class BalanceDetail implements Serializable{
 	
 	
 	
+	public BigDecimal getReceivableFiveFund() {
+		return receivableFiveFund;
+	}
+	public void setReceivableFiveFund(BigDecimal receivableFiveFund) {
+		this.receivableFiveFund = receivableFiveFund;
+	}
 	public Integer getEnterpriseId() {
 		return enterpriseId;
 	}

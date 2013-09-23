@@ -240,9 +240,57 @@ function findIdToEmployees(employeesId)
 }
 
 
+function findToIdBalanceDetail(detailId)
+{
+	if(detailId!=null && detailId!=undefined){
+		$("input[name='balanceDetail.detailId']").val(detailId);
+		$.ajax( {    
+		    url:'findToIdBalanceDetail',// 跳转到 action  
+		    data:{detailId:detailId},    
+		    type:'post',    
+		    cache:false,
+		    dataType:'json',    
+		    success:function(data){
+		    	
+		    	$("input[name='balanceDetail.detailId']").val(data.balanceDetail.detailId); 
+		    	$("input[name='balanceDetail.receivedFunds']").val(data.balanceDetail.receivedFunds);
+		    	$("input[name='balanceDetail.wages']").val(data.balanceDetail.receivedFunds); 
+		    	$("input[name='balanceDetail.serviceWith']").val(data.balanceDetail.serviceWith); 
+		    	$("input[name='balanceDetail.fiveFund']").val(data.balanceDetail.fiveFund); 
+		    	$("input[name='balanceDetail.note']").val(data.balanceDetail.note); 
+		    
+		    },    
+		     error : function() {  
+		    	 alert("系统异常，请稍后重试！");
+		     }    
+		});	
+	}
+}
 
 
+function findToIdSalayBudegSummary(wageId)
+{
+	if(wageId!=null && wageId!=undefined){
+		$.ajax( {    
+		    url:'findToIdSalayBudegSummary',// 跳转到 action  
+		    data:{wageId:wageId},    
+		    type:'post',    
+		    cache:false,
+		    dataType:'json',    
+		    success:function(data){
+		    	$("#templateName").val(data.wageBudgetSummary.wageSheetName)
+		    	$("input[name='wageBudgetSummary.wageSheetName']").val(data.wageBudgetSummary.wageSheetName); 
+		    	$("input[name='wageBudgetSummary.wageMonth']").val(data.wageBudgetSummary.wageMonth);
+		    	$("input[name='wageBudgetSummary.mergeTax']").val(data.wageBudgetSummary.mergeTax); 
+		    	$("input[name='wageBudgetSummary.note']").val(data.wageBudgetSummary.note); 
 
+		    },    
+		     error : function() {  
+		    	 alert("系统异常，请稍后重试！");
+		     }    
+		});	
+	}
+}
 
 
 

@@ -131,6 +131,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	 */
 	public String  addSalaryBudgetTable()
 	{
+		    
 			Enterprise enterprise=WebUtil.getEnterprise(request);
 			if(enterprise==null)return INPUT;
 			CreateSalaryBudgetTable	createSalaryBudgetTablePO=null;

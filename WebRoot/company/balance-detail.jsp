@@ -13,6 +13,14 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
+
+		<script type="text/javascript">
+			function topage(page){
+				var form = document.getElementById("myform");
+				form.page.value=page;
+				form.submit();
+			}
+		</script>
 	</head>
 	<body>
 
@@ -40,13 +48,14 @@
 								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li>
-								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
+								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
 							</li>
 							<li class="active">
 								<a href="viewBalanceDetail">资金往来</a>
 							</li>
 						</ul>
-
+					<s:form action="viewBalanceDetail" method="post" id="myform">
+					<s:hidden name="page"/>
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -106,7 +115,7 @@
 										<s:property value="%{#balanceDetail.detailId}"/>
 									</td>
 									<td>
-										<s:date name="%{#balanceDetail.yearMonth}" format="yyyy年MM月dd日"/>
+										<s:date name="%{#balanceDetail.yearMonth}" format="yyyy年MM月"/>
 									</td>
 									<td>
 										<s:property value="%{#balanceDetail.balance}"/>
@@ -114,9 +123,15 @@
 									<td>
 										<s:property value="%{#balanceDetail.ballotsToal}"/>
 									</td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td>
+										<s:property value="%{#balanceDetail.wagesToal}"/>
+									</td>
+									<td>
+										<s:property value="%{#balanceDetail.serviceToal}"/>
+									</td>
+									<td>
+										<s:property value="%{#balanceDetail.receivableFiveFund}"/>
+									</td>
 									<td>
 										<s:property value="%{#balanceDetail.receivedFunds}"/>
 									</td>
@@ -133,23 +148,27 @@
 										<s:property value="%{#balanceDetail.fiveFund}"/>
 									</td>
 									<td rowspan="2">
-										<a href="#info-for-check" data-toggle="modal">填写</a>
+									<s:set value="%{#balanceDetail.detailId}" var="detailId"></s:set>
+										<a href="#info-for-check" onclick="findToIdBalanceDetail('${detailId}')" data-toggle="modal">填写</a>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="11" class="align-right">
-										备注:（<s:property value="%{#balanceDetail.note}"/>）
+										备注:（<s:property value="%{#request.session.user.username}"/>，
+										<s:date name="%{#balanceDetail.createDate}" format="yyyy年MM月dd日"/>，
+										<s:property value="%{#balanceDetail.note}"/>）
 									</td>
 								</tr>
 							</tbody>
 							</s:iterator>
 						</table>
-
+						
 						<div class="pagination">
 							<ul>
-								<jsp:include page="/share/fenye.jsp"></jsp:include>
+							<%@ include file="/share/fenye.jsp" %>
 							</ul>
 						</div>
+						</s:form>
 					</div>
 				</div>
 			</div>
@@ -173,7 +192,7 @@
 					<s:hidden name="balanceDetail.detailId"></s:hidden>
 						<div class="input-container">
 							<label>
-								实收款项 xxxxxxxx
+								实收款项 
 							</label>
 							<s:textfield name="balanceDetail.receivedFunds" />
 						</div>

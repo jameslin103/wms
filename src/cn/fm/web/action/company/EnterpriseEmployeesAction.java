@@ -41,7 +41,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private String    employessName;
 	private Integer   year;
 	private Integer   month;
-	
+	private int page;
 	
 	 //工程目录下的模板文件名称
    private String employeeFileName;
@@ -81,7 +81,12 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		this.cinsengDate = cinsengDate;
 	}
 	
-    
+	public int getPage() {
+		return page<=0?1:page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	public Integer getYear() {
 		return year;
 	}
@@ -220,7 +225,9 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		{
 			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
 			params.add(this.enterpriseId);
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			jpql.append(" and o.departure=?").append(params.size()+1);
+			params.add(0);
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(8,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);

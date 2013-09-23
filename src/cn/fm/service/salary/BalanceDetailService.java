@@ -12,8 +12,8 @@ public interface BalanceDetailService extends DAO<BalanceDetail> {
 	/**
 	 * 查询目前这个企业的自己往来情况
 	 */
-	public List<BalanceDetail>  getAllBalanceDetail(Integer enterpriseId,Integer employeeId);
-	public void  update(BalanceDetail balanceDetail,Integer detailId,Integer enterpriseId);
+	public List<BalanceDetail>  getAllBalanceDetail(Integer enterpriseId);
+	public boolean  updateBalanceDetail(BalanceDetail balanceDetail);
 	
 	
 	

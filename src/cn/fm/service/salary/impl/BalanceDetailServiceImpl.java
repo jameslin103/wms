@@ -18,7 +18,7 @@ public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implemen
 	/**
 	 * 查询目前这个企业的自己往来情况
 	 */
-	public List<BalanceDetail>  getAllBalanceDetail(Integer enterpriseId,Integer employeeId)
+	public List<BalanceDetail>  getAllBalanceDetail(Integer enterpriseId)
 	{
 		Query query=em.createQuery("select b from BalanceDetail b where b.enterpriseId=?1");
 			  query.setParameter(1, enterpriseId);
@@ -32,14 +32,18 @@ public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implemen
 		super.save(balanceDetail);
 		
 	}
-	public void  update(BalanceDetail balanceDetail,Integer detailId,Integer enterpriseId)
+	public  boolean  updateBalanceDetail(BalanceDetail balanceDetail)
 	{
-		em.createQuery("update BalanceDetail o set o.receivedFunds=?1 , o.wages=?2 , o.serviceWith=?3 , o.fiveFund=?4 , o.note=?5 where o.detailId=?6 and o.enterpriseId=?7")
-		.setParameter(1, balanceDetail.getReceivedFunds()).setParameter(2, balanceDetail.getWages())
-		.setParameter(3, balanceDetail.getServiceWith()).setParameter(4,balanceDetail.getFiveFund())
-		.setParameter(5,balanceDetail.getNote()).setParameter(6,detailId).setParameter(7,enterpriseId).executeUpdate();
+		try {
+			em.createQuery("update BalanceDetail o set o.receivedFunds=?1 , o.wages=?2 , o.serviceWith=?3 , o.fiveFund=?4 , o.note=?5 where o.detailId=?6 ")
+			.setParameter(1, balanceDetail.getReceivedFunds()).setParameter(2, balanceDetail.getWages())
+			.setParameter(3, balanceDetail.getServiceWith()).setParameter(4,balanceDetail.getFiveFund())
+			.setParameter(5,balanceDetail.getNote()).setParameter(6,balanceDetail.getDetailId()).executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 
+	return true;
 	}
-	
-	
 }

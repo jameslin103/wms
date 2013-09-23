@@ -17,5 +17,10 @@ public interface WageBudgetSummaryService extends DAO<WageBudgetSummary> {
 	 */
 	public List<WageBudgetSummary> getAllWageBudgetSummary(Integer budgetId,Integer enterpriseId);
 	
-	
+	/**
+	 * 更新预算表
+	 * @param wageBudgetSummary
+	 * @return
+	 */
+	public boolean updateWageBudgetSummary(WageBudgetSummary wageBudgetSummary);
 }

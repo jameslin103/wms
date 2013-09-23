@@ -67,6 +67,8 @@ public class WageBudgetSummary implements Serializable {
 	/**创建时间**/
 	private Date     createDate=new Date();
 	
+	private String   note;
+	
 	private Integer budgetId;
 	
 	private Integer enterpriseId;
@@ -74,7 +76,15 @@ public class WageBudgetSummary implements Serializable {
 	private CreateSalaryBudgetTable createSalaryBudgerTable;
 	
 	
-	
+	@Column(length=100)
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
 	@Id @GeneratedValue
 	public Integer getWageId() {
 		return wageId;

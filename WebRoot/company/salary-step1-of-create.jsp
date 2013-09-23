@@ -34,7 +34,7 @@
             <li><a href="company/index.jsp">综合</a></li>
             <li><a href="viewEnterpriseEmployees">员工档案</a></li>
             <li class="active"><a href="viewSalaryBudgetTable">工资预算表</a></li>
-            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
+            <li><a href="viewInsuranceWithMonth">增减员与参保明细</a></li>
           </ul>
 			<div class="span4">
             <h3>1/3&nbsp;新建工资预算表信息</h3>

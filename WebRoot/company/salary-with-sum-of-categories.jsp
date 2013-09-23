@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="company/index.jsp">综合</a></li>
             <li><a href="viewEnterpriseEmployees">员工档案</a></li>
             <li class="active"><a href="viewWageBudgetSummary">工资预算表</a></li>
-            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
+            <li><a href="viewInsuranceWithMonth">增减员与参保明细</a></li>
           </ul>
  
           <table class="table table-striped table-bordered">
@@ -63,7 +63,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td>
                 	<s:property value="%{#wage.wageSheetName}"/>
                 </td>
-                <td><s:property value="%{#wage.wageMonth}"/></td>
+                <td><s:date name="%{#wage.wageMonth}" format="yyyy年MM月"/></td>
                 <td><s:property value="%{#wage.mergeTax}"/></td>
                 <td><s:property value="%{#wage.nture}"/></td>
                 <td><s:property value="%{#wage.makeTotal}"/></td>
@@ -87,7 +87,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </ul>
                 </td>
                 <td>
-                  <a href="#info-for-check" data-toggle="modal">修改</a>
+                  <s:set value="%{#wage.wageId}" var="wageId"></s:set>
+                  <a href="#info-for-check" onclick="findToIdSalayBudegSummary('${wageId}')" data-toggle="modal">修改</a>
                   <a href="">删除</a><br>
                   <a href="viewAllEmployeesSalaryDetail">查看</a>
                   <a href="">下载</a>
@@ -103,64 +104,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <div id="footer"></div>
   </div>
-  
+  <!-- ======================================================================== -->
   <div id="info-for-check" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3 id="myModalLabel">工资预算表修改</h3>
     </div>
-
     <div class="modal-body">
       <div class="row-fluid">
-        <form action="" method="post">
-          <div class="row-fluid">
-            <div class="input-container">
-              <label>名称</label>
-              <input type="text" name="">
-            </div>
+         <s:form action="updateWageBudgetSummary" method="post">
+              <div class="row-fluid">
+                <div class="input-container">
+                  <label>名称</label>
+                  <s:textfield name="wageBudgetSummary.wageSheetName" cssStyle="width: 220px;height:30px;"/>
+                </div>
 
-            <div class="input-container">
-              <label>模板</label>
-              <p>某某模板名称</p>
-            </div>
+                <div class="input-container">
+                  <label>模板</label>
+                  <span id="templateName"></span>
+                </div>
 
-            <div class="input-container">
-              <label>生成哪月工资？</label>
-              <select class="span3">
-                <option value="">2014年</option>
-                <option value="" selected>2013年</option>
-                <option value="">2012年</option>
-              </select>
-              <select class="span3">
-                <option value="">7月</option>
-                <option value="" selected>8月</option>
-                <option value="">9月</option>
-              </select> 
-            </div>
+                <div class="input-container" >
+                  <label>生成哪月工资？</label>
+                  <s:textfield id="d11"	name="salaryDate" onclick="WdatePicker()" name="wageBudgetSummary.wageMonth" cssClass="Wdate" cssStyle="width: 220px;height:30px;"  />
+                </div>
+                <div class="input-container">
+                  <label>选择与其他工资表合并计税</label>
+                  <select id="salaryTable" name="wageBudgetSummary.mergeTax" >
+                    <option value="%{#createSalaryBudgetTable.temple}">--请选择--</option>
+                  </select>
+                </div>
 
+                <div class="input-container">
+                  <label>补充说明</label>
+                  <textarea rows="3" name="wageBudgetSummary.note"   style="width: 220px;" >
+                  		<s:property value="%{#wageBudgetSummary.note}"/>
+                  </textarea>
+                </div>
 
-            <div class="input-container">
-              <label>选择与其他工资表合并计税</label>
-              <select>
-                <option value="">无</option>
-                <option value="">某某工资表1</option>
-                <option value="">某某工资表2</option>
-                <option value="">某某工资表3</option>
-                <option value="">某某工资表4</option>
-              </select>
-            </div>
+                <div class="input-container">
+                  <s:submit   value="提交" cssClass="btn btn-primary" />
+                </div>
 
-            <div class="input-container">
-              <label>补充说明</label>
-              <textarea rows="3"></textarea>
-            </div>
-
-            <div class="input-container">
-              <button type="submit" class="btn btn-primary">提交</button>
-            </div>
-
-          </div>
-        </form>   
+              </div>
+              <s:token></s:token>
+            </s:form>   
       </div>
     </div>
 

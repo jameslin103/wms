@@ -36,4 +36,25 @@ public class WageBudgetSummaryServiceImpl extends DaoSupport<WageBudgetSummary> 
 		super.delete(wageBudgetSummary);
 		
 	}
+	/**
+	 * 更新预算表
+	 * @param wageBudgetSummary
+	 * @return
+	 */
+	public boolean updateWageBudgetSummary(WageBudgetSummary wageBudgetSummary)
+	{
+		try {
+			em.createQuery("update WageBudgetSummary w set w.wageSheetName=?1" +
+					",w.wageMonth=?2,w.mergeTax=?3,w.note=?4 where w.wageId=?5")
+			.setParameter(1, wageBudgetSummary.getWageSheetName()).setParameter(2, wageBudgetSummary.getWageMonth())
+			.setParameter(3, wageBudgetSummary.getMergeTax()).setParameter(4, wageBudgetSummary.getNote())
+			.setParameter(5, wageBudgetSummary.getWageId()).executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
 }
