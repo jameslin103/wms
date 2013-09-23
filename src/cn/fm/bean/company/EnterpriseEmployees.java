@@ -69,7 +69,7 @@ public class EnterpriseEmployees implements Serializable{
 	/*公积金*/
 	private String  accumulationFund;
 	/*大病统筹*/
-	private Integer  seriousDisease;
+	private String  seriousDisease;
 	/*大病统筹基数*/
 	private Double  seriousDiseaseBase;
 	
@@ -98,6 +98,8 @@ public class EnterpriseEmployees implements Serializable{
 	private Integer  pseudoDelete;
 	
 	private String  note;
+	/*离职员工*/
+	private Integer departure;
 	
 	/**增员**/
 	private  long addCount;
@@ -116,7 +118,13 @@ public class EnterpriseEmployees implements Serializable{
 	
 	
 	
-	
+	@Column(length=1)
+	public Integer getDeparture() {
+		return departure;
+	}
+	public void setDeparture(Integer departure) {
+		this.departure = departure;
+	}
 	@Column(length=50)
 	public String getNote() {
 		return note;
@@ -364,12 +372,12 @@ public class EnterpriseEmployees implements Serializable{
 	public void setAccumulationFund(String accumulationFund) {
 		this.accumulationFund = accumulationFund;
 	}
-	@Column(length=1)
-	public Integer getSeriousDisease() {
+	@Column(length=10)
+	public String getSeriousDisease() {
 		return seriousDisease;
 	}
 	@Column(length=80)
-	public void setSeriousDisease(Integer seriousDisease) {
+	public void setSeriousDisease(String seriousDisease) {
 		this.seriousDisease = seriousDisease;
 	}
 	@Column(length=80)

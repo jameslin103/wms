@@ -136,5 +136,38 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		
 		return flag;
 	}
+	/**
+	 * 修改企业联系人
+	 * @param enterprise
+	 * @return
+	 */
+	public boolean updateEnterpriseContact(Enterprise enterprise){
+		
+		try {
+			Query query=em.createQuery("update Enterprise set contact=?1," +
+					"phone=?2," +
+					"qq=?3," +
+					"fax=?4," +
+					"email=?5 where enterpriseId=?6");
+			
+			query.setParameter(1, enterprise.getContact())
+				 .setParameter(2, enterprise.getPhone())
+				 .setParameter(3, enterprise.getQq())
+				 .setParameter(4, enterprise.getFax())
+				 .setParameter(5, enterprise.getEmail())
+				 .setParameter(6, enterprise.getEnterpriseId())
+				 .executeUpdate();
+		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+			
+		}
+		
+		return true;
+		
+		
+	}
 
 }

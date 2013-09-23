@@ -2,35 +2,23 @@ package cn.fm.web.action.company;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
-
 import org.apache.struts2.ServletActionContext;
-
 import com.opensymphony.xwork2.Preparable;
-
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
-import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.utils.DateUtil;
-import cn.fm.utils.ExcelFileGenerator;
-import cn.fm.utils.ExportExcelUtils;
 import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
-import cn.fm.web.action.ReportAction;
 
 
 @SuppressWarnings("serial")
@@ -51,15 +39,61 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private String    excelName;
 	private Integer   enterpriseId;
 	private String    employessName;
-	
+	private Integer   year;
+	private Integer   month;
 	
 	
 	 //工程目录下的模板文件名称
    private String employeeFileName;
 	
     
+	
+
+	public EnterpriseEmployeesService getEnterpriseEmployeesService() {
+		return enterpriseEmployeesService;
+	}
+	public void setEnterpriseEmployeesService(
+			EnterpriseEmployeesService enterpriseEmployeesService) {
+		this.enterpriseEmployeesService = enterpriseEmployeesService;
+	}
+	public EnterpriseEmployees getEnterpriseEmployees() {
+		return enterpriseEmployees;
+	}
+	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
+		this.enterpriseEmployees = enterpriseEmployees;
+	}
+	public String getEndContractDeadline() {
+		return endContractDeadline;
+	}
+	public void setEndContractDeadline(String endContractDeadline) {
+		this.endContractDeadline = endContractDeadline;
+	}
+	public String getStartContractDeadline() {
+		return startContractDeadline;
+	}
+	public void setStartContractDeadline(String startContractDeadline) {
+		this.startContractDeadline = startContractDeadline;
+	}
+	public String getCinsengDate() {
+		return cinsengDate;
+	}
+	public void setCinsengDate(String cinsengDate) {
+		this.cinsengDate = cinsengDate;
+	}
+	
     
-    
+	public Integer getYear() {
+		return year;
+	}
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+	public Integer getMonth() {
+		return month;
+	}
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
 	public String getEmployeeFileName() {
 		return employeeFileName;
 	}
@@ -171,7 +205,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		return SUCCESS;
 	}
 	/**
-	 * 
+	 * 查看企业所有在职员工
 	 * @return
 	 */
 	public String viewEnterpriseEmployees(){
@@ -184,7 +218,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		List<Object> params = new ArrayList<Object>();
 		if(this.enterpriseId!=null)
 		{
-			jpql.append(" o.enterprise.id=? ");
+			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
 			params.add(this.enterpriseId);
 			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
@@ -214,13 +248,38 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		return SUCCESS;
 	}
 	
-	
+	/**
+	 * 查看参保人员与未参保人员
+	 * @return
+	 */
 	public String fildInsuranceEnterpriseEmployees()
 	{
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		if(enterprise==null || enterprise.getEnterpriseId()==null)return SUCCESS;
 		
-		List<EnterpriseEmployees> listEmployees=enterpriseEmployeesService.findInsuranceEnterpriseEmployees(insurance);
-		if(listEmployees.size()==0)
+		List<EnterpriseEmployees> listEmployees=enterpriseEmployeesService.findInsuranceEnterpriseEmployees(insurance,enterprise.getEnterpriseId());
+		if(listEmployees==null || listEmployees.size()==0)
 			listEmployees=new ArrayList<EnterpriseEmployees>();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(enterprise.getEnterpriseId()!=null)
+		{
+			jpql.append(" o.whetherGinseng=?1 and ");
+			jpql.append(" o.enterprise.enterpriseId=?2 ");
+			params.add(this.insurance);
+			params.add(this.enterpriseId);
+			
+			
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+		
+		
+		
 		request.setAttribute("employees", listEmployees);
 		return SUCCESS;
 	}
@@ -254,25 +313,101 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		
 		return SUCCESS;
 	}
-	
+	/**
+	 * 查看新增人员
+	 * @return
+	 */
 	public String newStaffEmployees(){
 		
 		List<EnterpriseEmployees> enterpriseEmployeesList=enterpriseEmployeesService.findNewStaffAndRenewalEmployees(this.enterpriseId, "新增");
 		if(enterpriseEmployeesList.size()==0)
 			enterpriseEmployeesList=new ArrayList<EnterpriseEmployees>();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(this.enterpriseId!=null)
+		{
+			
+			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(this.enterpriseId);
+			jpql.append(" and o.ginsengProtectNature like ?").append(params.size()+1);
+			params.add("%新增%");
+			
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+
 		request.setAttribute("employees", enterpriseEmployeesList);
 		return SUCCESS;
 	}
 	
+	/**
+	 * 查看续保人员
+	 * @return
+	 */
 	public String  renewalEmployees()
 	{
 		List<EnterpriseEmployees> enterpriseEmployeesList=enterpriseEmployeesService.findNewStaffAndRenewalEmployees(this.enterpriseId, "续保");
-		if(enterpriseEmployeesList.size()==0)
+		if(enterpriseEmployeesList==null || enterpriseEmployeesList.size()==0)
 			enterpriseEmployeesList=new ArrayList<EnterpriseEmployees>();
+		
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(this.enterpriseId!=null)
+		{
+			jpql.append(" o.ginsengProtectNature like ?").append(params.size()+1);
+			params.add("%续保%");
+			jpql.append(" and  o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(this.enterpriseId);
+			
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+		
 		request.setAttribute("employees", enterpriseEmployeesList);
 		return SUCCESS;
 	}
-
+	/**
+	 * 查看减员情况
+	 * @return
+	 */
+	public String personnelReduction()
+	{
+		List<EnterpriseEmployees> enterpriseEmployeesList=enterpriseEmployeesService.findNewStaffAndRenewalEmployees(this.enterpriseId, "减员");
+		if(enterpriseEmployeesList==null || enterpriseEmployeesList.size()==0)
+			enterpriseEmployeesList=new ArrayList<EnterpriseEmployees>();
+		
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(this.enterpriseId!=null)
+		{
+			jpql.append(" o.ginsengProtectNature like ?").append(params.size()+1);
+			params.add("%减员%");
+			jpql.append(" and  o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(this.enterpriseId);
+			
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+		
+		request.setAttribute("employees", enterpriseEmployeesList);
+		return SUCCESS;
+	}
+	/**
+	 * 删除减员续保增员
+	 * @return
+	 */
 	public String deleteEmployees()
 	{
 		Enterprise enterprise=WebUtil.getEnterprise(request);
@@ -285,10 +420,58 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		return SUCCESS;
 		
 	}
-	
+	/**
+	 * 查看统计企业增减员参保
+	 * @return
+	 */
 	public String viewInsuranceWithMonth()
 	{
 		
+		return SUCCESS;
+	}
+	
+	/**
+	 * 查看统计企业增减员参保明细表
+	 * @return
+	 */
+	public String insuranceWithEmployeeList()
+	{
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		if(enterprise==null || enterprise.getEnterpriseId()==null)return SUCCESS;
+		List<EnterpriseEmployees> employees=enterpriseEmployeesService.getInsuranceWithEmployeeList(enterprise.getEnterpriseId(),2013,8);
+		if(employees==null || employees.size()==0)employees=new ArrayList<EnterpriseEmployees>();
+		
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(enterprise.getEnterpriseId()!=null)
+		{
+			jpql.append("( o.ginsengProtectNature like ?").append(params.size()+1);
+			params.add("%新增%");
+			jpql.append("  or  o.ginsengProtectNature like ?").append(params.size()+1);
+			params.add("%续保%");
+			jpql.append(" or o.ginsengProtectNature like ?").append(params.size()+1).append(")");
+			params.add("%减员%");
+			jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(this.enterpriseId);
+			jpql.append(" and o.pseudoDelete=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and o.departure=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and year(o.cinsengDate)=?").append(params.size()+1);
+			params.add(this.year);
+			jpql.append(" and month(o.cinsengDate)=?").append(params.size()+1);
+			params.add(this.month);
+			
+			
+			
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+		request.setAttribute("employees", employees);
 		return SUCCESS;
 	}
 	/**
@@ -383,43 +566,66 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 				
 		}
 	}
-	
-	
-	
+	/**
+	 * 查找隐藏的员工
+	 * @return
+	 */
+	public String findEmployeesHidden()
+	{
+		
+		List<EnterpriseEmployees>  listEmployees=enterpriseEmployeesService.findEmployeesHidden(enterpriseId);
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(this.enterpriseId!=null)
+		{
+			jpql.append(" o.pseudoDelete=0  and ");
+			jpql.append(" o.enterprise.enterpriseId=?1 ");
+			params.add(this.enterpriseId);
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+		if(listEmployees.size()==0){
+			listEmployees=new ArrayList<EnterpriseEmployees>();
+		}
+		
+		request.setAttribute("employees", listEmployees);
+		return SUCCESS;
+	}
+	/**
+	 * 查找离职员工
+	 * @return
+	 */
+	public String findEmployeesDeparture()
+	{
+		
+		List<EnterpriseEmployees>  listEmployees=enterpriseEmployeesService.findEmployeesDeparture(enterpriseId);
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(this.enterpriseId!=null)
+		{
+			jpql.append(" o.departure=?1 and ");
+			jpql.append(" o.enterprise.enterpriseId=?2 ");
+			params.add(1);
+			params.add(this.enterpriseId);
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+		if(listEmployees.size()==0){
+			listEmployees=new ArrayList<EnterpriseEmployees>();
+		}
+		
+		request.setAttribute("employees", listEmployees);
+		return SUCCESS;
+	}
 
-	public EnterpriseEmployeesService getEnterpriseEmployeesService() {
-		return enterpriseEmployeesService;
-	}
-	public void setEnterpriseEmployeesService(
-			EnterpriseEmployeesService enterpriseEmployeesService) {
-		this.enterpriseEmployeesService = enterpriseEmployeesService;
-	}
-	public EnterpriseEmployees getEnterpriseEmployees() {
-		return enterpriseEmployees;
-	}
-	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
-		this.enterpriseEmployees = enterpriseEmployees;
-	}
-	public String getEndContractDeadline() {
-		return endContractDeadline;
-	}
-	public void setEndContractDeadline(String endContractDeadline) {
-		this.endContractDeadline = endContractDeadline;
-	}
-	public String getStartContractDeadline() {
-		return startContractDeadline;
-	}
-	public void setStartContractDeadline(String startContractDeadline) {
-		this.startContractDeadline = startContractDeadline;
-	}
-	public String getCinsengDate() {
-		return cinsengDate;
-	}
-	public void setCinsengDate(String cinsengDate) {
-		this.cinsengDate = cinsengDate;
-	}
-
-	
 	
 
 }

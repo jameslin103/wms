@@ -54,7 +54,7 @@ public class EnterpriseEmployessServiceTest {
 	@Test
 	public void testFindEmplyess()
 	{
-		List<EnterpriseEmployees> list=enterpriseEmployeesService.findInsuranceEnterpriseEmployees(1);
+		List<EnterpriseEmployees> list=enterpriseEmployeesService.findInsuranceEnterpriseEmployees(1,17);
 		for (EnterpriseEmployees es : list) {
 			System.out.println(es.getEmployeesName());
 		}

@@ -51,7 +51,7 @@
 							<thead>
 								<tr>
 									<th rowspan="2">
-										<s:property value=""/>
+										序号
 									</th>
 									<th rowspan="2">
 										月份
@@ -147,36 +147,7 @@
 
 						<div class="pagination">
 							<ul>
-								<li>
-									<a href="#">&laquo;</a>
-								</li>
-								<li>
-									<a href="#">1</a>
-								</li>
-								<li>
-									<a href="#">2</a>
-								</li>
-								<li>
-									<a href="#">3</a>
-								</li>
-								<li>
-									<a href="#">4</a>
-								</li>
-								<li>
-									<a href="#">5</a>
-								</li>
-								<li>
-									<a href="#">6</a>
-								</li>
-								<li>
-									<a href="#">7</a>
-								</li>
-								<li>
-									<a href="#">8</a>
-								</li>
-								<li>
-									<a href="#">&raquo;</a>
-								</li>
+								<jsp:include page="/share/fenye.jsp"></jsp:include>
 							</ul>
 						</div>
 					</div>
@@ -185,12 +156,10 @@
 
 			<div id="footer"></div>
 		</div>
-
-		<div id="info-for-check" class="modal hide fade" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<!--================================================= add  addBalanceDetail=================================================-->
+		<div id="info-for-check" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					×
 				</button>
 				<h3 id="myModalLabel">
@@ -201,12 +170,12 @@
 			<div class="modal-body">
 				<div class="row-fluid">
 					<s:form action="addBalanceDetail" method="post">
-					<s:hidden value="%{#balanceDetail.detailId}" name="balanceDetail.detailId"></s:hidden>
+					<s:hidden name="balanceDetail.detailId"></s:hidden>
 						<div class="input-container">
 							<label>
-								实收款项
+								实收款项 xxxxxxxx
 							</label>
-							<s:textfield name="balanceDetail.receivedFunds"  value="%{#balanceDetail.receivedFunds}"/>
+							<s:textfield name="balanceDetail.receivedFunds" />
 						</div>
 						<hr>
 						<h3>
@@ -216,26 +185,26 @@
 							<label>
 								工资
 							</label>
-							<s:textfield name="balanceDetail.wages" value="%{#balanceDetail.wages}"/>
+							<s:textfield name="balanceDetail.wages"/>
 						</div>
 						<div class="input-container">
 							<label>
 								服务费
 							</label>
-							<s:textfield name="balanceDetail.serviceWith" value="%{#balanceDetail.serviceWith}"/>
+							<s:textfield name="balanceDetail.serviceWith"/>
 						</div>
 						<div class="input-container">
 							<label>
 								五险一金
 							</label>
-							<s:textfield name="balanceDetail.fiveFund" value="%{#balanceDetail.fiveFund}"/>
+							<s:textfield name="balanceDetail.fiveFund" />
 						</div>
 						<hr>
 						<div class="input-container">
 							<label>
 								备注
 							</label>
-							<s:textfield name="balanceDetail.note" value="%{#balanceDetail.note}"/>
+							<s:textfield name="balanceDetail.note"/>
 						</div>
 						<div class="input-container">
 							<label>

@@ -3,20 +3,12 @@ package cn.fm.bean.salary;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-
-
-import cn.fm.bean.company.Enterprise;
 
 /**
  * 资金往来实体类
@@ -83,15 +75,21 @@ public class BalanceDetail implements Serializable{
 	@Column(length=80)
 	private Integer      employeesId;
 	
-	private Enterprise   enterprise;
+	@Column(length=80)
+	private Integer      enterpriseId;
 	
 	
 	
+	
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
 	public Integer getEmployeesId() {
 		return employeesId;
 	}
-
-
 	public void setEmployeesId(Integer employeesId) {
 		this.employeesId = employeesId;
 	}
@@ -225,12 +223,4 @@ public class BalanceDetail implements Serializable{
 		this.endingBalance = endingBalance;
 	}
 
-	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH },optional=true)
-    @JoinColumn(name="detailId",referencedColumnName = "enterpriseId")  
-	public Enterprise getEnterprise() {
-		return enterprise;
-	}
-	public void setEnterprise(Enterprise enterprise) {
-		this.enterprise = enterprise;
-	}
 }

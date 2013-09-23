@@ -179,6 +179,15 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		
 		return SUCCESS;
 	}
-
+	/**
+	 * 修改企业联系人
+	 * @return
+	 */
+	public String updateEnterpriseContact()
+	{
+		enterpriseService.updateEnterpriseContact(enterprise);
+		
+		return SUCCESS;
+	}
 
 }

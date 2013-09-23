@@ -49,18 +49,9 @@
 
 						<ul class="normal action-container clearfix">
 							<li class="right">
+							
 								<form action="" class="select-for-year" method="post">
-									<select>
-										<option value="">
-											2014年
-										</option>
-										<option value="" selected>
-											2013年
-										</option>
-										<option value="">
-											2012年
-										</option>
-									</select>
+									 日期:<input id="d11" name="year" onclick="WdatePicker()"  class="Wdate" style="width: 110px;height: 25px;" />
 								</form>
 							</li>
 							<li>
@@ -97,7 +88,7 @@
 										一月
 									</td>
 									<td>
-										<a href="company/insurance-with-employee-list.jsp">新增3人，续保4人，减员2人</a>
+										<a href="insuranceWithEmployeeList?month=8">新增3人，续保4人，减员2人</a>
 									</td>
 									<td>
 										已完成

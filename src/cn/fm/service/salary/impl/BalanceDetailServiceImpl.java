@@ -15,10 +15,13 @@ import cn.fm.service.salary.BalanceDetailService;
 public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implements BalanceDetailService {
 	
 	@SuppressWarnings("unchecked")
+	/**
+	 * 查询目前这个企业的自己往来情况
+	 */
 	public List<BalanceDetail>  getAllBalanceDetail(Integer enterpriseId,Integer employeeId)
 	{
-		Query query=em.createQuery(" select b from BalanceDetail b where b.enterpriseId=?1 and b.employeeId=?2");
-		
+		Query query=em.createQuery("select b from BalanceDetail b where b.enterpriseId=?1");
+			  query.setParameter(1, enterpriseId);
 		
 		return query.getResultList();
 		

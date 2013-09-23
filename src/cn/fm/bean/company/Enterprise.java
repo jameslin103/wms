@@ -79,7 +79,7 @@ public class Enterprise implements Serializable{
 	private Set<CreateSalaryBudgetTable> createSalaryBugetTables=new HashSet<CreateSalaryBudgetTable>();
 	
 	
-	private Set<BalanceDetail>  balanceDetails=new HashSet<BalanceDetail>();
+	
 	
 	//工资模板
 	private Set<SalaryTemplate>  salaryTemplates=new HashSet<SalaryTemplate>();
@@ -201,14 +201,7 @@ public class Enterprise implements Serializable{
 	public void setCount(long count) {
 		this.count = count;
 	}
-	@OneToMany(cascade ={ CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.REMOVE} ,fetch = FetchType.EAGER,mappedBy="enterprise")
-	public Set<BalanceDetail> getBalanceDetails(){
-		return balanceDetails;
-	}
-	public void setBalanceDetails(Set<BalanceDetail> balanceDetails) {
-		this.balanceDetails = balanceDetails;
-	}
-	
+
 	@OneToMany(cascade ={CascadeType.REFRESH, CascadeType.REMOVE,CascadeType.PERSIST},fetch=FetchType.EAGER , mappedBy = "enterprise")
 	@OrderBy("budgetId asc")
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBugetTables() {

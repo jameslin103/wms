@@ -79,10 +79,10 @@
 								<a href="fildInsuranceEnterpriseEmployees?insurance=0">未参保</a>，
 							</li>
 							<li>
-								<a href="#">离职员工</a>，
+								<a href="findEmployeesDeparture?enterpriseId=<s:property value="%{#session.enterprise.enterpriseId}" />">离职员工</a>，
 							</li>
 							<li>
-								<a href="#">隐藏信息</a>
+								<a href="findEmployeesHidden?enterpriseId=<s:property value="%{#session.enterprise.enterpriseId}" />">隐藏信息</a>
 							</li>
 							<li class="right">
 								<a href="exportEmployeesExcel" class="btn btn-primary">下载全体在职员工信息</a>
@@ -233,7 +233,7 @@
 						                		个性设置
 						                	</s:if>
 										</td>
-										<td>
+										<td>b
 											<s:property value="%{#emp.paymentWay}" />
 										</td>
 										<td>
@@ -246,7 +246,9 @@
 						</table>
 
 						<div class="pagination">
-						<font color="blue">  当前页:第${pageView.currentpage}页 | 总记录数:${pageView.totalrecord}条 | 每页显示:${pageView.maxresult}条 | 总页数:${pageView.totalpage}页</font>　
+						<font color="blue"> 
+							 当前页:第${pageView.currentpage}页 | 总记录数:${pageView.totalrecord}条 | 每页显示:${pageView.maxresult}条 | 总页数:${pageView.totalpage}页
+						 </font>　
 						<s:iterator begin="%{#request.pageView.pageindex.startindex}" end="%{#request.pageView.pageindex.endindex}" var="wp">
     					<s:if test="%{#request.pageView.currentpage==wp}">
 	    					<b>
@@ -363,9 +365,7 @@
 							<label>
 								开户银行
 							</label>
-							<s:select list="#{1:'工商',2:'农行',3:'兴业'}"
-								name="enterpriseEmployees.bank" label="abc" listKey="key"
-								listValue="value" headerKey="0" headerValue="-请选择-" />
+							<s:textfield name="enterpriseEmployees.bank" />
 						</div>
 
 						<div class="input-container">
@@ -379,30 +379,23 @@
 							<label>
 								行业
 							</label>
-							<s:select list="#{1:'计算机与信息',2:'制造业',3:'财政金融'}"
-								name="enterpriseEmployees.industry" label="abc" listKey="key"
-								listValue="value" headerKey="0" headerValue="-请选择-" />
+							<s:textfield name="enterpriseEmployees.industry" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								岗位
 							</label>
-							<s:select list="#{1:'销售',2:'生产'}" name="enterpriseEmployees.jobs"
-								label="abc" listKey="key" listValue="value" headerKey="0"
-								headerValue="-请选择-" />
-
+							<s:textfield name="enterpriseEmployees.jobs" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								婚姻状况
 							</label>
-							<input type="radio" name="enterpriseEmployees.maritalStatus"
-								value="1" checked="checked" />
+							<input type="radio" name="enterpriseEmployees.maritalStatus" value="1" checked="checked" />
 							未婚，
-							<input type="radio" name="enterpriseEmployees.maritalStatus"
-								value="0" />
+							<input type="radio" name="enterpriseEmployees.maritalStatus" value="0" />
 							已婚
 						</div>
 
@@ -410,10 +403,7 @@
 							<label>
 								文化程度
 							</label>
-							<s:select
-								list="#{1:'博士',2:'研究生',3:'本科',4:'大专',5:'中专',6:'高中',7:'初中',8:'小学'}"
-								name="enterpriseEmployees.jobs" label="abc" listKey="key"
-								listValue="value" headerKey="0" headerValue="-=请选择=-" />
+							<s:textfield name="enterpriseEmployees.jobs" />
 						</div>
 
 						<div class="input-container">
@@ -428,8 +418,7 @@
 
 						<div class="input-container">
 							止：
-							<s:textfield id="d11"
-								name="enterpriseEmployees.endContractDeadline"
+							<s:textfield id="d11" name="enterpriseEmployees.endContractDeadline"
 								onclick="WdatePicker()" cssClass="Wdate" />
 						</div>
 
@@ -437,8 +426,7 @@
 							<label>
 								是否参保?
 							</label>
-							<input type="radio" name="enterpriseEmployees.whetherGinseng"
-								value="1" checked="checked" />
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="1" checked="checked" />
 							是，
 							<input type="radio" name="enterpriseEmployees.whetherGinseng"
 								value="0" />
@@ -449,14 +437,11 @@
 							<label>
 								参保类型
 							</label>
-							<input type="checkbox" name="enterpriseEmployees.sociaSecurity"
-								value="0" />
+							<input type="checkbox" name="enterpriseEmployees.sociaSecurity"	value="医保" />
 							医保
-							<input type="checkbox" name="enterpriseEmployees.healthCare"
-								value="0" />
+							<input type="checkbox" name="enterpriseEmployees.healthCare"  value="社保" />
 							社保
-							<input type="checkbox"
-								name="enterpriseEmployees.accumulationFund" value="0" />
+							<input type="checkbox" name="enterpriseEmployees.accumulationFund" value="公积金" />
 							公积金
 						</div>
 
@@ -464,12 +449,9 @@
 							<label>
 								参保性质
 							</label>
-							<input type="radio"
-								name="enterpriseEmployees.ginsengProtectNature" value="1"
-								checked="checked" />
+							<input type="radio" 	name="enterpriseEmployees.ginsengProtectNature" value="1" checked="checked" />
 							新增，
-							<input type="radio"
-								name="enterpriseEmployees.ginsengProtectNature" value="0" />
+							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="0" />
 							续保
 						</div>
 
@@ -527,11 +509,9 @@
 							<label>
 								个税缴纳方式?
 							</label>
-							<input type="radio" name="enterpriseEmployees.paymentWay"
-								value="1" checked="checked" />
+							<input type="radio" name="enterpriseEmployees.paymentWay" value="1" checked="checked" />
 							个人缴纳，
-							<input type="radio" name="enterpriseEmployees.paymentWay"
-								value="0" />
+							<input type="radio" name="enterpriseEmployees.paymentWay" value="0" />
 							企业缴纳
 						</div>
 
@@ -539,8 +519,7 @@
 							<label>
 								状态?
 							</label>
-							<input type="checkbox" name="enterpriseEmployees.pseudoDelete"
-								value="0" />
+							<input type="checkbox" name="enterpriseEmployees.pseudoDelete" value="0" />
 							隐藏
 						</div>
 
@@ -615,11 +594,9 @@
 							<label>
 								户口性质
 							</label>
-							<input type="radio" name="enterpriseEmployees.householdRegister"
-								value="1" checked="checked" />
+							<input type="radio" name="enterpriseEmployees.householdRegister" value="1" checked="checked" />
 							非农
-							<input type="radio" name="enterpriseEmployees.householdRegister"
-								value="0" />
+							<input type="radio" name="enterpriseEmployees.householdRegister" value="0" />
 							农村
 						</div>
 
@@ -627,8 +604,7 @@
 							<label>
 								是否有照片？
 							</label>
-							<input type="radio" name="enterpriseEmployees.photo" value="1"
-								checked="checked" />
+							<input type="radio" name="enterpriseEmployees.photo" value="1" checked="checked" />
 							无
 							<input type="radio" name="enterpriseEmployees.photo" value="0" />
 							有
@@ -760,9 +736,9 @@
 							<label>
 								参保基数
 							</label>
-							<input type="radio" name="enterpriseEmployees.base" value="1" checked="checked"/>
+							<input type="radio" name="enterpriseEmployees.base" value="1" checked="checked" id="base"/>
 							默认基数，
-							<input type="radio" name="enterpriseEmployees.base" value="0" />
+							<input type="radio" name="enterpriseEmployees.base" value="0" id="base"/>
 							个性设置
 						</div>
 
@@ -819,7 +795,7 @@
 							<label>
 								服务费
 							</label>
-							<input type="text" name="enterpriseEmployees.serviceCost" value="3000"/>
+							<input type="text" name="enterpriseEmployees.serviceCost" />
 						</div>
 
 						<div class="input-container">

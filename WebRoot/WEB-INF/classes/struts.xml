@@ -103,7 +103,28 @@
             	<param name="actionName">viewEnterpriseEmployees</param>
             </result>
         </action>
-         
+        <!-- 离职员工 -->
+         <action name="findEmployeesDeparture" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="findEmployeesDeparture">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterpriseEmployees</param>
+            </result>
+        </action>
+        <!-- 隐藏员工 -->
+         <action name="findEmployeesHidden" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="findEmployeesHidden">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterpriseEmployees</param>
+            </result>
+        </action>
+          <!-- 增减员与参保明细 -->
+        <action name="viewInsuranceWithMonth" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewInsuranceWithMonth">
+            <result name="success">company/insurance-with-month.jsp</result>
+        </action>
+        <!-- 增减员与参保具体员工资料 -->
+         <action name="insuranceWithEmployeeList" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="insuranceWithEmployeeList">
+            <result name="success">company/insurance-with-employee-list.jsp</result>
+        </action>
+        
+          <!-- 查看企业员工 -->
          <action name="viewEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewEnterpriseEmployees">
             <result name="success">/company/employee-list.jsp</result>
             <result name="input" type="redirectAction">
@@ -147,11 +168,17 @@
              <result name="input"  type="redirectAction">
             	<param name="actionName">viewEmployeePersonalSalary</param>
             </result>
-        </action> 
+        </action>
+        <!-- 新增 --> 
           <action name="newStaffEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="newStaffEmployees">
             <result name="success">company/insurance-with-employee-list.jsp</result>
         </action>
+        <!-- 续保 -->
          <action name="renewalEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="renewalEmployees">
+            <result name="success">company/insurance-with-employee-list.jsp</result>
+        </action>
+         <!-- 减员 -->
+         <action name="personnelReduction" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="personnelReduction">
             <result name="success">company/insurance-with-employee-list.jsp</result>
         </action>
          <action name="downloadInsuranceWithEmployeeList" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="downloadInsuranceWithEmployeeList">
@@ -166,10 +193,8 @@
             	<param name="actionName">viewWorkersIncreased</param>
             </result>
         </action>
+     
         
-        <action name="viewInsuranceWithMonth" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewInsuranceWithMonth">
-            <result name="success">company/insurance-with-month.jsp</result>
-        </action>
         <action name="downloadBatchIncreaseEmployeesExcel" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="downloadBatchIncreaseEmployeesExcel">
             <!-- 配置结果类型为stream的结果 -->  
           <result name="success" type="stream">  
@@ -225,6 +250,14 @@
             </result>
            <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
+            </result>
+        </action>
+         <action name="updateEnterpriseContact" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterpriseContact">
+           <result name="success" type="redirectAction">
+            	<param name="actionName">toBeResponsibleEnterprise</param>
+            </result>
+           <result name="input" type="redirectAction">
+            	<param name="actionName">toBeResponsibleEnterprise</param>
             </result>
         </action> 
         
@@ -314,10 +347,8 @@
 	           <interceptor-ref name="tokenSession" >  
 	               <param name="includeMethods"></param>  
 	          </interceptor-ref>  
-	         
             <result name="success" >company/salary-step2-of-create.jsp</result>
             <result name="input">company/salary-step1-of-create.jsp</result>
-           
         </action>
         <action name="returnToModifySalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="returnToModifySalaryBudgetTable">
                 <interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
@@ -343,13 +374,14 @@
                <result name="success" type="redirectAction">
                	<param name="actionName">returnToModifySalaryBudgetTable</param>
                </result>
-              
         </action> 
-        
         <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
             <result name="success" >company/salary-step1-of-create.jsp</result>
             <result name="input">company/salary-step1-of-create.jsp</result>
         </action> 
+        
+      
+        
         <action name="findBeforeCurrentDateTemplate" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="findBeforeCurrentDateTemplate">
             <result type="json" name="createSalaryBudgetTableList">
             	
@@ -363,6 +395,7 @@
             	<param name="actionName">toBeResponsibleEnterprise</param>
             </result>
         </action>
+        <!-- 查看企业资金往来情况 -->
         <action name="viewBalanceDetail" class="cn.fm.web.action.salary.BalanceDetailAction" method="viewBalanceDetail">
             <result name="success" >company/balance-detail.jsp</result>
         </action>

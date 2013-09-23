@@ -1,13 +1,15 @@
 package cn.fm.web.action.salary;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-
 import javax.annotation.Resource;
-
-
+import cn.fm.bean.PageView;
+import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.service.salary.BalanceDetailService;
+import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
 @SuppressWarnings("serial")
@@ -50,10 +52,24 @@ public class BalanceDetailAction extends BaseAction {
 
 	public String  viewBalanceDetail()
 	{
-		
-		List<BalanceDetail> balanceDetailList=balanceDetailService.getAllBalanceDetail(employeeId,enterpriseId);
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		List<BalanceDetail> balanceDetailList=balanceDetailService.getAllBalanceDetail(enterprise.getEnterpriseId(),employeeId);
 		if(balanceDetailList.size()==0)
 			balanceDetailList=new ArrayList<BalanceDetail>();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("createDate", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(enterprise.getEnterpriseId()!=null)
+		{
+			jpql.append(" o.enterpriseId=?").append(params.size()+1);
+			params.add(enterprise.getEnterpriseId());
+			PageView<BalanceDetail> pageView = new PageView<BalanceDetail>(10,  this.getPage());
+			pageView.setQueryResult(balanceDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+
 		request.setAttribute("balanceDetails", balanceDetailList);
 		
 		return SUCCESS;

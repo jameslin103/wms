@@ -174,11 +174,9 @@
 			</div>
 		</div>
 
-		<div id="info-for-check" class="modal hide fade" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="info-for-check" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					×
 				</button>
 				<h3 id="myModalLabel">
@@ -186,15 +184,9 @@
 				</h3>
 			</div>
 			<div class="modal-body">
-				<s:form action="updateEnterprise" method="post">
+				<s:form action="updateEnterpriseContact" method="post">
 				
 				    <s:hidden name="enterprise.enterpriseId"></s:hidden>
-				    <s:hidden name="enterprise.legalRepresentative"></s:hidden>
-				    <s:hidden name="enterprise.accountLine"></s:hidden>
-				    <s:hidden name="enterprise.enterpriseBankAccount"></s:hidden>
-				    <s:hidden name="enterprise.accountLine"></s:hidden>
-				    <s:hidden name="enterprise.status" value=""></s:hidden>
-				    
 					<div class="row-fluid">
 						<p>
 							公司名称：<input type="text" name="enterprise.rferred" disabled="disabled"/>

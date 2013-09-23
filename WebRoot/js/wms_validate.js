@@ -198,8 +198,7 @@ function findIdToEmployees(employeesId)
 		    dataType:'json',    
 		    success:function(data){
 		    	var sex=(data.enterpriseEmployees.employeesSex=='男')?1:0;
-		    	var way=(data.enterpriseEmployees.paymentWay='个人')?1:0;
-		    	
+		    	var way=(data.enterpriseEmployees.paymentWay='企业')?0:1;
 		    	$("input[name='enterpriseEmployees.employeesId']").val(data.enterpriseEmployees.employeesId); 
 		    	$("input[name='enterpriseEmployees.contractNo']").val(data.enterpriseEmployees.contractNo);  
 		    	$("input[name='enterpriseEmployees.employeesName']").val(data.enterpriseEmployees.employeesName); 
@@ -222,15 +221,14 @@ function findIdToEmployees(employeesId)
 		    	$("input[name='enterpriseEmployees.sociaSecurity']").val(data.enterpriseEmployees.sociaSecurity); 
 		    	$("input[name='enterpriseEmployees.ginsengProtectNature']").val(data.enterpriseEmployees.ginsengProtectNature); 
 		    	$("input[name='enterpriseEmployees.cinsengDate']").val(data.enterpriseEmployees.cinsengDate); 
-		    	$("input[name='enterpriseEmployees.base']'][value="+data.enterpriseEmployees.base+"]").attr("checked",true);
+		    	$("input[name='enterpriseEmployees.base'][value="+data.enterpriseEmployees.base+"]").attr("checked",true);
 		    	$("input[name='enterpriseEmployees.socialInsurance']").val(data.enterpriseEmployees.socialInsurance); 
-		    	$("input[name='enterpriseEmployees.fertilityInsurance']").val(data.enterpriseEmployees.fertilityInsurance); 
+		    	$("input[name='enterpriseEmployees.fertilityInsurance']").val(data.enterpriseEmployees.fertilityInsurance);
 		    	$("input[name='enterpriseEmployees.inductrialBase']").val(data.enterpriseEmployees.inductrialBase); 
 		    	$("input[name='enterpriseEmployees.basicMedical']").val(data.enterpriseEmployees.basicMedical); 
 		    	$("input[name='enterpriseEmployees.housingFund']").val(data.enterpriseEmployees.housingFund); 
-		    	$("input[name='enterpriseEmployees.paymentWay']'][value="+way+"]").attr("checked",true) 
-		    	$("input[name='enterpriseEmployees.pseudoDelete']").val(data.enterpriseEmployees.pseudoDelete); 
-		    	
+		    	$("input[name='enterpriseEmployees.paymentWay'][value="+way+"]").attr("checked",true) 
+		    	$("input[name='enterpriseEmployees.pseudoDelete'][value="+data.enterpriseEmployees.pseudoDelete+"]").attr("checked",true); 
 		    	$("input[name='enterpriseEmployees.serviceCost']").val(data.enterpriseEmployees.serviceCost); 
 		    	
 		    },    

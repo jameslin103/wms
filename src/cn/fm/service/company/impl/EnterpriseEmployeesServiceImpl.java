@@ -32,7 +32,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees> getAllEnterpriseEmployees(Integer enterpriseId)
 	{
-		Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterprise.enterpriseId=?1 ");
+		Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterprise.enterpriseId=?1  and e.departure=0 ");
 		return query.setParameter(1, enterpriseId).getResultList();
 	}
 	
@@ -47,15 +47,15 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		Query query = null;
 		if(!StringUtil.isEmpty(employeesName)  && all!=null)
 		{
-			query = em.createQuery("select e from EnterpriseEmployees e where e.employeesName like ?1")
+			query = em.createQuery("select e from EnterpriseEmployees e where e.employeesName like ?1  and e.departure=0 ")
 			.setParameter(1, "%"+employeesName+"%");
 		}
 		if(StringUtil.isEmpty(employeesName) && all!=null){
-			query = em.createQuery("select e from EnterpriseEmployees e");
+			query = em.createQuery("select e from EnterpriseEmployees e  and e.departure=0 ");
 		}
 		if(all==null && !StringUtil.isEmpty(employeesName))
 		{
-			query = em.createQuery("select e from EnterpriseEmployees e where e.employeesName like ?1 and e.enterprise.id=?2 ")
+			query = em.createQuery("select e from EnterpriseEmployees e where e.employeesName like ?1 and e.enterprise.id=?2  and e.departure=0 ")
 			.setParameter(1, "%"+employeesName+"%").setParameter(2, enterpriseId);
 			
 		}
@@ -63,14 +63,19 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		 return query.getResultList();
 	}
 	
-	
+	/**
+	 * 查看参保人员与未参保人员
+	 * @param insurance
+	 * @param enterpriseId
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
-	public List<EnterpriseEmployees> findInsuranceEnterpriseEmployees(Integer  insurance)
+	public List<EnterpriseEmployees> findInsuranceEnterpriseEmployees(Integer  insurance,Integer enterpriseId)
 	{
-		Query query = em.createQuery("select e from EnterpriseEmployees e where e.whetherGinseng=?1");
+		Query query = em.createQuery("select e from EnterpriseEmployees e where e.whetherGinseng=?1 and e.enterprise.enterpriseId=?2  and e.departure=0 " );
 		
-		List<EnterpriseEmployees>  list=query.setParameter(1, insurance).getResultList();
-		return list;
+		return query.setParameter(1, insurance).setParameter(2, enterpriseId).getResultList();
+		 
 	}
 	
 	/**
@@ -111,7 +116,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				employees.setHealthCare(data[22].toString()==null?"":data[22].toString());
 				employees.setSociaSecurity(data[23].toString()==null?null:data[23].toString());
 				employees.setAccumulationFund(data[24].toString()==null?null:data[24].toString());
-				employees.setSeriousDisease(data[25].toString()==null?null:data[25].equals(Constant.WMS_YES)?1:0);
+				employees.setSeriousDisease(data[25].toString()==null?null:data[25].toString());
 				employees.setBase(data[26].toString()==null?null:data[26].equals(Constant.WMS_YES)?1:0);
 				employees.setSocialInsurance(data[27].toString().equals("")?null:Double.valueOf(data[27]));
 				employees.setFertilityInsurance(data[28].toString().equals("")?null:Double.valueOf(data[28]));
@@ -146,29 +151,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		return super.find(employeesId);
 	}
 	
-	/**  
-	* @Name: getExcelFiledNameList
-	* @Description: 获取excel的标题数据
-	*               放到ArrayList集合中
-	* @Author: 刘洋（作者）
-	* @Version: wms1.00 （版本号）
-	* @Create Date: 2013-08-25（创建日期）
-	* @Parameters: 无
-	* @Return: ArrayList(Excel标题集数据)
-	*/
-	public List<String> getExcelFiledNameList() {
-		String [] titles = {"序","合同编号","姓名",	"性别",	"籍贯",	"户口性质",	"家庭住址",	"婚姻",	"文化程度","照片",	"身份证"	,"电话",	"行业",	"岗位",	
-				"开户银行",	"卡号","合同期限(起)","合同期限(止)","服务费（元）","参保性质","是否参保","哪月起参保？","社保","医保","公积金","大病统筹",
-				"参考默认","社会保险","生育保险","工伤","基本医疗保险","住房公积金","大病统筹","缴纳方式"};
-	
-		
-		List<String> filedName = new ArrayList<String>();
-		for(int i=0;i<titles.length;i++){
-			String title = titles[i];
-			filedName.add(title);
-		}
-		return filedName;
-	}
+
 	/**  
 	* @Name: getExcelFiledDataList
 	* @Description: 获取excel的数据内容
@@ -184,7 +167,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	{
 
 		List<EnterpriseEmployees> enterpriseEmployeesListDatePO=null;
-		Query query=em.createQuery("select e from EnterpriseEmployees e where e.enterprise.id=?1");
+		Query query=em.createQuery("select e from EnterpriseEmployees e  where e.enterprise.id=?1  and e.departure=0 ");
 		query.setParameter(1, enterpriseId);
 		enterpriseEmployeesListDatePO=query.getResultList();
 		List<EnterpriseEmployees> employeesListVO = this.enterpriseEmployeesPOListToVOList(enterpriseEmployeesListDatePO);
@@ -254,7 +237,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 * @return
 	 */
 	public long newStaffCount(Integer enterpriseId){
-		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.ginsengProtectNature='新增' ");
+		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1  and e.departure=0 and e.ginsengProtectNature='新增' ");
 		query.setParameter(1, enterpriseId);
 		return (Long)query.getSingleResult();
 		
@@ -265,7 +248,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 * @return
 	 */
 	public long renewalPersonnel(Integer enterpriseId){
-		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.ginsengProtectNature='续保' ");
+		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.ginsengProtectNature='续保'  and e.departure=0 ");
 		query.setParameter(1, enterpriseId);
 		return (Long)query.getSingleResult();
 		
@@ -276,7 +259,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 * @return
 	 */
 	public long ginsengPersonnel(Integer enterpriseId){
-		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.whetherGinseng=1 ");
+		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.whetherGinseng=1  and e.departure=0 ");
 		query.setParameter(1, enterpriseId);
 		return (Long)query.getSingleResult();
 		
@@ -285,7 +268,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees>  findWorkersIncreasedToEmployees(Integer enterpriseId)
 	{
-		Query query=em.createQuery("select e from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.whetherGinseng=1  and e.ginsengProtectNature='新增' order by employeesId asc ");
+		Query query=em.createQuery("select e from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.whetherGinseng=1 and e.departure=0  and e.ginsengProtectNature='新增' order by employeesId asc ");
 		query.setParameter(1, enterpriseId);
 		return query.getResultList();
 	}
@@ -301,7 +284,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	{
 		
 		Query query=em.createQuery("select e from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 " +
-				"and e.ginsengProtectNature like ?2 order by employeesId asc ");
+				"and e.ginsengProtectNature like ?2 and e.departure=0 order by employeesId asc ");
 		query.setParameter(1, enterpriseId).setParameter(2, "%"+type+"%");
 		return query.getResultList();
 		
@@ -358,12 +341,14 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees> getAllEnterpriseEmployees()
 	{
-		Query query = em.createQuery("select e from EnterpriseEmployees e ");
+		Query query = em.createQuery("select e from EnterpriseEmployees e and e.departure=0 ");
 		return query.getResultList();
 	}
 
 
-
+	/**
+	 * 修改企业员工信息
+	 */
 	public boolean updateEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
 		
 		try {
@@ -445,7 +430,85 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		return true;
 	}
 	
+	/**
+	 * 查询离职员工
+	 * @return
+	 */
+    @SuppressWarnings("unchecked")
+	public List<EnterpriseEmployees>  findEmployeesDeparture(Integer enterpriseId){
+    	Query query = em.createQuery("select e from EnterpriseEmployees e where e.departure=1 and e.enterprise.enterpriseId=?1 ");
+    		  query.setParameter(1, enterpriseId);
+    	
+    	
+		return query.getResultList();
+
+    }
+    /**
+	 * 查询隐藏员工
+	 * @return
+	 */
+    @SuppressWarnings("unchecked")
+	public List<EnterpriseEmployees>  findEmployeesHidden(Integer enterpriseId){
+    	Query query = em.createQuery("select e from EnterpriseEmployees e where e.pseudoDelete=0 and e.enterprise.enterpriseId=?1 ");
+    		  query.setParameter(1, enterpriseId);
+    	
+    	
+		return query.getResultList();
+
+    }
+
+
+    
+   /*
+    * 统计当前企业增员与减员明细
+    */
+    public long findInsuranceWithMonthCount(Integer enterpriseId)
+    {
+    	
+    	
+    	
+    	
+    	return 0;
+    }
+    
+    /**
+	 * 查看统计企业增减员参保明细表
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<EnterpriseEmployees> getInsuranceWithEmployeeList(Integer enterpriseId,Integer year,Integer month)
+	{
+		Query query = null ;
+		try {
+			query = em.createQuery("select e from EnterpriseEmployees e where (e.ginsengProtectNature='新增' or e.ginsengProtectNature='续保' or e.ginsengProtectNature='减员')" +
+					" and e.pseudoDelete=0 and e.enterprise.enterpriseId=?1 " +
+					" and e.departure=0 and  year(e.cinsengDate )=?2 and month( e.cinsengDate )=?3");
+			  query.setParameter(1, enterpriseId).setParameter(2, year).setParameter(3, month);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	
+	
+	return query.getResultList();
+
+		
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+
+	public List<String> getExcelFiledNameList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+    
 	
 	
 	

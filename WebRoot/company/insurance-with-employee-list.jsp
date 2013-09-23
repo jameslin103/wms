@@ -42,7 +42,7 @@
 								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li class="active">
-								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
+								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
 							</li>
 						</ul>
 
@@ -66,7 +66,7 @@
 								<a href="renewalEmployees?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>">续保</a>，
 							</li>
 							<li>
-								<a href="#">减员</a>
+								<a href="personnelReduction?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>">减员</a>
 							</li>
 						</ul>
 
@@ -153,36 +153,39 @@
 										<s:property value="%{#emp.homeAddress}"/>
 									</td>
 									<td>
-										<s:if test="%{#emp.householdRegister==0}">
+										<s:if test="#emp.householdRegister==0">
 												<span>非农</span>
 										</s:if>
-										<s:elseif test="%{#emp.householdRegister==1}">
+										<s:elseif test="#emp.householdRegister==1">
 												<span>农村</span>
 										</s:elseif>
+										<s:else>&nbsp;&nbsp;</s:else>
 										</td>
 										<td>
-											<s:if test="%{#emp.maritalStatus==0}">
+											<s:if test="#emp.maritalStatus==0">
 												<span>已婚</span>
 											</s:if>
-											<s:else>
+											<s:elseif test="#emp.maritalStatus==1">
 												<span>未婚</span>
-											</s:else>
+											</s:elseif>
+											<s:else>&nbsp;&nbsp;</s:else>
 										</td>
 									<td>
 										<s:property value="%{#emp.levelEducation}"/>
 									</td>
 									<td>
-										<s:date name="%{#emp.startContractDeadline}" format="yyyy.MM.dd"/>
-										——
-										<s:date name="%{#emp.endContractDeadline}" format="yyyy.MM.dd"/>
+										<s:date name="%{#emp.startContractDeadline}" format="yyyy年MM月dd"/>
+										—
+										<s:date name="%{#emp.endContractDeadline}" format="yyyy年MM月dd"/>
 									</td>
 									<td>
-										<s:if test="%{#emp.photo}==0">
+										<s:if test="#emp.photo==0">
 											没有
 										</s:if>
-										<s:elseif test="%{#emp.photo}==1">
+										<s:elseif test="#emp.photo==1">
 											有
 										</s:elseif>
+										<s:else>&nbsp;&nbsp;</s:else>
 									</td>
 									<td>
 										<s:property value="%{#emp.ginsengProtectNature}"/>
@@ -221,34 +224,7 @@
 						<div class="pagination">
 							<ul>
 								<li>
-									<a href="#">&laquo;</a>
-								</li>
-								<li>
-									<a href="#">1</a>
-								</li>
-								<li>
-									<a href="#">2</a>
-								</li>
-								<li>
-									<a href="#">3</a>
-								</li>
-								<li>
-									<a href="#">4</a>
-								</li>
-								<li>
-									<a href="#">5</a>
-								</li>
-								<li>
-									<a href="#">6</a>
-								</li>
-								<li>
-									<a href="#">7</a>
-								</li>
-								<li>
-									<a href="#">8</a>
-								</li>
-								<li>
-									<a href="#">&raquo;</a>
+									<%@ include file="/share/fenye.jsp" %>
 								</li>
 							</ul>
 						</div>

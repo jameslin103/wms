@@ -30,8 +30,13 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	public List<EnterpriseEmployees> getEnterpriseEmployeesSalaryDetail(Serializable entityId);
 	
 	public EnterpriseEmployees findEnterpriseEmployees(Integer employeesId);
-	
-	public List<EnterpriseEmployees> findInsuranceEnterpriseEmployees(Integer  insurance);
+	/**
+	 * 查看参保人员与未参保人员
+	 * @param insurance
+	 * @param enterpriseId
+	 * @return
+	 */
+	public List<EnterpriseEmployees> findInsuranceEnterpriseEmployees(Integer  insurance,Integer enterpriseId);
 	
 	public List<EnterpriseEmployees>  findAllEnterpriseEmployees(String employessName,Integer all,Integer enterpriseId);
 	
@@ -69,13 +74,21 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	public List<EnterpriseEmployees>  findWorkersIncreasedToEmployees(Integer enterpriseId);
 	
 	/**
-	 * 帅选新增或者续保，减员人员
+	 * 筛选新增或者续保，减员人员
 	 * @param enterpriseId
 	 * @param type
 	 * @return
 	 */
 	public List<EnterpriseEmployees>    findNewStaffAndRenewalEmployees(Integer enterpriseId,String type);
 	
+	/**
+	 * 批量上传参保；减员
+	 * @param file
+	 * @param fiName
+	 * @param number
+	 * @param readRow
+	 * @return
+	 */
 	public boolean batchIncreaseEmployees(File file , String fiName,int number,int readRow);
 	
 	/**
@@ -84,6 +97,23 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @return
 	 */
 	public boolean updateEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees);
+	 /**
+	 * 查询隐藏员工
+	 * @return
+	 */
+    public List<EnterpriseEmployees>  findEmployeesHidden(Integer enterpriseId);
+    
 	
+	/**
+	 * 查询离职员工
+	 * @return
+	 */
+    public List<EnterpriseEmployees>  findEmployeesDeparture(Integer enterpriseId);
 	
+    /**
+	 * 查看统计企业增减员参保明细表
+	 * @return
+	 */
+
+	public List<EnterpriseEmployees> getInsuranceWithEmployeeList(Integer enterpriseId,Integer year,Integer month);
 }
