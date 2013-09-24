@@ -343,6 +343,10 @@
         <action name="viewSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="viewSalaryBudgetTable">
             <result name="success" >company/salary-with-month.jsp</result>
         </action> 
+         <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
+            <result name="success" >company/salary-step1-of-create.jsp</result>
+            <result name="input">company/salary-step1-of-create.jsp</result>
+        </action> 
         <action name="addSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="addSalaryBudgetTable" >
 	           <interceptor-ref name="tokenSession" >  
 	               <param name="includeMethods"></param>  
@@ -375,10 +379,7 @@
                	<param name="actionName">returnToModifySalaryBudgetTable</param>
                </result>
         </action> 
-        <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
-            <result name="success" >company/salary-step1-of-create.jsp</result>
-            <result name="input">company/salary-step1-of-create.jsp</result>
-        </action> 
+     
 
         <action name="findBeforeCurrentDateTemplate" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="findBeforeCurrentDateTemplate">
             <result type="json" name="createSalaryBudgetTableList">
@@ -387,20 +388,25 @@
         </action> 
         
         <!-- ===========Wage-budget-salary 2013-08-28============ -->
-         <action name="viewWageBudgetSummary" class="cn.fm.web.action.salary.WageBudgetSummaryAction" method="viewWageBudgetSummary">
+         <action name="viewSalaryBudgetTableSummary" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="viewSalaryBudgetTableSummary">
             <result name="success">company/salary-with-sum-of-categories.jsp</result>
-            <result name="input" type="redirectAction">
-            	<param name="actionName">toBeResponsibleEnterprise</param>
-            </result>
         </action>
-        <action name="findToIdSalayBudegSummary" class="cn.fm.web.action.salary.WageBudgetSummaryAction" method="findToIdSalayBudegSummary">
-            <result name="wageBudgetSummary" type="json"></result>
+        <action name="findToIdSalayBudegTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="findToIdSalayBudegTable">
+            <result name="createSalaryBudgetTable" type="json"></result>
         </action>
-        <action name="updateWageBudgetSummary" class="cn.fm.web.action.salary.WageBudgetSummaryAction" method="updateWageBudgetSummary">
+        <action name="updateSalayBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="updateSalayBudgetTable">
             <result name="success" type="redirectAction">
-            	<param name="actionName">viewWageBudgetSummary</param>
+            	<param name="actionName">viewSalaryBudgetTableSummary</param>
+            	<param name="enterpriseId">${enterpriseId}</param>
+            	<param name="budgetId">${budgetId}</param>
             </result>
         </action>
+         <action name="deleteSalayBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="deleteSalayBudgetTable">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewSalaryBudgetTable</param>
+            </result>
+        </action>
+        
         
         <!-- 查看企业资金往来情况 -->
         <action name="viewBalanceDetail" class="cn.fm.web.action.salary.BalanceDetailAction" method="viewBalanceDetail">
@@ -425,16 +431,20 @@
             <result name="success">company/salary-with-bank-detail.jsp</result>
         </action>
         
+           <!-- report  ======================== -->
         <action name="downloadBankIssueSalary" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="downloadBankIssueSalary">
             <result name="success"  type="jasper"></result>
             <result name="input" type="redirectAction">
             	<param name="actionName">viewSalaryWithBankDetail</param>
             </result>
         </action>
-     
-       
-
-
+        
+       <action name="downloadSalaryWithSumOfCategoriesReport" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="downloadSalaryWithSumOfCategoriesReport">
+            <result name="success"  type="jasper"></result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewSalaryBudgetTable</param>
+            </result>
+        </action>
 	</package>
 
 </struts>

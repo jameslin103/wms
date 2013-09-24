@@ -4,18 +4,6 @@ function Ctrl($scope) {
 }
 
 
-
-
-$(document).ready(function(){
-
-	ajaxfindBeforeCurrentDateTemplate();
-	valitate_xls();
-
-	
-	
-	
-});
-
 /**
  * json 请求查询企业信息
  * @param enterpriseId
@@ -86,7 +74,7 @@ function findEnterpriseToUser(enterpriseId)
 
 function ajaxfindBeforeCurrentDateTemplate()
 {
-	$(".Wdate").blur(function (){
+
 		var template=$("#d11").val();
 		if(template!=""){
 			$.ajax( {    
@@ -114,8 +102,6 @@ function ajaxfindBeforeCurrentDateTemplate()
 			     }    
 		});	
 		}
-	});
-  
 }
 /**
  * 查找修改的基数
@@ -268,21 +254,30 @@ function findToIdBalanceDetail(detailId)
 }
 
 
-function findToIdSalayBudegSummary(wageId)
+function findToIdSalayBudegTable(budgetId)
 {
-	if(wageId!=null && wageId!=undefined){
+	if(budgetId!=null && budgetId!=undefined){
 		$.ajax( {    
-		    url:'findToIdSalayBudegSummary',// 跳转到 action  
-		    data:{wageId:wageId},    
+		    url:'findToIdSalayBudegTable',// 跳转到 action  
+		    data:{budgetId:budgetId},    
 		    type:'post',    
 		    cache:false,
 		    dataType:'json',    
 		    success:function(data){
-		    	$("#templateName").val(data.wageBudgetSummary.wageSheetName)
-		    	$("input[name='wageBudgetSummary.wageSheetName']").val(data.wageBudgetSummary.wageSheetName); 
-		    	$("input[name='wageBudgetSummary.wageMonth']").val(data.wageBudgetSummary.wageMonth);
-		    	$("input[name='wageBudgetSummary.mergeTax']").val(data.wageBudgetSummary.mergeTax); 
-		    	$("input[name='wageBudgetSummary.note']").val(data.wageBudgetSummary.note); 
+		    	$("input[name='budgetId']").val(budgetId); 
+		    	$("input[name='createSalaryBudgetTable.budgetId']").val(data.createSalaryBudgetTable.budgetId); 
+		    	$("#templateName").text(data.createSalaryBudgetTable.templateName)
+		    	$("input[name='createSalaryBudgetTable.name']").val(data.createSalaryBudgetTable.name); 
+		    	$("input[name='createSalaryBudgetTable.wageMonth']").val(data.createSalaryBudgetTable.wageMonth);
+		    	$("input[name='createSalaryBudgetTable.mergeTax']").val(data.createSalaryBudgetTable.mergeTax); 
+		    	$("#salaryTable").empty();
+		    	$("#salaryTable").append("<option>"+data.createSalaryBudgetTable.mergeTax+"</option>");
+		    	//$("#salaryTable").attr("value",'test');
+		    
+		    	$("#note").val(data.createSalaryBudgetTable.note);
+
+		    
+		    	
 
 		    },    
 		     error : function() {  

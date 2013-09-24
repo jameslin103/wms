@@ -69,7 +69,30 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 		return falag;
 		
 	}
+	@SuppressWarnings("unchecked")
+	public List<CreateSalaryBudgetTable>  getFindCreateSalaryBudgetTables(Integer budgetId){
+		
+		Query query=em.createQuery("select c from CreateSalaryBudgetTable  c where c.budgetId=?1");
+		   query.setParameter(1,budgetId);
+		   return query.getResultList();
+		
+	}
 
+	public void updateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable) {
+		try {
+			em.createQuery("update CreateSalaryBudgetTable c set c.name=?1,c.wageMonth=?2,c.mergeTax=?3,c.note=?4 where c.budgetId=?5")
+			.setParameter(1, createSalaryBudgetTable.getName()).setParameter(2, createSalaryBudgetTable.getWageMonth())
+			.setParameter(3, createSalaryBudgetTable.getMergeTax()).setParameter(4, createSalaryBudgetTable.getNote())
+			.setParameter(5, createSalaryBudgetTable.getBudgetId())
+			.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
 	
 	
 	

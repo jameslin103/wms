@@ -57,45 +57,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th>现金（人）</th>
                 <th>（制作、实际发放）</th>
             </thead>
-            <s:iterator value="%{#request.wageBudgetSummarys}" id="wage">
             <tbody>
               <tr>
                 <td>
-                	<s:property value="%{#wage.wageSheetName}"/>
+                	<s:property value="%{#request.createSalaryBudgetTable.name}"/>
                 </td>
-                <td><s:date name="%{#wage.wageMonth}" format="yyyy年MM月"/></td>
-                <td><s:property value="%{#wage.mergeTax}"/></td>
-                <td><s:property value="%{#wage.nture}"/></td>
-                <td><s:property value="%{#wage.makeTotal}"/></td>
-                <td><s:property value="%{#wage.wageTotal}"/></td>
-                <td><s:property value="%{#wage.serviceTotal}"/></td>
-                <td><s:property value="%{#wage.fiveInsurancesTotal}"/></td>
-                <td><s:property value="%{#wage.issueNumber}"/><br>
+                <td><s:date name="%{#request.createSalaryBudgetTable.wageMonth}" format="yyyy年MM月"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.mergeTax}"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.nture}"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.makeTotal}"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.wageTotal}"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.serviceTotal}"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.fiveInsurancesTotal}"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br>
                 <a href="viewSalaryWithBankDetail">查看</a>
                 </td>
-                <td><s:property value="%{#wage.issueNumber}"/><br><span class="em">（已发放）</span>
+                <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br><span class="em">（已发放）</span>
                 <br>2013年7月15日9时</td>
-                <td><s:property value="%{#wage.heLines}"/><br><span class="em">（已发放）</span>
+                <td><s:property value="%{#request.createSalaryBudgetTable.heLines}"/><br><span class="em">（已发放）</span>
                 <br>2013年7月15日9：30时</td>
-                <td><s:property value="%{#wage.cash}"/><br><span class="em">（已发放）</span>
+                <td><s:property value="%{#request.createSalaryBudgetTable.cashnumber}"/><br><span class="em">（已发放）</span>
                 <br>2013年7月16日11时</td>
                 <td>
                   <ul>
-                    <li>制作:<s:property value="%{#wage.status}"/>
+                    <li>制作:<s:property value="%{#request.createSalaryBudgetTable.status}"/>
                     </li>
                     <li>发放：小柴</li>
                   </ul>
                 </td>
                 <td>
-                  <s:set value="%{#wage.wageId}" var="wageId"></s:set>
-                  <a href="#info-for-check" onclick="findToIdSalayBudegSummary('${wageId}')" data-toggle="modal">修改</a>
-                  <a href="">删除</a><br>
+                  <s:set value="%{#request.createSalaryBudgetTable.budgetId}" var="budgetId"></s:set>
+                  <a href="#info-for-check" onclick="findToIdSalayBudegTable('${budgetId}')" data-toggle="modal">修改</a>
+                  <a href="deleteSalayBudgetTable?createSalaryBudgetTable.budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}" />">删除</a><br>
                   <a href="viewAllEmployeesSalaryDetail">查看</a>
-                  <a href="">下载</a>
+                  <a href="downloadSalaryWithSumOfCategoriesReport?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}" />">下载</a>
                 </td>
               </tr>
             </tbody>
-            </s:iterator>
           </table>
         </div>
   
@@ -112,11 +110,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="modal-body">
       <div class="row-fluid">
-         <s:form action="updateWageBudgetSummary" method="post">
+         <s:form action="updateSalayBudgetTable" method="post">
+         	  <s:hidden name="enterpriseId" value="%{#request.session.enterprise.enterpriseId}"></s:hidden>
+         	  <s:hidden name="createSalaryBudgetTable.budgetId"></s:hidden>
+         	  <s:hidden name="budgetId"></s:hidden>
               <div class="row-fluid">
                 <div class="input-container">
                   <label>名称</label>
-                  <s:textfield name="wageBudgetSummary.wageSheetName" cssStyle="width: 220px;height:30px;"/>
+                  <s:textfield name="createSalaryBudgetTable.name" cssStyle="width: 220px;height:30px;"/>
                 </div>
 
                 <div class="input-container">
@@ -126,19 +127,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                 <div class="input-container" >
                   <label>生成哪月工资？</label>
-                  <s:textfield id="d11"	name="salaryDate" onclick="WdatePicker()" name="wageBudgetSummary.wageMonth" cssClass="Wdate" cssStyle="width: 220px;height:30px;"  />
+                  <s:textfield id="d11"	 onclick="WdatePicker()" onblur="ajaxfindBeforeCurrentDateTemplate()" name="createSalaryBudgetTable.wageMonth" cssClass="Wdate" cssStyle="width: 220px;height:30px;"  />
                 </div>
                 <div class="input-container">
                   <label>选择与其他工资表合并计税</label>
-                  <select id="salaryTable" name="wageBudgetSummary.mergeTax" >
-                    <option value="%{#createSalaryBudgetTable.temple}">--请选择--</option>
+                  <select id="salaryTable" name="createSalaryBudgetTable.mergeTax" >
+                    <option value="0">--请选择--</option>
                   </select>
                 </div>
 
                 <div class="input-container">
                   <label>补充说明</label>
-                  <textarea rows="3" name="wageBudgetSummary.note"   style="width: 220px;" >
-                  		<s:property value="%{#wageBudgetSummary.note}"/>
+                  <textarea rows="3" name="createSalaryBudgetTable.note" cols="30" id="note">
+                  			
                   </textarea>
                 </div>
 

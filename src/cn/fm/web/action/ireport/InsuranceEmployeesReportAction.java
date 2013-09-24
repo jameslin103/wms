@@ -3,16 +3,15 @@ package cn.fm.web.action.ireport;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
-
 import org.apache.struts2.ServletActionContext;
-
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseEmployeesService;
+import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.ReportAction;
@@ -20,19 +19,28 @@ import cn.fm.web.action.ReportAction;
 @SuppressWarnings("serial")
 public class InsuranceEmployeesReportAction extends ReportAction {
 	@Resource
-	private EnterpriseEmployeesService  enterpriseEmployeesService;
+	private EnterpriseEmployeesService  		enterpriseEmployeesService;
 	@Resource
 	private EmployeesSalaryDetailService        employeesSalaryDetailService;
+	@Resource
+	private CreateSalaryBudgetTableService		createSalaryBudgetTableService;
+	
+	
+	private Integer								budgetId;
 	
 	
 	
 	
 	
 	
+
 	
-	
-	
-	
+	public Integer getBudgetId() {
+		return budgetId;
+	}
+	public void setBudgetId(Integer budgetId) {
+		this.budgetId = budgetId;
+	}
 	public void setEnterpriseEmployeesService(
 			EnterpriseEmployeesService enterpriseEmployeesService) {
 		this.enterpriseEmployeesService = enterpriseEmployeesService;
@@ -137,7 +145,30 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	}
 	
 	
-	
+	public String downloadSalaryWithSumOfCategoriesReport()
+	{
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		WmsUser    user=WebUtil.getWmsUser(request);
+		if(enterprise.getEnterpriseId()==null)return INPUT;
+		String currentPath = ServletActionContext.getServletContext().getRealPath("");
+		String images= currentPath+"/images/fullname.jpg";
+		List<CreateSalaryBudgetTable> wageBudgetSummaryList=createSalaryBudgetTableService.getFindCreateSalaryBudgetTables(budgetId);
+		Map<String, Object> parameters=new HashMap<String, Object>();
+		parameters.put("fullName",enterprise.getFullName()); 
+		parameters.put("username",user.getUsername()); 
+		parameters.put("image",images); 
+
+		String sqlJasper="salary-with-sum-of-categories.jasper";
+		 
+		try {
+			downloadExcel(sqlJasper, "工资预算表汇总信息表", parameters,wageBudgetSummaryList);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	
 	

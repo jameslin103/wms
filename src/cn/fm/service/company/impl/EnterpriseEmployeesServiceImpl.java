@@ -51,7 +51,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			.setParameter(1, "%"+employeesName+"%");
 		}
 		if(StringUtil.isEmpty(employeesName) && all!=null){
-			query = em.createQuery("select e from EnterpriseEmployees e  and e.departure=0 ");
+			query = em.createQuery("select e from EnterpriseEmployees e  where e.departure=0 ");
 		}
 		if(all==null && !StringUtil.isEmpty(employeesName))
 		{
@@ -168,7 +168,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	{
 
 		List<EnterpriseEmployees> enterpriseEmployeesListDatePO=null;
-		Query query=em.createQuery("select e from EnterpriseEmployees e  where e.enterprise.id=?1  and e.departure=0 ");
+		Query query=em.createQuery("select e from EnterpriseEmployees e  where e.enterprise.enterpriseId=?1  and e.departure=0 ");
 		query.setParameter(1, enterpriseId);
 		enterpriseEmployeesListDatePO=query.getResultList();
 		List<EnterpriseEmployees> employeesListVO = this.enterpriseEmployeesPOListToVOList(enterpriseEmployeesListDatePO);
@@ -342,7 +342,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees> getAllEnterpriseEmployees()
 	{
-		Query query = em.createQuery("select e from EnterpriseEmployees e and e.departure=0 ");
+		Query query = em.createQuery("select e from EnterpriseEmployees e where e.departure=0 ");
 		return query.getResultList();
 	}
 
@@ -450,7 +450,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 */
     @SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees>  findEmployeesHidden(Integer enterpriseId){
-    	Query query = em.createQuery("select e from EnterpriseEmployees e where e.pseudoDelete=0 and e.enterprise.enterpriseId=?1 ");
+    	Query query = em.createQuery("select e from EnterpriseEmployees e where e.pseudoDelete=0 and e.enterprise.enterpriseId=?1 e.departure=0 ");
     		  query.setParameter(1, enterpriseId);
     	
     	

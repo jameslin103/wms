@@ -56,7 +56,7 @@
 
                 <div class="input-container" >
                   <label>生成哪月工资？</label>
-                  <s:textfield id="d11"	name="salaryDate" onclick="WdatePicker()" value="%{#createSalaryBudgetTable.salaryDate}" cssClass="Wdate" cssStyle="width: 220px;height:30px;"  />
+                  <s:textfield id="d11"	name="salaryDate" onblur="ajaxfindBeforeCurrentDateTemplate()" onclick="WdatePicker()" value="%{#createSalaryBudgetTable.salaryDate}" cssClass="Wdate" cssStyle="width: 220px;height:30px;"  />
                 </div>
 
 

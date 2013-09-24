@@ -42,12 +42,30 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	private String error;
 	
 	private String message; 
+	
 	private File   file;
 	
 	private Integer templateId;
 	
+	private Integer  enterpriseId;
 	
-	 public String getExcelName() {
+	private Integer  budgetId;
+	
+	
+	
+	public Integer getBudgetId() {
+		return budgetId;
+	}
+	public void setBudgetId(Integer budgetId) {
+		this.budgetId = budgetId;
+	}
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+	public String getExcelName() {
 		return excelName;
 	}
 	public void setExcelName(String excelName) {
@@ -111,7 +129,11 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			CreateSalaryBudgetTableService createSalaryBudgetTableService) {
 		this.createSalaryBudgetTableService = createSalaryBudgetTableService;
 	}
-
+	
+	/**
+	 * 查看当前企业的预算表
+	 * @return
+	 */
 	public String viewSalaryBudgetTable()
 	{
 		
@@ -234,6 +256,63 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	        
 	        
 	 } 
+	 
+		/**
+		 * 当前企业底下的所有模板
+		 * @param createSalaryBudgetTable
+		 */
+		public void getSalaryTemplate(Integer enterpriseId)
+		{
+		
+			if(enterpriseId==null)return;
+			List<SalaryTemplate> salaryTemplateList=salaryTemplateService.getAllSalaryTemplate(enterpriseId);
+			if(salaryTemplateList.size()==0)
+				salaryTemplateList=new ArrayList<SalaryTemplate>();
+			request.setAttribute("salaryTemplates", salaryTemplateList);
+		}
+		
+		/**
+		 * 查询汇总工资预算表
+		 * @return
+		 */
+	    public String	viewSalaryBudgetTableSummary()
+	    {
+	    	createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+	    	if(createSalaryBudgetTable==null)createSalaryBudgetTable=new CreateSalaryBudgetTable();
+	    	request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTable);
+	    	
+	    	return SUCCESS;
+	    	
+	    }
+		
+		public String findToIdSalayBudegTable()
+		{
+			
+			createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+			
+			return "createSalaryBudgetTable";
+		}
+		/**
+		 * 更新预算表名称
+		 * @return
+		 */
+		public String updateSalayBudgetTable()
+		{
+			
+			createSalaryBudgetTableService.updateSalaryBudgetTable(createSalaryBudgetTable);
+			return SUCCESS;
+		}
+		/**
+		 * 删除预算表
+		 * @return
+		 */
+		public String deleteSalayBudgetTable()
+		{
+			
+			createSalaryBudgetTableService.delete(createSalaryBudgetTable.getBudgetId());
+			
+			return SUCCESS;
+		}
 	 
 
 }

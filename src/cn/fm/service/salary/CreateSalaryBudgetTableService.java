@@ -21,5 +21,10 @@ public interface CreateSalaryBudgetTableService extends DAO<CreateSalaryBudgetTa
 	 * @param 
 	 */
 	public boolean updateCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable);
+	
+	
+	public List<CreateSalaryBudgetTable>  getFindCreateSalaryBudgetTables(Integer budgetId);
+	
+	public void updateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable);
 
 }

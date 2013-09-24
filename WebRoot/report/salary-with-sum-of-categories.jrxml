@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salary-with-sum-of-categories" language="groovy" pageWidth="980" pageHeight="750" columnWidth="940" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a95c57d-eca8-4d8d-b77e-e80701fe06a7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="89"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fullName" class="java.lang.String"/>
+	<parameter name="username" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="budgetId" class="java.lang.Integer">
+		<fieldDescription><![CDATA[budgetId]]></fieldDescription>
+	</field>
+	<field name="cashnumber" class="java.lang.Integer">
+		<fieldDescription><![CDATA[cashnumber]]></fieldDescription>
+	</field>
+	<field name="chooseTax" class="java.lang.String">
+		<fieldDescription><![CDATA[chooseTax]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="cmbc" class="java.lang.Integer">
+		<fieldDescription><![CDATA[cmbc]]></fieldDescription>
+	</field>
+	<field name="createDate" class="java.util.Date">
+		<fieldDescription><![CDATA[createDate]]></fieldDescription>
+	</field>
+	<field name="enterprise" class="cn.fm.bean.company.Enterprise">
+		<fieldDescription><![CDATA[enterprise]]></fieldDescription>
+	</field>
+	<field name="fiveInsurancesTotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[fiveInsurancesTotal]]></fieldDescription>
+	</field>
+	<field name="heLines" class="java.lang.Integer">
+		<fieldDescription><![CDATA[heLines]]></fieldDescription>
+	</field>
+	<field name="issueNumber" class="java.lang.Integer">
+		<fieldDescription><![CDATA[issueNumber]]></fieldDescription>
+	</field>
+	<field name="makeTotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[makeTotal]]></fieldDescription>
+	</field>
+	<field name="mergeTax" class="java.lang.String">
+		<fieldDescription><![CDATA[mergeTax]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<field name="note" class="java.lang.String">
+		<fieldDescription><![CDATA[note]]></fieldDescription>
+	</field>
+	<field name="nture" class="java.lang.String">
+		<fieldDescription><![CDATA[nture]]></fieldDescription>
+	</field>
+	<field name="salaryDate" class="java.util.Date">
+		<fieldDescription><![CDATA[salaryDate]]></fieldDescription>
+	</field>
+	<field name="salaryTemplate" class="cn.fm.bean.salary.SalaryTemplate">
+		<fieldDescription><![CDATA[salaryTemplate]]></fieldDescription>
+	</field>
+	<field name="serviceTotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[serviceTotal]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[status]]></fieldDescription>
+	</field>
+	<field name="templateName" class="java.lang.String">
+		<fieldDescription><![CDATA[templateName]]></fieldDescription>
+	</field>
+	<field name="updateDate" class="java.util.Date">
+		<fieldDescription><![CDATA[updateDate]]></fieldDescription>
+	</field>
+	<field name="wageMonth" class="java.util.Date">
+		<fieldDescription><![CDATA[wageMonth]]></fieldDescription>
+	</field>
+	<field name="wageTotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[wageTotal]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement uuid="390b5bf1-ce78-4eb2-8838-d8a4199295e5" x="0" y="0" width="930" height="35"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fullName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="41" splitType="Stretch">
+			<textField pattern="yyyy/MM/dd">
+				<reportElement uuid="b9cd4ee7-4b69-40f5-a3b4-6d56af1a2613" x="71" y="1" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4bd566cc-cb31-4be2-97a9-8275665d5d4d" x="0" y="1" width="71" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["制作时间:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="22b1bf6c-8f58-4147-a638-84b48541e8a9" x="0" y="21" width="70" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["制 表 人:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b0cd690b-0b6c-4934-865d-19528fff8ec4" x="70" y="21" width="101" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{username}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ec017f1d-7bfe-4e53-a0b8-b7b3c5255235" mode="Opaque" x="0" y="0" width="79" height="41" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[工资预算表名称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="92c7c421-e68c-4b6c-bde2-d38ee76f01ed" mode="Opaque" x="79" y="0" width="79" height="41" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[工资所属月份]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="827d5ba6-9e98-4500-8a8c-2d1379f3f342" mode="Opaque" x="158" y="0" width="79" height="41" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[合并计税工资表]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="09aa3874-e734-4bad-947d-688e2a606f0d" mode="Opaque" x="237" y="0" width="31" height="41" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[性质]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6d0542dc-716d-468f-b584-f2801b6705be" mode="Opaque" x="268" y="20" width="79" height="21" backcolor="#FF3300"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[开票总额（元）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="10dcd29a-de53-403f-9066-e48487f91b77" mode="Opaque" x="347" y="20" width="76" height="21" backcolor="#009966"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[工资总额（元）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="480238c2-ce0d-4d1b-b5a0-4cddf4a2fff6" mode="Opaque" x="423" y="20" width="80" height="21" backcolor="#FF3300"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[服务费总额（元）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="69dcfdcb-37b7-429d-8ae4-6f0ff30d4862" mode="Opaque" x="503" y="20" width="92" height="21" backcolor="#33FF33"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[五险一金总额（元）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="07c2be73-af50-410e-a441-d47daab40616" mode="Opaque" x="595" y="20" width="76" height="21" backcolor="#FFFF00"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[发放人数（人）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="388e115b-d06d-48c2-86a5-4b9a61b65912" mode="Opaque" x="671" y="20" width="72" height="21" backcolor="#999999"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[民生银行（人）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b461be78-1a1c-4ac6-b482-6861e63bb3a4" mode="Opaque" x="743" y="20" width="43" height="21" backcolor="#FFFF00"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[他行(人)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="aae32938-d08e-4537-bd25-56f2ef3fbe92" mode="Opaque" x="786" y="20" width="53" height="21" backcolor="#FFFF00"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[现金（人）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fcac591e-e445-4c56-9563-b84b8cce6d81" mode="Opaque" x="839" y="20" width="101" height="21" backcolor="#00CCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[（制作、实际发放）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="21f7880a-c08a-4212-baf2-efc4cd08f5d9" mode="Opaque" x="268" y="0" width="327" height="20" backcolor="#666600"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[工资预算表汇总信息]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f85bf061-cc62-4a78-a437-de8f7f194b71" mode="Opaque" x="595" y="0" width="244" height="20" backcolor="#99FFCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[发放明细]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2c736723-82df-468e-9e0f-13638709e6db" mode="Opaque" x="839" y="0" width="101" height="20" backcolor="#009933"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[状态]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="2da84875-4707-4ae9-b228-b9d97efdd572" x="0" y="0" width="79" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{name}==null?"":$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a4360636-cb60-4fdc-b768-c80bb2c70003" x="79" y="0" width="79" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{wageMonth}==null?"":$F{wageMonth}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4bc34400-2276-48b6-bdc7-c683ae2072eb" x="158" y="0" width="79" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{mergeTax}==null?"":$F{mergeTax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c0359485-2b6c-44d4-bcf7-742ef55993d2" x="237" y="0" width="31" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nture}==null?"":$F{nture}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="19efc576-c790-498c-9c94-3b6ff2f4328a" x="268" y="0" width="79" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{makeTotal}==null?"":$F{makeTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ed8524c5-a575-4f41-a46b-1bdec4e331f0" x="347" y="0" width="76" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{wageTotal}==null?"":$F{wageTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="aa42f9f9-6afd-4c75-961e-61f7b967f6f0" x="423" y="0" width="80" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{serviceTotal}==null?"":$F{serviceTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="04b8c223-1adf-46f2-97f3-dbebf4aaa815" x="503" y="0" width="92" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fiveInsurancesTotal}==null?"":$F{fiveInsurancesTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0790277c-0cc4-48cc-bc9b-b56f5cbc6be5" x="595" y="0" width="76" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{issueNumber}==null?"":$F{issueNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ceb1ddc0-bd7a-4d27-86e5-cdf0d5c76ce1" x="671" y="0" width="72" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cmbc}==null?"":$F{cmbc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="930b3787-4676-47ca-8409-37f6b80d9290" x="743" y="0" width="43" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{heLines}==null?"":$F{heLines}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="24c0bc23-089e-4573-8cee-712138169c74" x="786" y="0" width="53" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cashnumber}==null?"":$F{cashnumber}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="a9625fb7-fb5c-4d14-beb3-e82785cc956d" x="839" y="0" width="31" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["制作:"+($F{status}==null?"":$F{status})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="6d66e77c-eebc-4abb-8e61-eb179bf4281a" isPrintRepeatedValues="false" mode="Opaque" x="870" y="0" width="70" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["发放："+($F{createDate}==null?"":$F{createDate})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="1800b224-519e-45cb-ac2d-c1e326e3b846" x="841" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
