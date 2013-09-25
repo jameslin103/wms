@@ -24,10 +24,25 @@ public class SalaryTemplateAction extends BaseAction {
 	private SalaryTemplateService salaryTemplateService;
 	@Resource
 	private CustomBonusServices   customBonusService;
+	@Resource 
+	private EnterpriseService   enterpriseService;
 	
 	private SalaryTemplate       salaryTemplate;
 	private CustomBonus          customBonus;
-	@Resource private EnterpriseService   enterpriseService;
+	private Integer				 templateId;
+
+	
+	
+	
+	
+	
+	public Integer getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(Integer templateId) {
+		this.templateId = templateId;
+	}
 
 	public SalaryTemplate getSalaryTemplate() {
 		return salaryTemplate;
@@ -56,7 +71,7 @@ public class SalaryTemplateAction extends BaseAction {
 	public String viewSalaryTemplate()
 	{
 		
-		List<CustomBonus> customBonus=customBonusService.getAllCustomBonus();
+		List<CustomBonus> customBonus=customBonusService.getStatusEnableCustomBonus();
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null)return INPUT;
 		List<SalaryTemplate> salaryTemplate=salaryTemplateService.getAllSalaryTemplate(enterprise.getEnterpriseId());
@@ -80,6 +95,18 @@ public class SalaryTemplateAction extends BaseAction {
 		
 		return SUCCESS;
 		
+	}
+	public String findToIdSalaryTemplate(){
+		
+		salaryTemplate=salaryTemplateService.find(templateId);
+		
+		return "salaryTemplate";
+	}
+	public String updateSalaryTemplate()
+	{
+		
+		salaryTemplateService.updateSalaryTemplate(salaryTemplate);
+		return SUCCESS;
 	}
 	
 }

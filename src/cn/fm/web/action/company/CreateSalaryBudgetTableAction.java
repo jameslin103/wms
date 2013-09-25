@@ -153,9 +153,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	 */
 	public String  addSalaryBudgetTable()
 	{
-		    
-			Enterprise enterprise=WebUtil.getEnterprise(request);
-			if(enterprise==null)return INPUT;
+
 			CreateSalaryBudgetTable	createSalaryBudgetTablePO=null;
 			if(createSalaryBudgetTable!=null && createSalaryBudgetTable.getBudgetId()!=null)
 			{
@@ -163,8 +161,8 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 				createSalaryBudgetTableService.updateCreateSalaryBudgetTable(createSalaryBudgetTable);
 			}else{
 				if(createSalaryBudgetTable==null || createSalaryBudgetTable.getName()==null)return INPUT;
-				if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-				Enterprise enterprisePO=enterpriseService.find(enterprise.getEnterpriseId());
+				if(enterpriseId==null)return INPUT;
+				Enterprise enterprisePO=enterpriseService.find(enterpriseId);
 				SalaryTemplate salaryTemplatePO=salaryTemplateService.find(templateId);
 				createSalaryBudgetTable.setEnterprise(enterprisePO);
 				createSalaryBudgetTable.setSalaryTemplate(salaryTemplatePO);

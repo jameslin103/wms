@@ -287,8 +287,64 @@ function findToIdSalayBudegTable(budgetId)
 	}
 }
 
+function findToIdCustomBonus(id)
+{
+	if(id!=null && id!=undefined){
+		$.ajax( {    
+		    url:'findToIdCustomBonus',// 跳转到 action  
+		    data:{id:id},    
+		    type:'post',    
+		    cache:false,
+		    dataType:'json',    
+		    success:function(data){
+		    	$("input[name='customBonus.id']").val(data.customBonus.id); 
+		    	$("input[name='customBonus.bonusName']").val(data.customBonus.bonusName); 
+		    	$("input[name='customBonus.state'][value="+data.customBonus.state+"]").attr("checked",true);
+		    
+		    	
+
+		    },    
+		     error : function() {  
+		    	 alert("系统异常，请稍后重试！");
+		     }    
+		});	
+	}
 
 
+
+}
+function findToIdSalaryTemplate(templateId){
+	
+	if(templateId!=null && templateId!=undefined){
+		$.ajax( {    
+		    url:'findToIdSalaryTemplate',// 跳转到 action  
+		    data:{templateId:templateId},    
+		    type:'post',    
+		    cache:false,
+		    dataType:'json',    
+		    success:function(data){
+		    	
+		    	$("input[name='salaryTemplate.templateId']").val(data.salaryTemplate.templateId); 
+		    	$("input[name='salaryTemplate.templateName']").val(data.salaryTemplate.templateName); 
+		    	//$("input[name='salaryTemplate.subsidyList'][value="+data.salaryTemplate.subsidyList+"]").attr("checked",true);
+		    	//alert(data.salaryTemplate.subsidyList);
+		    	
+		    	$("input[name='salaryTemplate.fiveInsurances'][value="+data.salaryTemplate.fiveInsurances+"]").attr("checked",true);
+		    	$("input[name='salaryTemplate.tax'][value="+data.salaryTemplate.tax+"]").attr("checked",true);
+		    	$("input[name='salaryTemplate.status'][value="+data.salaryTemplate.status+"]").attr("checked",true); 
+		    
+		    	
+
+		    },    
+		     error : function() {  
+		    	 alert("系统异常，请稍后重试！");
+		     }    
+		});	
+	}
+
+	
+	
+}
 
 
 

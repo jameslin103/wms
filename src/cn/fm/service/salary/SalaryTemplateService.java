@@ -16,4 +16,6 @@ public interface SalaryTemplateService extends DAO<SalaryTemplate> {
 	
 	public List<CreateSalaryBudgetTable> findBeforeCurrentDateTemplate(Date date,Integer enterpriseId);
 
+	public void updateSalaryTemplate(SalaryTemplate salaryTemplate);
+
 }

@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="company/index.jsp">综合</a></li>
             <li><a href="viewEnterpriseEmployees">员工档案</a></li>
             <li class="active"><a href="viewSalaryBudgetTable">工资预算表</a></li>
-            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
+            <li><a href="viewInsuranceWithMonth">增减员与参保明细</a></li>
           </ul>
  
           <ul class="normal action-container clearfix">
@@ -90,6 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                	</s:elseif>
                 <s:else>
                 </s:else>
+                </td>
                 <td>
                 	<s:if test="%{#salary.status==1}">
                 	<span>启用</span>
@@ -102,7 +103,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 
                 </td>
                 <td>
-               	 <a href="#info-for-check" data-toggle="modal">修改</a>
+                <s:set value="%{#salary.templateId}" var="templateId"></s:set>
+               	 <a href="#info-for-check1" onclick="findToIdSalaryTemplate('${templateId}')" data-toggle="modal">修改</a>
                 </td>
               </tr>
             </tbody>
@@ -116,14 +118,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div id="footer"></div>
 
  </div>
-
+  <!-- =============================addSalaryTemplate==================================== -->
     <div id="info-for-check" class="modal hide fade modal-of-info-for-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel">新建/修改工资模板</h3>
       </div>
       <div class="modal-body">
-      <!-- =============================addSalaryTemplate==================================== -->
         <s:form action="addSalaryTemplate" method="post">
           <div class="row-fluid">
             <div class="input-container">
@@ -166,6 +167,59 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
       </div>
     </div> 
+ <!-- =============================updateSalaryTemplate==================================== -->
+    <div id="info-for-check1" class="modal hide fade modal-of-info-for-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">修改工资模板</h3>
+      </div>
+      <div class="modal-body">
+        <s:form action="updateSalaryTemplate" method="post">
+        	<s:hidden name="salaryTemplate.templateId"></s:hidden>
+          <div class="row-fluid">
+            <div class="input-container">
+              <label>名称</label>
+              	<s:textfield name="salaryTemplate.templateName"/>
+            </div>
+			
+			<s:iterator value="#request.customBonus" id="customBonus">
+            <div class="input-container">
+              <label class="checkbox">&nbsp;</label> 
+              <input type="checkbox" value="<s:property value='%{#customBonus.id}'/>" name="salaryTemplate.subsidyList" >
+              <s:property value="%{#customBonus.bonusName}"/>
+            </div>
+            </s:iterator>        
+
+            <div class="input-container">
+              <label>&nbsp;</label>
+              <input type="radio" name="salaryTemplate.fiveInsurances" value="1" checked="checked">包含五险一金，
+              <input type="radio" name="salaryTemplate.fiveInsurances" value="0">不包含
+            </div>
+            <div class="input-container">
+              <label>&nbsp;</label>
+              <input type="radio" name="salaryTemplate.tax" value="1" checked="checked">包含个税，
+              <input type="radio" name="salaryTemplate.tax" value="0">不包含
+            </div>
+            <div class="input-container">
+              <label>&nbsp;</label>
+              <input type="radio" name="salaryTemplate.status" value="1" checked="checked">启用，
+              <input type="radio" name="salaryTemplate.status" value="0">停用
+            </div>                    
+
+            <div class="input-container">
+              <label>&nbsp;</label>
+              <s:submit value="提交" cssClass="btn btn-primary"/>
+            </div>
+          </div>
+        </s:form>              
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    </div> 
+
+
+
 </body>
 
 </html>

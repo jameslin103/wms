@@ -30,23 +30,20 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * @date   2013-09-01
 	 */
 	@SuppressWarnings({ "unchecked", "static-access" })
-	public List<EnterpriseEmployees>   uploadImportWageBudgetSummary(File file , String fileName,int number,int readRows ,int enterpriseId)
+	public void saveEmployeesSalaryDetail(File file , String fileName,int number,int readRows,EmployeesSalaryDetail employeesSalaryDetail)
 	{
-	
-		if(enterpriseId==0)return null;
-		List<EnterpriseEmployees>   enterpriseEmployeesIsExistVO=null;
+
+	    if(employeesSalaryDetail==null || employeesSalaryDetail.getEnterpriseId()==null)return ;
 		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
 		try {
 			List<String[]> arrayList=excel.generateStationBugSql(file,fileName,number,readRows);
-			if(arrayList.size()==0)return null;
-			for (int i = 0; i < arrayList.size(); i++) {
+			if(arrayList.size()==0)return ;
+			for (int i = 0; i < arrayList.size(); i++){
 				String[] data = arrayList.get(i);
-				if(!StringUtil.isEmpty(data[0].toString())){
-					if(IsExistRepeatEmployees(data[0].toString(),enterpriseId)==null)return null;
-					if(IsExistRepeatEmployees(data[0].toString(),enterpriseId).size()>0){
-						enterpriseEmployeesIsExistVO=IsExistRepeatEmployees(data[0].toString(),enterpriseId);
-					}
-				}
+				EmployeesSalaryDetail employeesSalaryDetailVO=structureEmployeesSalaryDetail(data);
+				employeesSalaryDetailVO.setEnterpriseId(employeesSalaryDetail.getEnterpriseId());
+				employeesSalaryDetailVO.setBudgettableId(employeesSalaryDetail.getBudgettableId());
+				super.save(employeesSalaryDetailVO);
 			}	
 			
 		} catch (Exception e) {
@@ -54,37 +51,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			e.printStackTrace();
 		}
 		
-		return enterpriseEmployeesIsExistVO;
 	}
-	/**
-	 * 临时保存EmployeesSalaryDetail
-	 * @param employeesSalaryDetail
-	 * @return employeesSalaryDetailListVO
-	 */
-	@SuppressWarnings({ "unchecked", "static-access" })
-	public List<EmployeesSalaryDetail> saveTempEmployeesSalaryDetail(File file , String fileName,int number,int readRows,int enterpriseId)
-	{
-		List<EmployeesSalaryDetail> employeesSalaryDetailListVO=new ArrayList<EmployeesSalaryDetail>();
-
-		if(enterpriseId==0)return null;
-		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
-		try {
-			List<String[]> arrayList=excel.generateStationBugSql(file,fileName,number,readRows);
-			if(arrayList.size()==0)return null;
-			for (int i = 0; i < arrayList.size(); i++) {
-				String[] data = arrayList.get(i);
-				employeesSalaryDetailListVO.add(structureEmployeesSalaryDetail(data));	
-			}	
-			
-		} catch (Exception e) {
-		
-			e.printStackTrace();
-		}
-		return employeesSalaryDetailListVO;
-		
-	}
-
-	
 	/**
 	 * @author jameslin
 	 * @date 2013-09-01
@@ -94,36 +61,42 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	public EmployeesSalaryDetail structureEmployeesSalaryDetail(String[] fileDate)
 	{
 		EmployeesSalaryDetail   employeesSalaryDetailVO=new EmployeesSalaryDetail();
-		employeesSalaryDetailVO.setEmployeesName(fileDate[0].toString());
-		employeesSalaryDetailVO.setWage(fileDate[1].toString()==null?null:new BigDecimal(fileDate[1]));
-		employeesSalaryDetailVO.setBonus(fileDate[2].toString()==null?null:new BigDecimal(fileDate[2]));
-		employeesSalaryDetailVO.setSubsidies(fileDate[3].toString()==null?null:new BigDecimal(fileDate[3]));
-		employeesSalaryDetailVO.setShouldPay(fileDate[4].toString()==null?null:new BigDecimal(fileDate[4]));
-		employeesSalaryDetailVO.setSocialInsuranceBase(fileDate[5].toString()==null?null:new BigDecimal(fileDate[5]));
-		employeesSalaryDetailVO.setEnterprisePensionInsurance(fileDate[6].toString()==null?null:new BigDecimal(fileDate[6]));
-		employeesSalaryDetailVO.setPersonalPensionInsurance(fileDate[7].toString()==null?null:new BigDecimal(fileDate[7]));
-		employeesSalaryDetailVO.setEnterpriseUnemploymentInsurance(fileDate[8].toString()==null?null:new BigDecimal(fileDate[8]));
-		employeesSalaryDetailVO.setPersonalUnemploymentInsurance(fileDate[9].toString()==null?null:new BigDecimal(fileDate[9]));
-		employeesSalaryDetailVO.setBirthInsuranceBase(fileDate[10].toString()==null?null:new BigDecimal(fileDate[10]));
-		employeesSalaryDetailVO.setEnterpriseBirthInsurance(fileDate[11].toString()==null?null:new BigDecimal(fileDate[11]));
-		employeesSalaryDetailVO.setInductrialInjuryBase(fileDate[12].toString()==null?null:new BigDecimal(fileDate[12]));
-		employeesSalaryDetailVO.setEnterpriseInductrialInjuryBase(fileDate[13].toString()==null?null:new BigDecimal(fileDate[13]));
-		employeesSalaryDetailVO.setMedicalPaymentBase(fileDate[14].toString()==null?null:new BigDecimal(fileDate[14]));
-		employeesSalaryDetailVO.setEnterpriseMedicalBase(fileDate[15].toString()==null?null:new BigDecimal(fileDate[15]));
-		employeesSalaryDetailVO.setPersonalMedicalBase(fileDate[16].toString()==null?null:new BigDecimal(fileDate[16]));
-		employeesSalaryDetailVO.setHousingReserveBase(fileDate[17].toString()==null?null:new BigDecimal(fileDate[17]));
-		employeesSalaryDetailVO.setEnterpriseReserveBase(fileDate[18].toString()==null?null:new BigDecimal(fileDate[18]));
-		employeesSalaryDetailVO.setPersonalReserveBase(fileDate[19].toString()==null?null:new BigDecimal(fileDate[19]));
-		employeesSalaryDetailVO.setMorbidityStatistics(fileDate[20].toString()==null?null:new BigDecimal(fileDate[20]));
-		employeesSalaryDetailVO.setEnterpriseSubtotal(fileDate[21].toString()==null?null:new BigDecimal(fileDate[21]));
-		employeesSalaryDetailVO.setPersonalSubtotal(fileDate[22].toString()==null?null:new BigDecimal(fileDate[22]));
-		employeesSalaryDetailVO.setBeforeSalary(fileDate[23].toString()==null?null:new BigDecimal(fileDate[23]));
-		employeesSalaryDetailVO.setEnterpriseTax(fileDate[24].toString()==null?null:new BigDecimal(fileDate[24]));
-		employeesSalaryDetailVO.setPersonalTax(fileDate[25].toString()==null?null:new BigDecimal(fileDate[25]));
-		employeesSalaryDetailVO.setServiceCharge(fileDate[26].toString()==null?null:new BigDecimal(fileDate[26]));
-		employeesSalaryDetailVO.setAggregate(fileDate[27].toString()==null?null:new BigDecimal(fileDate[27]));
-		employeesSalaryDetailVO.setMoneyToCards(fileDate[28].toString()==null?null:new BigDecimal(fileDate[28]));
-		employeesSalaryDetailVO.setNote(fileDate[29].toString());
+		try {
+			employeesSalaryDetailVO.setEmployeesName(fileDate[1].toString());
+			employeesSalaryDetailVO.setWage(fileDate[2].toString()==null?null:new BigDecimal(fileDate[2]));
+			employeesSalaryDetailVO.setBonus(fileDate[3].toString()==null?null:new BigDecimal(fileDate[3]));
+			employeesSalaryDetailVO.setSubsidies(fileDate[4].toString()==null?null:new BigDecimal(fileDate[4]));
+			employeesSalaryDetailVO.setShouldPay(fileDate[5].toString()==null?null:new BigDecimal(fileDate[5]));
+			employeesSalaryDetailVO.setSocialInsuranceBase(fileDate[6].toString()==null?null:new BigDecimal(fileDate[6]));
+			employeesSalaryDetailVO.setEnterprisePensionInsurance(fileDate[7].toString()==null?null:new BigDecimal(fileDate[7]));
+			employeesSalaryDetailVO.setPersonalPensionInsurance(fileDate[8].toString()==null?null:new BigDecimal(fileDate[8]));
+			employeesSalaryDetailVO.setEnterpriseUnemploymentInsurance(fileDate[9].toString()==null?null:new BigDecimal(fileDate[9]));
+			employeesSalaryDetailVO.setPersonalUnemploymentInsurance(fileDate[10].toString()==null?null:new BigDecimal(fileDate[10]));
+			employeesSalaryDetailVO.setBirthInsuranceBase(fileDate[11].toString()==null?null:new BigDecimal(fileDate[11]));
+			employeesSalaryDetailVO.setEnterpriseBirthInsurance(fileDate[12].toString()==null?null:new BigDecimal(fileDate[12]));
+			employeesSalaryDetailVO.setInductrialInjuryBase(fileDate[13].toString()==null?null:new BigDecimal(fileDate[13]));
+			employeesSalaryDetailVO.setEnterpriseInductrialInjuryBase(fileDate[14].toString()==null?null:new BigDecimal(fileDate[14]));
+			employeesSalaryDetailVO.setMedicalPaymentBase(fileDate[15].toString()==null?null:new BigDecimal(fileDate[15]));
+			employeesSalaryDetailVO.setEnterpriseMedicalBase(fileDate[16].toString()==null?null:new BigDecimal(fileDate[16]));
+			employeesSalaryDetailVO.setPersonalMedicalBase(fileDate[17].toString()==null?null:new BigDecimal(fileDate[17]));
+			employeesSalaryDetailVO.setHousingReserveBase(fileDate[18].toString()==null?null:new BigDecimal(fileDate[18]));
+			employeesSalaryDetailVO.setEnterpriseReserveBase(fileDate[19].toString()==null?null:new BigDecimal(fileDate[19]));
+			employeesSalaryDetailVO.setPersonalReserveBase(fileDate[20].toString()==null?null:new BigDecimal(fileDate[20]));
+			employeesSalaryDetailVO.setMorbidityStatistics(fileDate[21].toString()==null?null:new BigDecimal(fileDate[21]));
+			employeesSalaryDetailVO.setEnterpriseSubtotal(fileDate[22].toString()==null?null:new BigDecimal(fileDate[22]));
+			employeesSalaryDetailVO.setPersonalSubtotal(fileDate[23].toString()==null?null:new BigDecimal(fileDate[23]));
+			employeesSalaryDetailVO.setBeforeSalary(fileDate[24].toString()==null?null:new BigDecimal(fileDate[24]));
+			employeesSalaryDetailVO.setEnterpriseTax(fileDate[25].toString()==null?null:new BigDecimal(fileDate[25]));
+			employeesSalaryDetailVO.setPersonalTax(fileDate[26].toString()==null?null:new BigDecimal(fileDate[26]));
+			employeesSalaryDetailVO.setServiceCharge(fileDate[27].toString()==null?null:new BigDecimal(fileDate[27]));
+			employeesSalaryDetailVO.setAggregate(fileDate[28].toString()==""?null:new BigDecimal(fileDate[28]));
+			employeesSalaryDetailVO.setMoneyToCards(fileDate[29].toString()==""?null:new BigDecimal(fileDate[29]));
+			employeesSalaryDetailVO.setNote(fileDate[32].toString());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return employeesSalaryDetailVO;
 	}
 	
@@ -168,25 +141,114 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		
 		return query.setParameter(1, enterpriseId).setParameter(2, employeesId).getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	/**
+	 * 统计预算工资
+	 */
+	public List<EmployeesSalaryDetail> findImportEmployeesSalaryDetailStatistics(Integer budgetId,Integer enterpriseId) {
+		
+		Query query=em.createQuery("select e from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");
+		
+		return query.setParameter(1, enterpriseId).setParameter(2, budgetId).getResultList();
 
+	}
+	/**
+	 * 统计开票总额
+	 * 
+	 */
+	public BigDecimal   getInvoiceTotal(Integer enterpriseId,Integer budgettableId)
+	{
+		
+		Query query=em.createQuery("select  sum(e.wage+e.serviceCharge+"+
+          "e.moneyToCards+e.enterpriseTax+"+
+          "e.personalTax+e.socialInsuranceBase+"+
+          "e.enterprisePensionInsurance+"+
+          "e.personalPensionInsurance+"+
+          "e.enterpriseUnemploymentInsurance+"+
+          "e.personalUnemploymentInsurance) from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");
+		
+		return (BigDecimal)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
+		
+	}
+	/**
+	 * 统计工资总额（元）
+	 */
+	public BigDecimal getWageTotal(Integer enterpriseId,Integer budgettableId)
+	{
+		Query query=null;
+		try {
+			
+			query=em.createQuery("select sum(e.wage) from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");		
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return (BigDecimal)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
+	}
+	/**
+	 * 统计发放人数
+	 */
+	public Integer getNumberPersonlTotal(Integer enterpriseId,Integer budgettableId)
+	{
+		Query query=null;
+		try {
+			
+			query=em.createQuery("select count(e.salaryId) from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");		
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return (Integer)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
+	}
+	
+	/**
+	 * 统计服务费总额
+	 */
+	public BigDecimal getServiceTotal(Integer enterpriseId,Integer budgettableId)
+	{
+		Query query=null;
+		try {
+			
+			query=em.createQuery("select sum(e.serviceCharge) from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");		
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return (BigDecimal)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
+	}
+	/**
+	 * 统计统计五险总额
+	 */
+	public BigDecimal getFiveInsuranceTotal(Integer enterpriseId,Integer budgettableId)
+	{
+		Query query=null;
+		try {
+			
+			query=em.createQuery("select sum("+
+					"e.enterprisePensionInsurance+" +
+					"e.personalPensionInsurance+" +
+					"e.enterpriseUnemploymentInsurance+" +
+					"e.personalUnemploymentInsurance+" +
+					"e.enterpriseBirthInsurance+" +
+					"e.enterpriseInductrialInjuryBase+" +
+					"e.enterpriseMedicalBase+" +
+					"e.personalMedicalBase) " +
+					"from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");		
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return (BigDecimal)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
+	}
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }

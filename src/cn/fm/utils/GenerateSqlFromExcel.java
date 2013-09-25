@@ -78,7 +78,7 @@ public class GenerateSqlFromExcel {
 			String[] valStr = new String[number];
 			for (int k = 0; k < sheet[i].getColumns(); k++) 
 			{
-				if(sheet[i].getColumns()==0){continue;}
+				
 				Cell cell = sheet[i].getCell(k, j);
 				String content = "";
 				if (cell.getType() == CellType.DATE) {

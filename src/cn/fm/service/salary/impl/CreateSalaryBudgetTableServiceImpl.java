@@ -93,6 +93,30 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 		
 		
 	}
+	/**
+	 * 插入各种总额(开票；五险，人数)
+	 */
+	public void updateCreateSalaryBudgetTableSummary(CreateSalaryBudgetTable createSalaryBudgetTable) {
+		
+			try {
+				em.createQuery("update CreateSalaryBudgetTable c set c.makeTotal=?1," +
+						"c.wageTotal=?2," +
+						"serviceTotal=?3," +
+						"c.fiveInsurancesTotal=?4," +
+						"c.issueNumber=?5 where c.budgetId=?6")
+						.setParameter(1, createSalaryBudgetTable.getMakeTotal())
+						.setParameter(2, createSalaryBudgetTable.getWageTotal())
+						.setParameter(3, createSalaryBudgetTable.getServiceTotal())
+						.setParameter(4, createSalaryBudgetTable.getFiveInsurancesTotal())
+						.setParameter(5, createSalaryBudgetTable.getIssueNumber())
+						.setParameter(6, createSalaryBudgetTable.getBudgetId())
+						.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		
+	}
 	
 	
 	

@@ -1,6 +1,7 @@
 package cn.fm.web.action.salary;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +29,17 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	
 	private EnterpriseEmployees   enterpriseEmployees;
 	private Enterprise    enterprise;
+	private CreateSalaryBudgetTable   createSalaryBudgetTable;
+	private EmployeesSalaryDetail     employeesSalaryDetail;
+	
 	private File file;
-	private Double   bonusTotal;
-	private Double   wargeTotal;
+	
+	private BigDecimal   bonusTotal; //开票总额
+	private BigDecimal   wargeTotal;//工资总额
+	private BigDecimal   fiveInsuranceTotal;//五险一金总额
+	private Integer	 numberPeopleTotal;	//发放人数		
+	private BigDecimal   serviceTotal;//服务费总额
+	
 	private Integer  enterpriseId;
 	private Integer  employeesId;
 	private Integer  budgetId;
@@ -39,6 +48,30 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	
 	
 	
+	public BigDecimal getFiveInsuranceTotal() {
+		return fiveInsuranceTotal;
+	}
+
+	public void setFiveInsuranceTotal(BigDecimal fiveInsuranceTotal) {
+		this.fiveInsuranceTotal = fiveInsuranceTotal;
+	}
+
+	public Integer getNumberPeopleTotal() {
+		return numberPeopleTotal;
+	}
+
+	public void setNumberPeopleTotal(Integer numberPeopleTotal) {
+		this.numberPeopleTotal = numberPeopleTotal;
+	}
+
+	public BigDecimal getServiceTotal() {
+		return serviceTotal;
+	}
+
+	public void setServiceTotal(BigDecimal serviceTotal) {
+		this.serviceTotal = serviceTotal;
+	}
+
 	public Integer getBudgetId() {
 		return budgetId;
 	}
@@ -63,19 +96,19 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		this.employeesId = employeesId;
 	}
 
-	public Double getBonusTotal() {
+	public BigDecimal getBonusTotal() {
 		return bonusTotal;
 	}
 
-	public void setBonusTotal(Double bonusTotal) {
+	public void setBonusTotal(BigDecimal bonusTotal) {
 		this.bonusTotal = bonusTotal;
 	}
 
-	public Double getWargeTotal() {
+	public BigDecimal getWargeTotal() {
 		return wargeTotal;
 	}
 
-	public void setWargeTotal(Double wargeTotal) {
+	public void setWargeTotal(BigDecimal wargeTotal) {
 		this.wargeTotal = wargeTotal;
 	}
 
@@ -89,6 +122,23 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 
 	public Enterprise getEnterprise() {
 		return enterprise;
+	}
+	
+	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
+		return createSalaryBudgetTable;
+	}
+	
+	public EmployeesSalaryDetail getEmployeesSalaryDetail() {
+		return employeesSalaryDetail;
+	}
+
+	public void setEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail) {
+		this.employeesSalaryDetail = employeesSalaryDetail;
+	}
+
+	public void setCreateSalaryBudgetTable(
+			CreateSalaryBudgetTable createSalaryBudgetTable) {
+		this.createSalaryBudgetTable = createSalaryBudgetTable;
 	}
 
 	public void setEnterprise(Enterprise enterprise) {
@@ -116,31 +166,30 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	 */
 	public String  uploadEmployeesSalaryDetail()
 	{
-		
+		createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTable);
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
+		
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-		try {
-			List<EnterpriseEmployees>  enterpriseEmployees=employeesSalaryDetailService.uploadImportWageBudgetSummary(file, "工资预算表", 33,3, enterprise.getEnterpriseId());
-			if(enterpriseEmployees==null)return INPUT;
-			if(enterpriseEmployees.size()>0){
-				request.setAttribute("enterpriseEmployees", enterpriseEmployees);
-				return INPUT;
-			}else{
-				List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.saveTempEmployeesSalaryDetail(file, "工资预算表", 33,3, enterprise.getEnterpriseId());
-				for (EmployeesSalaryDetail employeesSalaryDetail : employeesSalaryDetailList) {
-					
-						wargeTotal+=Double.valueOf(employeesSalaryDetail.getWage().toString());
-				}
-				request.setAttribute("wargeTotal", wargeTotal);
-				request.getSession().setAttribute("employeesSalaryDetail", employeesSalaryDetailList);
+		employeesSalaryDetail=new EmployeesSalaryDetail();
+		employeesSalaryDetail.setEnterpriseId(enterprise.getEnterpriseId());
+		employeesSalaryDetail.setBudgettableId(budgetId);
+		employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "工资预算表", 33,3,employeesSalaryDetail);
+		
+		//查找统计上传员工工资的总额
+		bonusTotal=employeesSalaryDetailService.getInvoiceTotal(enterpriseId, budgetId);
+		wargeTotal=employeesSalaryDetailService.getWageTotal(enterpriseId, budgetId);
+		fiveInsuranceTotal=employeesSalaryDetailService.getFiveInsuranceTotal(enterpriseId, budgetId);
+		numberPeopleTotal=employeesSalaryDetailService.getNumberPersonlTotal(enterpriseId, budgetId);
+		serviceTotal=employeesSalaryDetailService.getServiceTotal(enterpriseId, budgetId);
+		
+		//记录到工资预算表汇总信息
+		createSalaryBudgetTable.setFiveInsurancesTotal(fiveInsuranceTotal);
+		createSalaryBudgetTable.setMakeTotal(bonusTotal);
+		createSalaryBudgetTable.setWageTotal(wargeTotal);
+		createSalaryBudgetTable.setServiceTotal(serviceTotal);
+		createSalaryBudgetTable.setIssueNumber(numberPeopleTotal);
 				
-			}
-		} catch (Exception e) {
-			CreateSalaryBudgetTable cateteSalaryBugetTablePO=createSalaryBudgetTableService.find(this.budgetId);
-			request.setAttribute("createSalaryBudgetTable", cateteSalaryBugetTablePO);
-			e.printStackTrace();
-			return INPUT;
-		}
 		
 		return SUCCESS;
 	}

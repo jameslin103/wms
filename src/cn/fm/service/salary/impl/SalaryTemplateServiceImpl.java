@@ -29,9 +29,20 @@ public class SalaryTemplateServiceImpl extends DaoSupport<SalaryTemplate> implem
 	/**
 	 * 更新实体
 	 */
-	public void updateSalaryTemplate(SalaryTemplate salaryTemplateId)
+	public void updateSalaryTemplate(SalaryTemplate salaryTemplate)
 	{
-		super.update(salaryTemplateId);
+		try {
+			em.createQuery("update SalaryTemplate s set s.templateName=?1," +
+					"s.subsidyList=?2,s.fiveInsurances=?3," +
+					"s.tax=?4,s.status=?5 where templateId=?6")
+			.setParameter(1,salaryTemplate.getTemplateName())
+			.setParameter(3,salaryTemplate.getSubsidyList())
+			.setParameter(4,salaryTemplate.getTax())
+			.setParameter(5,salaryTemplate.getStatus())
+			.setParameter(6,salaryTemplate.getTemplateId()).executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	/**

@@ -14,7 +14,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
-import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.utils.DateUtil;

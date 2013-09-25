@@ -50,10 +50,13 @@ public class EmployeesSalaryDetail implements Serializable
 	
 	/*生育保险基数  */
 	private BigDecimal  birthInsuranceBase;
+	
 	/*生育（企业) */
 	private BigDecimal  enterpriseBirthInsurance;
+	
 	/*工伤基数 */
 	private BigDecimal  inductrialInjuryBase;
+	
 	/*工伤（企业）*/
 	private BigDecimal  enterpriseInductrialInjuryBase;
  
@@ -98,16 +101,19 @@ public class EmployeesSalaryDetail implements Serializable
 
 	/*到卡金额 */
 	private BigDecimal  moneyToCards;
-	/**备注**/
+	
+	/*备注**/
 	private String      note;
 
 	@Column(length=80)
 	private Integer     enterpriseId;
+	
 	@Column(length=80)
 	private Integer     empolyessId;
 	
 	private Date        createDate=new Date();
 	
+	private Integer     budgettableId;
 	
 	
 	
@@ -120,6 +126,16 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setSalaryId(Integer salaryId) {
 		this.salaryId = salaryId;
 	}
+	
+	@Column(length=50)
+	public Integer getBudgettableId() {
+		return budgettableId;
+	}
+
+	public void setBudgettableId(Integer budgettableId) {
+		this.budgettableId = budgettableId;
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreateDate() {
 		return createDate;

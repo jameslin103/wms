@@ -327,6 +327,14 @@
             	<param name="actionName">viewCustomBonus</param>
             </result>
         </action> 
+        <action name="findToIdCustomBonus" class="cn.fm.web.action.company.CustomBonusAction" method="findToIdCustomBonus">
+            <result name="customBonus" type="json"></result>
+        </action>
+         <action name="updateCustomBonus" class="cn.fm.web.action.company.CustomBonusAction" method="updateCustomBonus">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewCustomBonus</param>
+            </result>
+        </action>  
         
         <!-- Template 2013-08-23 -->
         <action name="viewSalaryTemplate" class="cn.fm.web.action.company.SalaryTemplateAction" method="viewSalaryTemplate">
@@ -340,6 +348,17 @@
             	<param name="actionName">viewSalaryTemplate</param>
             </result>
         </action>
+        
+         <action name="findToIdSalaryTemplate" class="cn.fm.web.action.company.SalaryTemplateAction" method="findToIdSalaryTemplate">
+            <result name="salaryTemplate" type="json" ></result>
+        </action> 
+        <action name="updateSalaryTemplate" class="cn.fm.web.action.company.SalaryTemplateAction" method="updateSalaryTemplate">
+          <result name="success" type="redirectAction">
+            	<param name="actionName">viewSalaryTemplate</param>
+            </result>
+        </action> 
+        
+        
         <action name="viewSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="viewSalaryBudgetTable">
             <result name="success" >company/salary-with-month.jsp</result>
         </action> 
@@ -348,11 +367,10 @@
             <result name="input">company/salary-step1-of-create.jsp</result>
         </action> 
         <action name="addSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="addSalaryBudgetTable" >
-	           <interceptor-ref name="tokenSession" >  
-	               <param name="includeMethods"></param>  
-	          </interceptor-ref>  
             <result name="success" >company/salary-step2-of-create.jsp</result>
-            <result name="input">company/salary-step1-of-create.jsp</result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">newSalaryBudgetTable</param>
+            </result>
         </action>
         <action name="returnToModifySalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="returnToModifySalaryBudgetTable">
                 <interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  

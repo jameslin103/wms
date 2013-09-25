@@ -473,7 +473,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			
 			
 			
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(8,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
@@ -587,10 +587,10 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		List<Object> params = new ArrayList<Object>();
 		if(this.enterpriseId!=null)
 		{
-			jpql.append(" o.pseudoDelete=0  and ");
-			jpql.append(" o.enterprise.enterpriseId=?1 ");
+			jpql.append(" o.pseudoDelete=0");
+			jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
 			params.add(this.enterpriseId);
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(8,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
@@ -616,11 +616,11 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		List<Object> params = new ArrayList<Object>();
 		if(this.enterpriseId!=null)
 		{
-			jpql.append(" o.departure=?1 and ");
-			jpql.append(" o.enterprise.enterpriseId=?2 ");
+			jpql.append(" o.departure=?").append(params.size()+1);
 			params.add(1);
+			jpql.append(" and  o.enterprise.enterpriseId=?").append(params.size()+1);
 			params.add(this.enterpriseId);
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(8,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
@@ -632,7 +632,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		request.setAttribute("employees", listEmployees);
 		return SUCCESS;
 	}
-
+	
 	
 
 }

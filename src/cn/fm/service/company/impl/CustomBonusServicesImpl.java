@@ -19,7 +19,12 @@ public class CustomBonusServicesImpl extends DaoSupport<CustomBonus> implements 
 		Query query=em.createQuery("select c from CustomBonus c");
 		return query.getResultList();
 	}
-
+	@SuppressWarnings("unchecked")
+	public List<CustomBonus> getStatusEnableCustomBonus() {
+		Query query=em.createQuery("select c from CustomBonus c where c.state=1");
+		return query.getResultList();
+	}
+	
 	public void save(CustomBonus customBonus) {
 		super.save(customBonus);
 	}
@@ -29,6 +34,18 @@ public class CustomBonusServicesImpl extends DaoSupport<CustomBonus> implements 
 		
 		query.setParameter(1, customBonus.getBonusName()).setParameter(2, customBonus.getId());
 		query.getSingleResult();
+		
+	}
+
+	public void updateCustomBonus(CustomBonus customBonus) {
+		try {
+			em.createQuery("update CustomBonus c set c.bonusName=?1,c.state=?2 where id=?3")
+			.setParameter(1, customBonus.getBonusName())
+			.setParameter(2, customBonus.getState()).setParameter(3, customBonus.getId()).executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 }

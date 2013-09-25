@@ -26,5 +26,10 @@ public interface CreateSalaryBudgetTableService extends DAO<CreateSalaryBudgetTa
 	public List<CreateSalaryBudgetTable>  getFindCreateSalaryBudgetTables(Integer budgetId);
 	
 	public void updateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable);
+	/**
+	 * 插入汇总开票，五险。。总额
+	 * @param createSalaryBudgetTable
+	 */
+	public void updateCreateSalaryBudgetTableSummary(CreateSalaryBudgetTable createSalaryBudgetTable);
 
 }

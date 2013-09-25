@@ -11,4 +11,11 @@ public interface CustomBonusServices extends DAO<CustomBonus> {
 	public void update(CustomBonus customBonus,Integer id);
 	
 	public List<CustomBonus> getAllCustomBonus();
+
+	public void updateCustomBonus(CustomBonus customBonus);
+	/**
+	 * 获取启用的奖金
+	 * @return
+	 */
+	public List<CustomBonus> getStatusEnableCustomBonus();
 }

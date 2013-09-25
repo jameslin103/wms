@@ -34,10 +34,10 @@
 								<a href="viewEnterpriseEmployees">员工档案</a>
 							</li>
 							<li class="active">
-								<a href="viewWageBudgetSummary">工资预算表</a>
+								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li>
-								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
+								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
 							</li>
 						</ul>
 
@@ -85,7 +85,8 @@
 											</s:else>
 										</td>
 										<td width="20">
-											<a href="#info-for-check" data-toggle="modal">修改</a>
+											<s:set value="%{#customBonus.id}" var="id"></s:set>
+											<a href="#info-for-check1" onclick="findToIdCustomBonus('${id}')" data-toggle="modal">修改</a>
 										</td>
 									</tr>
 								</s:iterator>
@@ -100,13 +101,11 @@
 			<div id="footer"></div>
 
 		</div>
-		<!-- Modal -->
+		<!--========================================================  addCustomBonus=================================================================== -->
 		<div id="info-for-check"
-			class="modal hide fade modal-of-info-for-check" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			class="modal hide fade modal-of-info-for-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					×
 				</button>
 				<h3 id="myModalLabel">
@@ -148,6 +147,53 @@
 				</button>
 			</div>
 		</div>
+		<!--========================================================  updateCustomBonus=================================================================== -->
+		<div id="info-for-check1" class="modal hide fade modal-of-info-for-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					×
+				</button>
+				<h3 id="myModalLabel">
+					修改奖金与各种补贴
+				</h3>
+			</div>
+			<div class="modal-body">
+				<s:form action="updateCustomBonus" method="post">
+					<s:hidden name="customBonus.id"></s:hidden>
+					<div class="row-fluid">
+						<div class="input-container">
+							<label>
+								名称
+							</label>
+							<s:textfield name="customBonus.bonusName" />
+						</div>
+						<div class="input-container">
+							<label>
+								&nbsp;
+							</label>
+							<input type="radio" name="customBonus.state" value="1"	checked="checked">
+							启用，
+							<input type="radio" name="customBonus.state" value="0">
+							停用
+						</div>
+
+						<div class="input-container">
+							<label>
+								&nbsp;
+							</label>
+							<s:submit value="提交" cssClass="btn btn-primary" />
+						</div>
+					</div>
+				</s:form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">
+					Close
+				</button>
+			</div>
+		</div>
+	
+	
 	</body>
 
 </html>

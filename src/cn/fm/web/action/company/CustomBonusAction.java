@@ -12,10 +12,10 @@ import cn.fm.web.action.BaseAction;
 @SuppressWarnings("serial")
 public class CustomBonusAction extends BaseAction {
 	@Resource
-	private CustomBonusServices  customBonusActionService;
+	private CustomBonusServices  customBonusService;
 	private CustomBonus   customBonus;
 	
-	
+	private Integer      id;
 	
 	
 	
@@ -27,28 +27,51 @@ public class CustomBonusAction extends BaseAction {
 	public void setCustomBonus(CustomBonus customBonus) {
 		this.customBonus = customBonus;
 	}
+	
+	
+	public Integer getId() {
+		return id;
+	}
 
-	public void setCustomBonusActionService(
-			CustomBonusServices customBonusActionService) {
-		this.customBonusActionService = customBonusActionService;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setCustomBonusService(CustomBonusServices customBonusService) {
+		this.customBonusService = customBonusService;
 	}
 
 	public String addCustomBonus()
 	{
 		if(customBonus==null)return SUCCESS;
-		customBonusActionService.save(customBonus);
+		customBonusService.save(customBonus);
 		return SUCCESS;
 	}
 	
 	public String viewCustomBonus()
 	{
-		List<CustomBonus> customBonus=customBonusActionService.getAllCustomBonus();
+		List<CustomBonus> customBonus=customBonusService.getAllCustomBonus();
 		if(customBonus.size()==0)
 			customBonus=new ArrayList<CustomBonus>();
 		request.setAttribute("customBonus", customBonus);
 		return SUCCESS;
 	}
 	
+	public String  findToIdCustomBonus()
+	{
+		customBonus=customBonusService.find(id);
+		
+		return "customBonus";
+		
+	}
+	public String   updateCustomBonus()
+	{
+		
+		customBonusService.updateCustomBonus(customBonus);
+		
+		return SUCCESS;
+	}
+		
 	
 	
 	

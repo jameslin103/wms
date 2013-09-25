@@ -94,7 +94,7 @@ public class EnterpriseEmployees implements Serializable{
 	/*基本医疗保险基数*/
 	private Double  basicMedical;
 	
-	/*伪删除  0 隐藏    1显示*/
+	/*伪删除  1 隐藏    0显示*/
 	private Integer  pseudoDelete;
 	
 	private String  note;
