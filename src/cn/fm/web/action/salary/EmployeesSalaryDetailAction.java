@@ -1,17 +1,23 @@
 package cn.fm.web.action.salary;
 
 import java.io.File;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.service.company.EnterpriseEmployeesService;
+import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.utils.WebUtil;
@@ -26,28 +32,49 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	private EnterpriseEmployeesService   enterpriseEmployeesService;
 	@Resource
 	private CreateSalaryBudgetTableService  createSalaryBudgetTableService; 
+	@Resource
+	private EnterpriseService				enterpriseService;
 	
 	private EnterpriseEmployees   enterpriseEmployees;
 	private Enterprise    enterprise;
 	private CreateSalaryBudgetTable   createSalaryBudgetTable;
 	private EmployeesSalaryDetail     employeesSalaryDetail;
 	
+	
 	private File file;
 	
 	private BigDecimal   bonusTotal; //开票总额
 	private BigDecimal   wargeTotal;//工资总额
 	private BigDecimal   fiveInsuranceTotal;//五险一金总额
-	private Integer	 numberPeopleTotal;	//发放人数		
+	private long	 numberPeopleTotal;	//发放人数		
 	private BigDecimal   serviceTotal;//服务费总额
 	
 	private Integer  enterpriseId;
 	private Integer  employeesId;
 	private Integer  budgetId;
+	private Integer salaryId;
+	
+	/*生成哪月工资？*/
+	private Date    salaryDate;
 	
 	
 	
-	
-	
+	public Date getSalaryDate() {
+		return salaryDate;
+	}
+
+	public void setSalaryDate(Date salaryDate) {
+		this.salaryDate = salaryDate;
+	}
+
+	public Integer getSalaryId() {
+		return salaryId;
+	}
+
+	public void setSalaryId(Integer salaryId) {
+		this.salaryId = salaryId;
+	}
+
 	public BigDecimal getFiveInsuranceTotal() {
 		return fiveInsuranceTotal;
 	}
@@ -56,11 +83,11 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		this.fiveInsuranceTotal = fiveInsuranceTotal;
 	}
 
-	public Integer getNumberPeopleTotal() {
+	public long getNumberPeopleTotal() {
 		return numberPeopleTotal;
 	}
 
-	public void setNumberPeopleTotal(Integer numberPeopleTotal) {
+	public void setNumberPeopleTotal(long numberPeopleTotal) {
 		this.numberPeopleTotal = numberPeopleTotal;
 	}
 
@@ -157,7 +184,11 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	public void setEmployeesSalaryDetailService(EmployeesSalaryDetailService employeesSalaryDetailService) {
 		this.employeesSalaryDetailService = employeesSalaryDetailService;
 	}
+	
 
+	public void setEnterpriseService(EnterpriseService enterpriseService) {
+		this.enterpriseService = enterpriseService;
+	}
 
 	/**
 	 * excel批量导入工资预算表数据
@@ -174,22 +205,30 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		employeesSalaryDetail=new EmployeesSalaryDetail();
 		employeesSalaryDetail.setEnterpriseId(enterprise.getEnterpriseId());
 		employeesSalaryDetail.setBudgettableId(budgetId);
+		employeesSalaryDetail.setSalaryDate(salaryDate);
 		employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "工资预算表", 33,3,employeesSalaryDetail);
 		
 		//查找统计上传员工工资的总额
-		bonusTotal=employeesSalaryDetailService.getInvoiceTotal(enterpriseId, budgetId);
-		wargeTotal=employeesSalaryDetailService.getWageTotal(enterpriseId, budgetId);
-		fiveInsuranceTotal=employeesSalaryDetailService.getFiveInsuranceTotal(enterpriseId, budgetId);
-		numberPeopleTotal=employeesSalaryDetailService.getNumberPersonlTotal(enterpriseId, budgetId);
-		serviceTotal=employeesSalaryDetailService.getServiceTotal(enterpriseId, budgetId);
+		bonusTotal=employeesSalaryDetailService.getInvoiceTotal(enterprise.getEnterpriseId(), budgetId);
+		wargeTotal=employeesSalaryDetailService.getWageTotal(enterprise.getEnterpriseId(), budgetId);
+		fiveInsuranceTotal=employeesSalaryDetailService.getFiveInsuranceTotal(enterprise.getEnterpriseId(), budgetId);
+		numberPeopleTotal=employeesSalaryDetailService.getNumberPersonlTotal(enterprise.getEnterpriseId(), budgetId);
+		serviceTotal=employeesSalaryDetailService.getServiceTotal(enterprise.getEnterpriseId(), budgetId);
+		
 		
 		//记录到工资预算表汇总信息
-		createSalaryBudgetTable.setFiveInsurancesTotal(fiveInsuranceTotal);
-		createSalaryBudgetTable.setMakeTotal(bonusTotal);
-		createSalaryBudgetTable.setWageTotal(wargeTotal);
-		createSalaryBudgetTable.setServiceTotal(serviceTotal);
-		createSalaryBudgetTable.setIssueNumber(numberPeopleTotal);
-				
+		CreateSalaryBudgetTable createSalaryBudgetTableSummary=new CreateSalaryBudgetTable();
+		createSalaryBudgetTableSummary.setBudgetId(budgetId);
+		createSalaryBudgetTableSummary.setFiveInsurancesTotal(fiveInsuranceTotal);
+		createSalaryBudgetTableSummary.setMakeTotal(bonusTotal);
+		createSalaryBudgetTableSummary.setWageTotal(wargeTotal);
+		createSalaryBudgetTableSummary.setServiceTotal(serviceTotal);
+		createSalaryBudgetTableSummary.setIssueNumber(Integer.parseInt(numberPeopleTotal+""));
+		createSalaryBudgetTableService.updateCreateSalaryBudgetTableSummary(createSalaryBudgetTableSummary);	
+		
+		createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		
+		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTable);
 		
 		return SUCCESS;
 	}
@@ -229,10 +268,36 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	{
 		
 		Enterprise enterprise=WebUtil.getEnterprise(request);
-	
-		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getAllEmployeesSalaryDetail(enterprise.getEnterpriseId(), 26);
-		if(employeesSalaryDetailList.size()==0)
+		if(enterprise==null || enterprise.getEnterpriseId()==null){
+			enterprise=enterpriseService.find(enterpriseId);
+			request.getSession().setAttribute("enterprise", enterprise);
+		}
+		
+		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getAllEmployeesSalaryDetail(enterprise.getEnterpriseId(), budgetId);
+		if(employeesSalaryDetailList==null ||employeesSalaryDetailList.size()==0)
 			employeesSalaryDetailList=new ArrayList<EmployeesSalaryDetail>();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("createDate", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(enterprise.getEnterpriseId()!=null)
+		{
+			jpql.append(" o.enterpriseId=?").append(params.size()+1);
+			params.add(enterprise.getEnterpriseId());
+			jpql.append(" and o.budgettableId=?").append(params.size()+1);
+			params.add(budgetId);
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(8,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("budgetId", budgetId);
+			request.setAttribute("pageView", pageView);
+		}
+		
+		
+		
+		
+		
 		request.setAttribute("employeesSalaryDetail", employeesSalaryDetailList);
 		return SUCCESS;
 	}
@@ -255,6 +320,17 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		return SUCCESS;
 	}
 	
+	public String findToIdSalaryDetail()
+	{
+		
+		employeesSalaryDetail=employeesSalaryDetailService.find(salaryId);
+		return "employeesSalaryDetail";
+	}
 	
-	
+	public String updateEmployeesSalaryDetail()
+	{
+		employeesSalaryDetailService.updateEmployeesSalaryDetail(employeesSalaryDetail);
+		
+		return SUCCESS;
+	}
 }

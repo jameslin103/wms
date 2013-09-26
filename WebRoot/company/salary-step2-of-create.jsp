@@ -67,6 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       	上传新工资预算表
                       <s:form action="uploadEmployeesSalaryDetail" cssClass="form-search" method="post" enctype="multipart/form-data">
                       	 <s:hidden value="%{#request.createSalaryBudgetTable.budgetId}" name="budgetId"/>
+                      	  <s:hidden value="%{#request.createSalaryBudgetTable.salaryDate}" name="salaryDate"/>
                       	 <s:hidden name="file" value="file"></s:hidden>
                          <input type="file" name="file" id="filevalue"><br>
                        <s:submit  cssClass="btn btn-primary" id="uploadFile" value="上传"/>

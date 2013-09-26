@@ -448,6 +448,15 @@
         <action name="viewSalaryWithBankDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewSalaryWithBankDetail">
             <result name="success">company/salary-with-bank-detail.jsp</result>
         </action>
+        <action name="findToIdSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="findToIdSalaryDetail">
+            <result name="employeesSalaryDetail" type="json"></result>
+        </action>
+        <action name="updateEmployeesSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="updateEmployeesSalaryDetail">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewAllEmployeesSalaryDetail</param>
+            	<param name="budgetId">${budgetId}</param>
+            </result>
+        </action>
         
            <!-- report  ======================== -->
         <action name="downloadBankIssueSalary" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="downloadBankIssueSalary">

@@ -268,10 +268,10 @@ function findToIdSalayBudegTable(budgetId)
 		    	$("input[name='createSalaryBudgetTable.budgetId']").val(data.createSalaryBudgetTable.budgetId); 
 		    	$("#templateName").text(data.createSalaryBudgetTable.templateName)
 		    	$("input[name='createSalaryBudgetTable.name']").val(data.createSalaryBudgetTable.name); 
-		    	$("input[name='createSalaryBudgetTable.wageMonth']").val(data.createSalaryBudgetTable.wageMonth);
-		    	$("input[name='createSalaryBudgetTable.mergeTax']").val(data.createSalaryBudgetTable.mergeTax); 
+		    	$("input[name='createSalaryBudgetTable.salaryDate']").val(data.createSalaryBudgetTable.salaryDate);
 		    	$("#salaryTable").empty();
-		    	$("#salaryTable").append("<option>"+data.createSalaryBudgetTable.mergeTax+"</option>");
+		    	$("#salaryTable").append("<option>"+data.createSalaryBudgetTable.chooseTax+"</option>");
+		    	
 		    	//$("#salaryTable").attr("value",'test');
 		    
 		    	$("#note").val(data.createSalaryBudgetTable.note);
@@ -345,6 +345,53 @@ function findToIdSalaryTemplate(templateId){
 	
 	
 }
+
+function findToIdSalaryDetail(salaryId)
+{
+	
+	if(salaryId!=null && salaryId!=undefined){
+		$.ajax( {    
+		    url:'findToIdSalaryDetail',// 跳转到 action  
+		    data:{salaryId:salaryId},    
+		    type:'post',    
+		    cache:false,
+		    dataType:'json',    
+		    success:function(data){
+		    	
+		    	$("input[name='employeesSalaryDetail.salaryId']").val(data.employeesSalaryDetail.salaryId); 
+		    	$("input[name='budgetId']").val(data.employeesSalaryDetail.budgettableId); 
+		    	$("#name").text(data.employeesSalaryDetail.employeesName);
+		    	$("input[name='employeesSalaryDetail.wage']").val(data.employeesSalaryDetail.wage); 
+		    	$("input[name='employeesSalaryDetail.bonus']").val(data.employeesSalaryDetail.bonus); 
+		    	$("input[name='employeesSalaryDetail.subsidies']").val(data.employeesSalaryDetail.subsidies); 
+		    
+		    	
+
+		    },    
+		     error : function() {  
+		    	 alert("系统异常，请稍后重试！");
+		     }    
+		});	
+
+	}
+		
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

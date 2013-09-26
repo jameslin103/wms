@@ -3,6 +3,13 @@
 	<property name="ireport.zoom" value="1.2100000000000024"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="salaryDate" class="java.lang.String"/>
+	<parameter name="budgetName" class="java.lang.String"/>
+	<parameter name="createDate" class="java.lang.String"/>
+	<parameter name="makeTotal" class="java.lang.String"/>
+	<parameter name="wageTotal" class="java.lang.String"/>
+	<parameter name="serviceTotal" class="java.lang.String"/>
+	<parameter name="fiveInsurancesTotal" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -17,6 +24,9 @@
 	</field>
 	<field name="bonus" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[bonus]]></fieldDescription>
+	</field>
+	<field name="budgettableId" class="java.lang.Integer">
+		<fieldDescription><![CDATA[budgettableId]]></fieldDescription>
 	</field>
 	<field name="class" class="java.lang.Class">
 		<fieldDescription><![CDATA[class]]></fieldDescription>
@@ -93,6 +103,9 @@
 	<field name="personalUnemploymentInsurance" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[personalUnemploymentInsurance]]></fieldDescription>
 	</field>
+	<field name="salaryDate" class="java.util.Date">
+		<fieldDescription><![CDATA[salaryDate]]></fieldDescription>
+	</field>
 	<field name="salaryId" class="java.lang.Integer">
 		<fieldDescription><![CDATA[salaryId]]></fieldDescription>
 	</field>
@@ -116,13 +129,13 @@
 	</background>
 	<title>
 		<band height="42" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="356fd08f-e58f-47b6-b13e-3bd913d3ec37" x="0" y="0" width="1467" height="42"/>
+			<textField>
+				<reportElement uuid="11573d9f-0d67-48c3-91ae-4790ecbb08c6" x="0" y="0" width="1467" height="42"/>
 				<textElement textAlignment="Center">
-					<font size="22" isBold="true"/>
+					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[2013.3月份各类费用预算表]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{salaryDate}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -153,7 +166,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="微软雅黑" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{createDate}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy年MM月份">
 				<reportElement uuid="d9536d92-1948-49af-89db-545ef8e77ed2" x="67" y="20" width="1400" height="20" forecolor="#333333"/>
@@ -167,7 +180,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="微软雅黑" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["中交二航局海西高速公路网东山联络线路基土建工程施工A标段项目经理部"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{budgetName}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -177,7 +190,7 @@
 				<reportElement uuid="e065ba30-217c-48c7-8087-3085cd0f1f15" mode="Opaque" x="0" y="0" width="22" height="60" forecolor="#333333" backcolor="#00FFFF"/>
 				<box>
 					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -754,12 +767,12 @@
 				<text><![CDATA[合计(企业应付)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="db1979c1-a029-42e4-9e73-8e9b757727d1" mode="Opaque" x="1377" y="0" width="90" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
+				<reportElement uuid="db1979c1-a029-42e4-9e73-8e9b757727d1" mode="Opaque" x="1377" y="0" width="89" height="60" forecolor="#333333" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="微软雅黑"/>
@@ -774,12 +787,12 @@
 				<reportElement uuid="8c651c4e-87da-4a90-a0f9-80ebbe959105" x="0" y="0" width="22" height="20"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5" lineColor="#666666"/>
-					<leftPen lineWidth="0.5" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
 					<bottomPen lineWidth="0.5" lineColor="#666666"/>
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{salaryId}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{salaryId}==null?"":$F{salaryId}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="db12749a-58d3-48d8-923b-9fcdaaa931fd" x="22" y="0" width="45" height="20"/>
@@ -790,7 +803,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{employeesName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{employeesName}==null?"":$F{employeesName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="22e12876-f8cd-433e-b1ec-d6f90ccd3108" x="67" y="0" width="45" height="20"/>
@@ -801,7 +814,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{wage}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{wage}==null?"":$F{wage}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="4333da1d-65e7-41e1-abb1-d62285b92f4e" x="112" y="0" width="46" height="20"/>
@@ -812,7 +825,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{bonus}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bonus}==null?"":$F{bonus}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="9267d346-ad3a-48bf-a95e-64142bad3aec" x="158" y="0" width="44" height="20"/>
@@ -823,10 +836,10 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{subsidies}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{subsidies}==null?"":$F{subsidies}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="b5deae37-9b6b-4d70-a9d3-bb1b4810bb11" x="202" y="0" width="46" height="20"/>
+				<reportElement uuid="b5deae37-9b6b-4d70-a9d3-bb1b4810bb11" x="202" y="0" width="45" height="20"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5" lineColor="#666666"/>
 					<leftPen lineWidth="0.5" lineColor="#666666"/>
@@ -834,10 +847,10 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{shouldPay}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{shouldPay}==null?"":$F{shouldPay}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="02ac80d6-85a7-47a7-8474-c71cde28ff28" x="248" y="0" width="44" height="20"/>
+				<reportElement uuid="02ac80d6-85a7-47a7-8474-c71cde28ff28" x="247" y="0" width="45" height="20"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5" lineColor="#666666"/>
 					<leftPen lineWidth="0.5" lineColor="#666666"/>
@@ -845,7 +858,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{socialInsuranceBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{socialInsuranceBase}==null?"":$F{socialInsuranceBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="bee22aee-9394-4250-938f-476e797164df" x="292" y="0" width="50" height="20"/>
@@ -856,7 +869,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterprisePensionInsurance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterprisePensionInsurance}==null?"":$F{enterprisePensionInsurance}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="d48fdaa6-b55c-473f-92d4-0eb9962de12d" x="342" y="0" width="50" height="20"/>
@@ -867,7 +880,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{personalPensionInsurance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{personalPensionInsurance}==null?"":$F{personalPensionInsurance}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="2aa0aade-820c-4820-9dc3-a78dd6d23c1a" x="392" y="0" width="50" height="20"/>
@@ -878,7 +891,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseUnemploymentInsurance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseUnemploymentInsurance}==null?"":$F{enterpriseUnemploymentInsurance}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="6109f5fb-0c96-4913-b335-3b753e56a586" x="442" y="0" width="50" height="20"/>
@@ -889,7 +902,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{personalUnemploymentInsurance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{personalUnemploymentInsurance}==null?"":$F{personalUnemploymentInsurance}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="c5d41843-7ec2-4e08-a20c-493c5920b887" x="492" y="0" width="45" height="20"/>
@@ -900,7 +913,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{birthInsuranceBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{birthInsuranceBase}==null?"":$F{birthInsuranceBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="23ae213f-8488-445f-8eb7-9f196a956a7c" x="537" y="0" width="45" height="20"/>
@@ -911,7 +924,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseBirthInsurance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseBirthInsurance}==null?"":$F{enterpriseBirthInsurance}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="ad0150df-7bba-4670-a739-13ad9c303f70" x="582" y="0" width="45" height="20"/>
@@ -922,7 +935,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{inductrialInjuryBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{inductrialInjuryBase}==null?"":$F{inductrialInjuryBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="b9086ac2-f91c-4b0b-97cc-bf3ac1fa363a" x="627" y="0" width="45" height="20"/>
@@ -933,7 +946,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseInductrialInjuryBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseInductrialInjuryBase}==null?"":$F{enterpriseInductrialInjuryBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="07a24f58-1b92-48f6-8254-58e3aada960a" x="672" y="0" width="70" height="20"/>
@@ -944,7 +957,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{medicalPaymentBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{medicalPaymentBase}==null?"":$F{medicalPaymentBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="bd7e5f82-63dc-4086-8afb-6aae5034a29e" x="742" y="0" width="50" height="20"/>
@@ -955,7 +968,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseMedicalBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseMedicalBase}==null?"":$F{enterpriseMedicalBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="8cc9cce0-bf3a-415e-898a-df0932280ebc" x="792" y="0" width="50" height="20"/>
@@ -966,7 +979,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{personalMedicalBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{personalMedicalBase}==null?"":$F{personalMedicalBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="a4c08699-3d32-4407-9a9d-6be2aa043a1d" x="842" y="0" width="70" height="20"/>
@@ -977,7 +990,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{housingReserveBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{housingReserveBase}==null?"":$F{housingReserveBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="97318563-8476-4392-a2b4-69588334df35" x="912" y="0" width="50" height="20"/>
@@ -988,7 +1001,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseReserveBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseReserveBase}==null?"":$F{enterpriseReserveBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="0fc702f3-102c-47d3-b00a-463287888656" x="962" y="0" width="50" height="20"/>
@@ -999,7 +1012,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{personalReserveBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{personalReserveBase}==null?"":$F{personalReserveBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="50df33f5-f513-42dd-b2ca-53d6cecb91e9" x="1012" y="0" width="45" height="20"/>
@@ -1010,7 +1023,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{morbidityStatistics}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{morbidityStatistics}==null?"":$F{personalReserveBase}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="d583766c-b82d-4b9a-90eb-01a9499b7986" x="1057" y="0" width="50" height="20"/>
@@ -1021,7 +1034,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseSubtotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseSubtotal}==null?"":$F{enterpriseSubtotal}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="f565b639-d3d5-4f4b-88a5-8592dc870aad" x="1107" y="0" width="50" height="20"/>
@@ -1032,7 +1045,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{personalSubtotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{personalSubtotal}==null?"":$F{enterpriseSubtotal}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="b40c720a-8c9e-45d5-92ca-43b09c58c120" x="1157" y="0" width="45" height="20"/>
@@ -1043,7 +1056,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{beforeSalary}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{beforeSalary}==null?"":$F{beforeSalary}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="89949668-6ae4-41f8-9a9f-d250bfbb6c05" x="1202" y="0" width="50" height="20"/>
@@ -1054,7 +1067,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseTax}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseTax}==null?"":$F{enterpriseTax}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="1524517e-4071-46ac-a1ed-9bfe9212cef1" x="1252" y="0" width="50" height="20"/>
@@ -1065,7 +1078,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{personalTax}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{personalTax}==null?"":$F{personalTax}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="919df6d8-faf5-4783-b1b7-809f69d9da73" x="1302" y="0" width="30" height="20"/>
@@ -1076,7 +1089,7 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{serviceCharge}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{serviceCharge}==null?"":$F{serviceCharge}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="8e4d39d5-c907-4536-a281-3d32d782a88b" x="1332" y="0" width="45" height="20"/>
@@ -1087,10 +1100,10 @@
 					<rightPen lineWidth="0.5" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{aggregate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{aggregate}==null?"":$F{aggregate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="24097c24-6055-45be-b85d-fc6434a6643c" x="1377" y="0" width="90" height="20"/>
+				<reportElement uuid="24097c24-6055-45be-b85d-fc6434a6643c" x="1377" y="0" width="89" height="20"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0" lineColor="#666666"/>
@@ -1099,18 +1112,19 @@
 					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{moneyToCards}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{moneyToCards}==null?"":$F{moneyToCards}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<summary>
 		<band height="153" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="7e4c5c8f-35c2-4e04-89d1-764e31d032e8" x="0" y="0" width="67" height="125" forecolor="#333333"/>
+				<reportElement uuid="7e4c5c8f-35c2-4e04-89d1-764e31d032e8" x="0" y="0" width="50" height="124" forecolor="#333333"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="0.0" lineColor="#666666"/>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineColor="#666666"/>
 				</box>
 				<textElement verticalAlignment="Top" markup="none">
@@ -1118,19 +1132,6 @@
 				</textElement>
 				<text><![CDATA[备注:]]></text>
 			</staticText>
-			<textField>
-				<reportElement uuid="17008f7b-89a9-4992-bd75-fd5983dce13b" x="67" y="0" width="1400" height="125" forecolor="#333333"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="0.0" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineColor="#000000"/>
-				</box>
-				<textElement verticalAlignment="Top">
-					<font fontName="微软雅黑" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement uuid="8274e188-b588-4709-b76f-f488b1bb9cab" x="0" y="125" width="492" height="28" forecolor="#333333"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
@@ -1160,6 +1161,63 @@
 					<font fontName="微软雅黑" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["制表:"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="89320d85-b7cc-44e0-a586-362d75127462" mode="Transparent" x="0" y="-1" width="1466" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="a37ac1b3-cc90-4094-ac4d-ad89babc821f" mode="Transparent" x="0" y="124" width="1466" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="ded9192c-576e-4950-ab45-bc053edef10d" mode="Transparent" x="1466" y="0" width="1" height="125"/>
+			</line>
+			<staticText>
+				<reportElement uuid="b3d5f693-42f7-4ff6-a9ec-4753c803ac20" mode="Opaque" x="50" y="18" width="80" height="26" backcolor="#666600"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[开票总额：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e11b5918-cba5-45db-aa09-a75337532ec4" mode="Opaque" x="50" y="44" width="80" height="26" backcolor="#0099CC"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[工资总额：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="952ac5b0-db42-4da6-a105-6e4137f5bdb7" mode="Opaque" x="50" y="70" width="80" height="28" backcolor="#009999"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[保险总额：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f8c95dd7-524f-410b-9810-dfb9ba023cb5" mode="Opaque" x="50" y="98" width="80" height="26" backcolor="#66FF66"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[服务费总额：]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b4be718e-6c59-4ea6-9288-c3101b0234a8" mode="Opaque" x="129" y="18" width="307" height="27" forecolor="#FF3300"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{makeTotal}==null?"":$P{makeTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a65df0df-7236-4c51-be29-133443f45a8a" mode="Opaque" x="129" y="44" width="307" height="26" forecolor="#FF3300"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{wageTotal}==null?"":$P{wageTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d8b8d186-b197-490d-96d4-5deff36e5e9f" mode="Opaque" x="129" y="70" width="307" height="28" forecolor="#FF3300"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{fiveInsurancesTotal}==null?"":$P{fiveInsurancesTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2795f9ac-ab1c-45e3-a5fd-92abd9ee91e0" mode="Opaque" x="129" y="98" width="307" height="26" forecolor="#FF3300"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{serviceTotal}==null?"":$P{serviceTotal}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

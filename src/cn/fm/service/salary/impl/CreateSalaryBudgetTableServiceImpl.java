@@ -80,9 +80,9 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 
 	public void updateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable) {
 		try {
-			em.createQuery("update CreateSalaryBudgetTable c set c.name=?1,c.wageMonth=?2,c.mergeTax=?3,c.note=?4 where c.budgetId=?5")
-			.setParameter(1, createSalaryBudgetTable.getName()).setParameter(2, createSalaryBudgetTable.getWageMonth())
-			.setParameter(3, createSalaryBudgetTable.getMergeTax()).setParameter(4, createSalaryBudgetTable.getNote())
+			em.createQuery("update CreateSalaryBudgetTable c set c.name=?1,c.salaryDate=?2,c.chooseTax=?3,c.note=?4 where c.budgetId=?5")
+			.setParameter(1, createSalaryBudgetTable.getName()).setParameter(2, createSalaryBudgetTable.getSalaryDate())
+			.setParameter(3, createSalaryBudgetTable.getChooseTax()).setParameter(4, createSalaryBudgetTable.getNote())
 			.setParameter(5, createSalaryBudgetTable.getBudgetId())
 			.executeUpdate();
 			
@@ -101,7 +101,7 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 			try {
 				em.createQuery("update CreateSalaryBudgetTable c set c.makeTotal=?1," +
 						"c.wageTotal=?2," +
-						"serviceTotal=?3," +
+						"c.serviceTotal=?3," +
 						"c.fiveInsurancesTotal=?4," +
 						"c.issueNumber=?5 where c.budgetId=?6")
 						.setParameter(1, createSalaryBudgetTable.getMakeTotal())

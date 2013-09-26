@@ -94,7 +94,7 @@
 												<s:iterator value="%{#en.createSalaryBugetTables}" id="cr">
 														 <s:if test="#en.enterpriseId==#enterprise.enterpriseId">
 														    <li>
-															    <a href="viewWageBudgetSummary.action?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>&budgetId=<s:property value="%{#cr.budgetId}"/>">
+															    <a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>&budgetId=<s:property value="%{#cr.budgetId}"/>">
 															    	<s:property value="%{#cr.name}"/>（<s:property value="%{#cr.note}"/>）
 															    	</a>
 														    </li>

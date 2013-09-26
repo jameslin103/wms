@@ -104,7 +104,10 @@ public class EmployeesSalaryDetail implements Serializable
 	
 	/*备注**/
 	private String      note;
-
+	
+	/*生成哪月工资？*/
+	private Date    salaryDate;
+	
 	@Column(length=80)
 	private Integer     enterpriseId;
 	
@@ -406,7 +409,15 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEmployeesName(String employeesName) {
 		this.employeesName = employeesName;
 	}
+	@Temporal(TemporalType.DATE)
+	public Date getSalaryDate() {
+		return salaryDate;
+	}
 
+	public void setSalaryDate(Date salaryDate) {
+		this.salaryDate = salaryDate;
+	}
+	
 
 	
 }

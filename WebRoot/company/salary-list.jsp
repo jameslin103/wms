@@ -13,7 +13,11 @@
 		<title>富民人力银行派遣系统</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<%@ include file="/help/public_css_js.jsp"%>
-
+		<script type="text/javascript">
+			 
+		
+		
+		</script>
 	</head>
 	<body>
 
@@ -38,8 +42,8 @@
           </ul>
           
           <ul class="normal action-container clearfix">
-            <li class="title">2013年1月工资明细</li>
-            <li class="right"><a href="downloadEmployeesSalaryDetail" class="btn btn-primary">下载Excel表格</a></li>
+            <li class="title"><s:date name="%{#request.employeesSalaryDetail[1].salaryDate}" format="yyyy年MM月"/>工资明细</li>
+            <li class="right"><a href="downloadEmployeesSalaryDetail?budgetId=<s:property value="%{#request.budgetId}"/>" class="btn btn-primary">下载Excel表格</a></li>
           </ul>
 
           <table class="table table-striped table-bordered">
@@ -88,8 +92,10 @@
             <s:iterator value="#request.employeesSalaryDetail" id="employeesSalaryDetail">
             <thbody >
               <tr>
-                <td>刘备</td>
-                <td><a href="#info-for-check" data-toggle="modal">修改</a></td>
+                <td><s:property value="%{#employeesSalaryDetail.employeesName}"/></td>
+                <td>
+                <s:set value="%{#employeesSalaryDetail.salaryId}" var="salaryId"></s:set>
+                <a href="#info-for-check" onclick="findToIdSalaryDetail('${salaryId}')" data-toggle="modal">修改</a></td>
                 <td><s:property value="%{#employeesSalaryDetail.wage}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.bonus}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.subsidies}"/></td>
@@ -124,18 +130,7 @@
           </table>
 
           <div class="pagination">
-            <ul>
-              <li><a href="#">&laquo;</a></li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">6</a></li>
-              <li><a href="#">7</a></li>
-              <li><a href="#">8</a></li>
-              <li><a href="#">&raquo;</a></li>
-            </ul>
+            <%@include file="/share/fenye.jsp" %>
           </div>
           
         </div>
@@ -153,30 +148,33 @@
     </div>
 
     <div class="modal-body">
-      <h3>2013年5月工资</h3>
-      <form action="" method="post">
+    	
+      <h3><s:date name="%{#request.employeesSalaryDetail[1].salaryDate}" format="yyyy年MM月" />工资</h3>
+      <form action="updateEmployeesSalaryDetail" method="post">
+      	<s:hidden name="employeesSalaryDetail.salaryId"></s:hidden>
+      	<s:hidden name="budgetId"></s:hidden>
         <div class="row-fluid">
           <div class="input-container">
-            <p>姓名：张三</p>
+            <p>姓名：<s:label id="name"></s:label></p>
           </div>
 
           <div class="input-container">
             <label>工资</label>
-            <input type="text" name="">
+            <input type="text" name="employeesSalaryDetail.wage">
           </div>
 
           <div class="input-container">
             <label>奖金</label>
-            <input type="text" name="">
+            <input type="text" name="employeesSalaryDetail.bonus">
           </div>
 
           <div class="input-container">
             <label>补贴</label>
-            <input type="text" name="">
+            <input type="text" name="employeesSalaryDetail.subsidies">
           </div>
           
           <div class="input-container">
-            <button type="button" class="btn btn-primary">提交</button>
+            <s:submit value="提交" cssClass="btn btn-primary"/>
           </div>
         </div>
       </form>

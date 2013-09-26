@@ -41,13 +41,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 	 /**模板名称**/
 	 private String templateName;
-	 
-	 /**工资所属月份**/
-	 private  Date wageMonth ;
-	 
-	 /**合并计税工资表**/
-	 private String   mergeTax;
-	 
+	
 	 /**性质**/
 	 private String nture;
 	 
@@ -153,22 +147,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setTemplateName(String templateName) {
 		this.templateName = templateName;
 	}
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getWageMonth() {
-		return wageMonth;
-	}
 
-	public void setWageMonth(Date wageMonth) {
-		this.wageMonth = wageMonth;
-	}
-	@Column(length=100)
-	public String getMergeTax() {
-		return mergeTax;
-	}
-
-	public void setMergeTax(String mergeTax) {
-		this.mergeTax = mergeTax;
-	}
 	@Column(length=20)
 	public String getNture() {
 		return nture;

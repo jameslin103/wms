@@ -2,7 +2,6 @@ package cn.fm.utils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,6 +11,7 @@ import java.util.regex.Pattern;
 
 public class DateUtil {
 	    public final static String FORMAT_DATE = "yyyy-MM-dd";
+	    public final static String FORMAT_DATE_MONTH = "yyyy年MM月";
 	    public final static String FORMAT_DATE_TIME = "yyyy-MM-dd HH:mm:ss";
 	    public final static String FORMAT_DB_DATE_TIME = "YYYY-MM-DD HH24:MI:SS";
 	    public final static String FORMAT_DATE_YYYYMMMDD = "yyyyMMdd";

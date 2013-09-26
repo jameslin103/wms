@@ -136,12 +136,16 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	 */
 	public String viewSalaryBudgetTable()
 	{
-		
 		Enterprise enterprise=WebUtil.getEnterprise(request);
+		if(enterprise==null || enterprise.getEnterpriseId()==null){
+			enterprise=enterpriseService.find(enterpriseId);
+			request.getSession().setAttribute("enterprise",enterprise );
+			
+		}
+		
 		List<CreateSalaryBudgetTable> createSalaryBudgetTableList=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(enterprise.getEnterpriseId());
 		if(createSalaryBudgetTableList.size()==0)
 			createSalaryBudgetTableList=new ArrayList<CreateSalaryBudgetTable>();
-		
 		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTableList);
 		
 		
@@ -164,8 +168,10 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 				if(enterpriseId==null)return INPUT;
 				Enterprise enterprisePO=enterpriseService.find(enterpriseId);
 				SalaryTemplate salaryTemplatePO=salaryTemplateService.find(templateId);
+				createSalaryBudgetTable.setTemplateName(salaryTemplatePO.getTemplateName());
 				createSalaryBudgetTable.setEnterprise(enterprisePO);
 				createSalaryBudgetTable.setSalaryTemplate(salaryTemplatePO);
+				
 				createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
 				try {
 					createSalaryBudgetTableService.save(createSalaryBudgetTable);
@@ -201,7 +207,6 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	 */
 	public String newSalaryBudgetTable()
 	{
-		createSalaryBudgetTable=new CreateSalaryBudgetTable();
 		getSalaryTemplate();
 		return SUCCESS;
 		
@@ -275,6 +280,12 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		 */
 	    public String	viewSalaryBudgetTableSummary()
 	    {
+	    	Enterprise enterprise=WebUtil.getEnterprise(request);
+	    	if(enterprise==null || enterprise.getEnterpriseId()==null){
+	    		enterprise=enterpriseService.find(enterpriseId);
+	    		request.getSession().setAttribute("enterprise", enterprise);
+	    	}
+	    	
 	    	createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
 	    	if(createSalaryBudgetTable==null)createSalaryBudgetTable=new CreateSalaryBudgetTable();
 	    	request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTable);

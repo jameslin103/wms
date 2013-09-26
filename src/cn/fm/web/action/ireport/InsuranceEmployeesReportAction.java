@@ -1,5 +1,6 @@
 package cn.fm.web.action.ireport;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
+import cn.fm.utils.DateUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.ReportAction;
 
@@ -102,19 +104,33 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	public String downloadEmployeesSalaryDetail()
 	{
 		Enterprise enterprise=WebUtil.getEnterprise(request);
+		StringBuffer  sb=new StringBuffer();
 		WmsUser    user=WebUtil.getWmsUser(request);
 		if(enterprise.getEnterpriseId()==null)return INPUT;
-		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getAllEmployeesSalaryDetail(enterprise.getEnterpriseId(),26);
+		CreateSalaryBudgetTable createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getAllEmployeesSalaryDetail(enterprise.getEnterpriseId(),budgetId);
 		Map<String, Object> parameters=new HashMap<String, Object>();
+		String salaryDate=DateUtil.dateToString(createSalaryBudgetTable.getSalaryDate(),DateUtil.FORMAT_DATE_MONTH);
+		sb.append(salaryDate).append("月份各类费用预算表");
+		parameters.put("salaryDate",sb.toString());
+		parameters.put("createDate",DateUtil.dateToString(createSalaryBudgetTable.getCreateDate(),DateUtil.FORMAT_DATE_MONTH));
+		
+		parameters.put("makeTotal",createSalaryBudgetTable.getMakeTotal().toString());
+		parameters.put("wageTotal",createSalaryBudgetTable.getWageTotal().toString());
+		parameters.put("serviceTotal",createSalaryBudgetTable.getServiceTotal().toString());
+		parameters.put("fiveInsurancesTotal",createSalaryBudgetTable.getFiveInsurancesTotal().toString());
+		parameters.put("budgetName", createSalaryBudgetTable.getName());
 		parameters.put("fullname",enterprise.getFullName()); 
-		parameters.put("username",user.getUsername()); 
+		parameters.put("username",user.getUsername());
+		
+		
 		String sqlJasper="salaryDateail.jasper";
 		 
 		try {
 			downloadExcel(sqlJasper, "员工工资明细表", parameters,employeesSalaryDetailList);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return null;

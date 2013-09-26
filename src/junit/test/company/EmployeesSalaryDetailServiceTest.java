@@ -29,5 +29,21 @@ public class EmployeesSalaryDetailServiceTest {
 		System.out.println(total);
 		
 	}
+	@Test
+	public void   numberPersonlTotal()
+	{
+		
+		Integer total=Integer.parseInt(employeesSalaryDetailService.getNumberPersonlTotal(17, 22)+"");
+		System.out.println(total);
+		
+	}
+	@Test
+	public void   invoiceTotal()
+	{
+		
+		BigDecimal total=employeesSalaryDetailService.getInvoiceTotal(17, 22);
+		System.out.println(total);
+		
+	}
 	
 }

@@ -43,6 +43,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 				EmployeesSalaryDetail employeesSalaryDetailVO=structureEmployeesSalaryDetail(data);
 				employeesSalaryDetailVO.setEnterpriseId(employeesSalaryDetail.getEnterpriseId());
 				employeesSalaryDetailVO.setBudgettableId(employeesSalaryDetail.getBudgettableId());
+				employeesSalaryDetailVO.setSalaryDate(employeesSalaryDetail.getSalaryDate());
 				super.save(employeesSalaryDetailVO);
 			}	
 			
@@ -135,11 +136,11 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * 获取当前企业员工工资
 	 */
 	@SuppressWarnings("unchecked")
-	public List<EmployeesSalaryDetail>  getAllEmployeesSalaryDetail(Integer enterpriseId,Integer employeesId)
+	public List<EmployeesSalaryDetail>  getAllEmployeesSalaryDetail(Integer enterpriseId,Integer budgetId)
 	{
-		Query query=em.createQuery("select e from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.empolyessId=?2");
+		Query query=em.createQuery("select e from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");
 		
-		return query.setParameter(1, enterpriseId).setParameter(2, employeesId).getResultList();
+		return query.setParameter(1, enterpriseId).setParameter(2, budgetId).getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -190,7 +191,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	/**
 	 * 统计发放人数
 	 */
-	public Integer getNumberPersonlTotal(Integer enterpriseId,Integer budgettableId)
+	public long getNumberPersonlTotal(Integer enterpriseId,Integer budgettableId)
 	{
 		Query query=null;
 		try {
@@ -201,7 +202,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			e.printStackTrace();
 		}
 		
-		return (Integer)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
+		return (Long)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
 	}
 	
 	/**
@@ -244,6 +245,22 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		}
 		
 		return (BigDecimal)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
+	}
+	
+	public void updateEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail) {
+		 try {
+			 em.createQuery("update EmployeesSalaryDetail e set e.wage=?1,e.bonus=?2,e.subsidies=?3 where e.salaryId=?4")
+			 .setParameter(1, employeesSalaryDetail.getWage()).setParameter(2, employeesSalaryDetail.getBonus())
+			 .setParameter(3, employeesSalaryDetail.getSubsidies()).setParameter(4, employeesSalaryDetail.getSalaryId())
+			 .executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		
+		
 	}
 	
 	

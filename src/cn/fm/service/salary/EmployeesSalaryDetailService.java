@@ -25,7 +25,7 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	 * @param employeesId
 	 * @return
 	 */
-	public List<EmployeesSalaryDetail>  getAllEmployeesSalaryDetail(Integer enterpriseId,Integer employeesId);
+	public List<EmployeesSalaryDetail>  getAllEmployeesSalaryDetail(Integer enterpriseId,Integer budgettableId);
 
 	/**
 	 * 统计预算工资
@@ -45,7 +45,7 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	/**
 	 * 统计发放人数
 	 */
-	public Integer getNumberPersonlTotal(Integer enterpriseId,Integer budgettableId);
+	public long getNumberPersonlTotal(Integer enterpriseId,Integer budgettableId);
 	
 	/**
 	 * 统计服务费总额
@@ -56,6 +56,9 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	 * 统计五险总额
 	 */
 	public BigDecimal getFiveInsuranceTotal(Integer enterpriseId,Integer budgettableId);
+
+	
+	public void updateEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail);
 	
 	
 	
