@@ -111,10 +111,13 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getAllEmployeesSalaryDetail(enterprise.getEnterpriseId(),budgetId);
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		String salaryDate=DateUtil.dateToString(createSalaryBudgetTable.getSalaryDate(),DateUtil.FORMAT_DATE_MONTH);
-		sb.append(salaryDate).append("月份各类费用预算表");
+		String currentPath = ServletActionContext.getServletContext().getRealPath("");
+		String images= currentPath+"/images/fullname.jpg";
+		
+		sb.append(salaryDate).append("份各类费用预算表");
+		
 		parameters.put("salaryDate",sb.toString());
 		parameters.put("createDate",DateUtil.dateToString(createSalaryBudgetTable.getCreateDate(),DateUtil.FORMAT_DATE_MONTH));
-		
 		parameters.put("makeTotal",createSalaryBudgetTable.getMakeTotal().toString());
 		parameters.put("wageTotal",createSalaryBudgetTable.getWageTotal().toString());
 		parameters.put("serviceTotal",createSalaryBudgetTable.getServiceTotal().toString());
@@ -122,6 +125,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		parameters.put("budgetName", createSalaryBudgetTable.getName());
 		parameters.put("fullname",enterprise.getFullName()); 
 		parameters.put("username",user.getUsername());
+		parameters.put("image", images);
 		
 		
 		String sqlJasper="salaryDateail.jasper";

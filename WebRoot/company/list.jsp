@@ -83,7 +83,7 @@
 											<a href="#info-for-check" data-toggle="modal" onclick="modalEnterprise('${enterpriseId}')" >修改联系人</a>
 										</td>
 										<td>
-											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">-20000</a>
+											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>"><s:property  value="%{#enterprise.balanceDetailTotal}"/></a>
 										</td>
 										<td>
 											<a href="viewEnterpriseEmployees?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/> "><s:property value="%{#enterprise.count}"/></a>

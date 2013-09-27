@@ -45,5 +45,9 @@ public class EmployeesSalaryDetailServiceTest {
 		System.out.println(total);
 		
 	}
-	
+	@Test
+	public void   delete()
+	{
+		employeesSalaryDetailService.deleteEmployeesSalaryDetail(26);
+	}
 }

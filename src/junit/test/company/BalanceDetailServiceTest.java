@@ -66,5 +66,15 @@ public class BalanceDetailServiceTest {
 		balanceDetailService.save(balanceDetail);
 		
 	}
+	
+	@Test
+	public void findBlanceCount()
+	{
+		
+	     BigDecimal blance=balanceDetailService.findBalanceDetail(17);
+	     
+	     System.out.println(blance);
+		
+	}
 
 }

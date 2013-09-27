@@ -262,7 +262,17 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		
 		
 	}
+	public void deleteEmployeesSalaryDetail(Integer budgetId){
+		try {
+			em.createQuery("delete EmployeesSalaryDetail e where e.budgettableId=?1")
+			.setParameter(1, budgetId).executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	
+		
+		
+	}
 	
 	
 	

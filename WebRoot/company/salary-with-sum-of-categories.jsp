@@ -68,27 +68,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td><s:property value="%{#request.createSalaryBudgetTable.makeTotal}"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.wageTotal}"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.serviceTotal}"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.fiveInsurancesTotal}"/></td>
+                <td align="center"><br></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br>
                 <a href="viewSalaryWithBankDetail?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}"/>">查看</a>
                 </td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br><span class="em">（已发放）</span>
-                <br>2013年7月15日9时</td>
+                <br><s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月dd日HH时"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.heLines}"/><br><span class="em">（已发放）</span>
-                <br>2013年7月15日9：30时</td>
+                <br><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.cashnumber}"/><br><span class="em">（已发放）</span>
-                <br>2013年7月16日11时</td>
+                <br><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/></td>
                 <td>
                   <ul>
-                    <li>制作:<s:property value="%{#request.createSalaryBudgetTable.status}"/>
+                    <li>制作:<s:property value="%{#request.session.user.username}"/>
                     </li>
-                    <li>发放：小柴</li>
+                    <li>发放：<s:property value="%{#request.session.user.username}"/></li>
                   </ul>
                 </td>
                 <td>
                   <s:set value="%{#request.createSalaryBudgetTable.budgetId}" var="budgetId"></s:set>
                   <a href="#info-for-check" onclick="findToIdSalayBudegTable('${budgetId}')" data-toggle="modal">修改</a>
-                  <a href="deleteSalayBudgetTable?createSalaryBudgetTable.budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}" />">删除</a><br>
+                  <a href="deleteSalayBudgetTable?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}" />&enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}" />">删除</a><br>
                   <a href="viewAllEmployeesSalaryDetail?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}"/>">查看</a>
                   <a href="downloadSalaryWithSumOfCategoriesReport?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}" />">下载</a>
                 </td>

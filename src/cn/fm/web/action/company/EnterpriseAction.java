@@ -12,6 +12,7 @@ import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
+import cn.fm.service.salary.BalanceDetailService;
 import cn.fm.service.user.WmsUserService;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
@@ -25,6 +26,8 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	private WmsUserService    wmsUserService;
 	@Resource
 	private EnterpriseEmployeesService  enterpriseEmployeesService;
+	@Resource
+	private BalanceDetailService		balanceDetailService;
 	
 	private Enterprise        enterprise;
 	private Integer			  enterpriseId;
@@ -135,6 +138,7 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 			enterprisePO.setAddCount(enterpriseEmployeesService.newStaffCount(enterprisePO.getEnterpriseId()));
 			enterprisePO.setRenewalCount(enterpriseEmployeesService.renewalPersonnel(enterprisePO.getEnterpriseId()));
 			enterprisePO.setWhetherGinsengCount(enterpriseEmployeesService.ginsengPersonnel(enterprisePO.getEnterpriseId()));
+			enterprisePO.setBalanceDetailTotal(balanceDetailService.findBalanceDetail(enterprisePO.getEnterpriseId()));
 			enterprises.add(enterprisePO);
 			
 		}

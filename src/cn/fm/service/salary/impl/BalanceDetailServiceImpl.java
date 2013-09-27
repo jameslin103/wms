@@ -1,5 +1,6 @@
 package cn.fm.service.salary.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -45,5 +46,19 @@ public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implemen
 		}
 
 	return true;
+	}
+	
+	public BigDecimal findBalanceDetail(Integer enterpriseId) {
+		
+		Query query=null;
+		try {
+			query=em.createQuery("select sum(b.balance) from BalanceDetail b where b.enterpriseId=?1");
+			  query.setParameter(1, enterpriseId);
+		} catch (Exception e) {
+			
+		}
+	
+	return (BigDecimal)query.getSingleResult();
+		
 	}
 }

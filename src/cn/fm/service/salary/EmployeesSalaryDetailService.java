@@ -61,7 +61,7 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	public void updateEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail);
 	
 	
-	
+	public void deleteEmployeesSalaryDetail(Integer budgetId);
 	
 	
 	

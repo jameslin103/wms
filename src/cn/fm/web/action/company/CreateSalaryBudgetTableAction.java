@@ -14,6 +14,7 @@ import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
+import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.WebUtil;
@@ -28,6 +29,8 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	private SalaryTemplateService           salaryTemplateService;
 	@Resource
 	private EnterpriseService               enterpriseService;
+	@Resource 
+	private EmployeesSalaryDetailService  employeesSalaryDetailService;
 	
 	private CreateSalaryBudgetTable      createSalaryBudgetTable;
 	
@@ -318,8 +321,8 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		public String deleteSalayBudgetTable()
 		{
 			
-			createSalaryBudgetTableService.delete(createSalaryBudgetTable.getBudgetId());
-			
+			createSalaryBudgetTableService.deleteCreateSalaryBudgetTable(budgetId);
+			employeesSalaryDetailService.deleteEmployeesSalaryDetail(budgetId);
 			return SUCCESS;
 		}
 	 

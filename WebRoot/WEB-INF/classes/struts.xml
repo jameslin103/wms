@@ -422,6 +422,8 @@
          <action name="deleteSalayBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="deleteSalayBudgetTable">
             <result name="success" type="redirectAction">
             	<param name="actionName">viewSalaryBudgetTable</param>
+            	<param name="enterpriseId">${enterpriseId}</param>
+            	<param name="budgetId">${budgetId}</param>
             </result>
         </action>
         

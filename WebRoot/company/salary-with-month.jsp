@@ -89,9 +89,10 @@
 									</th>
 								</tr>
 							</thead>
-							<s:iterator begin="1" end="12" id="mm">
+							<s:iterator begin="1" end="12" id="mm" var="dd">
+							<s:property value="#dd"/>
+							
 							<tbody>
-								
 								<tr>
 									<td>
 										<div style="font-weight:bold; text-align: center;"><s:property value="#mm"/>月</div>
@@ -100,7 +101,10 @@
 									<td>
 										<ol>
 											<li>
-												<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
+												<s:if test="#dd==1">
+												  
+												</s:if>
+											<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
 												&budgetId=<s:property value="%{#sal.budgetId}"/>">
 													<s:property value="%{#sal.name}"/>			
 												</a>

@@ -7,6 +7,8 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import sun.util.BuddhistCalendar;
+
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
@@ -118,7 +120,16 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 		
 	}
 	
+	public void deleteCreateSalaryBudgetTable(Integer budgetId)
+	{
+		try {
+			em.createQuery("delete CreateSalaryBudgetTable c where c.budgetId=?1").setParameter(1, budgetId).executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	
+		
+	}
 	
 	
 	

@@ -1,6 +1,7 @@
 package cn.fm.bean.company;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -59,6 +60,9 @@ public class Enterprise implements Serializable{
 	private  Integer   status;
 	
 	private  long      count;
+	
+	/*统计企业资金往来*/
+	private  BigDecimal	   balanceDetailTotal ;
 	
 
 	/**增员**/
@@ -251,11 +255,18 @@ public class Enterprise implements Serializable{
 	}  
 	
 	
-	
+	@Transient
+	public BigDecimal getBalanceDetailTotal() {
+		return balanceDetailTotal;
+	}
+	public void setBalanceDetailTotal(BigDecimal balanceDetailTotal) {
+		this.balanceDetailTotal = balanceDetailTotal;
+	}
 	@Transient
 	public long getAddCount() {
 		return addCount;
 	}
+	
 	public void setAddCount(long addCount) {
 		this.addCount = addCount;
 	}
