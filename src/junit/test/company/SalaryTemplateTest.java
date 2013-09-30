@@ -1,8 +1,12 @@
 package junit.test.company;
 
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,6 +17,7 @@ import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.utils.DateUtil;
+import cn.fm.utils.ExportExcelUtils;
 
 public class SalaryTemplateTest {
 
@@ -91,6 +96,27 @@ public class SalaryTemplateTest {
 		enterprise.setEnterpriseId(16);
 		sal.setEnterprise(enterprise);
 		salaryTemplateService.save(sal);
+		
+	}
+	
+	@Test
+	public void excelImpot()
+	{
+//		ExportExcelUtils<SalaryTemplate> ex = new ExportExcelUtils<SalaryTemplate>();
+//		SalaryTemplate salaryTemplate=salaryTemplateService.find(3);
+//		String headers=salaryTemplate.getSubsidyList();
+//        OutputStream out = new FileOutputStream("E://a.xls");
+//        OutputStream out2 = new FileOutputStream("E://b.xls");
+        
+//        
+//        ex.exportExcel(headers,null, out);
+//        
+//        out.close();
+//        JOptionPane.showMessageDialog(null, "导出成功!");
+//        System.out.println("excel导出成功！");
+//		
+		
+		
 		
 	}
 

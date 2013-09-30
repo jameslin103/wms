@@ -460,7 +460,7 @@
             </result>
         </action>
         
-           <!-- report  ======================== -->
+           <!-- report  导出数据======================== -->
         <action name="downloadBankIssueSalary" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="downloadBankIssueSalary">
             <result name="success"  type="jasper"></result>
             <result name="input" type="redirectAction">

@@ -1,7 +1,6 @@
 package cn.fm.web.action.salary;
 
 import java.io.File;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,10 +15,14 @@ import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
+import cn.fm.bean.salary.SalaryTemplate;
+import cn.fm.service.company.CustomBonusServices;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
+import cn.fm.service.salary.BalanceDetailService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
+import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
@@ -27,13 +30,19 @@ import cn.fm.web.action.BaseAction;
 public class EmployeesSalaryDetailAction extends BaseAction{
 
 	@Resource
-	private EmployeesSalaryDetailService employeesSalaryDetailService;
+	private EmployeesSalaryDetailService 	employeesSalaryDetailService;
 	@Resource
-	private EnterpriseEmployeesService   enterpriseEmployeesService;
+	private EnterpriseEmployeesService   	enterpriseEmployeesService;
 	@Resource
 	private CreateSalaryBudgetTableService  createSalaryBudgetTableService; 
 	@Resource
 	private EnterpriseService				enterpriseService;
+	@Resource 
+	private BalanceDetailService			balanceDetailService;
+	@Resource
+	private SalaryTemplateService			salaryTemplateService;
+
+	
 	
 	private EnterpriseEmployees   enterpriseEmployees;
 	private Enterprise    enterprise;
@@ -46,19 +55,20 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	private BigDecimal   bonusTotal; //开票总额
 	private BigDecimal   wargeTotal;//工资总额
 	private BigDecimal   fiveInsuranceTotal;//五险一金总额
-	private long	 numberPeopleTotal;	//发放人数		
+	private long		 numberPeopleTotal;	//发放人数		
 	private BigDecimal   serviceTotal;//服务费总额
 	
-	private Integer  enterpriseId;
-	private Integer  employeesId;
-	private Integer  budgetId;
-	private Integer salaryId;
+	private Integer  	 enterpriseId;
+	private Integer  	 employeesId;
+	private Integer 	 budgetId;
+	private Integer 	 salaryId;
 	
 	/*生成哪月工资？*/
 	private Date    salaryDate;
 	
 	
 	
+
 	public Date getSalaryDate() {
 		return salaryDate;
 	}
@@ -181,6 +191,23 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 
 
 
+	public void setEnterpriseEmployeesService(
+			EnterpriseEmployeesService enterpriseEmployeesService) {
+		this.enterpriseEmployeesService = enterpriseEmployeesService;
+	}
+
+	public void setCreateSalaryBudgetTableService(
+			CreateSalaryBudgetTableService createSalaryBudgetTableService) {
+		this.createSalaryBudgetTableService = createSalaryBudgetTableService;
+	}
+
+	public void setBalanceDetailService(BalanceDetailService balanceDetailService) {
+		this.balanceDetailService = balanceDetailService;
+	}
+
+	public void setSalaryTemplateService(SalaryTemplateService salaryTemplateService) {
+		this.salaryTemplateService = salaryTemplateService;
+	}
 	public void setEmployeesSalaryDetailService(EmployeesSalaryDetailService employeesSalaryDetailService) {
 		this.employeesSalaryDetailService = employeesSalaryDetailService;
 	}
@@ -190,6 +217,12 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		this.enterpriseService = enterpriseService;
 	}
 
+	
+	
+	
+	
+	
+	
 	/**
 	 * excel批量导入工资预算表数据
 	 * @return success
@@ -206,7 +239,10 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		employeesSalaryDetail.setEnterpriseId(enterprise.getEnterpriseId());
 		employeesSalaryDetail.setBudgettableId(budgetId);
 		employeesSalaryDetail.setSalaryDate(salaryDate);
-		employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "工资预算表", 33,3,employeesSalaryDetail);
+		
+		//上传的名字是否重复
+		List<String> employeesNames=employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "工资预算表", 33,3,employeesSalaryDetail);
+		if(employeesNames.size()>0)return INPUT;
 		
 		//查找统计上传员工工资的总额
 		bonusTotal=employeesSalaryDetailService.getInvoiceTotal(enterprise.getEnterpriseId(), budgetId);
@@ -214,6 +250,13 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		fiveInsuranceTotal=employeesSalaryDetailService.getFiveInsuranceTotal(enterprise.getEnterpriseId(), budgetId);
 		numberPeopleTotal=employeesSalaryDetailService.getNumberPersonlTotal(enterprise.getEnterpriseId(), budgetId);
 		serviceTotal=employeesSalaryDetailService.getServiceTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		//查看当前预算表所对应的模板各种定制奖金情况
+		 SalaryTemplate salaryTemplatePO=salaryTemplateService.find(createSalaryBudgetTable.getSalaryTemplate().getTemplateId());
+		//CustomBonus    customBonusPO=customBonusServices.find(salaryTemplatePO.getc)
+		
+		
+		
 		
 		
 		//记录到工资预算表汇总信息
@@ -225,6 +268,22 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		createSalaryBudgetTableSummary.setServiceTotal(serviceTotal);
 		createSalaryBudgetTableSummary.setIssueNumber(Integer.parseInt(numberPeopleTotal+""));
 		createSalaryBudgetTableService.updateCreateSalaryBudgetTableSummary(createSalaryBudgetTableSummary);	
+		
+		//统计上传员工工资的总额,保险，开票总额 记录到<资金往来这个表中>
+		BalanceDetail   balanceDetail=new BalanceDetail();
+		balanceDetail.setBallotsToal(bonusTotal);
+		balanceDetail.setWagesToal(wargeTotal);
+		balanceDetail.setServiceToal(serviceTotal);
+		balanceDetail.setReceivableFiveFund(fiveInsuranceTotal);
+		balanceDetail.setYearMonth(createSalaryBudgetTable.getSalaryDate());
+		balanceDetail.setBudgetId(createSalaryBudgetTable.getBudgetId());
+		balanceDetail.setNote(createSalaryBudgetTable.getNote());
+		balanceDetail.setEnterpriseId(enterprise.getEnterpriseId());
+		
+		
+		balanceDetailService.save(balanceDetail);
+		
+		
 		
 		createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
 		

@@ -326,5 +326,5 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			return SUCCESS;
 		}
 	 
-
+		
 }

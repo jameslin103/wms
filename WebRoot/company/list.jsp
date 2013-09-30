@@ -64,8 +64,8 @@
 									</th>
 								</tr>
 							</thead>
-
-							<s:iterator value="#request.enterpriseList" var="enterprise">
+								
+							<s:iterator value="#request.enterpriseList" var="enterprise" >
 								<tbody>
 									<tr>
 										<td>
@@ -83,7 +83,8 @@
 											<a href="#info-for-check" data-toggle="modal" onclick="modalEnterprise('${enterpriseId}')" >修改联系人</a>
 										</td>
 										<td>
-											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>"><s:property  value="%{#enterprise.balanceDetailTotal}"/></a>
+											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">
+												<s:property  value="%{#enterprise.balanceDetailTotal}"/></a>
 										</td>
 										<td>
 											<a href="viewEnterpriseEmployees?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/> "><s:property value="%{#enterprise.count}"/></a>
@@ -96,7 +97,7 @@
 														    <li>
 															    <a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>&budgetId=<s:property value="%{#cr.budgetId}"/>">
 															    	<s:property value="%{#cr.name}"/>（<s:property value="%{#cr.note}"/>）
-															    	</a>
+															    </a>
 														    </li>
 														   </s:if>
 														</s:iterator>

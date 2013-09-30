@@ -4,6 +4,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
 
+import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.service.base.DAO;
 
@@ -17,7 +18,7 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	 * @author jameslin
 	 * @date   2013-09-01
 	 */
-	public void saveEmployeesSalaryDetail(File file , String fileName,int number,int readRows, EmployeesSalaryDetail employeesSalaryDetail);
+	public List<String> saveEmployeesSalaryDetail(File file , String fileName,int number,int readRows, EmployeesSalaryDetail employeesSalaryDetail);
 
 	/**
 	 * 获取当前企业的员工工资明细表
@@ -65,9 +66,15 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	
 	
 	
+	/**
+	 * 计算五险一金规则
+	 * @param wage
+	 * @param tax
+	 */
+	public EmployeesSalaryDetail toCalculateFiveInsurances();
+
 	
-	
-	
+	public List<String> isExitUploadEnterpriseEmployees(List<EnterpriseEmployees> enterpriseEmployeesListPO,EmployeesSalaryDetail employeesSalaryDetailVO);
 	
 	
 	

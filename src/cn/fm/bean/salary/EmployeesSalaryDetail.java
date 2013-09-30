@@ -118,9 +118,19 @@ public class EmployeesSalaryDetail implements Serializable
 	
 	private Integer     budgettableId;
 	
+	/*身份证号*/
+	private String  cardNumber;
 	
 	
-	
+	@Column(length=20)
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
+	}
+
 	@Id @GeneratedValue
 	public Integer getSalaryId() {
 		return salaryId;

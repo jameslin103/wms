@@ -17,7 +17,7 @@ public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implemen
 	
 	@SuppressWarnings("unchecked")
 	/**
-	 * 查询目前这个企业的自己往来情况
+	 * 查询目前这个企业的自己资金往来情况
 	 */
 	public List<BalanceDetail>  getAllBalanceDetail(Integer enterpriseId)
 	{
@@ -36,6 +36,13 @@ public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implemen
 	public  boolean  updateBalanceDetail(BalanceDetail balanceDetail)
 	{
 		try {
+			if(balanceDetail!=null && balanceDetail.getReceivableFiveFund()!=null){
+				//BigDecimal blan=BigDecimal(balanceDetail.getReceivableFiveFund()-balanceDetail.getBallotsToal());
+			}
+			
+			
+			
+			
 			em.createQuery("update BalanceDetail o set o.receivedFunds=?1 , o.wages=?2 , o.serviceWith=?3 , o.fiveFund=?4 , o.note=?5 where o.detailId=?6 ")
 			.setParameter(1, balanceDetail.getReceivedFunds()).setParameter(2, balanceDetail.getWages())
 			.setParameter(3, balanceDetail.getServiceWith()).setParameter(4,balanceDetail.getFiveFund())
@@ -46,19 +53,5 @@ public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implemen
 		}
 
 	return true;
-	}
-	
-	public BigDecimal findBalanceDetail(Integer enterpriseId) {
-		
-		Query query=null;
-		try {
-			query=em.createQuery("select sum(b.balance) from BalanceDetail b where b.enterpriseId=?1");
-			  query.setParameter(1, enterpriseId);
-		} catch (Exception e) {
-			
-		}
-	
-	return (BigDecimal)query.getSingleResult();
-		
 	}
 }

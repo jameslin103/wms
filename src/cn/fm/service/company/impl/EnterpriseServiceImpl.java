@@ -1,5 +1,6 @@
 package cn.fm.service.company.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.company.EnterpriseService;
@@ -28,6 +30,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 			for (Enterprise enterprise : enterpriseList) {
 				Long count=getCountEmployees(enterprise.getEnterpriseId());
 				Enterprise enterpriseVO=new Enterprise();
+				enterpriseVO.setBalanceDetailTotal(findBalanceDetail(enterprise.getEnterpriseId()));
 				enterpriseVO.setAccountLine(enterprise.getAccountLine());
 				enterpriseVO.setAddress(enterprise.getAddress());
 				enterpriseVO.setContact(enterprise.getContact());
@@ -66,6 +69,19 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		return (Long) query.getSingleResult();
 	}
 	
+public BigDecimal findBalanceDetail(Integer enterpriseId) {
+		
+		Query query=null;
+		try {
+			query=em.createQuery("select sum(b.balance) from BalanceDetail b where b.enterpriseId=?1");
+			  query.setParameter(1, enterpriseId);
+		} catch (Exception e) {
+			
+		}
+	
+	return (BigDecimal)query.getSingleResult();
+		
+	}
 	public void saveEnterprise(Enterprise enterprise){
 		
 		

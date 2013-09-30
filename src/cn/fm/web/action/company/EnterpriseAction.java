@@ -138,7 +138,6 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 			enterprisePO.setAddCount(enterpriseEmployeesService.newStaffCount(enterprisePO.getEnterpriseId()));
 			enterprisePO.setRenewalCount(enterpriseEmployeesService.renewalPersonnel(enterprisePO.getEnterpriseId()));
 			enterprisePO.setWhetherGinsengCount(enterpriseEmployeesService.ginsengPersonnel(enterprisePO.getEnterpriseId()));
-			enterprisePO.setBalanceDetailTotal(balanceDetailService.findBalanceDetail(enterprisePO.getEnterpriseId()));
 			enterprises.add(enterprisePO);
 			
 		}

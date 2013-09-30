@@ -69,9 +69,14 @@ public class BalanceDetail implements Serializable{
 	@Column(length=80)
 	private BigDecimal     fiveFund;
 	
+	//创建日期
 	@Temporal(TemporalType.DATE)
 	private  Date		   createDate=new Date();
 	
+	//修改日期
+	private   Date         updteDate=new Date();
+	
+	//备注
 	@Column(length=100)
 	private String       note;
 
@@ -82,9 +87,17 @@ public class BalanceDetail implements Serializable{
 	@Column(length=80)
 	private Integer      enterpriseId;
 	
+	@Column(length=80)
+	private Integer      budgetId;
 	
 	
 	
+	public Integer getBudgetId() {
+		return budgetId;
+	}
+	public void setBudgetId(Integer budgetId) {
+		this.budgetId = budgetId;
+	}
 	public BigDecimal getReceivableFiveFund() {
 		return receivableFiveFund;
 	}
@@ -232,5 +245,12 @@ public class BalanceDetail implements Serializable{
 	public void setEndingBalance(BigDecimal endingBalance) {
 		this.endingBalance = endingBalance;
 	}
+	public Date getUpdteDate() {
+		return updteDate;
+	}
+	public void setUpdteDate(Date updteDate) {
+		this.updteDate = updteDate;
+	}
+	
 
 }

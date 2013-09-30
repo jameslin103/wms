@@ -11,27 +11,39 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
+/**
+ * 五险一金基数实体类
+ * @author jameslin
+ * @date   2013-09-23
+ */
 @SuppressWarnings("serial")
 @Entity
 public class InsurancesBaseSettings implements Serializable{
 
 	
 	private Integer      id;
+	
 	/*医保类型*/
 	private String       insurancesType;
+	
 	/*社会保险基数*/
 	private BigDecimal   socialInsurance;
+	
 	/*生育保险基数*/
 	private BigDecimal   birthInsurance;
+	
 	/*工伤基数*/
 	private BigDecimal   inductrialInjury;
+	
 	/*住房公积金基数*/
 	private BigDecimal   housingMPF;
+	
 	/*基本医疗基数*/
 	private BigDecimal   basicMedical;
+	
 	/*大病统筹基数*/
 	private BigDecimal   povertyStricken;
+	
 	/*开始执行年月份*/
 	private Date   startDate;
 	

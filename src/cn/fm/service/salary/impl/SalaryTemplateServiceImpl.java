@@ -4,12 +4,9 @@ package cn.fm.service.salary.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Query;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import cn.fm.bean.company.CustomBonus;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
@@ -126,4 +123,5 @@ public class SalaryTemplateServiceImpl extends DaoSupport<SalaryTemplate> implem
 		
 		return bonusNames;
 	}
+
 }

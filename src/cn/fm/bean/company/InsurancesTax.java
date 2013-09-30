@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 @SuppressWarnings("serial")
 @Entity
 /***
+ * 计税规则实体类
  * jameslin 2013-08-15
  */
 public class InsurancesTax implements Serializable{

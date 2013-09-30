@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 
 import cn.fm.bean.user.Book;
 import cn.fm.bean.user.Student;
-import cn.fm.utils.ExcelFileGenerator;
 import cn.fm.utils.ExportExcelUtils;
 
 public class ExcelDateTest {
@@ -61,10 +60,7 @@ public class ExcelDateTest {
 	         
 	         OutputStream out = new FileOutputStream("E://a.xls");
 	         OutputStream out2 = new FileOutputStream("E://b.xls");
-	         OutputStream out3 = new FileOutputStream("E://entersprise.xls");
-	         ExcelFileGenerator generator = new ExcelFileGenerator(dd,dataset2);
-	         generator.expordExcel(out3);
-	         
+
 	         ex.exportExcel(headers, dataset, out);
 	         ex2.exportExcel(headers2, dataset2, out2);
 	         out.close();
