@@ -48,7 +48,7 @@
 								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li>
-								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
+								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
 							</li>
 							<li>
 								<a href="viewBalanceDetail">资金往来</a>
@@ -157,7 +157,7 @@
 								</tr>
 
 							</thead>
-							<s:iterator value="#request.employees" id="emp">
+							<s:iterator value="#request.pageView.records" id="emp">
 								<tbody>
 									<tr>
 										<td>
@@ -232,7 +232,7 @@
 						                		个性设置
 						                	</s:if>
 										</td>
-										<td>b
+										<td>
 											<s:property value="%{#emp.paymentWay}" />
 										</td>
 										<td>

@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
   		</div>
 
-			<div id="main"> 
+	<div id="main"> 
       <div class="row-fluid">
         <div id="center-pane">
           <ul class="nav nav-tabs">

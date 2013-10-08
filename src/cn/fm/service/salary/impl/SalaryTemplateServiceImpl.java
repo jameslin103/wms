@@ -33,7 +33,8 @@ public class SalaryTemplateServiceImpl extends DaoSupport<SalaryTemplate> implem
 					"s.subsidyList=?2,s.fiveInsurances=?3," +
 					"s.tax=?4,s.status=?5 where templateId=?6")
 			.setParameter(1,salaryTemplate.getTemplateName())
-			.setParameter(3,salaryTemplate.getSubsidyList())
+			.setParameter(2,salaryTemplate.getSubsidyList())
+			.setParameter(3,salaryTemplate.getFiveInsurances())
 			.setParameter(4,salaryTemplate.getTax())
 			.setParameter(5,salaryTemplate.getStatus())
 			.setParameter(6,salaryTemplate.getTemplateId()).executeUpdate();
