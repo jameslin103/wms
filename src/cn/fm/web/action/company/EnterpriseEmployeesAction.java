@@ -41,12 +41,14 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private String    employessName;
 	private Integer   year;
 	private Integer   month;
+	private int page;
 	
 	 //工程目录下的模板文件名称
    private String employeeFileName;
 	
-
+    
 	
+
 	public EnterpriseEmployeesService getEnterpriseEmployeesService() {
 		return enterpriseEmployeesService;
 	}
@@ -79,6 +81,12 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		this.cinsengDate = cinsengDate;
 	}
 	
+	public int getPage() {
+		return page<=0?1:page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	public Integer getYear() {
 		return year;
 	}
@@ -206,11 +214,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 * @return
 	 */
 	public String viewEnterpriseEmployees(){
-		
-        if(request.getParameter("page")!=null&&request.getParameter("page")!=""){  
-            page =Integer.parseInt(request.getParameter("page").toString());  
-        }  
-        
 		Enterprise enter=WebUtil.getEnterprise(request);
 		if(enter!=null)this.setEnterpriseId(enter.getEnterpriseId());
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
@@ -223,11 +226,12 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			params.add(this.enterpriseId);
 			jpql.append(" and o.departure=?").append(params.size()+1);
 			params.add(0);
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.page);
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
 		}
+		
 		return SUCCESS;
 	}
 	
@@ -254,9 +258,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return SUCCESS;
 		
-		List<EnterpriseEmployees> listEmployees=enterpriseEmployeesService.findInsuranceEnterpriseEmployees(insurance,enterprise.getEnterpriseId());
-		if(listEmployees==null || listEmployees.size()==0)
-			listEmployees=new ArrayList<EnterpriseEmployees>();
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("employeesId", "desc");
 		StringBuffer jpql = new StringBuffer("");
@@ -277,7 +278,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		
 		
 		
-		request.setAttribute("employees", listEmployees);
 		return SUCCESS;
 	}
 	
@@ -316,9 +316,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 */
 	public String newStaffEmployees(){
 		
-		List<EnterpriseEmployees> enterpriseEmployeesList=enterpriseEmployeesService.findNewStaffAndRenewalEmployees(this.enterpriseId, "新增");
-		if(enterpriseEmployeesList.size()==0)
-			enterpriseEmployeesList=new ArrayList<EnterpriseEmployees>();
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("employeesId", "desc");
 		StringBuffer jpql = new StringBuffer("");
@@ -337,7 +334,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			request.setAttribute("pageView", pageView);
 		}
 
-		request.setAttribute("employees", enterpriseEmployeesList);
 		return SUCCESS;
 	}
 	
@@ -347,9 +343,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 */
 	public String  renewalEmployees()
 	{
-		List<EnterpriseEmployees> enterpriseEmployeesList=enterpriseEmployeesService.findNewStaffAndRenewalEmployees(this.enterpriseId, "续保");
-		if(enterpriseEmployeesList==null || enterpriseEmployeesList.size()==0)
-			enterpriseEmployeesList=new ArrayList<EnterpriseEmployees>();
 		
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("employeesId", "desc");
@@ -368,7 +361,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			request.setAttribute("pageView", pageView);
 		}
 		
-		request.setAttribute("employees", enterpriseEmployeesList);
 		return SUCCESS;
 	}
 	/**
@@ -377,10 +369,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 */
 	public String personnelReduction()
 	{
-		List<EnterpriseEmployees> enterpriseEmployeesList=enterpriseEmployeesService.findNewStaffAndRenewalEmployees(this.enterpriseId, "减员");
-		if(enterpriseEmployeesList==null || enterpriseEmployeesList.size()==0)
-			enterpriseEmployeesList=new ArrayList<EnterpriseEmployees>();
-		
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("employeesId", "desc");
 		StringBuffer jpql = new StringBuffer("");
@@ -398,7 +386,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			request.setAttribute("pageView", pageView);
 		}
 		
-		request.setAttribute("employees", enterpriseEmployeesList);
 		return SUCCESS;
 	}
 	/**
@@ -435,8 +422,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	{
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return SUCCESS;
-		List<EnterpriseEmployees> employees=enterpriseEmployeesService.getInsuranceWithEmployeeList(enterprise.getEnterpriseId(),2013,8);
-		if(employees==null || employees.size()==0)employees=new ArrayList<EnterpriseEmployees>();
 		
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("employeesId", "desc");
@@ -468,7 +453,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
 		}
-		request.setAttribute("employees", employees);
 		return SUCCESS;
 	}
 	/**
@@ -579,7 +563,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			jpql.append(" o.pseudoDelete=0");
 			jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
 			params.add(this.enterpriseId);
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(8,  super.getPage());
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(8,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
@@ -593,7 +577,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	public String findEmployeesDeparture()
 	{
 		
-		List<EnterpriseEmployees>  listEmployees=enterpriseEmployeesService.findEmployeesDeparture(enterpriseId);
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("employeesId", "desc");
 		StringBuffer jpql = new StringBuffer("");
@@ -609,11 +592,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
 		}
-		if(listEmployees.size()==0){
-			listEmployees=new ArrayList<EnterpriseEmployees>();
-		}
-		
-		request.setAttribute("employees", listEmployees);
 		return SUCCESS;
 	}
 	

@@ -36,8 +36,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	
 	List<CreateSalaryBudgetTable>  createSalaryBudgetTableList;
 	
-	private String salaryFileName ="工资预算表.xls";
-	
+
 	private String excelName;
 
 	private String salaryDate;
@@ -248,20 +247,11 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	public String downloadSalaryBudgetTable()
 	{
 		
-		try {
-			excelName = new String(salaryFileName.getBytes(), "iso8859-1");//解决中文 文件名问题
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		
 		return SUCCESS;
 		
 	}
-	 public InputStream getDownloadFile()  
-	 {  
-	        return ServletActionContext.getServletContext().getResourceAsStream("/doc/"+salaryFileName);  
-	        
-	        
-	 } 
+	
 	 
 		/**
 		 * 当前企业底下的所有模板

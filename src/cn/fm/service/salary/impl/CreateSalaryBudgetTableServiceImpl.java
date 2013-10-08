@@ -6,9 +6,6 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import sun.util.BuddhistCalendar;
-
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
@@ -24,7 +21,7 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 	@SuppressWarnings("unchecked")
 	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Integer enterpriseId)
 	{
-		Query query=em.createQuery("select c from CreateSalaryBudgetTable  c where c.enterprise.enterpriseId=?1");
+		Query query=em.createQuery("select c from CreateSalaryBudgetTable  c where c.enterprise.enterpriseId=?1 and YEAR(c.salaryDate)=year(curdate()) group by c.salaryDate ");
 			   query.setParameter(1,enterpriseId);
 		return query.getResultList();
 	}

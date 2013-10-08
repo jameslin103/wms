@@ -135,11 +135,13 @@ public class ExportExcelUtils<T> {
 	                 int intValue = (Integer) value;
 	                 cell.setCellValue(intValue);
 	              } else if (value instanceof Float) {
-	                 float fValue = (Float) value;
+	                 @SuppressWarnings("unused")
+					float fValue = (Float) value;
 	                 //textValue =(String)new HSSFRichTextString(String.valueOf(fValue));
 	                 cell.setCellValue(textValue);
 	              } else if (value instanceof Double) {
-	                 double dValue = (Double) value;
+	                 @SuppressWarnings("unused")
+					double dValue = (Double) value;
 	                // textValue = new HSSFRichTextString(String.valueOf(dValue));
 	                 cell.setCellValue(textValue);
 	              } else if (value instanceof Long) {

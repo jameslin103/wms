@@ -10,6 +10,7 @@ import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
+import cn.fm.web.action.company.ExportSalaryBudgetByPoiAction;
 
 public class CreateSalaryBudgetTableServictTest {
 
@@ -54,6 +55,13 @@ public class CreateSalaryBudgetTableServictTest {
 		
 	}
 	
-
+	@Test
+	public void excel()
+	{
+		ExportSalaryBudgetByPoiAction ca=new ExportSalaryBudgetByPoiAction();
+		ca.downloadSalaryBudgetTable();
+		
+		
+	}
 		
 }
