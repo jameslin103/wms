@@ -29,7 +29,7 @@
 								<a href="toBeResponsibleEnterprise">我负责的企业</a>
 							</li>
 							<li>
-								<a href="#">所有企业</a>
+								<a href="toBeResponsibleEnterprise">所有企业</a>
 							</li>
 						</ul>
 

@@ -23,7 +23,7 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
 	protected HttpServletRequest request;
 	protected HttpSession session;
 	protected HttpServletResponse response;
-	protected int  page;
+	protected int  page=1;
 	
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;

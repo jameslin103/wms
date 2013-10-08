@@ -32,7 +32,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees> getAllEnterpriseEmployees(Integer enterpriseId)
 	{
-		Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterprise.enterpriseId=?1  and e.departure=0 and e.pseudoDelete!=0 ");
+		Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterprise.enterpriseId=?1  and e.departure=0");
 		return query.setParameter(1, enterpriseId).getResultList();
 	}
 	
