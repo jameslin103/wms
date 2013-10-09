@@ -10,7 +10,6 @@
 			</li>
 			<li>
 				<s:a href="loginOut">退出</s:a>
-				<s:a href="downloadSalaryBudgetTable">xxxxxxx</s:a>
 			</li>
 		</ul>
 

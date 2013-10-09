@@ -10,16 +10,19 @@ import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
+import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.web.action.company.ExportSalaryBudgetByPoiAction;
 
 public class CreateSalaryBudgetTableServictTest {
 
 	private static CreateSalaryBudgetTableService createSalaryBudgetTableService;
+	private static SalaryTemplateService salaryTemplateService;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		ApplicationContext  axt=new ClassPathXmlApplicationContext("beans.xml");
 		
-		createSalaryBudgetTableService=(CreateSalaryBudgetTableService)axt.getBean("createSalaryBudgetTableServiceImpl");
+		//createSalaryBudgetTableService=(CreateSalaryBudgetTableService)axt.getBean("createSalaryBudgetTableServiceImpl");
+		salaryTemplateService=(SalaryTemplateService)axt.getBean("salaryTemplateServiceImpl");
 		
 		
 		
@@ -59,7 +62,8 @@ public class CreateSalaryBudgetTableServictTest {
 	public void excel()
 	{
 		ExportSalaryBudgetByPoiAction ca=new ExportSalaryBudgetByPoiAction();
-		ca.getExeclStream();
+		ca.setSalaryTemplateService(salaryTemplateService);
+		ca.downloadSalaryBudgetTable();
 		
 		
 	}
