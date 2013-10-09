@@ -1,13 +1,14 @@
 package cn.fm.web.action.company;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Resource;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -16,9 +17,11 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.struts2.ServletActionContext;
-
+import cn.fm.bean.company.CustomBonus;
+import cn.fm.bean.salary.SalaryTemplate;
+import cn.fm.service.company.CustomBonusServices;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
+import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.web.action.BaseAction;
 
 @SuppressWarnings("serial")
@@ -26,83 +29,116 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	
 	@Resource
 	private CreateSalaryBudgetTableService   createSalaryBudgetTableService;
+	@Resource 
+	private CustomBonusServices 			customBonusServices;
+	@Resource
+	private SalaryTemplateService			salaryTemplateService;
+	
+	
+	 private  String fileName="员工基本工资信息表.xls";
+	 
+	 private  InputStream excelFile;
 	
 	
 	
 	
-	 private static String fileName = "工资预算表.xls";
-	
-	
-	
-	
-	
-	  public String getFileName() {  
-	        return fileName;  
-	    }  
-	      
-	      
-	      
-	    public void setFileName(String fileName) {  
-	        this.fileName = fileName;  
-	    }  
-	
-	
-	
-	    public InputStream getDownloadFile()  
-	    {  
-	    	
-	    	//return createSalaryBudgetTableService.getInputStream();
-	    	return null;
-		} 
+	 
+	 
+	 	
+	  public InputStream getExcelFile() {
+		return excelFile;
+	 }
 
+
+
+	public void setSalaryTemplateService(SalaryTemplateService salaryTemplateService)
+	{
+		 this.salaryTemplateService = salaryTemplateService;
+    }
+
+	public void setCreateSalaryBudgetTableService(
+			CreateSalaryBudgetTableService createSalaryBudgetTableService) {
+		this.createSalaryBudgetTableService = createSalaryBudgetTableService;
+	}
+
+	public void setCustomBonusServices(CustomBonusServices customBonusServices) {
+		this.customBonusServices = customBonusServices;
+	}
+
+
+
+		public String getFileName() 
+		{  
+		        return fileName;  
+		}  
+ 
+	      
+	   public void setFileName(String fileName)
+	   {  
+	    	this.fileName=fileName;
+	   }  
+
+	   //下载模板
 	    public String downloadSalaryBudgetTable()
-		{
-	    	this.setFileName("员工基本信息表.xls");
+	    {
 	    	try {
-				fileName = new String(fileName.getBytes(), "iso8859-1");//解决中文 文件名问题
+				fileName = new String(fileName.getBytes(),"ISO8859-1");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
-			}
-			header();
-			return SUCCESS;
-		}
-		
-	    
+			} 
+	    	header();
+	        return SUCCESS;  
+	    }  
 	    
 	    
 	    /**
 	     * 表头
 	     */
-	    public static void header()
+	    public  void header()
 	    {
 	    	HSSFWorkbook workbook = new HSSFWorkbook();
 	 	    HSSFSheet sheet = workbook.createSheet(fileName);
 	 	    sheet.setDefaultColumnWidth(10);
 	 	    HSSFRow zeroRow = sheet.createRow(0);
-	 	    zeroRow.setHeight((short)300);
-
+	 	    zeroRow.setHeight((short)500);
+	 	    
+	 	    //封装标题
+	 	   List<String> header=new ArrayList<String>();
+		 	  header.add("序号");
+		 	  header.add("姓名");
+		 	  header.add("基本工资");
+			  header.add("身份证号码");
+		 	  SalaryTemplate salaryTemplate=salaryTemplateService.find(4);
+		 	  String[] customt=salaryTemplate.getSubsidyList().split(",");
+	 	   
+	 	   for (int i = 0; i <customt.length; i++)
+	 	   {
+	 		  CustomBonus customBonus=customBonusServices.find(Integer.parseInt(customt[i].trim()));
+	 		  header.add(customBonus.getBonusName());
+	 		  
+	 	   }
 		    // 表头
-		    for (int i= 0; i < 10; i++)
+		    for (int i=0; i <header.size(); i++)
 		    {
 		        HSSFCell cell = zeroRow.createCell(i);
-		        cell.setCellValue("字段" + i);
+		        cell.setCellValue(header.get(i));
 		        // 设置表头样式
 		        setHeaderStyle(workbook, cell);
 		    }
 
-		    // 内容
-		    for (int i =1; i <= 30; i++) {
-		        HSSFRow row = sheet.createRow(i);
-		        for (int j = 0; j < 10; j++) {
-		            HSSFCell cell = row.createCell(j);
-		            cell.setCellValue("张三" + i + j);
-		             
-		            // 设置内容区样式
-		            setContentStyle(workbook, cell);
-		        }
-		    }
+//		    // 内容
+//		    for (int i =1; i <= 30; i++) {
+//		        HSSFRow row = sheet.createRow(i);
+//		        for (int j = 0; j < 10; j++) {
+//		            HSSFCell cell = row.createCell(j);
+//		            cell.setCellValue("张三" + i + j);
+//		             
+//		            // 设置内容区样式
+//		            setContentStyle(workbook, cell);
+//		        }
+//		    }
 		    // 输出文件
-		     exprotExcel(workbook, null);
+		     exprotExcel(workbook, fileName);
 		}
 	    
 		/**
@@ -110,7 +146,7 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 		 * @param workbook
 		 * @param cell
 		 */
-		public static void setHeaderStyle(HSSFWorkbook workbook, HSSFCell cell) 
+		public void setHeaderStyle(HSSFWorkbook workbook, HSSFCell cell) 
 		{
 		    HSSFFont font = workbook.createFont();
 		    font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
@@ -138,7 +174,7 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 		 */
 		
 		
-		public  static void setContentStyle(HSSFWorkbook workbook,HSSFCell cell)
+		public  void setContentStyle(HSSFWorkbook workbook,HSSFCell cell)
 		{
 		    HSSFFont cellFont = workbook.createFont();
 		    cellFont.setFontName("宋体");
@@ -160,30 +196,27 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 		 * @param workbook
 		 * @param fileName
 		 */
-		public static void exprotExcel(HSSFWorkbook workbook, String fileName)
+		public void exprotExcel(HSSFWorkbook workbook, String fileName)
 		{
-			
-			FileOutputStream outputStream = null;
-		    fileName = fileName==null ? fileName : workbook.getSheetName(0);
-		    try {
-		        outputStream = new FileOutputStream("D:\\" + fileName + ".xls");
-		        workbook.write(outputStream);
-		        outputStream.flush();
-		        outputStream.close();
-		    } catch (FileNotFoundException e) {
-		        e.printStackTrace();
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		    } finally {
-		        try {
-		            if (outputStream != null) {
-		                outputStream.close();
-		            }
-		        } catch (Exception e2) {
-		            e2.printStackTrace();
-		        }
-		    }
+				ByteArrayOutputStream baos=null;
+			    try {
+			    	baos = new ByteArrayOutputStream();
+			        workbook.write(baos);
+			        excelFile =new ByteArrayInputStream(baos.toByteArray());
+			        baos.flush();
+			    } catch (FileNotFoundException e) {
+			        e.printStackTrace();
+			    } catch (IOException e) {
+			        e.printStackTrace();
+			    } finally {
+			        try {
+			            if (baos != null) {
+			            	baos.close();
+			            }
+			        } catch (Exception e2) {
+			            e2.printStackTrace();
+			        }
+			    }
+			 
 		}
-
-	
 }

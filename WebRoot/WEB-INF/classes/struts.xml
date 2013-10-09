@@ -384,12 +384,11 @@
         </action> 
         <action name="downloadSalaryBudgetTable" class="cn.fm.web.action.company.ExportSalaryBudgetByPoiAction" method="downloadSalaryBudgetTable">
              <result name="success" type="stream">
-               <param name="encode">true</param> 
                <!-- 指定被下载文件的文件类型 -->
                <param name="contentType">application/vnd.ms-excel</param>
                <!-- 指定下载文件的文件位置 -->
                <param name="contentDisposition">attachment;filename="${fileName}"</param>  
-               <param name="inputName">excelStream</param>
+               <param name="inputName">excelFile</param>
                <param name="bufferSize">1024</param>
             </result>  
         </action> 
