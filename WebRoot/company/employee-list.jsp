@@ -17,9 +17,12 @@
 		function topage(page){
 			var form = document.getElementById("myform");
 			form.page.value=page;
-			alert(form.page.value);
 			form.submit();
 		}
+		$(function(){
+			　$("#loginForm").validate();
+		
+		});
 		</script>
 	</head>
 	<body>
@@ -96,7 +99,7 @@
 							</li>
 						</ul>
 					<s:form action="viewEnterpriseEmployees" method="post" id="myform">
-						<s:hidden name="page"/>
+						 <input type="hidden" name="page"/>
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -126,7 +129,7 @@
 									</th>
 									<th rowspan="2" width="">
 										服务费
-										<br>
+										<br/>
 										（元）
 									</th>
 									<th colspan="2" width="">
@@ -134,7 +137,7 @@
 									</th>
 									<th rowspan="2" width="">
 										哪月起
-										<br>
+										<br/>
 										参保
 									</th>
 									<th rowspan="2" width="">
@@ -174,27 +177,35 @@
 											<s:property value="%{#emp.employeesSex}" />
 										</td>
 										<td>
-											<s:if test="%{#emp.householdRegister==0}">
+											<s:if test="#emp.householdRegister==0">
 												<span>非农</span>
 											</s:if>
-											<s:if test="%{#emp.householdRegister==1}">
+											<s:elseif test="#emp.householdRegister==1">
 												<span>农村</span>
-											</s:if>
-										</td>
-										<td>
-											<s:if test="%{#emp.maritalStatus==0}">
-												<span>已婚</span>
-											</s:if>
+											</s:elseif>
 											<s:else>
-												<span>未婚</span>
 											</s:else>
 										</td>
 										<td>
-											<s:if test="%{#emp.photo==1}">
+											<s:if test="#emp.maritalStatus==0">
+												<span>已婚</span>
+											</s:if>
+											<s:elseif test="#emp.maritalStatus==1">
+												<span>未婚</span>
+											</s:elseif>
+											<s:else>
+												
+											</s:else>
+										</td>
+										<td>
+											<s:if test="#emp.photo==1">
 												<span>有</span>
 											</s:if>
-											<s:else>
+											<s:elseif test="#emp.photo==0">
 												<span>否</span>
+											</s:elseif>
+											<s:else>
+												
 											</s:else>
 										</td>
 										<td>
@@ -208,10 +219,10 @@
 										</td>
 
 										<td>
-											<s:if test="%{#emp.whetherGinseng==1}">
+											<s:if test="#emp.whetherGinseng==1">
 												<span>是</span>
 											</s:if>
-											<s:elseif test="%{#emp.whetherGinseng==0}">
+											<s:elseif test="#emp.whetherGinseng==0">
 												<span>否</span>
 											</s:elseif>
 											<s:else>
@@ -225,12 +236,13 @@
 											<s:date name="%{#emp.cinsengDate}" format="yyyy年MM月dd"/>
 										</td>
 										<td>
-											<s:if test="%{#emp.base==0}">
+											<s:if test="#emp.base==0">
 						                		默认
 						                	</s:if>
-											<s:if test="%{#emp.base==1}">
+											<s:elseif test="#emp.base==1">
 						                		个性设置
-						                	</s:if>
+						                	</s:elseif>
+						                	<s:else></s:else>
 										</td>
 										<td>
 											<s:property value="%{#emp.paymentWay}" />
@@ -259,8 +271,7 @@
 		<div id="info-for-check" class="modal hide fade" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					×
 				</button>
 				<h3 id="myModalLabel">
@@ -268,13 +279,13 @@
 				</h3>
 			</div>
 			<div class="modal-body">
-				<s:form action="addEnterpriseEmployees" method="post">
+				<s:form action="addEnterpriseEmployees" method="post" id="loginForm">
 					<div class="row-fluid">
 						<div class="input-container">
 							<label>
 								合同编号
 							</label>
-							<s:textfield name="enterpriseEmployees.contractNo" />
+							<s:textfield name="enterpriseEmployees.contractNo" cssClass="required email" id="input_e"/>
 
 						</div>
 
