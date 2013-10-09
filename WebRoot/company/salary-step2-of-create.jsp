@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="alert alert-info">
                   <ol>
                     <li>
-                      <a href="downloadSalaryBudgetTable">下载工资预算表</a>
+                      <a href="downloadSalaryBudgetTable?templateId=<s:property value="%{#request.createSalaryBudgetTable.salaryTemplate.templateId}"/>">下载工资预算表</a>
                     </li>
                     <li>
                       	上传新工资预算表

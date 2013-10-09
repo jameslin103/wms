@@ -39,7 +39,7 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	 
 	 private  InputStream excelFile;
 	
-	
+	 private Integer  templateId;
 	
 	
 	 
@@ -48,6 +48,18 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	  public InputStream getExcelFile() {
 		return excelFile;
 	 }
+
+	  
+
+	public Integer getTemplateId() {
+		return templateId;
+	}
+
+
+
+	public void setTemplateId(Integer templateId) {
+		this.templateId = templateId;
+	}
 
 
 
@@ -97,7 +109,7 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	    public  void header()
 	    {
 	    	HSSFWorkbook workbook = new HSSFWorkbook();
-	 	    HSSFSheet sheet = workbook.createSheet(fileName);
+	 	    HSSFSheet sheet = workbook.createSheet("员工基本工资信息表");
 	 	    sheet.setDefaultColumnWidth(10);
 	 	    HSSFRow zeroRow = sheet.createRow(0);
 	 	    zeroRow.setHeight((short)500);
@@ -108,9 +120,10 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 		 	  header.add("姓名");
 		 	  header.add("基本工资");
 			  header.add("身份证号码");
-		 	  SalaryTemplate salaryTemplate=salaryTemplateService.find(4);
+		 	  SalaryTemplate salaryTemplate=salaryTemplateService.find(templateId);
 		 	  String[] customt=salaryTemplate.getSubsidyList().split(",");
-	 	   
+		 	  int count=header.size()+customt.length;
+		 	  request.getSession().setAttribute("count", count);
 	 	   for (int i = 0; i <customt.length; i++)
 	 	   {
 	 		  CustomBonus customBonus=customBonusServices.find(Integer.parseInt(customt[i].trim()));
