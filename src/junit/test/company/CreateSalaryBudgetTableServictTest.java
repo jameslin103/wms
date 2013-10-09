@@ -59,7 +59,7 @@ public class CreateSalaryBudgetTableServictTest {
 	public void excel()
 	{
 		ExportSalaryBudgetByPoiAction ca=new ExportSalaryBudgetByPoiAction();
-		ca.downloadSalaryBudgetTable();
+		ca.getExeclStream();
 		
 		
 	}

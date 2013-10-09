@@ -47,26 +47,24 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	    }  
 	
 	
-	
-	    public InputStream getDownloadFile()  
-	    {  
+	    public InputStream getExeclStream()
+	    {
+	    	try {  
+	            fileName = new String(fileName.getBytes(),"ISO8859-1");  
+	        } catch (UnsupportedEncodingException e1) {  
+	            e1.printStackTrace();  
+	        }  
 	    	
-	    	//return createSalaryBudgetTableService.getInputStream();
-	    	return null;
-		} 
-
-	    public String downloadSalaryBudgetTable()
-		{
-	    	this.setFileName("员工基本信息表.xls");
-	    	try {
-				fileName = new String(fileName.getBytes(), "iso8859-1");//解决中文 文件名问题
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
 			header();
-			return SUCCESS;
-		}
-		
+	    	return null;
+	    	
+	    }
+	    @Override  
+	    public String execute() throws Exception {  
+	    	
+	        return SUCCESS;  
+	    }  
+
 	    
 	    
 	    
@@ -102,7 +100,7 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 		        }
 		    }
 		    // 输出文件
-		     exprotExcel(workbook, null);
+		     exprotExcel(workbook, fileName);
 		}
 	    
 		/**
