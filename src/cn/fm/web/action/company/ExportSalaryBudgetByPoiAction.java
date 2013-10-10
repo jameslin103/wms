@@ -120,6 +120,7 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 		 	  header.add("姓名");
 		 	  header.add("基本工资");
 			  header.add("身份证号码");
+			  header.add("备注");
 		 	  SalaryTemplate salaryTemplate=salaryTemplateService.find(templateId);
 		 	  String[] customt=salaryTemplate.getSubsidyList().split(",");
 		 	  int count=header.size()+customt.length;
@@ -130,6 +131,7 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	 		  header.add(customBonus.getBonusName());
 	 		  
 	 	   }
+	 	  
 		    // 表头
 		    for (int i=0; i <header.size(); i++)
 		    {

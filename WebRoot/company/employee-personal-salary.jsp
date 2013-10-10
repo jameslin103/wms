@@ -37,7 +37,7 @@
 								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li>
-								<a href="company/insurance-with-month.jsp">增减员与参保明细</a>
+								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
 							</li>
 						</ul>
 
@@ -408,7 +408,7 @@
 									<td>
 										<s:property value="%{#employeesSalaryDetail.aggregate}" />
 									</td>
-									<td>
+									<td>&nbsp;
 										<s:property value="%{#employeesSalaryDetail.moneyToCards}" />
 									</td>
 								</tr>
@@ -416,41 +416,9 @@
 							</table>
 						</s:iterator>
 					</s:else>
-	
 					<div class="pagination">
-							<ul>
-								<li>
-									<a href="#">&laquo;</a>
-								</li>
-								<li>
-									<a href="#">1</a>
-								</li>
-								<li>
-									<a href="#">2</a>
-								</li>
-								<li>
-									<a href="#">3</a>
-								</li>
-								<li>
-									<a href="#">4</a>
-								</li>
-								<li>
-									<a href="#">5</a>
-								</li>
-								<li>
-									<a href="#">6</a>
-								</li>
-								<li>
-									<a href="#">7</a>
-								</li>
-								<li>
-									<a href="#">8</a>
-								</li>
-								<li>
-									<a href="#">&raquo;</a>
-								</li>
-							</ul>
-						</div>
+						<%@ include  file="../share/fenye.jsp"%>		
+					</div>
 
 					</div>
 

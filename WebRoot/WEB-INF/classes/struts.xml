@@ -478,6 +478,15 @@
             	<param name="actionName">viewSalaryBudgetTable</param>
             </result>
         </action>
+         <action name="viewTaxOfPerson" class="cn.fm.web.action.salary.TaxOfPersonAction" method="viewTaxOfPerson">
+            <result name="success" >/admin/tax-of-person.jsp</result>
+        </action>
+        <action name="updateTaxOfPerson" class="cn.fm.web.action.salary.TaxOfPersonAction" method="updateTaxOfPerson">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewTaxOfPerson</param>
+            </result>
+        </action>
+        
 	</package>
 
 </struts>

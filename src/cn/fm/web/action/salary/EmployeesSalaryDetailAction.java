@@ -242,7 +242,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		
 		//上传的名字是否重复
 		int count=(Integer)request.getSession().getAttribute("count");
-		List<String> employeesNames=employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "员工基本工资信息表", count,1,employeesSalaryDetail);
+		List<String> employeesNames=employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "员工基本工资信息表", count,1,employeesSalaryDetail,createSalaryBudgetTable.getSalaryTemplate().getTemplateId());
 		if(employeesNames.size()>0)return INPUT;
 		
 		//查找统计上传员工工资的总额

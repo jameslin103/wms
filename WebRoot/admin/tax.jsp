@@ -32,7 +32,7 @@
 								<a href="viewInsurancesBaseSettings">五险一金（基数）</a>
 							</li>
 							<li>
-								<a href="admin/tax-of-person.jsp">个税</a>
+								<a href="viewTaxOfPerson">个税</a>
 							</li>
 						</ul>
 

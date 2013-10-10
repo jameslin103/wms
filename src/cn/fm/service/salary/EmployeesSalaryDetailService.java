@@ -18,7 +18,7 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	 * @author jameslin
 	 * @date   2013-09-01
 	 */
-	public List<String> saveEmployeesSalaryDetail(File file , String fileName,int number,int readRows, EmployeesSalaryDetail employeesSalaryDetail);
+	public List<String> saveEmployeesSalaryDetail(File file , String fileName,int number,int readRows, EmployeesSalaryDetail employeesSalaryDetail,Integer templateId);
 
 	/**
 	 * 获取当前企业的员工工资明细表
@@ -75,7 +75,7 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 
 	
 	public List<String> isExitUploadEnterpriseEmployees(List<EnterpriseEmployees> enterpriseEmployeesListPO,EmployeesSalaryDetail employeesSalaryDetailVO);
-	
+
 	
 	
 	
