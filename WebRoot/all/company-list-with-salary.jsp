@@ -20,7 +20,7 @@
 
 		<div id="container">
 			<div id="header">
-				<jsp:include page="../layout/header.jsp" />
+				<jsp:include page="../layout/list_header.jsp" />
 			</div>
 			<div id="main">
 				<div class="row-fluid">
@@ -28,13 +28,13 @@
 
 						<ul class="nav nav-tabs">
 							<li class="active">
-								<a href="company/company-list-with-saraly.jsp">工资</a>
+								<a href="viewCompanyListWithSaraly">工资</a>
 							</li>
 							<li>
-								<a href="all/company-list-with-insurance.jsp">增减员与参保</a>
+								<a href="viewCompanyListWithInsurance">增减员与参保</a>
 							</li>
 							<li>
-								<a href="all/company-list-with-balance.jsp">资金往来</a>
+								<a href="viewCompanyListWithBalance">资金往来</a>
 							</li>
 						</ul>
 
@@ -161,39 +161,40 @@
 									（制作、审核、实际发放）
 								</th>
 							</thead>
+						<s:iterator value="#request.createSalaryBudgetTable.records" id="createSalaryBudgetTable">
 							<tbody>
 								<tr>
 									<td>
-										1
+										<s:property value="%{#createSalaryBudgetTable.budgetId}"/>
 									</td>
 									<td>
-										福建电信
+										<s:property value="%{#createSalaryBudgetTable.enterprise.fullName}"/>
 									</td>
 									<td>
-										<a href="company/salary-list.jsp">某某工程工资</a>
+										<a href="company/salary-list.jsp"><s:property value="%{#createSalaryBudgetTable.name}"/></a>
 									</td>
 									<td>
-										2013年1月
+										<s:date name="%{#createSalaryBudgetTable.salaryDate}" format="yyyy年MM月"/>
 									</td>
 									<td>
-										10435.50
+										<s:property value="%{#createSalaryBudgetTable.makeTotal}"/>
 									</td>
 									<td>
-										9480.00
+										<s:property value="%{#createSalaryBudgetTable.wageTotal}"/>
 									</td>
 									<td>
-										60
+										<s:property value="%{#createSalaryBudgetTable.serviceTotal}"/>
 									</td>
 									<td>
 										600
 									</td>
 									<td>
-										15
+										<s:property value="%{#createSalaryBudgetTable.issueNumber}"/>
 										<br>
 										<a href="company/salary-with-bank-detail.jsp">查看</a>
 									</td>
 									<td>
-										8
+										<s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/>
 										<br>
 										<span class="em">（已发放）</span>
 										<br>
@@ -225,105 +226,14 @@
 										</ul>
 									</td>
 								</tr>
-								<tr>
-									<td>
-										2
-									</td>
-									<td>
-										福建电信
-									</td>
-									<td>
-										某某工程工资
-									</td>
-									<td>
-										2013年1月
-									</td>
-									<td>
-										10435.50
-									</td>
-									<td>
-										9480.00
-									</td>
-									<td>
-										60
-									</td>
-									<td>
-										600
-									</td>
-									<td>
-										15
-										<br>
-										<a href="company/salary-with-bank-detail.jsp">查看</a>
-									</td>
-									<td>
-										8
-										<br>
-										<span class="em">（已发放）</span>
-										<br>
-										2013年7月15日9时
-									</td>
-									<td>
-										2
-										<br>
-										<span class="em">（已发放）</span>
-										<br>
-										2013年7月15日9：30时
-									</td>
-									<td>
-										5
-										<br>
-										<span class="em">（已发放）</span>
-										<br>
-										2013年7月16日11时
-									</td>
-									<td>
-										<ul>
-											<li>
-												制作：倪姐，2013-07-18，9:00，
-											</li>
-											<li>
-												发放：小柴
-												<a href="#info-for-check2" data-toggle="modal">操作</a>
-											</li>
-										</ul>
-									</td>
-								</tr>
+								
 							</tbody>
+							</s:iterator>
+							
 						</table>
 
 						<div class="pagination">
-							<ul>
-								<li>
-									<a href="#">&laquo;</a>
-								</li>
-								<li>
-									<a href="#">1</a>
-								</li>
-								<li>
-									<a href="#">2</a>
-								</li>
-								<li>
-									<a href="#">3</a>
-								</li>
-								<li>
-									<a href="#">4</a>
-								</li>
-								<li>
-									<a href="#">5</a>
-								</li>
-								<li>
-									<a href="#">6</a>
-								</li>
-								<li>
-									<a href="#">7</a>
-								</li>
-								<li>
-									<a href="#">8</a>
-								</li>
-								<li>
-									<a href="#">&raquo;</a>
-								</li>
-							</ul>
+							<%@include file="../share/fenye.jsp"  %>
 						</div>
 					</div>
 				</div>

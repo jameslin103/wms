@@ -490,6 +490,16 @@
             </result>
         </action>
         
+        <!-- ==============汇总============== -->
+        <action name="viewCompanyListWithSaraly" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="viewCompanyListWithSaraly">
+            <result name="success" >all/company-list-with-salary.jsp</result>
+        </action>
+        <action name="viewCompanyListWithInsurance" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="viewCompanyListWithInsurance">
+            <result name="success" >all/company-list-with-insurance.jsp</result>
+        </action>
+        <action name="viewCompanyListWithBalance" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="viewCompanyListWithBalance">
+            <result name="success" >all/company-list-with-balance.jsp</result>
+        </action>
 	</package>
 
 </struts>

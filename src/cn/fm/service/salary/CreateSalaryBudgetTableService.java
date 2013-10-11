@@ -34,5 +34,13 @@ public interface CreateSalaryBudgetTableService extends DAO<CreateSalaryBudgetTa
 	
 	
 	public void deleteCreateSalaryBudgetTable(Integer budgetId);
+	
+	/**
+	 * 所有企业的汇总情况
+	 * @return  List<CreateSalaryBudgetTable>
+	 */
+	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable();
+	
+	
 
 }

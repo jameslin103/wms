@@ -127,6 +127,17 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 	
 		
 	}
+
+	/**
+	 * 所有企业工资预算表汇总
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable() {
+		
+		return em.createQuery("select c from CreateSalaryBudgetTable c").getResultList();
+		 
+	}
 	
 
 	

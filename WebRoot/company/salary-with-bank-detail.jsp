@@ -79,18 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </table>
 
           <div class="pagination">
-            <ul>
-              <li><a href="#">&laquo;</a></li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">6</a></li>
-              <li><a href="#">7</a></li>
-              <li><a href="#">8</a></li>
-              <li><a href="#">&raquo;</a></li>
-            </ul>
+            <%@include file="../share/fenye.jsp" %>
           </div>
 				</div>
 			</div>
