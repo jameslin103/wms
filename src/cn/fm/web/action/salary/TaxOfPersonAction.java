@@ -42,7 +42,7 @@ public class TaxOfPersonAction extends BaseAction {
 	}
 	public String updateTaxOfPerson()
 	{
-		if(taxOfPerson.getTaxThreshold()==null)return SUCCESS;
+		if(taxOfPerson.getTaxThreshold()==null || taxOfPerson.getStatrDate()==null)return INPUT;
 		taxOfPersonService.updateTaxOfPerson(taxOfPerson);
 		return SUCCESS;
 	}

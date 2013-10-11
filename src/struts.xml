@@ -485,6 +485,9 @@
             <result name="success" type="redirectAction">
             	<param name="actionName">viewTaxOfPerson</param>
             </result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewTaxOfPerson</param>
+            </result>
         </action>
         
 	</package>
