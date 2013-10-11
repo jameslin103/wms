@@ -18,18 +18,40 @@
 				$("#submit").click(function (){
 				  var taxThreshold=$("input[name='taxOfPerson.taxThreshold']").val();
 				  var statrDate=$("input[name='taxOfPerson.statrDate']").val();
+
 				
 				   if(taxThreshold=="")
 				   {
-				   		$("#errortax").text("起征点不能为空!!");
+				   		$("#errortax").css("color","red");
+				   		$("#errortax").text("起征点必填项!");
 				   		return false;
+				   }else if(statrDate==""){
+				   		$("#errorStatrDate").css("color","red");
+				   		$("#errorStatrDate").text("执行日期必填项!");
+				   		return false;
+				   }else{
+				   		clearErrorMessage();
+				   		return true;
 				   }
-					
-				
-				
 				});
 			});
+		$(function (){
+			$(".close").click(function (){
+				clearErrorMessage();
+			});
+			$("#close").click(function (){
+				clearErrorMessage();
+			});
 		
+		});
+			
+			
+			
+		function clearErrorMessage()
+		{
+			$("#errortax").text(" ");
+			$("#errorStatrDate").text(" ");
+		}
 		
 		</script>
 	</head>
@@ -169,28 +191,28 @@
    		 </div>
 	    <div class="modal-body">
 	      <form action="updateTaxOfPerson" method="post" id="myForm">
+	      	<input type="hidden" value="${taxOfPerson.taxid}" name="taxOfPerson.taxid"/>
 	        <div class="row-fluid">
 	          <div class="input-container">
 	            <label>起征点:</label>
-	            <input type="text" name="taxOfPerson.taxThreshold" style="height:30px;">(元)
-	            <label id="errortax"></label>
+	            <input type="text" name="taxOfPerson.taxThreshold" value="${taxOfPerson.taxThreshold}" style="height:30px;"><span style="color: red"> *</span>(元)
+	            <span id="errortax"></span>
 	          </div>
 	          <div class="input-container">
 	            <label>&nbsp;</label>
 	             <label>开始执行日期:</label>
-	              <input type="text" id="d11" name="taxOfPerson.statrDate"onclick="WdatePicker()" class="Wdate" style="height: 30px;"/>
+	              <input type="text" id="d11" name="taxOfPerson.statrDate" value="${taxOfPerson.statrDate}" onclick="WdatePicker()" class="Wdate" style="height: 30px;"/>
+	          	   <span style="color: red"> *</span>
+	          	   <span id="errorStatrDate"></span>
 	          </div>                    
-	
 	          <div class="input-container">
-	            <label>&nbsp;</label>
-	            
 	              <s:submit value="提交" cssClass="btn btn-primary" id="submit"/>
 	          </div>
 	        </div>
 	      </form>              
 	    </div>
 	    <div class="modal-footer">
-	      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	      <button class="btn" data-dismiss="modal" aria-hidden="true" id="close">Close</button>
 	    </div>
 	
 			</div>
