@@ -21,16 +21,47 @@
 				
 				   if(taxThreshold=="")
 				   {
-				   		$("#errortax").text("起征点不能为空!!");
+				   		//noty({ text: "提示信息~~~~~" });
+				   		$("#taxThreshold").css("backgrounp", "yellow")
+				   		$("#errortax").css("color","red")
+				   		$("#errortax").text("起征点不能为空!");
+				   		
+				   		
 				   		return false;
+				   }else{
+				   		$("#errortax").text(" ");
+				   }
+				   if(statrDate==""){
+				   
+				   	   $("#statrDate").css("color","red")
+				   	   $("#statrDate").text("执行日期不能为空!");
+				   	   $("#taxThreshold").css("backgrounp", "white")
+				   	   return false;
+				   }else{
+				   		 $("#statrDate").text(" ")
+				   
 				   }
 					
 				
 				
 				});
 			});
+		$(function (){
+			$(".close").click(function (){
+				clert();
+			
+			});
+			$("#close").click(function (){
+				 clert();
+			
+			});
+			
+		});
+		function clert(){
+			$("#errortax").text(" ");
+		    $("#statrDate").text(" ")
 		
-		
+		}
 		</script>
 	</head>
 	<body>
@@ -169,16 +200,17 @@
    		 </div>
 	    <div class="modal-body">
 	      <form action="updateTaxOfPerson" method="post" id="myForm">
+	         <s:hidden name="taxOfPerson.taxid" value="%{#request.taxOfPerson.taxid}"></s:hidden>
 	        <div class="row-fluid">
 	          <div class="input-container">
-	            <label>起征点:</label>
-	            <input type="text" name="taxOfPerson.taxThreshold" style="height:30px;">(元)
-	            <label id="errortax"></label>
+	            <label>起征点(元):</label>
+		            <input type="text" name="taxOfPerson.taxThreshold" value="${taxOfPerson.taxThreshold}" style="height:30px;" id="taxThreshold"><span style="color: red;"> * </span> 
+		            <span id="errortax"></span>
 	          </div>
 	          <div class="input-container">
-	            <label>&nbsp;</label>
 	             <label>开始执行日期:</label>
-	              <input type="text" id="d11" name="taxOfPerson.statrDate"onclick="WdatePicker()" class="Wdate" style="height: 30px;"/>
+	              <input type="text" id="d11" name="taxOfPerson.statrDate"onclick="WdatePicker()" value="${taxOfPerson.statrDate}" class="Wdate" style="height: 30px;"/><span style="color: red;"> *</span>
+	          	  <span id="statrDate"></span>
 	          </div>                    
 	
 	          <div class="input-container">
@@ -190,7 +222,7 @@
 	      </form>              
 	    </div>
 	    <div class="modal-footer">
-	      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	      <button class="btn" data-dismiss="modal" aria-hidden="true" id="close">Close</button>
 	    </div>
 	
 			</div>
