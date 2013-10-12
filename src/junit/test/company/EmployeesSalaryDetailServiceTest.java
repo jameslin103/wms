@@ -80,27 +80,7 @@ public class EmployeesSalaryDetailServiceTest {
 //		  System.out.println(bd2);
 
 	}
-   @Test
-   public void isExitUploadEnterpriseEmployees()
-   {
-	   List<EnterpriseEmployees> enterpriseEmployeesListPO=new ArrayList<EnterpriseEmployees>();
-	   EnterpriseEmployees  enterpriseEmployees=new EnterpriseEmployees();
-	   enterpriseEmployees.setEmployeesName("张东");
-	   enterpriseEmployees.setCardNumber("35000189789");
-	   enterpriseEmployeesListPO.add(enterpriseEmployees);
-	   EmployeesSalaryDetail  employeesSalaryDetail=new EmployeesSalaryDetail();
-	   employeesSalaryDetail.setEmployeesName("张东");
-	   employeesSalaryDetail.setCardNumber("35000189789");
-	   
-	  
-	   
-	   
-	   List<String> employees=employeesSalaryDetailService.isExitUploadEnterpriseEmployees(enterpriseEmployeesListPO, employeesSalaryDetail);
-	   for (String string : employees) 
-	   {
-		   System.out.println(string);
-	   }
-   }
+   
 
    @Test
    public void count(){
@@ -156,7 +136,7 @@ public class EmployeesSalaryDetailServiceTest {
 	   eeList.add(ee);
 	   EnterpriseEmployees ee1=new EnterpriseEmployees();
 	   ee1.setEmployeesName("张三");
-	   ee1.setCardNumber("35012399");
+	   ee1.setCardNumber("350123");
 	   eeList.add(ee1);
 	   EnterpriseEmployees ee2=new EnterpriseEmployees();
 	   ee2.setEmployeesName("张三");
@@ -168,42 +148,89 @@ public class EmployeesSalaryDetailServiceTest {
 	   eeList.add(ee3);
 	   int count=0;
 	   int cardnumber=0;
-	   
+
+
 		   for (EmployeesSalaryDetail  employeesSalaryDetail : edList)
 		   {
+			   boolean falg=false;
+			   String detailName=employeesSalaryDetail.getEmployeesName();
 			   for ( EnterpriseEmployees enterpriseEmployees : eeList)
 			   {
-				        String name=employeesSalaryDetail.getEmployeesName();
-				        String detailName=enterpriseEmployees.getEmployeesName();
-						   if(name.equals(detailName))
-						   {    
-							   count++;
+				     
+				        String employeName=enterpriseEmployees.getEmployeesName();
+						   if(detailName.equals(employeName))
+						   {      falg=true;
+							       count++;
+							       System.out.println("数据库存在相同名字："+detailName+"总共"+count+"个");
 								   if(count>0)
 								   {
+									      
 										   String card=enterpriseEmployees.getCardNumber()==null?"":enterpriseEmployees.getCardNumber();
-										   if(card.equals(employeesSalaryDetail.getCardNumber()))
+										   String detailCar=employeesSalaryDetail.getCardNumber();
+										   if(card.equals(detailCar))
 										   {
 											   cardnumber++;
 											   
 											     if(cardnumber>1)
 											      {
-											    	 System.out.println("相同名字："+employeesSalaryDetail.getEmployeesName());
-											    	 System.out.println("身份证号:"+employeesSalaryDetail.getCardNumber());
-											    	 System.out.println(cardnumber);
-											    	 System.out.println("=======================第"+count+"个"+enterpriseEmployees.getEmployeesName()+"=================================");
+											    	 System.out.println("相同身份证："+cardnumber+" 个  姓名："+employeName+"卡号："+detailCar);
+											    	 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 											      }
 										   } 
 								   }
-						   }
-						  
-				   }
-				   System.out.println("不存在的名字："+employeesSalaryDetail.getEmployeesName());
-				   System.out.println("数据库无法匹配不存在此员工");
-				   System.out.println("=======================================");
-				   System.out.println(count); 
+						   } 
+				    }
+			   		if(falg==false){
+						  System.out.println("不存在的名字："+detailName);
+						  System.out.println("数据库无法匹配不存在此员工");
+						  System.out.println("=======================================");
+			   		}
 			   }
-		   
-		 
 	   }
+   
+   @Test
+   public void exitSameUploadEnterpriseEmployees()
+   {
+	   List<EnterpriseEmployees> enterpriseEmployeesListPO=new ArrayList<EnterpriseEmployees>();
+	   EnterpriseEmployees  enterpriseEmployees=new EnterpriseEmployees();
+	   enterpriseEmployees.setEmployeesName("张东");
+	   enterpriseEmployees.setCardNumber("101");
+	   enterpriseEmployeesListPO.add(enterpriseEmployees);
+	   
+	   EnterpriseEmployees  enterpriseEmployees1=new EnterpriseEmployees();
+	   enterpriseEmployees1.setEmployeesName("张东");
+	   enterpriseEmployees1.setCardNumber("101");
+	   enterpriseEmployeesListPO.add(enterpriseEmployees1);
+	   
+	   EnterpriseEmployees  enterpriseEmployees2=new EnterpriseEmployees();
+	   enterpriseEmployees2.setEmployeesName("张东");
+	   enterpriseEmployees2.setCardNumber("101");
+	   enterpriseEmployeesListPO.add(enterpriseEmployees2);
+	   
+	   EnterpriseEmployees  enterpriseEmployees3=new EnterpriseEmployees();
+	   enterpriseEmployees3.setEmployeesName("张东");
+	   enterpriseEmployees3.setCardNumber("101");
+	   enterpriseEmployeesListPO.add(enterpriseEmployees3);
+	   
+	   EnterpriseEmployees  enterpriseEmployees4=new EnterpriseEmployees();
+	   enterpriseEmployees4.setEmployeesName("张东");
+	   enterpriseEmployees4.setCardNumber("101");
+	   enterpriseEmployeesListPO.add(enterpriseEmployees4);
+	   
+	   
+	   //===========================================================
+	   EmployeesSalaryDetail  employeesSalaryDetail=new EmployeesSalaryDetail();
+	   employeesSalaryDetail.setEmployeesName("张东");
+	   employeesSalaryDetail.setCardNumber("101");
+	   
+	   
+	   List<String> employees=employeesSalaryDetailService.isExitUploadEnterpriseEmployees(enterpriseEmployeesListPO, employeesSalaryDetail);
+	   for (String string : employees) 
+	   {
+		   System.out.println(string);
+	   }
+	   
+   }
+   
 
 }

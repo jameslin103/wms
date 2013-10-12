@@ -44,16 +44,23 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			if(arrayList.size()==0)return null;
 			for (int i = 0; i < arrayList.size(); i++){
 				String[] data = arrayList.get(i);
-				EmployeesSalaryDetail employeesSalaryDetailVO=structureEmployeesSalaryDetail(data,templateId);
+				
+				
 				List<EnterpriseEmployees> enterpriseEmployeesListPO=getAllEnterpriseEmployees(employeesSalaryDetail.getEnterpriseId());
 				
 				//匹配姓名是否重复
-				employeesName=isExitUploadEnterpriseEmployees(enterpriseEmployeesListPO,employeesSalaryDetailVO);
+				EmployeesSalaryDetail detail=refactoringEmployeesSalaryDetailDate(data);
+				employeesName=isExitUploadEnterpriseEmployees(enterpriseEmployeesListPO,detail);
+				
 				
 				if(employeesName.size()==0){
 					//记录id
-					employeesSalaryDetailVO.setEmpolyessId(recordEnterpriseEmployeesToId(enterpriseEmployeesListPO,employeesSalaryDetailVO).getEmpolyessId());
-					employeesSalaryDetailVO.setCardNumber(recordEnterpriseEmployeesToId(enterpriseEmployeesListPO,employeesSalaryDetailVO).getCardNumber());
+					EmployeesSalaryDetail employeesSalaryDetailVO=structureEmployeesSalaryDetail(data,templateId);
+					
+					employeesSalaryDetailVO.setEmpolyessId(recordEnterpriseEmployeesToId(enterpriseEmployeesListPO,data).getEmpolyessId());
+					employeesSalaryDetailVO.setCardNumber(recordEnterpriseEmployeesToId(enterpriseEmployeesListPO,data).getCardNumber());
+					
+					
 					employeesSalaryDetailVO.setSalaryDate(employeesSalaryDetail.getSalaryDate());
 					employeesSalaryDetailVO.setEnterpriseId(employeesSalaryDetail.getEnterpriseId());
 					employeesSalaryDetailVO.setBudgettableId(employeesSalaryDetail.getBudgettableId());
@@ -68,6 +75,20 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		}
 		return employeesName;
 		
+	}
+	/**
+	 * 重构导入的数据进行封装EmployeesSalaryDetail类
+	 * @return EmployeesSalaryDetail
+	 * 2013-10-13
+	 */
+	public EmployeesSalaryDetail   refactoringEmployeesSalaryDetailDate(String[] fileDate)
+	{
+		EmployeesSalaryDetail  salaryDetailExcelDate=new EmployeesSalaryDetail();
+		
+		salaryDetailExcelDate.setEmployeesName(fileDate[1]==null?"":fileDate[1].toString());
+		salaryDetailExcelDate.setCardNumber(fileDate[3]==null?"":fileDate[3].toString());
+		
+		return salaryDetailExcelDate;
 	}
 	/**
 	 * @author jameslin
@@ -341,21 +362,49 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * 上传的员工进行匹配
 	 */
 
-	public List<String> isExitUploadEnterpriseEmployees(List<EnterpriseEmployees> enterpriseEmployeesListPO,EmployeesSalaryDetail employeesSalaryDetailVO) {
-		List<String>   employeesName=new ArrayList<String>();
-		if(!StringUtil.isEmpty(employeesSalaryDetailVO.getEmployeesName())){
-			for (EnterpriseEmployees emp : enterpriseEmployeesListPO) 
-			{
-				if(!StringUtil.isEmpty(emp.getEmployeesName()) && !StringUtil.isEmpty(employeesSalaryDetailVO.getEmployeesName()))
-				{
-					if(emp.getEmployeesName().equals(employeesSalaryDetailVO.getEmployeesName()))
-					{
-						employeesName.add(employeesSalaryDetailVO.getEmployeesName());		
-					}
-				}
-			}
+	public List<String> isExitUploadEnterpriseEmployees(List<EnterpriseEmployees> enterpriseEmployeesListPO,EmployeesSalaryDetail employeesSalaryDetailVO) 
+	{
 		
-		}
+		
+				List<String>   employeesName=new ArrayList<String>();
+				int count=0;        //记录存在几个相同名字
+				int cardnumber=0;   //记录存在几个相同身份证
+				boolean falg=false; //记录是否匹配
+				int  templCar=0;    //记录总共多少个相同身份证号码
+				boolean isCar=false;
+			   
+			   String detailName=employeesSalaryDetailVO.getEmployeesName();
+			   String detailCar=employeesSalaryDetailVO.getCardNumber();
+			   
+			   for ( EnterpriseEmployees enterpriseEmployees : enterpriseEmployeesListPO)
+			   {           
+				           String empCard=enterpriseEmployees.getCardNumber()==null?"":enterpriseEmployees.getCardNumber();
+				           String employeName=enterpriseEmployees.getEmployeesName()==null?"":enterpriseEmployees.getEmployeesName();
+						   if(detailName.equals(employeName))
+						   {       falg=true;
+						   		   count++;
+								   if(count>0)
+								   {
+										 if(empCard.equals(detailCar))
+										  {
+											     cardnumber++;
+											     if(cardnumber>1)
+											      {
+											    	 templCar++;
+											    	 isCar=true;
+											      }   										     
+										   } 
+								   }
+						   } 
+				    }
+			   		if(falg==false)
+			   		{
+			   			employeesName.add("数据库无法匹配不存在此员工: "+detailName);
+			   		}
+			   		if(isCar==true)
+			   		{
+			   			employeesName.add("数据库存在："+count+"个: "+detailName+" 身份证号:"+detailCar+" 相同 : "+templCar+" 个");
+			   		}
 		return employeesName;
 	}
 	
@@ -365,21 +414,27 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * @param employeesSalaryDetailVO
 	 * @return
 	 */
-	public EmployeesSalaryDetail recordEnterpriseEmployeesToId(List<EnterpriseEmployees> enterpriseEmployeesListPO,EmployeesSalaryDetail employeesSalaryDetailVO)
+	public EmployeesSalaryDetail recordEnterpriseEmployeesToId(List<EnterpriseEmployees> enterpriseEmployeesListPO,String[] excelDate)
 	{
 	
 		EmployeesSalaryDetail employeesSalaryDetail=new EmployeesSalaryDetail();
-		if(!StringUtil.isEmpty(employeesSalaryDetailVO.getEmployeesName())){
+		if(!StringUtil.isEmpty(excelDate.toString()))
+		{
 			for (EnterpriseEmployees emp : enterpriseEmployeesListPO) 
 			{
-				if(!StringUtil.isEmpty(emp.getEmployeesName()) && !StringUtil.isEmpty(employeesSalaryDetailVO.getEmployeesName()))
-				{
-					if(!StringUtil.isEmpty(emp.getCardNumber()) && !StringUtil.isEmpty(employeesSalaryDetailVO.getCardNumber()))
-					{
-						employeesSalaryDetail.setEmpolyessId(emp.getEmployeesId());
+				    if(excelDate[2].equals(emp.getEmployeesName()))
+				    employeesSalaryDetail.setEmpolyessId(emp.getEmployeesId());
+				    employeesSalaryDetail.setServiceCharge(new BigDecimal(emp.getServiceCost()));
+				    if(!StringUtil.isEmpty(emp.getCardNumber())){
+				    	
 						employeesSalaryDetail.setCardNumber(emp.getCardNumber());
-					}
-				}
+						
+						
+				    }else{
+				    	
+				    	
+				    	
+				    }			
 			}
 		
 		}
