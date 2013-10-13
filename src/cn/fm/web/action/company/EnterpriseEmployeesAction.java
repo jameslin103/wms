@@ -15,6 +15,7 @@ import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.service.company.EnterpriseEmployeesService;
+import cn.fm.service.company.EnterpriseService;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
@@ -26,6 +27,9 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	@Resource 
 	private EnterpriseEmployeesService enterpriseEmployeesService;
+	@Resource
+	private EnterpriseService          enterpriseService;
+	
 	private EnterpriseEmployees  enterpriseEmployees;
 	
 	private String    endContractDeadline;
@@ -206,7 +210,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	{
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-		enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",34,2,enterprise);
+		
+		enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",34,2,enterpriseService.find(enterprise.getEnterpriseId()));
 		return SUCCESS;
 	}
 	/**

@@ -517,7 +517,7 @@
 							<label>
 								状态?
 							</label>
-							<input type="checkbox" name="enterpriseEmployees.pseudoDelete" value="0" />
+							<input type="checkbox" name="enterpriseEmployees.pseudoDelete" value="1" />
 							隐藏
 						</div>
 

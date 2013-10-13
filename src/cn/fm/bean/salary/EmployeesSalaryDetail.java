@@ -27,7 +27,7 @@ public class EmployeesSalaryDetail implements Serializable
 	 /*奖金 */
 	private BigDecimal  bonus;
 	
-	/*补贴 */
+	/*电脑补贴 */
 	private BigDecimal  subsidies;
 	
 	/*应发工资 */

@@ -118,11 +118,11 @@ public class EmployeesSalaryDetailServiceTest {
 	   List<EmployeesSalaryDetail> edList=new ArrayList<EmployeesSalaryDetail>();
 	   EmployeesSalaryDetail ed=new EmployeesSalaryDetail();
 	   ed.setEmployeesName("张三xxx");
-	   ed.setCardNumber("350123");
+	   ed.setCardNumber("");
 	   edList.add(ed);
 	   EmployeesSalaryDetail ed1=new EmployeesSalaryDetail();
 	   ed1.setEmployeesName("张三");
-	   ed1.setCardNumber("350123");
+	   ed1.setCardNumber("");
 	   edList.add(ed1);
 	   EmployeesSalaryDetail ed3=new EmployeesSalaryDetail();
 	   ed3.setEmployeesName("李刚");
@@ -140,16 +140,17 @@ public class EmployeesSalaryDetailServiceTest {
 	   eeList.add(ee1);
 	   EnterpriseEmployees ee2=new EnterpriseEmployees();
 	   ee2.setEmployeesName("张三");
-	   ee2.setCardNumber("350123");
+	   ee2.setCardNumber("");
 	   eeList.add(ee2);
 	   EnterpriseEmployees ee3=new EnterpriseEmployees();
 	   ee3.setEmployeesName("张三");
-	   ee3.setCardNumber("350123888");
+	   ee3.setCardNumber("");
 	   eeList.add(ee3);
 	   int count=0;
 	   int cardnumber=0;
-
-
+	   boolean isCar=false;
+	   int templCar=0;
+	   String detailCar="";
 		   for (EmployeesSalaryDetail  employeesSalaryDetail : edList)
 		   {
 			   boolean falg=false;
@@ -161,20 +162,20 @@ public class EmployeesSalaryDetailServiceTest {
 						   if(detailName.equals(employeName))
 						   {      falg=true;
 							       count++;
-							       System.out.println("数据库存在相同名字："+detailName+"总共"+count+"个");
 								   if(count>0)
 								   {
 									      
 										   String card=enterpriseEmployees.getCardNumber()==null?"":enterpriseEmployees.getCardNumber();
-										   String detailCar=employeesSalaryDetail.getCardNumber();
+										   detailCar=employeesSalaryDetail.getCardNumber();
+										   if(detailCar==null || detailCar.equals("")){System.out.println("身份证不能为空");return;}
 										   if(card.equals(detailCar))
 										   {
 											   cardnumber++;
 											   
 											     if(cardnumber>1)
 											      {
-											    	 System.out.println("相同身份证："+cardnumber+" 个  姓名："+employeName+"卡号："+detailCar);
-											    	 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+											    	 templCar++;
+											    	 isCar=true;
 											      }
 										   } 
 								   }
@@ -184,6 +185,11 @@ public class EmployeesSalaryDetailServiceTest {
 						  System.out.println("不存在的名字："+detailName);
 						  System.out.println("数据库无法匹配不存在此员工");
 						  System.out.println("=======================================");
+			   		}
+			   		
+			   		if(isCar==true)
+			   		{
+			   		 System.out.println("数据库存在："+count+"个: "+detailName+" 身份证号:"+detailCar+" 相同 : "+templCar+" 个");
 			   		}
 			   }
 	   }
@@ -232,5 +238,40 @@ public class EmployeesSalaryDetailServiceTest {
 	   
    }
    
-
+   @Test
+   public void cumotsLegth()
+   {
+	   String  file="1, 3, 5, 6, 8";
+	   String[] customt=file.split(",");
+	   System.out.println(customt);
+	   int count=customt.length+4;
+	  
+	   System.out.println(count);
+	   
+   }
+   @Test
+   public void updateEmployeesCarNumber()
+   {
+	  EnterpriseEmployees employees=new  EnterpriseEmployees();
+	  employees.setEmployeesId(2);
+	  employees.setCardNumber("110");
+	  
+	  employeesSalaryDetailService.updateEmployeesCarNumber(employees);
+	   
+   }
+   @Test
+   public void structureEmployeesSalaryDetail(){
+	   
+	   EmployeesSalaryDetail ed=new EmployeesSalaryDetail();
+	   ed.setWage(new BigDecimal(4900));
+	   ed.setBonus(new BigDecimal(500));
+	   ed.setSubsidies(new BigDecimal(100));
+	   ed.setCardNumber("555999");
+	   
+	   EmployeesSalaryDetail eDetail=employeesSalaryDetailService.structureEmployeesSalaryDetail(ed,1);
+	   
+	   System.out.println(eDetail.getShouldPay());
+	   System.out.println(eDetail.getBonus());
+	   System.out.println(eDetail.getPersonalTax());
+   }
 }

@@ -66,6 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li>
                       	上传新工资预算表
                       <s:form action="uploadEmployeesSalaryDetail" cssClass="form-search" method="post" enctype="multipart/form-data">
+                      	 <s:hidden value="%{#request.createSalaryBudgetTable.salaryTemplate.templateId}" name="templateId"></s:hidden>
                       	 <s:hidden value="%{#request.createSalaryBudgetTable.budgetId}" name="budgetId"/>
                       	  <s:hidden value="%{#request.createSalaryBudgetTable.salaryDate}" name="salaryDate"/>
                       	 <s:hidden name="file" value="file"></s:hidden>
@@ -75,7 +76,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </li>
                   </ol> 
                 </div>
-
+					<div>
+						<s:iterator value="#request.employeesNames" id="names">
+							<span style="color: red">${names}</span>
+						
+						</s:iterator>
+					
+					</div>
               </div>
           </div>
         </div>

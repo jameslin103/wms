@@ -77,8 +77,8 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	public List<String> isExitUploadEnterpriseEmployees(List<EnterpriseEmployees> enterpriseEmployeesListPO,EmployeesSalaryDetail employeesSalaryDetailVO);
 
 	
+	public void updateEmployeesCarNumber(EnterpriseEmployees enterpriseEmployees);
 	
-	
-	
+	public EmployeesSalaryDetail structureEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail ,Integer templateId);
 	
 }

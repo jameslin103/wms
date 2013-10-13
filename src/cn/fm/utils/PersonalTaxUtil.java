@@ -53,6 +53,8 @@ public class PersonalTaxUtil {
 			}else if(remainingWage>=80000){
 				results=new BigDecimal(remainingWage*0.45-13505).setScale(2,BigDecimal.ROUND_HALF_DOWN);
 				
+			}else{
+				results=new BigDecimal(0.00);
 			}
 			
 		}

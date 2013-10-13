@@ -126,7 +126,8 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				employees.setSeriousDiseaseBase(data[32].toString().equals("")?null:Double.valueOf(data[32]));
 				employees.setPaymentWay(data[33].toString());
 				employees.setDeparture(0);
-				if(enterprise!=null)employees.setEnterprise(em.find(Enterprise.class, enterprise.getEnterpriseId()));
+				employees.setPseudoDelete(0);
+				if(enterprise!=null)employees.setEnterprise(enterprise);
 				
 				
 				super.save(employees);	

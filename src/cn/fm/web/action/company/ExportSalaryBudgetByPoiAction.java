@@ -20,15 +20,12 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import cn.fm.bean.company.CustomBonus;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.company.CustomBonusServices;
-import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.web.action.BaseAction;
 
 @SuppressWarnings("serial")
 public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	
-	@Resource
-	private CreateSalaryBudgetTableService   createSalaryBudgetTableService;
 	@Resource 
 	private CustomBonusServices 			customBonusServices;
 	@Resource
@@ -67,11 +64,6 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	{
 		 this.salaryTemplateService = salaryTemplateService;
     }
-
-	public void setCreateSalaryBudgetTableService(
-			CreateSalaryBudgetTableService createSalaryBudgetTableService) {
-		this.createSalaryBudgetTableService = createSalaryBudgetTableService;
-	}
 
 	public void setCustomBonusServices(CustomBonusServices customBonusServices) {
 		this.customBonusServices = customBonusServices;
@@ -123,8 +115,7 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 			  header.add("备注");
 		 	  SalaryTemplate salaryTemplate=salaryTemplateService.find(templateId);
 		 	  String[] customt=salaryTemplate.getSubsidyList().split(",");
-		 	  int count=header.size()+customt.length;
-		 	  request.getSession().setAttribute("count", count);
+		 	 
 	 	   for (int i = 0; i <customt.length; i++)
 	 	   {
 	 		  CustomBonus customBonus=customBonusServices.find(Integer.parseInt(customt[i].trim()));

@@ -118,10 +118,10 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		
 		parameters.put("salaryDate",sb.toString());
 		parameters.put("createDate",DateUtil.dateToString(createSalaryBudgetTable.getCreateDate(),DateUtil.FORMAT_DATE_MONTH));
-		parameters.put("makeTotal",createSalaryBudgetTable.getMakeTotal().toString());
-		parameters.put("wageTotal",createSalaryBudgetTable.getWageTotal().toString());
-		parameters.put("serviceTotal",createSalaryBudgetTable.getServiceTotal().toString());
-		parameters.put("fiveInsurancesTotal",createSalaryBudgetTable.getFiveInsurancesTotal().toString());
+		parameters.put("makeTotal",createSalaryBudgetTable.getMakeTotal()==null?"":createSalaryBudgetTable.getMakeTotal().toString());
+		parameters.put("wageTotal",createSalaryBudgetTable.getWageTotal()==null?"":createSalaryBudgetTable.getWageTotal().toString());
+		parameters.put("serviceTotal",createSalaryBudgetTable.getServiceTotal()==null?"":createSalaryBudgetTable.getServiceTotal().toString());
+		parameters.put("fiveInsurancesTotal",createSalaryBudgetTable.getFiveInsurancesTotal()==null?"":createSalaryBudgetTable.getFiveInsurancesTotal().toString());
 		parameters.put("budgetName", createSalaryBudgetTable.getName());
 		parameters.put("fullname",enterprise.getFullName()); 
 		parameters.put("username",user.getUsername());
