@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td><s:property value="%{#request.createSalaryBudgetTable.serviceTotal}"/></td>
                 <td align="center"><br></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br>
-                <a href="viewSalaryWithBankDetail?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}"/>">查看</a>
+                <a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}"/>">查看</a>
                 </td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br><span class="em">（已发放）</span>
                 <br><s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月dd日HH时"/></td>

@@ -127,7 +127,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				employees.setPaymentWay(data[33].toString());
 				employees.setDeparture(0);
 				employees.setPseudoDelete(0);
-				if(enterprise!=null)employees.setEnterprise(enterprise);
+				if(enterprise!=null)employees.setEnterprise(em.find(Enterprise.class, enterprise.getEnterpriseId()));
 				
 				
 				super.save(employees);	
@@ -509,8 +509,64 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	/**
+	 * 批量上传减员信息表
+	 */
+	// TODO Auto-generated method stub
+	public void uploadExcelByInsuranceReduction(File file, String fileName, Integer number, Integer readRow,Integer enterpriseId) {
+		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
+		  try {
+			  List<String[]> arrayList=excel.generateStationBugSql(file,fileName,number,readRow);
+				if(arrayList==null)return;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+			
+		
+		
+		
+		
+		
+		
 	
-    
+		
+	}
+	
+	/**
+	 * 上传的exce减员数据与数据库人员进行匹配
+	 * @param fileDate
+	 * @param enterpriseId
+	 * @return 存在提示信息(isExistingEmployees)
+	 */
+    public List<String>  uploadExcelDateByDatabaseEmployees(String[] fileDate,Integer enterpriseId){
+    	
+    	List<String>  isExistingEmployees=new ArrayList<String>();
+    	
+    	
+    	String carNumber=fileDate[2]==null?"":fileDate[2];
+    	String employeesName=fileDate[1]==null?"":fileDate[1];
+    	
+    	if(StringUtil.isEmpty(carNumber)){
+    		 isExistingEmployees.add(" 身份证为空");
+    		 return null;
+    		}
+    	
+    	List<EnterpriseEmployees> enterpriseEmployeesList=getAllEnterpriseEmployees(enterpriseId);
+    	
+    	for (EnterpriseEmployees enterpriseEmployees : enterpriseEmployeesList)
+    	{
+			
+		}
+    	
+    	
+    	
+    	
+    	
+    	return isExistingEmployees;
+    	
+    }
 	
 	
 	

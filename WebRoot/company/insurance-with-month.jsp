@@ -68,23 +68,23 @@
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
-									<th>
+									<th align="center">
 										月份
 									</th>
-									<th>
+									<th align="center">
 										详细
 									</th>
-									<th>
+									<th align="center">
 										状态
 									</th>
-									<th>
+									<th align="center">
 										补充说明
 									</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td>
+									<td align="center">
 										一月
 									</td>
 									<td>
@@ -111,7 +111,146 @@
 										-----
 									</td>
 								</tr>
-
+								<tr>
+									<td>
+										三月
+									</td>
+									<td>
+										<a href="insuranceWithEmployeeList?month=8">新增3人，续保4人，减员2人</a>
+									</td>
+									<td>
+										已完成
+									</td>
+									<td>
+										---
+									</td>
+								</tr>
+								<tr>
+									<td>
+										四月
+									</td>
+									<td>
+										新增3人
+									</td>
+									<td>
+										已完成
+									</td>
+									<td>
+										-----
+									</td>
+								</tr>
+								<tr>
+									<td>
+										五月
+									</td>
+									<td>
+										<a href="insuranceWithEmployeeList?month=8">新增3人，续保4人，减员2人</a>
+									</td>
+									<td>
+										已完成
+									</td>
+									<td>
+										---
+									</td>
+								</tr>
+								<tr>
+									<td>
+										六月
+									</td>
+									<td>
+										新增3人
+									</td>
+									<td>
+										已完成
+									</td>
+									<td>
+										-----
+									</td>
+								</tr>
+								<tr>
+									<td>
+										七月
+									</td>
+									<td>
+										<a href="insuranceWithEmployeeList?month=8">新增3人，续保4人，减员2人</a>
+									</td>
+									<td>
+										已完成
+									</td>
+									<td>
+										---
+									</td>
+								</tr>
+								<tr>
+									<td>
+										八月
+									</td>
+									<td>
+										新增3人
+									</td>
+									<td>
+										已完成
+									</td>
+									<td>
+										-----
+									</td>
+								</tr>
+								<tr>
+									<td>
+										九月
+									</td>
+									<td>
+										<a href="insuranceWithEmployeeList?month=8">新增3人，续保4人，减员2人</a>
+									</td>
+									<td>
+										已完成
+									</td>
+									<td>
+										---
+									</td>
+								</tr>
+								<tr>
+									<td>
+										十月
+									</td>
+									<td>
+										新增3人
+									</td>
+									<td>
+										已完成
+									</td>
+									<td>
+										-----
+									</td>
+								</tr>
+								<tr>
+									<td>
+										十一月
+									</td>
+									<td>
+										<a href="insuranceWithEmployeeList?month=8">新增3人，续保4人，减员2人</a>
+									</td>
+									<td>
+										已完成
+									</td>
+									<td>
+										---
+									</td>
+								</tr>
+								<tr>
+									<td>
+										十二月
+									</td>
+									<td>
+										新增0人
+									</td>
+									<td>
+										未完成
+									</td>
+									<td>
+										-----
+									</td>
+								</tr>
 							</tbody>
 						</table>
 

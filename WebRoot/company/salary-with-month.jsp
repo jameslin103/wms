@@ -13,6 +13,7 @@
 		<title>富民人力银行派遣系统</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<%@ include file="/help/public_css_js.jsp"%>
+
 	</head>
 	<body>
 
@@ -71,8 +72,7 @@
 							<li>
 								<a href="viewCustomBonus">定制奖金与各种补贴</a>
 							</li>
-						</ul>
-
+						</ul>	
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -86,8 +86,7 @@
 										工资发放
 									</th>
 								</tr>
-							</thead>
-							
+							</thead>  
 							<tbody>
 								<tr>
 									<td>
@@ -96,11 +95,14 @@
 									<td>
 										<ol>
 										<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
+										<s:property value="%{#sal.salaryDate}"/>
 											<li>
 												<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
 													&budgetId=<s:property value="%{#sal.budgetId}"/>">
-													<s:if test="#sal.enterprise.enterpriseId==17">
+													<s:if test="#sal.enterprise.enterpriseId">
+													
 														<s:property value="%{#sal.name}"/>	
+														
 													</s:if>		
 												</a>
 											</li>

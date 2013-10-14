@@ -11,7 +11,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <title>富民人力银行派遣系统</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%@ include file="/help/public_css_js.jsp" %>
-
+	<script type="text/javascript">
+		function topage(page){
+			var form = document.getElementById("myform");
+			form.page.value=page;
+			form.submit();
+		}
+	</script>
+		
 </head>
 <body>
 
@@ -27,15 +34,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="company/index.jsp">综合</a></li>
             <li><a href="viewEnterpriseEmployees">员工档案</a></li>
             <li class="active"><a href="viewSalaryBudgetTable">工资预算表</a></li>
-            <li><a href="ivewInsuranceWithMonth">增减员与参保明细</a></li>
+            <li><a href="viewInsuranceWithMonth">增减员与参保明细</a></li>
             <li><a href="viewBalanceDetail">资金往来</a></li>            
           </ul>
  
           <ul class="normal action-container clearfix">
             <li>分类查看：</li>
-            <li><a href="#">民生银行</a>，</li>
-            <li><a href="#">他行</a>，</li>
-            <li><a href="#">现金</a></li>
+            <li><a href="viewMinshengBank?budgetId=<s:property value="%{#request.budgetId}"/>">民生银行</a>，</li>
+            <li><a href="viewOtherBank?budgetId=<s:property value="%{#request.budgetId}"/>">他行</a>，</li>
+            <li><a href="viewCashIssue?budgetId=<s:property value="%{#request.budgetId}"/>">现金</a></li>
             <li class="right"><a href="downloadBankIssueSalary" class="btn btn-primary">下载Excel表格</a></li>
           </ul>
 
@@ -51,30 +58,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </tr>
             </thead>
             <tbody>
+            <s:iterator value="#request.pageView.records" id="employeesSalaryDetail">
               <tr>
-                <td>1</td>
-                <td>张三</td>
-                <td>012345678912345678</td>
-                <td>民生</td>
-                <td>1234567890123456789012</td>
-                <td>360</td>
+                <td><s:property value="%{#employeesSalaryDetail.salaryId}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.employeesName}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.cardNumber}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.note}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.bankCardNumber}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.wage}"/></td>
               </tr>
-              <tr>
-                <td>2</td>
-                <td>李四</td>
-                <td>012345678912345678</td>
-                <td>工商</td>
-                <td>1234567890123456755555</td>
-                <td>360</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>王五</td>
-                <td>012345678912345678</td>
-                <td></td>
-                <td></td>
-                <td>360</td>
-              </tr>
+              </s:iterator>
             </tbody>
           </table>
 

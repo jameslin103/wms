@@ -119,22 +119,17 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			subsidies=Double.valueOf(employeesSalaryDetail.getSubsidies()==null?"0.00":employeesSalaryDetail.getSubsidies().toString());
 			
 			shouldPayTotal=wage+subsidies+bonus;
+			
 			employeesSalaryDetailVO.setSubsidies(new BigDecimal(subsidies));
 			employeesSalaryDetailVO.setShouldPay(new BigDecimal(shouldPayTotal));
-			
 			employeesSalaryDetailVO.setBonus(new BigDecimal(bonus));
-			
 			employeesSalaryDetailVO.setMorbidityStatistics(employeesSalaryDetail.getMorbidityStatistics());
-			
 			employeesSalaryDetailVO.setEmployeesName(employeesSalaryDetail.getEmployeesName());
-			
 			employeesSalaryDetailVO.setCardNumber(employeesSalaryDetail.getCardNumber());
-			
 			employeesSalaryDetailVO.setEmpolyessId(employeesSalaryDetail.getEmpolyessId());
-			
 			employeesSalaryDetailVO.setNote(employeesSalaryDetail.getNote());
-			
 			employeesSalaryDetailVO.setServiceCharge(employeesSalaryDetail.getServiceCharge());
+			employeesSalaryDetailVO.setBankCardNumber(employeesSalaryDetail.getBankCardNumber());
 			
 			//计算五险一金规则
 			SalaryTemplate salaryTemplate=getIsFiveBase(templateId);
@@ -276,6 +271,9 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		
 		//生育保险基数
 		employeesSalaryDetail.setBirthInsuranceBase(base.getBirthInsurance());
+		
+		//工伤基数
+		employeesSalaryDetail.setInductrialInjuryBase(base.getInductrialInjury());
 		
 		//基本医疗保险   缴费基数
 		employeesSalaryDetail.setMedicalPaymentBase(base.getBasicMedical());
@@ -434,24 +432,26 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			{
 				    if(fileDate[1].equals(emp.getEmployeesName()))
 				    {
-					    if(StringUtil.isEmpty(emp.getCardNumber()))
-					    {
-					    	  
-						    if(StringUtil.isEmpty(carNumber))return null;
-					    	if(!StringUtil.isEmpty(carNumber))
-					    	{
-					    		EnterpriseEmployees  tempEmployees=new EnterpriseEmployees();
-					    		tempEmployees.setCardNumber(carNumber);
-					    		tempEmployees.setEmployeesId(emp.getEmployeesId());
-					    		//更新员工的身份证号码
-					    		updateEmployeesCarNumber(tempEmployees);
-					    	}
-
-					    }else{
+						    if(StringUtil.isEmpty(emp.getCardNumber()))
+						    {
+						    	  
+								    if(StringUtil.isEmpty(carNumber))return null;
+							    	if(!StringUtil.isEmpty(carNumber))
+							    	{
+							    		EnterpriseEmployees  tempEmployees=new EnterpriseEmployees();
+							    		tempEmployees.setCardNumber(carNumber);
+							    		tempEmployees.setEmployeesId(emp.getEmployeesId());
+							    		//更新员工的身份证号码
+							    		updateEmployeesCarNumber(tempEmployees);
+							    	}
+	
+						     }
 					    	    employeesSalaryDetail.setWage(new BigDecimal(fileDate[2].toString()==null?"":fileDate[2].toString()));
 					    	    employeesSalaryDetail.setCardNumber(carNumber);
 					    	    employeesSalaryDetail.setEmpolyessId(emp.getEmployeesId());
 					    	    employeesSalaryDetail.setEmployeesName(emp.getEmployeesName());
+					    	    employeesSalaryDetail.setBankCardNumber(emp.getBankCardNumber());
+					    	    
 							    
 							    //服务费
 							    employeesSalaryDetail.setServiceCharge(new BigDecimal(emp.getServiceCost()==null?"":emp.getServiceCost().toString()));
@@ -474,8 +474,6 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 						    
 								//电脑补贴
 								employeesSalaryDetail.setSubsidies(new BigDecimal(0.00));
-
-					     }
 				    }
 			  }
 		
@@ -675,8 +673,15 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees> getAllEnterpriseEmployees(Integer enterpriseId)
 	{
-		Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterprise.enterpriseId=?1  and e.departure=0 and e.pseudoDelete=0 ");
-		return query.setParameter(1, enterpriseId).getResultList();
+		try {
+			Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterprise.enterpriseId=?1  and e.departure=0 and e.pseudoDelete=0 ");
+			return query.setParameter(1, enterpriseId).getResultList();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+	
 	}
 	
 	

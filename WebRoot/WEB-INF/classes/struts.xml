@@ -211,7 +211,7 @@
            </result>  
         </action>
         
-        <!-- 批量增员减员续保 -->
+        <!-- 批量增员续保 -->
         <action name="batchIncreaseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="batchIncreaseEmployees">
             <interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
             <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
@@ -222,10 +222,27 @@
         <action name="increaseEmployeesUI" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="increaseEmployeesUI">
             <result name="success">company/insurance-step1-of-create.jsp</result>
         </action>
-        <!-- 批量减员 -->
+        <!-- 批量减员操作界面 -->
         <action name="insuranceReductionUI" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="insuranceReductionUI">
             <result name="success">company/insurance-step1-of-reduction.jsp</result>
         </action>
+        <action name="downloadReductionTemplate" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="downloadReductionTemplate">
+           <!-- 配置结果类型为stream的结果 -->  
+          <result name="success" type="stream">  
+               <!-- 指定被下载文件的文件类型 -->  
+               <param name="contentType">application/vnd.ms-excel</param>  
+               <!-- 指定下载文件的文件位置 -->  
+               <param name="contentDisposition">attachment;filename="${excelName}"</param>
+               <param name="inputName">downloadFile</param>
+               <param name="bufferSize">1024</param>
+          </result>
+        </action>
+         <!-- 批量减员上传数据 -->
+         <action name="uploadInsuranceReduction" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="uploadInsuranceReduction">
+            <result name="success">company/insurance-step2-of-reduction.jsp</result>
+            <result name="input">company/insurance-step2-of-reduction.jsp</result>
+        </action>
+        
         
        <!-- Enterprise  -->
         <action name="viewEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterprise">
@@ -451,7 +468,7 @@
         <action name="viewAllEmployeesSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewAllEmployeesSalaryDetail">
             <result name="success">company/salary-list.jsp</result>
         </action>
-        <action name="viewSalaryWithBankDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewSalaryWithBankDetail">
+        <action name="viewSalaryWithBankPersonalNumber" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewSalaryWithBankPersonalNumber">
             <result name="success">company/salary-with-bank-detail.jsp</result>
         </action>
         <action name="findToIdSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="findToIdSalaryDetail">
@@ -462,6 +479,15 @@
             	<param name="actionName">viewAllEmployeesSalaryDetail</param>
             	<param name="budgetId">${budgetId}</param>
             </result>
+        </action>
+        <action name="viewMinshengBank" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewMinshengBank">
+            <result name="success">company/salary-with-bank-detail.jsp</result>
+        </action>
+        <action name="viewOtherBank" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewOtherBank">
+            <result name="success">company/salary-with-bank-detail.jsp</result>
+        </action>
+        <action name="viewCashIssue" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewCashIssue">
+            <result name="success">company/salary-with-bank-detail.jsp</result>
         </action>
         
            <!-- report  导出数据======================== -->

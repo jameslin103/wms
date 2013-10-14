@@ -16,16 +16,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<div id="container">
     	<div id="header">
-    		<jsp:include page="../layout/header.jsp"></jsp:include>
-    	</div>
+				<jsp:include page="../layout/header.jsp"></jsp:include>
+
+				<div id="sub-header" class="clearfix">
+					<h2>
+						<s:property value="%{#session.enterprise.fullName}" />
+					</h2>
+				</div>
+			</div>
 	<div id="main"> 
     		 <div class="row-fluid">
         <div id="center-pane">
           <ul class="nav nav-tabs">
             <li><a href="index.html">综合</a></li>
-            <li><a href="employee-list.html">员工档案</a></li>
-            <li><a href="salary-with-month.html">工资预算表</a></li>
-            <li class="active"><a href="insurance-with-month.html">增减员与参保明细</a></li>
+            <li><a href="viewEnterpriseEmployees">员工档案</a></li>
+            <li><a href="viewSalaryBudgetTable">工资预算表</a></li>
+            <li class="active"><a href="viewInsuranceWithMonth">增减员与参保明细</a></li>
           </ul>
 
           <div class="span4">
@@ -36,11 +42,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="alert alert-info">
                   <ol>
                     <li>
-                      <a href="">下载Excel表格</a>
+                      <a href="downloadReductionTemplate">下载Excel表格</a>
                     </li>
                     <li>
-                      上传减员信息表
-                      <form  action="insurance-step2-of-reduction.html" class="form-search" method="post">
+                      	上传减员信息表
+                      <form  action="uploadInsuranceReduction" class="form-search" method="post" enctype="multipart/form-data">
                         <input type="file"><br>
                         <button type="submit" class="btn btn-primary">上传</button>
                       </form>

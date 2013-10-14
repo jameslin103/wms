@@ -210,8 +210,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	{
 		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-		
-		enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",34,2,enterpriseService.find(enterprise.getEnterpriseId()));
+		enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",34,2,enterprise);
 		return SUCCESS;
 	}
 	/**
@@ -599,7 +598,34 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		}
 		return SUCCESS;
 	}
+	/**
+	 * 下载减员信息模板
+	 * @return
+	 */
+	public String downloadReductionTemplate()
+	{
+		
+		this.setEmployeeFileName("减员信息表.xls");
+    	try {
+			excelName = new String(employeeFileName.getBytes(), "iso8859-1");//解决中文 文件名问题
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		return SUCCESS;
+	}
 	
-	
-
+	/**
+	 * 批量excel上传减员信息
+	 * @return
+	 */
+	public String uploadInsuranceReduction()
+	{
+		
+		Enterprise  enterprise=WebUtil.getEnterprise(request);
+		if(enterprise==null)return INPUT;
+		enterpriseEmployeesService.uploadExcelByInsuranceReduction(file ,"社医保增减员",3,2,enterprise.getEnterpriseId());
+		
+		return SUCCESS;
+	}
 }

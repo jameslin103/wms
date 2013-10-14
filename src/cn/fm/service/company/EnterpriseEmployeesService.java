@@ -116,4 +116,14 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 */
 
 	public List<EnterpriseEmployees> getInsuranceWithEmployeeList(Integer enterpriseId,Integer year,Integer month);
+
+	
+	/**
+	 * 批量上传减员
+	 * @param file
+	 * @param string
+	 * @param number
+	 * @param rows
+	 */
+	public void uploadExcelByInsuranceReduction(File file, String fileName, Integer number, Integer readRow,Integer enterpriseId);
 }

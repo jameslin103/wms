@@ -121,7 +121,18 @@ public class EmployeesSalaryDetail implements Serializable
 	/*身份证号*/
 	private String  cardNumber;
 	
+	private String  bankCardNumber;
 	
+	
+	@Column(length=20)
+	public String getBankCardNumber() {
+		return bankCardNumber;
+	}
+
+	public void setBankCardNumber(String bankCardNumber) {
+		this.bankCardNumber = bankCardNumber;
+	}
+
 	@Column(length=20)
 	public String getCardNumber() {
 		return cardNumber;

@@ -271,6 +271,9 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		createSalaryBudgetTableSummary.setWageTotal(wargeTotal);
 		createSalaryBudgetTableSummary.setServiceTotal(serviceTotal);
 		createSalaryBudgetTableSummary.setIssueNumber(Integer.parseInt(numberPeopleTotal+""));
+
+		//TODO 医保类型待定
+		
 		createSalaryBudgetTableService.updateCreateSalaryBudgetTableSummary(createSalaryBudgetTableSummary);	
 		
 		//统计上传员工工资的总额,保险，开票总额 记录到<资金往来这个表中>
@@ -366,12 +369,98 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	}
 	
 	
-	public String viewSalaryWithBankDetail()
+	public String viewSalaryWithBankPersonalNumber()
 	{
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+			jpql.append(" o.budgettableId=?").append(params.size()+1);
+			params.add(this.budgetId);
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
 		
+			request.setAttribute("budgetId", budgetId);
+		return SUCCESS;
+		
+	}
+	/**
+	 * 查看民生银行发放人数
+	 * @return
+	 */
+	public String viewMinshengBank(){
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+			jpql.append(" o.budgettableId=?").append(params.size()+1);
+			params.add(this.budgetId);
+			jpql.append(" and o.note like ?").append(params.size()+1);
+			params.add("%民生银行%");
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		
+			request.setAttribute("budgetId", budgetId);
 		
 		return SUCCESS;
 	}
+	/**
+	 * 查看其它银行发放人数
+	 * @return
+	 */
+	public String viewOtherBank(){
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+			jpql.append(" o.budgettableId=?").append(params.size()+1);
+			params.add(this.budgetId);
+			jpql.append(" and o.note!=?").append(params.size()+1);
+			params.add(" 民生银行");
+			jpql.append(" and o.note!=?").append(params.size()+1);
+			params.add("现金");
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		
+			request.setAttribute("budgetId", budgetId);
+			
+			return SUCCESS;
+	}
+	/**
+	 * 查看现金发放人数
+	 * @return
+	 */
+	public String viewCashIssue(){
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+			jpql.append(" o.budgettableId=?").append(params.size()+1);
+			params.add(this.budgetId);
+			jpql.append(" and o.note=?").append(params.size()+1);
+			params.add("like '现金' ");
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		
+			request.setAttribute("budgetId", budgetId);
+		
+		return SUCCESS;
+	}
+		
+	
+	
 	
 	/**
 	 * 重新获取工资预算表当前新增的数据信息
