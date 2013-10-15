@@ -28,13 +28,13 @@
 								<a href="index.html">综合</a>
 							</li>
 							<li>
-								<a href="employee-list.html">员工档案</a>
+								<a href="viewEnterpriseEmployees">员工档案</a>
 							</li>
 							<li>
-								<a href="salary-with-month.html">工资预算表</a>
+								<a href="viewSalaryBudgetTable">工资预算表</a>
 							</li>
 							<li class="active">
-								<a href="insurance-with-month.html">增减员与参保明细</a>
+								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
 							</li>
 						</ul>
 
@@ -46,17 +46,17 @@
 
 								<div class="alert">
 									<p>
-										减员3人
+										减员<s:property value="%{#request.count}"/>人
 									</p>
 									<p>
-										<a href="insurance-step1-of-reduction.html">信息错误，重新导入数据！</a>
+										<a href="uploadInsuranceReduction">信息错误，重新导入数据！</a>
 									</p>
 								</div>
 								<hr>
-
+								
 								<div>
 									<p>
-										<a href="insurance-with-month.html" class="btn btn-primary">信息正确，确认！</a>
+										<a href="viewInsuranceWithMonth" class="btn btn-primary">信息正确，确认！</a>
 									</p>
 								</div>
 

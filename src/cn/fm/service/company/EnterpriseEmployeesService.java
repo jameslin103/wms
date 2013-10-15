@@ -125,5 +125,16 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @param number
 	 * @param rows
 	 */
-	public void uploadExcelByInsuranceReduction(File file, String fileName, Integer number, Integer readRow,Integer enterpriseId);
+	public List<String> uploadExcelByInsuranceReduction(File file, String fileName, Integer number, Integer readRow,Integer enterpriseId);
+	
+	
+	
+	/**
+	 * 上传的exce减员数据与数据库人员进行匹配
+	 * @param fileDate
+	 * @param enterpriseId
+	 * @return 存在提示信息(isExistingEmployees)
+	 */
+    public List<String>  uploadExcelDateByDatabaseEmployees(String[] fileDate,Integer enterpriseId);
+	
 }

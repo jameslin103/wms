@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.regex.Pattern;
+
 import javax.annotation.Resource;
 import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.Preparable;
@@ -414,7 +416,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 */
 	public String viewInsuranceWithMonth()
 	{
-		
+		//enterpriseEmployeesService.getViewInsuranceWithMonth();
 		return SUCCESS;
 	}
 	
@@ -466,7 +468,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	public String batchIncreaseEmployees()
 	{
 		
-		boolean falg=enterpriseEmployeesService.batchIncreaseEmployees(file ,"社医保增减员",16,1);
+		boolean falg=enterpriseEmployeesService.batchIncreaseEmployees(file ,"增员续保信息表",11,1);
 		if(falg==false){
 			request.setAttribute("message", "数据有误上传失败!!");
 			return INPUT;
@@ -494,7 +496,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 */
 	public String downloadBatchIncreaseEmployeesExcel()
 	{
-		this.setEmployeeFileName("社医保增减员.xls");
+		this.setEmployeeFileName("增员续保信息表.xls");
     	try {
 			excelName = new String(employeeFileName.getBytes(), "iso8859-1");//解决中文 文件名问题
 		} catch (UnsupportedEncodingException e) {
@@ -621,11 +623,31 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 */
 	public String uploadInsuranceReduction()
 	{
-		
 		Enterprise  enterprise=WebUtil.getEnterprise(request);
-		if(enterprise==null)return INPUT;
-		enterpriseEmployeesService.uploadExcelByInsuranceReduction(file ,"社医保增减员",3,2,enterprise.getEnterpriseId());
+		if(enterprise==null || enterprise.getEnterpriseId()==0)return INPUT;
+		List<String> messageList=enterpriseEmployeesService.uploadExcelByInsuranceReduction(file ,"减员信息表",5,2,enterprise.getEnterpriseId());
 		
+		int count=0;
+		if(messageList.size()!=0)
+		{
+			for (String str : messageList)
+			{
+				if(isNumeric(str)){
+					count+=Integer.parseInt(str);	
+				}
+			}
+			if(count==0){
+				request.setAttribute("messageList", messageList);
+				return INPUT;
+			}
+		}
+		request.setAttribute("count", count);
 		return SUCCESS;
 	}
+	
+	//判断字符串是否为数字
+	public static boolean isNumeric(String str){ 
+	    Pattern pattern = Pattern.compile("[0-9]*"); 
+	    return pattern.matcher(str).matches();    
+	 } 
 }

@@ -47,12 +47,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li>
                       	上传减员信息表
                       <form  action="uploadInsuranceReduction" class="form-search" method="post" enctype="multipart/form-data">
-                        <input type="file"><br>
+                        <s:file name="file"/><br>
                         <button type="submit" class="btn btn-primary">上传</button>
                       </form>
                     </li>
                   </ol>
-                  <p class="red">备注：上传时，所有姓名，必须与数据库中已有的员工档案一致，重名用身份证号识别，如果无法识别，给予提醒！</p>
+                  <s:if test="#request.messageList.size()!=0">
+                  <p class="red">备注：<br/>
+                  	<s:iterator value="#request.messageList" id="mag">
+              			<span style="color: red">${mag}</span><br/>
+              	   </s:iterator>
+                  </p>
+                  </s:if>
                 </div>
               </div>
           </div>

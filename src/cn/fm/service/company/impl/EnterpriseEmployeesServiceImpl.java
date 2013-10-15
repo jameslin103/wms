@@ -3,6 +3,7 @@ package cn.fm.service.company.impl;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -336,6 +337,34 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		}
 	   return flag;
 	}
+	
+	public List<String> uploadExcelDateByDatabaseEmployeesMatch(String[] fileDate,Integer enterpriseId)
+	{
+		List<String> promptMessage=new ArrayList<String>();
+		
+		List<EnterpriseEmployees> enterpriseEmployeesList=getAllEnterpriseEmployees(enterpriseId);
+		String excelEmployeesName=fileDate[0]==null?"":fileDate[0].toString();
+		String excelCarNumber=fileDate[1]==null?"":fileDate[1].toString();
+		
+		for (EnterpriseEmployees emp : enterpriseEmployeesList)
+		{
+			
+		}
+		
+		
+		
+		
+		
+		
+		return promptMessage;
+		
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * 
 	 * @return 所有企业员工
@@ -515,22 +544,25 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 * 批量上传减员信息表
 	 */
 	// TODO Auto-generated method stub
-	public void uploadExcelByInsuranceReduction(File file, String fileName, Integer number, Integer readRow,Integer enterpriseId) {
+	@SuppressWarnings({ "unchecked", "static-access" })
+	public List<String> uploadExcelByInsuranceReduction(File file, String fileName, Integer number, Integer readRow,Integer enterpriseId) {
+		
 		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
+		List<String>   messageList=new ArrayList<String>();
 		  try {
 			  List<String[]> arrayList=excel.generateStationBugSql(file,fileName,number,readRow);
-				if(arrayList==null)return;
+				if(arrayList==null){messageList.add("请确认你上传数据的完整性!"); return messageList;}
+				for (int i = 0; i < arrayList.size(); i++) {
+					String[] data = arrayList.get(i);
+					messageList.addAll(uploadExcelDateByDatabaseEmployees(data,enterpriseId));
+					
+				}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			messageList.add("未知的文件异常!");
 		}
-			
 		
-		
-		
-		
-		
-		
-	
+	return messageList;
 		
 	}
 	
@@ -541,35 +573,102 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 * @return 存在提示信息(isExistingEmployees)
 	 */
     public List<String>  uploadExcelDateByDatabaseEmployees(String[] fileDate,Integer enterpriseId){
-    	
-    	List<String>  isExistingEmployees=new ArrayList<String>();
-    	
-    	
-    	String carNumber=fileDate[2]==null?"":fileDate[2];
-    	String employeesName=fileDate[1]==null?"":fileDate[1];
-    	
-    	if(StringUtil.isEmpty(carNumber)){
-    		 isExistingEmployees.add(" 身份证为空");
-    		 return null;
-    		}
-    	
-    	List<EnterpriseEmployees> enterpriseEmployeesList=getAllEnterpriseEmployees(enterpriseId);
-    	
-    	for (EnterpriseEmployees enterpriseEmployees : enterpriseEmployeesList)
-    	{
-			
-		}
-    	
-    	
-    	
-    	
+    	        
+		    	int      count=0;
+		    	int      employeesId=0;
+		    	int      reduction=0;
+		    	String   note="";
+		    	String message=new String();
+		    	List<String>  isExistingEmployees=new ArrayList<String>();
+		    	
+		    	//TODO 待解决上传空数据
+		        //if(isEmptyString(fileDate)==false)return isExistingEmployees;
+		    	
+		    	String carNumber=fileDate[2]==null?"":fileDate[2];
+		    	String employeesNameDate=fileDate[1]==null?"":fileDate[1];
+		    	Date   reductionDate=DateUtil.StringToDate(fileDate[3]==null?"":fileDate[3].toString(), DateUtil.FORMAT_DATE);
+		    	if(reductionDate==null){isExistingEmployees.add("减员日期不能为空!");return isExistingEmployees;}
+		    	
+		    	String noteExcel=fileDate[4]==null?"":fileDate[4].toString();
+		    	if(StringUtil.isEmpty(carNumber.trim())){ isExistingEmployees.add(" 身份证不能为空!"); return isExistingEmployees;}   		 
+		    	
+		    	List<EnterpriseEmployees> enterpriseEmployeesList=getAllEnterpriseEmployees(enterpriseId);
+		    	
+		    	for (EnterpriseEmployees emp : enterpriseEmployeesList)
+		    	{
+		    		 String empCarNumber=emp.getCardNumber();
+		    		 String empEmployeesName=emp.getEmployeesName();
+					 if(carNumber.trim().equals(empCarNumber.trim()) &&  employeesNameDate.trim().equals(empEmployeesName.trim()))
+					 {
+						 count++;
+						 if(emp.getReduction()==0){
+							 reduction++;
+							 employeesId=emp.getEmployeesId();
+							 note=emp.getNote();
+						 }else{
+							 message=new String(employeesNameDate+"已减员,时间为: "+emp.getReductionDate()+"身份证号码:"+emp.getCardNumber());
+							 isExistingEmployees.add(message);
+						 }
+					 }
+				}
+		    	if(reduction==1)
+				 {
+		    		 int reducontNumber=0;
+		    		  if(!StringUtil.isEmpty(noteExcel))note=noteExcel;
+		    		  EnterpriseEmployees templEmployees=new EnterpriseEmployees();
+		    		  templEmployees.setReductionDate(reductionDate);
+		    		  templEmployees.setNote(note);
+		    		  templEmployees.setEmployeesId(employeesId);
+		    		  
+		    		  //减员动作
+		    		  if( updateReduction(templEmployees)==true){
+		    			  reducontNumber++;
+		    			  isExistingEmployees.add(reducontNumber+"");
+		    		  }
+		    		   
+				 }
+				 if(count==0)
+				 {
+					 message=new String("数据库不存在:"+employeesNameDate+"身份证:"+carNumber);
+					 isExistingEmployees.add(message);					 
+					 
+				 }if(count>1){
+					 message=new String(employeesNameDate+"身份证:"+carNumber+"相同:"+count+"个");
+					 isExistingEmployees.add(message);
+				 }
     	
     	return isExistingEmployees;
     	
     }
 	
-	
-	
+	public boolean isEmptyString(String[] dateFile){
+		for (String str : dateFile) {
+			if(str.length()==0 && str.trim().isEmpty())return false;
+		}
+		
+		
+		return true;
+	}
+	/**
+	 * 进行减员操作
+	 * @param reductionDate
+	 * @param employeesId
+	 * @return
+	 */
+	public boolean updateReduction(EnterpriseEmployees enterpriseEmployees)
+	{
+		try {
+			em.createQuery(" update EnterpriseEmployees e set e.reduction=1,e.reductionDate=?1,e.note=?2 where e.employeesId=?3")
+            .setParameter(1, enterpriseEmployees.getReductionDate()).setParameter(2, enterpriseEmployees.getNote())
+            .setParameter(3, enterpriseEmployees.getEmployeesId()).executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+		
+	}
 	
 	
 	

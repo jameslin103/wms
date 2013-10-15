@@ -3,6 +3,7 @@ package junit.test.company;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -188,9 +189,65 @@ public class EnterpriseEmployessServiceTest {
 	}
 	
 	
-	
-	
-	
-	
+	@Test
+	public void uploadExcelDateByDatabaseEmployees()
+	{
+		String[] fileDate={"1","张森锋","3508811990011041370","2013-10-30"};
+		//String[] fileDate={" "," "," "};
+		
+		
+		List<String> message=enterpriseEmployeesService.uploadExcelDateByDatabaseEmployees(fileDate, 18);
+		if(message==null)return;
+		for (String str : message) {
+			System.out.println(str);
+		}
+		
+		
+		
+	}
+    @Test
+    
+    public void isSameEmployees()
+    {
+    	String[] fileDate={"1","张森锋","3508811990011041370"};
+    	
+    	EnterpriseEmployees  emp=new EnterpriseEmployees();
+    	emp.setCardNumber("3508811990011041370");
+    	emp.setEmployeesName("张森锋");
+    	EnterpriseEmployees  emp1=new EnterpriseEmployees();
+    	emp1.setCardNumber("3508811990011041370");
+    	emp1.setEmployeesName("张森锋");
+    	
+    	int count=0;
+    	
+    	List<EnterpriseEmployees>   enterpriseEmployeesList=new ArrayList<EnterpriseEmployees>();
+    	enterpriseEmployeesList.add(emp);
+    	enterpriseEmployeesList.add(emp1);
+    	
+    	String carNumber=fileDate[2].toString();
+    	String employeesNameDate=fileDate[1].toString();
+    	for (EnterpriseEmployees enterpriseEmployees : enterpriseEmployeesList)
+    	{
+    		 String empCarNumber=enterpriseEmployees.getCardNumber();
+    		 String empEmployeesName=enterpriseEmployees.getEmployeesName();
+			 if(carNumber.equals(empCarNumber) && empEmployeesName.equals(employeesNameDate))
+			 {
+				 count++;
+				
+			 } 
+		}
+    	
+    	if(count==1)
+		 {
+    		System.out.println("修改成功");
+		 }
+		 if(count==0)
+		 {
+			 System.out.println("数据库存在:"+employeesNameDate+"身份证:"+carNumber);					 
+			 
+		 }if(count>1){
+			 System.out.println(employeesNameDate+"身份证:"+carNumber+"相同:"+count+"个");
+		 }
+    }
 
 }

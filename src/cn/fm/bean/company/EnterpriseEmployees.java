@@ -62,20 +62,31 @@ public class EnterpriseEmployees implements Serializable{
 	private Date  endContractDeadline;
 	/*是否参保*/
 	private  Integer whetherGinseng;
+	
 	/*医保*/
 	private String  sociaSecurity;
+	
 	/*社保 */
 	private String  healthCare;
+	
 	/*公积金*/
 	private String  accumulationFund;
+	
 	/*大病统筹*/
 	private String  seriousDisease;
+	
 	/*大病统筹基数*/
 	private Double  seriousDiseaseBase;
 	
 	/*参保性质  0新增  1续保 2 减员*/
 	private String ginsengProtectNature;
 	
+	/*增员*/
+	//private Integer  recruiting;
+	
+	/*续保*/
+	//private Integer  renewal;
+ 
 	/*参保日期*/
 	private Date  cinsengDate;
 	
@@ -95,7 +106,7 @@ public class EnterpriseEmployees implements Serializable{
 	private Double  basicMedical;
 	
 	/*伪删除  1 隐藏    0显示*/
-	private Integer  pseudoDelete;
+	private Integer  pseudoDelete=0;
 	
 	private String  note;
 	/*离职员工*/
@@ -110,14 +121,32 @@ public class EnterpriseEmployees implements Serializable{
 	/**参保**/
 	private  long whetherGinsengCount;
 	
+	/*减员*/
+	private Integer  reduction=0;
+	
+	/*减员日期*/
+	private Date reductionDate;
+	
 	private Date     createDate=new Date();
 	
 	private Enterprise  enterprise;
 	
 	
 	
-	
-	
+	@Temporal(TemporalType.DATE)
+	public Date getReductionDate() {
+		return reductionDate;
+	}
+	public void setReductionDate(Date reductionDate) {
+		this.reductionDate = reductionDate;
+	}
+	@Column(length=2)
+	public Integer getReduction() {
+		return reduction;
+	}
+	public void setReduction(Integer reduction) {
+		this.reduction = reduction;
+	}
 	@Column(length=1)
 	public Integer getDeparture() {
 		return departure;

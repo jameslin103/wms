@@ -219,15 +219,18 @@
             <result name="success">company/insurance-step2-of-create.jsp</result>
             <result name="input">company/insurance-step1-of-create.jsp</result>
         </action>
+        
+         <!-- 批量增员(与续保)操作界面 -->
         <action name="increaseEmployeesUI" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="increaseEmployeesUI">
             <result name="success">company/insurance-step1-of-create.jsp</result>
         </action>
+        
         <!-- 批量减员操作界面 -->
         <action name="insuranceReductionUI" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="insuranceReductionUI">
             <result name="success">company/insurance-step1-of-reduction.jsp</result>
         </action>
         <action name="downloadReductionTemplate" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="downloadReductionTemplate">
-           <!-- 配置结果类型为stream的结果 -->  
+           <!-- 配置结果类型为stream的结果 -->
           <result name="success" type="stream">  
                <!-- 指定被下载文件的文件类型 -->  
                <param name="contentType">application/vnd.ms-excel</param>  
@@ -240,7 +243,7 @@
          <!-- 批量减员上传数据 -->
          <action name="uploadInsuranceReduction" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="uploadInsuranceReduction">
             <result name="success">company/insurance-step2-of-reduction.jsp</result>
-            <result name="input">company/insurance-step2-of-reduction.jsp</result>
+            <result name="input">company/insurance-step1-of-reduction.jsp</result>
         </action>
         
         
