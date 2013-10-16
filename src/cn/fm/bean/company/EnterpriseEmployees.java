@@ -58,8 +58,10 @@ public class EnterpriseEmployees implements Serializable{
 	private String  levelEducation;
 	/*合同期限 开始*/
 	private Date  startContractDeadline;
+	
 	/*合同期限 终止*/
 	private Date  endContractDeadline;
+	
 	/*是否参保*/
 	private  Integer whetherGinseng;
 	
@@ -78,14 +80,9 @@ public class EnterpriseEmployees implements Serializable{
 	/*大病统筹基数*/
 	private Double  seriousDiseaseBase;
 	
-	/*参保性质  0新增  1续保 2 减员*/
-	private String ginsengProtectNature;
 	
-	/*增员*/
-	//private Integer  recruiting;
-	
-	/*续保*/
-	//private Integer  renewal;
+	/*参保性质  1新增  2续保*/
+	private Integer ginsengProtectNature;
  
 	/*参保日期*/
 	private Date  cinsengDate;
@@ -110,7 +107,7 @@ public class EnterpriseEmployees implements Serializable{
 	
 	private String  note;
 	/*离职员工*/
-	private Integer departure;
+	private Integer departure=0;
 	
 	/**增员**/
 	private  long addCount;
@@ -130,7 +127,6 @@ public class EnterpriseEmployees implements Serializable{
 	private Date     createDate=new Date();
 	
 	private Enterprise  enterprise;
-	
 	
 	
 	@Temporal(TemporalType.DATE)
@@ -310,10 +306,10 @@ public class EnterpriseEmployees implements Serializable{
 		this.endContractDeadline = endContractDeadline;
 	}
 	@Column(length=5)
-	public String getGinsengProtectNature() {
+	public Integer getGinsengProtectNature() {
 		return ginsengProtectNature;
 	}
-	public void setGinsengProtectNature(String ginsengProtectNature) {
+	public void setGinsengProtectNature(Integer ginsengProtectNature) {
 		this.ginsengProtectNature = ginsengProtectNature;
 	}
 	@Temporal(TemporalType.DATE)

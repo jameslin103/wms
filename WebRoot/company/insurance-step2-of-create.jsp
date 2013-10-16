@@ -47,7 +47,10 @@
 
 								<div class="alert">
 									<p>
-										增员80人，续保50人
+										<s:iterator value="#request.message" var="meg">
+										       增员<s:property value="%{#meg.increase}" />人，续保<s:property value="%{#meg.renewal}"/>人
+										</s:iterator>
+										
 									</p>
 									<p>
 										<a href="batchIncreaseEmployees">信息错误，重新导入数据！</a>
@@ -57,7 +60,7 @@
 
 								<div>
 									<p>
-										<a href="insurance-with-month.jsp" class="btn btn-primary">信息正确，确认！</a>
+										<a href="viewInsuranceWithMonth" class="btn btn-primary">信息正确，确认！</a>
 									</p>
 								</div>
 

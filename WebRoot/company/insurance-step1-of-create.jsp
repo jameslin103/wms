@@ -48,7 +48,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       </s:form>
                     </li>
                   </ol>
-                  <p class="red">备注：上传时，所有姓名，必须与数据库中已有的员工档案一致，重名用身份证号识别，如果无法识别，给予提醒！</p>
+                 	<s:if test="#request.message.size()!=0">
+	                  <p class="red">备注： 
+		                  <s:iterator value="#request.message" var="mes">
+		                      ${mes}
+		                  </s:iterator>
+	                  </p>
+                  </s:if>
                 </div>
               </div>
           </div>

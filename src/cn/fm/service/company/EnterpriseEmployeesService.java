@@ -40,8 +40,6 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	
 	public List<EnterpriseEmployees>  findAllEnterpriseEmployees(String employessName,Integer all,Integer enterpriseId);
 	
-	public List<EnterpriseEmployees> getExcelFiledDataList(EnterpriseEmployees enterpriseEmployees,int enterpriseId);
-	
 	public List<String> getExcelFiledNameList();
 	
 	
@@ -89,7 +87,7 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @param readRow
 	 * @return
 	 */
-	public boolean batchIncreaseEmployees(File file , String fiName,int number,int readRow);
+	public List<String> batchIncreaseEmployees(File file , String fiName,int number,int readRow,Integer enterpriseId);
 	
 	/**
 	 * 更新实体
@@ -137,4 +135,13 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 */
     public List<String>  uploadExcelDateByDatabaseEmployees(String[] fileDate,Integer enterpriseId);
 	
+    
+    
+    /**
+	 * 匹配上传增员，人员是否已经离职；或者存在重复数据
+	 * @date 2013-10-16
+	 * @version 1.0
+	 * @author jameslin
+	 */
+	public String isExistSameToByEnterprise(String employeesName,String cardNumber, Integer enterpriseId);
 }

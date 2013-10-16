@@ -216,5 +216,73 @@ public class DateUtil {
 	    	Calendar calendar = Calendar.getInstance();
 	    	return toBeComparedCalendar.before(calendar);
 	    }
+	    /**
+	     * //判断时间date1是否在时间date2之前   时间格式 2005-4-21 16:16:34
+	     * @param date1
+	     * @param date2
+	     * @return
+	     */
+	    public static boolean isDateBefore(String date1,String date2){
+	        try{
+	         DateFormat df = DateFormat.getDateTimeInstance();
+	         return df.parse(date1).before(df.parse(date2));
+	        }catch(ParseException e){
+	        	e.printStackTrace();
+	         return false;
+	        }
+	     }
+	    
+	    /**
+	     * 时间比大小
+	     * @param date1
+	     * @param date2
+	     * @return
+	     */
+	    
+	    public static int timeCompare(String date1,String date2){
+	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        Calendar c1=Calendar.getInstance();
+	        Calendar c2=Calendar.getInstance();
+	        try {
+	            c1.setTime(formatter.parse(date1));
+	            c2.setTime(formatter.parse(date2));
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	        }
+	        int result=c1.compareTo(c2);
+	        return result;
+	    }
+	    
+	    /**
+
+	    * 两个时间比较
+
+	    * @param date
+
+	    * @return
+
+	    */
+
+	    public static int compareDateWithNow(Date date1){
+	    	
+		    Date date2 = new Date();
+		    int rnum =date1.compareTo(date2);
+		    return rnum;
+
+	    }
+	    
+	    
+	    /**
+	     * 获得当前时间
+	     * @return
+	     */ 
+	    public static String getCurrentTime(){  
+	        Date currentTime = new Date();  
+	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+	        String dateString = formatter.format(currentTime);  
+	        return dateString;  
+	    }  
+	    
+	    
 
 }

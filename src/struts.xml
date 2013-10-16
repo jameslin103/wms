@@ -215,7 +215,7 @@
         <action name="batchIncreaseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="batchIncreaseEmployees">
             <interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
             <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
-             <result name="invalid.token">company/insurance-step1-of-create.jsp</result>
+            <result name="invalid.token">company/insurance-step1-of-create.jsp</result>
             <result name="success">company/insurance-step2-of-create.jsp</result>
             <result name="input">company/insurance-step1-of-create.jsp</result>
         </action>

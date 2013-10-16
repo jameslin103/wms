@@ -6,8 +6,10 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
@@ -331,8 +333,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			
 			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
 			params.add(this.enterpriseId);
-			jpql.append(" and o.ginsengProtectNature like ?").append(params.size()+1);
-			params.add("%新增%");
+			jpql.append(" and o.ginsengProtectNature=?").append(params.size()+1);
+			params.add(1);
 			
 			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
@@ -356,8 +358,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		List<Object> params = new ArrayList<Object>();
 		if(this.enterpriseId!=null)
 		{
-			jpql.append(" o.ginsengProtectNature like ?").append(params.size()+1);
-			params.add("%续保%");
+			jpql.append(" o.ginsengProtectNature=?").append(params.size()+1);
+			params.add(2);
 			jpql.append(" and  o.enterprise.enterpriseId=?").append(params.size()+1);
 			params.add(this.enterpriseId);
 			
@@ -381,8 +383,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		List<Object> params = new ArrayList<Object>();
 		if(this.enterpriseId!=null)
 		{
-			jpql.append(" o.ginsengProtectNature like ?").append(params.size()+1);
-			params.add("%减员%");
+			jpql.append(" o.reduction=?").append(params.size()+1);
+			params.add(1);
 			jpql.append(" and  o.enterprise.enterpriseId=?").append(params.size()+1);
 			params.add(this.enterpriseId);
 			
@@ -436,11 +438,11 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		if(enterprise.getEnterpriseId()!=null)
 		{
 			jpql.append("( o.ginsengProtectNature like ?").append(params.size()+1);
-			params.add("%新增%");
-			jpql.append("  or  o.ginsengProtectNature like ?").append(params.size()+1);
-			params.add("%续保%");
+			params.add(1);
 			jpql.append(" or o.ginsengProtectNature like ?").append(params.size()+1).append(")");
-			params.add("%减员%");
+			params.add(2);
+			jpql.append(" and o.reduction=?").append(params.size()+1);
+			params.add(1);
 			jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
 			params.add(this.enterpriseId);
 			jpql.append(" and o.pseudoDelete=?").append(params.size()+1);
@@ -467,15 +469,27 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 */
 	public String batchIncreaseEmployees()
 	{
-		
-		boolean falg=enterpriseEmployeesService.batchIncreaseEmployees(file ,"增员续保信息表",11,1);
-		if(falg==false){
-			request.setAttribute("message", "数据有误上传失败!!");
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
+		List<String> messageList=enterpriseEmployeesService.batchIncreaseEmployees(file ,"增员续保信息表",11,2,enterprise.getEnterpriseId());
+
+		boolean isNumeric=false;
+		if(messageList.size()!=0){
+			for (String str : messageList)
+			{
+				if(isNumeric(str)){
+					isNumeric=true;
+				}
+			}
+			if(isNumeric==true){
+				request.setAttribute("message", messageList);
+				return SUCCESS;
+			}
+			
+			request.setAttribute("message", messageList);
 			return INPUT;
 			
 		}
-		
-		
 		return SUCCESS;
 	}
 	public String insuranceReductionUI(){
