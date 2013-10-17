@@ -2,8 +2,6 @@ package cn.fm.service.company.impl;
 
 import java.io.File;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,6 +24,10 @@ import cn.fm.utils.StringUtil;
 
 @Service @Transactional
 public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmployees> implements EnterpriseEmployeesService {
+	
+	
+	private String messageError="";
+	
 	
 	public void save(EnterpriseEmployees entity)
 	{
@@ -242,31 +244,41 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				for (int i = 0; i < arrayList.size(); i++)
 				{
 					String[] data = arrayList.get(i);
-					messageList=uploadExcelDateByDatabaseEmployeesMatch(data,employeesListPO);
-					if(messageList.size()==0)
+					
+					
+					EnterpriseEmployees reductionOrIncreaseEmployees=new EnterpriseEmployees();
+					//上传员工进行匹配
+					reductionOrIncreaseEmployees=uploadExcelDateByDatabaseEmployeesMatch(data,employeesListPO,enterpriseId);
+					
+					if(StringUtil.isEmpty(messageError))
 					{
-						EnterpriseEmployees reductionOrIncreaseEmployees=new EnterpriseEmployees();
-						
-						reductionOrIncreaseEmployees=structureExcelByEmployeesDate(data,employeesListPO,enterpriseId);
-						if(reductionOrIncreaseEmployees!=null){
-							if(reductionOrIncreaseEmployees.getEmployeesId()!=null && reductionOrIncreaseEmployees.getEmployeesId()!=0){
-								 if(updateRenewalEmployees(reductionOrIncreaseEmployees)==true){
-									 renewal++;
-									 map.put("renewal", renewal+"");
-									 messageList.add(map.toString());
-								 }
-								
-							}else{
-								 reductionOrIncreaseEmployees.setEnterprise(em.find(Enterprise.class, enterpriseId));
-								 super.save(reductionOrIncreaseEmployees);
-								 increase++;
-								 map.put("increase", increase+"");
-								 messageList.add(map.toString());
-							}
-							
-						}
+						if(reductionOrIncreaseEmployees!=null)
+						{
+								if(reductionOrIncreaseEmployees.getEmployeesId()!=null && reductionOrIncreaseEmployees.getEmployeesId()!=0)
+								{
+									 if(updateRenewalEmployees(reductionOrIncreaseEmployees)==true)
+									 {
+										 renewal++;
+										 map.put("renewal", renewal+"");
+										 messageList.add(map.toString());
+									 }
+									
+								}else{
+									if(StringUtil.isEmpty(messageError))
+									{
+										 reductionOrIncreaseEmployees.setEnterprise(em.find(Enterprise.class, enterpriseId));
+										 super.save(reductionOrIncreaseEmployees);
+										 increase++;
+										 map.put("increase", increase+"");
+										 messageList.add(map.toString());
+								    }else{
+								    	messageList.add(messageError);
+								    }
+								}	
+						   }
+					}else{
+				    	messageList.add(messageError);
 					}
-						
 				}
 				
 			}catch (Exception e) {
@@ -313,70 +325,89 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 * @date 2013-10-16
 	 * @version 1.0 版本
 	 */
-	public List<String> uploadExcelDateByDatabaseEmployeesMatch(String[] fileDate, List<EnterpriseEmployees> enterpriseEmployeesList)
-	{
-		List<String> promptMessage=new ArrayList<String>();
-		int sameName=0;
-		int sameCarNumber=0;
-		int sameCarNumberTotal=0;
-		
-		String excelEmployeesName=fileDate[1]==null?"":fileDate[1].toString();
-		if(StringUtil.isEmpty(excelEmployeesName)){promptMessage.add("姓名不能为空");return promptMessage;}
-		
-		String excelCarNumber=fileDate[2]==null?"":fileDate[2].toString();
-		//String excelRecruiting=fileDate[8]==null?"":fileDate[8].toString();
-		
-		String employeesName="";
-		String carNumber="";
-		for (EnterpriseEmployees emp : enterpriseEmployeesList)
-		{
-				employeesName=emp.getEmployeesName();
-				carNumber=emp.getCardNumber();
-			
-				if(excelEmployeesName.equals(employeesName))
-				{
-					sameName++;
-					if(sameName>1)
-					{
-						if(carNumber.equals(excelCarNumber))
-						{
-							sameCarNumber++;
-							if(sameCarNumber>1){
-								sameCarNumberTotal++;
-								}
-						}
-					}
-				}		
-			}
-			if(sameCarNumberTotal>1)
-			{
-				String message="数据库存在 ："+sameName+"个 ，："+excelEmployeesName+"，身份证相同："+sameCarNumberTotal+"个， 身份证号码："+excelCarNumber;
-				promptMessage.add(message);
-			}
-
-			
-		return promptMessage;
-		
-	}
-	
-	
-	/**
-	 * excel导入的数据封装到EnterpriseEmployees 这个对象中
-	 * @param fileDate
-	 * @param enterpriseEmployeesList
-	 * @return
-	 */
-	public EnterpriseEmployees structureExcelByEmployeesDate(String[] fileDate, List<EnterpriseEmployees> enterpriseEmployeesList,Integer enterpriseId)
+	public EnterpriseEmployees uploadExcelDateByDatabaseEmployeesMatch(String[] fileDate, List<EnterpriseEmployees> enterpriseEmployeesList,Integer enterpriseId)
 	{
 		
-		int sameName=0;
-		int cardNumberTotal=0;
+		int sameName=0;          //相同名字
+		int cardNumberTotal=0;   //相同身份证
+		int employeesId=0;
+		int cardTotal=0;
+		
 		EnterpriseEmployees  emp=new EnterpriseEmployees();
 		
 		String excelEmployeesName=fileDate[1]==null?"":fileDate[1].toString();
 		String excelCarNumber=fileDate[2]==null?"":fileDate[2].toString();
-		Date startContractDeadline=DateUtil.StringToDate(fileDate[3]==null?"":fileDate[3].toString(), DateUtil.FORMAT_DATE);
-		Date endContractDeadline=DateUtil.StringToDate(fileDate[4]==null?"":fileDate[4].toString(), DateUtil.FORMAT_DATE);
+		String excelRecruiting=fileDate[8]==null?"":fileDate[8].toString();
+		
+		
+		String employeesName="";
+		String carNumber="";
+
+		if(!StringUtil.isEmpty(excelRecruiting) && excelRecruiting.equals(Constant.WMS_XU_BAO))
+		{
+			for (EnterpriseEmployees employees : enterpriseEmployeesList)
+				{
+					employeesName=employees.getEmployeesName();
+					carNumber=employees.getCardNumber();
+					if(excelEmployeesName.equals(employeesName))
+					{
+						employeesId=employees.getEmployeesId();
+						sameName++;
+					    if(sameName>1)
+					    {
+					    	if(carNumber.equals(excelCarNumber))//续保
+							{
+					    		cardTotal++;
+					    		employeesId=employees.getEmployeesId();
+					    		if(cardTotal>1)
+					    		{
+					    			cardNumberTotal++;
+					    		}
+							}
+					    }
+					    
+				   }
+			}
+			if(cardTotal==1)
+	    	{
+				
+				emp=temporaryBuildingEmployees(fileDate,employeesId);
+	    	}
+			
+			if(sameName==1)
+			{
+		    	
+				emp=temporaryBuildingEmployees(fileDate,employeesId);
+		    	
+		    }
+			if(cardTotal>1)
+			{
+				messageError="数据库中存在:"+sameName+"个,相同名:"+excelEmployeesName+"，身份证号码为："+excelCarNumber;
+			}
+		}
+		
+		//增员信息
+		if(!StringUtil.isEmpty(excelRecruiting) && excelRecruiting.equals(Constant.WMS_ZENG_YUAN))
+		{
+			messageError=isExistSameToByEnterprise(excelEmployeesName,excelCarNumber,enterpriseId);
+			emp=temporaryBuildingEmployees(fileDate,null);
+			
+		}
+		return emp;
+	}
+	/**
+	 * 封装excel上传的数据
+	 * @param fileDate
+	 * @param employeesId
+	 * @return
+	 */
+	public EnterpriseEmployees temporaryBuildingEmployees(String[] fileDate,Integer employeesId )
+	{
+		EnterpriseEmployees empVO=new EnterpriseEmployees();
+		String excelEmployeesName=fileDate[1]==null?"":fileDate[1].toString();
+		String excelCarNumber=fileDate[2]==null?"":fileDate[2].toString();
+		Date   startContractDeadline=DateUtil.StringToDate(fileDate[3]==null?"":fileDate[3].toString(), DateUtil.FORMAT_DATE)==null?null:DateUtil.StringToDate(fileDate[3]==null?"":fileDate[3].toString(), DateUtil.FORMAT_DATE);
+		Date   endContractDeadline=DateUtil.StringToDate(fileDate[4]==null?"":fileDate[4].toString(), DateUtil.FORMAT_DATE)==null?null:DateUtil.StringToDate(fileDate[4]==null?"":fileDate[4].toString(), DateUtil.FORMAT_DATE);
 		String sociaSecurity=fileDate[5]==null?"":fileDate[5].toString();
 		String healthCare=fileDate[6]==null?"":fileDate[6].toString();
 		String accumulationFund=fileDate[7]==null?"":fileDate[7].toString();
@@ -384,106 +415,38 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		Date cinsengDate=DateUtil.StringToDate(fileDate[9]==null?"":fileDate[9].toString(), DateUtil.FORMAT_DATE);
 		String note=fileDate[10]==null?"":fileDate[10].toString();
 		
-		String employeesName="";
-		String carNumber="";
-
-		if(!StringUtil.isEmpty(excelRecruiting) && excelRecruiting.equals(Constant.WMS_XU_BAO))
-		{
-			for (EnterpriseEmployees employees : enterpriseEmployeesList) 
-				{
-					employeesName=employees.getEmployeesName();
-					carNumber=employees.getCardNumber();
-					if(excelEmployeesName.equals(employeesName))
-					{
-						sameName++;
-					    if(sameName>1)
-					    {
-					    	
-					    	if(carNumber.equals(excelCarNumber))//续保
-							{
-					    		cardNumberTotal++;
-							}
-					    	if(cardNumberTotal==1){
-					    		emp.setEmployeesId(employees.getEmployeesId());
-					    		emp.setCardNumber(excelCarNumber);
-					    		emp.setStartContractDeadline(startContractDeadline);
-					    		emp.setEndContractDeadline(endContractDeadline);
-					    		//医保
-					    		emp.setSociaSecurity(sociaSecurity);
-					    		//社保
-					    		emp.setHealthCare(healthCare);
-					    		//公积金
-					    		emp.setAccumulationFund(accumulationFund);
-					    		
-					    		int natrue=excelRecruiting.equals(Constant.WMS_XU_BAO)?2:1;
-					    		/*续保*/
-					    		emp.setGinsengProtectNature(natrue);
-					    		
-					    		emp.setNote(note);
-					    		
-					    		emp.setCinsengDate(cinsengDate);
-					    	}
-					    	
-					    }
-					    if(sameName==1){
-					    	
-					    	emp.setEmployeesId(employees.getEmployeesId());
-				    		emp.setCardNumber(excelCarNumber);
-				    		emp.setStartContractDeadline(startContractDeadline);
-				    		emp.setEndContractDeadline(endContractDeadline);
-				    		//医保
-				    		emp.setSociaSecurity(sociaSecurity);
-				    		//社保
-				    		emp.setHealthCare(healthCare);
-				    		//公积金
-				    		emp.setAccumulationFund(accumulationFund);
-				    		
-				    		int natrue=excelRecruiting.equals(Constant.WMS_XU_BAO)?2:1;
-				    		/*续保*/
-				    		emp.setGinsengProtectNature(natrue);
-				    		
-				    		emp.setCinsengDate(cinsengDate);
-				    		
-				    		emp.setNote(note);
-					    	
-					    }
-				   }
-			}
-		}
 		
-		//增员信息
-		if(!StringUtil.isEmpty(excelRecruiting) && excelRecruiting.equals(Constant.WMS_ZENG_YUAN))
-		{
-			
-			emp.setEmployeesName(employeesName);
-			
-    		emp.setCardNumber(excelCarNumber);
-    		
-    		emp.setStartContractDeadline(startContractDeadline);
-    		emp.setEndContractDeadline(endContractDeadline);
-    		//医保
-    		emp.setSociaSecurity(sociaSecurity);
-    		//社保
-    		emp.setHealthCare(healthCare);
-    		//公积金
-    		emp.setAccumulationFund(accumulationFund);
-    		
-    		int natrue=excelRecruiting.equals(Constant.WMS_XU_BAO)?2:1;
-    		/*续保*/
-    		emp.setGinsengProtectNature(natrue);
-    		
-    		emp.setCinsengDate(cinsengDate);
-    		
-    		emp.setNote(note);
-		}
+		
+		empVO.setEmployeesId(employeesId);
+		empVO.setEmployeesName(excelEmployeesName);
+		
+		empVO.setCardNumber(excelCarNumber);
+		empVO.setStartContractDeadline(startContractDeadline);
+		empVO.setEndContractDeadline(endContractDeadline);
+		//医保
+		empVO.setSociaSecurity(sociaSecurity);
+		//社保
+		empVO.setHealthCare(healthCare);
+		//公积金
+		empVO.setAccumulationFund(accumulationFund);
+		
+		int natrue=excelRecruiting.equals(Constant.WMS_XU_BAO)?2:1;
+		/*续保*/
+		empVO.setGinsengProtectNature(natrue);
+		
+		empVO.setCinsengDate(cinsengDate);
+		
+		empVO.setNote(note);
 		
 		
 		
-		return emp;
+		return empVO;
 	}
 	
+	
+	
 	/**
-	 * 匹配上传增员，人员是否已经离职；或者存在重复数据
+	 * 查询全库人员匹配上传增员，人员是否已经离职；或者存在重复数据
 	 * @date 2013-10-16
 	 * @version 1.0
 	 * @author jameslin
@@ -494,51 +457,60 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		int    cardNumberSame=0;   //相同身份证
 		int    sameCardTotal=0;    //几张相同身份证
 		String message="";
-		Date   departureDate;     //离职日期
-		Date   endContractDate;   //合同结束日期
+		Date   departureDate=null;     //离职日期
+		Date   endContractDate=null;   //合同结束日期
+		String fullName=null;
+		Integer enterpriseIdPO=0;
+		
+		
 		List<EnterpriseEmployees> enterpriseEmployeesPO=getAllEnterpriseEmployees();
-		for (EnterpriseEmployees emp : enterpriseEmployeesPO) {
-			if(emp.getEmployeesName().equals(employeesName))
+		for (EnterpriseEmployees emp : enterpriseEmployeesPO)
+		{
+			String empEolyeesName=emp.getEmployeesName();
+			if(empEolyeesName==null)continue;
+			if(empEolyeesName.equals(employeesName))
 			{
 				sameName++;
+				
+				fullName=emp.getEnterprise().getFullName();
+				endContractDate=emp.getEndContractDeadline();
+				enterpriseIdPO=emp.getEnterprise().getEnterpriseId();
 				if(sameName>1){
-					if(emp.getCardNumber().equals(cardNumber)){
+					if(emp.getCardNumber().equals(cardNumber))
+					{
+						departureDate=emp.getReductionDate();
 						cardNumberSame++;
-						if(cardNumberSame>1){
+						if(cardNumberSame>1)
+						{
 							sameCardTotal++;
 						}
 					}
 				}
-				if(sameName>1 && cardNumberSame==1)
+			}
+			
+		}
+		if(sameName>1 && cardNumberSame==1)
+		{
+			if(departureDate!=null)
+			{
+				if(DateUtil.compareDateWithNow(departureDate)==1)
 				{
-					String fullName=emp.getEnterprise().getFullName();
-					endContractDate=emp.getEndContractDeadline();
-					if(emp.getEnterprise().getEnterpriseId()!=enterpriseId){
-						departureDate=emp.getReductionDate();
-						if(departureDate!=null)
-						{
-							if(DateUtil.compareDateWithNow(departureDate)==-1)
-							{
-								
-								 message=employeesName+"已在,"+fullName+",还未离职,离职时间为:"+departureDate+",合同到期为:"+endContractDate;
-							}
-						}
-						if(departureDate==null || departureDate.equals(""))
-						{
-							    message=employeesName+"已在:"+fullName+",合同到期为:"+endContractDate;
-						}
-					}
-				}
-				if(cardNumberSame>1){
-					
+						
+					 message=employeesName+"已在,"+fullName+",还未离职,离职时间为:"+departureDate+",合同到期为:"+endContractDate;
 				}
 			}
+			if(departureDate==null || departureDate.equals(""))
+			{
+				    message=employeesName+"已在:"+fullName+",合同到期为:"+endContractDate;
+			}
 		}
-		
-		
-		
+		if(sameName>1 && cardNumberSame>1)
+		{
+			message="数据库存在，"+sameName+"个，同名："+employeesName+"，身份证相同"+cardNumberSame+"张,号码为："+cardNumber;
+			
+		}
+
 		return message;
-		
 	}
 	
 	/**

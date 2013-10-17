@@ -53,6 +53,31 @@ public class DateUtil {
 	    }
 	    
 	    /**
+	     * 这种日期格式2013/05/08的转换
+	     * @param str
+	     * @param strFormat
+	     * @return
+	     */
+	    public static Date StringTypeToDate(String str,String strFormat){
+	    	SimpleDateFormat dateFormat=new SimpleDateFormat(strFormat);
+	    	Date date=new Date();
+	    	try {
+	    		String year = str.substring(7, 11);
+				String month = str.substring(3, 6);
+				String yue = str.substring(0,2);
+				
+				date=dateFormat.parse(str);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+	    	return date;
+	    	
+	    }
+	    
+	    
+	    /**
 	     * String to date and set formate and set locale
 	     * @param formatType
 	     * @param Calendar YYYY-MM-dd

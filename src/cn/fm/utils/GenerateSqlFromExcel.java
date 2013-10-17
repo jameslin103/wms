@@ -106,7 +106,7 @@ public class GenerateSqlFromExcel {
 			DateCell dateCell = (DateCell) cell;
 			java.util.Date importdate = dateCell.getDate();/**如果excel是日期格式的话需要减去8小时*/
 			long eighthour = 8*60*60*1000;
-			SimpleDateFormat simpledate = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME); 
+			SimpleDateFormat simpledate = new SimpleDateFormat(DateUtil.FORMAT_DATE); 
 			/**在当前日期上减8小时*/
 			long time = importdate.getTime()-eighthour; 
 			Date date = new Date();

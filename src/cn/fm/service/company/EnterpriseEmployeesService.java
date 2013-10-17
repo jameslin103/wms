@@ -144,4 +144,23 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @author jameslin
 	 */
 	public String isExistSameToByEnterprise(String employeesName,String cardNumber, Integer enterpriseId);
+	
+	/**
+	 * 封装excel上传的数据
+	 * @param fileDate
+	 * @param employeesId
+	 * @return
+	 */
+	public EnterpriseEmployees temporaryBuildingEmployees(String[] fileDate,Integer employeesId );
+	
+	
+	/**
+	 * 增员、续保，并且与数据库匹配
+	 * @param fileDate
+	 * @param enterpriseEmployeesList
+	 * @return message
+	 * @date 2013-10-16
+	 * @version 1.0 版本
+	 */
+	public EnterpriseEmployees uploadExcelDateByDatabaseEmployeesMatch(String[] fileDate, List<EnterpriseEmployees> enterpriseEmployeesList,Integer enterpriseId);
 }
