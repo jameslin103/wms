@@ -20,7 +20,11 @@
 			<div id="header">
 				<jsp:include page="../layout/header.jsp" />
 			</div>
-
+			<div id="sub-header" class="clearfix">
+					<h2>
+						<s:property value="%{#session.enterprise.fullName}" />
+					</h2>
+				</div>
 			<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">
@@ -47,10 +51,7 @@
 
 								<div class="alert">
 									<p>
-										<s:iterator value="#request.message" var="meg">
-										       增员<s:property value="%{#meg.increase}" />人，续保<s:property value="%{#meg.renewal}"/>人
-										</s:iterator>
-										
+										     增员<s:property value="%{#request.zenyua}" />人，续保<s:property value="%{#request.xubao}"/>人
 									</p>
 									<p>
 										<a href="batchIncreaseEmployees">信息错误，重新导入数据！</a>

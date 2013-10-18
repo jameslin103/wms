@@ -5,7 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -220,20 +222,7 @@ public class EnterpriseEmployessServiceTest {
 	   
 	   
    }
-   @Test
-   public void isExistSameToByEnterprise()
-   {
-	   String carNumber="352202198003129980";
-	   String name="张芳芳";
-	   
-	   String mes=enterpriseEmployeesService.isExistSameToByEnterprise(name, carNumber, 18);
-	   
-	   System.out.println(mes);
-	   
-	   
-	   
-	   
-   }
+
    @Test	
    public void temporaryBuildingEmployees()
    {
@@ -256,47 +245,41 @@ public class EnterpriseEmployessServiceTest {
 	   }
 	   
    }
+
    @Test
-   public void   uploadExcelDateByDatabaseEmployeesMatch()
+   public void getfileDate()
    {
-	   List<String[]> list=new ArrayList<String[]>();
-	   String[] file={"1","张芳芳","352202198003129980","2013-05-1","2014-04-30","医保","社保","公积金","增员","2013-08-03","备注"};
-	   String[] file2={"2","杨斌","352202198003130532","2013-05-1","2014-04-30","医保","社保","公积金","增员","2013-08-03","备注"};
-	   String[] fileDate={"3","余哲彬","350681199108107013","2013-07-05","2013-7-15","医保","社保","公积金","续保","2013-08-03","备注"};
-	   String[] fileDate1={"4","张吕文","350821199006211252","2013-07-05","2013-7-15","医保","社保","公积金","续保","2013-08-03","备注"};
+	   Map<String, Integer> map=new HashMap<String, Integer>();
 	  
-	   list.add(file);
-	   list.add(file2);
-	   list.add(fileDate);
-	   list.add(fileDate1);
 	   
-	   //=====
-	   List<EnterpriseEmployees>   enterpriseEmployeesList=new ArrayList<EnterpriseEmployees>();
-	   EnterpriseEmployees         enterpriseEmployees=new EnterpriseEmployees();
-	   enterpriseEmployees.setEmployeesId(47);
-	   enterpriseEmployees.setEmployeesName("杨斌");
-	   enterpriseEmployees.setCardNumber("352202198003130532");
-	   enterpriseEmployees.setStartContractDeadline(new Date(2013-05-01));
-	   enterpriseEmployees.setEndContractDeadline(new Date(2014-04-30));
-	   enterpriseEmployeesList.add(enterpriseEmployees);
+	   List<String>  list=new ArrayList<String>();
+	   list.add(6+"");
+	   list.add(8+"");
 	   
-	   EnterpriseEmployees         enterpriseEmployees1=new EnterpriseEmployees();
-	   enterpriseEmployees1.setEmployeesId(48);
-	   enterpriseEmployees1.setEmployeesName("余哲彬");
-	   enterpriseEmployees1.setCardNumber("350681199108107013");
-	   enterpriseEmployees1.setStartContractDeadline(new Date(2013-07-05));
-	   enterpriseEmployees1.setEndContractDeadline(new Date(2013-7-15));
-	   enterpriseEmployeesList.add(enterpriseEmployees1);
-	   
-	   
-	   
-	   for (int i = 0; i < list.size(); i++)
-	   {
-		   String[] date=list.get(i);
-		   EnterpriseEmployees emp=enterpriseEmployeesService.uploadExcelDateByDatabaseEmployeesMatch(date,enterpriseEmployeesList,18);
-		   System.out.println(emp.getEmployeesName());
-	   }
-	   
+	  for (String str : list) 
+	  {
+		  String aa=str;
+		  if(list.size()==0){
+			  System.out.println(str+"====");
+		  }else{
+			  System.out.println(list.get(0));
+			  System.out.println(str+"else");
+		  }
+//		  if(str.==0){
+//			  map.put("aa", Integer.parseInt(list.get(i)));
+//		  }
+//		  if(i==1){
+//		  
+//		   map.put("bb", Integer.parseInt(list.get(i)));
+//		  }
+//		  System.out.println(list.get(i));
+	  }
+	  for (Object obj : map.keySet()) 
+	  {
+		  Object key = obj;           
+		  Object value = map.get(key);   
+		  System.out.println(value);
+	  }
    }
    
  
