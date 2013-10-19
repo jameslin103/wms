@@ -60,7 +60,7 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	public String viewCompanyListWithSaraly()
 	{
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("detailId", "desc");
+		orderby.put("budgetId", "desc");
 		StringBuffer jpql = new StringBuffer("");
 		PageView<CreateSalaryBudgetTable> pageView = new PageView<CreateSalaryBudgetTable>(10,  this.getPage());
 		pageView.setQueryResult(createSalaryBudgetTableService.getScrollData(pageView.getFirstResult(), 
@@ -78,7 +78,7 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	{
 		
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("detailId", "desc");
+		orderby.put("employeesId", "desc");
 		StringBuffer jpql = new StringBuffer("");
 		PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
 		pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 

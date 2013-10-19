@@ -17,118 +17,32 @@
 
 	</head>
 	<body>
-
 		<div id="container">
+		<div id="header">
 			<div id="header">
-				<ul class="user normal clearfix">
-					<li>
-						<a href="account/password.jsp">某某员工</a>
-					</li>
-					<li>
-						<a href="#">退出</a>
-					</li>
-				</ul>
-
-				<div class="navbar">
-					<div class="navbar-inner">
-						<div class="container">
-							<a class="brand" href="#">富民</a>
-							<ul class="nav">
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-										企业 <b class="caret"></b> </a>
-									<ul class="dropdown-menu" role="menu"
-										aria-labelledby="dropdownMenu">
-										<li>
-											<a tabindex="-1" href="company/list.jsp">我的企业</a>
-										</li>
-										<li>
-											<a tabindex="-1" href="#">所有企业</a>
-										</li>
-									</ul>
-								</li>
-
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-										管理 <b class="caret"></b> </a>
-									<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-										<li>
-											<a tabindex="-1" href="admin/company-list.jsp">企业相关</a>
-										</li>
-										<li>
-											<a tabindex="-1" href="admin/tax.jsp">计税规则</a>
-										</li>
-										<li>
-											<a tabindex="-1" href="admin/authorization.jsp">权限分配</a>
-										</li>
-									</ul>
-								</li>
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-										汇总 <b class="caret"></b> </a>
-									<ul class="dropdown-menu" role="menu"
-										aria-labelledby="dropdownMenu">
-										<li>
-											<a tabindex="-1" href="all/company-list-with-salary.jsp">工资预算表</a>
-										</li>
-										<li>
-											<a tabindex="-1"
-												href="all/company-list-with-insurance.jsp">增减员与参保</a>
-										</li>
-										<li>
-											<a tabindex="-1" href="all/company-list-with-balance.jsp">资金往来</a>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<a href="help/index.jsp">帮助</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
+				<jsp:include page="../layout/list_header.jsp" />
 			</div>
-
-			<div id="sub-header" class="clearfix">
-				<h2>
-					2013年8月
-				</h2>
-				<div class="date">
-					2013年7月23日
-				</div>
-			</div>
-
-
-			<div id="main">
+		</div>
+		<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">
 
 						<ul class="nav nav-tabs">
-							<li>
-								<a href="all/company-list-with-salary.jsp">工资</a>
+							<li >
+								<a href="viewCompanyListWithSaraly">工资</a>
 							</li>
 							<li class="active">
-								<a href="all/company-list-with-insurance.jsp">增减员与参保</a>
+								<a href="viewCompanyListWithInsurance">增减员与参保</a>
 							</li>
 							<li>
-								<a href="all/company-list-with-balance.jsp">资金往来</a>
+								<a href="viewCompanyListWithBalance">资金往来</a>
 							</li>
 						</ul>
 
 						<ul class="normal action-container clearfix">
 							<li class="right">
 								<form action="" class="select-for-year" method="post">
-									<select>
-										<option value="">
-											2014年
-										</option>
-										<option value="" selected>
-											2013年
-										</option>
-										<option value="">
-											2012年
-										</option>
-									</select>
+									 日期:<input id="d11" name="year" onclick="WdatePicker()"  class="Wdate" style="width: 110px;height: 25px;" />
 								</form>
 							</li>
 							<li>
@@ -249,38 +163,7 @@
 						</table>
 
 						<div class="pagination">
-							<ul>
-								<li>
-									<a href="#">&laquo;</a>
-								</li>
-								<li>
-									<a href="#">1</a>
-								</li>
-								<li>
-									<a href="#">2</a>
-								</li>
-								<li>
-									<a href="#">3</a>
-								</li>
-								<li>
-									<a href="#">4</a>
-								</li>
-								<li>
-									<a href="#">5</a>
-								</li>
-								<li>
-									<a href="#">6</a>
-								</li>
-								<li>
-									<a href="#">7</a>
-								</li>
-								<li>
-									<a href="#">8</a>
-								</li>
-								<li>
-									<a href="#">&raquo;</a>
-								</li>
-							</ul>
+							<%@include file="../share/fenye.jsp" %>
 						</div>
 					</div>
 				</div>

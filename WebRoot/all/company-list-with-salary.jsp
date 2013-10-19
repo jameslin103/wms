@@ -25,7 +25,6 @@
 			<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">
-
 						<ul class="nav nav-tabs">
 							<li class="active">
 								<a href="viewCompanyListWithSaraly">工资</a>
@@ -41,17 +40,7 @@
 						<ul class="normal action-container clearfix">
 							<li class="right">
 								<form action="" class="select-for-year" method="post">
-									<select>
-										<option value="">
-											2014年
-										</option>
-										<option value="" selected>
-											2013年
-										</option>
-										<option value="">
-											2012年
-										</option>
-									</select>
+									 日期:<input id="d11" name="year" onclick="WdatePicker()"  class="Wdate" style="width: 110px;height: 25px;" />
 								</form>
 							</li>
 							<li>
