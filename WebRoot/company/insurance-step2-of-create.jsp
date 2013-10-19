@@ -20,7 +20,11 @@
 			<div id="header">
 				<jsp:include page="../layout/header.jsp" />
 			</div>
-
+			<div id="sub-header" class="clearfix">
+					<h2>
+						<s:property value="%{#session.enterprise.fullName}" />
+					</h2>
+				</div>
 			<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">
@@ -47,7 +51,7 @@
 
 								<div class="alert">
 									<p>
-										增员80人，续保50人
+										     增员<s:property value="%{#request.zenyua}" />人，续保<s:property value="%{#request.xubao}"/>人
 									</p>
 									<p>
 										<a href="batchIncreaseEmployees">信息错误，重新导入数据！</a>
@@ -57,7 +61,7 @@
 
 								<div>
 									<p>
-										<a href="insurance-with-month.jsp" class="btn btn-primary">信息正确，确认！</a>
+										<a href="viewInsuranceWithMonth" class="btn btn-primary">信息正确，确认！</a>
 									</p>
 								</div>
 

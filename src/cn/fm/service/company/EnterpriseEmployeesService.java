@@ -40,8 +40,6 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	
 	public List<EnterpriseEmployees>  findAllEnterpriseEmployees(String employessName,Integer all,Integer enterpriseId);
 	
-	public List<EnterpriseEmployees> getExcelFiledDataList(EnterpriseEmployees enterpriseEmployees,int enterpriseId);
-	
 	public List<String> getExcelFiledNameList();
 	
 	
@@ -89,7 +87,7 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @param readRow
 	 * @return
 	 */
-	public boolean batchIncreaseEmployees(File file , String fiName,int number,int readRow);
+	public List<String> batchIncreaseEmployees(File file , String fiName,int number,int readRow,Integer enterpriseId);
 	
 	/**
 	 * 更新实体
@@ -136,5 +134,15 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @return 存在提示信息(isExistingEmployees)
 	 */
     public List<String>  uploadExcelDateByDatabaseEmployees(String[] fileDate,Integer enterpriseId);
+	
+
+	/**
+	 * 封装excel上传的数据
+	 * @param fileDate
+	 * @param employeesId
+	 * @return
+	 */
+	public EnterpriseEmployees temporaryBuildingEmployees(String[] fileDate,Integer employeesId );
+	
 	
 }

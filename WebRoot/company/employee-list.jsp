@@ -230,7 +230,15 @@
 											</s:else>
 										</td>
 										<td>
-											<s:property value="%{#emp.ginsengProtectNature}" />
+											<s:if test="#emp.ginsengProtectNature==1">
+													<span>增员</span>
+											</s:if>
+											<s:elseif test="#emp.ginsengProtectNature==2">
+													<span>续保</span>
+											</s:elseif>
+											<s:else>
+											
+											</s:else>
 										</td>
 										<td>
 											<s:date name="%{#emp.cinsengDate}" format="yyyy年MM月dd"/>

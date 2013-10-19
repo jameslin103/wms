@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Query;
 
@@ -23,6 +25,10 @@ import cn.fm.utils.StringUtil;
 @Service @Transactional
 public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmployees> implements EnterpriseEmployeesService {
 	
+	
+	private String messageError="";
+	
+	
 	public void save(EnterpriseEmployees entity)
 	{
 		super.save(entity);	
@@ -33,8 +39,14 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees> getAllEnterpriseEmployees(Integer enterpriseId)
 	{
-		Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterprise.enterpriseId=?1  and e.departure=0");
-		return query.setParameter(1, enterpriseId).getResultList();
+		try {
+			Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterprise.enterpriseId=?1  and e.departure=0 and e.reduction=0");
+			return query.setParameter(1, enterpriseId).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
 	/**
@@ -111,7 +123,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				employees.setStartContractDeadline(data[16].toString()==null?null:DateUtil.StringToDate(data[16], DateUtil.FORMAT_DATE));
 				employees.setEndContractDeadline(data[17].toString()==null?null:DateUtil.StringToDate(data[17], DateUtil.FORMAT_DATE));
 				employees.setServiceCost(data[18].toString().equals("")?null:Double.valueOf(data[18]));
-				employees.setGinsengProtectNature(data[19].toString());
+				employees.setGinsengProtectNature(data[19].toString()==null?null:(data[19].toString().equals(Constant.WMS_ZENG_YUAN)?1:2));
 				employees.setWhetherGinseng(data[20].toString()==null?null:data[20].equals(Constant.WMS_YES)?1:0);
 				employees.setCinsengDate(data[21].toString()==null?null:DateUtil.StringToDate(data[21], DateUtil.FORMAT_DATE));
 				employees.setHealthCare(data[22].toString()==null?"":data[22].toString());
@@ -153,94 +165,14 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	public EnterpriseEmployees findEnterpriseEmployees(Integer employeesId) {
 		return super.find(employeesId);
 	}
-	
 
-	/**  
-	* @Name: getExcelFiledDataList
-	* @Description: 获取excel的数据内容
-	* 	   获取数据,
-	* @Author: jameslin（作者）
-	* @Version: wms1.00 （版本号）
-	* @Create Date: 2013-08-25 （创建日期）
-	* @Parameters: 无
-	* @Return: ArrayList(Excel标题集数据)
-	*/
-	@SuppressWarnings("unchecked")
-	public List<EnterpriseEmployees> getExcelFiledDataList(EnterpriseEmployees enterpriseEmployees,int enterpriseId)
-	{
-
-		List<EnterpriseEmployees> enterpriseEmployeesListDatePO=null;
-		Query query=em.createQuery("select e from EnterpriseEmployees e  where e.enterprise.enterpriseId=?1  and e.departure=0 ");
-		query.setParameter(1, enterpriseId);
-		enterpriseEmployeesListDatePO=query.getResultList();
-		List<EnterpriseEmployees> employeesListVO = this.enterpriseEmployeesPOListToVOList(enterpriseEmployeesListDatePO);
-
-		return  employeesListVO;
-	}
-	/**  
-	* @Name: elecUserPOListToVOList
-	* @Description: 获取的用户列表中的值从PO对象转换成VO对象
-	* @Author: jameslin（作者）
-	* @Version: wmsV1.00 （版本号）
-	* @Create Date: 2013-08-25 （创建日期）
-	* @Parameters: List<ElecUser> list 存放PO对象
-	* @Return: List<ElecUserForm> 存放VO对象
-	*/
-	private List<EnterpriseEmployees> enterpriseEmployeesPOListToVOList(List<EnterpriseEmployees> list) {
-		//构造报表导出数据
-		List<EnterpriseEmployees> employeesList = new ArrayList<EnterpriseEmployees>();
-		EnterpriseEmployees enterpriseEmployeesVO = null;
-		for(int i=0;list!=null && i<list.size();i++){
-			EnterpriseEmployees employeesListVO = list.get(i);
-			enterpriseEmployeesVO = new EnterpriseEmployees();
-			enterpriseEmployeesVO.setEmployeesId(employeesListVO.getEmployeesId());
-			enterpriseEmployeesVO.setContractNo(employeesListVO.getContractNo());
-			enterpriseEmployeesVO.setEmployeesName(employeesListVO.getEmployeesName());
-			enterpriseEmployeesVO.setEmployeesSex(employeesListVO.getEmployeesSex());
-			enterpriseEmployeesVO.setNativePlace(employeesListVO.getNativePlace());
-			enterpriseEmployeesVO.setHouseholdRegister(employeesListVO.getHouseholdRegister());
-			enterpriseEmployeesVO.setHomeAddress(employeesListVO.getHomeAddress());
-			enterpriseEmployeesVO.setMaritalStatus(employeesListVO.getMaritalStatus());
-			enterpriseEmployeesVO.setLevelEducation(employeesListVO.getLevelEducation());
-			enterpriseEmployeesVO.setPhoto(employeesListVO.getPhoto());
-			enterpriseEmployeesVO.setCardNumber(employeesListVO.getCardNumber());
-			enterpriseEmployeesVO.setPhone(employeesListVO.getPhone());
-			enterpriseEmployeesVO.setIndustry(employeesListVO.getIndustry());
-			enterpriseEmployeesVO.setJobs(employeesListVO.getJobs());
-			enterpriseEmployeesVO.setBank(employeesListVO.getBank());
-			enterpriseEmployeesVO.setBankCardNumber(employeesListVO.getBankCardNumber());
-			enterpriseEmployeesVO.setStartContractDeadline(employeesListVO.getStartContractDeadline());
-			enterpriseEmployeesVO.setEndContractDeadline(employeesListVO.getEndContractDeadline());
-			enterpriseEmployeesVO.setServiceCost(employeesListVO.getServiceCost());
-			enterpriseEmployeesVO.setGinsengProtectNature(employeesListVO.getGinsengProtectNature());
-			enterpriseEmployeesVO.setWhetherGinseng(employeesListVO.getWhetherGinseng());
-			enterpriseEmployeesVO.setCinsengDate(employeesListVO.getCinsengDate());
-			enterpriseEmployeesVO.setHealthCare(employeesListVO.getHealthCare());
-			enterpriseEmployeesVO.setSociaSecurity(employeesListVO.getSociaSecurity());
-			enterpriseEmployeesVO.setAccumulationFund(employeesListVO.getAccumulationFund());
-			enterpriseEmployeesVO.setSeriousDisease(employeesListVO.getSeriousDisease());
-			enterpriseEmployeesVO.setBase(employeesListVO.getBase());
-			enterpriseEmployeesVO.setSocialInsurance(employeesListVO.getSocialInsurance());
-			enterpriseEmployeesVO.setFertilityInsurance(employeesListVO.getFertilityInsurance());
-			enterpriseEmployeesVO.setInductrialBase(employeesListVO.getInductrialBase());
-			enterpriseEmployeesVO.setBasicMedical(employeesListVO.getBasicMedical());
-			enterpriseEmployeesVO.setHousingFund(employeesListVO.getHousingFund());
-			enterpriseEmployeesVO.setSeriousDiseaseBase(employeesListVO.getSeriousDiseaseBase());
-			enterpriseEmployeesVO.setPaymentWay(employeesListVO.getPaymentWay());
-			//enterpriseEmployeesVO.setEnterpriseId(employeesListVO.getEnterpriseId());
-			employeesList.add(enterpriseEmployeesVO);
-		}
-		return employeesList;
-	}
-	
-	
 	/**
 	 * 统计新增人数
 	 * @param enterpriseId
 	 * @return
 	 */
 	public long newStaffCount(Integer enterpriseId){
-		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1  and e.departure=0 and e.ginsengProtectNature='新增' ");
+		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1  and e.departure=0 and e.ginsengProtectNature=1 ");
 		query.setParameter(1, enterpriseId);
 		return (Long)query.getSingleResult();
 		
@@ -271,7 +203,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees>  findWorkersIncreasedToEmployees(Integer enterpriseId)
 	{
-		Query query=em.createQuery("select e from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.whetherGinseng=1 and e.departure=0  and e.ginsengProtectNature='新增' order by employeesId asc ");
+		Query query=em.createQuery("select e from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.whetherGinseng=1 and e.departure=0  and e.ginsengProtectNature=1 order by employeesId asc ");
 		query.setParameter(1, enterpriseId);
 		return query.getResultList();
 	}
@@ -292,78 +224,219 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		return query.getResultList();
 		
 	}
+	
 	/**
-	 * 批量上传增员；减员；并且与数据库匹配
+	 * 批量上传增员；续保；
 	 */
 	@SuppressWarnings({ "unchecked", "static-access" })
-	public boolean  batchIncreaseEmployees(File file , String fiName,int number,int readRow)
+	public List<String>  batchIncreaseEmployees(File file , String fiName,int number,int readRow,Integer enterpriseId)
 	{
-		boolean flag=false;
-		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
+		int renewal=0; //续保
+		int increase=0; //增员
+		List<String>  messageList=new ArrayList<String>();
 		
-			List<String[]> arrayList;
+		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
+		List<EnterpriseEmployees> employeesListPO=getAllEnterpriseEmployees(enterpriseId);
 			try {
-				arrayList = excel.generateStationBugSql(file,fiName,number,readRow);
-				if(arrayList==null)return false;
-				List<EnterpriseEmployees> employeesListPO=getAllEnterpriseEmployees();
+				List<String[]> arrayList = excel.generateStationBugSql(file,fiName,number,readRow);
+				if(arrayList==null){messageList.add("数据格式出错!");return messageList;}
+				
 				for (int i = 0; i < arrayList.size(); i++)
 				{
 					String[] data = arrayList.get(i);
-					if(data.length!=0 || !data.equals("")){
-					for(EnterpriseEmployees emp:employeesListPO){
-						String cardNumber=(data[7].toString())== null?"":data[7].toString();
-						if(StringUtil.isEmpty(emp.getCardNumber()))return false;
-						if(StringUtil.isEmpty(cardNumber))return false;
-						if(cardNumber.equals(emp.getCardNumber())){
-							emp.setSociaSecurity(data[10].toString()== null?"":data[10].toString());
-							emp.setHealthCare((data[11].toString())== null?"":data[11].toString());
-							emp.setAccumulationFund((data[12].toString())== null?"":data[12].toString());
-							emp.setGinsengProtectNature(data[13].toString()== null?"":data[13].toString());
-							emp.setCinsengDate(data[14].toString()== null?emp.getCreateDate():DateUtil.StringToDate(data[14].toString(), DateUtil.FORMAT_DATE));
-							emp.setNote(data[15].toString()== null?"":data[15].toString());
-
-							super.update(emp);
-							flag=true;
-						}
-						
-					}	
+					
+					
+					EnterpriseEmployees reductionOrIncreaseEmployees=new EnterpriseEmployees();
+					//上传员工进行匹配
+					
+					reductionOrIncreaseEmployees=isExistSameToByEnterprise(data,employeesListPO);
+					
+					if(StringUtil.isEmpty(messageError))
+					{
+						if(reductionOrIncreaseEmployees!=null)
+						{
+							if(reductionOrIncreaseEmployees.getGinsengProtectNature()!=null && reductionOrIncreaseEmployees.getGinsengProtectNature()==1)
+							{
+									 if(updateRenewalEmployees(reductionOrIncreaseEmployees)==true)
+									 {
+										 renewal++;
+									 }
+									
+								}
+								if(reductionOrIncreaseEmployees.getGinsengProtectNature()!=null && reductionOrIncreaseEmployees.getGinsengProtectNature()==2)
+								{
+									
+									if(updateRenewalEmployees(reductionOrIncreaseEmployees)==true)
+								    {
+											 increase++;
+									}
+								}
+								
+									
+						  }
+					}
 				}
-			}
+				if(StringUtil.isEmpty(messageError))
+				{
+					if(renewal>0)
+					{
+						 messageList.add(renewal+"");
+					}
+					if(increase>0)
+					{
+						 messageList.add(increase+"");
+					}
+				}else{
+					messageList.add(messageError);
+				}
 				
-		} catch (Exception e) {
+			}catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return false;
-		}
-	   return flag;
+				messageList.add("文件出错请重试!");
+			
+		    }
+	   return messageList;
 	}
 	
-	public List<String> uploadExcelDateByDatabaseEmployeesMatch(String[] fileDate,Integer enterpriseId)
+	/**
+	 * 续保动作,或者增员动作
+	 * @param enterpriseEmployees
+	 * @return
+	 */
+	
+	public boolean updateRenewalEmployees(EnterpriseEmployees enterpriseEmployees)
 	{
-		List<String> promptMessage=new ArrayList<String>();
+		try {
+			em.createQuery("update EnterpriseEmployees ee set ee.cardNumber=?1,ee.startContractDeadline=?2 ," +
+					"ee.endContractDeadline=?3,ee.sociaSecurity=?4,ee.healthCare=?5,ee.accumulationFund=?6," +
+					"ee.ginsengProtectNature=?7,ee.note=?8,ee.cinsengDate=?9 where ee.employeesId=?10")
+			   .setParameter(1, enterpriseEmployees.getCardNumber()).setParameter(2, enterpriseEmployees.getStartContractDeadline())
+			   .setParameter(3, enterpriseEmployees.getEndContractDeadline()).setParameter(4, enterpriseEmployees.getSociaSecurity())
+			   .setParameter(5, enterpriseEmployees.getHealthCare()).setParameter(6, enterpriseEmployees.getAccumulationFund())
+			   .setParameter(7, enterpriseEmployees.getGinsengProtectNature()).setParameter(8, enterpriseEmployees.getNote())
+			   .setParameter(9, enterpriseEmployees.getCinsengDate()).setParameter(10, enterpriseEmployees.getEmployeesId()).executeUpdate();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return false;
+		}
+
+	}
 		
-		List<EnterpriseEmployees> enterpriseEmployeesList=getAllEnterpriseEmployees(enterpriseId);
-		String excelEmployeesName=fileDate[0]==null?"":fileDate[0].toString();
-		String excelCarNumber=fileDate[1]==null?"":fileDate[1].toString();
+	
+	/**
+	 * 查询全库人员匹配上传增员，人员是否已经离职；或者存在重复数据
+	 * @date 2013-10-16
+	 * @version 1.0
+	 * @author jameslin
+	 */
+	public EnterpriseEmployees isExistSameToByEnterprise(String[] fileDate, List<EnterpriseEmployees> enterpriseEmployeesList){
+		this.messageError="";
+		EnterpriseEmployees   enterpriseEmployees=null;
+		
+		int    sameName=0;             //相同名字
+		int    cardNumberSame=0;       //相同身份证
+		int    sameCardTotal=0;        //几张相同身份证
+		
+		Integer  employeesId=0;
+		
+		String excelEmployeesName=fileDate[1]==null?"":fileDate[1].toString();
+		String excelCarNumber=fileDate[2]==null?"":fileDate[2].toString();
+		
+		
 		
 		for (EnterpriseEmployees emp : enterpriseEmployeesList)
 		{
+			String empEolyeesName=emp.getEmployeesName();
+			if(empEolyeesName==null)continue;
+			if(empEolyeesName.equals(excelEmployeesName))
+			{
+				sameName++;
+				employeesId=emp.getEmployeesId();
+				if(sameName>1){
+					String cardId=emp.getCardNumber();
+					if(StringUtil.isEmpty(cardId))continue;
+					if(emp.getCardNumber().equals(excelCarNumber))
+					{
+						cardNumberSame++;
+						if(cardNumberSame>1)
+						{
+							sameCardTotal++;
+						}
+					}
+				}
+			}
 			
 		}
 		
+		if(sameName>1 && cardNumberSame>1)
+		{
+			messageError="数据库存在，"+sameName+"个，同名："+excelEmployeesName+"，身份证相同"+cardNumberSame+"张,号码为："+excelCarNumber;
+			
+		}
+		else if(sameName>1 && cardNumberSame==0)
+		{
+			messageError="数据库存在，"+sameName+"个，同名："+excelEmployeesName+"，身份证为空，请确定身份证!";
+			
+		}
+		else if(sameName==0)
+		{
+			messageError="数据库中不存在:"+excelEmployeesName;
+		}else{
+			if(StringUtil.isEmpty(messageError) && employeesId!=0){
+				enterpriseEmployees=new EnterpriseEmployees();
+				enterpriseEmployees=temporaryBuildingEmployees(fileDate,employeesId);
+			}
+		}
 		
-		
-		
-		
-		
-		return promptMessage;
-		
+		return enterpriseEmployees;
 	}
 	
-	
-	
-	
-	
+	/**
+	 * 封装excel上传的数据
+	 * @param fileDate
+	 * @param employeesId
+	 * @return
+	 */
+	public EnterpriseEmployees temporaryBuildingEmployees(String[] fileDate,Integer employeesId )
+	{
+		EnterpriseEmployees empVO=new EnterpriseEmployees();
+		String excelEmployeesName=fileDate[1]==null?"":fileDate[1].toString();
+		String excelCarNumber=fileDate[2]==null?"":fileDate[2].toString();
+		String sociaSecurity=fileDate[3]==null?"":fileDate[3].toString();
+		String healthCare=fileDate[4]==null?"":fileDate[4].toString();
+		String accumulationFund=fileDate[5]==null?"":fileDate[5].toString();
+		String excelRecruiting=fileDate[6]==null?"":fileDate[6].toString();
+		Date cinsengDate=DateUtil.StringToDate(fileDate[7]==null?"":fileDate[7].toString(), DateUtil.FORMAT_DATE);
+		String note=fileDate[8]==null?"":fileDate[8].toString();
+		
+		
+		
+		empVO.setEmployeesId(employeesId);
+		empVO.setEmployeesName(excelEmployeesName);
+		
+		empVO.setCardNumber(excelCarNumber);
+		//医保
+		empVO.setSociaSecurity(sociaSecurity);
+		//社保
+		empVO.setHealthCare(healthCare);
+		//公积金
+		empVO.setAccumulationFund(accumulationFund);
+		
+		int natrue=excelRecruiting.equals(Constant.WMS_XU_BAO)?2:1;
+		/*续保*/
+		empVO.setGinsengProtectNature(natrue);
+		
+		empVO.setCinsengDate(cinsengDate);
+		
+		empVO.setNote(note);
+		
+		
+		
+		return empVO;
+	}
 	
 	/**
 	 * 
@@ -372,7 +445,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	@SuppressWarnings("unchecked")
 	public List<EnterpriseEmployees> getAllEnterpriseEmployees()
 	{
-		Query query = em.createQuery("select e from EnterpriseEmployees e where e.departure=0 ");
+		Query query = em.createQuery("select e from EnterpriseEmployees e where e.departure=0 and e.reduction=0");
 		return query.getResultList();
 	}
 
@@ -511,7 +584,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	{
 		Query query = null ;
 		try {
-			query = em.createQuery("select e from EnterpriseEmployees e where (e.ginsengProtectNature='新增' or e.ginsengProtectNature='续保' or e.ginsengProtectNature='减员')" +
+			query = em.createQuery("select e from EnterpriseEmployees e where (e.ginsengProtectNature=1 or e.ginsengProtectNature=2 )" +
 					" and e.pseudoDelete=0 and e.enterprise.enterpriseId=?1 " +
 					" and e.departure=0 and  year(e.cinsengDate )=?2 and month( e.cinsengDate )=?3");
 			  query.setParameter(1, enterpriseId).setParameter(2, year).setParameter(3, month);
@@ -669,10 +742,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		return true;
 		
 	}
-	
-	
-	
-	
-	
+
+
 
 }

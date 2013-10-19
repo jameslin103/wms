@@ -29,7 +29,7 @@ public class EnterpriseEmployees implements Serializable{
 	/*籍贯*/
 	private String  nativePlace;
 	/*照片  0.没有 1.有*/
-	private Integer photo;
+	private Integer photo=0;
 	/*身份证号*/
 	private String  cardNumber;
 	/*电话号码*/
@@ -58,10 +58,12 @@ public class EnterpriseEmployees implements Serializable{
 	private String  levelEducation;
 	/*合同期限 开始*/
 	private Date  startContractDeadline;
+	
 	/*合同期限 终止*/
 	private Date  endContractDeadline;
-	/*是否参保*/
-	private  Integer whetherGinseng;
+	
+	/*是否参保  0否 1是*/
+	private  Integer whetherGinseng=0;
 	
 	/*医保*/
 	private String  sociaSecurity;
@@ -78,14 +80,9 @@ public class EnterpriseEmployees implements Serializable{
 	/*大病统筹基数*/
 	private Double  seriousDiseaseBase;
 	
-	/*参保性质  0新增  1续保 2 减员*/
-	private String ginsengProtectNature;
 	
-	/*增员*/
-	//private Integer  recruiting;
-	
-	/*续保*/
-	//private Integer  renewal;
+	/*参保性质  1增员  2续保*/
+	private Integer ginsengProtectNature;
  
 	/*参保日期*/
 	private Date  cinsengDate;
@@ -109,8 +106,8 @@ public class EnterpriseEmployees implements Serializable{
 	private Integer  pseudoDelete=0;
 	
 	private String  note;
-	/*离职员工*/
-	private Integer departure;
+	/*离职员工    1离职*/
+	private Integer departure=0;
 	
 	/**增员**/
 	private  long addCount;
@@ -121,7 +118,7 @@ public class EnterpriseEmployees implements Serializable{
 	/**参保**/
 	private  long whetherGinsengCount;
 	
-	/*减员*/
+	/*减员  1 减员*/
 	private Integer  reduction=0;
 	
 	/*减员日期*/
@@ -130,7 +127,6 @@ public class EnterpriseEmployees implements Serializable{
 	private Date     createDate=new Date();
 	
 	private Enterprise  enterprise;
-	
 	
 	
 	@Temporal(TemporalType.DATE)
@@ -310,10 +306,10 @@ public class EnterpriseEmployees implements Serializable{
 		this.endContractDeadline = endContractDeadline;
 	}
 	@Column(length=5)
-	public String getGinsengProtectNature() {
+	public Integer getGinsengProtectNature() {
 		return ginsengProtectNature;
 	}
-	public void setGinsengProtectNature(String ginsengProtectNature) {
+	public void setGinsengProtectNature(Integer ginsengProtectNature) {
 		this.ginsengProtectNature = ginsengProtectNature;
 	}
 	@Temporal(TemporalType.DATE)

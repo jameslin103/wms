@@ -5,7 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -205,49 +207,86 @@ public class EnterpriseEmployessServiceTest {
 		
 		
 	}
-    @Test
-    
-    public void isSameEmployees()
-    {
-    	String[] fileDate={"1","张森锋","3508811990011041370"};
-    	
-    	EnterpriseEmployees  emp=new EnterpriseEmployees();
-    	emp.setCardNumber("3508811990011041370");
-    	emp.setEmployeesName("张森锋");
-    	EnterpriseEmployees  emp1=new EnterpriseEmployees();
-    	emp1.setCardNumber("3508811990011041370");
-    	emp1.setEmployeesName("张森锋");
-    	
-    	int count=0;
-    	
-    	List<EnterpriseEmployees>   enterpriseEmployeesList=new ArrayList<EnterpriseEmployees>();
-    	enterpriseEmployeesList.add(emp);
-    	enterpriseEmployeesList.add(emp1);
-    	
-    	String carNumber=fileDate[2].toString();
-    	String employeesNameDate=fileDate[1].toString();
-    	for (EnterpriseEmployees enterpriseEmployees : enterpriseEmployeesList)
-    	{
-    		 String empCarNumber=enterpriseEmployees.getCardNumber();
-    		 String empEmployeesName=enterpriseEmployees.getEmployeesName();
-			 if(carNumber.equals(empCarNumber) && empEmployeesName.equals(employeesNameDate))
-			 {
-				 count++;
-				
-			 } 
-		}
-    	
-    	if(count==1)
-		 {
-    		System.out.println("修改成功");
-		 }
-		 if(count==0)
-		 {
-			 System.out.println("数据库存在:"+employeesNameDate+"身份证:"+carNumber);					 
-			 
-		 }if(count>1){
-			 System.out.println(employeesNameDate+"身份证:"+carNumber+"相同:"+count+"个");
-		 }
-    }
 
+   @Test
+   public void dateBefore()
+   {
+	   String date2="2013-02-20";
+	   Date  Date1=DateUtil.StringToDate(date2, DateUtil.FORMAT_DATE);
+	   
+	   String date1="2013/06/09";
+	   Date   da=DateUtil.StringTypeToDate(date1, DateUtil.FORMAT_DATE);
+	   System.out.println(da);
+	   
+	   System.out.println(DateUtil.compareDateWithNow(Date1)==1);
+	   
+	   
+   }
+
+   @Test	
+   public void temporaryBuildingEmployees()
+   {
+	   List<String[]> list=new ArrayList<String[]>();
+	   
+	   String[] file={"1","杨斌","352202198003130532","2013-05-1","2014-04-30","医保","社保","公积金","增员","2013-08-03","备注"};
+	   String[] fileDate={"2","余哲彬","350681199108107013","2013-07-05","2013-7-15","医保","社保","公积金","续保","2013-08-03","备注"};
+	   String[] fileDate1={"3","张吕文","350821199006211252","2013-07-05","2013-7-15","医保","社保","公积金","续保","2013-08-03","备注"};
+	   list.add(file);
+	   list.add(fileDate);
+	   list.add(fileDate1);
+	   
+	   for (int i = 0; i < list.size(); i++)
+	   {
+		   String[] date=list.get(i);
+		   EnterpriseEmployees  enterpriseEmployees=enterpriseEmployeesService.temporaryBuildingEmployees(date, 18);
+		   
+		   System.out.println(enterpriseEmployees.getEmployeesName());
+		
+	   }
+	   
+   }
+
+   @Test
+   public void getfileDate()
+   {
+	   Map<String, Integer> map=new HashMap<String, Integer>();
+	  
+	   
+	   List<String>  list=new ArrayList<String>();
+	   list.add(6+"");
+	   list.add(8+"");
+	   
+	  for (String str : list) 
+	  {
+		  String aa=str;
+		  if(list.size()==0){
+			  System.out.println(str+"====");
+		  }else{
+			  System.out.println(list.get(0));
+			  System.out.println(str+"else");
+		  }
+//		  if(str.==0){
+//			  map.put("aa", Integer.parseInt(list.get(i)));
+//		  }
+//		  if(i==1){
+//		  
+//		   map.put("bb", Integer.parseInt(list.get(i)));
+//		  }
+//		  System.out.println(list.get(i));
+	  }
+	  for (Object obj : map.keySet()) 
+	  {
+		  Object key = obj;           
+		  Object value = map.get(key);   
+		  System.out.println(value);
+	  }
+   }
+   
+ 
+   
+   
+   
+   
+   
+   
 }
