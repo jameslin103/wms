@@ -1,7 +1,15 @@
 package cn.fm.web.action.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
+
+import cn.fm.bean.permissions.Menu;
+import cn.fm.bean.permissions.Role;
 import cn.fm.bean.user.WmsUser;
+import cn.fm.service.permissions.MenuService;
+import cn.fm.service.permissions.RoleService;
 import cn.fm.service.user.WmsUserService;
 import cn.fm.web.action.BaseAction;
 
@@ -16,7 +24,9 @@ public class LoginAction extends BaseAction{
 		
 		@Resource
 		private WmsUserService wmsUserService;
-		
+		private RoleService roleService;
+		@Resource
+		private MenuService menuService;
 		
 		
 		
@@ -55,20 +65,33 @@ public class LoginAction extends BaseAction{
 			return SUCCESS;
 		}
 	
-		private boolean isInvalid(String value) {
+	   private boolean isInvalid(String value)
+	   {
 		        return (value == null || value.length() == 0);
+	   }
+		public List<Menu> getUserMenu(WmsUser loginUser){
+			List<Menu> menuList = new ArrayList<Menu>();
+			String[] ids = loginUser.getRoleIds().split(",");
+			String menuIds = "";
+			for (int i = 0; i < ids.length; i++) {
+				Role role = roleService.find(Long.valueOf(ids[i]));
+				menuIds += role.getMenuIds();
+			}
+			menuList = menuService.getByIds(menuIds);
+			return menuList;
+		}
+
+		public String authorizationUser()
+		{
+			
+			
+			
+			
+			return SUCCESS;
 		}
 	
-	public String authorizationUser()
-	{
-		
-		
-		
-		
-		return SUCCESS;
-	}
 	
-	
+
 	
 	
 	

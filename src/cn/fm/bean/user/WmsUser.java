@@ -1,8 +1,10 @@
 package cn.fm.bean.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -18,8 +20,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.permissions.Role;
 
 
 @Entity
@@ -46,8 +50,9 @@ public class WmsUser implements Serializable{
 	
 	private Set<Enterprise> enterprise=new HashSet<Enterprise>();
 	
+	private String roleIds;
 	
-	
+	private List<Role> roles = new ArrayList<Role>();
 	
 	
 	
@@ -173,5 +178,25 @@ public class WmsUser implements Serializable{
 			return false;
 		return true;
 	}
+
+	public String getRoleIds() {
+		return roleIds;
+	}
+
+	@Column(length=20)
+	public void setRoleIds(String roleIds) {
+		this.roleIds = roleIds;
+	}
+
+	@Transient
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+	
+	
 	
 }

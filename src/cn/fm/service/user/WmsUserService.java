@@ -36,4 +36,10 @@ public interface WmsUserService extends DAO<WmsUser>{
 	 */
 	public List<WmsUser>  getEnterpriseToBoWmsUser(List<Enterprise> enterprise);
 	
+	public void assignRoles(String[] roleIds,WmsUser wmsUser);
+	
+	public void assignRoles(String[] roleIds, String[] userIds);
+	
+	
+	
 }

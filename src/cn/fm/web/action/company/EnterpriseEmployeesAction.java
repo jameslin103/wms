@@ -6,10 +6,8 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
@@ -19,7 +17,6 @@ import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.service.company.EnterpriseEmployeesService;
-import cn.fm.service.company.EnterpriseService;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
@@ -32,8 +29,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	@Resource 
 	private EnterpriseEmployeesService enterpriseEmployeesService;
 	@Resource
-	private EnterpriseService          enterpriseService;
-	
 	private EnterpriseEmployees  enterpriseEmployees;
 	
 	private String    endContractDeadline;

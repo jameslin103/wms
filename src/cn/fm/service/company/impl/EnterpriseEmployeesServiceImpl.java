@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Query;
 
@@ -183,7 +181,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 * @return
 	 */
 	public long renewalPersonnel(Integer enterpriseId){
-		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.ginsengProtectNature='续保'  and e.departure=0 ");
+		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.ginsengProtectNature=2  and e.departure=0 ");
 		query.setParameter(1, enterpriseId);
 		return (Long)query.getSingleResult();
 		

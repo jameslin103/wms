@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.fm.bean.company.Enterprise;
-import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.company.EnterpriseService;
