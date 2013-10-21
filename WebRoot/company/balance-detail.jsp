@@ -13,7 +13,6 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
-
 		<script type="text/javascript">
 			function topage(page){
 				var form = document.getElementById("myform");
@@ -35,7 +34,6 @@
 			</div>
 			<div id="main">
 				<div class="row-fluid">
-
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
 							<li>
@@ -108,7 +106,7 @@
 									</th>
 								</tr>
 							</thead>
-							<s:iterator value="%{#request.balanceDetails}" id="balanceDetail">
+							<s:iterator value="%{#request.pageView.records}" id="balanceDetail">
 							<tbody>
 								<tr>
 									<td rowspan="2">

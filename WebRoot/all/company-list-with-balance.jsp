@@ -12,7 +12,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    <title>富民人力银行派遣系统</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%@ include file="/help/public_css_js.jsp" %>
-
+	<script type="text/javascript">
+	   $(function (){
+	   
+	      var year=$("input[name='year']").val();
+	   	  $("input[name='year']").blur(function(){
+	   	 	  
+	   	  	 	if(year!="" && year!=undefined)
+	   	  	 	{
+	   	  			$("#myform1").submit(); 
+					
+	   	         }
+	   	  });
+	   	   
+	   });
+	
+	
+	</script>
 </head>
 <body>
 
@@ -35,28 +51,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<a href="viewCompanyListWithBalance">资金往来</a>
 			</li>
           </ul>
-
+		<form action="viewCompanyListWithBalance" class="select-for-year" method="post" id="myform1">
           <ul class="normal action-container clearfix">
             <li class="right">
-			<form action="" class="select-for-year" method="post">
-				 日期:<input id="d11" name="year" onclick="WdatePicker()"  class="Wdate" style="width: 110px;height: 25px;" />
-			</form>
-
+				 日期:<input id="d11" name="year" onclick="WdatePicker()" value="${year}" class="Wdate" style="width: 110px;height: 25px;" />
+					<input type="hidden" name="year" value="${year}"/>
             </li>
-            <li><a href="#">1月</a>，</li>
-            <li><a href="#">2月</a>，</li>
-            <li><a href="#">3月</a>，</li>
-            <li><a href="#">4月</a>，</li>
-            <li><a href="#">5月</a>，</li>
-            <li><a href="#">6月</a>，</li>
-            <li><a href="#">7月</a>，</li>
-            <li><a href="#">8月</a>，</li>
-            <li><a href="#">9月</a>，</li>
-            <li><a href="#">10月</a>，</li>
-            <li><a href="#">11月</a>，</li>
-            <li><a href="#">12月</a></li>
+            <li><a href="viewCompanyListWithBalance?month=1&year=<s:property value="%{#request.year}"/>">1月</a>，</li>
+            <li><a href="viewCompanyListWithBalance?month=2&year=<s:property value="%{#request.year}"/>">2月</a>，</li>
+            <li><a href="viewCompanyListWithBalance?month=3&year=<s:property value="%{#request.year}"/>">3月</a>，</li>
+            <li><a href="viewCompanyListWithBalance?month=4&year=<s:property value="%{#request.year}"/>">4月</a>，</li>
+            <li><a href="viewCompanyListWithBalance?month=5&year=<s:property value="%{#request.year}"/>">5月</a>，</li>
+            <li><a href="viewCompanyListWithBalance?month=6&year=<s:property value="%{#request.year}"/>">6月</a>，</li>
+            <li><a href="viewCompanyListWithBalance?month=7&year=<s:property value="%{#request.year}"/>">7月</a>，</li>
+            <li><a href="viewCompanyListWithBalance?month=8&year=<s:property value="%{#request.year}"/>">8月</a>，</li>
+            <li><a href="viewCompanyListWithBalance?month=9&year=<s:property value="%{#request.year}"/>">9月</a>，</li>
+            <li><a href="viewCompanyListWithBalance?month=10&year=<s:property value="%{#request.year}"/>">10月</a>，</li>
+            <li><a href="viewCompanyListWithBalance?month=11&year=<s:property value="%{#request.year}"/>">11月</a>，</li>
+            <li><a href="viewCompanyListWithBalance?month=12&year=<s:property value="%{#request.year}"/>">12月</a></li>
           </ul>
-
+		</form>
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
@@ -66,17 +80,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td><a href="company/balance-detail.jsp">福建电信</a></td>
-                <td>360</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td><a href="company/balance-detail.jsp">中国英航</a></td>
-                <td>-250</td>
-              </tr>
+             <s:iterator value="#request.pageView.records" id="balanceDetail">
+	              <tr>
+	                <td><s:property value="%{#balanceDetail.detailId}"/></td>
+	                <td><a href="viewBalanceDetail?enterpriseId=<s:property value="%{#balanceDetail.enterpriseId}"/>"><s:property value="%{#balanceDetail.enterpriseId}"/></a></td>
+	                <td><s:property value="%{#balanceDetail.balance}"/></td>
+	              </tr>
+              </s:iterator>
             </tbody>
+           
           </table>
 
           <div class="pagination">

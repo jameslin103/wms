@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                  <li><a tabindex="-1" href="viewEnterprise">企业相关</a></li>
                   <li><a tabindex="-1" href="toViewTaxRules">计税规则</a></li>
-                  <li><a tabindex="-1" href="authorizationUser">权限分配</a></li>            
+                  <li><a tabindex="-1" href="toAuthorizationUser">权限分配</a></li>            
               </ul>
             </li>
              <li class="dropdown">

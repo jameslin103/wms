@@ -92,7 +92,6 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	
 	public String  viewEnterprise()
 	{
-		WmsUser user=WebUtil.getWmsUser(request);
 		List<WmsUser> wmsUsers=wmsUserService.getAllWmsUser();
 		List<WmsUser> wmsUserList=enterpriseService.getEnterpriseToBoWmsUser(getWmsUserToBeEnterprise());
 		if(wmsUserList==null || wmsUserList.size()==0)

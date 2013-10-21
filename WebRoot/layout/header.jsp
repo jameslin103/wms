@@ -31,11 +31,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                  <li><a tabindex="-1" href="viewEnterprise">企业相关</a></li>
                   <li><a tabindex="-1" href="toViewTaxRules">计税规则</a></li>
-                  <li><a tabindex="-1" href="authorizationUser">权限分配</a></li>            
+                  <li><a tabindex="-1" href="toAuthorizationUser">权限分配</a></li>            
               </ul>
             </li>
             
-            <li><a href="all/company-list-with-salary.jsp">汇总</a></li>
+            <li><a href="viewCompanyListWithSaraly">汇总</a></li>
             <li><a href="help/index.jsp">帮助</a></li>
           </ul>
         </div>        

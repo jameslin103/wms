@@ -3,7 +3,6 @@ package cn.fm.service.user.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Query;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.base.DaoSupport;
-import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.user.WmsUserService;
 
 
@@ -126,7 +124,6 @@ public class WmsUserServiceImpl extends DaoSupport<WmsUser> implements WmsUserSe
 		return wmsUserListVO;
 	}
 
-	@Override
 	public void assignRoles(String[] roleIds, WmsUser wmsUser) {
 		em.createQuery("update WmsUser u set u.roleIds=?1 where u.userId = ?2")
 		.setParameter(1,mergeRoleIds(roleIds)).setParameter(2,wmsUser.getUserId()).executeUpdate();
@@ -140,7 +137,6 @@ public class WmsUserServiceImpl extends DaoSupport<WmsUser> implements WmsUserSe
 		return ids;
 	}
 
-	@Override
 	public void assignRoles(String[] roleIds, String[] userIds) {
 		String roleIdsStr = mergeRoleIds(roleIds);
 		for (int i = 0; i < userIds.length; i++) {

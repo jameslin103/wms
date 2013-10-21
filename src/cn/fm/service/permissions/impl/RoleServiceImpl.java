@@ -9,24 +9,21 @@ import cn.fm.bean.permissions.Role;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.permissions.RoleService;
 
-@Service
-@Transactional
+
+@Service   @Transactional
 public class RoleServiceImpl extends DaoSupport<Role> implements RoleService{
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Role> getAll() {
 		List<Role> list = em.createQuery("from Role").getResultList();
 		return list;
 	}
 
-	@Override
 	public void addRole(String[] menuIds, Role role) {
 		role.setMenuIds(mergeMenuIds(menuIds));
 		save(role);
 	}
 	
-	@Override
 	public void updateRole(String[] menuIds, Role roleVO) {
 		em.createQuery("update Role r set r.menuIds=?1 where r.roleId = ?2")
 		.setParameter(1,mergeMenuIds(menuIds)).setParameter(2,roleVO.getRoleId()).executeUpdate();

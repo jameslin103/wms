@@ -61,11 +61,17 @@
             	 <param name="actionName">userLogin</param> 
             </result>
         </action>  
-      <action name="authorizationUser" class="cn.fm.web.action.user.LoginAction" method="authorizationUser">
+      <action name="toAuthorizationUser" class="cn.fm.web.action.user.PermissionAction" method="toAuthorizationUser">
             <result name="success" >admin/authorization.jsp</result>
         </action>  
        
-               
+         <!-- ========角色管理============ -->    
+         <action name="toRoleManage" class="cn.fm.web.action.user.PermissionAction" method="toRoleManage">
+            <result name="success" >/admin/role.jsp</result>
+        </action>  
+         
+         
+           
         <!-- excel Import Date -->
         <action name="addImportExcelEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="addImportExcelEmployees">
             <result name="input">company/employee-step1-of-create.jsp</result>

@@ -150,7 +150,7 @@
 									（制作、审核、实际发放）
 								</th>
 							</thead>
-						<s:iterator value="#request.createSalaryBudgetTable.records" id="createSalaryBudgetTable">
+						<s:iterator value="#request.pageView.records" id="createSalaryBudgetTable">
 							<tbody>
 								<tr>
 									<td>

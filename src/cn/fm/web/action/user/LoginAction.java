@@ -69,6 +69,7 @@ public class LoginAction extends BaseAction{
 	   {
 		        return (value == null || value.length() == 0);
 	   }
+	   
 		public List<Menu> getUserMenu(WmsUser loginUser){
 			List<Menu> menuList = new ArrayList<Menu>();
 			String[] ids = loginUser.getRoleIds().split(",");
@@ -80,27 +81,6 @@ public class LoginAction extends BaseAction{
 			menuList = menuService.getByIds(menuIds);
 			return menuList;
 		}
-
-		public String authorizationUser()
-		{
-			
-			
-			
-			
-			return SUCCESS;
-		}
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

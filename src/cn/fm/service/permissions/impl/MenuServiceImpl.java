@@ -15,13 +15,11 @@ import cn.fm.service.permissions.MenuService;
 @Transactional
 public class MenuServiceImpl extends DaoSupport<Menu> implements MenuService{
 
-	@Override
 	public List<Menu> getAll() {
 		List<Menu> list = em.createQuery("from Menu").getResultList();
 		return list;
 	}
 
-	@Override
 	public List<Menu> getByIds(String menuIds) {
 		List<Menu> menuList = new ArrayList<Menu>();
 		String[] ids = menuIds.split(",");

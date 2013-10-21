@@ -26,9 +26,10 @@ import cn.fm.web.action.BaseAction;
 @SuppressWarnings("serial")
 public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
-	@Resource 
-	private EnterpriseEmployeesService enterpriseEmployeesService;
 	@Resource
+	private EnterpriseEmployeesService enterpriseEmployeesService;
+	
+	
 	private EnterpriseEmployees  enterpriseEmployees;
 	
 	private String    endContractDeadline;

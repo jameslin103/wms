@@ -71,12 +71,8 @@ public class BalanceDetailAction extends BaseAction {
 			enterprise=enterpriseService.find(this.getEnterpriseId());
 			request.getSession().setAttribute("enterprise", enterprise);
 		}
-		
-		List<BalanceDetail> balanceDetailList=balanceDetailService.getAllBalanceDetail(enterprise.getEnterpriseId());
-		if(balanceDetailList==null ||balanceDetailList.size()==0)
-			balanceDetailList=new ArrayList<BalanceDetail>();
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("createDate", "desc");
+		orderby.put("createDate", "asc");
 		StringBuffer jpql = new StringBuffer("");
 		List<Object> params = new ArrayList<Object>();
 		if(enterprise.getEnterpriseId()!=null)
@@ -88,8 +84,6 @@ public class BalanceDetailAction extends BaseAction {
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
 		}
-
-		request.setAttribute("balanceDetails", balanceDetailList);
 		
 		return SUCCESS;
 	}

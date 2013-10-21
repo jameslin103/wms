@@ -126,7 +126,7 @@
 					<div class="input-container">
 						<!-- <input type="text">
 						<button type="submit" class="btn">搜索</button> -->
-						<s:select id="user-select-list" list="wmsUserList" listKey="userId" listValue="username" headerKey="" headerValue="请选择"></s:select>
+						<s:select id="user-select-list" list="#request.wmsUserList" listKey="userId" listValue="username" headerKey="" headerValue="请选择"></s:select>
 					</div>
 					<div class="input-container">
 						<ul class="list-of-items-for-delete normal clearfix">

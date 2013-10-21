@@ -82,7 +82,7 @@ public class Enterprise implements Serializable{
 	//工资预算表
 	private Set<CreateSalaryBudgetTable> createSalaryBugetTables=new HashSet<CreateSalaryBudgetTable>();
 	
-	
+	private Set<BalanceDetail>           balanceDetail=new HashSet<BalanceDetail>();
 	
 	
 	//工资模板
@@ -107,6 +107,7 @@ public class Enterprise implements Serializable{
 	public void setSalaryTemplates(Set<SalaryTemplate> salaryTemplates) {
 		this.salaryTemplates = salaryTemplates;
 	}
+	
 	@Id @GeneratedValue @Column(length=36)
 	public Integer getEnterpriseId() {
 		return enterpriseId;
@@ -284,6 +285,16 @@ public class Enterprise implements Serializable{
 	public void setWhetherGinsengCount(long whetherGinsengCount) {
 		this.whetherGinsengCount = whetherGinsengCount;
 	}
+	
+	
+//	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE },  
+//                       fetch = FetchType.EAGER, mappedBy = "enterprise")
+//	public Set<BalanceDetail> getBalanceDetail() {
+//		return balanceDetail;
+//	}
+//	public void setBalanceDetail(Set<BalanceDetail> balanceDetail) {
+//		this.balanceDetail = balanceDetail;
+//	}
 	
 	
 }
