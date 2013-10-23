@@ -5,14 +5,13 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<base href="<%=basePath%>">
-
-<title>富民人力银行派遣系统</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%@ page contentType="text/html; charset=UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<base href="<%=basePath%>" />
+		<title>富民人力银行派遣系统</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/help/public_css_js.jsp"%>
 <script>
 	$(document).ready(function(){
@@ -47,32 +46,6 @@
 	<div id="container">
 		<div id="header">
 			<jsp:include page="../layout/header.jsp" />
-		</div>
-
-		<div class="navbar">
-			<div class="navbar-inner">
-				<a class="brand" href="#">富民</a>
-				<ul class="nav">
-					<s:iterator value="#session.menu" var="menu">
-						<s:if test="parentMenu.menuId==1">
-							<s:if test="type==0">
-								<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><s:property value="name"/><b class="caret"></b></a>
-									<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-										<s:iterator value="#session.menu" var="submenu">
-											<s:if test="#menu.menuId==#submenu.parentMenu.menuId">
-												<li><a tabindex="-1" href="<s:property value="#submenu.url"/>"><s:property value="#submenu.name"/></a></li>
-											</s:if>
-										</s:iterator>
-									</ul>
-								</li>
-							</s:if>
-							<s:if test="type==1">
-								<li><a href="<s:property value="url"/>"><s:property value="name"/></a></li>
-							</s:if>
-						</s:if>
-					</s:iterator>
-				</ul>
-			</div>
 		</div>
 		<div id="main">
 			<div class="row-fluid">
@@ -124,9 +97,7 @@
 			<form action="addAuthorization" class="navbar-form pull-left" method="post">
 				<div class="row-fluid">
 					<div class="input-container">
-						<!-- <input type="text">
-						<button type="submit" class="btn">搜索</button> -->
-						<s:select id="user-select-list" list="#request.wmsUserList" listKey="userId" listValue="username" headerKey="" headerValue="请选择"></s:select>
+						<s:select id="user-select-list" list="wmsUserList" listKey="userId" listValue="username" headerKey="" headerValue="请选择"></s:select>
 					</div>
 					<div class="input-container">
 						<ul class="list-of-items-for-delete normal clearfix">

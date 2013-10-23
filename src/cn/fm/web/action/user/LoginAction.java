@@ -24,6 +24,7 @@ public class LoginAction extends BaseAction{
 		
 		@Resource
 		private WmsUserService wmsUserService;
+		@Resource
 		private RoleService roleService;
 		@Resource
 		private MenuService menuService;
@@ -61,7 +62,8 @@ public class LoginAction extends BaseAction{
 			if( loginUser!=null){
 				request.getSession().setAttribute("user",loginUser);
 			}
-			
+			List<Menu> menuList=getUserMenu(loginUser);
+			request.getSession().setAttribute("menuList", menuList);
 			return SUCCESS;
 		}
 	
@@ -82,5 +84,9 @@ public class LoginAction extends BaseAction{
 			return menuList;
 		}
 	
-	
+	   public String toPassword()
+	   {
+		   
+		   return SUCCESS;
+	   }
 }

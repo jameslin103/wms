@@ -125,8 +125,13 @@ public class WmsUserServiceImpl extends DaoSupport<WmsUser> implements WmsUserSe
 	}
 
 	public void assignRoles(String[] roleIds, WmsUser wmsUser) {
-		em.createQuery("update WmsUser u set u.roleIds=?1 where u.userId = ?2")
-		.setParameter(1,mergeRoleIds(roleIds)).setParameter(2,wmsUser.getUserId()).executeUpdate();
+		try {
+			em.createQuery("update WmsUser u set u.roleIds=?1 where u.userId =?2")
+			.setParameter(1,mergeRoleIds(roleIds)).setParameter(2,wmsUser.getUserId()).executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private String mergeRoleIds(String[] roleIds){

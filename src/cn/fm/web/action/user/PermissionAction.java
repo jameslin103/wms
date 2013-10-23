@@ -29,6 +29,8 @@ public class PermissionAction extends BaseAction{
 	
 	private String[] userIds;
 	
+	private Integer  userId;
+	
 	private Role role;
 	
 	private WmsUser wmsUser;
@@ -39,6 +41,11 @@ public class PermissionAction extends BaseAction{
 	private RoleService roleService;
 	@Resource
 	private WmsUserService wmsUserService;
+	
+	
+	
+	
+	
 	
 	public String toAuthorizationUser(){
 		roleList = roleService.getAll();
@@ -56,6 +63,7 @@ public class PermissionAction extends BaseAction{
 	}
 	
 	public String addAuthorization(){
+		if(roleIds==null || userIds==null)return INPUT;
 		wmsUserService.assignRoles(roleIds, userIds);
 		return SUCCESS;
 	}
@@ -91,6 +99,13 @@ public class PermissionAction extends BaseAction{
 		}
 		return SUCCESS;
 	}
+	
+	public String toHelp()
+	{
+		
+		return SUCCESS;
+	}
+	
 	
 	public String addRole(){
 		roleService.addRole(menuIds, role);
@@ -177,5 +192,15 @@ public class PermissionAction extends BaseAction{
 	public void setUserIds(String[] userIds) {
 		this.userIds = userIds;
 	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	
+	
 	
 }

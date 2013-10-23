@@ -27,12 +27,15 @@
     
 	<package name="wms" extends="struts-default,json-default,jasperreports-default" >
 		<interceptors>
+			<interceptor name="sessionout"  class="cn.fm.bean.filter.SessionIterceptor"/>  
 			<interceptor-stack name="appInterceptor">
 				<interceptor-ref name="store">
 					<param name="operationMode">STORE</param>
 				</interceptor-ref>
+				<interceptor-ref name="sessionout" />
 				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
+			
 		</interceptors>
 		<default-interceptor-ref name="appInterceptor" />
 		<global-results>
@@ -45,12 +48,17 @@
 		<global-exception-mappings>
 			<exception-mapping result="error" exception="cn.fm.bean.filter.SystemException"/>
 		</global-exception-mappings>
+		
 		<!-- 用户登录 -->
 		
 		<action name="userLogin" class="cn.fm.web.action.user.LoginAction" method="userLogin">  
             <result name="input">/login.jsp</result>
             <result name="success">/dashboard.jsp</result>
         </action>
+		<action name="toPassword" class="cn.fm.web.action.user.LoginAction" method="toPassword">  
+            <result name="success">account/password.jsp</result>
+        </action>
+        
          <action name="loginOut"  class="cn.fm.web.action.user.WmsUserLogoutAction" method="loginOut">
             <result name="success" type="redirectAction">
             	 <param name="actionName">userLogin</param>
@@ -58,18 +66,34 @@
         </action>
          <action name="updateBuyerPassword" class="cn.fm.web.action.user.UpdatePasswordAction" method="updatePassword">
             <result name="success" type="redirectAction">
-            	 <param name="actionName">userLogin</param> 
+            	 <param name="actionName">userLogin</param>
             </result>
         </action>  
+        
+         <!-- ========角色管理 权限============ -->    
       <action name="toAuthorizationUser" class="cn.fm.web.action.user.PermissionAction" method="toAuthorizationUser">
             <result name="success" >admin/authorization.jsp</result>
+        </action> 
+        <action name="toHelp" class="cn.fm.web.action.user.PermissionAction" method="toHelp">
+            <result name="success" >/help/index.jsp</result>
         </action>  
-       
-         <!-- ========角色管理============ -->    
-         <action name="toRoleManage" class="cn.fm.web.action.user.PermissionAction" method="toRoleManage">
+        <action name="toRoleManage" class="cn.fm.web.action.user.PermissionAction" method="toRoleManage">
             <result name="success" >/admin/role.jsp</result>
         </action>  
-         
+        
+          <action name="updateAuthorization" class="cn.fm.web.action.user.PermissionAction" method="updateAuthorization">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">toAuthorizationUser</param>
+            </result>
+        </action>
+         <action name="addAuthorization" class="cn.fm.web.action.user.PermissionAction" method="addAuthorization">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">toAuthorizationUser</param>
+            </result>
+             <result name="input" type="redirectAction">
+            	<param name="actionName">toAuthorizationUser</param>
+            </result>
+        </action>
          
            
         <!-- excel Import Date -->
@@ -535,6 +559,18 @@
         <action name="viewCompanyListWithBalance" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="viewCompanyListWithBalance">
             <result name="success" >all/company-list-with-balance.jsp</result>
         </action>
+        <action name="findEnterpriseEmployeesRecution" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="findEnterpriseEmployeesRecution">
+            <result name="employeesRecution" type="json" >all/company-list-with-balance.jsp</result>
+        </action>
+        <action name="updateRecutionState" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="updateRecutionState">
+            <result name="success" type="redirectAction" >
+            	<param name="actionName">viewCompanyListWithInsurance</param>
+            </result>
+            <result name="input" type="redirectAction" >
+            	<param name="actionName">viewCompanyListWithInsurance</param>
+            </result>
+        </action>
+        
 	</package>
 
 </struts>

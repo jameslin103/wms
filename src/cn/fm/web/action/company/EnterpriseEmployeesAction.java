@@ -17,6 +17,7 @@ import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.service.company.EnterpriseEmployeesService;
+import cn.fm.service.company.EnterpriseService;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
@@ -28,7 +29,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	@Resource
 	private EnterpriseEmployeesService enterpriseEmployeesService;
-	
+	@Resource
+	private EnterpriseService			enterpriseService;
 	
 	private EnterpriseEmployees  enterpriseEmployees;
 	
@@ -440,7 +442,15 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 */
 	public String insuranceWithEmployeeList()
 	{
-		Enterprise enterprise=WebUtil.getEnterprise(request);
+		Enterprise enterprise=null;
+		if(enterpriseId!=null){
+			enterprise=enterpriseService.find(enterpriseId);
+			request.getSession().setAttribute("enterprise", enterprise);
+			
+		}else{
+			enterprise=WebUtil.getEnterprise(request);
+		}
+		
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return SUCCESS;
 		
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();

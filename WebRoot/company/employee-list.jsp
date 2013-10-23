@@ -36,7 +36,6 @@
 					</h2>
 				</div>
 			</div>
-	
 			<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">

@@ -743,4 +743,31 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 
 
 
+	public EnterpriseEmployees findRecutionState(Integer enterpriseId) {
+		try {
+			return (EnterpriseEmployees)em.createQuery("select count(o.enterpriseId) ,o.cinsengDate ,o.ginsengProtectNature, " +
+					"o.enterpriseId ,o.reductionState from EnterpriseEmployees o where o.enterprise.enterpriseId=?1")
+					.setParameter(1, enterpriseId).getSingleResult();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	/**
+	 * 修改增减员状态
+	 * @param enterpriseId
+	 * @param recutionState
+	 */
+	public void updateRecutionState(Integer enterpriseId,Integer recutionState)
+	{
+		
+		try {
+			em.createQuery("update EnterpriseEmployees o set o.recutionState=?1 where o.enterprise.enterpriseId=?2")
+					.setParameter(1, recutionState).setParameter(2, enterpriseId).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

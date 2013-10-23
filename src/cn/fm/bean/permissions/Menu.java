@@ -22,10 +22,10 @@ public class Menu implements Serializable {
 	@JoinColumn(name = "pmenuId")
 	private Menu parentMenu;
 
-	@Column(length=20)
+	@Column(length=255)
 	private String name;
 
-	@Column(length=20)
+	@Column(length=255)
 	private String url;
 	
 	@Column(length=2)

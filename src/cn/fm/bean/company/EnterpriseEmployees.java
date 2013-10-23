@@ -20,42 +20,61 @@ import org.hibernate.annotations.NotFoundAction;
 public class EnterpriseEmployees implements Serializable{
 	
 	private Integer employeesId;
+	
 	/*员工姓名 */
 	private String  employeesName;
+	
 	/*员工性别*/
 	private String employeesSex;
+	
 	/*户口性质  0非农  1 农村*/
 	private Integer householdRegister;
+	
 	/*籍贯*/
 	private String  nativePlace;
+	
 	/*照片  0.没有 1.有*/
 	private Integer photo=0;
+	
 	/*身份证号*/
 	private String  cardNumber;
+	
 	/*电话号码*/
 	private String  phone;
+	
 	/*服务费用*/
 	private Double  serviceCost;
+	
 	/*社会保险*/
 	private Double  socialInsurance;
+	
 	/*生育保险*/
 	private Double  fertilityInsurance;
+	
 	/*合同编号*/
 	private String  contractNo;
+	
 	/*家庭住址*/
 	private String  homeAddress;
+	
 	/*银行卡号*/
 	private String  bankCardNumber;
+	
 	/*开户银行*/
 	private String  bank;
+	
 	/*行业*/
 	private String  industry;
+	
 	/*岗位*/
 	private String  jobs;
+	
 	/*婚姻状况*/
 	private Integer  maritalStatus;
+	
 	/*文化程度*/
 	private String  levelEducation;
+	
 	/*合同期限 开始*/
 	private Date  startContractDeadline;
 	
@@ -106,6 +125,7 @@ public class EnterpriseEmployees implements Serializable{
 	private Integer  pseudoDelete=0;
 	
 	private String  note;
+	
 	/*离职员工    1离职*/
 	private Integer departure=0;
 	
@@ -128,7 +148,19 @@ public class EnterpriseEmployees implements Serializable{
 	
 	private Enterprise  enterprise;
 	
+	/*增减员状态    0 未执行  1执行中  2已完成*/
+	private Integer     reductionState=0;
 	
+	
+	
+	
+	
+	public Integer getReductionState() {
+		return reductionState;
+	}
+	public void setReductionState(Integer reductionState) {
+		this.reductionState = reductionState;
+	}
 	@Temporal(TemporalType.DATE)
 	public Date getReductionDate() {
 		return reductionDate;

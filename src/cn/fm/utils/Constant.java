@@ -33,7 +33,7 @@ public class Constant {
 	public static final String WMS_PHOTO_YES="有";
 	public static final String WMS_BASE_PERSON="个人缴纳";
 	public static final String WMS_BASE_ENTERPRISE="企业缴纳";
-	
+	public static final String USER_SESSION="user";
 	
 	
 	public static final String WMS_YES="是";

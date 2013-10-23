@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salary-with-sum-of-categories" language="groovy" pageWidth="980" pageHeight="750" columnWidth="940" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a95c57d-eca8-4d8d-b77e-e80701fe06a7">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="89"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fullName" class="java.lang.String"/>
 	<parameter name="username" class="java.lang.String"/>
@@ -41,9 +41,6 @@
 	<field name="makeTotal" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[makeTotal]]></fieldDescription>
 	</field>
-	<field name="mergeTax" class="java.lang.String">
-		<fieldDescription><![CDATA[mergeTax]]></fieldDescription>
-	</field>
 	<field name="name" class="java.lang.String">
 		<fieldDescription><![CDATA[name]]></fieldDescription>
 	</field>
@@ -70,9 +67,6 @@
 	</field>
 	<field name="updateDate" class="java.util.Date">
 		<fieldDescription><![CDATA[updateDate]]></fieldDescription>
-	</field>
-	<field name="wageMonth" class="java.util.Date">
-		<fieldDescription><![CDATA[wageMonth]]></fieldDescription>
 	</field>
 	<field name="wageTotal" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[wageTotal]]></fieldDescription>
@@ -349,7 +343,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{wageMonth}==null?"":$F{wageMonth}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{salaryDate}==null?"":$F{salaryDate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="4bc34400-2276-48b6-bdc7-c683ae2072eb" x="158" y="0" width="79" height="20"/>
@@ -359,7 +353,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{mergeTax}==null?"":$F{mergeTax}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{chooseTax}==null?"":$F{chooseTax}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="c0359485-2b6c-44d4-bcf7-742ef55993d2" x="237" y="0" width="31" height="20"/>

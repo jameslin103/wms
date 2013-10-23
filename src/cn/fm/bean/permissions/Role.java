@@ -19,10 +19,10 @@ public class Role implements Serializable {
 	@GeneratedValue
 	private Long roleId;
 	
-	@Column(length=20)
+	@Column(length=255)
 	private String name;
 	
-	@Column(length=20)
+	@Column(length=255)
 	private String menuIds;
 	
 	@Transient

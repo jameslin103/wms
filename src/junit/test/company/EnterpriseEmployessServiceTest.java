@@ -284,7 +284,12 @@ public class EnterpriseEmployessServiceTest {
    
  
    
-   
+   @Test
+   public void findRecutionState()
+   {
+	   
+	   enterpriseEmployeesService.findRecutionState(18);
+   }
    
    
    

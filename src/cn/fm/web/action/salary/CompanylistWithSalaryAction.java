@@ -29,16 +29,32 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	@Resource
 	private   BalanceDetailService balanceDetailService;
 	
-	
+	private   EnterpriseEmployees employeesRecution;
 	
 	private   Integer        month; 
 	private   String		 year;
 	private   Integer        yearSub;
-	
-	
+	private   Integer        enterpriseId;
+	private   Integer        recutionState;
 
 	
 	
+	public Integer getRecutionState() {
+		return recutionState;
+	}
+
+	public void setRecutionState(Integer recutionState) {
+		this.recutionState = recutionState;
+	}
+
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+
 	public Integer getYearSub() {
 		return yearSub;
 	}
@@ -76,6 +92,16 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	public void setBalanceDetailService(BalanceDetailService balanceDetailService) {
 		this.balanceDetailService = balanceDetailService;
 	}
+	
+	
+
+	public EnterpriseEmployees getEmployeesRecution() {
+		return employeesRecution;
+	}
+
+	public void setEmployeesRecution(EnterpriseEmployees employeesRecution) {
+		this.employeesRecution = employeesRecution;
+	}
 
 	/**
 	 * 查看工资预算表
@@ -83,12 +109,30 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	 */
 	public String viewCompanyListWithSaraly()
 	{
+		String yearAndMonth = null;
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("budgetId", "asc");
 		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(!StringUtil.isEmpty(year))
+		{
+			yearSub=Integer.parseInt(year.substring(0, 4));
+			yearAndMonth=yearSub+""+month;
+			if(month!=null && month!=0){
+				
+				jpql.append(" date_format(o.salaryDate,'%Y%m')=?").append(params.size()+1);
+				params.add(yearAndMonth);
+			}else{
+
+				jpql.append(" year(o.salaryDate)=?").append(params.size()+1);
+				params.add(yearSub);
+				
+			}
+		}
+		
 		PageView<CreateSalaryBudgetTable> pageView = new PageView<CreateSalaryBudgetTable>(10,  this.getPage());
 		pageView.setQueryResult(createSalaryBudgetTableService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),null, orderby));
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
 			
 		return SUCCESS;
@@ -102,7 +146,7 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	{
 		String yearAndMonth = null;
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("employeesId", "asc");
+		orderby.put("cinsengDate", "asc");
 		StringBuffer jpql = new StringBuffer("");
 
 		List<Object> params = new ArrayList<Object>();
@@ -112,18 +156,18 @@ public class CompanylistWithSalaryAction extends BaseAction{
 			yearAndMonth=yearSub+""+month;
 			if(month!=null && month!=0){
 				
-				jpql.append(" date_format(o.yearMonth,'%Y%m')=?").append(params.size()+1);
+				jpql.append(" date_format(o.cinsengDate,'%Y%m')=?").append(params.size()+1);
 				params.add(yearAndMonth);
 			}else{
 
-				jpql.append(" year(o.yearMonth)=?").append(params.size()+1);
+				jpql.append(" year(o.cinsengDate)=?").append(params.size()+1);
 				params.add(yearSub);
 				
 			}
 		}
 		PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
 		pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),null, orderby));
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
 			request.setAttribute("year", yearSub);
 		return SUCCESS;
@@ -162,6 +206,27 @@ public class CompanylistWithSalaryAction extends BaseAction{
 			request.setAttribute("pageView", pageView);
 			request.setAttribute("year", yearSub);
 			
+		return SUCCESS;
+	}
+	
+	public String findEnterpriseEmployeesRecution()
+	{
+		
+		employeesRecution=enterpriseEmployeesService.findRecutionState(enterpriseId);
+		
+		
+		return "employeesRecution";
+	}
+	/**
+	 * 修改增员,参保，状态
+	 * @return
+	 */
+	public String updateRecutionState()
+	{
+		if(enterpriseId==null || recutionState==null)return INPUT;
+		
+		enterpriseEmployeesService.updateRecutionState(enterpriseId,recutionState);
+		
 		return SUCCESS;
 	}
 	

@@ -3,7 +3,6 @@ function Ctrl($scope) {
   $scope.user = {name: 'guest', last: 'visitor'};
 }
 
-
 /**
  * json 请求查询企业信息
  * @param enterpriseId
@@ -380,7 +379,32 @@ function findToIdSalaryDetail(salaryId)
 
 
 
+function findEnterpriseEmployeesRecution(enterpriseId)
+{
+	
+	if(enterpriseId!=null && enterpriseId!=undefined){
+		$.ajax( {    
+		    url:'findEnterpriseEmployeesRecution',// 跳转到 action  
+		    data:{enterpriseId:enterpriseId},    
+		    type:'post',    
+		    cache:false,
+		    dataType:'json',    
+		    success:function(data){
+		    	$("input[name='enterpriseId']").val(data.employeesRecution.enterprise.enterpriseId);
+		    	$("input[name='recutionState'][value="+data.employeesRecution.recutionState+"]").attr("checked",true);
+		    	
 
+		    },    
+		     error : function() {  
+		    	 alert("系统异常，请稍后重试！");
+		     }    
+		});	
+
+	}
+
+
+
+}
 
 
 

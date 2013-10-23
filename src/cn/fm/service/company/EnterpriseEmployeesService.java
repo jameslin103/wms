@@ -143,6 +143,19 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @return
 	 */
 	public EnterpriseEmployees temporaryBuildingEmployees(String[] fileDate,Integer employeesId );
+
 	
+	/**
+	 * 查看增减员的执行状态
+	 * @param enterpriseId
+	 * @return
+	 */
+	public EnterpriseEmployees findRecutionState(Integer enterpriseId);
 	
+	/**
+	 * 修改增减员状态
+	 * @param enterpriseId
+	 * @param recutionState
+	 */
+	public void updateRecutionState(Integer enterpriseId,Integer recutionState);
 }

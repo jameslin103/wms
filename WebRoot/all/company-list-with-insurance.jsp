@@ -5,26 +5,22 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<base href="<%=basePath%>">
-
+		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script type="text/javascript">
 	   $(function (){
-	      var year=$("input[name='year']").val();
-	      alert(year);
+	   
 	   	  $("input[name='year']").blur(function(){
-	   	 	  
+	   	  	   var year=$("input[name='year']").val();
 	   	  	 	if(year!="" && year!=undefined)
 	   	  	 	{
-	   	  	 			
 	   	  			$("#myform1").submit(); 
-					
 	   	         }
 	   	  });
 	   	   
@@ -104,30 +100,44 @@
 								</tr>
 							</thead>
 							<tbody>
+							 <s:iterator value="#request.pageView.records" id="enterpriseEmployees">
 								<tr>
 									<td>
-										1
+										<s:property value="%{#enterpriseEmployees.employeesId}"/>
 									</td>
 									<td>
-										枫叶科技公司
+										<s:property value="%{#enterpriseEmployees.enterprise.fullName}"/>
 									</td>
 									<td>
-										2013年9月
+									    <s:date name="%{#enterpriseEmployees.cinsengDate}" format="yyyy年MM"/>
 									</td>
 									<td>
-										<a href="insuranceWithEmployeeList">新增员工3人，减员2人，参保3人
+										<a href="insuranceWithEmployeeList?enterpriseId=<s:property value="%{#enterpriseEmployees.enterprise.enterpriseId}"/>">新增员工3人，减员2人，参保3人
 										</a>
 									</td>
 									<td>
-										已完成
+										<s:if test="#enterpriseEmployees.reductionState==0">
+										    <span>未执行</span>
+										</s:if>
+										<s:elseif test="#enterpriseEmployees.reductionState==1">
+											<span>执行中</span>
+										</s:elseif>
+										<s:elseif test="#enterpriseEmployees.reductionState==2">
+											<span>已完成</span>
+										</s:elseif>
+										<s:else>
+										
+										</s:else>
 									</td>
 									<td>
-										---
+										<s:property value="%{#enterpriseEmployees.note}"/>
 									</td>
 									<td>
-										<a href="#info-for-check" data-toggle="modal">修改</a>
+										<s:set value="%{#enterpriseEmployees.enterprise.enterpriseId}" name="enterpriseId"></s:set>
+										<a href="#info-for-check" data-toggle="modal" onclick="findEnterpriseEmployeesRecution('${enterpriseId}')">修改</a>
 									</td>
 								</tr>
+							</s:iterator>
 							</tbody>
 						</table>
 
@@ -155,36 +165,33 @@
 
 			<div class="modal-body">
 				<div class="row-fluid">
-					<form action="" method="post">
-
+					<form action="updateRecutionState" method="post">
+						<input type="hidden" name="enterpriseId"/>
 						<div class="input-container">
 							<label>
 								&nbsp;
 							</label>
-							<input type="radio" name="iscompleted" value="0"
-								checked="checked">
+							<input type="radio" name="recutionState" value="0"checked="checked" />
 							未执行，
-							<input type="radio" name="iscompleted" value="1">
+							<input type="radio" name="recutionState" value="1"/>
 							执行中，
-							<input type="radio" name="iscompleted" value="2">
+							<input type="radio" name="recutionState" value="2"/>
 							已完成
 						</div>
 
-						<hr>
+						<hr/>
 
 						<div class="input-container">
 							<label>
 								补充说明
 							</label>
-							<input type="text" name="">
+							<input type="text" name=""/>
 						</div>
 
-						<hr>
+						<hr/>
 
 						<div class="input-container">
-							<button type="button" class="btn btn-primary">
-								提交
-							</button>
+							<s:submit cssClass="btn btn-primary" value="提交"></s:submit>
 						</div>
 					</form>
 				</div>

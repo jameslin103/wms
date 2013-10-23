@@ -5,20 +5,19 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<base href="<%=basePath%>">
+		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
 	</head>
 	<body>
-
-		<div id="container">
+	<div id="container">
 			<div id="header">
-				<jsp:include page="../layout/list_header.jsp" />
+				<jsp:include page="../layout/header.jsp" />
 			</div>
 			<div id="main">
 				<div class="row-fluid">
@@ -28,10 +27,10 @@
 							<li class="active">
 								<a href="toBeResponsibleEnterprise">我负责的企业</a>
 							</li>
-							<li>
+							<!--<li>
 								<a href="toBeResponsibleEnterprise">所有企业</a>
 							</li>
-						</ul>
+						--></ul>
 
 						<table class="table table-striped table-bordered">
 							<thead>
