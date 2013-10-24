@@ -280,7 +280,16 @@
        <!-- Enterprise  -->
         <action name="viewEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterprise">
             <result name="success">admin/company-list.jsp</result>
-        </action> 
+        </action>
+         <action name="addEnterpriseToUser" class="cn.fm.web.action.company.EnterpriseAction" method="addEnterpriseToUser">
+           <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterprise</param>
+            </result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewEnterprise</param>
+            </result>
+        </action>
+         
          <action name="toBeResponsibleEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="toBeResponsibleEnterprise">
             <result name="success">company/list.jsp</result>
         </action>
@@ -411,8 +420,6 @@
             	<param name="actionName">viewSalaryTemplate</param>
             </result>
         </action> 
-        
-        
         <action name="viewSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="viewSalaryBudgetTable">
             <result name="success" >company/salary-with-month.jsp</result>
         </action> 

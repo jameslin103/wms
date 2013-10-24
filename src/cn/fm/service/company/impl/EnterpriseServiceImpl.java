@@ -184,5 +184,18 @@ public BigDecimal findBalanceDetail(Integer enterpriseId) {
 		
 		
 	}
+	/**
+	 * 查询所有企业
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Enterprise> getAllEnterprise() {
+		try {
+			return em.createQuery("select e from Enterprise e").getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
 
 }

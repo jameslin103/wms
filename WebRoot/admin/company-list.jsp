@@ -56,7 +56,7 @@
 									</th>
 								</tr>
 							</thead>
-							<s:iterator value="#request.enterpriseList" id="enterprise" status="en">
+							<s:iterator value="#request.enterpsie" id="enterprise">
 								<tbody>
 									<tr>
 										<td>
@@ -64,15 +64,15 @@
 										</td>
 										<td class="with-complement">
 											<s:property value="%{#enterprise.fullName}" />
-											<span class="complement"> <s:property
-													value="%{#enterprise.contact}" /> 电话： <s:property
-													value="%{#enterprise.phone}" /> QQ： <s:property
-													value="%{#enterprise.qq}" /> </span>
+											<span class="complement"> 
+													<s:property value="%{#enterprise.contact}" />  
+													电话： <s:property value="%{#enterprise.phone}" /> 
+													QQ： <s:property value="%{#enterprise.qq}" /> 
+											</span>
 										</td>
 										<td class="with-complement">
-											<s:iterator value="#request.wmsUserList" id="user" status="us">
+											<s:iterator value="#request.enterprise.user" id="user">
 												<s:property value="%{#user.username}" />
-												
 											</s:iterator>
 											<s:set value="%{#enterprise.enterpriseId}" var="enterpriseId"></s:set>
 											<s:hidden value='%{#enterprise.id}' id="enterId"/>
@@ -171,7 +171,6 @@
 							</label>
 							<s:textfield name="enterprise.qq" />
 						</div>
-
 						<div class="input-container">
 							<label>
 								传真
@@ -185,14 +184,13 @@
 							</label>
 							<s:textfield name="enterprise.email" />
 						</div>
-
 						<div class="input-container">
 							<label>
 								状态?
 							</label>
-							<input type="radio" name="enterprise.status" value="0"checked="checked">
+							<input type="radio" name="enterprise.status" value="0"checked="checked"/>
 							合约中，
-							<input type="radio" name="enterprise.status" value="1">
+							<input type="radio" name="enterprise.status" value="1"/>
 							暂停
 						</div>
 
@@ -303,9 +301,9 @@
 							<label>
 								状态?
 							</label>
-							<input type="radio" name="enterprise.status" value="0">
+							<input type="radio" name="enterprise.status" value="0"/>
 							合约中，
-							<input type="radio" name="enterprise.status" value="1">
+							<input type="radio" name="enterprise.status" value="1"/>
 							暂停
 						</div>
 
@@ -336,7 +334,8 @@
 			</div>
 			<div class="modal-body">
 				<div class="row-fluid">
-					<form action="" method="post">
+					<form action="addEnterpriseToUser" method="post">
+						<s:hidden name="enterpriseId" value=""></s:hidden>
 						<div class="input-container">
 							<label>
 								企业名称
@@ -352,7 +351,6 @@
 							<s:iterator value="#request.wmsUserList" id="user" status="us">		
 								<li>
 									<s:property value="%{#user.username}" />
-									<a href="#">X</a>
 								</li>
 							</s:iterator>
 							</ul>
@@ -361,14 +359,12 @@
 							<label>
 								搜索并添加负责人
 							</label>
-							<s:select list="%{#request.wmsUsers}" label="0" listKey="username"
+							<s:select list="%{#request.wmsUsers}" name="userId" label="0" listKey="userId"
 							 listValue="username"  headerKey="0" headerValue="-请选择-"/>
 						</div>
 
 						<div class="input-container">
-							<button type="button" class="btn btn-primary">
-								添加
-							</button>
+							<s:submit cssClass="btn btn-primary" value="添加" />
 						</div>
 					</form>
 				</div>

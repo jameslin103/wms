@@ -39,5 +39,5 @@ public class Constant {
 	public static final String WMS_YES="是";
 	public static final String WMS_NO="否";
 	
-	
+	public static final String WMS_GENDANYUAN="跟单员";
 }

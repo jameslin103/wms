@@ -76,7 +76,7 @@
 												<s:if test="#menu.menuId==#submenu.parentMenu.menuId">
 													<s:property value="#submenu.name"/>&nbsp;
 												</s:if>
-											</s:iterator>)<br>
+											</s:iterator>)<br/>
 										</s:if>
 									</s:iterator></td>
 									<td><a href="#edit-role" data-toggle="modal" class="edit-role-btn" data-id="<s:property value="roleId"/>">修改</a>&nbsp;<a href="#delete-role" class="delete-role-btn" data-toggle="modal" data-id="<s:property value="roleId"/>">删除</a></td>
@@ -105,12 +105,12 @@
 					<s:iterator value="menuList" var="menu">
 						<s:if test="parentMenu.menuId==1">
 							<div class="input-container">
-								<input type="checkbox" name="menuIds" value="<s:property value="menuId"/>"><s:property value="name"/>
+								<input type="checkbox" name="menuIds" value="<s:property value="menuId"/>"/><s:property value="name"/>
 							</div>
 							<s:iterator value="menuList" var="submenu">
 								<s:if test="#menu.menuId==#submenu.parentMenu.menuId">
 									<div class="input-container">
-										&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="menuIds" value="<s:property value="#submenu.menuId"/>"><s:property value="#submenu.name"/>
+										&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="menuIds" value="<s:property value="#submenu.menuId"/>"/><s:property value="#submenu.name"/>
 									</div>
 								</s:if>
 							</s:iterator>
@@ -143,12 +143,12 @@
 						<s:iterator value="menuList" var="menu">
 							<s:if test="parentMenu.menuId==1">
 								<div class="input-container">
-									<input type="checkbox" name="menuIds" class="menu-id" value="<s:property value="menuId"/>"><s:property value="name"/>
+									<input type="checkbox" name="menuIds" class="menu-id" value="<s:property value="menuId"/>"/><s:property value="name"/>
 								</div>
 								<s:iterator value="menuList" var="submenu">
 									<s:if test="#menu.menuId==#submenu.parentMenu.menuId">
 										<div class="input-container">
-											&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="menuIds" class="menu-id" value="<s:property value="#submenu.menuId"/>"><s:property value="#submenu.name"/>
+											&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="menuIds" class="menu-id" value="<s:property value="#submenu.menuId"/>" /><s:property value="#submenu.name"/>
 										</div>
 									</s:if>
 								</s:iterator>

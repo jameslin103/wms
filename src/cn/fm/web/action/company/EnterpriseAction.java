@@ -1,7 +1,9 @@
 package cn.fm.web.action.company;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -9,11 +11,14 @@ import com.opensymphony.xwork2.Preparable;
 
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.bean.permissions.Role;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
+import cn.fm.service.permissions.RoleService;
 import cn.fm.service.salary.BalanceDetailService;
 import cn.fm.service.user.WmsUserService;
+import cn.fm.utils.Constant;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
@@ -28,6 +33,8 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	private EnterpriseEmployeesService  enterpriseEmployeesService;
 	@Resource
 	private BalanceDetailService		balanceDetailService;
+	@Resource
+	private RoleService					roleService;
 	
 	private Enterprise        enterprise;
 	private Integer			  enterpriseId;
@@ -36,7 +43,7 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	
 	private EnterpriseEmployees  enterpriseEmployees=new EnterpriseEmployees();
 	
-
+	private Integer				userId;
 	
 	
 	public Enterprise getEnterpriseJson() {
@@ -70,20 +77,44 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
 		this.enterpriseEmployees = enterpriseEmployees;
 	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	
+	
+	
+	
+	
 	public void prepare() throws Exception {
 		// TODO Auto-generated method stub
 	
 		
 		
 	}
-
+	/**
+	 * 分配负责人
+	 * @return
+	 */
+	public String addEnterpriseToUser()
+	{
+		Set<WmsUser>  users=new HashSet<WmsUser>();
+		if(userId==null)return INPUT;
+		WmsUser  user=wmsUserService.find(userId);
+		users.add(user);
+		enterprise=enterpriseService.find(enterpriseId);
+		enterprise.setUser(users);
+		enterpriseService.update(enterprise);
+		
+		return SUCCESS;
+	}
 
 	public String  addEnterprise()
 	{
 		if(enterprise==null)return INPUT;
 		if(enterprise!=null){
-			WmsUser user=WebUtil.getWmsUser(request);
-			enterprise.addWmsUser(user);
 			enterpriseService.save(enterprise);
 		}
 		
@@ -92,17 +123,39 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	
 	public String  viewEnterprise()
 	{
-		List<WmsUser> wmsUsers=wmsUserService.getAllWmsUser();
-		List<WmsUser> wmsUserList=enterpriseService.getEnterpriseToBoWmsUser(getWmsUserToBeEnterprise());
-		if(wmsUserList==null || wmsUserList.size()==0)
-			wmsUserList=new ArrayList<WmsUser>();
-		if(wmsUsers.size()==0)
-			wmsUsers=new ArrayList<WmsUser>();
-		request.setAttribute("wmsUserList", wmsUserList);
+		List<WmsUser> wmsUsers=getTemplWmsUser(wmsUserService.getAllWmsUser());
+		List<Enterprise> allEnterpsie=enterpriseService.getAllEnterprise();
+		if(wmsUsers.size()==0)wmsUsers=new ArrayList<WmsUser>();
+		if(allEnterpsie==null || allEnterpsie.size()==0)allEnterpsie=new ArrayList<Enterprise>();
 		request.setAttribute("wmsUsers", wmsUsers);
+		request.setAttribute("enterpsie", allEnterpsie);
 		return SUCCESS;
 	}
 	
+	public List<WmsUser> getTemplWmsUser(List<WmsUser> wmsUsers)
+	{
+		boolean falg=false;
+		List<WmsUser> users=new ArrayList<WmsUser>();
+		WmsUser  us=new WmsUser();
+		for (WmsUser user : wmsUsers){
+			falg=false;
+			String[] roleIds = user.getRoleIds()!=null?user.getRoleIds().split(","):null;
+			if(roleIds!=null){
+				for (int i = 0; i < roleIds.length; i++) {
+					Long roleId=Long.valueOf(roleIds[i]);
+					Role  role=roleService.find(roleId);
+					if(roleId.equals(role.getRoleId()) && role.getName().equals(Constant.WMS_GENDANYUAN)){
+						falg=true;
+					}
+				}
+			}
+			if(falg==true){
+				us=user;
+				users.add(us);
+			}
+		}
+		return users;
+	}
 	public String toBeResponsibleEnterprise()
 	{
 		

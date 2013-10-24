@@ -59,6 +59,7 @@ function findEnterpriseToUser(enterpriseId)
 		    success:function(data){
 		      $("#fullName").html('');
 		      $("#fullName").html(data.enterpriseJson.fullName);
+		      $("input[name='enterpriseId']").val(data.enterpriseJson.enterpriseId);
 		      
 		     },    
 		     error : function() {  

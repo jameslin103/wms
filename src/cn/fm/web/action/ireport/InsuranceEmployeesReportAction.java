@@ -166,7 +166,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	
 	
 	public String downloadSalaryWithSumOfCategoriesReport()
-	{
+	{       
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		WmsUser    user=WebUtil.getWmsUser(request);
 		if(enterprise.getEnterpriseId()==null)return INPUT;

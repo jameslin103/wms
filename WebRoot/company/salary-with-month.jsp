@@ -100,7 +100,6 @@
 												<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
 													&budgetId=<s:property value="%{#sal.budgetId}"/>">
 													<s:if test="#sal.enterprise.enterpriseId">
-													
 														<s:property value="%{#sal.name}"/>	
 														
 													</s:if>		

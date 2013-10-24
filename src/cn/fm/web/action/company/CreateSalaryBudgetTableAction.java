@@ -149,12 +149,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		if(createSalaryBudgetTableList.size()==0)
 			createSalaryBudgetTableList=new ArrayList<CreateSalaryBudgetTable>();
 		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTableList);
-		List<String> date=new ArrayList<String>();
-		date.add("2013-09-23");
-		date.add("2013-08-26");
-		date.add("2013-06-27");
-		date.add("2013-02-24");
-		request.setAttribute("mess", date);
+		
 		
 		return SUCCESS;
 	}

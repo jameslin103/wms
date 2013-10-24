@@ -45,4 +45,10 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	 * @return
 	 */
 	public boolean updateEnterpriseContact(Enterprise enterprise);
+	
+	/**
+	 * 查询所有企业
+	 * @return
+	 */
+	public List<Enterprise>  getAllEnterprise();
 }
