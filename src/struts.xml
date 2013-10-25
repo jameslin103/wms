@@ -58,6 +58,12 @@
 		<action name="toPassword" class="cn.fm.web.action.user.LoginAction" method="toPassword">  
             <result name="success">account/password.jsp</result>
         </action>
+        <action name="updateWmsUserPassword" class="cn.fm.web.action.user.LoginAction" method="updateWmsUserPassword">  
+             <result name="success" type="redirectAction">
+            	 <param name="actionName">userLogin</param>
+            </result>
+            <result name="input"> account/password.jsp</result>
+        </action>
         
          <action name="loginOut"  class="cn.fm.web.action.user.WmsUserLogoutAction" method="loginOut">
             <result name="success" type="redirectAction">

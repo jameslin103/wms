@@ -11,6 +11,8 @@ import cn.fm.bean.user.WmsUser;
 import cn.fm.service.permissions.MenuService;
 import cn.fm.service.permissions.RoleService;
 import cn.fm.service.user.WmsUserService;
+import cn.fm.utils.StringUtil;
+import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
 
@@ -29,7 +31,7 @@ public class LoginAction extends BaseAction{
 		@Resource
 		private MenuService menuService;
 		
-		
+	
 		
 		public WmsUser getWmsUser() {
 			return wmsUser;
@@ -86,6 +88,14 @@ public class LoginAction extends BaseAction{
 	
 	   public String toPassword()
 	   {
+		   return SUCCESS;
+	   }
+	   public String updateWmsUserPassword(){
+		   if(loginUser==null || loginUser.getPassword()==null || StringUtil.isEmpty(loginUser.getPassword())) return INPUT;
+		   WmsUser wmsUser=WebUtil.getWmsUser(request);
+		   wmsUserService.updatePassword(wmsUser.getPhone(), loginUser.getPassword());
+		   
+		   
 		   
 		   return SUCCESS;
 	   }

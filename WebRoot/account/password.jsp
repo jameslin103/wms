@@ -14,6 +14,34 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
+		<script type="text/javascript">
+		 function passwordVailte(){
+		 	var oldPassword=$("#oldPassword").val();
+		 	var password=$("#password").val();
+		 	var comfitPassword=$("#comfitPassword").val();
+		 	var newpassword=$("#newpassword").val();
+		 	
+		 		if(oldPassword==""){
+		 			alert("旧密码不能为空!")
+		 			return false;
+		 		}
+		 		if(newpassword==""){
+		 			$("#span_newpassword").html("新密码不能为空!");
+		 			return false;
+		 		}
+		 		if(comfitPassword==""){
+		 			$("#span_comfitPassword").html("确认密码不能为空!");
+		 			return false;
+		 		}
+		 		if(comfitPassword!=newpassword){
+		 			alert("新密码两次输入不一样!")
+		 			return false;
+		 		}
+		 
+		 }
+		
+		
+		</script>
 	</head>
 	<body>
 
@@ -30,24 +58,13 @@
 								<a href="employee-list.html">密码修改</a>
 							</li>
 						</ul>
-
 						<div class="row-fluid">
 							<div class="span3">
-								<form action="updateBuyerPassword" method="post">
-									<s:hidden value='%{#session.user.username}'
-										name="buyer.username" id="username" />
-									<s:hidden value="%{#session.user.password}" id="password"
-										name="buyer.password" />
-									<s:password cssClass="input-block-level" placeholder="旧密码"
-										id="psd" name="oldPassword" />
-									<s:label id="oldPassword_labe" />
-									<s:password cssClass="input-block-level" placeholder="新密码"
-										id="new_psd" name="newPassword" />
-									<s:password cssClass="input-block-level" placeholder="新密码（确认）"
-										id="rple_psd" />
-									<button class="btn btn-primary" type="submit">
-										提交
-									</button>
+								<form action="updateWmsUserPassword" method="post">
+									<input type="password" class="input-block-level" placeholder="旧密码" id="oldPassword" value="${user.password}" name="oldPassword" maxlength="20"/>
+									<s:password cssClass="input-block-level" placeholder="新密码" id="newpassword" name="newPassword" maxlength="20"/>
+									<s:password cssClass="input-block-level" placeholder="新密码（确认）" id="comfitPassword"  name="loginUser.password" maxlength="20"/>
+									<s:submit cssClass="btn btn-primary"  value="提交" onclick="passwordVailte()"/>
 								</form>
 							</div>
 						</div>
@@ -55,9 +72,7 @@
 					</div>
 				</div>
 			</div>
-
 			<div id="footer"></div>
-
 		</div>
 
 
