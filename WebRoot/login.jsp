@@ -12,18 +12,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <title>富民人力银行派遣系统</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
  	<%@ include file="/help/public_css_js.jsp" %>
+	<script type="text/javascript">
+		$(function(){
+		    var	phone=$("input[name='wmsUser.phone']").val();
+		    var password=$("input[name='wmsUser.password']").val();
+			if(phone==""){
+				$("phone").text("手机号码必填项!");
+			}
+			if(password==""){
+				$("phone").text("密码必填项!");
+			}
 
+		});
+	
+	
+	</script>
 </head>
 <body>
 
 	<div id="container"> 	
   	<div class="main">
   		<div class="row-fluid">
-  			<div class="span4"></div>
+  			<div class="span4">
+  				 <s:property value="#request.phone"/>
+  				 <s:property value="#request.password"/>
+  				 <div style="color:red;"><s:property value="errorMessage"/></div>
+  				  <label id="phone" style="color:red;"/>
+  			     <label id="password" style="color:red;"/>
+  			</div>
         
   			<div class="login span4">
           <div class="inner well">
+          	 
             <form action="userLogin" method="post">
+            	
               <h2>富民派遣系统</h2>
               <s:textfield name="wmsUser.phone"  maxlength="13" placeholder="手机号码" cssClass="input-block-level"/>
               <s:password name="wmsUser.password"   maxlength="15" placeholder="密码"  cssClass="input-block-level"/>

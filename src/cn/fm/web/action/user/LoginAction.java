@@ -29,7 +29,7 @@ public class LoginAction extends BaseAction{
 		@Resource
 		private MenuService menuService;
 		
-		
+		private String      errorMessage;
 		
 		public WmsUser getWmsUser() {
 			return wmsUser;
@@ -46,16 +46,32 @@ public class LoginAction extends BaseAction{
 		public void setLoginUser(WmsUser loginUser) {
 			this.loginUser = loginUser;
 		}
+		public String getErrorMessage() {
+			return errorMessage;
+		}
 
+		public void setErrorMessage(String errorMessage) {
+			this.errorMessage = errorMessage;
+		}
+
+		
 		public String userLogin()
 		{
 			if(wmsUser==null)return INPUT;
 			if (isInvalid(wmsUser.getPhone().trim()))
-		            return INPUT;
-		    if (isInvalid(wmsUser.getPassword().trim()))
-		            return INPUT;
+			{
+			   request.setAttribute("phone", "电话号码不能为空!");
+		       return INPUT;
+			}
+		    if(isInvalid(wmsUser.getPassword().trim()))
+		    {
+		    	request.setAttribute("password", "密码不能为空!");
+		         return INPUT;
+		    }
 			boolean isCheckUser=wmsUserService.checkUser(wmsUser.getPhone(), wmsUser.getPassword());
-			if(isCheckUser!=true){
+			if(isCheckUser!=true)
+			{
+				errorMessage="用户名或者密码错误!";
 				return INPUT;	
 			}
 			loginUser=wmsUserService.find(wmsUser.getPhone());
