@@ -11,6 +11,8 @@ import cn.fm.bean.user.WmsUser;
 import cn.fm.service.permissions.MenuService;
 import cn.fm.service.permissions.RoleService;
 import cn.fm.service.user.WmsUserService;
+import cn.fm.utils.StringUtil;
+import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
 
@@ -29,7 +31,7 @@ public class LoginAction extends BaseAction{
 		@Resource
 		private MenuService menuService;
 		
-		private String      errorMessage;
+	
 		
 		public WmsUser getWmsUser() {
 			return wmsUser;
@@ -46,32 +48,16 @@ public class LoginAction extends BaseAction{
 		public void setLoginUser(WmsUser loginUser) {
 			this.loginUser = loginUser;
 		}
-		public String getErrorMessage() {
-			return errorMessage;
-		}
 
-		public void setErrorMessage(String errorMessage) {
-			this.errorMessage = errorMessage;
-		}
-
-		
 		public String userLogin()
 		{
 			if(wmsUser==null)return INPUT;
 			if (isInvalid(wmsUser.getPhone().trim()))
-			{
-			   request.setAttribute("phone", "电话号码不能为空!");
-		       return INPUT;
-			}
-		    if(isInvalid(wmsUser.getPassword().trim()))
-		    {
-		    	request.setAttribute("password", "密码不能为空!");
-		         return INPUT;
-		    }
+		            return INPUT;
+		    if (isInvalid(wmsUser.getPassword().trim()))
+		            return INPUT;
 			boolean isCheckUser=wmsUserService.checkUser(wmsUser.getPhone(), wmsUser.getPassword());
-			if(isCheckUser!=true)
-			{
-				errorMessage="用户名或者密码错误!";
+			if(isCheckUser!=true){
 				return INPUT;	
 			}
 			loginUser=wmsUserService.find(wmsUser.getPhone());
@@ -102,6 +88,14 @@ public class LoginAction extends BaseAction{
 	
 	   public String toPassword()
 	   {
+		   return SUCCESS;
+	   }
+	   public String updateWmsUserPassword(){
+		   if(loginUser==null || loginUser.getPassword()==null || StringUtil.isEmpty(loginUser.getPassword())) return INPUT;
+		   WmsUser wmsUser=WebUtil.getWmsUser(request);
+		   wmsUserService.updatePassword(wmsUser.getPhone(), loginUser.getPassword());
+		   
+		   
 		   
 		   return SUCCESS;
 	   }

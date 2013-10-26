@@ -18,7 +18,7 @@ public interface WmsUserService extends DAO<WmsUser>{
 	public boolean checkUser(String phone, String password);
 	
 
-	public void updatePassword(String username, String newpassword);
+	public void updatePassword(String phone, String newpassword);
 	
 	
 	public List getWmsUserInfo(Serializable ... usernames);

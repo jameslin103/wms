@@ -19,9 +19,9 @@ import cn.fm.service.user.WmsUserService;
 @Service @Transactional
 public class WmsUserServiceImpl extends DaoSupport<WmsUser> implements WmsUserService {
 
-	public void updatePassword(String username, String newpassword){
-		em.createQuery("update Buyer o set o.password=?1 where o.username=?2")
-		.setParameter(1, newpassword).setParameter(2, username).executeUpdate();
+	public void updatePassword(String phone, String newpassword){
+		em.createQuery("update WmsUser o set o.password=?1 where o.phone=?2")
+		.setParameter(1, newpassword).setParameter(2, phone).executeUpdate();
 	}
 
 	public void save(WmsUser entity) {

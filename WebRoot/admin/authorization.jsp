@@ -19,6 +19,7 @@
 			$("form :checkbox",this).removeAttr("checked");
 			$("form",this)[0].reset();
 		});
+		alert(data.username);
 		$(".edit-user-btn").on("click",function(){
 			$.getJSON("loadWmsUser",{"wmsUser.userId":$(this).data("id")}).success(function(data){
 				$("#edit-user .userName").html(data.username);
@@ -103,10 +104,10 @@
 						<ul class="list-of-items-for-delete normal clearfix">
 						</ul>
 					</div>
-					<hr>
+					<hr />
 					<s:iterator value="roleList" var="role">
 						<div class="input-container">
-							<input type="checkbox" name="roleIds" class="role-id" value="<s:property value="roleId"/>"><s:property value="name"/>
+							<input type="checkbox" name="roleIds" class="role-id" value="<s:property value="roleId"/>" /><s:property value="name"/>
 						</div>
 					</s:iterator>
 					<div class="input-container">
@@ -135,7 +136,7 @@
 						</div>
 						<s:iterator value="roleList" var="role">
 							<div class="input-container">
-								<input type="checkbox" name="roleIds" class="role-id" value="<s:property value="roleId"/>"><s:property value="name"/>
+								<input type="radio" name="roleIds" class="role-id" value="<s:property value="roleId"/>" /><s:property value="name"/>
 							</div>
 						</s:iterator>
 						<div class="input-container">
