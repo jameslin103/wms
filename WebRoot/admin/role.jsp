@@ -61,7 +61,7 @@
 					<table class="table table-striped table-bordered">
 						<thead>
 							<tr>
-								<th>序</th><th>角色名</th><th>权限</th><th>操作</th>
+								<th align="center">序</th><th align="center">角色名</th><th align="center">权限</th><th align="center">操作</th>
 							</tr>
 						</thead>
 						<tbody>

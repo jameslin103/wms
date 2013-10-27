@@ -76,13 +76,18 @@
 											</s:iterator>
 											<s:set value="%{#enterprise.enterpriseId}" var="enterpriseId"></s:set>
 											<s:hidden value='%{#enterprise.id}' id="enterId"/>
-											<a href="#info-for-check2" data-toggle="modal"  onclick="findEnterpriseToUser('${enterpriseId}')" class="complement" >增删负责人 </a>
+											<a href="#info-for-check2" data-toggle="modal"  onclick="findEnterpriseToUser('${enterpriseId}')" class="complement" >
+												<s:iterator value="#enterprise.user" id="user"> 
+													<s:iterator value="#user.role" id="role">
+														<s:property value="%{#role}"/>
+													</s:iterator>
+												</s:iterator>
+															<span>增删负责人</span>
+													
+											 </a>
 										</td>
 										<td>
-											
-											<div id="">										
 											<a href="#info-for-check3"  data-toggle="modal" id="updateto" onclick="modalEnterprise('${enterpriseId}')" >修改</a>
-											</div>	
 										</td>
 									</tr>
 								</tbody>

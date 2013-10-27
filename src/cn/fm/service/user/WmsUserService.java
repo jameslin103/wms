@@ -40,6 +40,6 @@ public interface WmsUserService extends DAO<WmsUser>{
 	
 	public void assignRoles(String[] roleIds, String[] userIds);
 	
-	
+	public boolean isExitPhone(String phone);
 	
 }

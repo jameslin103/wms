@@ -16,7 +16,6 @@ import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.permissions.RoleService;
-import cn.fm.service.salary.BalanceDetailService;
 import cn.fm.service.user.WmsUserService;
 import cn.fm.utils.Constant;
 import cn.fm.utils.WebUtil;
@@ -31,8 +30,6 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	private WmsUserService    wmsUserService;
 	@Resource
 	private EnterpriseEmployeesService  enterpriseEmployeesService;
-	@Resource
-	private BalanceDetailService		balanceDetailService;
 	@Resource
 	private RoleService					roleService;
 	
@@ -113,25 +110,70 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 
 	public String  addEnterprise()
 	{
+		boolean isSystem=false;
+		WmsUser user=WebUtil.getWmsUser(request);
+		if(user==null)return INPUT;
 		if(enterprise==null)return INPUT;
 		if(enterprise!=null){
-			enterpriseService.save(enterprise);
-		}
-		
+			isSystem=isStysemUserRole(user);
+			if(isSystem==true)
+			{
+				 enterpriseService.save(enterprise);
+			}
+			if(isSystem!=true)
+			{
+				  enterprise.addWmsUser(wmsUserService.find(user.getUserId()));
+				  enterpriseService.save(enterprise);
+			}		 	
+		  }
+
 		return SUCCESS;
 	}
 	
 	public String  viewEnterprise()
 	{
+		boolean isSystem=false;
+		WmsUser user=WebUtil.getWmsUser(request);
+		isSystem=isStysemUserRole(user);
+		
 		List<WmsUser> wmsUsers=getTemplWmsUser(wmsUserService.getAllWmsUser());
-		List<Enterprise> allEnterpsie=enterpriseService.getAllEnterprise();
 		if(wmsUsers.size()==0)wmsUsers=new ArrayList<WmsUser>();
-		if(allEnterpsie==null || allEnterpsie.size()==0)allEnterpsie=new ArrayList<Enterprise>();
+		
+		
+		if(isSystem==true)
+		{
+			List<Enterprise> allEnterpsie=enterpriseService.getAllEnterprise();
+			if(allEnterpsie==null || allEnterpsie.size()==0)allEnterpsie=new ArrayList<Enterprise>();
+			request.setAttribute("enterpsie", allEnterpsie);
+		}
+		if(isSystem!=true)
+		{
+			List<Enterprise> enterpsies=getWmsUserToBeEnterprise();
+			request.setAttribute("enterpsie", enterpsies);
+			
+		}
+		
 		request.setAttribute("wmsUsers", wmsUsers);
-		request.setAttribute("enterpsie", allEnterpsie);
+		
 		return SUCCESS;
 	}
 	
+	public boolean isStysemUserRole(WmsUser user)
+	{
+		boolean isSystem=false;
+		String[] userRoleIds= user.getRoleIds()!=null?user.getRoleIds().split(","):null;
+		  if(userRoleIds!=null){
+			  for (int i=0; i<userRoleIds.length;i++) 
+			  {
+				  Long roleId=Long.valueOf(userRoleIds[i]);
+					Role  role=roleService.find(roleId);
+					if(roleId.equals(role.getRoleId()) && role.getName().equals(Constant.WMS_GAO_JI_GUANLI_YUAN)){
+					  isSystem=true;
+				  }
+			  }
+		  }
+		return isSystem;
+	}
 	public List<WmsUser> getTemplWmsUser(List<WmsUser> wmsUsers)
 	{
 		boolean falg=false;
@@ -158,8 +200,10 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	}
 	public String toBeResponsibleEnterprise()
 	{
-		
-		getWmsUserToBeEnterprise();
+		WmsUser user=WebUtil.getWmsUser(request);
+		WmsUser userPO=wmsUserService.find(user.getUserId());
+		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(userPO);
+		request.setAttribute("enterprises", findToBeEnterpriseAndCreateSalaryBudgetTable(enterpriseList));
 		return SUCCESS;
 	}
 	/**
@@ -171,14 +215,7 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		WmsUser user=WebUtil.getWmsUser(request);
 		WmsUser userPO=wmsUserService.find(user.getUserId());
 		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(userPO);
-	
-		if(enterpriseList.size()==0){
-			enterpriseList=new ArrayList<Enterprise>();
-		}
-		
-		request.setAttribute("enterprises", findToBeEnterpriseAndCreateSalaryBudgetTable(enterpriseList));
-		request.setAttribute("enterpriseList", enterpriseList);
-		
+		if(enterpriseList.size()==0)enterpriseList=new ArrayList<Enterprise>();
 		return enterpriseList;
 	}
 	

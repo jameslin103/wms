@@ -40,4 +40,6 @@ public class Constant {
 	public static final String WMS_NO="否";
 	
 	public static final String WMS_GENDANYUAN="跟单员";
+	public static final String WMS_GAO_JI_GUANLI_YUAN="超级管理员";
+	
 }

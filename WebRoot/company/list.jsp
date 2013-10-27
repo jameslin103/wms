@@ -115,10 +115,11 @@
 											</s:iterator>
 										</td>
 										<td>
-											<s:property value="%{#username}"/>刘备
+											<s:iterator value="#en.user" id="user">
+												<s:property value="%{#user.username}"/>
+											</s:iterator>
 										</td>
 									</tr>
-									<tr>
 								</tbody>
 							</s:iterator>
 						</table>

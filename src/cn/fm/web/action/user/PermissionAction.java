@@ -11,6 +11,7 @@ import cn.fm.bean.user.WmsUser;
 import cn.fm.service.permissions.MenuService;
 import cn.fm.service.permissions.RoleService;
 import cn.fm.service.user.WmsUserService;
+import cn.fm.utils.StringUtil;
 import cn.fm.web.action.BaseAction;
 
 public class PermissionAction extends BaseAction{
@@ -69,6 +70,7 @@ public class PermissionAction extends BaseAction{
 	}
 	
 	public String updateAuthorization(){
+		if(wmsUser==null || roleIds==null )return INPUT;
 		wmsUserService.assignRoles(roleIds, wmsUser);
 		return SUCCESS;
 	}
@@ -106,6 +108,13 @@ public class PermissionAction extends BaseAction{
 		return SUCCESS;
 	}
 	
+	public String addWmsUser()
+	{
+		if(wmsUser==null)return INPUT;
+		wmsUserService.save(wmsUser);
+		
+		return SUCCESS;
+	}
 	
 	public String addRole(){
 		roleService.addRole(menuIds, role);
@@ -127,8 +136,19 @@ public class PermissionAction extends BaseAction{
 		responseJson(role);
 		return NONE;
 	}
-	
-
+	public String isExitPhone()
+	{
+		String errorString=null;
+		if(wmsUser==null || StringUtil.isEmpty(wmsUser.getPhone()))return INPUT;
+		 boolean isPhone=wmsUserService.isExitPhone(wmsUser.getPhone());
+		if(isPhone==true){
+			errorString="此号码已存在!";
+		}else{
+			errorString="此号码可用!";
+		}
+		responseJson(errorString);
+		return NONE;
+	}
 	public List<Menu> getMenuList() {
 		return menuList;
 	}

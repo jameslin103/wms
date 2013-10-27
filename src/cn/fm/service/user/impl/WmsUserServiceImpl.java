@@ -101,10 +101,29 @@ public class WmsUserServiceImpl extends DaoSupport<WmsUser> implements WmsUserSe
 	}
 
 	public WmsUser find(String phone) {
-		Query query=em.createQuery("select w from WmsUser w where w.phone=?");
-		return (WmsUser)query.setParameter(1, phone).getSingleResult();
+		try {
+			Query query=em.createQuery("select w from WmsUser w where w.phone=?");
+			return (WmsUser)query.setParameter(1, phone).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
-	
+	public boolean isExitPhone(String phone){
+		boolean isPhone=false;
+		try {
+			Query query=em.createQuery("select count(w) from WmsUser w where w.phone=?");
+			int count=Integer.parseInt(query.setParameter(1, phone).getSingleResult().toString());
+			if(count>0){
+				isPhone=true;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return isPhone;
+	}
 	/**
 	 * 查询这个企业的所有负责人
 	 * @param enterprise

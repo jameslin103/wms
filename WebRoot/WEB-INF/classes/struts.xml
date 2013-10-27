@@ -85,7 +85,24 @@
         </action>  
         <action name="toRoleManage" class="cn.fm.web.action.user.PermissionAction" method="toRoleManage">
             <result name="success" >/admin/role.jsp</result>
-        </action>  
+        </action>
+        <action name="addWmsUser" class="cn.fm.web.action.user.PermissionAction" method="addWmsUser">
+           <result name="success" type="redirectAction">
+            	<param name="actionName">toAuthorizationUser</param>
+            </result>
+             <result name="input" type="redirectAction">
+            	<param name="actionName">toAuthorizationUser</param>
+            </result>
+        </action>
+        <action name="loadRole" class="cn.fm.web.action.user.PermissionAction" method="loadRole">
+             <result name="success"></result>
+        </action>
+        <action name="loadWmsUser" class="cn.fm.web.action.user.PermissionAction" method="loadWmsUser">
+             <result name="success"></result>
+        </action>
+        <action name="isExitPhone" class="cn.fm.web.action.user.PermissionAction" method="isExitPhone">
+             <result name="success"></result>
+        </action>    
         
           <action name="updateAuthorization" class="cn.fm.web.action.user.PermissionAction" method="updateAuthorization">
             <result name="success" type="redirectAction">
@@ -98,6 +115,30 @@
             </result>
              <result name="input" type="redirectAction">
             	<param name="actionName">toAuthorizationUser</param>
+            </result>
+        </action>
+        <action name="addRole" class="cn.fm.web.action.user.PermissionAction" method="addRole">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">toRoleManage</param>
+            </result>
+             <result name="input" type="redirectAction">
+            	<param name="actionName">toRoleManage</param>
+            </result>
+        </action>
+        <action name="deleteRole" class="cn.fm.web.action.user.PermissionAction" method="deleteRole">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">toRoleManage</param>
+            </result>
+             <result name="input" type="redirectAction">
+            	<param name="actionName">toRoleManage</param>
+            </result>
+        </action>
+        <action name="updateRole" class="cn.fm.web.action.user.PermissionAction" method="updateRole">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">toRoleManage</param>
+            </result>
+             <result name="input" type="redirectAction">
+            	<param name="actionName">toRoleManage</param>
             </result>
         </action>
          

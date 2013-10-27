@@ -19,7 +19,6 @@
 			$("form :checkbox",this).removeAttr("checked");
 			$("form",this)[0].reset();
 		});
-		alert(data.username);
 		$(".edit-user-btn").on("click",function(){
 			$.getJSON("loadWmsUser",{"wmsUser.userId":$(this).data("id")}).success(function(data){
 				$("#edit-user .userName").html(data.username);
@@ -40,6 +39,62 @@
 				$(".list-of-items-for-delete").append("<li>"+$(this).html()+"<input type='hidden' name='userIds' value='"+$(this).val()+"'/><button type='button' class='close' data-dismiss='alert'>&times;</button></li>");
 			}
 		});
+		$("#add-System").on("hidden",function(){
+			$("form",this)[0].reset();
+			$("#username").text("*");
+			$("#password").text("*");
+			$(".is_Phone").text(" ");
+		});
+		
+			$("input[name='wmsUser.phone']").blur(function()
+			{
+				var phone=$("input[name='wmsUser.phone']").val();
+				if(phone!="")
+				{
+					$.getJSON("isExitPhone",{"wmsUser.phone":phone}).success(function(data){
+						if(data=="此号码已存在!"){
+							$(".is_Phone").text('');
+							$(".is_Phone").text(data);
+							$(".is_Phone").css("color","red");
+						}else{
+							$(".is_Phone").text('');
+							$(".is_Phone").text(data);
+							$(".is_Phone").css("color","blue");
+						}
+					});
+				}
+			});
+			$("#sub").click(function (){
+				var username=$("input[name='wmsUser.username']").val();
+				var password=$("input[name='wmsUser.password']").val();
+				var phone=$("input[name='wmsUser.phone']").val();
+				if(username=="" && password=="" && phone==""){
+					$("#username").text("*");
+					$("#password").text("*");
+					$("#username").text("用户名必填项!");
+					$("#password").text("密码必填项!");
+					$(".is_Phone").text("手机号码必填项!");
+					$(".is_Phone").css("color","red");
+					$("#password").css("color","red");
+					$("#username").css("color","red");
+					return false;
+				}
+				if(username!="" && password==""){
+					$("#username").text(" ");
+					$("#password").text(" ");
+					$("#password").text("密码必填项!");
+					$("#password").css("color","red");
+					return false;
+				}
+				if(username=="" && password!=""){
+					$("#username").text(" ");
+					$("#password").text(" ");
+					$("#username").text("用户名必填项!");
+					$("#username").css("color","red");
+					return false;
+				}
+			
+			});
 	});
 </script>
 </head>
@@ -56,16 +111,16 @@
 						<li><a href="toRoleManage">角色管理</a></li>
 					</ul>
 					<ul class="normal action-container clearfix">
-						<li><a href="#add-permission" data-toggle="modal">为员工分配权限</a>
-						</li>
+						<li><a href="#add-permission" data-toggle="modal">为员工分配权限</a></li>
+						<li><a href="#add-System" data-toggle="modal">增加操作系统员工</a></li>
 					</ul>
 					<table class="table table-striped table-bordered">
 						<thead>
 							<tr>
-								<th>序</th>
-								<th>姓名</th>
-								<th>权限</th>
-								<th>修改</th>
+								<th align="center">序</th>
+								<th align="center">姓名</th>
+								<th align="center">权限</th>
+								<th align="center">修改</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -87,6 +142,7 @@
 		</div>
 		<div id="footer"></div>
 	</div>
+	<!-- add permission -->
 	<div id="add-permission"
 		class="modal hide fade modal-of-info-for-check" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -98,7 +154,7 @@
 			<form action="addAuthorization" class="navbar-form pull-left" method="post">
 				<div class="row-fluid">
 					<div class="input-container">
-						<s:select id="user-select-list" list="wmsUserList" listKey="userId" listValue="username" headerKey="" headerValue="请选择"></s:select>
+						<s:select id="user-select-list" list="wmsUserList" name="userIds" listKey="userId" listValue="username" headerKey="" headerValue="请选择"></s:select>
 					</div>
 					<div class="input-container">
 						<ul class="list-of-items-for-delete normal clearfix">
@@ -120,11 +176,54 @@
 			<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
 		</div>
 	</div>
-
+	<!-- add WmsUser -->
+		<div id="add-System"
+		class="modal hide fade modal-of-info-for-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">添加员工</h3>
+		</div>
+		<div class="modal-body">
+			<form action="addWmsUser" class="navbar-form pull-left" method="post">
+				<div class="row-fluid">
+					<label>用户名:</label>
+					<div class="input-container">
+						<input type="text" name="wmsUser.username"/><span id="username" style="color:red">*</span>
+					</div>
+					<label>密    码:</label>
+					<div class="input-container">
+						<input type="text" name="wmsUser.password"/><span id="password" style="color:red">*</span>
+					</div>
+					<label>手机号码:</label>
+					<div class="input-container">
+						<input type="text" name="wmsUser.phone" 
+						onkeyup="value=value.replace(/[^\d]/g,'')" id="text" 
+						onbeforepaste="clipboardData.setData('wmsUser.phone',clipboardData.getData('text').replace(/[^\d]/g,''))"/><span style="color:red">*</span>
+						<span class="is_Phone"></span>
+					</div>
+					<label>邮     箱:</label>
+					<div class="input-container">
+						<input type="text" name="wmsUser.email"/>
+					</div>
+					<hr />
+					<div class="input-container">
+						<button type="submit" id="sub" class="btn btn-primary">提交</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+		</div>
+	</div>
+	
+	
+	
+	<!-- endit User -->
 	<div id="edit-user" class="modal hide fade modal-of-info-for-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">权限分配</h3>
+			<h3 id="myModalLabel">修改权限分配</h3>
 		</div>
 		<div class="modal-body">
 			<div class="row-fluid">
