@@ -69,10 +69,11 @@
 							<li>
 								操作：
 							</li>
-							<li>
-								<a href="#info-for-check" data-toggle="modal">修改</a>
+							<!--<li>
+								<s:set value="%{#request.employees.employeesId}" var="employeesId"></s:set>
+								<a href="#info-for-check" onclick="findIdToEmployees('${employeesId}')" data-toggle="modal">修改</a>
 							</li>
-						</ul>
+						--></ul>
 
 						<h3>
 							基本信息
@@ -113,7 +114,7 @@
 									</th>
 									<th>
 										服务费
-										<br>
+										<br/>
 										（元）
 									</th>
 								</tr>
@@ -185,7 +186,7 @@
 									</th>
 									<th rowspan="2" width="">
 										哪月起
-										<br>
+										<br/>
 										参保
 									</th>
 									<th rowspan="2" width="">
@@ -207,12 +208,12 @@
 									</th>
 									<th>
 										社会
-										<br>
+										<br/>
 										保险
 									</th>
 									<th>
 										生育
-										<br>
+										<br/>
 										保险
 									</th>
 									<th>
@@ -220,17 +221,17 @@
 									</th>
 									<th>
 										基本
-										<br>
+										<br/>
 										医疗保险
 									</th>
 									<th>
 										住房
-										<br>
+										<br/>
 										公积金
 									</th>
 									<th>
 										大病
-										<br>
+										<br/>
 										统筹
 									</th>
 								</tr>
@@ -321,48 +322,52 @@
 
 		</div>
 		<!-- Modal -->
-		<div id="info-for-check" class="modal hide fade" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="#info-for-check" class="modal hide fade modal-of-info-for-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
+				<button type="button" class="close" data-dismiss="modal"aria-hidden="true">
 					×
 				</button>
 				<h3 id="myModalLabel">
 					员工信息
 				</h3>
 			</div>
+			
+			
 			<div class="modal-body">
-				<form action="" method="post">
+				<s:form action="updateEnterpriseEmployees" method="post" id="loginForm">
+					<s:hidden name="enterpriseEmployees.employeesId"></s:hidden>
 					<div class="row-fluid">
 						<div class="input-container">
 							<label>
 								合同编号
 							</label>
-							<input type="text" name="contract-number">
+							<s:textfield name="enterpriseEmployees.contractNo" cssClass="required email" id="input_e"/>
+
 						</div>
 
 						<div class="input-container">
 							<label>
 								姓名
 							</label>
-							<input type="text" name="name">
+							<s:textfield name="enterpriseEmployees.employeesName" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								身份证
 							</label>
-							<input type="text" name="shenfenzheng">
+							<s:textfield name="enterpriseEmployees.cardNumber" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								性别
 							</label>
-							<input type="radio" name="sex" value="1" checked="checked">
-							男，
-							<input type="radio" name="sex" value="0">
+							<input type="radio" name="enterpriseEmployees.employeesSex"
+								value="1" checked="checked" />
+							男
+							<input type="radio" name="enterpriseEmployees.employeesSex"
+								value="0" />
 							女
 						</div>
 
@@ -370,10 +375,11 @@
 							<label>
 								户口性质
 							</label>
-							<input type="radio" name="type-of-residence" value="1"
-								checked="checked">
-							非农，
-							<input type="radio" name="type-of-residence" value="0">
+							<input type="radio" name="enterpriseEmployees.householdRegister"
+								value="1" checked="checked" />
+							非农
+							<input type="radio" name="enterpriseEmployees.householdRegister"
+								value="0" />
 							农村
 						</div>
 
@@ -381,9 +387,10 @@
 							<label>
 								是否有照片？
 							</label>
-							<input type="radio" name="photo" value="1" checked="checked">
-							无，
-							<input type="radio" name="photo" value="0">
+							<input type="radio" name="enterpriseEmployees.photo" value="1"
+								checked="checked" />
+							无
+							<input type="radio" name="enterpriseEmployees.photo" value="0" />
 							有
 						</div>
 
@@ -391,85 +398,58 @@
 							<label>
 								电话
 							</label>
-							<input type="text" name="tel">
+							<s:textfield name="enterpriseEmployees.phone" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								家庭住址
 							</label>
-							<input type="text" name="address">
+							<s:textfield name="enterpriseEmployees.homeAddress" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								银行卡号
 							</label>
-							<input type="text" name="cardnumber">
+							<s:textfield name="enterpriseEmployees.bankCardNumber" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								开户银行
 							</label>
-							<select>
-								<option>
-									工商
-								</option>
-								<option>
-									农行
-								</option>
-								<option>
-									兴业
-								</option>
-							</select>
+							<s:textfield name="enterpriseEmployees.bank" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								籍贯
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.nativePlace" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								行业
 							</label>
-							<select>
-								<option value="">
-									计算机与信息
-								</option>
-								<option value="">
-									制造业
-								</option>
-								<option value="">
-									财政金融
-								</option>
-							</select>
+							<s:textfield name="enterpriseEmployees.industry" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								岗位
 							</label>
-							<select>
-								<option value="">
-									销售
-								</option>
-								<option value="">
-									生产
-								</option>
-							</select>
+							<s:textfield name="enterpriseEmployees.jobs" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								婚姻状况
 							</label>
-							<input type="radio" name="ismarried" value="1" checked="checked">
+							<input type="radio" name="enterpriseEmployees.maritalStatus" value="1" checked="checked" />
 							未婚，
-							<input type="radio" name="ismarried" value="0">
+							<input type="radio" name="enterpriseEmployees.maritalStatus" value="0" />
 							已婚
 						</div>
 
@@ -477,32 +457,7 @@
 							<label>
 								文化程度
 							</label>
-							<select>
-								<option value="">
-									博士
-								</option>
-								<option value="">
-									研究生
-								</option>
-								<option value="">
-									本科
-								</option>
-								<option value="">
-									大专
-								</option>
-								<option value="">
-									中专
-								</option>
-								<option value="">
-									高中
-								</option>
-								<option value="">
-									初中
-								</option>
-								<option value="">
-									小学
-								</option>
-							</select>
+							<s:textfield name="enterpriseEmployees.jobs" />
 						</div>
 
 						<div class="input-container">
@@ -510,86 +465,25 @@
 								合同期限
 							</label>
 							起：
-							<select class="span2">
-								<option value="">
-									2014年
-								</option>
-								<option value="" selected>
-									2013年
-								</option>
-								<option value="">
-									2012年
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									7月
-								</option>
-								<option value="" selected>
-									8月
-								</option>
-								<option value="">
-									9月
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									15日
-								</option>
-								<option value="" selected>
-									19日
-								</option>
-								<option value="">
-									22日
-								</option>
-							</select>
+							<s:textfield id="d11"
+								name="enterpriseEmployees.startContractDeadline"
+								onclick="WdatePicker()" cssClass="Wdate" />
 						</div>
 
 						<div class="input-container">
 							止：
-							<select class="span2">
-								<option value="">
-									2014年
-								</option>
-								<option value="" selected>
-									2013年
-								</option>
-								<option value="">
-									2012年
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									7月
-								</option>
-								<option value="" selected>
-									8月
-								</option>
-								<option value="">
-									9月
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									15日
-								</option>
-								<option value="" selected>
-									19日
-								</option>
-								<option value="">
-									22日
-								</option>
-							</select>
+							<s:textfield id="d11" name="enterpriseEmployees.endContractDeadline"
+								onclick="WdatePicker()" cssClass="Wdate" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								是否参保?
 							</label>
-							<input type="radio" name="has-insurance" value="1"
-								checked="checked">
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="1" checked="checked" />
 							是，
-							<input type="radio" name="has-insurance" value="0">
+							<input type="radio" name="enterpriseEmployees.whetherGinseng"
+								value="0" />
 							否
 						</div>
 
@@ -597,11 +491,11 @@
 							<label>
 								参保类型
 							</label>
-							<input type="checkbox" name="">
-							医保，
-							<input type="checkbox" name="">
-							社保，
-							<input type="checkbox" name="">
+							<input type="checkbox" name="enterpriseEmployees.sociaSecurity"	value="医保" />
+							医保
+							<input type="checkbox" name="enterpriseEmployees.healthCare"  value="社保" />
+							社保
+							<input type="checkbox" name="enterpriseEmployees.accumulationFund" value="公积金" />
 							公积金
 						</div>
 
@@ -609,50 +503,28 @@
 							<label>
 								参保性质
 							</label>
-							<input type="radio" name="type-of-insurance" value="1"
-								checked="checked">
+							<input type="radio" 	name="enterpriseEmployees.ginsengProtectNature" value="1" checked="checked" />
 							新增，
-							<input type="radio" name="type-of-insurance" value="0">
+							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="0" />
 							续保
 						</div>
 
 						<div class="input-container">
 							<label>
-								从哪一月开始参保？
+								开始参保日期:
 							</label>
-							<select class="span2">
-								<option value="">
-									2014年
-								</option>
-								<option value="" selected>
-									2013年
-								</option>
-								<option value="">
-									2012年
-								</option>
-							</select>
-
-							<select class="span2">
-								<option value="">
-									7月
-								</option>
-								<option value="" selected>
-									8月
-								</option>
-								<option value="">
-									9月
-								</option>
-							</select>
+							<s:textfield id="d11" name="enterpriseEmployees.cinsengDate"
+								onclick="WdatePicker()" cssClass="Wdate" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								参保基数
 							</label>
-							<input type="radio" name="base-of-insurance" value="1"
-								checked="checked">
+							<input type="radio" name="enterpriseEmployees.base" value="1"
+								checked="checked" />
 							默认基数，
-							<input type="radio" name="base-of-insurance" value="0">
+							<input type="radio" name="enterpriseEmployees.base" value="0" />
 							个性设置
 						</div>
 
@@ -660,41 +532,40 @@
 							<label>
 								社会保险基数
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.socialInsurance" />
 						</div>
 						<div class="input-container">
 							<label>
 								生育保险基数
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.fertilityInsurance" />
 						</div>
 						<div class="input-container">
 							<label>
 								工伤基数
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.inductrialBase" />
 						</div>
 						<div class="input-container">
 							<label>
 								基本医疗保险基数
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.basicMedical" />
 						</div>
 						<div class="input-container">
 							<label>
 								住房公积金基数
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.housingFund" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								个税缴纳方式?
 							</label>
-							<input type="radio" name="status-of-tax" value="1"
-								checked="checked">
+							<input type="radio" name="enterpriseEmployees.paymentWay" value="1" checked="checked" />
 							个人缴纳，
-							<input type="radio" name="status-of-tax" value="0">
+							<input type="radio" name="enterpriseEmployees.paymentWay" value="0" />
 							企业缴纳
 						</div>
 
@@ -702,7 +573,7 @@
 							<label>
 								状态?
 							</label>
-							<input type="checkbox" name="status-of-job" value="0">
+							<input type="checkbox" name="enterpriseEmployees.pseudoDelete" value="1" />
 							隐藏
 						</div>
 
@@ -710,27 +581,24 @@
 							<label>
 								服务费
 							</label>
-							<input type="text" name="">
+							<s:textfield name="enterpriseEmployees.serviceCost" />
 						</div>
 
 						<div class="input-container">
-							<button type="button" class="btn btn-primary">
-								提交
-							</button>
+							<s:submit cssClass="btn btn-primary" value="提交" />
 						</div>
 
 					</div>
-				</form>
+				</s:form>
 			</div>
+			
+			
 			<div class="modal-footer">
 				<button class="btn" data-dismiss="modal" aria-hidden="true">
 					Close
 				</button>
 			</div>
 		</div>
-
-		<script type="text/javascript" src="js/jquery.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	</body>
 
 </html>

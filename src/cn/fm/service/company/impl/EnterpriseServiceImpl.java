@@ -63,7 +63,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 	public long  getCountEmployees(Integer enterpriseId)
 	{
 		
-		Query query = em.createQuery("select count(e) from EnterpriseEmployees e where e.enterprise.enterpriseId=?1");
+		Query query = em.createQuery("select count(e) from EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.departure=0 and e.reduction=0 and pseudoDelete=0");
 		query.setParameter(1, enterpriseId);
 		return (Long) query.getSingleResult();
 	}

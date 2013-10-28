@@ -265,7 +265,7 @@ public class DateUtil {
 	     */
 	    
 	    public static int timeCompare(String date1,String date2){
-	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	        Calendar c1=Calendar.getInstance();
 	        Calendar c2=Calendar.getInstance();
 	        try {

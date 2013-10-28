@@ -211,14 +211,14 @@ public class EnterpriseEmployessServiceTest {
    @Test
    public void dateBefore()
    {
-	   String date2="2013-02-20";
-	   Date  Date1=DateUtil.StringToDate(date2, DateUtil.FORMAT_DATE);
+	   String date2="2013-12-01";
+	   //Date  Date1=DateUtil.StringToDate(date2, DateUtil.FORMAT_DATE);
 	   
-	   String date1="2013/06/09";
-	   Date   da=DateUtil.StringTypeToDate(date1, DateUtil.FORMAT_DATE);
-	   System.out.println(da);
+	   String date1="2013-10-31";
+	   //Date   da=DateUtil.StringTypeToDate(date1, DateUtil.FORMAT_DATE);
+	  // System.out.println(da);
 	   
-	   System.out.println(DateUtil.compareDateWithNow(Date1)==1);
+	   System.out.println(DateUtil.timeCompare(date2,date1));
 	   
 	   
    }
@@ -290,7 +290,14 @@ public class EnterpriseEmployessServiceTest {
 	   
 	   enterpriseEmployeesService.findRecutionState(18);
    }
-   
+   @Test
+   public void isExitSameEnterpriseEmployees()
+   {
+	   String[] employees={"关羽","33333333338888"};
+	   
+	  String error=enterpriseEmployeesService.isExitSameEnterpriseEmployees(employees);
+	  System.out.println(error);
+   }
    
    
    

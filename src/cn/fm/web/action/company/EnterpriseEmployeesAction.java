@@ -210,9 +210,11 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 */
 	public String addImportExcelEmployees()
 	{
-		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
+		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-		enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",34,2,enterprise);
+		List<String> messageList=enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",34,2,enterprise);
+		if(messageList!=null && messageList.size()>0){request.setAttribute("messageList", messageList);return INPUT;}
+		
 		return SUCCESS;
 	}
 	/**

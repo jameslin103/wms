@@ -20,7 +20,7 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @param file
 	 * @param fiName
 	 */
-	public void saveImportExcelEmployees(File file , String fiName,int number,int readRow,Enterprise enterprise);
+	public List<String> saveImportExcelEmployees(File file , String fiName,int number,int readRow,Enterprise enterprise);
 	/**
 	 * 查看所有企业员工
 	 * @return list
@@ -63,6 +63,14 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @return
 	 */
 	public long ginsengPersonnel(Integer enterpriseId);
+	
+	/**
+	 * 统计减员
+	 * @param enterpriseId
+	 * @return
+	 */
+	public long reductionTotal(Integer enterpriseId);
+	
 	
 	/**
 	 * 查询增员，减员，续保
@@ -158,4 +166,7 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @param recutionState
 	 */
 	public void updateRecutionState(Integer enterpriseId,Integer recutionState);
+	
+	
+	public  String isExitSameEnterpriseEmployees(String[] fileDate);
 }

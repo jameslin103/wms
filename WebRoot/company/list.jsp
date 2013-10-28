@@ -73,10 +73,11 @@
 										<td class="with-complement">
 											<a href="viewEnterpriseDetailed?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">
 											<s:property  value="%{#enterprise.fullName}" /></a>
-											<span class="complement"> <s:property
-													value="%{#enterprise.contact}" /> 电话:<s:property
-													value="%{#enterprise.phone}" /> QQ：<s:property
-													value="%{#enterprise.qq}" /> </span>
+											<span class="complement">
+												  <s:property value="%{#enterprise.contact}" />
+												  电话:<s:property value="%{#enterprise.phone}" />
+												 QQ：<s:property value="%{#enterprise.qq}" /> 
+											</span>
 											<s:set var="enterpriseId" value="%{#enterprise.enterpriseId}"></s:set>
 											<a href="#info-of-company" onclick="modalEnterprise('${enterpriseId}')" data-toggle="modal">详细信息</a>，
 											<a href="#info-for-check" data-toggle="modal" onclick="modalEnterprise('${enterpriseId}')" >修改联系人</a>
@@ -108,7 +109,7 @@
 												 <s:if test="#en.enterpriseId==#enterprise.enterpriseId">
 													<a href="viewWorkersIncreased?enterprise.enterpriseId=<s:property value="%{#en.enterpriseId}"/>">
 														增员<s:property value="%{#en.addCount}"/>人，
-														减员<s:property value="%{#en.renewalCount}"/>人，
+														减员<s:property value="%{#en.reduction}"/>人，
 														参保<s:property value="%{#en.whetherGinsengCount}"/>人
 													</a>
 											</s:if>

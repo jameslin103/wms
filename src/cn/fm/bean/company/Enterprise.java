@@ -66,13 +66,16 @@ public class Enterprise implements Serializable{
 	
 
 	/**增员**/
-	private  long addCount;
+	private  long addCount=0;
 	
 	/**续保**/
-	private  long renewalCount;
+	private  long renewalCount=0;
 	
 	/**参保**/
-	private  long whetherGinsengCount;
+	private  long whetherGinsengCount=0;
+	
+	/**统计减员**/
+	private long  reductionTotal=0;
 	     
 	
 	private Set<EnterpriseEmployees> enterpriseEmployees=new HashSet<EnterpriseEmployees>();
@@ -284,6 +287,13 @@ public class Enterprise implements Serializable{
 	}
 	public void setWhetherGinsengCount(long whetherGinsengCount) {
 		this.whetherGinsengCount = whetherGinsengCount;
+	}
+	@Transient
+	public long getReductionTotal() {
+		return reductionTotal;
+	}
+	public void setReductionTotal(long reductionTotal) {
+		this.reductionTotal = reductionTotal;
 	}
 	
 	

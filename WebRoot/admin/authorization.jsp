@@ -93,6 +93,15 @@
 					$("#username").css("color","red");
 					return false;
 				}
+				if(username=="" && password==""){
+					$("#username").text("*");
+					$("#password").text("*");
+					$("#username").text("用户名必填项!");
+					$("#password").text("密码必填项!");
+					$("#password").css("color","red");
+					$("#username").css("color","red");
+					return false;
+				}
 			
 			});
 	});

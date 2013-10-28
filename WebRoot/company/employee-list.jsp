@@ -687,8 +687,8 @@
 								合同期限
 							</label>
 							起：
-							<s:textfield id="d11"
-								name="enterpriseEmployees.startContractDeadline" onclick="WdatePicker()" cssClass="Wdate" />
+							<input type="text" id="d11"
+								name="enterpriseEmployees.startContractDeadline" onclick="WdatePicker()" class="Wdate" />
 						</div>
 
 						<div class="input-container">

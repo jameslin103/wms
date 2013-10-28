@@ -62,14 +62,20 @@
 											<s:form action="addImportExcelEmployees" cssClass="form-search" method="post"
 												enctype="multipart/form-data">
 												<s:file name="file" />
-												<br>
+												<br/>
 												<s:submit cssClass="btn btn-primary" value="上传" />
 											</s:form>
 										</li>
 									</ol>
-									<p class="red">
-										备注：上传时，检查身份证号，如果重复载入，给予提醒！
-									</p>
+									<s:if test="#request.messageList.size()>0">
+										<p class="red">
+										备注：<br />
+											<s:iterator value="#request.messageList" id="mes">
+												<s:property value="%{#mes}"/><br/>
+											</s:iterator>
+										</p>
+									</s:if>
+									
 								</div>
 							</div>
 						</div>

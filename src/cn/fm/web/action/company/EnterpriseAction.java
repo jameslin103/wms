@@ -166,7 +166,8 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 			  for (int i=0; i<userRoleIds.length;i++) 
 			  {
 				  Long roleId=Long.valueOf(userRoleIds[i]);
-					Role  role=roleService.find(roleId);
+					Role  role=roleService.find(roleId)==null?null:roleService.find(roleId);
+					if(role==null)return false;
 					if(roleId.equals(role.getRoleId()) && role.getName().equals(Constant.WMS_GAO_JI_GUANLI_YUAN)){
 					  isSystem=true;
 				  }
@@ -203,6 +204,7 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		WmsUser user=WebUtil.getWmsUser(request);
 		WmsUser userPO=wmsUserService.find(user.getUserId());
 		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(userPO);
+		request.setAttribute("enterpriseList", enterpriseList);
 		request.setAttribute("enterprises", findToBeEnterpriseAndCreateSalaryBudgetTable(enterpriseList));
 		return SUCCESS;
 	}
@@ -225,8 +227,9 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		for (Enterprise enterprise : enterpriseList) {
 			Enterprise enterprisePO=enterpriseService.find(enterprise.getEnterpriseId());
 			enterprisePO.setAddCount(enterpriseEmployeesService.newStaffCount(enterprisePO.getEnterpriseId()));
-			enterprisePO.setRenewalCount(enterpriseEmployeesService.renewalPersonnel(enterprisePO.getEnterpriseId()));
+			//enterprisePO.setRenewalCount(enterpriseEmployeesService.renewalPersonnel(enterprisePO.getEnterpriseId()));
 			enterprisePO.setWhetherGinsengCount(enterpriseEmployeesService.ginsengPersonnel(enterprisePO.getEnterpriseId()));
+			enterprisePO.setReductionTotal(enterpriseEmployeesService.reductionTotal(enterprisePO.getEnterpriseId()));
 			enterprises.add(enterprisePO);
 			
 		}
