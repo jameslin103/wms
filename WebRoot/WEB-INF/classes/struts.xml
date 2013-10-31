@@ -199,7 +199,9 @@
           <!-- 增减员与参保明细 -->
         <action name="viewInsuranceWithMonth" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewInsuranceWithMonth">
             <result name="success">company/insurance-with-month.jsp</result>
+            <result name="input">company/insurance-with-month.jsp</result>
         </action>
+        
         <!-- 增减员与参保具体员工资料 -->
          <action name="insuranceWithEmployeeList" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="insuranceWithEmployeeList">
             <result name="success">company/insurance-with-employee-list.jsp</result>
@@ -250,18 +252,12 @@
             	<param name="actionName">viewEmployeePersonalSalary</param>
             </result>
         </action>
-        <!-- 新增 --> 
-          <action name="newStaffEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="newStaffEmployees">
+        
+        <!-- 查看 新增  续保，减员--> 
+          <action name="viewStaffAndRenewalAndReductionEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewStaffAndRenewalAndReductionEmployees">
             <result name="success">company/insurance-with-employee-list.jsp</result>
         </action>
-        <!-- 续保 -->
-         <action name="renewalEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="renewalEmployees">
-            <result name="success">company/insurance-with-employee-list.jsp</result>
-        </action>
-         <!-- 减员 -->
-         <action name="personnelReduction" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="personnelReduction">
-            <result name="success">company/insurance-with-employee-list.jsp</result>
-        </action>
+      
          <action name="downloadInsuranceWithEmployeeList" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="downloadInsuranceWithEmployeeList">
             <result name="success"  type="jasper"></result>
             <result name="input" type="redirectAction">
@@ -469,6 +465,7 @@
         </action> 
         <action name="viewSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="viewSalaryBudgetTable">
             <result name="success" >company/salary-with-month.jsp</result>
+             <result name="input" >company/salary-with-month.jsp</result>
         </action> 
          <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
             <result name="success" >company/salary-step1-of-create.jsp</result>
@@ -614,7 +611,7 @@
             <result name="success" >all/company-list-with-balance.jsp</result>
         </action>
         <action name="findEnterpriseEmployeesRecution" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="findEnterpriseEmployeesRecution">
-            <result name="employeesRecution" type="json" >all/company-list-with-balance.jsp</result>
+            <result name="employeesRecution" type="json" ></result>
         </action>
         <action name="updateRecutionState" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="updateRecutionState">
             <result name="success" type="redirectAction" >

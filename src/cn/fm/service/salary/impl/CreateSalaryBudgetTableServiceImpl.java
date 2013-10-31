@@ -19,11 +19,21 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Integer enterpriseId)
+	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Integer enterpriseId,Integer year)
 	{
-		Query query=em.createQuery("select c from CreateSalaryBudgetTable  c where c.enterprise.enterpriseId=?1 and YEAR(c.salaryDate)=year(curdate()) group by c.salaryDate ");
-			   query.setParameter(1,enterpriseId);
-		return query.getResultList();
+		try {
+			return em.createQuery("select c from CreateSalaryBudgetTable  c " +
+					"where c.enterprise.enterpriseId=?1 " +
+					" and YEAR(c.createDate)=?2 " +
+					" group by c.createDate")
+					.setParameter(1, enterpriseId).setParameter(2,year).getResultList();
+			  
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	/**
 	 * 更新工资预算表
@@ -140,18 +150,5 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 	}
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

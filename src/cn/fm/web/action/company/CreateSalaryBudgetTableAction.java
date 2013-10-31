@@ -1,14 +1,10 @@
 package cn.fm.web.action.company;
-
-
-
 import java.io.File;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
-import org.apache.struts2.ServletActionContext;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
@@ -53,8 +49,16 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	
 	private Integer  budgetId;
 	
+	private Integer  year;
 	
 	
+	
+	public Integer getYear() {
+		return year;
+	}
+	public void setYear(Integer year) {
+		this.year = year;
+	}
 	public Integer getBudgetId() {
 		return budgetId;
 	}
@@ -138,21 +142,38 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	 */
 	public String viewSalaryBudgetTable()
 	{
+		
+		if(year==null)
+		{
+			this.year=Integer.parseInt(DateUtil.getCurrentTime().toString().substring(0, 4));
+		}
+		
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null || enterprise.getEnterpriseId()==null){
 			enterprise=enterpriseService.find(enterpriseId);
 			request.getSession().setAttribute("enterprise",enterprise );
-			
 		}
 		
-		List<CreateSalaryBudgetTable> createSalaryBudgetTableList=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(enterprise.getEnterpriseId());
-		if(createSalaryBudgetTableList.size()==0)
-			createSalaryBudgetTableList=new ArrayList<CreateSalaryBudgetTable>();
-		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTableList);
-		
-		
+		List<CreateSalaryBudgetTable> createSalaryBudgetTableList=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(enterprise.getEnterpriseId(),this.year);
+
+		Map<String, Object> map=reconstructToMonthGroupByTableDate(createSalaryBudgetTableList);
+		request.setAttribute("map", map);
 		return SUCCESS;
 	}
+	
+	public Map<String, Object> reconstructToMonthGroupByTableDate(List<CreateSalaryBudgetTable> createSalaryBudgetTableList)
+	{
+		Map<String, Object> map=new HashMap<String, Object>();
+		for (CreateSalaryBudgetTable table : createSalaryBudgetTableList) {
+			map.put(table.getCreateDate().toString(), table);
+		}
+		
+		
+		return map;
+	}
+	
+	
+	
 	/**
 	 * 新增工资预算表
 	 * @return

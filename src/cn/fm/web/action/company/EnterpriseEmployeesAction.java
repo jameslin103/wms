@@ -48,13 +48,21 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private Integer   year;
 	private Integer   month;
 	private int page;
+	private String    insuranceYear;
+	private Integer   staff_renewal_reduction;
 	
 	 //工程目录下的模板文件名称
    private String employeeFileName;
 	
     
 	
-
+   
+	public Integer getStaff_renewal_reduction() {
+		return staff_renewal_reduction;
+	}
+	public void setStaff_renewal_reduction(Integer staffRenewalReduction) {
+		staff_renewal_reduction = staffRenewalReduction;
+	}
 	public EnterpriseEmployeesService getEnterpriseEmployeesService() {
 		return enterpriseEmployeesService;
 	}
@@ -162,7 +170,13 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		this.insurance = insurance;
 	}
 	
-
+	
+	public String getInsuranceYear() {
+		return insuranceYear;
+	}
+	public void setInsuranceYear(String insuranceYear) {
+		this.insuranceYear = insuranceYear;
+	}
 	public Integer getAll() {
 		return all;
 	}
@@ -335,22 +349,31 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		return SUCCESS;
 	}
 	/**
-	 * 查看新增人员
+	 * 查看新增，续保，减员，人员
 	 * @return
 	 */
-	public String newStaffEmployees(){
+	public String viewStaffAndRenewalAndReductionEmployees(){
 		
+		Enterprise enterprise=WebUtil.getEnterprise(request);
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("employeesId", "desc");
 		StringBuffer jpql = new StringBuffer("");
 		List<Object> params = new ArrayList<Object>();
-		if(this.enterpriseId!=null)
+		if(enterprise.getEnterpriseId()!=null)
 		{
 			
 			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(this.enterpriseId);
+			params.add(enterprise.getEnterpriseId());
 			jpql.append(" and o.ginsengProtectNature=?").append(params.size()+1);
-			params.add(1);
+			params.add(staff_renewal_reduction);
+			jpql.append(" and o.pseudoDelete=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and o.departure=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and year(o.cinsengDate)=?").append(params.size()+1);
+			params.add(Integer.parseInt(insuranceYear));
+			jpql.append(" and month(o.cinsengDate)=?").append(params.size()+1);
+			params.add(this.month);
 			
 			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
@@ -361,57 +384,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		return SUCCESS;
 	}
 	
-	/**
-	 * 查看续保人员
-	 * @return
-	 */
-	public String  renewalEmployees()
-	{
-		
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("employeesId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-		if(this.enterpriseId!=null)
-		{
-			jpql.append(" o.ginsengProtectNature=?").append(params.size()+1);
-			params.add(2);
-			jpql.append(" and  o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(this.enterpriseId);
-			
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
-			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("pageView", pageView);
-		}
-		
-		return SUCCESS;
-	}
-	/**
-	 * 查看减员情况
-	 * @return
-	 */
-	public String personnelReduction()
-	{
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("employeesId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-		if(this.enterpriseId!=null)
-		{
-			jpql.append(" o.reduction=?").append(params.size()+1);
-			params.add(1);
-			jpql.append(" and  o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(this.enterpriseId);
-			
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
-			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("pageView", pageView);
-		}
-		
-		return SUCCESS;
-	}
+	
 	/**
 	 * 删除减员续保增员
 	 * @return
@@ -434,7 +407,17 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 */
 	public String viewInsuranceWithMonth()
 	{
-		//enterpriseEmployeesService.getViewInsuranceWithMonth();
+		Enterprise  enterprise=WebUtil.getEnterprise(request);
+		if(enterprise==null)return INPUT;
+		if(StringUtil.isEmpty(insuranceYear))
+		{
+			this.insuranceYear=DateUtil.getCurrentTime().substring(0, 4);
+		}else{
+			this.insuranceYear=insuranceYear.substring(0,4);
+		}
+	    List<Object[]>	insuranceSumTotal=enterpriseEmployeesService.getViewInsuranceWithMonthTotal(Integer.parseInt(insuranceYear),enterprise.getEnterpriseId());
+		request.setAttribute("insuranceSumTotal", insuranceSumTotal);
+		
 		return SUCCESS;
 	}
 	
@@ -454,7 +437,12 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		}
 		
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return SUCCESS;
-		
+		if(StringUtil.isEmpty(insuranceYear))
+		{
+			this.insuranceYear=DateUtil.getCurrentTime().substring(0, 4);
+		}else{
+			this.insuranceYear=insuranceYear.substring(0,4);
+		}
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("employeesId", "desc");
 		StringBuffer jpql = new StringBuffer("");
@@ -463,27 +451,29 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		{
 			jpql.append("( o.ginsengProtectNature=?").append(params.size()+1);
 			params.add(1);
-			jpql.append(" or o.ginsengProtectNature=?").append(params.size()+1).append(")");
+			jpql.append(" or o.ginsengProtectNature=?").append(params.size()+1);
 			params.add(2);
-			jpql.append(" and o.reduction=?").append(params.size()+1);
-			params.add(1);
-			jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(this.enterpriseId);
+			jpql.append(" or o.ginsengProtectNature=?").append(params.size()+1);
+			params.add(3);
+			jpql.append(" )and o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(enterprise.getEnterpriseId());
 			jpql.append(" and o.pseudoDelete=?").append(params.size()+1);
 			params.add(0);
 			jpql.append(" and o.departure=?").append(params.size()+1);
 			params.add(0);
 			jpql.append(" and year(o.cinsengDate)=?").append(params.size()+1);
-			params.add(this.year);
+			params.add(Integer.parseInt(insuranceYear));
 			jpql.append(" and month(o.cinsengDate)=?").append(params.size()+1);
 			params.add(this.month);
 			
 			
 			
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(8,  this.getPage());
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
+			request.setAttribute("insuranceYear", insuranceYear);
+			request.setAttribute("month", month);
 		}
 		return SUCCESS;
 	}

@@ -239,10 +239,15 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		employees.setGinsengProtectNature(data[19].toString()==null?null:(data[19].toString().equals(Constant.WMS_ZENG_YUAN)?1:2));
 		employees.setWhetherGinseng(data[20].toString()==null?null:data[20].equals(Constant.WMS_YES)?1:0);
 		employees.setCinsengDate(data[21].toString()==null?null:DateUtil.StringToDate(data[21], DateUtil.FORMAT_DATE));
+		/*社保 */
 		employees.setHealthCare(data[22].toString()==null?"":data[22].toString());
+		/*医保*/
 		employees.setSociaSecurity(data[23].toString()==null?null:data[23].toString());
-		employees.setAccumulationFund(data[24].toString()==null?null:data[24].toString());
+		/*公积金*/
+		employees.setAccumulationFund(data[24].toString()==null?null:data[24]);
+		/*大病统筹*/
 		employees.setSeriousDisease(data[25].toString()==null?null:data[25].toString());
+		
 		employees.setBase(data[26].toString()==null?null:data[26].equals(Constant.WMS_YES)?1:0);
 		employees.setSocialInsurance(data[27].toString().equals("")?null:Double.valueOf(data[27]));
 		employees.setFertilityInsurance(data[28].toString().equals("")?null:Double.valueOf(data[28]));
@@ -936,7 +941,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	public boolean updateReduction(EnterpriseEmployees enterpriseEmployees)
 	{
 		try {
-			em.createQuery(" update EnterpriseEmployees e set e.reduction=1,e.reductionDate=?1,e.note=?2 where e.employeesId=?3")
+			em.createQuery(" update EnterpriseEmployees e set e.reduction=1, e.ginsengProtectNature=3,e.reductionDate=?1,e.note=?2 where e.employeesId=?3")
             .setParameter(1, enterpriseEmployees.getReductionDate()).setParameter(2, enterpriseEmployees.getNote())
             .setParameter(3, enterpriseEmployees.getEmployeesId()).executeUpdate();
 			
@@ -949,12 +954,21 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	}
 
 
-
-	public EnterpriseEmployees findRecutionState(Integer enterpriseId) {
+	/**
+	 * 查询参保人员是否完成
+	 */
+	@SuppressWarnings("unchecked")
+	public List<EnterpriseEmployees> findRecutionState(Integer enterpriseId,Integer month,Integer year) {
 		try {
-			return (EnterpriseEmployees)em.createQuery("select count(o.enterpriseId) ,o.cinsengDate ,o.ginsengProtectNature, " +
-					"o.enterpriseId ,o.reductionState from EnterpriseEmployees o where o.enterprise.enterpriseId=?1")
-					.setParameter(1, enterpriseId).getSingleResult();
+			return   em.createQuery("select o " +
+					" from EnterpriseEmployees o " +
+					"where o.enterprise.enterpriseId=?1" +
+					" and month(o.cinsengDate)=?2" +
+					" and year(o.cinsengDate)=?3")
+					.setParameter(1, enterpriseId)
+					.setParameter(2, month)
+					.setParameter(3, year)
+					.getResultList();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -966,15 +980,58 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 * @param enterpriseId
 	 * @param recutionState
 	 */
-	public void updateRecutionState(Integer enterpriseId,Integer recutionState)
+	public void updateRecutionState(Integer enterpriseId,Integer recutionState,String reductionNote,Integer month,Integer year)
 	{
 		
 		try {
-			em.createQuery("update EnterpriseEmployees o set o.recutionState=?1 where o.enterprise.enterpriseId=?2")
-					.setParameter(1, recutionState).setParameter(2, enterpriseId).getSingleResult();
+			em.createQuery("update EnterpriseEmployees o set o.reductionState=?1,o.reductionNote=?2 where " +
+					"o.enterprise.enterpriseId=?3" +
+					" and o.departure=0 " +
+					" and o.pseudoDelete=0" +
+					" and month(o.cinsengDate)=?4" +
+					" and year(o.cinsengDate)=?5")
+					.setParameter(1, recutionState)
+					.setParameter(2, reductionNote)
+					.setParameter(3, enterpriseId)
+					.setParameter(4, month)
+					.setParameter(5, year)
+					.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 	}
+	/**
+	 * 统计，增员，减员，参保人员
+	 * @param year
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Object[]>     getViewInsuranceWithMonthTotal(Integer year,Integer enterpriseId)
+	{
+		try {
+			String sql="select e.reductionState," +
+			"sum(case e.ginsengProtectNature  when '1' then 1 else 0 end ) , " +
+			"sum(case e.ginsengProtectNature when '2' then 1 else 0 end )," +
+			"sum(case e.ginsengProtectNature when '3' then 1  else 0 end )," +
+			" month(e.cinsengDate)  from EnterpriseEmployees e " +
+			" where  year(e.cinsengDate) =?1 " +
+			" and e.enterprise.enterpriseId=?2 " +
+			" and e.pseudoDelete=0 " +
+			" and e.departure=0 " +
+			" group by month(e.cinsengDate)";
+
+			return em.createQuery(sql).setParameter(1, year).setParameter(2, enterpriseId).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	
+	
+	
+	
+	
+	
 }

@@ -82,7 +82,9 @@
 														<s:property value="%{#role}"/>
 													</s:iterator>
 												</s:iterator>
-															<span>增删负责人</span>
+												<s:if test="#request.isSystemAdmin==true">
+														<span>增删负责人</span>
+												</s:if>
 													
 											 </a>
 										</td>

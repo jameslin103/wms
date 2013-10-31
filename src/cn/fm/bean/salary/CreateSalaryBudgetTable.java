@@ -69,7 +69,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	/**现金（人数）**/
 	 private Integer      cashnumber;
 
-	/**状态**/
+	/**状态 **/
 	private String       status;
 	
 	/**补充说明*/
@@ -83,7 +83,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	/**选择模板*/
 	private SalaryTemplate  salaryTemplate;
 	
-
+	
 	 
 	private Enterprise enterprise;
 	

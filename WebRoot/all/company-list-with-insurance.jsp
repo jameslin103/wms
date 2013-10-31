@@ -23,10 +23,7 @@
 	   	  			$("#myform1").submit(); 
 	   	         }
 	   	  });
-	   	   
-	   });
-	
-	
+	   	 
 	</script>
 	</head>
 	<body>
@@ -51,28 +48,31 @@
 								<a href="viewCompanyListWithBalance">资金往来</a>
 							</li>
 						</ul>
-						<form action="viewCompanyListWithInsurance" class="select-for-year" method="post" id="myform1">
+						
 						<ul class="normal action-container clearfix">
 							<li class="right">
-								
-									 日期:<input id="d11" name="year" onclick="WdatePicker()" value="${year}" class="Wdate" style="width: 110px;height: 25px;" />
-									<input type="hidden" name="year" value="${year}"/>
-							
+							<form action="viewCompanyListWithInsurance" class="select-for-year" method="post" id="myform1">
+								按年份查询:
+									<!--<input id="d11" name="insuranceYear" onclick="WdatePicker()" class="Wdate" style="width: 110px;height: 25px;" />
+										 -->
+									<input type="text" name="year" value="${year}" maxlength="4" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+									<input type="hidden" value="${year}" name="insuranceYear"/>
+							</form>
 							</li>
-							    <li><a href="viewCompanyListWithInsurance?month=1&year=<s:property value="%{#request.year}"/>">1月</a>，</li>
-					            <li><a href="viewCompanyListWithInsurance?month=2&year=<s:property value="%{#request.year}"/>">2月</a>，</li>
-					            <li><a href="viewCompanyListWithInsurance?month=3&year=<s:property value="%{#request.year}"/>">3月</a>，</li>
-					            <li><a href="viewCompanyListWithInsurance?month=4&year=<s:property value="%{#request.year}"/>">4月</a>，</li>
-					            <li><a href="viewCompanyListWithInsurance?month=5&year=<s:property value="%{#request.year}"/>">5月</a>，</li>
-					            <li><a href="viewCompanyListWithInsurance?month=6&year=<s:property value="%{#request.year}"/>">6月</a>，</li>
-					            <li><a href="viewCompanyListWithInsurance?month=7&year=<s:property value="%{#request.year}"/>">7月</a>，</li>
-					            <li><a href="viewCompanyListWithInsurance?month=8&year=<s:property value="%{#request.year}"/>">8月</a>，</li>
-					            <li><a href="viewCompanyListWithInsurance?month=9&year=<s:property value="%{#request.year}"/>">9月</a>，</li>
-					            <li><a href="viewCompanyListWithInsurance?month=10&year=<s:property value="%{#request.year}"/>">10月</a>，</li>
-					            <li><a href="viewCompanyListWithInsurance?month=11&year=<s:property value="%{#request.year}"/>">11月</a>，</li>
-					            <li><a href="viewCompanyListWithInsurance?month=12&year=<s:property value="%{#request.year}"/>">12月</a></li>
+							    <li><a href="viewCompanyListWithInsurance?month=1&year=${year}">1月</a>，</li>
+					            <li><a href="viewCompanyListWithInsurance?month=2&year=${year}">2月</a>，</li>
+					            <li><a href="viewCompanyListWithInsurance?month=3&year=${year}">3月</a>，</li>
+					            <li><a href="viewCompanyListWithInsurance?month=4&year=${year}">4月</a>，</li>
+					            <li><a href="viewCompanyListWithInsurance?month=5&year=${year}">5月</a>，</li>
+					            <li><a href="viewCompanyListWithInsurance?month=6&year=${year}">6月</a>，</li>
+					            <li><a href="viewCompanyListWithInsurance?month=7&year=${year}">7月</a>，</li>
+					            <li><a href="viewCompanyListWithInsurance?month=8&year=${year}">8月</a>，</li>
+					            <li><a href="viewCompanyListWithInsurance?month=9&year=${year}">9月</a>，</li>
+					            <li><a href="viewCompanyListWithInsurance?month=10&year=${year}">10月</a>，</li>
+					            <li><a href="viewCompanyListWithInsurance?month=11&year=${year}">11月</a>，</li>
+					            <li><a href="viewCompanyListWithInsurance?month=12&year=${year}">12月</a></li>
 						</ul>
-						</form>
+					
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -100,19 +100,24 @@
 								</tr>
 							</thead>
 							<tbody>
-							 <s:iterator value="#request.pageView.records" id="enterpriseEmployees">
+							 <s:iterator value="#request.map" id="enterpriseEmployees" status="list">
 								<tr>
 									<td>
-										<s:property value="%{#enterpriseEmployees.employeesId}"/>
+										<s:property value="#list.index+1"/>
 									</td>
 									<td>
 										<s:property value="%{#enterpriseEmployees.enterprise.fullName}"/>
 									</td>
 									<td>
-									    <s:date name="%{#enterpriseEmployees.cinsengDate}" format="yyyy年MM"/>
+										<s:property value="%{#enterpriseEmployees.cinsengDate.substring(0,4)}"/>年
+										<s:property value="%{#enterpriseEmployees.cinsengDate.substring(5,7)}"/>月
 									</td>
 									<td>
-										<a href="insuranceWithEmployeeList?enterpriseId=<s:property value="%{#enterpriseEmployees.enterprise.enterpriseId}"/>">新增员工3人，减员2人，参保3人
+										
+										<a href="insuranceWithEmployeeList?enterpriseId=<s:property value="%{#enterpriseEmployees.enterprise.enterpriseId}"/>">
+											新增员工<s:property value="%{#enterpriseEmployees.addIncrease}"/>人，
+											减员<s:property value="%{#enterpriseEmployees.ginsengProtectNature}"/>人，
+											参保<s:property value="%{#enterpriseEmployees.cinseng}"/>人
 										</a>
 									</td>
 									<td>
@@ -130,11 +135,13 @@
 										</s:else>
 									</td>
 									<td>
-										<s:property value="%{#enterpriseEmployees.note}"/>
+										<s:property value="%{#enterpriseEmployees.reductionNote}"/>
 									</td>
 									<td>
 										<s:set value="%{#enterpriseEmployees.enterprise.enterpriseId}" name="enterpriseId"></s:set>
-										<a href="#info-for-check" data-toggle="modal" onclick="findEnterpriseEmployeesRecution('${enterpriseId}')">修改</a>
+										<s:set value="%{#enterpriseEmployees.cinsengDate.substring(5,7)}" name="month"></s:set>
+										<s:set value="%{#enterpriseEmployees.cinsengDate.substring(0,4)}" name="year"></s:set>
+										<a href="#info-for-check" data-toggle="modal" class="recution" onclick="findEnterpriseEmployeesRecution(${enterpriseId},${month},${year})" data-id="<s:property value="%{#enterpriseEmployees.cinsengDate.substring(5,7)}"/> ">修改</a>
 									</td>
 								</tr>
 							</s:iterator>
@@ -167,15 +174,18 @@
 				<div class="row-fluid">
 					<form action="updateRecutionState" method="post">
 						<input type="hidden" name="enterpriseId"/>
+						<input type="hidden" name="year"/>
+						<input type="hidden" name="month"/>
+						<span id="stateus"></span>
 						<div class="input-container">
 							<label>
 								&nbsp;
 							</label>
-							<input type="radio" name="recutionState" value="0"checked="checked" />
+							<input type="radio" name="reductionState" value="0" checked="checked" />
 							未执行，
-							<input type="radio" name="recutionState" value="1"/>
+							<input type="radio" name="reductionState" value="1"/>
 							执行中，
-							<input type="radio" name="recutionState" value="2"/>
+							<input type="radio" name="reductionState" value="2"/>
 							已完成
 						</div>
 
@@ -185,7 +195,7 @@
 							<label>
 								补充说明
 							</label>
-							<input type="text" name=""/>
+							<input type="text" name="reductionNote" maxlength="30"/><span style="color: red;">(限30个字符)</span>
 						</div>
 
 						<hr/>

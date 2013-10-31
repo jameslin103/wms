@@ -13,7 +13,17 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
-
+		<script>
+			$(function (){
+				$("input[name='year']").blur(function (){
+					var year=$("input[name='year']").val();
+					if(year!=""){
+						$("#salary").submit();
+					}
+				});
+			});
+		
+		</script>
 	</head>
 	<body>
 
@@ -53,8 +63,11 @@
 
 						<ul class="normal action-container clearfix">
 							<li class="right">
-								<form action="" class="select-for-year" method="post">
-									 日期:<input id="d11" name="salaryDate" onclick="WdatePicker()" class="Wdate" style="width: 110px;height: 25px;" />
+								<form action="viewSalaryBudgetTable" class="select-for-year" method="post" id="salary">
+									<!--<input id="d11" name="salaryDate" onclick="WdatePicker()" class="Wdate" style="width: 110px;height: 25px;" />
+										-->
+										按年份查询:<span style="color: red;">(如:2013)</span>
+										<input type="text" name="year" value="${year}" maxlength="4" onkeyup="value=value.replace(/[^\d]/g,'')"/>
 								</form>
 							</li>
 							<li>
@@ -88,86 +101,28 @@
 								</tr>
 							</thead>  
 							<tbody>
+								<s:iterator begin="01" end="12" id="month">
 								<tr>
 									<td>
-										<div style="font-weight:bold; text-align: center;">一月</div>
+										<div style="font-weight:bold; text-align: center;"><s:property value="#month"/>月</div>
 									</td>
 									<td>
 										<ol>
-										<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
-										<s:property value="%{#sal.salaryDate}"/>
-											<li>
+											<s:iterator value="#request.map">
 												<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-													&budgetId=<s:property value="%{#sal.budgetId}"/>">
-													<s:if test="#sal.enterprise.enterpriseId">
-														<s:property value="%{#sal.name}"/>	
-														
-													</s:if>		
+													&budgetId=<s:property value="value.budgetId"/>">
+													<s:if test="key.substring(5,7)==#month">
+														<li>
+															<s:if test="value.name.length()>15">
+																<s:property value="value.name.substring(0,15)+'...'"/>
+															</s:if>
+															<s:else>
+																<s:property value="value.name"/>
+															</s:else>
+															<s:date name="value.salaryDate" format="MM月"/>工资
+														</li>
+													</s:if>
 												</a>
-											</li>
-											</s:iterator>
-										</ol>
-									</td>
-								
-									<td>
-										<ol>
-											<li>
-												xxx项目1月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												judd项目1月工资第二批
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
-										</ol>
-									</td>
-								
-								</tr>
-								<tr>
-									<td>
-										<div style="font-weight:bold; text-align: center;">二月</div>
-									</td>
-									<td>
-									
-										<ol>
-										<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
-											<li>
-												<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-													&budgetId=<s:property value="%{#sal.budgetId}"/>">
-														<s:property value="%{#sal.name}"/>			
-												</a>
-											</li>
-										</s:iterator>
-										</ol>
-										
-									</td>
-									<td>
-										<ol>
-											<li>
-												xxx项目1月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												judd项目1月工资第二批
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
-										</ol>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div style="font-weight:bold; text-align: center;">三月</div>
-									</td>
-									<td>
-									
-										<ol>
-											<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
-												<li>
-													<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-														&budgetId=<s:property value="%{#sal.budgetId}"/>">
-															<s:property value="%{#sal.name}"/>			
-													</a>
-												</li>
 											</s:iterator>
 										</ol>
 										
@@ -175,303 +130,32 @@
 								
 									<td>
 										<ol>
-											<li>
-												xxx项目1月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												judd项目1月工资第二批
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
-										</ol>
-									</td>
-								
-								</tr>
-								<tr>
-									<td>
-										<div style="font-weight:bold; text-align: center;">四月</div>
-									</td>
-									<td>
-									
-										<ol>
-											<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
+											
+											<s:iterator value="#request.map">
+												<s:if test="key.substring(5,7)==#month">
 												<li>
-													<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-														&budgetId=<s:property value="%{#sal.budgetId}"/>">
-															<s:property value="%{#sal.name}"/>			
-													</a>
+													<s:if test="value.name.length()>15">
+														<s:property value="value.name.substring(0,15)+'...'"/>
+													</s:if>
+													<s:else>
+														<s:property value="value.name"/>
+													</s:else>
+													<s:date name="value.salaryDate" format="MM月"/>工资
+													<span class="blue">（<s:property value="value.note"/>）</span>
 												</li>
+												</s:if>
+												
 											</s:iterator>
-										</ol>
-									</td>
-								
-									<td>
-										<ol>
-											<li>
-												xxx项目1月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												judd项目1月工资第二批
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
+											
 										</ol>
 									</td>
 								
 								</tr>
-								<tr>
-									<td>
-										<div style="font-weight:bold; text-align: center;">五月</div>
-									</td>
-									<td>
-										<ol>
-											<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
-												<li>
-													<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-														&budgetId=<s:property value="%{#sal.budgetId}"/>">
-															<s:property value="%{#sal.name}"/>			
-													</a>
-												</li>
-											</s:iterator>
-										</ol>
-									</td>
-								
-									<td>
-										<ol>
-											<li>
-												xxx项目1月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												judd项目1月工资第二批
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
-										</ol>
-									</td>
-								
-								</tr>
-								<tr>
-									<td>
-										<div style="font-weight:bold; text-align: center;">六月</div>
-									</td>
-									<td>
-										<ol>
-											<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
-												<li>
-													<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-														&budgetId=<s:property value="%{#sal.budgetId}"/>">
-															<s:property value="%{#sal.name}"/>			
-													</a>
-												</li>
-											</s:iterator>
-										</ol>
-									</td>
-								
-									<td>
-										<ol>
-											<li>
-												xxx项目1月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												judd项目1月工资第二批
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
-										</ol>
-									</td>
-								
-								</tr>
-								<tr>
-									<td>
-										<div style="font-weight:bold; text-align: center;">七月</div>
-									</td>
-									<td>
-										<ol>
-											<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
-												<li>
-													<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-														&budgetId=<s:property value="%{#sal.budgetId}"/>">
-															<s:property value="%{#sal.name}"/>			
-													</a>
-												</li>
-											</s:iterator>
-										</ol>
-									</td>
-								
-									<td>
-										<ol>
-											<li>
-												xxx项目1月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												judd项目1月工资第二批
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
-										</ol>
-									</td>
-								
-								</tr>
-								<tr>
-									<td>
-										<div style="font-weight:bold; text-align: center;">八月</div>
-									</td>
-									<td>
-										<ol>
-											<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
-												<li>
-													<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-														&budgetId=<s:property value="%{#sal.budgetId}"/>">
-															<s:property value="%{#sal.name}"/>			
-													</a>
-												</li>
-											</s:iterator>
-										</ol>
-									</td>
-								
-									<td>
-										<ol>
-											<li>
-												xxx项目1月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												judd项目1月工资第二批
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
-										</ol>
-									</td>
-								
-								</tr>
-								<tr>
-									<td>
-										<div style="font-weight:bold; text-align: center;">九月</div>
-									</td>
-									<td>
-										<ol>
-											<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
-												<li>
-													<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-														&budgetId=<s:property value="%{#sal.budgetId}"/>">
-															<s:property value="%{#sal.name}"/>			
-													</a>
-												</li>
-											</s:iterator>
-										</ol>
-									</td>
-								
-									<td>
-										<ol>
-											<li>
-												xxx项目1月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												judd项目1月工资第二批
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
-										</ol>
-									</td>
-								
-								</tr>
-								<tr>
-									<td>
-										<div style="font-weight:bold; text-align: center;">十月</div>
-									</td>
-									<td>
-										<ol>
-											<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
-												<li>
-													<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-														&budgetId=<s:property value="%{#sal.budgetId}"/>">
-															<s:property value="%{#sal.name}"/>			
-													</a>
-												</li>
-											</s:iterator>
-										</ol>
-									</td>
-								
-									<td>
-										<ol>
-											<li>
-												xxx项目1月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												judd项目1月工资第二批
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
-										</ol>
-									</td>
-								
-								</tr>
-								<tr>
-									<td>
-										<div style="font-weight:bold; text-align: center;">十一月</div>
-									</td>
-									<td>
-										<ol>
-											<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
-												<li>
-													<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-														&budgetId=<s:property value="%{#sal.budgetId}"/>">
-															<s:property value="%{#sal.name}"/>			
-													</a>
-												</li>
-											</s:iterator>
-										</ol>
-									</td>
-								
-									<td>
-										<ol>
-											<li>
-												xxx项目1月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												judd项目1月工资第二批
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
-										</ol>
-									</td>
-								
-								</tr>
-								<tr>
-									<td>
-										<div style="font-weight:bold; text-align: center;">十二月</div>
-									</td>
-									<td>
-										<ol>
-											<s:iterator value="#request.createSalaryBudgetTable" id="sal" >
-												<li>
-													<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-														&budgetId=<s:property value="%{#sal.budgetId}"/>">
-															<s:property value="%{#sal.name}"/>			
-													</a>
-												</li>
-											</s:iterator>
-										</ol>
-									</td>
-								
-									<td>
-										<ol>
-											<li>
-												xxx项目1月工资
-												<span class="blue">（已发放）</span>
-											</li>
-											<li>
-												judd项目1月工资第二批
-												<span class="red">（资金已到位，待发放）</span>
-											</li>
-										</ol>
-									</td>
-								
-								</tr>
+								</s:iterator>
 							</tbody>
 						</table>
 
 					</div>
-
 				</div>
 			</div>
 

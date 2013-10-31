@@ -158,15 +158,26 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @param enterpriseId
 	 * @return
 	 */
-	public EnterpriseEmployees findRecutionState(Integer enterpriseId);
+	public List<EnterpriseEmployees> findRecutionState(Integer enterpriseId,Integer month,Integer year);
 	
 	/**
 	 * 修改增减员状态
 	 * @param enterpriseId
 	 * @param recutionState
 	 */
-	public void updateRecutionState(Integer enterpriseId,Integer recutionState);
+	public void updateRecutionState(Integer enterpriseId,Integer recutionState,String reductionNote,Integer month,Integer year);
 	
 	
 	public  String isExitSameEnterpriseEmployees(String[] fileDate);
+	
+	
+	/**
+	 * 统计，增员，减员，参保人员
+	 * @param year
+	 * @return
+	 */
+	public List<Object[]>     getViewInsuranceWithMonthTotal(Integer year,Integer enterpriseId);
+	
+	
+	
 }

@@ -100,7 +100,7 @@ public class EnterpriseEmployees implements Serializable{
 	private Double  seriousDiseaseBase;
 	
 	
-	/*参保性质  1增员  2续保*/
+	/*参保性质  1增员  2续保  3减员  */
 	private Integer ginsengProtectNature;
  
 	/*参保日期*/
@@ -148,13 +148,21 @@ public class EnterpriseEmployees implements Serializable{
 	
 	private Enterprise  enterprise;
 	
-	/*增减员状态    0 未执行  1执行中  2已完成*/
+	/*增员，减员，续保，状态    0 未执行  1执行中  2已完成*/
 	private Integer     reductionState=0;
 	
+	/*增减员；备注说明*/
+	private String      reductionNote;
 	
 	
-	
-	
+	@Column(length=30)
+	public String getReductionNote() {
+		return reductionNote;
+	}
+	public void setReductionNote(String reductionNote) {
+		this.reductionNote = reductionNote;
+	}
+	@Column(length=1)
 	public Integer getReductionState() {
 		return reductionState;
 	}

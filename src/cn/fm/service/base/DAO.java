@@ -58,4 +58,8 @@ public interface DAO<T> {
 		public QueryResult<T> getScrollData(int firstindex, int maxresult);
 		
 		public QueryResult<T> getScrollData();
+		
+		public QueryResult<T> getScrollDataSum(int firstindex, int maxresult, String wherejpql, Object[] queryParams,String orderby,String fromCurrentSql);
+		
+		
 	}

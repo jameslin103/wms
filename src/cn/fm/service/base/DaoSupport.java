@@ -86,6 +86,31 @@ public abstract class DaoSupport<T> implements DAO<T>{
 		return qr;
 	}
 	
+	/**
+	 * 统计集合返回结果
+	 * @param firstindex
+	 * @param maxresult
+	 * @param wherejpql
+	 * @param queryParams
+	 * @param orderby
+	 * @return
+	 * Date 2013-10-30
+	 */
+	@Transactional(readOnly=true,propagation=Propagation.NOT_SUPPORTED)
+	public QueryResult<T> getScrollDataSum(int firstindex, int maxresult , String wherejpql, Object[] queryParams,String orderby,String fromCurrenSql) {
+		QueryResult qr = new QueryResult<T>();
+		String entityname = getEntityName(this.entityClass);
+		Query query = em.createQuery("select "+fromCurrenSql+" from "+ entityname+ " o "+(wherejpql==null || "".equals(wherejpql.trim())? "": "where "+ wherejpql)+ orderby);
+		setQueryParams(query, queryParams);
+		if(firstindex!=-1 && maxresult!=-1) query.setFirstResult(firstindex).setMaxResults(maxresult);
+		qr.setResultlist(query.getResultList());
+		query = em.createQuery("select count("+ getCountField(this.entityClass)+ ") from "+ entityname+ " o "+(wherejpql==null || "".equals(wherejpql.trim())? "": "where "+ wherejpql));
+		setQueryParams(query, queryParams);
+		qr.setTotalrecord((Long)query.getSingleResult());
+		return qr;
+	}
+	
+	
 	protected static void setQueryParams(Query query, Object[] queryParams){
 		if(queryParams!=null && queryParams.length>0){
 			for(int i=0; i<queryParams.length; i++){

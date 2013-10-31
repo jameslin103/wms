@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li>
                       	上传减员信息表
                       <form  action="uploadInsuranceReduction" class="form-search" method="post" enctype="multipart/form-data">
-                        <s:file name="file"/><br>
+                        <s:file name="file"/><br/>
                         <button type="submit" class="btn btn-primary">上传</button>
                       </form>
                     </li>

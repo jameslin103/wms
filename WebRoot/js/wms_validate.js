@@ -380,21 +380,34 @@ function findToIdSalaryDetail(salaryId)
 
 
 
-function findEnterpriseEmployeesRecution(enterpriseId)
+function findEnterpriseEmployeesRecution(enterpriseId,month,year)
 {
-	
 	if(enterpriseId!=null && enterpriseId!=undefined){
 		$.ajax( {    
 		    url:'findEnterpriseEmployeesRecution',// 跳转到 action  
-		    data:{enterpriseId:enterpriseId},    
+		    data:{enterpriseId:enterpriseId,month:month,year:year},    
 		    type:'post',    
 		    cache:false,
 		    dataType:'json',    
 		    success:function(data){
-		    	$("input[name='enterpriseId']").val(data.employeesRecution.enterprise.enterpriseId);
-		    	$("input[name='recutionState'][value="+data.employeesRecution.recutionState+"]").attr("checked",true);
 		    	
-
+	    		var reductionState=0;
+	    		var enterpriseId=0;
+	    		var reductionNote;
+	    		$("input[name='reductionState'][value="+0+"]").attr("checked",true);
+		    	$.each(data.employeesRecution,function(i,value){
+		    		
+		    		enterpriseId=value.enterprise.enterpriseId;
+		    		reductionState=value.reductionState;
+		    		reductionNote=value.reductionNote;
+			    	
+		    	});
+		    	
+		    	$("input[name='enterpriseId']").val(enterpriseId);
+		    	$("input[name='reductionState'][value="+reductionState+"]").attr("checked",true);
+		    	$("input[name='year']").val(year);
+		    	$("input[name='month']").val(month);
+		    	$("input[name='reductionNote']").val(reductionNote);
 		    },    
 		     error : function() {  
 		    	 alert("系统异常，请稍后重试！");

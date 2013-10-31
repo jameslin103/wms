@@ -20,6 +20,7 @@ import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.utils.DateUtil;
+import cn.fm.web.action.salary.CompanylistWithSalaryAction;
 public class EnterpriseEmployessServiceTest {
 
 	
@@ -288,7 +289,7 @@ public class EnterpriseEmployessServiceTest {
    public void findRecutionState()
    {
 	   
-	   enterpriseEmployeesService.findRecutionState(18);
+	   enterpriseEmployeesService.findRecutionState(18,2013,3);
    }
    @Test
    public void isExitSameEnterpriseEmployees()
@@ -298,7 +299,29 @@ public class EnterpriseEmployessServiceTest {
 	  String error=enterpriseEmployeesService.isExitSameEnterpriseEmployees(employees);
 	  System.out.println(error);
    }
-   
-   
+   @Test
+   public void getViewInsuranceWithMonthTotal(){
+	   
+	 List<Object[]>  list=enterpriseEmployeesService.getViewInsuranceWithMonthTotal(2013,1);
+	 for (Object[] ob : list) {
+		
+		 System.out.println("状态\t"+"增员\t"+"参保\t"+"减员\t"+"月份\t");
+		 System.out.println(ob[0]+"\t"+ob[1]+"\t"+ob[2]+"\t"+ob[3]+"\t"+ob[4]);
+		 System.out.println("===============================");
+	}
+	System.out.println( DateUtil.getCurrentTime().substring(0, 4));
+	 
+	 
+   }
+   @Test
+	public void viewCompanyListWithInsuranceAction()
+	{
+		
+		CompanylistWithSalaryAction action=new CompanylistWithSalaryAction();
+		action.setEnterpriseEmployeesService(enterpriseEmployeesService);
+		action.viewCompanyListWithInsurance();
+		
+		
+	}
    
 }

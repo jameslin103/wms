@@ -51,7 +51,7 @@
 								<s:a href="downloadInsuranceWithEmployeeList" cssClass="btn btn-primary" >下载社医保办理与减员表</s:a>
 							</li>
 							<li>
-								2013年1月
+								<s:property value="%{#request.insuranceYear}"/>年<s:property value="%{#request.month}"/>月
 							</li>
 							<li>
 								&nbsp;/&nbsp;
@@ -60,13 +60,19 @@
 								查看：
 							</li>
 							<li>
-								<a href="newStaffEmployees?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>">新增</a>，
+								<a href="viewStaffAndRenewalAndReductionEmployees?staff_renewal_reduction=1
+								&insuranceYear=<s:property value="%{#request.insuranceYear}"/>
+								&month=<s:property value="%{#request.month}"/>">新增</a>，
 							</li>
 							<li>
-								<a href="renewalEmployees?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>">续保</a>，
+								<a href="viewStaffAndRenewalAndReductionEmployees?staff_renewal_reduction=2
+								&insuranceYear=<s:property value="%{#request.insuranceYear}"/>
+								&month=<s:property value="%{#request.month}"/>">续保</a>，
 							</li>
 							<li>
-								<a href="personnelReduction?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>">减员</a>
+								<a href="viewStaffAndRenewalAndReductionEmployees?staff_renewal_reduction=3
+									&insuranceYear=<s:property value="%{#request.insuranceYear}"/>
+									&month=<s:property value="%{#request.month}"/>">减员</a>
 							</li>
 						</ul>
 
@@ -125,14 +131,14 @@
 									</th>
 									<th>
 										费用
-										<br>
+										<br/>
 										（元）
 									</th>
 								</tr>
 							</thead>
 							
 							<tbody>
-							<s:iterator value="%{#request.employees}" id="emp">
+							<s:iterator value="%{#request.pageView.records}" id="emp">
 								<tr>
 									<td>
 										<s:property value="%{#emp.employeesId}"/>
@@ -188,29 +194,66 @@
 										<s:else>&nbsp;&nbsp;</s:else>
 									</td>
 									<td>
-										<s:property value="%{#emp.ginsengProtectNature}"/>
+										<s:if test="#emp.ginsengProtectNature==1">
+											<span>新增</span>
+										</s:if>
+										<s:elseif test="#emp.ginsengProtectNature==2">
+											<span>续保</span>
+										</s:elseif>
+										<s:elseif test="#emp.reduction==1">
+											<span>减员</span>
+										</s:elseif>
 									</td>
 									<td>
 										<ol>
 											<li>
-												<s:property value="%{#emp.sociaSecurity}"/>
+												<s:if test="%{#emp.sociaSecurity.indexOf('是')>=0}">
+													<span>医保</span>
+												</s:if>
+												<s:else>
+													<span>否</span>
+												</s:else>
 											</li>
 											<li>
-												<s:property value="%{#emp.healthCare}"/>
+												<s:if test="%{#emp.healthCare.indexOf('是')>=0}">
+													<span>社保</span>
+												</s:if>
+												<s:else>
+													<span>否</span>
+												</s:else>
 											</li>
 											<li>
-												<s:property value="%{#emp.accumulationFund}"/>
+												<s:if test="%{#emp.accumulationFund.indexOf('是')>=0}">
+													<span>公积金</span>
+												</s:if>
+												<s:else>
+													<span>否</span>
+												</s:else>
 											</li>
 											<li>
-												<s:property value="%{#emp.seriousDisease}"/>
+												<s:if test="%{#emp.seriousDisease.indexOf('是')>=0}">
+													<span>大病统筹</span>
+												</s:if>
+												<s:else>
+													<span>否</span>
+												</s:else>
+												
 											</li>
 										</ol>
 									</td>
 									<td>
-										560
+										<s:property value="%{#emp.serviceCost}"/>
 									</td>
 									<td>
-										执行中
+										<s:if test="#emp.reductionState==0">
+											<span>未执行</span>
+										</s:if>
+										<s:elseif test="#emp.reductionState==1">
+											<span>执行中</span>
+										</s:elseif>
+										<s:elseif test="#emp.reductionState==2">
+											<span>已完成</span>
+										</s:elseif>
 									</td>
 									<td>
 										<a href="deleteEmployees?enterpriseEmployees.employeesId=<s:property value="%{#emp.employeesId}"/>">删除</a>
@@ -221,12 +264,8 @@
 							
 						</table>
 
-						<div class="pagination">
-							<ul>
-								<li>
-									<%@ include file="/share/fenye.jsp" %>
-								</li>
-							</ul>
+						<div>
+							<%@ include file="../share/fenye.jsp" %>
 						</div>
 
 					</div>
@@ -256,9 +295,9 @@
 							<label>
 								&nbsp;
 							</label>
-							<input type="radio" name="" value="1" checked="checked">
+							<input type="radio" name="" value="1" checked="checked"/>
 							执行中，
-							<input type="radio" name="" value="0">
+							<input type="radio" name="" value="0"/>
 							已完成
 						</div>
 
@@ -266,7 +305,7 @@
 							<label>
 								补充说明
 							</label>
-							<input type="text" name="">
+							<input type="text" name=""/>
 						</div>
 
 						<div class="input-container">

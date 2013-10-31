@@ -2,6 +2,7 @@ package cn.fm.web.action.company;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import javax.annotation.Resource;
 
 import com.opensymphony.xwork2.Preparable;
 
+import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.permissions.Role;
@@ -41,8 +43,15 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	private EnterpriseEmployees  enterpriseEmployees=new EnterpriseEmployees();
 	
 	private Integer				userId;
+	private boolean      isSystemAdmin;
 	
 	
+	public boolean isSystemAdmin() {
+		return isSystemAdmin;
+	}
+	public void setSystemAdmin(boolean isSystemAdmin) {
+		this.isSystemAdmin = isSystemAdmin;
+	}
 	public Enterprise getEnterpriseJson() {
 		return enterpriseJson;
 	}
@@ -110,21 +119,12 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 
 	public String  addEnterprise()
 	{
-		boolean isSystem=false;
 		WmsUser user=WebUtil.getWmsUser(request);
 		if(user==null)return INPUT;
 		if(enterprise==null)return INPUT;
 		if(enterprise!=null){
-			isSystem=isStysemUserRole(user);
-			if(isSystem==true)
-			{
-				 enterpriseService.save(enterprise);
-			}
-			if(isSystem!=true)
-			{
-				  enterprise.addWmsUser(wmsUserService.find(user.getUserId()));
-				  enterpriseService.save(enterprise);
-			}		 	
+			enterprise.addWmsUser(wmsUserService.find(user.getUserId()));
+			enterpriseService.save(enterprise); 	
 		  }
 
 		return SUCCESS;
@@ -132,21 +132,22 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	
 	public String  viewEnterprise()
 	{
-		boolean isSystem=false;
-		WmsUser user=WebUtil.getWmsUser(request);
-		isSystem=isStysemUserRole(user);
 		
-		List<WmsUser> wmsUsers=getTemplWmsUser(wmsUserService.getAllWmsUser());
+		WmsUser user=WebUtil.getWmsUser(request);
+		isSystemAdmin=isStysemUserRole(user);
+		
+		List<WmsUser> wmsUsers=wmsUserService.getAllWmsUser();
 		if(wmsUsers.size()==0)wmsUsers=new ArrayList<WmsUser>();
 		
 		
-		if(isSystem==true)
+		if(isSystemAdmin==true)
 		{
 			List<Enterprise> allEnterpsie=enterpriseService.getAllEnterprise();
 			if(allEnterpsie==null || allEnterpsie.size()==0)allEnterpsie=new ArrayList<Enterprise>();
+			request.setAttribute("isSystemAdmin", isSystemAdmin);
 			request.setAttribute("enterpsie", allEnterpsie);
 		}
-		if(isSystem!=true)
+		if(isSystemAdmin!=true)
 		{
 			List<Enterprise> enterpsies=getWmsUserToBeEnterprise();
 			request.setAttribute("enterpsie", enterpsies);
@@ -157,7 +158,11 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		
 		return SUCCESS;
 	}
-	
+	/**
+	 * 是否高级管理员
+	 * @param user
+	 * @return
+	 */
 	public boolean isStysemUserRole(WmsUser user)
 	{
 		boolean isSystem=false;
@@ -246,12 +251,34 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	public String viewWorkersIncreased()
 	{
 		if(enterprise.getEnterpriseId()==null)return INPUT;
-		List<EnterpriseEmployees> enterprisEmployeesList=enterpriseEmployeesService.findWorkersIncreasedToEmployees(enterprise.getEnterpriseId());
-		if(enterprisEmployeesList.size()==0)
-			enterprisEmployeesList=new ArrayList<EnterpriseEmployees>();
+		
 		Enterprise enterprisePO=enterpriseService.find(enterprise.getEnterpriseId());
 		request.getSession().setAttribute("enterprise", enterprisePO);
-		request.setAttribute("employees", enterprisEmployeesList);
+		
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(enterprise.getEnterpriseId()!=null)
+		{
+			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(enterprise.getEnterpriseId());
+			jpql.append(" and (o.whetherGinseng=?").append(params.size()+1);
+			params.add(1);
+			jpql.append(" or o.reduction=?").append(params.size()+1);
+			params.add(1);
+			jpql.append(" or o.ginsengProtectNature=?").append(params.size()+1);
+			params.add(1);
+
+			jpql.append(" ) and o.pseudoDelete=?").append(params.size()+1);
+			params.add(0);
+			
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+		
 		return SUCCESS;
 	}
 	/**

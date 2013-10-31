@@ -96,7 +96,14 @@
 														 <s:if test="#en.enterpriseId==#enterprise.enterpriseId">
 														    <li>
 															    <a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>&budgetId=<s:property value="%{#cr.budgetId}"/>">
-															    	<s:property value="%{#cr.name}"/>（<s:property value="%{#cr.note}"/>）
+																    	<s:if test="#cr.name.length()>15">
+																			<s:property value="#cr.name.substring(0,15)+'...'"/>
+																		</s:if>
+																		<s:else>
+																			<s:property value="%{#cr.name}"/>
+																		</s:else>
+																				    	
+															    	（<s:property value="%{#cr.note}"/>）
 															    </a>
 														    </li>
 														   </s:if>
@@ -204,34 +211,34 @@
 							<label>
 								联系人
 							</label>
-							<input type="text" name="enterprise.contact" maxlength="20">
+							<input type="text" name="enterprise.contact" maxlength="20"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								电话
 							</label>
-							<input type="text" name="enterprise.phone" maxlength="20">
+							<input type="text" name="enterprise.phone" maxlength="20"/>
 						</div>
 						<div class="input-container">
 							<label>
 								QQ
 							</label>
-							<input type="text" name="enterprise.qq" maxlength="20">
+							<input type="text" name="enterprise.qq" maxlength="20"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								传真
 							</label>
-							<input type="text" name="enterprise.fax" maxlength="20">
+							<input type="text" name="enterprise.fax" maxlength="20"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								电子邮件
 							</label>
-							<input type="text" name="enterprise.email" maxlength="20">
+							<input type="text" name="enterprise.email" maxlength="20"/>
 						</div>
 
 						<div class="input-container">

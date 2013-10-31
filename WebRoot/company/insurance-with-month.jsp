@@ -13,6 +13,19 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
+		<script>
+			$(function (){
+			   $("input[name='insuranceYear']").blur(function(){
+			   	   var year=$("input[name='insuranceYear']").val();
+			   	   if(year!="")
+			   	   {
+			   	   	   $(".select-for-year").submit();
+			   	   }
+			   });
+			});
+		
+		
+		</script>
 
 	</head>
 	<body>
@@ -50,8 +63,12 @@
 						<ul class="normal action-container clearfix">
 							<li class="right">
 							
-								<form action="" class="select-for-year" method="post">
-									 日期:<input id="d11" name="year" onclick="WdatePicker()"  class="Wdate" style="width: 110px;height: 25px;" />
+								<form action="viewInsuranceWithMonth" class="select-for-year" method="post">
+									按年份查询:
+									<!--<input id="d11" name="insuranceYear" onclick="WdatePicker()" class="Wdate" style="width: 110px;height: 25px;" />
+										 -->
+									<input type="text" name="insuranceYear" value="${insuranceYear}" maxlength="4" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+									<input type="hidden" value="${insuranceYear}" name="insuranceYear"/>
 								</form>
 							</li>
 							<li>
@@ -83,174 +100,35 @@
 								</tr>
 							</thead>
 							<tbody>
+								<s:iterator value="#request.insuranceSumTotal" id="sumTotal" status="list">
 								<tr>
 									<td align="center">
-										一月
+										<s:property value="%{#sumTotal[4]}"/>月
 									</td>
 									<td>
-										<a href="insuranceWithEmployeeList?month=8">新增3人，续保4人，减员2人</a>
+										<a href="insuranceWithEmployeeList?month=<s:property value="%{#sumTotal[4]}"/>
+										&insuranceYear=<s:property value="%{#request.insuranceYear}"/>">
+											新增<s:property value="%{#sumTotal[1]}"/>人，
+											续保<s:property value="%{#sumTotal[2]}"/>人，
+											减员<s:property value="%{#sumTotal[3]}"/>人
+										</a>
 									</td>
 									<td>
-										已完成
+										<s:if test="#sumTotal[1]==0">
+											<span>未执行</span>
+										</s:if>
+										<s:elseif test="#sumTotal[1]==1">
+											<span>执行中</span>
+										</s:elseif>
+										<s:elseif test="#sumTotal[1]==1">
+											<span>已完成</span>
+										</s:elseif>
 									</td>
 									<td>
-										---
+										<!-- - -->
 									</td>
-								</tr>
-								<tr>
-									<td>
-										二月
-									</td>
-									<td>
-										新增3人
-									</td>
-									<td>
-										已完成
-									</td>
-									<td>
-										-----
-									</td>
-								</tr>
-								<tr>
-									<td>
-										三月
-									</td>
-									<td>
-										<a href="insuranceWithEmployeeList?month=8">新增3人，续保4人，减员2人</a>
-									</td>
-									<td>
-										已完成
-									</td>
-									<td>
-										---
-									</td>
-								</tr>
-								<tr>
-									<td>
-										四月
-									</td>
-									<td>
-										新增3人
-									</td>
-									<td>
-										已完成
-									</td>
-									<td>
-										-----
-									</td>
-								</tr>
-								<tr>
-									<td>
-										五月
-									</td>
-									<td>
-										<a href="insuranceWithEmployeeList?month=8">新增3人，续保4人，减员2人</a>
-									</td>
-									<td>
-										已完成
-									</td>
-									<td>
-										---
-									</td>
-								</tr>
-								<tr>
-									<td>
-										六月
-									</td>
-									<td>
-										新增3人
-									</td>
-									<td>
-										已完成
-									</td>
-									<td>
-										-----
-									</td>
-								</tr>
-								<tr>
-									<td>
-										七月
-									</td>
-									<td>
-										<a href="insuranceWithEmployeeList?month=8">新增3人，续保4人，减员2人</a>
-									</td>
-									<td>
-										已完成
-									</td>
-									<td>
-										---
-									</td>
-								</tr>
-								<tr>
-									<td>
-										八月
-									</td>
-									<td>
-										新增3人
-									</td>
-									<td>
-										已完成
-									</td>
-									<td>
-										-----
-									</td>
-								</tr>
-								<tr>
-									<td>
-										九月
-									</td>
-									<td>
-										<a href="insuranceWithEmployeeList?month=8">新增3人，续保4人，减员2人</a>
-									</td>
-									<td>
-										已完成
-									</td>
-									<td>
-										---
-									</td>
-								</tr>
-								<tr>
-									<td>
-										十月
-									</td>
-									<td>
-										新增3人
-									</td>
-									<td>
-										已完成
-									</td>
-									<td>
-										-----
-									</td>
-								</tr>
-								<tr>
-									<td>
-										十一月
-									</td>
-									<td>
-										<a href="insuranceWithEmployeeList?month=8">新增3人，续保4人，减员2人</a>
-									</td>
-									<td>
-										已完成
-									</td>
-									<td>
-										---
-									</td>
-								</tr>
-								<tr>
-									<td>
-										十二月
-									</td>
-									<td>
-										新增0人
-									</td>
-									<td>
-										未完成
-									</td>
-									<td>
-										-----
-									</td>
-								</tr>
+							  </tr>
+							  </s:iterator>
 							</tbody>
 						</table>
 

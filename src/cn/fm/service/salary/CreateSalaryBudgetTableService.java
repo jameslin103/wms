@@ -6,8 +6,10 @@ import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.service.base.DAO;
 
 public interface CreateSalaryBudgetTableService extends DAO<CreateSalaryBudgetTable> {
+	
 	public void save(CreateSalaryBudgetTable createSalaryBudgetTable);
-	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Integer enterpriseId);
+	
+	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Integer enterpriseId,Integer year);
 	/**
 	 * 更新工资预算表
 	 * @param createSalaryBudgetTable

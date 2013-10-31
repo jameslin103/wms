@@ -22,6 +22,10 @@ public class Constant {
 	
 	public static final String WMS_CITY_HEALTH_CARE="市医保";
 	public static final String WMS_PROVINCIAL_HEALTH_CARE="省医保";
+	public static final String WMS_SHEN_BAO="社保";
+	public static final String WMS_YI_BAO="医保";
+	public static final String WMS_GONG_JI_JIN="公积金";
+	public static final String WMS_DA_BING_TONG_CHOU="大病统筹";
 	public static final String WMS_SEX_MAILE="男";
 	public static final String WMS_SEX_WOMAN="女";
 	public static final String WMS_XIN_ZENG="新增";
@@ -38,8 +42,11 @@ public class Constant {
 	
 	public static final String WMS_YES="是";
 	public static final String WMS_NO="否";
+	public static final String WMS_WU="无";
 	
 	public static final String WMS_GENDANYUAN="跟单员";
 	public static final String WMS_GAO_JI_GUANLI_YUAN="超级管理员";
+	
+	
 	
 }
