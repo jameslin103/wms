@@ -128,23 +128,25 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	 */
 	public String viewCompanyListWithSaraly()
 	{
-		String yearAndMonth = null;
+		if(year==null)
+		{
+			this.year=DateUtil.getCurrentTime().toString().substring(0, 4);
+		}
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("budgetId", "asc");
 		StringBuffer jpql = new StringBuffer("");
 		List<Object> params = new ArrayList<Object>();
+		
 		if(!StringUtil.isEmpty(year))
 		{
-			yearSub=Integer.parseInt(year.substring(0, 4));
-			yearAndMonth=yearSub+""+month;
 			if(month!=null && month!=0){
 				
-				jpql.append(" date_format(o.salaryDate,'%Y%m')=?").append(params.size()+1);
-				params.add(yearAndMonth);
+				jpql.append(" month(o.salaryDate)=?").append(params.size()+1).append(" and");
+				params.add(month);
 			}else{
 
 				jpql.append(" year(o.salaryDate)=?").append(params.size()+1);
-				params.add(yearSub);
+				params.add(Integer.parseInt(year));
 				
 			}
 		}
@@ -241,36 +243,56 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	 */
 	public String viewCompanyListWithBalance()
 	{
-		String yearAndMonth = null;
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("detailId", "asc");
+		if(year==null)
+		{
+			this.year=DateUtil.getCurrentTime().toString().substring(0, 4);
+		}
+		String formCurrentSql=" o.enterpriseId, SUM(o.balance)";
+		String groupby="   group by o.enterpriseId order by o.enterpriseId asc ";
+		
 		StringBuffer jpql = new StringBuffer("");
 		
 		List<Object> params = new ArrayList<Object>();
 		if(!StringUtil.isEmpty(year))
 		{
-			yearSub=Integer.parseInt(year.substring(0, 4));
-			yearAndMonth=yearSub+""+month;
+		
 			if(month!=null && month!=0){
-				
-				jpql.append(" date_format(o.yearMonth,'%Y%m')=?").append(params.size()+1);
-				params.add(yearAndMonth);
-			}else{
-
-				jpql.append(" year(o.yearMonth)=?").append(params.size()+1);
-				params.add(yearSub);
-				
+				jpql.append(" month(o.yearMonth)=?").append(params.size()+1).append(" and");
+				params.add(month);
 			}
+			jpql.append(" year(o.yearMonth)=?").append(params.size()+1);
+			params.add(Integer.parseInt(year));
+			
+			
+			
+			
 		}
 		PageView<BalanceDetail> pageView = new PageView<BalanceDetail>(10,  this.getPage());
-		pageView.setQueryResult(balanceDetailService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+		pageView.setQueryResult(balanceDetailService.getScrollDataSum(pageView.getFirstResult(), pageView.getMaxresult(),jpql.toString(),params.toArray(), groupby,formCurrentSql));
 			request.setAttribute("pageView", pageView);
-			request.setAttribute("year", yearSub);
+			request.setAttribute("balanceDetailList", treconstructBalanceDetail( pageView.getRecords()));
+			request.setAttribute("year", year);
+			request.setAttribute("month", month);
 			
 		return SUCCESS;
 	}
-	
+	private List<Object> treconstructBalanceDetail(List<BalanceDetail> balanceDetailList) {
+		
+		Map<String, Object>  map;
+		List<Object>  list=new ArrayList<Object>();
+		for (Object bal : balanceDetailList) {
+			 Object[] ob=( Object[])bal;
+			 Integer enterpriseId=(Integer)(ob[0]==null?0:ob[0]);
+			
+			map=new HashMap<String, Object>();
+			map.put("balance",ob[1]==null?null:ob[1]);
+			map.put("enterprise", enterpriseService.find(enterpriseId));
+			list.add(map);
+		}
+
+		return list;
+	}
+
 	public String findEnterpriseEmployeesRecution()
 	{
 		

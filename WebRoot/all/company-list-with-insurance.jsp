@@ -13,18 +13,7 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
-		<script type="text/javascript">
-	   $(function (){
-	   
-	   	  $("input[name='year']").blur(function(){
-	   	  	   var year=$("input[name='year']").val();
-	   	  	 	if(year!="" && year!=undefined)
-	   	  	 	{
-	   	  			$("#myform1").submit(); 
-	   	         }
-	   	  });
-	   	 
-	</script>
+		
 	</head>
 	<body>
 		<div id="container">
@@ -53,10 +42,8 @@
 							<li class="right">
 							<form action="viewCompanyListWithInsurance" class="select-for-year" method="post" id="myform1">
 								按年份查询:
-									<!--<input id="d11" name="insuranceYear" onclick="WdatePicker()" class="Wdate" style="width: 110px;height: 25px;" />
-										 -->
-									<input type="text" name="year" value="${year}" maxlength="4" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-									<input type="hidden" value="${year}" name="insuranceYear"/>
+									<input type="text"  name="year" value="${year}" maxlength="4" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+									
 							</form>
 							</li>
 							    <li><a href="viewCompanyListWithInsurance?month=1&year=${year}">1月</a>，</li>

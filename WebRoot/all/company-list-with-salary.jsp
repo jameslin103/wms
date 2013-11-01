@@ -14,21 +14,7 @@
 		<title>富民人力银行派遣系统</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<%@ include file="/help/public_css_js.jsp"%>
-		<script type="text/javascript">
-	   $(function (){
-	   
-	   	  $("input[name='year']").blur(function(){
-	   	  	   var year=$("input[name='year']").val();
-	   	  	 	if(year!="" && year!=undefined)
-	   	  	 	{
-	   	  			$("#myform1").submit(); 
-	   	         }
-	   	  });
-	   	   
-	   });
-	
-	
-	</script>
+
 	</head>
 	<body>
 
@@ -50,27 +36,29 @@
 								<a href="viewCompanyListWithBalance">资金往来</a>
 							</li>
 						</ul>
-						<form action="viewCompanyListWithSaraly" class="select-for-year" method="post" id="myform1">
+						
 						
 						<ul class="normal action-container clearfix">
 							<li class="right">
-									 日期:<input id="d11" name="year" onclick="WdatePicker()" value="${year}" class="Wdate" style="width: 110px;height: 25px;" />
+							<form action="viewCompanyListWithSaraly" class="select-for-year" method="post" id="myform1">
+									按年份查询:<input type="text" name="year"  value="${year}"  maxlength="4" onkeyup="value=value.replace(/[^\d]/g,'')"/>
 									
+								</form>	
 							</li>
-								<li><a href="viewCompanyListWithSaraly?month=1&year=<s:property value="%{#request.year}"/>">1月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=2&year=<s:property value="%{#request.year}"/>">2月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=3&year=<s:property value="%{#request.year}"/>">3月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=4&year=<s:property value="%{#request.year}"/>">4月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=5&year=<s:property value="%{#request.year}"/>">5月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=6&year=<s:property value="%{#request.year}"/>">6月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=7&year=<s:property value="%{#request.year}"/>">7月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=8&year=<s:property value="%{#request.year}"/>">8月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=9&year=<s:property value="%{#request.year}"/>">9月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=10&year=<s:property value="%{#request.year}"/>">10月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=11&year=<s:property value="%{#request.year}"/>">11月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=12&year=<s:property value="%{#request.year}"/>">12月</a></li>
+								<li><a href="viewCompanyListWithSaraly?month=1&year=${year}">1月</a>，</li>
+					            <li><a href="viewCompanyListWithSaraly?month=2&year=${year}">2月</a>，</li>
+					            <li><a href="viewCompanyListWithSaraly?month=3&year=${year}">3月</a>，</li>
+					            <li><a href="viewCompanyListWithSaraly?month=4&year=${year}">4月</a>，</li>
+					            <li><a href="viewCompanyListWithSaraly?month=5&year=${year}">5月</a>，</li>
+					            <li><a href="viewCompanyListWithSaraly?month=6&year=${year}">6月</a>，</li>
+					            <li><a href="viewCompanyListWithSaraly?month=7&year=${year}">7月</a>，</li>
+					            <li><a href="viewCompanyListWithSaraly?month=8&year=${year}">8月</a>，</li>
+					            <li><a href="viewCompanyListWithSaraly?month=9&year=${year}">9月</a>，</li>
+					            <li><a href="viewCompanyListWithSaraly?month=10&year=${year}">10月</a>，</li>
+					            <li><a href="viewCompanyListWithSaraly?month=11&year=${year}">11月</a>，</li>
+					            <li><a href="viewCompanyListWithSaraly?month=12&year=${year}">12月</a></li>
 						</ul>
-						</form>
+					
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -82,7 +70,7 @@
 									</th>
 									<th rowspan="2">
 										工资预算表
-										<br>
+										<br/>
 										名称
 									</th>
 									<th rowspan="2" style="text-align: center">
@@ -100,17 +88,17 @@
 								</tr>
 								<th>
 									开票
-									<br>
+									<br/>
 									总额（元）
 								</th>
 								<th>
 									工资
-									<br>
+									<br/>
 									总额（元）
 								</th>
 								<th>
 									服务费
-									<br>
+									<br/>
 									总额（元）
 								</th>
 								<th>
@@ -120,7 +108,7 @@
 								</th>
 								<th>
 									发放
-									<br>
+									<br/>
 									人数（人）
 								</th>
 								<th>
@@ -130,7 +118,7 @@
 								</th>
 								<th>
 									他行
-									<br>
+									<br/>
 									（人）
 								</th>
 								<th>

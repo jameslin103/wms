@@ -461,7 +461,20 @@ function valitate_xls()
 }
 
 
-
+$(function (){
+	   
+ 	  $("input[name='year']").blur(function(){
+ 	  	   var year=$("input[name='year']").val();
+ 	  	    if(year<4){
+ 	  	   	  return;
+ 	  	    }
+ 	  	 	if(year!="" && year!=undefined)
+ 	  	 	{
+ 	  			$("#myform1").submit(); 
+ 	         }
+ 	  });
+ 	   
+ });
 
 
 

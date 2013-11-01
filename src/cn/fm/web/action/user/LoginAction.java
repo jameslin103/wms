@@ -11,6 +11,7 @@ import cn.fm.bean.user.WmsUser;
 import cn.fm.service.permissions.MenuService;
 import cn.fm.service.permissions.RoleService;
 import cn.fm.service.user.WmsUserService;
+import cn.fm.utils.CookieUtils;
 import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
@@ -32,7 +33,17 @@ public class LoginAction extends BaseAction{
 		private MenuService menuService;
 		
 	
+		private Integer remember_me;
 		
+		
+		public Integer getRemember_me() {
+			return remember_me;
+		}
+
+		public void setRemember_me(Integer rememberMe) {
+			remember_me = rememberMe;
+		}
+
 		public WmsUser getWmsUser() {
 			return wmsUser;
 		}
@@ -63,6 +74,10 @@ public class LoginAction extends BaseAction{
 			loginUser=wmsUserService.find(wmsUser.getPhone());
 			if( loginUser!=null){
 				request.getSession().setAttribute("user",loginUser);
+				if(remember_me!=null && remember_me==0){
+					CookieUtils cookie=new CookieUtils();
+					cookie.addCookie(loginUser);
+				}
 			}
 			List<Menu> menuList=getUserMenu(loginUser);
 			request.getSession().setAttribute("menuList", menuList);

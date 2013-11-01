@@ -67,6 +67,9 @@ public class BalanceDetailServiceTest {
 		
 	}
 	
-
+	@Test
+	public void save1(){
+		System.out.println("====");
+	}
 
 }

@@ -734,7 +734,7 @@
 							<label>
 								开始参保日期:
 							</label>
-							<s:textfield id="d11" name="enterpriseEmployees.cinsengDate"onclick="WdatePicker()" cssClass="Wdate" />
+							<input id="d11" type="text" name="enterpriseEmployees.cinsengDate" onclick="WdatePicker()" class="Wdate" />
 						</div>
 
 						<div class="input-container">
