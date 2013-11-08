@@ -20,7 +20,11 @@
 			<div id="header">
 				<jsp:include page="../layout/header.jsp" />
 			</div>
-
+			<div id="sub-header" class="clearfix">
+					<h2>
+						<s:property value="%{#session.enterprise.fullName}" />
+					</h2>
+			</div>
 
 			<div id="main">
 				<div class="row-fluid">
@@ -74,10 +78,10 @@
 											<s:property value="%{#customBonus.bonusName}" />
 										</td>
 										<td width="20">
-											<s:if test="%{#customBonus.state==0}">
+											<s:if test="#customBonus.state==0">
 												<span>禁用</span>
 											</s:if>
-											<s:elseif test="%{#customBonus.state==1}">
+											<s:elseif test="#customBonus.state==1">
 												<span>启用</span>
 											</s:elseif>
 											<s:else>
@@ -125,10 +129,9 @@
 							<label>
 								&nbsp;
 							</label>
-							<input type="radio" name="customBonus.state" value="1"
-								checked="checked">
+							<input type="radio" name="customBonus.state" value="1" checked="checked"/>
 							启用，
-							<input type="radio" name="customBonus.state" value="0">
+							<input type="radio" name="customBonus.state" value="0"/>
 							停用
 						</div>
 
@@ -165,15 +168,15 @@
 							<label>
 								名称
 							</label>
-							<s:textfield name="customBonus.bonusName" />
+							<s:textfield name="customBonus.bonusName" id="bonusName"/>
 						</div>
 						<div class="input-container">
 							<label>
 								&nbsp;
 							</label>
-							<input type="radio" name="customBonus.state" value="1"	checked="checked">
+							<input type="radio" name="customBonus.state" value="1"	checked="checked" />
 							启用，
-							<input type="radio" name="customBonus.state" value="0">
+							<input type="radio" name="customBonus.state" value="0" />
 							停用
 						</div>
 

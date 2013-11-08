@@ -3,20 +3,24 @@ package cn.fm.bean.salary;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import cn.fm.bean.company.CustomBonus;
 import cn.fm.bean.company.Enterprise;
 
 
@@ -45,10 +49,11 @@ public class SalaryTemplate implements Serializable {
 	
 	private List<String>  subsidys=new ArrayList<String>();
 	
-	private CreateSalaryBudgetTable   createSalaryBudgetTable;
+	private Set<CreateSalaryBudgetTable>   createSalaryBudgetTable=new HashSet<CreateSalaryBudgetTable>();
 	
 	private Enterprise   enterprise;
 	
+	private Set<CustomBonus>  customBonus=new HashSet<CustomBonus>();
 	
 	@ManyToOne(cascade=CascadeType.REFRESH)
 	@JoinColumn(name="enterpriseId")
@@ -124,18 +129,40 @@ public class SalaryTemplate implements Serializable {
 	public void setSubsidys(List<String> subsidys) {
 		this.subsidys = subsidys;
 	}
-	
-	@OneToOne(cascade={CascadeType.REFRESH,CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST},mappedBy="salaryTemplate")
-	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
+	@OneToMany(cascade={CascadeType.REFRESH},fetch=FetchType.EAGER,mappedBy="salaryTemplate")
+	public Set<CreateSalaryBudgetTable> getCreateSalaryBudgetTable() {
 		return createSalaryBudgetTable;
 	}
-
 	public void setCreateSalaryBudgetTable(
-			CreateSalaryBudgetTable createSalaryBudgetTable) {
+			Set<CreateSalaryBudgetTable> createSalaryBudgetTable) {
 		this.createSalaryBudgetTable = createSalaryBudgetTable;
 	}
 	
-
+	public void addCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable){
+		this.createSalaryBudgetTable.add(createSalaryBudgetTable);
+	}
+	public void romveCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable){
+		if(this.createSalaryBudgetTable.contains(createSalaryBudgetTable)){
+			this.romveCreateSalaryBudgetTable(createSalaryBudgetTable);
+		}
+	}
+	@OneToMany(cascade={CascadeType.REFRESH},fetch=FetchType.EAGER,mappedBy="salaryTemplate")
+	public Set<CustomBonus> getCustomBonus() {
+		return customBonus;
+	}
+	public void setCustomBonus(Set<CustomBonus> customBonus) {
+		this.customBonus = customBonus;
+	}
 	
+	public void addCustomBonus(CustomBonus customBonus){
+		this.customBonus.add(customBonus);	
+	}
 	
+	public void rovmeCustomBonus(CustomBonus customBonus){
+		if(this.customBonus.contains(customBonus)){
+			this.customBonus.remove(customBonus);
+		}
+		
+		
+	}
 }

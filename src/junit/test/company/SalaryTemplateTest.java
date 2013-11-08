@@ -77,15 +77,7 @@ public class SalaryTemplateTest {
 		System.out.println(salaryTemplate.getSubsidyList());
 		
 	}
-	@Test
-	public void findBeforeCurrentDateTemplate()
-	{
-		String date="2013-08-30";
-		
-		List li=salaryTemplateService.findBeforeCurrentDateTemplate(DateUtil.StringToDate(date, DateUtil.FORMAT_DATE), 3);
-		
-		System.out.println(li.size());
-	}
+
 	@Test
 	public void save()
 	{

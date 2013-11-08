@@ -32,7 +32,7 @@
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
 							<li class="active">
-								<a href="company/index.jsp">综合</a>
+								<a href="viewEnterpriseDetailed">综合</a>
 							</li>
 							<li>
 								<a

@@ -155,21 +155,29 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		}
 		
 		List<CreateSalaryBudgetTable> createSalaryBudgetTableList=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(enterprise.getEnterpriseId(),this.year);
-
-		Map<String, Object> map=reconstructToMonthGroupByTableDate(createSalaryBudgetTableList);
+		List<Object> map=null;
+		if(createSalaryBudgetTableList!=null){
+			map=reconstructToMonthGroupByTableDate(createSalaryBudgetTableList);
+		}
+		
 		request.setAttribute("map", map);
 		return SUCCESS;
 	}
 	
-	public Map<String, Object> reconstructToMonthGroupByTableDate(List<CreateSalaryBudgetTable> createSalaryBudgetTableList)
+	public List<Object> reconstructToMonthGroupByTableDate(List<CreateSalaryBudgetTable> createSalaryBudgetTableList)
 	{
-		Map<String, Object> map=new HashMap<String, Object>();
+		List<Object> list=new ArrayList<Object>();
+		Map<String, Object> map=null;
 		for (CreateSalaryBudgetTable table : createSalaryBudgetTableList) {
-			map.put(table.getCreateDate().toString(), table);
+			map=new HashMap<String, Object>();
+			String date=table.getCreateDate().toString();
+			map.put("date", date);
+			map.put("createSalaryBudgetTable", table);
+			list.add(map);
 		}
 		
 		
-		return map;
+		return list;
 	}
 	
 	
@@ -180,30 +188,31 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	 */
 	public String  addSalaryBudgetTable()
 	{
-
 			CreateSalaryBudgetTable	createSalaryBudgetTablePO=null;
 			if(createSalaryBudgetTable!=null && createSalaryBudgetTable.getBudgetId()!=null)
 			{
 				createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
 				createSalaryBudgetTableService.updateCreateSalaryBudgetTable(createSalaryBudgetTable);
 			}else{
-				if(createSalaryBudgetTable==null || createSalaryBudgetTable.getName()==null)return INPUT;
-				if(enterpriseId==null)return INPUT;
-				Enterprise enterprisePO=enterpriseService.find(enterpriseId);
-				SalaryTemplate salaryTemplatePO=salaryTemplateService.find(templateId);
-				createSalaryBudgetTable.setTemplateName(salaryTemplatePO.getTemplateName());
-				createSalaryBudgetTable.setEnterprise(enterprisePO);
-				createSalaryBudgetTable.setSalaryTemplate(salaryTemplatePO);
-				
+				if(createSalaryBudgetTable==null || createSalaryBudgetTable.getName()==null || enterpriseId==null)return INPUT;
+				if(budgetId!=null && budgetId!=0){
+					createSalaryBudgetTable.setMergeId(budgetId);
+					createSalaryBudgetTable.setIsTax(1);
+					CreateSalaryBudgetTable createSalaryBudgetTable_PO=createSalaryBudgetTableService.find(budgetId);
+					createSalaryBudgetTable.setChooseTax(createSalaryBudgetTable_PO.getName());
+				}
 				createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
 				try {
-					createSalaryBudgetTableService.save(createSalaryBudgetTable);
+					createSalaryBudgetTableService.saveCreateSalaryBudgetTable(createSalaryBudgetTable,enterpriseId,templateId);
 					
 				} catch (Exception e) {
-					e.printStackTrace();
+						e.printStackTrace();
+						this.addActionError("系统繁忙!!");
+
 				}
 				
 			}
+			if(createSalaryBudgetTable==null ||createSalaryBudgetTable.getBudgetId()==null)return INPUT;
 			createSalaryBudgetTablePO=createSalaryBudgetTableService.find(createSalaryBudgetTable.getBudgetId());
 			if(createSalaryBudgetTablePO==null){
 				createSalaryBudgetTablePO=new CreateSalaryBudgetTable();
@@ -252,10 +261,11 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	
 	public String findBeforeCurrentDateTemplate()
 	{
-		createSalaryBudgetTableList=salaryTemplateService.findBeforeCurrentDateTemplate(DateUtil.StringToDate(salaryDate, DateUtil.FORMAT_DATE),3);
-		if(createSalaryBudgetTableList.size()==0){
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		createSalaryBudgetTableList=createSalaryBudgetTableService.findBeforeCurrentDateTemplate(salaryDate,enterprise.getEnterpriseId());
+		if(createSalaryBudgetTableList==null || createSalaryBudgetTableList.size()==0){
 			createSalaryBudgetTableList=new ArrayList<CreateSalaryBudgetTable>();
-			this.setError("暂无记录");
+			this.addActionError("暂无记录");
 		}else{
 			this.setError("true");
 		}

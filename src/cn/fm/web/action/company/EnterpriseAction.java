@@ -1,10 +1,8 @@
 package cn.fm.web.action.company;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -106,17 +104,22 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	 */
 	public String addEnterpriseToUser()
 	{
-		Set<WmsUser>  users=new HashSet<WmsUser>();
-		if(userId==null)return INPUT;
-		WmsUser  user=wmsUserService.find(userId);
-		users.add(user);
-		enterprise=enterpriseService.find(enterpriseId);
-		enterprise.setUser(users);
-		enterpriseService.update(enterprise);
+		if(userId==null || enterpriseId==null)return INPUT;
+		enterpriseService.saveEnterpriseToBeResponsible(enterpriseId,userId);
 		
 		return SUCCESS;
 	}
-
+	
+	/**
+	 * 解除企业负责人
+	 * @return
+	 */
+	public String removeToEnterpriseHeadUser(){
+		
+		if(userId==null || enterpriseId==null)return INPUT;
+		enterpriseService.removeToEnterpriseHeadUser(enterpriseId,userId);
+		return SUCCESS;
+	}
 	public String  addEnterprise()
 	{
 		WmsUser user=WebUtil.getWmsUser(request);

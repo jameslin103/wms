@@ -6,7 +6,10 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import cn.fm.bean.company.CustomBonus;
+import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.company.CustomBonusServices;
+import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
 @SuppressWarnings("serial")
@@ -17,7 +20,7 @@ public class CustomBonusAction extends BaseAction {
 	
 	private Integer      id;
 	
-	
+	private SalaryTemplate   salaryTemplate;
 	
 	
 	public CustomBonus getCustomBonus() {
@@ -43,14 +46,19 @@ public class CustomBonusAction extends BaseAction {
 
 	public String addCustomBonus()
 	{
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		if(enterprise==null || enterprise.getEnterpriseId()==null)return SUCCESS;
 		if(customBonus==null)return SUCCESS;
+		customBonus.setEnterprise(enterprise);
 		customBonusService.save(customBonus);
 		return SUCCESS;
 	}
 	
 	public String viewCustomBonus()
 	{
-		List<CustomBonus> customBonus=customBonusService.getAllCustomBonus();
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		if(enterprise==null || enterprise.getEnterpriseId()==null)return SUCCESS;
+		List<CustomBonus> customBonus=customBonusService.getAllCustomBonus(enterprise.getEnterpriseId());
 		if(customBonus.size()==0)
 			customBonus=new ArrayList<CustomBonus>();
 		request.setAttribute("customBonus", customBonus);

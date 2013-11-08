@@ -1,6 +1,7 @@
 package junit.test.company;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.SalaryTemplateService;
+import cn.fm.utils.DateUtil;
 import cn.fm.web.action.company.ExportSalaryBudgetByPoiAction;
 
 public class CreateSalaryBudgetTableServictTest {
@@ -89,5 +91,24 @@ public class CreateSalaryBudgetTableServictTest {
 		
 	}
 	
+	@Test
+	public void findBeforeCurrentDateTemplate()
+	{
 		
+		List<CreateSalaryBudgetTable> list=createSalaryBudgetTableService.findBeforeCurrentDateTemplate("2013-11-10",1);
+		for (CreateSalaryBudgetTable cr : list) {
+			System.out.println(cr.getSalaryDate());
+		}
+		
+	}
+	@Test
+	public void saveCreateSalaryBudgetTable(){
+		
+		CreateSalaryBudgetTable c=new CreateSalaryBudgetTable();
+		c.setName("松岛枫");
+		c.setCashnumber(2);
+		
+		createSalaryBudgetTableService.saveCreateSalaryBudgetTable(c, 1, 3);
+	}
+	
 }

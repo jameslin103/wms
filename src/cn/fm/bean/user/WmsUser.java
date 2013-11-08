@@ -57,7 +57,7 @@ public class WmsUser implements Serializable{
 	
 	
 	 
-    @ManyToMany(cascade=CascadeType.REFRESH,fetch=FetchType.EAGER,mappedBy="user")          
+    @ManyToMany(cascade={CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.MERGE},mappedBy="user",fetch=FetchType.EAGER)          
 	public Set<Enterprise> getEnterprise() {
 		return enterprise;
 	}
@@ -150,35 +150,6 @@ public class WmsUser implements Serializable{
 	public void setVisible(Boolean visible) {
 		this.visible = visible;
 	}
-
-	
-	
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((username == null) ? 0 : username.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final WmsUser other = (WmsUser) obj;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
-	}
-
 	public String getRoleIds() {
 		return roleIds;
 	}
@@ -195,6 +166,31 @@ public class WmsUser implements Serializable{
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		WmsUser other = (WmsUser) obj;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
+			return false;
+		return true;
 	}
 	
 	

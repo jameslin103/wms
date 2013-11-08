@@ -29,16 +29,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         <div id="center-pane">
           <ul class="nav nav-tabs">
-            <li><a href="company/index.jsp">综合</a></li>
-            <li><a href="viewEnterpriseEmployees">员工档案</a></li>
-            <li class="active"><a href="viewSalaryBudgetTable">工资预算表</a></li>
-            <li><a href="viewInsuranceWithMonth">增减员与参保明细</a></li>
+				<%@include file="../share/permissions.jsp" %>
           </ul>
  
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th rowspan="2">工资预算表<br>名称</th>
+                <th rowspan="2">工资预算表<br/>名称</th>
                 <th rowspan="2" style="text-align:center">工资所属月份</th>
                 <th rowspan="2" style="text-align:center">合并计税工资表</th>
                 <th rowspan="2" style="text-align:center">性质</th>
@@ -47,13 +44,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th colspan="1" style="text-align:center">状态</th>
                 <th rowspan="2">操作</th>
               </tr>
-                <th>开票<br>总额（元）</th>
-                <th>工资<br>总额（元）</th>
-                <th>服务费<br>总额（元）</th>
-                <th>五险一金<br>总额（元）</th>
-                <th>发放<br>人数（人）</th>
-                <th>民生<br>银行（人）</th>
-                <th>他行<br>（人）</th>
+                <th>开票<br/>总额（元）</th>
+                <th>工资<br/>总额（元）</th>
+                <th>服务费<br/>总额（元）</th>
+                <th>五险一金<br/>总额（元）</th>
+                <th>发放<br/>人数（人）</th>
+                <th>民生<br/>银行（人）</th>
+                <th>他行<br/>（人）</th>
                 <th>现金（人）</th>
                 <th>（制作、实际发放）</th>
             </thead>
@@ -68,16 +65,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td><s:property value="%{#request.createSalaryBudgetTable.makeTotal}"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.wageTotal}"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.serviceTotal}"/></td>
-                <td align="center"><br></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br>
+                <td align="center"><br/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br/>
                 <a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}"/>">查看</a>
                 </td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br><span class="em">（已发放）</span>
-                <br><s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月dd日HH时"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.heLines}"/><br><span class="em">（已发放）</span>
-                <br><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.cashnumber}"/><br><span class="em">（已发放）</span>
-                <br><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br/><span class="em">
+                	（<s:property value="%{#request.createSalaryBudgetTable.note}"/>）</span>
+                <br/><s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月dd日HH时"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.heLines}"/><br/><span class="em">
+               	（<s:property value="%{#request.createSalaryBudgetTable.note}"/>）</span>
+                <br/><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.cashnumber}"/><br/><span class="em">
+                	（<s:property value="%{#request.createSalaryBudgetTable.note}"/>）</span>
+                <br/><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/></td>
                 <td>
                   <ul>
                     <li>制作:<s:property value="%{#request.session.user.username}"/>
@@ -117,7 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <div class="row-fluid">
                 <div class="input-container">
                   <label>名称</label>
-                  <s:textfield name="createSalaryBudgetTable.name" cssStyle="width: 220px;height:30px;"/>
+                  <s:textfield name="createSalaryBudgetTable.name" />
                 </div>
 
                 <div class="input-container">
@@ -127,7 +127,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                 <div class="input-container" >
                   <label>生成哪月工资？</label>
-                  <s:textfield id="d11"	 onclick="WdatePicker()" onblur="ajaxfindBeforeCurrentDateTemplate()" name="createSalaryBudgetTable.salaryDate" cssClass="Wdate" cssStyle="width: 220px;height:30px;"  />
+                  <input type="text" id="d11"	onfocus="WdatePicker({skin:'whyGreen'})"  onblur="ajaxfindBeforeCurrentDateTemplate()" 
+                        name="createSalaryBudgetTable.salaryDate"  class="Wdate" value="${createSalaryBudgetTable.salaryDate}" />
+                		
                 </div>
                 <div class="input-container">
                   <label>选择与其他工资表合并计税</label>

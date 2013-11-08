@@ -106,11 +106,11 @@
 									</th>
 								</tr>
 							</thead>
-							<s:iterator value="%{#request.pageView.records}" id="balanceDetail">
+							<s:iterator value="%{#request.pageView.records}" id="balanceDetail" status="list">
 							<tbody>
 								<tr>
 									<td rowspan="2">
-										<s:property value="%{#balanceDetail.detailId}"/>
+										<s:property value="#list.index+1"/>
 									</td>
 									<td>
 										<s:date name="%{#balanceDetail.yearMonth}" format="yyyy年MM月"/>

@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -83,8 +82,12 @@ public class CreateSalaryBudgetTable implements Serializable {
 	/**选择模板*/
 	private SalaryTemplate  salaryTemplate;
 	
+	/*是否已经合并 0未合并，1合并*/
+	private Integer    isTax=0;   
 	
-	 
+	/**跟哪个预算表合并**/
+	private Integer    mergeId;
+	
 	private Enterprise enterprise;
 	
 
@@ -130,7 +133,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.updateDate = updateDate;
 	}
 
-	@Column(length=10)
+	@Column(length=40)
 	public String getChooseTax() {
 		return chooseTax;
 	}
@@ -240,6 +243,23 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setCmbc(Integer cmbc) {
 		this.cmbc = cmbc;
 	}
+	@Column(length=1)
+	public Integer getIsTax() {
+		return isTax;
+	}
+
+	public void setIsTax(Integer isTax) {
+		this.isTax = isTax;
+	}
+	
+	@Column(length=20)
+	public Integer getMergeId() {
+		return mergeId;
+	}
+
+	public void setMergeId(Integer mergeId) {
+		this.mergeId = mergeId;
+	}
 
 	@ManyToOne(cascade = { CascadeType.REFRESH},optional=true)
 	@JoinColumn(name = "enterpriseId")
@@ -250,7 +270,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.enterprise = enterprise;
 	}
 	
-	@OneToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=true)
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST},optional=true)
 	@JoinColumn(name="templateId")
 	public SalaryTemplate getSalaryTemplate() {
 		return salaryTemplate;
@@ -259,6 +279,36 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setSalaryTemplate(SalaryTemplate salaryTemplate) {
 		this.salaryTemplate = salaryTemplate;
 	}
-
 	
+	
+	
+	
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((budgetId == null) ? 0 : budgetId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CreateSalaryBudgetTable other = (CreateSalaryBudgetTable) obj;
+		if (budgetId == null) {
+			if (other.budgetId != null)
+				return false;
+		} else if (!budgetId.equals(other.budgetId))
+			return false;
+		return true;
+	}
+
 }

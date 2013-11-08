@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 
 import cn.fm.bean.permissions.Menu;
 import cn.fm.bean.permissions.Role;
@@ -19,9 +20,11 @@ import cn.fm.web.action.BaseAction;
 
 
 
-@SuppressWarnings("serial")
 public class LoginAction extends BaseAction{
 	
+	    private static final long serialVersionUID = 6650955874307814247L;  
+	    public static final String USER_SESSION = "user"; 
+	    private CookieUtils cookieUtils = new CookieUtils();  
 		private WmsUser wmsUser;
 		private WmsUser loginUser;
 		
@@ -34,8 +37,13 @@ public class LoginAction extends BaseAction{
 		
 	
 		private Integer remember_me;
+		private boolean userCookie;  
 		
-		
+		 
+		public void setRoleService(RoleService roleService) {
+			this.roleService = roleService;
+		}
+
 		public Integer getRemember_me() {
 			return remember_me;
 		}
@@ -60,30 +68,61 @@ public class LoginAction extends BaseAction{
 			this.loginUser = loginUser;
 		}
 
+		public boolean isUserCookie() {
+			return userCookie;
+		}
+
+		public void setUserCookie(boolean userCookie) {
+			this.userCookie = userCookie;
+		}
+
 		public String userLogin()
 		{
-			if(wmsUser==null)return INPUT;
-			if (isInvalid(wmsUser.getPhone().trim()))
-		            return INPUT;
-		    if (isInvalid(wmsUser.getPassword().trim()))
-		            return INPUT;
-			boolean isCheckUser=wmsUserService.checkUser(wmsUser.getPhone(), wmsUser.getPassword());
-			if(isCheckUser!=true){
-				return INPUT;	
-			}
-			loginUser=wmsUserService.find(wmsUser.getPhone());
-			if( loginUser!=null){
-				request.getSession().setAttribute("user",loginUser);
-				if(remember_me!=null && remember_me==0){
-					CookieUtils cookie=new CookieUtils();
-					cookie.addCookie(loginUser);
-				}
-			}
-			List<Menu> menuList=getUserMenu(loginUser);
-			request.getSession().setAttribute("menuList", menuList);
-			return SUCCESS;
+			 if (cookieUtils.getCookie(request,  wmsUserService)) 
+			 {  
+		            return SUCCESS;  
+		      } else { 
+		            return "login";  
+		     }
+
 		}
-	
+		 public String execute() throws Exception 
+		 {
+			
+			 if(wmsUser==null)return INPUT;
+				if (isInvalid(wmsUser.getPhone().trim()))
+				{
+					this.addFieldError("username", "手机号号码不能为空!"); 
+			        return INPUT;
+				}
+			    if (isInvalid(wmsUser.getPassword().trim())){
+			    	this.addFieldError("username", "密码不能为空!"); 
+			        return INPUT;
+			    }
+				boolean isCheckUser=wmsUserService.checkUser(wmsUser.getPhone(), wmsUser.getPassword());
+				if(isCheckUser!=true){
+					 this.addFieldError("username", "用户名或密码错误!");  
+					 return INPUT;
+				}
+			
+				loginUser=wmsUserService.find(wmsUser.getPhone());
+				if( loginUser!=null){
+					request.getSession().setAttribute("user",loginUser);
+					if (userCookie==true) 
+					{  
+			            Cookie cookie = cookieUtils.addCookie(loginUser);  
+			            response.addCookie(cookie);// 添加cookie到response中  
+			        }  
+				}
+				List<Menu> menuList=getUserMenu(loginUser);
+				request.getSession().setAttribute("menuList", menuList);
+				return SUCCESS;
+				
+		 }
+		
+		
+		
+		
 	   private boolean isInvalid(String value)
 	   {
 		        return (value == null || value.length() == 0);

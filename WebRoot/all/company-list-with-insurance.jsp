@@ -27,15 +27,23 @@
 					<div id="center-pane">
 
 						<ul class="nav nav-tabs">
-							<li >
-								<a href="viewCompanyListWithSaraly">工资</a>
-							</li>
-							<li class="active">
-								<a href="viewCompanyListWithInsurance">增减员与参保</a>
-							</li>
-							<li>
-								<a href="viewCompanyListWithBalance">资金往来</a>
-							</li>
+						<s:iterator value="#session.menuList" id="menu">
+			         		 <s:if test="#menu.url=='viewCompanyListWithSaraly'">
+					            <li >
+								  	<a href="viewCompanyListWithSaraly">工资</a>
+								</li>
+							</s:if>
+							  <s:if test="#menu.url=='viewCompanyListWithInsurance'">
+								<li  class="active"> 
+								  <a href="viewCompanyListWithInsurance">增减员与参保</a>
+								</li>
+							</s:if>
+							<s:if test="#menu.url=='viewCompanyListWithBalance'">
+								<li>
+									<a href="viewCompanyListWithBalance">资金往来</a>
+								</li>
+							</s:if>
+					 </s:iterator>
 						</ul>
 						
 						<ul class="normal action-container clearfix">

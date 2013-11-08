@@ -4,10 +4,14 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -24,7 +28,7 @@ import cn.fm.bean.company.Enterprise;
 public class BalanceDetail implements Serializable{
 
 	
-	@Id @GeneratedValue
+	
 	private Integer  detailId;
 
 	/**月份**/
@@ -73,7 +77,7 @@ public class BalanceDetail implements Serializable{
 	private BigDecimal     fiveFund;
 	
 	//创建日期
-	@Temporal(TemporalType.DATE)
+	
 	private  Date		   createDate=new Date();
 	
 	//修改日期
@@ -86,9 +90,6 @@ public class BalanceDetail implements Serializable{
 
 	@Column(length=80)
 	private Integer      employeesId;
-	
-	@Column(length=80)
-	private Integer      enterpriseId;
 	
 	@Column(length=80)
 	private Integer      budgetId;
@@ -110,12 +111,6 @@ public class BalanceDetail implements Serializable{
 	public void setReceivableFiveFund(BigDecimal receivableFiveFund) {
 		this.receivableFiveFund = receivableFiveFund;
 	}
-	public Integer getEnterpriseId() {
-		return enterpriseId;
-	}
-	public void setEnterpriseId(Integer enterpriseId) {
-		this.enterpriseId = enterpriseId;
-	}
 	public Integer getEmployeesId() {
 		return employeesId;
 	}
@@ -123,7 +118,7 @@ public class BalanceDetail implements Serializable{
 		this.employeesId = employeesId;
 	}
 
-
+	@Id @GeneratedValue
 	public Integer getDetailId() {
 		return detailId;
 	}
@@ -223,7 +218,7 @@ public class BalanceDetail implements Serializable{
 		this.fiveFund = fiveFund;
 	}
 
-
+	@Temporal(TemporalType.DATE)
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -251,6 +246,7 @@ public class BalanceDetail implements Serializable{
 	public void setEndingBalance(BigDecimal endingBalance) {
 		this.endingBalance = endingBalance;
 	}
+	@Temporal(TemporalType.DATE)
 	public Date getUpdteDate() {
 		return updteDate;
 	}
@@ -258,15 +254,39 @@ public class BalanceDetail implements Serializable{
 		this.updteDate = updteDate;
 	}
 	
-//	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, optional = false)  
-//	@JoinColumn(name = "enterprise_id")
-//	@Column(length=256)
-//	public Enterprise getEnterprise() {
-//		return enterprise;
-//	}
-//	public void setEnterprise(Enterprise enterprise) {
-//		this.enterprise = enterprise;
-//	}
+	@ManyToOne(cascade={CascadeType.REFRESH }, optional= true)  
+	@JoinColumn(name="enterprise_id")
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
 	
-
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((detailId == null) ? 0 : detailId.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BalanceDetail other = (BalanceDetail) obj;
+		if (detailId == null) {
+			if (other.detailId != null)
+				return false;
+		} else if (!detailId.equals(other.detailId))
+			return false;
+		return true;
+	}
+	
+	
 }

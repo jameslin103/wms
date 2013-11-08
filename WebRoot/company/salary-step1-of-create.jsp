@@ -13,6 +13,47 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
+		<script>
+			
+			$(function(){
+				$("#sub").click(function(){
+					$("#nameerror").css("");
+					$("#temp").text("");
+					$("#temp").css("");
+					$("#nameerror").text("");
+					$("#salaryDate").text("");
+					$("#salaryDate").css("");
+					var name=$("#budgetName").val();
+					var tempid=$("#tempid").val();
+					var salaryDate=$("input[name='salaryDate']").val();
+					if(name==""){
+						$("#nameerror").text("预算表名称必填项!");
+						$("#nameerror").css("color","red");
+						return false;
+					}
+					if(tempid==0)
+					{
+						$("#temp").text("模板必填项!");
+						$("#temp").css("color","red");
+						return false;
+					}
+					if(tempid=="")
+					{
+						$("#temp").text("模板必填项!");
+						$("#temp").css("color","red");
+						return false;
+					}
+					if(salaryDate==""){
+						$("#salaryDate").text("生成那月工资必填项!");
+						$("#salaryDate").css("color","red");
+						return false;
+					
+					}
+				});
+			
+			})
+		
+		</script>
 
 	</head>
 	<body>
@@ -44,28 +85,31 @@
               <div class="row-fluid">
                 <div class="input-container">
                   <label>名称</label>
-                  <s:textfield name="createSalaryBudgetTable.name" cssStyle="width: 220px;height:30px;"/>
+                  <s:textfield name="createSalaryBudgetTable.name" id="budgetName" maxlength="30"/><span style="color:red;">*</span>
+                  <span id="nameerror"></span>
                 </div>
 
                 <div class="input-container">
                   <label>选择模板</label>
                    <s:select  headerValue="--请选择--" headerKey="0" 
             			 list="%{#request.salaryTemplates}" name="templateId" 
-            			 listKey="templateId" listValue="templateName">
-             	   </s:select> 
+            			 listKey="templateId" listValue="templateName" id="tempid">
+             	   </s:select><span style="color:red;">*</span><span id="temp"></span>
                 </div>
 
                 <div class="input-container" >
                   <label>生成哪月工资？</label>
-                  <s:textfield id="d11"	name="salaryDate" onblur="ajaxfindBeforeCurrentDateTemplate()" onclick="WdatePicker()" value="%{#createSalaryBudgetTable.salaryDate}" cssClass="Wdate" cssStyle="width: 220px;height:30px;"  />
+                  <input type="text" id="d11"	name="salaryDate" onblur="ajaxfindBeforeCurrentDateTemplate()" 
+                  onclick="WdatePicker()" value="${createSalaryBudgetTable.salaryDate}" class="Wdate"  />
+                  <span style="color:red;">*</span><span id="salaryDate"></span>
                 </div>
 
 
                 <div class="input-container">
                   <label>选择与其他工资表合并计税</label>
-                  <select id="salaryTable" name="createSalaryBudgetTable.chooseTax" >
-                    <option value="%{#createSalaryBudgetTable.temple}">--请选择--</option>
-                  </select>
+                  <select id="salaryTable" name="budgetId" >
+                    <option value="0">--请选择--</option>
+                  </select><span style="color:red;">(需要合并的请选择)</span>
                 </div>
 
                 <div class="input-container">
@@ -76,9 +120,9 @@
                 </div>
 
                 <div class="input-container">
-                  <s:submit   value="提交" cssClass="btn btn-primary" />
+                  <s:submit   value="提交" cssClass="btn btn-primary"  id="sub"/>
                 </div>
-
+				<s:actionerror />
               </div>
               <s:token></s:token>
             </s:form>   

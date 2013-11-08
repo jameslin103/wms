@@ -43,29 +43,10 @@
 				<div class="row-fluid">
 
 					<div id="center-pane">
-						<ul class="nav nav-tabs">
-							<li>
-								<a href="company/index.jsp">综合</a>
-							</li>
-							<li>
-								<a href="viewEnterpriseEmployees">员工档案</a>
-							</li>
-							<li class="active">
-								<a href="viewSalaryBudgetTable">工资预算表</a>
-							</li>
-							<li>
-								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
-							</li>
-							<li>
-								<a href="viewWageBudgetSummary?enterpriseId=<s:property value='%{#request.session.enterprise.enterpriseId}'/>">资金往来</a>
-							</li>
-						</ul>
-
+							<%@include file="../share/permissions.jsp" %>
 						<ul class="normal action-container clearfix">
 							<li class="right">
 								<form action="viewSalaryBudgetTable" class="select-for-year" method="post" id="salary">
-									<!--<input id="d11" name="salaryDate" onclick="WdatePicker()" class="Wdate" style="width: 110px;height: 25px;" />
-										-->
 										按年份查询:<span style="color: red;">(如:2013)</span>
 										<input type="text" name="year" value="${year}" maxlength="4" onkeyup="value=value.replace(/[^\d]/g,'')"/>
 								</form>
@@ -108,18 +89,18 @@
 									</td>
 									<td>
 										<ol>
-											<s:iterator value="#request.map">
+											<s:iterator value="#request.map" id="value">
 												<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
-													&budgetId=<s:property value="value.budgetId"/>">
-													<s:if test="key.substring(5,7)==#month">
+													&budgetId=<s:property value="#value.createSalaryBudgetTable.budgetId"/>">
+													<s:if test="#value.date.substring(5,7)==#month">
 														<li>
-															<s:if test="value.name.length()>15">
-																<s:property value="value.name.substring(0,15)+'...'"/>
+															<s:if test="#value.createSalaryBudgetTable.name.length()>15">
+																<s:property value="#value.createSalaryBudgetTable.name.substring(0,15)+'...'"/>
 															</s:if>
 															<s:else>
-																<s:property value="value.name"/>
+																<s:property value="#value.createSalaryBudgetTable.name"/>
 															</s:else>
-															<s:date name="value.salaryDate" format="MM月"/>工资
+															<s:date name="#value.createSalaryBudgetTable.salaryDate" format="MM月"/>工资
 														</li>
 													</s:if>
 												</a>
@@ -131,17 +112,17 @@
 									<td>
 										<ol>
 											
-											<s:iterator value="#request.map">
-												<s:if test="key.substring(5,7)==#month">
+											<s:iterator value="#request.map" id="value">
+												<s:if test="#value.date.substring(5,7)==#month">
 												<li>
-													<s:if test="value.name.length()>15">
-														<s:property value="value.name.substring(0,15)+'...'"/>
+													<s:if test="#value.createSalaryBudgetTable.name.length()>15">
+														<s:property value="#value.createSalaryBudgetTable.name.substring(0,15)+'...'"/>
 													</s:if>
 													<s:else>
-														<s:property value="value.name"/>
+														<s:property value="#value.createSalaryBudgetTable.name"/>
 													</s:else>
-													<s:date name="value.salaryDate" format="MM月"/>工资
-													<span class="blue">（<s:property value="value.note"/>）</span>
+													<s:date name="#value.createSalaryBudgetTable.salaryDate" format="MM月"/>工资
+													<span class="blue">（<s:property value="#value.createSalaryBudgetTable.note"/>）</span>
 												</li>
 												</s:if>
 												

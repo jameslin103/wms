@@ -38,7 +38,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	public List<EnterpriseEmployees> getAllEnterpriseEmployees(Integer enterpriseId)
 	{
 		try {
-			Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterprise.enterpriseId=?1  e.departure=0 and e.reduction=0 and e.pseudoDelete=0");
+			Query query = em.createQuery("select e from EnterpriseEmployees e where e.enterprise.enterpriseId=?1 and e.departure=0 and e.reduction=0 and e.pseudoDelete=0");
 			return query.setParameter(1, enterpriseId).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,7 +113,13 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				
 			}
 			if(messageList.size()==0){
-				saveEnterpriseEmployees(employeesListVO,enterprise);	
+				try {
+					saveEnterpriseEmployees(employeesListVO,enterprise);
+				} catch (Exception e) {
+					e.printStackTrace();
+					messageList.add("数据格式错误!");
+				}
+					
 			}
 			
 			
@@ -222,7 +228,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		employees.setEmployeesName(data[2].toString());
 		employees.setEmployeesSex(data[3].toString());
 		employees.setNativePlace(data[4].toString());
-		employees.setHouseholdRegister(data[5].toString()==null?null:data[5].equals(Constant.WMS_YES)?1:0);
+		employees.setHouseholdRegister(data[5].toString()==null?null:data[5].equals(Constant.WMS_YES)?1:null);
 		employees.setHomeAddress(data[6].toString());
 		employees.setMaritalStatus(data[7].toString()==null?null:data[7].equals(Constant.WMS_YES)?1:0);
 		employees.setLevelEducation(data[8].toString());
@@ -267,9 +273,10 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 */
 	public void saveEnterpriseEmployees(List<EnterpriseEmployees> enterpriseEmployeesList,Enterprise enterprise){
 		if(enterpriseEmployeesList==null ||enterpriseEmployeesList.size()==0)return;
-		EnterpriseEmployees  employees=new EnterpriseEmployees();
+		EnterpriseEmployees  employees;
 		for (EnterpriseEmployees emp : enterpriseEmployeesList) {
 			if(emp==null || emp.equals(""))continue;
+			employees=new EnterpriseEmployees();
 			employees.setContractNo(emp.getContractNo());
 			employees.setEmployeesName(emp.getEmployeesName());
 			employees.setEmployeesSex(emp.getEmployeesSex());
@@ -307,7 +314,12 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			employees.setPseudoDelete(emp.getPseudoDelete());
 			
 			if(enterprise!=null)employees.setEnterprise(em.find(Enterprise.class, enterprise.getEnterpriseId()));
-			super.save(employees);
+			try {
+				super.save(employees);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 
 		}
 		

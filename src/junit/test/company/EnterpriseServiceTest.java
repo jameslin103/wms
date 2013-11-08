@@ -79,6 +79,24 @@ public class EnterpriseServiceTest {
 		
 	}
 	@Test
+	public void addUserAndEnterpriseRelationship()
+	{
+		
+		enterpriseService.saveEnterpriseToBeResponsible(17, 3);
+
+		
+	}
+	
+	@Test
+	public void removeToEnterpriseHeadUser()
+	{
+		enterpriseService.removeToEnterpriseHeadUser(17, 3);
+		
+	}
+	
+	
+	
+	@Test
 	
 	public void findEnterprise()
 	{

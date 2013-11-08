@@ -52,23 +52,7 @@ public class SalaryTemplateServiceImpl extends DaoSupport<SalaryTemplate> implem
 		Query query=em.createQuery("select s from SalaryTemplate s where s.enterprise.enterpriseId=?1");
 		return query.setParameter(1, enterpriseId).getResultList();
 	}
-	
-	/**
-	 * 获取工资预算表
-	 * @param date 时间段获取
-	 * @param enterpriseId 根据企业
-	 * @return list
-	 */
-	@SuppressWarnings("unchecked")
-	public List<CreateSalaryBudgetTable> findBeforeCurrentDateTemplate(Date date,Integer enterpriseId)
-	{
-		
-		Query query=em.createQuery("select c from CreateSalaryBudgetTable c where c.salaryDate<?1 and c.enterprise.id=?2");
-		return query.setParameter(1,date).setParameter(2, enterpriseId).getResultList();
-		
-	}
 
-	
 	
 	/**
 	 * 重新组合一个SalaryTemplate

@@ -25,17 +25,25 @@
 			<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">
-						<ul class="nav nav-tabs">
-							<li class="active">
-								<a href="viewCompanyListWithSaraly">工资</a>
+			<ul class="nav nav-tabs">
+		          <s:iterator value="#session.menuList" id="menu">
+		         		 <s:if test="#menu.url=='viewCompanyListWithSaraly'">
+				            <li  class="active">
+							  	<a href="viewCompanyListWithSaraly">工资</a>
 							</li>
-							<li>
-								<a href="viewCompanyListWithInsurance">增减员与参保</a>
+						</s:if>
+						  <s:if test="#menu.url=='viewCompanyListWithInsurance'">
+							<li> 
+							  <a href="viewCompanyListWithInsurance">增减员与参保</a>
 							</li>
+						</s:if>
+						<s:if test="#menu.url=='viewCompanyListWithBalance'">
 							<li>
 								<a href="viewCompanyListWithBalance">资金往来</a>
 							</li>
-						</ul>
+						</s:if>
+					 </s:iterator>
+          </ul>
 						
 						
 						<ul class="normal action-container clearfix">
@@ -128,11 +136,11 @@
 									（制作、审核、实际发放）
 								</th>
 							</thead>
-						<s:iterator value="#request.pageView.records" id="createSalaryBudgetTable">
+						<s:iterator value="#request.pageView.records" id="createSalaryBudgetTable" status="list">
 							<tbody>
 								<tr>
 									<td>
-										<s:property value="%{#createSalaryBudgetTable.budgetId}"/>
+										<s:property value="%{#list.index+1}"/>
 									</td>
 									<td>
 										<s:property value="%{#createSalaryBudgetTable.enterprise.fullName}"/>
@@ -159,28 +167,28 @@
 									</td>
 									<td>
 										<s:property value="%{#createSalaryBudgetTable.issueNumber}"/>
-										<br>
-										<a href="company/salary-with-bank-detail.jsp">查看</a>
+										<br/>
+										<a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">查看</a>
 									</td>
 									<td>
 										<s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/>
-										<br>
+										<br/>
 										<span class="em">（已发放）</span>
-										<br>
+										<br/>
 										2013年7月15日9时
 									</td>
 									<td>
 										2
-										<br>
+										<br/>
 										<span class="em">（已发放）</span>
-										<br>
+										<br/>
 										2013年7月15日9：30时
 									</td>
 									<td>
 										5
-										<br>
+										<br/>
 										<span class="em">（已发放）</span>
-										<br>
+										<br/>
 										2013年7月16日11时
 									</td>
 									<td>
@@ -230,9 +238,9 @@
 							<label>
 								&nbsp;
 							</label>
-							<input type="radio" name="start" value="1" checked="checked">
+							<input type="radio" name="start" value="1" checked="checked"/>
 							通过，
-							<input type="radio" name="start" value="0">
+							<input type="radio" name="start" value="0"/>
 							不通过
 						</div>
 
@@ -240,7 +248,7 @@
 							<label>
 								补充说明
 							</label>
-							<input type="text" name="">
+							<input type="text" name=""/>
 						</div>
 
 						<div class="input-container">

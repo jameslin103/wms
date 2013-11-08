@@ -7,8 +7,7 @@ import cn.fm.service.base.DAO;
 
 public interface CreateSalaryBudgetTableService extends DAO<CreateSalaryBudgetTable> {
 	
-	public void save(CreateSalaryBudgetTable createSalaryBudgetTable);
-	
+
 	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Integer enterpriseId,Integer year);
 	/**
 	 * 更新工资预算表
@@ -43,6 +42,16 @@ public interface CreateSalaryBudgetTableService extends DAO<CreateSalaryBudgetTa
 	 */
 	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable();
 	
-	
-
+	/**
+	 * 获取工资预算表
+	 * @param date 时间段获取
+	 * @param enterpriseId 根据企业
+	 * @return list
+	 */
+	public List<CreateSalaryBudgetTable> findBeforeCurrentDateTemplate(String date,Integer enterpriseId);
+	/**
+	 * 保存工资预算表
+	 * @param createSalaryBudgetTable
+	 */
+	public void saveCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable,Integer enterpriseId,Integer templateId);
 }

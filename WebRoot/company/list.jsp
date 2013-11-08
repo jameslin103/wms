@@ -64,11 +64,11 @@
 								</tr>
 							</thead>
 								
-							<s:iterator value="#request.enterpriseList" var="enterprise" >
+							<s:iterator value="#request.enterpriseList" var="enterprise" status="list">
 								<tbody>
 									<tr>
 										<td>
-											<s:property value="%{#enterprise.enterpriseId}" />
+											<s:property value="%{#list.index+1}" />
 										</td>
 										<td class="with-complement">
 											<a href="viewEnterpriseDetailed?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">
@@ -123,9 +123,7 @@
 											</s:iterator>
 										</td>
 										<td>
-											<s:iterator value="#en.user" id="user">
-												<s:property value="%{#user.username}"/>
-											</s:iterator>
+											<s:property value="%{#session.user.username}"/>
 										</td>
 									</tr>
 								</tbody>

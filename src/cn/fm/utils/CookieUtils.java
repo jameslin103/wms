@@ -1,46 +1,60 @@
 package cn.fm.utils;
 
-import java.util.ArrayList;  
-import java.util.List;  
 import javax.servlet.http.Cookie;  
 import javax.servlet.http.HttpServletRequest; 
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang3.StringUtils;
 
 import cn.fm.bean.user.WmsUser;
+import cn.fm.service.user.WmsUserService;
+import cn.fm.web.action.user.LoginAction;
 
 
 
 public class CookieUtils {
 	
-	 public static final String USER_COOKIE = "user"; 
-	 public List<Cookie> addCookie(WmsUser user) {  
-	        Cookie cookieU = new Cookie("phone", user.getPhone());  
-	        Cookie cookieP = new Cookie("password", user.getPassword());  
-	        cookieU.setMaxAge(60 * 60 * 24 * 14);  
-	        cookieP.setMaxAge(60 * 60 * 24 * 14);  
-	        cookieU.setPath("/");  
-	        cookieP.setPath("/");  
-	        List<Cookie> list = new ArrayList<Cookie>();  
-	        list.add(cookieP);  
-	        list.add(cookieU);  
-	        return list;  
+	 public static final String USER_COOKIE = "user.cookie";  
+	  
+	    // 添加一个cookie  
+	    public Cookie addCookie(WmsUser user) {  
+	        Cookie cookie = new Cookie(USER_COOKIE, user.getPhone() + ","  
+	                + user.getPassword());  
+	        System.out.println("添加cookie");  
+	        cookie.setMaxAge(60 * 60 * 24 * 14);// cookie保存两周  
+	        return cookie;  
 	    }  
 	  
-	    public static String getCookie(HttpServletRequest request, String key) {  
+	    // 得到cookie  
+	    public boolean getCookie(HttpServletRequest request, WmsUserService wmsUserService) {  
 	        Cookie[] cookies = request.getCookies();  
 	        System.out.println("cookies: " + cookies);  
 	        if (cookies != null) {  
 	            for (Cookie cookie : cookies) {  
-	                System.out.println("cookieName: " + cookie.getName());  
-	                if (key.equals(cookie.getName())) {  
+	                System.out.println("cookie: " + cookie.getName());  
+	                if (CookieUtils.USER_COOKIE.equals(cookie.getName())) {  
 	                    String value = cookie.getValue();  
-	                    System.out.println("cookieValue: " + cookie.getValue());  
-	                    return value;  
+	                    if (!StringUtils.isEmpty(value)) {  
+	                        String[] split = value.split(",");  
+	                        String phone= split[0];  
+	                        String password = split[1];
+	                        WmsUser user=null;
+	                       boolean isUser=wmsUserService.checkUser(phone, password);
+	                       if(isUser==true){
+	                    	   user=wmsUserService.find(phone);
+	                    	   if (user != null) {  
+		                            HttpSession session = request.getSession();  
+		                            session.setAttribute(LoginAction.USER_SESSION, user);// 添加用户到session中  
+		                            return true;  
+		                        }  
+	                       }
+	                    }  
 	                }  
 	            }  
 	        }  
-	        return null;  
+	        return false;  
 	    }  
-	
+	  
 	    // 删除cookie  
 	    public Cookie delCookie(HttpServletRequest request) {  
 	        Cookie[] cookies = request.getCookies();  
@@ -55,14 +69,6 @@ public class CookieUtils {
 	        }  
 	        return null;  
 	    }  
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

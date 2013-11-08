@@ -1,3 +1,4 @@
+
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
@@ -28,7 +29,7 @@
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
 							<li class="active">
-								<a href="#">所有企业</a>
+								<a href="viewEnterprise">所有企业</a>
 							</li>
 						</ul>
 
@@ -56,11 +57,11 @@
 									</th>
 								</tr>
 							</thead>
-							<s:iterator value="#request.enterpsie" id="enterprise">
+							<s:iterator value="#request.enterpsie" id="enterprise" status="list">
 								<tbody>
 									<tr>
 										<td>
-											<s:property value="%{#enterprise.enterpriseId}" />
+											<s:property value="%{#list.index+1}" />
 										</td>
 										<td class="with-complement">
 											<s:property value="%{#enterprise.fullName}" />
@@ -351,16 +352,10 @@
 						</div>
 
 						<div class="input-container">
-							<label>
-								当前负责人
-							</label>
-							<ul class="list-of-items-for-delete normal clearfix">
-							<s:iterator value="#request.wmsUserList" id="user" status="us">		
-								<li>
-									<s:property value="%{#user.username}" />
-								</li>
-							</s:iterator>
-							</ul>
+							 <label>当前负责人</label>
+				            <ul class="list-of-items-for-delete normal clearfix">
+				              	
+				            </ul>
 						</div>
 						<div class="input-container">
 							<label>

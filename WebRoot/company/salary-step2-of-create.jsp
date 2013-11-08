@@ -39,7 +39,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="company/index.jsp">综合</a></li>
             <li><a href="viewEnterpriseEmployees">员工档案</a></li>
             <li class="active"><a href="viewSalaryBudgetTable">工资预算表</a></li>
-            <li><a href="company/insurance-with-month.jsp">增减员与参保明细</a></li>
+            <li><a href="viewInsuranceWithMonth">增减员与参保明细</a></li>
           </ul>
 
           <div class="span4">
@@ -56,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
                  <s:token/>
                 </s:form>
-                <hr>
+                <hr/>
                 
                 <div class="alert alert-info">
                   <ol>
@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       	 <s:hidden value="%{#request.createSalaryBudgetTable.budgetId}" name="budgetId"/>
                       	  <s:hidden value="%{#request.createSalaryBudgetTable.salaryDate}" name="salaryDate"/>
                       	 <s:hidden name="file" value="file"></s:hidden>
-                         <input type="file" name="file" id="filevalue"><br>
+                         <input type="file" name="file" id="filevalue"/><br/>
                        <s:submit  cssClass="btn btn-primary" id="uploadFile" value="上传"/>
                       </s:form>
                     </li>
@@ -79,7 +79,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div>
 						<s:iterator value="#request.employeesNames" id="names">
 							<span style="color: red">${names}</span>
-						
 						</s:iterator>
 					
 					</div>

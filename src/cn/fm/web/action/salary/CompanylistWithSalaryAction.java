@@ -247,8 +247,8 @@ public class CompanylistWithSalaryAction extends BaseAction{
 		{
 			this.year=DateUtil.getCurrentTime().toString().substring(0, 4);
 		}
-		String formCurrentSql=" o.enterpriseId, SUM(o.balance)";
-		String groupby="   group by o.enterpriseId order by o.enterpriseId asc ";
+		String formCurrentSql=" o.enterprise.enterpriseId, SUM(o.balance)";
+		String groupby="   group by o.enterprise.enterpriseId order by o.enterprise.enterpriseId asc ";
 		
 		StringBuffer jpql = new StringBuffer("");
 		

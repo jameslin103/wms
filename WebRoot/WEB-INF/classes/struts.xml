@@ -51,7 +51,7 @@
 		
 		<!-- 用户登录 -->
 		
-		<action name="userLogin" class="cn.fm.web.action.user.LoginAction" method="userLogin">  
+		<action name="userLogin" class="cn.fm.web.action.user.LoginAction">  
             <result name="input">/login.jsp</result>
             <result name="success">/dashboard.jsp</result>
         </action>
@@ -66,9 +66,7 @@
         </action>
         
          <action name="loginOut"  class="cn.fm.web.action.user.WmsUserLogoutAction" method="loginOut">
-            <result name="success" type="redirectAction">
-            	 <param name="actionName">userLogin</param>
-            </result>
+            <result name="success" >/login.jsp</result>
         </action>
          <action name="updateBuyerPassword" class="cn.fm.web.action.user.UpdatePasswordAction" method="updatePassword">
             <result name="success" type="redirectAction">
@@ -78,7 +76,8 @@
         
          <!-- ========角色管理 权限============ -->    
       <action name="toAuthorizationUser" class="cn.fm.web.action.user.PermissionAction" method="toAuthorizationUser">
-            <result name="success" >admin/authorization.jsp</result>
+            <result name="success" >/admin/authorization.jsp</result>
+            <result name="input" >/admin/authorization.jsp</result>
         </action> 
         <action name="toHelp" class="cn.fm.web.action.user.PermissionAction" method="toHelp">
             <result name="success" >/help/index.jsp</result>
@@ -332,7 +331,14 @@
             	<param name="actionName">viewEnterprise</param>
             </result>
         </action>
-         
+        <action name="removeToEnterpriseHeadUser" class="cn.fm.web.action.company.EnterpriseAction" method="removeToEnterpriseHeadUser">
+           <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterprise</param>
+            </result>
+             <result name="input" type="redirectAction">
+            	<param name="actionName">viewEnterprise</param>
+            </result>
+        </action>
          <action name="toBeResponsibleEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="toBeResponsibleEnterprise">
             <result name="success">company/list.jsp</result>
         </action>

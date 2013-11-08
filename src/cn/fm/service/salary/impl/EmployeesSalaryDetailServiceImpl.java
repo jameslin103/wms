@@ -34,19 +34,22 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * @date   2013-09-01
 	 */
 	@SuppressWarnings({ "unchecked", "static-access" })
-	public List<String> saveEmployeesSalaryDetail(File file , String fileName,int number,int readRows,EmployeesSalaryDetail employeesSalaryDetail,Integer templateId)
+	public List<String> saveEmployeesSalaryDetail(File file , String fileName,int number,int readRows,EmployeesSalaryDetail employeesSalaryDetail,Integer templateId,Integer enterpriseId)
 	{
 		List<String>  employeesName=new ArrayList<String>();
+		List<EmployeesSalaryDetail> detailList=new ArrayList<EmployeesSalaryDetail>();
+		List<EnterpriseEmployees> enterpriseEmployeesListPO=getAllEnterpriseEmployees(enterpriseId);
 	    if(employeesSalaryDetail==null || employeesSalaryDetail.getEnterpriseId()==null)return null;
 		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
 		try {
 			List<String[]> arrayList=excel.generateStationBugSql(file,fileName,number,readRows);
 			if(arrayList.size()==0)return null;
-			for (int i = 0; i < arrayList.size(); i++){
+			for (int i = 0; i < arrayList.size(); i++)
+			{
 				String[] data = arrayList.get(i);
 				
 				
-				List<EnterpriseEmployees> enterpriseEmployeesListPO=getAllEnterpriseEmployees(employeesSalaryDetail.getEnterpriseId());
+			
 				
 				//匹配姓名是否重复
 				EmployeesSalaryDetail detail=refactoringEmployeesSalaryDetailDate(data);
@@ -60,18 +63,83 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 					employeesSalaryDetailVO.setSalaryDate(employeesSalaryDetail.getSalaryDate());
 					employeesSalaryDetailVO.setEnterpriseId(employeesSalaryDetail.getEnterpriseId());
 					employeesSalaryDetailVO.setBudgettableId(employeesSalaryDetail.getBudgettableId());
-					super.save(employeesSalaryDetailVO);
+					detailList.add(employeesSalaryDetailVO);
 				}
 				
-			}	
+			}
+			if(employeesName.size()==0){
+				saveEmployeesSalaryDetail(detailList);
+			}
 			
 		} catch (Exception e) {
-		
 			e.printStackTrace();
+			employeesName.add("文件出错!!");
+			
 		}
 		return employeesName;
 		
 	}
+	/**
+	 * 保存数据到数据库
+	 * @param employeesSalaryDetailList
+	 */
+	public void saveEmployeesSalaryDetail(List<EmployeesSalaryDetail> employeesSalaryDetailList)
+	{
+			if(employeesSalaryDetailList==null)return;
+			     EmployeesSalaryDetail  employeesSalaryDetailVO=null;
+			for (EmployeesSalaryDetail detail : employeesSalaryDetailList) 
+			{
+				 if(StringUtil.isEmpty(detail.getCardNumber()) || StringUtil.isEmpty(detail.getEmployeesName()))continue;
+				employeesSalaryDetailVO=new EmployeesSalaryDetail();
+				employeesSalaryDetailVO.setAggregate(detail.getAggregate());
+				employeesSalaryDetailVO.setSubsidies(detail.getSubsidies());
+				employeesSalaryDetailVO.setShouldPay(detail.getShouldPay());
+				employeesSalaryDetailVO.setBonus(detail.getBonus());
+				employeesSalaryDetailVO.setMorbidityStatistics(detail.getMorbidityStatistics());
+				employeesSalaryDetailVO.setEmployeesName(detail.getEmployeesName());
+				employeesSalaryDetailVO.setCardNumber(detail.getCardNumber());
+				employeesSalaryDetailVO.setEmpolyessId(detail.getEmpolyessId());
+				employeesSalaryDetailVO.setNote(detail.getNote());
+				employeesSalaryDetailVO.setServiceCharge(detail.getServiceCharge());
+				employeesSalaryDetailVO.setBankCardNumber(detail.getBankCardNumber());
+				employeesSalaryDetailVO.setSocialInsuranceBase(detail.getSocialInsuranceBase());
+				employeesSalaryDetailVO.setEnterprisePensionInsurance(detail.getEnterprisePensionInsurance());
+				employeesSalaryDetailVO.setPersonalPensionInsurance(detail.getPersonalPensionInsurance());
+				employeesSalaryDetailVO.setEnterpriseUnemploymentInsurance(detail.getEnterpriseUnemploymentInsurance());
+				employeesSalaryDetailVO.setPersonalUnemploymentInsurance(detail.getPersonalUnemploymentInsurance());
+				employeesSalaryDetailVO.setBirthInsuranceBase(detail.getBirthInsuranceBase());
+				employeesSalaryDetailVO.setEnterpriseBirthInsurance(detail.getInductrialInjuryBase());
+				employeesSalaryDetailVO.setInductrialInjuryBase(detail.getInductrialInjuryBase());
+				employeesSalaryDetailVO.setEnterpriseInductrialInjuryBase(detail.getEnterpriseInductrialInjuryBase());
+				employeesSalaryDetailVO.setMedicalPaymentBase(detail.getMedicalPaymentBase());
+				employeesSalaryDetailVO.setEnterpriseMedicalBase(detail.getEnterpriseMedicalBase());
+				employeesSalaryDetailVO.setPersonalMedicalBase(detail.getPersonalMedicalBase());
+				employeesSalaryDetailVO.setHousingReserveBase(detail.getHousingReserveBase());
+				employeesSalaryDetailVO.setEnterpriseReserveBase(detail.getEnterpriseReserveBase());
+				employeesSalaryDetailVO.setPersonalReserveBase(detail.getPersonalReserveBase());
+				employeesSalaryDetailVO.setEnterpriseId(detail.getEnterpriseId());
+				employeesSalaryDetailVO.setSalaryDate(detail.getSalaryDate());
+				employeesSalaryDetailVO.setWage(detail.getWage());
+				employeesSalaryDetailVO.setPersonalSubtotal(detail.getPersonalSubtotal());
+				employeesSalaryDetailVO.setEnterpriseTax(detail.getEnterpriseTax());
+				employeesSalaryDetailVO.setMoneyToCards(detail.getMoneyToCards());
+				employeesSalaryDetailVO.setEnterpriseSubtotal(detail.getEnterpriseSubtotal());
+				employeesSalaryDetailVO.setBudgettableId(detail.getBudgettableId());
+				employeesSalaryDetailVO.setEmpolyessId(detail.getEmpolyessId());
+				employeesSalaryDetailVO.setBeforeSalary(detail.getBeforeSalary());
+				employeesSalaryDetailVO.setCreateDate(detail.getCreateDate());
+				employeesSalaryDetailVO.setPersonalTax(detail.getPersonalTax());
+				 
+			   super.save(employeesSalaryDetailVO);
+			}
+			
+			
+	}
+	
+	
+	
+	
+	
 	/**
 	 * 重构导入的数据进行封装EmployeesSalaryDetail类
 	 * @return EmployeesSalaryDetail
@@ -102,7 +170,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			Double  shouldPayTotal;			     //应发工资
 			Double  aggregate;					 //合计(企业应付)
 			Double  fiveBaseTotal = 0.00;		 //五险一金总基数
-			BigDecimal  personalTax = null;		 //个税
+			BigDecimal  personalTax = new BigDecimal("0.00");		 //个税
 		
 		
 		
@@ -244,7 +312,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 */
 	public BigDecimal  personalTax(Double wage,Double fiveBastTotal)
 	{
-		BigDecimal personalTax=null;
+		BigDecimal personalTax=new BigDecimal("0.00");
 		TaxOfPerson taxOfPerson=getTaxOfPerson();
 		if(taxOfPerson.getTaxThreshold()!=null)
 		{
@@ -446,7 +514,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 							    	}
 	
 						     }
-					    	    employeesSalaryDetail.setWage(new BigDecimal(fileDate[2].toString()==null?"":fileDate[2].toString()));
+					    	    employeesSalaryDetail.setWage(new BigDecimal(fileDate[2].toString()==null?null:fileDate[2].toString()));
 					    	    employeesSalaryDetail.setCardNumber(carNumber);
 					    	    employeesSalaryDetail.setEmpolyessId(emp.getEmployeesId());
 					    	    employeesSalaryDetail.setEmployeesName(emp.getEmployeesName());
@@ -454,19 +522,20 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 					    	    
 							    
 							    //服务费
-							    employeesSalaryDetail.setServiceCharge(new BigDecimal(emp.getServiceCost()==null?"":emp.getServiceCost().toString()));
+							    employeesSalaryDetail.setServiceCharge(new BigDecimal(emp.getServiceCost()==null?"0.0":emp.getServiceCost().toString()));
 							    
 							    //大病统筹
-							    employeesSalaryDetail.setMorbidityStatistics(new BigDecimal(emp.getSeriousDiseaseBase()==null?"":emp.getSeriousDiseaseBase().toString()));
+							    employeesSalaryDetail.setMorbidityStatistics(new BigDecimal(emp.getSeriousDiseaseBase()==null?"0.0".toString():emp.getSeriousDiseaseBase().toString()));
 						    	
 							  
 						    	 //备注
-						    	 employeesSalaryDetail.setNote(fileDate[4].toString()==null?null:fileDate[4].toString());
+						    	 employeesSalaryDetail.setNote(fileDate[4].toString()==null?"0.0":fileDate[4].toString());
 		
 								//统计excel导入各种奖金
 								for(int i=5;i<number;i++)
 								{
-									Double bonuses=Double.valueOf(fileDate[i].toString());
+									Double bonuses=Double.valueOf(fileDate[i]==null?"0.0":fileDate[i].toString());
+									if(bonuses==null)continue;
 										bonusesTotal+=bonuses;
 		
 								}

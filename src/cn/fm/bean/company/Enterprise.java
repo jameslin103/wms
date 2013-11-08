@@ -2,6 +2,7 @@ package cn.fm.bean.company;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +17,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.NotFound;
@@ -61,6 +64,10 @@ public class Enterprise implements Serializable{
 	
 	private  long      count;
 	
+	private Date       createDate=new Date();
+	
+	private Date       updateDate;
+	
 	/*统计企业资金往来*/
 	private  BigDecimal	   balanceDetailTotal ;
 	
@@ -87,12 +94,13 @@ public class Enterprise implements Serializable{
 	
 	private Set<BalanceDetail>           balanceDetail=new HashSet<BalanceDetail>();
 	
-	
 	//工资模板
 	private Set<SalaryTemplate>  salaryTemplates=new HashSet<SalaryTemplate>();
+	
+	private Set<CustomBonus>   customBonus=new HashSet<CustomBonus>();
 
     
-	 @ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.REFRESH)  
+	 @ManyToMany(fetch=FetchType.EAGER,cascade={CascadeType.REFRESH,CascadeType.MERGE,CascadeType.PERSIST})  
 	  @JoinTable(name = "user_enterprise",
 			   inverseJoinColumns =@JoinColumn (name ="user_id" ),//被维护端外键
               joinColumns =  @JoinColumn (name ="enterprise_id" ))//维护端外键
@@ -202,6 +210,20 @@ public class Enterprise implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
 	@Transient
 	public long getCount() {
 		return count;
@@ -254,8 +276,8 @@ public class Enterprise implements Serializable{
 	{  
 	   if(this.user.contains(wmsUser))
 	   {
-	             this.user.remove(wmsUser);  
-	     }  
+	         this.user.remove(wmsUser);  
+	   }  
 	}  
 	
 	
@@ -296,15 +318,36 @@ public class Enterprise implements Serializable{
 		this.reductionTotal = reductionTotal;
 	}
 	
+	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.MERGE},
+			fetch=FetchType.EAGER,mappedBy="enterprise")
+	public Set<CustomBonus> getCustomBonus() {
+		return customBonus;
+	}
+	public void setCustomBonus(Set<CustomBonus> customBonus) {
+		this.customBonus = customBonus;
+	}
 	
-//	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE },  
-//                       fetch = FetchType.EAGER, mappedBy = "enterprise")
-//	public Set<BalanceDetail> getBalanceDetail() {
-//		return balanceDetail;
-//	}
-//	public void setBalanceDetail(Set<BalanceDetail> balanceDetail) {
-//		this.balanceDetail = balanceDetail;
-//	}
 	
+	
+	@OneToMany(cascade = {CascadeType.ALL},  
+                       fetch = FetchType.EAGER, mappedBy = "enterprise")
+	public Set<BalanceDetail> getBalanceDetail() {
+		return balanceDetail;
+	}
+	public void setBalanceDetail(Set<BalanceDetail> balanceDetail) {
+		this.balanceDetail = balanceDetail;
+	}
+	
+	public void addBalanceDetail(BalanceDetail balanceDetail)
+	{
+		this.balanceDetail.add(balanceDetail);
+		
+	}
+	public void romveBalanceDetail(BalanceDetail balanceDetail)
+	{
+		if(this.balanceDetail.contains(balanceDetail))
+			this.balanceDetail.remove(balanceDetail);
+
+	}
 	
 }

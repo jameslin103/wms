@@ -50,10 +50,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th>操作</th>
               </tr>
             </thead>
-            <s:iterator value="%{#request.salaryTemplate}" id="salary">
+            <s:iterator value="%{#request.salaryTemplate}" id="salary" status="list">
             <tbody>
               <tr>
-                <td><s:property value="%{#salary.templateId}"/></td>
+                <td><s:property value="%{#list.index+1}"/></td>
                 <td><s:property value="%{#salary.templateName}"/></td>
                 <td>
                   <ol>
@@ -134,26 +134,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			<s:iterator value="#request.customBonus" id="customBonus">
             <div class="input-container">
-              <label class="checkbox">&nbsp;</label> 
-              <input type="checkbox" value="<s:property value='%{#customBonus.id}'/>" name="salaryTemplate.subsidyList" >
-              <s:property value="%{#customBonus.bonusName}"/>
+              	<label class="checkbox">&nbsp;</label> 
+             	 <input type="checkbox" value="<s:property value='%{#customBonus.id}'/>" name="salaryTemplate.subsidyList" />
+             	 <s:property value="%{#customBonus.bonusName}"/>
             </div>
             </s:iterator>        
 
             <div class="input-container">
               <label>&nbsp;</label>
-              <input type="radio" name="salaryTemplate.fiveInsurances" value="1" checked="checked">包含五险一金，
-              <input type="radio" name="salaryTemplate.fiveInsurances" value="0">不包含
+              <input type="radio" name="salaryTemplate.fiveInsurances" value="1" checked="checked"/>包含五险一金，
+              <input type="radio" name="salaryTemplate.fiveInsurances" value="0"/>不包含
             </div>
             <div class="input-container">
               <label>&nbsp;</label>
-              <input type="radio" name="salaryTemplate.tax" value="1" checked="checked">包含个税，
-              <input type="radio" name="salaryTemplate.tax" value="0">不包含
+              <input type="radio" name="salaryTemplate.tax" value="1" checked="checked"/>包含个税，
+              <input type="radio" name="salaryTemplate.tax" value="0"/>不包含
             </div>
             <div class="input-container">
               <label>&nbsp;</label>
-              <input type="radio" name="salaryTemplate.status" value="1" checked="checked">启用，
-              <input type="radio" name="salaryTemplate.status" value="0">停用
+              <input type="radio" name="salaryTemplate.status" value="1" checked="checked"/>启用，
+              <input type="radio" name="salaryTemplate.status" value="0"/>停用
             </div>                    
 
             <div class="input-container">
@@ -185,25 +185,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<s:iterator value="#request.customBonus" id="customBonus">
             <div class="input-container">
               <label class="checkbox">&nbsp;</label> 
-              <input type="checkbox" value="<s:property value='%{#customBonus.id}'/>" name="salaryTemplate.subsidyList" >
-              <s:property value="%{#customBonus.bonusName}"/>
+              <input type="checkbox" value="<s:property value='%{#customBonus.id}'/>" name="salaryTemplate.subsidyList" />
+              	<s:property value="%{#customBonus.bonusName}"/>
             </div>
             </s:iterator>        
 
             <div class="input-container">
               <label>&nbsp;</label>
-              <input type="radio" name="salaryTemplate.fiveInsurances" value="1" checked="checked">包含五险一金，
-              <input type="radio" name="salaryTemplate.fiveInsurances" value="0">不包含
+              <input type="radio" name="salaryTemplate.fiveInsurances" value="1" checked="checked"/>包含五险一金，
+              <input type="radio" name="salaryTemplate.fiveInsurances" value="0"/>不包含
             </div>
             <div class="input-container">
               <label>&nbsp;</label>
-              <input type="radio" name="salaryTemplate.tax" value="1" checked="checked">包含个税，
-              <input type="radio" name="salaryTemplate.tax" value="0">不包含
+              <input type="radio" name="salaryTemplate.tax" value="1" checked="checked"/>包含个税，
+              <input type="radio" name="salaryTemplate.tax" value="0"/>不包含
             </div>
             <div class="input-container">
               <label>&nbsp;</label>
-              <input type="radio" name="salaryTemplate.status" value="1" checked="checked">启用，
-              <input type="radio" name="salaryTemplate.status" value="0">停用
+              <input type="radio" name="salaryTemplate.status" value="1" checked="checked"/>启用，
+              <input type="radio" name="salaryTemplate.status" value="0"/>停用
             </div>                    
 
             <div class="input-container">

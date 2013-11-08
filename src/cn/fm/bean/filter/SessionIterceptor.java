@@ -15,9 +15,9 @@ public class SessionIterceptor extends AbstractInterceptor {
 	
 	
 	 public String intercept(ActionInvocation actionInvocation) throws Exception {  
-	        ActionContext ctx = ActionContext.getContext();  
+	        ActionContext ctx = ActionContext.getContext(); 
 	        Map session = ctx.getSession();  
-	        Action action = (Action) actionInvocation.getAction();  
+	        Action action = (Action) actionInvocation.getAction();
 	        if (action instanceof LoginAction) {  
 	            return actionInvocation.invoke();  
 	        }  

@@ -1,21 +1,39 @@
 package cn.fm.service.salary.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
+import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 
 @Service @Transactional
 public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryBudgetTable> implements	CreateSalaryBudgetTableService {
 
-	public void save(CreateSalaryBudgetTable createSalaryBudgetTable){
+
+	/**
+	 * 保存工资预算表
+	 * @param createSalaryBudgetTable
+	 */
+	public void saveCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable,Integer enterpriseId,Integer templateId)
+	{
 		
+		
+		Enterprise enterprisePO=em.find(Enterprise.class, enterpriseId);
+		SalaryTemplate salaryTemplatePO=em.find(SalaryTemplate.class, templateId);
+		createSalaryBudgetTable.setTemplateName(salaryTemplatePO.getTemplateName());
+		createSalaryBudgetTable.setEnterprise(enterprisePO);
+		createSalaryBudgetTable.setSalaryTemplate(salaryTemplatePO);
 		super.save(createSalaryBudgetTable);
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -25,7 +43,7 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 			return em.createQuery("select c from CreateSalaryBudgetTable  c " +
 					"where c.enterprise.enterpriseId=?1 " +
 					" and YEAR(c.createDate)=?2 " +
-					" group by c.createDate")
+					" order by c.createDate desc ")
 					.setParameter(1, enterpriseId).setParameter(2,year).getResultList();
 			  
 		
@@ -89,11 +107,22 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 
 	public void updateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable) {
 		try {
-			em.createQuery("update CreateSalaryBudgetTable c set c.name=?1,c.salaryDate=?2,c.chooseTax=?3,c.note=?4 where c.budgetId=?5")
-			.setParameter(1, createSalaryBudgetTable.getName()).setParameter(2, createSalaryBudgetTable.getSalaryDate())
-			.setParameter(3, createSalaryBudgetTable.getChooseTax()).setParameter(4, createSalaryBudgetTable.getNote())
-			.setParameter(5, createSalaryBudgetTable.getBudgetId())
-			.executeUpdate();
+			em.createQuery("update CreateSalaryBudgetTable c " +
+					"set c.name=?1," +
+					"c.salaryDate=?2," +
+					"c.chooseTax=?3," +
+					"c.note=?4, " +
+					"c.updateDate=?5, " +
+					"c.mergeId=?6 " +
+					" where c.budgetId=?7")
+				.setParameter(1, createSalaryBudgetTable.getName())
+				.setParameter(2, createSalaryBudgetTable.getSalaryDate())
+				.setParameter(3, createSalaryBudgetTable.getChooseTax())
+				.setParameter(4, createSalaryBudgetTable.getNote())
+				.setParameter(5, createSalaryBudgetTable.getUpdateDate())
+				.setParameter(6, createSalaryBudgetTable.getMergeId()).
+				 setParameter(7, createSalaryBudgetTable.getBudgetId())
+				.executeUpdate();
 			
 			
 		} catch (Exception e) {
@@ -148,7 +177,46 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 		return em.createQuery("select c from CreateSalaryBudgetTable c").getResultList();
 		 
 	}
+	/**
+	 * 获取工资预算表
+	 * @param date 时间段获取
+	 * @param enterpriseId 根据企业
+	 * @return list
+	 */
+	@SuppressWarnings("unchecked")
+	public List<CreateSalaryBudgetTable> findBeforeCurrentDateTemplate(String date,Integer enterpriseId)
+	{
+		List<CreateSalaryBudgetTable> createTableList=new ArrayList<CreateSalaryBudgetTable>();
+		CreateSalaryBudgetTable     createSalaryBudgetTable=null;
+		try {
+			
+			String sql="select * from createsalarybudgetTable c " +
+					"where c.salaryDate between date_sub('"+date+"',interval 2 month) " +
+					" and '"+date+"' " +
+					" and c.enterpriseId=1 " +
+					" and c.isTax=0";
+			List object=em.createNativeQuery(sql).getResultList();
+			
+			for (Object obj : object) {
+				Object[] tempObject=(Object[])obj;
+				createSalaryBudgetTable=new CreateSalaryBudgetTable();
+				createSalaryBudgetTable.setBudgetId((Integer)tempObject[0]);
+				createSalaryBudgetTable.setName(tempObject[3].toString());
+				createSalaryBudgetTable.setSalaryDate((Date)tempObject[5]);
+				
+				createTableList.add(createSalaryBudgetTable);
+			}
+
 	
+		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return createTableList;
+	}
 
 
 }

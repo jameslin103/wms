@@ -57,10 +57,16 @@ function findEnterpriseToUser(enterpriseId)
 		    cache:false,
 		    dataType:'json',    
 		    success:function(data){
+		      $("#user").val(data.enterpriseJson.user);
 		      $("#fullName").html('');
 		      $("#fullName").html(data.enterpriseJson.fullName);
 		      $("input[name='enterpriseId']").val(data.enterpriseJson.enterpriseId);
-		      
+		      $(".list-of-items-for-delete").html('');
+			      $.each(data.enterpriseJson.user,function(i,value){
+			    	  $(".list-of-items-for-delete").
+			    	  append("<li>"+value.username+"<a href='removeToEnterpriseHeadUser?userId="+value.userId+"" +
+			    	  		"&enterpriseId="+data.enterpriseJson.enterpriseId+"'style='width: 50px;'>(删除)</a></li>");
+			      });
 		     },    
 		     error : function() {  
 		    	 alert("系统异常，请稍后重试！");
@@ -84,16 +90,17 @@ function ajaxfindBeforeCurrentDateTemplate()
 			    cache:false,
 			    dataType:'json',    
 			    success:function(data){
+			    	 $("#salaryTable").html("");
+		        	  $("#salaryTable").css('');
+		        	  $("#noDate").text("");
 			        if(data.error=="true" ){
-			        	  $("#salaryTable").html("");
-			        	  $("#salaryTable").css('');
+			        	$("#salaryTable").append("<option value='0'>--请选择--</option>")
 			        	  $(data.createSalaryBudgetTableList).each(function(i, value){
 			        		  $("#salaryTable").append("<option value='" +value.budgetId+"'>"
 			        				  + value.name + "</option>");  
 			        	  });
 			        }else{    
-			        	 $("#salaryTable").html("");
-			        	 $("#salaryTable").append("<option >无数据</option>");
+			        	 $("#noDate").text(" 无数据 ");
 			        	 //$("#salaryTable").css("background-color", "yellow");
 			        }    
 			     },    
@@ -267,15 +274,15 @@ function findToIdSalayBudegTable(budgetId)
 		    	$("input[name='budgetId']").val(budgetId); 
 		    	$("input[name='createSalaryBudgetTable.budgetId']").val(data.createSalaryBudgetTable.budgetId); 
 		    	$("#templateName").text(data.createSalaryBudgetTable.templateName)
-		    	$("input[name='createSalaryBudgetTable.name']").val(data.createSalaryBudgetTable.name); 
-		    	$("input[name='createSalaryBudgetTable.salaryDate']").val(data.createSalaryBudgetTable.salaryDate);
+		    	$("input[name='createSalaryBudgetTable.name']").val(data.createSalaryBudgetTable.name==null?"":data.createSalaryBudgetTable.name); 
+		    	$("input[name='createSalaryBudgetTable.salaryDate']").val((new Date(data.book.otherPublishDate)).format("yyyy-MM-dd"));  
 		    	$("#salaryTable").empty();
 		    	$("#salaryTable").append("<option>"+data.createSalaryBudgetTable.chooseTax+"</option>");
 		    	
 		    	//$("#salaryTable").attr("value",'test');
 		    
 		    	$("#note").val(data.createSalaryBudgetTable.note);
-
+		    
 		    
 		    	
 
@@ -298,7 +305,7 @@ function findToIdCustomBonus(id)
 		    dataType:'json',    
 		    success:function(data){
 		    	$("input[name='customBonus.id']").val(data.customBonus.id); 
-		    	$("input[name='customBonus.bonusName']").val(data.customBonus.bonusName); 
+		    	$("#bonusName").val(data.customBonus.bonusName); 
 		    	$("input[name='customBonus.state'][value="+data.customBonus.state+"]").attr("checked",true);
 		    
 		    	
@@ -478,7 +485,35 @@ $(function (){
 
 
 
-
+/** 
+ * 时间对象的格式化; 
+ */  
+Date.prototype.format = function(format) {  
+    /* 
+     * eg:format="yyyy-MM-dd hh:mm:ss"; 
+     */  
+    var o = {  
+        "M+" : this.getMonth() + 1, // month  
+        "d+" : this.getDate(), // day  
+        "h+" : this.getHours(), // hour  
+        "m+" : this.getMinutes(), // minute  
+        "s+" : this.getSeconds(), // second  
+        "q+" : Math.floor((this.getMonth() + 3) / 3), // quarter  
+        "S" : this.getMilliseconds()  
+        // millisecond  
+    }  
+  
+    if (/(y+)/.test(format)) {  
+        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4- RegExp.$1.length));  
+    }  
+  
+    for (var k in o) {  
+        if (new RegExp("(" + k + ")").test(format)) {  
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]  : ("00" + o[k]).substr(("" + o[k]).length));  
+        }  
+    }  
+    return format;  
+}  
 
 
 

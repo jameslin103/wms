@@ -51,4 +51,19 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	 * @return
 	 */
 	public List<Enterprise>  getAllEnterprise();
+	
+	/**
+	 * 增加企业负责人
+	 * @param enterprise
+	 * @param user
+	 */
+	public void saveEnterpriseToBeResponsible(Integer enterpriseId,Integer userId);
+	
+	
+	
+	/**
+	 * 解除企业负责人
+	 * @return
+	 */
+	public void removeToEnterpriseHeadUser(Integer enterpriseId,Integer userId);
 }

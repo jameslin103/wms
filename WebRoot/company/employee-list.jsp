@@ -39,24 +39,7 @@
 			<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">
-						<ul class="nav nav-tabs">
-							<li>
-								<a href="company/index.jsp">综合</a>
-							</li>
-							<li class="active">
-								<a href="viewEnterpriseEmployees">员工档案</a>
-							</li>
-							<li>
-								<a href="viewSalaryBudgetTable">工资预算表</a>
-							</li>
-							<li>
-								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
-							</li>
-							<li>
-								<a href="viewBalanceDetail">资金往来</a>
-							</li>
-						</ul>
-
+								<%@include file="../share/permissions.jsp" %>
 						<ul class="normal action-container clearfix">
 							<li>
 								新员工档案：
@@ -159,11 +142,11 @@
 								</tr>
 
 							</thead>
-							<s:iterator value="#request.pageView.records" id="emp">
+							<s:iterator value="#request.pageView.records" id="emp" status="list">
 								<tbody>
 									<tr>
 										<td>
-											<s:property value="%{#emp.employeesId}" />
+											<s:property value="%{#list.index+1}" />
 										</td>
 										<td>
 											<s:hidden value="%{#emp.employeesId}" name="employeesId" />
@@ -416,15 +399,15 @@
 								合同期限
 							</label>
 							起：
-							<s:textfield id="d11"
+							<input type="text" id="d4311"
 								name="enterpriseEmployees.startContractDeadline"
-								onclick="WdatePicker()" cssClass="Wdate" />
+								 onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'d4311\')||\'2020-10-01\'}',skin:'whyGreen'})" class="Wdate" />
 						</div>
 
 						<div class="input-container">
 							止：
-							<s:textfield id="d11" name="enterpriseEmployees.endContractDeadline"
-								onclick="WdatePicker()" cssClass="Wdate" />
+							<input type="text" id="d4312" name="enterpriseEmployees.endContractDeadline"
+								 class="Wdate" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'d4311\')}',maxDate:'2020-10-01',skin:'whyGreen'})"/>
 						</div>
 
 						<div class="input-container">

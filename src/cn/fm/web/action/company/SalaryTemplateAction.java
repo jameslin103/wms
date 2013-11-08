@@ -71,9 +71,10 @@ public class SalaryTemplateAction extends BaseAction {
 	public String viewSalaryTemplate()
 	{
 		
-		List<CustomBonus> customBonus=customBonusService.getStatusEnableCustomBonus();
+	
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null)return INPUT;
+		List<CustomBonus> customBonus=customBonusService.getStatusEnableCustomBonus(enterprise.getEnterpriseId());
 		List<SalaryTemplate> salaryTemplate=salaryTemplateService.getAllSalaryTemplate(enterprise.getEnterpriseId());
 		if(salaryTemplate==null || salaryTemplate.size()==0)
 			salaryTemplate=new ArrayList<SalaryTemplate>();

@@ -15,13 +15,13 @@ import cn.fm.service.company.CustomBonusServices;
 public class CustomBonusServicesImpl extends DaoSupport<CustomBonus> implements CustomBonusServices {
 
 	@SuppressWarnings("unchecked")
-	public List<CustomBonus> getAllCustomBonus() {
-		Query query=em.createQuery("select c from CustomBonus c");
+	public List<CustomBonus> getAllCustomBonus(Integer enterpriseId) {
+		Query query=em.createQuery("select c from CustomBonus c where c.enterprise.enterpriseId=?1").setParameter(1, enterpriseId);
 		return query.getResultList();
 	}
 	@SuppressWarnings("unchecked")
-	public List<CustomBonus> getStatusEnableCustomBonus() {
-		Query query=em.createQuery("select c from CustomBonus c where c.state=1");
+	public List<CustomBonus> getStatusEnableCustomBonus(Integer enterpriseId) {
+		Query query=em.createQuery("select c from CustomBonus c where c.state=1 and c.enterprise.enterpriseId=?1").setParameter(1, enterpriseId);
 		return query.getResultList();
 	}
 	

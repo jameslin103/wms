@@ -240,7 +240,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	{
 		createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
 		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTable);
-		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
+		Enterprise enterprise=WebUtil.getEnterprise(request);
 		
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
 		employeesSalaryDetail=new EmployeesSalaryDetail();
@@ -252,7 +252,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	 	 String[] customt=salaryTemplate.getSubsidyList().split(",");
 		 int count=customt.length+5;
 		//上传的名字是否重复
-		List<String> employeesNames=employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "员工基本工资信息表", count,1,employeesSalaryDetail,createSalaryBudgetTable.getSalaryTemplate().getTemplateId());
+		List<String> employeesNames=employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "员工基本工资信息表", count,1,employeesSalaryDetail,createSalaryBudgetTable.getSalaryTemplate().getTemplateId(),enterprise.getEnterpriseId());
 		if(employeesNames.size()>0){request.setAttribute("employeesNames", employeesNames);return INPUT;}
 		
 		//查找统计上传员工工资的总额
@@ -285,7 +285,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		balanceDetail.setYearMonth(createSalaryBudgetTable.getSalaryDate());
 		balanceDetail.setBudgetId(createSalaryBudgetTable.getBudgetId());
 		balanceDetail.setNote(createSalaryBudgetTable.getNote());
-		balanceDetail.setEnterpriseId(enterprise.getEnterpriseId());
+		balanceDetail.setEnterprise(enterprise);
 		
 		
 		balanceDetailService.save(balanceDetail);

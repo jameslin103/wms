@@ -72,7 +72,7 @@ public BigDecimal findBalanceDetail(Integer enterpriseId) {
 		
 		Query query=null;
 		try {
-			query=em.createQuery("select sum(b.balance) from BalanceDetail b where b.enterpriseId=?1");
+			query=em.createQuery("select sum(b.balance) from BalanceDetail b where b.enterprise.enterpriseId=?1");
 			  query.setParameter(1, enterpriseId);
 		} catch (Exception e) {
 			
@@ -197,5 +197,40 @@ public BigDecimal findBalanceDetail(Integer enterpriseId) {
 		}
 		
 	}
+	
+	/**
+	 * 增加企业负责人
+	 * @param enterprise
+	 * @param user
+	 */
+	public void saveEnterpriseToBeResponsible(Integer enterpriseId,Integer userId){
+		if(enterpriseId==null || userId==null)return;
+		WmsUser userPo=em.find(WmsUser.class, userId);
+		Enterprise enterprisePO=em.getReference(Enterprise.class, enterpriseId);
+		enterprisePO.addWmsUser(userPo);
+		em.persist(enterprisePO);
+	}
+	
+	/**
+	 * 解除企业负责人
+	 * @return
+	 */
+	public void removeToEnterpriseHeadUser(Integer enterpriseId,Integer userId)
+	{
+		
+		if(enterpriseId==null || userId==null)return;
+		WmsUser userPo=em.find(WmsUser.class, userId);
+		Enterprise enterprisePO=em.getReference(Enterprise.class,enterpriseId);
+		enterprisePO.removeWmsUser(userPo);
+		em.remove(enterprisePO);
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 
 }
