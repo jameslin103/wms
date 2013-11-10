@@ -1,10 +1,5 @@
 package cn.fm.utils;
 
-
-
-
-
-
 public class Constant {
 	public static final String WMS_SEARCH_ERROR = "error";
 	public final static String WMS_REPORT_EXCEL_EXPORT_TYPE="excel";
@@ -16,7 +11,8 @@ public class Constant {
 	public static final String WMS_ACTIVITY_CTIME = "yyyy-mm-dd HH24:MI";
 	public static final String WMS_ACTIVITY_MONTH = "yyyy-MM";
 	public static final String WMS_STANDARD_DATE_TIME="yyyy-MM-dd HH:mm:ss";
-	
+	public final static String WMS_GRID_FILTER_PARAM_SEPARATOR="|";
+	public final static String WMS_GRID_FILTER_PARAM_VALUE_SEPARATOR="#";
 	public static final String WMS_HOUR_TEXT = "小时";
 	public static final String WMS_MINUTE_TEXT = "分钟";
 	
@@ -47,6 +43,8 @@ public class Constant {
 	public static final String WMS_GENDANYUAN="跟单员";
 	public static final String WMS_GAO_JI_GUANLI_YUAN="超级管理员";
 	
-	
+	public static final int WMS_PAGE_SIZE = 5;
+	public static final String WMS_SEARCH_FALSE = "0";
+	public static final String WMS_FELX_SEARCH_DATE = "date";
 	
 }
