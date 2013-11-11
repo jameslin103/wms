@@ -22,9 +22,15 @@ import cn.fm.utils.StringUtil;
  */
 public class SearchImpl{
 
-    
+    private JpaDAO  dao;
 
-    public BaseGrid findPage(GridParameter gridParameter, BaseGrid baseGrid) {
+    
+    
+    public void setDao(JpaDAO dao) {
+		this.dao = dao;
+	}
+
+	public BaseGrid findPage(GridParameter gridParameter, BaseGrid baseGrid) {
         String filterParams = baseGrid.getFilterParams();
         String objectAlias = gridParameter.getObjectAlias();
         String hql = makeSearhHQL(filterParams, gridParameter);
@@ -37,7 +43,7 @@ public class SearchImpl{
     public BaseGrid findPageByList(BaseGrid baseGrid,List list){
 	    String sortName = baseGrid.getSortname();
         String sortOrder = baseGrid.getSortorder();
-    	PageData pageData = .findPageByList(baseGrid.getPage(), baseGrid.getRp(),sortName,sortOrder,list);
+    	PageData pageData = dao.findPageByList(baseGrid.getPage(), baseGrid.getRp(),sortName,sortOrder,list);
     	injectQueryResult(pageData, baseGrid);
     	return baseGrid;
     }

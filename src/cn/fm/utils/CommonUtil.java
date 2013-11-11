@@ -5,7 +5,10 @@ import java.util.Set;
 
 import javax.persistence.Query;
 
+
+@SuppressWarnings("unchecked")
 public class CommonUtil {
+	
 	public static Query addQueryParams(Query query, Map params) {
 		Set keys = params.keySet();
 		for (Object obj : keys) {

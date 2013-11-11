@@ -9,6 +9,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+@SuppressWarnings("unused")
 public class DateUtil {
 	    public final static String FORMAT_DATE = "yyyy-MM-dd";
 	    public final static String FORMAT_DATE_MONTH = "yyyy年MM月";
@@ -62,7 +64,8 @@ public class DateUtil {
 	    	SimpleDateFormat dateFormat=new SimpleDateFormat(strFormat);
 	    	Date date=new Date();
 	    	try {
-	    		String year = str.substring(7, 11);
+	    		
+				String year = str.substring(7, 11);
 				String month = str.substring(3, 6);
 				String yue = str.substring(0,2);
 				

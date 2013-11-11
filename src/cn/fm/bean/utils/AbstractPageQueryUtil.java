@@ -18,7 +18,7 @@ import cn.fm.bean.SearchBean;
 import cn.fm.utils.Constant;
 import cn.fm.utils.StringUtil;
 
-
+@SuppressWarnings("unchecked")
 public class AbstractPageQueryUtil {
 
     private Session session;
@@ -51,7 +51,8 @@ public class AbstractPageQueryUtil {
         return null;
     }
 
-    public List setUpResult(List datals) {
+    
+	public List setUpResult(List datals) {
         return null;
     }
 

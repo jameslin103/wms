@@ -1,6 +1,6 @@
 package cn.fm.utils;
 
-
+@SuppressWarnings("unused")
 public class WMSResource {
 	private static final String WMS_RESOURCES_ROOT="WMS_RESOURCES_ROOT";
 	private static final String WMS_CLASSPATH_RESOURCES="WMS_RESOURCES_ROOT";

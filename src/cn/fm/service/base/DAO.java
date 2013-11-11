@@ -63,5 +63,4 @@ public interface DAO<T> {
 		
 		public QueryResult<T> getScrollDataSum(int firstindex, int maxresult, String wherejpql, Object[] queryParams,String orderby,String fromCurrentSql);
 		
-		//public QueryResultPageData<T> findByPage(final String hsql, final Map pmap, final int topage, final int pagesize, final String orderby);
 	}

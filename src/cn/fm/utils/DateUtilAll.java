@@ -13,6 +13,8 @@ import java.util.GregorianCalendar;
  * @author jameslin
  * 2013-10-16
  */
+
+@SuppressWarnings("unused")
 public class DateUtilAll
 {
 	//每月天数(非润年)
@@ -399,6 +401,7 @@ public class DateUtilAll
 	 * @param dateTime ("2004-01-18 10:50:30")
 	 * @return true or false
 	 */
+	@SuppressWarnings("deprecation")
 	public static Calendar converStrToCalendar(String dateTime)
 	{
 		if (dateTime == null){
@@ -426,6 +429,7 @@ public class DateUtilAll
 	 * @param dateTime ("2004-01-18 10:50:30")
 	 * @return 2004-01-18
 	 */
+	@SuppressWarnings("deprecation")
 	public static String ConvertStrToDateStr(String time)
 	{
 		Timestamp date1= convertStrToDate(time);
