@@ -228,7 +228,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		employees.setEmployeesName(data[2].toString());
 		employees.setEmployeesSex(data[3].toString());
 		employees.setNativePlace(data[4].toString());
-		employees.setHouseholdRegister(data[5].toString()==null?null:data[5].equals(Constant.WMS_YES)?1:null);
+		employees.setHouseholdRegister(data[5]==null?null:data[5].equals(Constant.WMS_YES)?1:0);
 		employees.setHomeAddress(data[6].toString());
 		employees.setMaritalStatus(data[7].toString()==null?null:data[7].equals(Constant.WMS_YES)?1:0);
 		employees.setLevelEducation(data[8].toString());

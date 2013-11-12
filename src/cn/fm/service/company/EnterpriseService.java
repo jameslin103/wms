@@ -66,4 +66,7 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	 * @return
 	 */
 	public void removeToEnterpriseHeadUser(Integer enterpriseId,Integer userId);
+	
+	
+	public List<Enterprise> getUserToAllEnterprise(WmsUser user);
 }

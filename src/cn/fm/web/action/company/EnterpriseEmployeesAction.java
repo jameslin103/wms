@@ -314,7 +314,56 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		
 		return SUCCESS;
 	}
-	
+	/**
+	 * 查找隐藏的员工
+	 * @return
+	 */
+	public String findEmployeesHidden()
+	{
+		
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(this.enterpriseId!=null)
+		{
+			jpql.append(" o.pseudoDelete=?").append(params.size()+1);
+			params.add(1);
+			jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(this.enterpriseId);
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+		return SUCCESS;
+	}
+	/**
+	 * 查找离职员工
+	 * @return
+	 */
+	public String findEmployeesDeparture()
+	{
+		
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(this.enterpriseId!=null)
+		{
+			jpql.append(" o.departure=?").append(params.size()+1);
+			params.add(1);
+			jpql.append(" and  o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(this.enterpriseId);
+			
+			
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+		return SUCCESS;
+	}
 	/**
 	 * 
 	 * @return
@@ -359,6 +408,9 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		orderby.put("employeesId", "desc");
 		StringBuffer jpql = new StringBuffer("");
 		List<Object> params = new ArrayList<Object>();
+		if(StringUtil.isEmpty(insuranceYear)){
+			insuranceYear=DateUtil.getCurrentTime();	
+		}
 		if(enterprise.getEnterpriseId()!=null)
 		{
 			
@@ -371,7 +423,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			jpql.append(" and o.departure=?").append(params.size()+1);
 			params.add(0);
 			jpql.append(" and year(o.cinsengDate)=?").append(params.size()+1);
-			params.add(Integer.parseInt(insuranceYear));
+			params.add(Integer.parseInt(insuranceYear.toString()));
 			jpql.append(" and month(o.cinsengDate)=?").append(params.size()+1);
 			params.add(this.month);
 			
@@ -588,56 +640,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 				
 		}
 	}
-	/**
-	 * 查找隐藏的员工
-	 * @return
-	 */
-	public String findEmployeesHidden()
-	{
-		
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("employeesId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-		if(this.enterpriseId!=null)
-		{
-			jpql.append(" o.pseudoDelete=?").append(params.size()+1);
-			params.add(1);
-			jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(this.enterpriseId);
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(8,  this.getPage());
-			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("pageView", pageView);
-		}
-		return SUCCESS;
-	}
-	/**
-	 * 查找离职员工
-	 * @return
-	 */
-	public String findEmployeesDeparture()
-	{
-		
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("employeesId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-		if(this.enterpriseId!=null)
-		{
-			jpql.append(" o.departure=?").append(params.size()+1);
-			params.add(1);
-			jpql.append(" and  o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(this.enterpriseId);
-			
-			
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
-			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("pageView", pageView);
-		}
-		return SUCCESS;
-	}
+	
 	/**
 	 * 下载减员信息模板
 	 * @return

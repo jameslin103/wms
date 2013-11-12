@@ -185,15 +185,11 @@
         </action>
         <!-- 离职员工 -->
          <action name="findEmployeesDeparture" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="findEmployeesDeparture">
-            <result name="success" type="redirectAction">
-            	<param name="actionName">viewEnterpriseEmployees</param>
-            </result>
+            <result name="success">company/employee-list.jsp</result>
         </action>
         <!-- 隐藏员工 -->
          <action name="findEmployeesHidden" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="findEmployeesHidden">
-            <result name="success" type="redirectAction">
-            	<param name="actionName">viewEnterpriseEmployees</param>
-            </result>
+            <result name="success">company/employee-list.jsp</result>
         </action>
           <!-- 增减员与参保明细 -->
         <action name="viewInsuranceWithMonth" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewInsuranceWithMonth">

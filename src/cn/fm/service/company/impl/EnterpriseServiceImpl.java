@@ -55,6 +55,18 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		return enterpriseListVO;
 
 	}
+	@SuppressWarnings("unchecked")
+	public List<Enterprise> getUserToAllEnterprise(WmsUser user)
+	{
+		try {
+		 return	em.createQuery("select t from Enterprise t join WmsUser u on t.enterpriseId=u.userId where u.userId=?1 ")
+		 		.setParameter(1, user.getUserId()).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 	/**
 	 * 统计公司多少员工
 	 * @param enterpriseId
@@ -190,7 +202,7 @@ public BigDecimal findBalanceDetail(Integer enterpriseId) {
 	@SuppressWarnings("unchecked")
 	public List<Enterprise> getAllEnterprise() {
 		try {
-			return em.createQuery("select e from Enterprise e").getResultList();
+			return em.createQuery("select e from Enterprise e order by e.enterpriseId asc ").getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

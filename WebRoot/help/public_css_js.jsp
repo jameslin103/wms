@@ -4,7 +4,8 @@
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bootstrap.min.css"/>
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/layout.css"/>
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/buttons.css"/> 
-
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/flexigrid.css"/>
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/flexigrid.pack.css"/>
   
   
   <%@ taglib uri="/struts-tags" prefix="s"%>
@@ -15,5 +16,7 @@
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.validate.min.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/messages_zh.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.noty.js"></script>
-  
+  <script type="text/javascript" src="<%=request.getContextPath()%>/js/flexigrid.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/js/flexigrid.pack.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/js/tableflexigrid.js"></script>
   

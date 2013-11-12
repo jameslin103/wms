@@ -28,10 +28,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row-fluid">
 
         <div id="center-pane">
-          <ul class="nav nav-tabs">
-				<%@include file="../share/permissions.jsp" %>
-          </ul>
- 
+				<ul class="nav nav-tabs">
+					<s:iterator value="#session.menuList" id="menu">
+						<s:if test="#menu.url=='viewEnterpriseEmployees'">
+							<li >
+								<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
+								</a>
+							</li>
+						</s:if>
+						<s:if test="#menu.url=='viewSalaryBudgetTable'">
+							<li class="active">
+								<a href="viewSalaryBudgetTable" >
+									<s:property value="#menu.name" />
+								</a>
+							</li>
+						</s:if>
+						<s:if test="#menu.url=='viewInsuranceWithMonth'">
+							<li >
+								<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
+								</a>
+							</li>
+						</s:if>
+						<s:if test="#menu.url=='viewBalanceDetail'">
+							<li >
+								<a href="viewBalanceDetail" ><s:property value="#menu.name" />
+								</a>
+							</li>
+						</s:if>
+						<s:if test="#menu.url=='viewEnterpriseDetailed'">
+							<li >
+								<a href="viewEnterpriseDetailed" ><s:property value="#menu.name" />
+								</a>
+							</li>
+						</s:if>
+					</s:iterator>
+				</ul>
           <table class="table table-striped table-bordered">
             <thead>
               <tr>

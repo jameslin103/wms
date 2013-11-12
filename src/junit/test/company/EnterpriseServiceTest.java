@@ -157,6 +157,13 @@ public class EnterpriseServiceTest {
 		}
 	}
 	
-	
+	@Test
+	public void getUserToAllEnterprise()
+	{
+		WmsUser user=new WmsUser();
+		user.setUserId(5);
+		enterpriseService.getUserToAllEnterprise(user);
+		
+	}
 
 }
