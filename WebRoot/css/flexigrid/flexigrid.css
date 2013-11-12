@@ -20,7 +20,7 @@
 }
 
 .flexigrid div.nDiv {
-	background: #eee url(../images/line.gif) repeat-y -1px top;
+	background: #eee url(images/line.gif) repeat-y -1px top;
 	border: 1px solid #ccc;
 	border-top: 0px;
 	overflow: auto;

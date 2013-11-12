@@ -22,6 +22,7 @@ import cn.fm.service.company.EnterpriseService;
 public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements EnterpriseService {
 
 	private SearchImpl searchImpl;
+	
 
 	public void setSearchImpl(SearchImpl searchImpl) {
 		this.searchImpl = searchImpl;
@@ -246,11 +247,10 @@ public BigDecimal findBalanceDetail(Integer enterpriseId) {
 		
 		
 	}
-	@Override
-	public BaseGrid findDivisionPage(BaseGrid baseGrid) {
+	public BaseGrid findEnterprisePage(BaseGrid baseGrid) {
 		GridParameter gridParameter = GridParameter.getInstance()
-		.setModuleNameVal("division").setObjectNameVal("Division")
-		.setObjectAliasVal("division");
+		.setModuleNameVal("enterprise").setObjectNameVal("Enterprise")
+		.setObjectAliasVal("enterprise");
 		return searchImpl.findPage(gridParameter, baseGrid);
 	}
 	

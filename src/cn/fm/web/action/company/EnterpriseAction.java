@@ -318,5 +318,10 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		
 		return SUCCESS;
 	}
-
+	public String findEnterpriseGrid()
+	{
+		enterpriseJson=enterpriseService.find(20);
+		
+		return SUCCESS;
+	}
 }

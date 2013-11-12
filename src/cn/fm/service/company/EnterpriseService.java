@@ -69,7 +69,8 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	
 	
 	
-	public BaseGrid findDivisionPage(BaseGrid baseGrid);
+	public BaseGrid findEnterprisePage(BaseGrid baseGrid);
+	
 	
 	
 }

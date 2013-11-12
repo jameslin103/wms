@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<%@ include file="/help/public_css_js.jsp" %>
+	    <%@ include file="/help/public_css_js.jsp" %>
 	<script type="text/javascript">
 		function topage(page){
 			var form = document.getElementById("myform");
@@ -26,7 +26,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div id="header">
 			<jsp:include page="../layout/header.jsp"></jsp:include>
     	</div>
-
+    	<div id="sub-header" class="clearfix">
+			<h2>
+				<s:property value="%{#session.enterprise.fullName}" />
+			</h2>
+		</div>
 		<div id="main"> 
 			<div class="row-fluid">
 			<div id="center-pane">
@@ -34,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<s:iterator value="#session.menuList" id="menu">
 								<s:if test="#menu.url=='viewEnterpriseDetailed'">
 									<li >
-										<a href="viewEnterpriseDetailed"  ><s:property value="#menu.name" />
+										<a href="viewEnterpriseDetailed"><s:property value="#menu.name" />
 										</a>
 									</li>
 								</s:if>
@@ -73,6 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="viewCashIssue?budgetId=<s:property value="%{#request.budgetId}"/>">现金</a></li>
             <li class="right"><a href="downloadBankIssueSalary" class="btn btn-primary">下载Excel表格</a></li>
           </ul>
+          <!--
 
           <table class="table table-striped table-bordered">
             <thead>
@@ -98,10 +103,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </s:iterator>
             </tbody>
           </table>
-
-          <div class="pagination">
-            <%@include file="../share/fenye.jsp" %>
-          </div>
+		  -->
+		  		<table id="flexigrid" style="display: none;"></table>
+          
 				</div>
 			</div>
 		</div>

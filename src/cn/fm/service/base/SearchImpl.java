@@ -22,7 +22,7 @@ import cn.fm.utils.StringUtil;
  */
 public class SearchImpl{
 
-    
+    private 
 
     public BaseGrid findPage(GridParameter gridParameter, BaseGrid baseGrid) {
         String filterParams = baseGrid.getFilterParams();

@@ -351,7 +351,11 @@
             <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
             </result>
-        </action> 
+        </action>
+        <action name="findEnterpriseGrid" class="cn.fm.web.action.company.EnterpriseAction" method="findEnterpriseGrid">
+           <result type="json" name="success"></result>
+        </action>
+         
          <action name="updateEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterprise">
            <result name="success" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>

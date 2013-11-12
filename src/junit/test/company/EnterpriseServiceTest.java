@@ -156,14 +156,14 @@ public class EnterpriseServiceTest {
 			System.out.println(cr.getName());
 		}
 	}
-	
-	@Test
-	public void getUserToAllEnterprise()
-	{
-		WmsUser user=new WmsUser();
-		user.setUserId(5);
-		enterpriseService.getUserToAllEnterprise(user);
-		
-	}
+//	
+//	@Test
+//	public void getUserToAllEnterprise()
+//	{
+//		WmsUser user=new WmsUser();
+//		user.setUserId(5);
+//		enterpriseService.getUserToAllEnterprise(user);
+//		
+//	}
 
 }
