@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <title>富民人力银行派遣系统</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
  	<%@ include file="/help/public_css_js.jsp" %>
-	<script type="text/javascript">zcx 
+	<script type="text/javascript">
 		$(function(){
 		    var	phone=$("input[name='wmsUser.phone']").val();
 		    var password=$("input[name='wmsUser.password']").val();

@@ -31,24 +31,40 @@
 				<div class="row-fluid">
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
-							<li class="active">
-								<a href="viewEnterpriseDetailed">综合</a>
-							</li>
-							<li>
-								<a
-									href="viewEnterpriseEmployees">员工档案</a>
-							</li>
-							<li>
-								<a href="viewSalaryBudgetTable">工资预算表</a>
-							</li>
-							<li>
-								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
-							</li>
-							<li>
-								<a href="viewBalanceDetail">资金往来</a>
-							</li>
+							<s:iterator value="#session.menuList" id="menu" >
+								<s:if test="#menu.url=='viewEnterpriseDetailed'">
+									<li  class="active">
+										<a href="viewEnterpriseDetailed" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewEnterpriseEmployees'">
+									<li >
+										<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewSalaryBudgetTable'">
+									<li >
+										<a href="viewSalaryBudgetTable" >
+											<s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewInsuranceWithMonth'">
+									<li >
+										<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewBalanceDetail'">
+									<li >
+										<a href="viewBalanceDetail" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+							</s:iterator>
 						</ul>
-
 					</div>
 				</div>
 			</div>

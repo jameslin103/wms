@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<%@ include file="/help/public_css_js.jsp" %>
+	    <%@ include file="/help/public_css_js.jsp" %>
 	<script type="text/javascript">
 		function topage(page){
 			var form = document.getElementById("myform");
@@ -26,17 +26,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div id="header">
 			<jsp:include page="../layout/header.jsp"></jsp:include>
     	</div>
-
+    	<div id="sub-header" class="clearfix">
+			<h2>
+				<s:property value="%{#session.enterprise.fullName}" />
+			</h2>
+		</div>
 		<div id="main"> 
 			<div class="row-fluid">
-				<div id="center-pane">
-         <ul class="nav nav-tabs">
-            <li><a href="company/index.jsp">综合</a></li>
-            <li><a href="viewEnterpriseEmployees">员工档案</a></li>
-            <li class="active"><a href="viewSalaryBudgetTable">工资预算表</a></li>
-            <li><a href="viewInsuranceWithMonth">增减员与参保明细</a></li>
-            <li><a href="viewBalanceDetail">资金往来</a></li>            
-          </ul>
+			<div id="center-pane">
+         			<ul class="nav nav-tabs">
+							<s:iterator value="#session.menuList" id="menu">
+								<s:if test="#menu.url=='viewEnterpriseDetailed'">
+									<li >
+										<a href="viewEnterpriseDetailed"><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewEnterpriseEmployees'">
+									<li >
+										<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewSalaryBudgetTable'">
+									<li class="active">
+										<a href="viewSalaryBudgetTable" >
+											<s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewInsuranceWithMonth'">
+									<li >
+										<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewBalanceDetail'">
+									<li >
+										<a href="viewBalanceDetail" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+							</s:iterator>
+					</ul>
  
           <ul class="normal action-container clearfix">
             <li>分类查看：</li>
@@ -45,6 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="viewCashIssue?budgetId=<s:property value="%{#request.budgetId}"/>">现金</a></li>
             <li class="right"><a href="downloadBankIssueSalary" class="btn btn-primary">下载Excel表格</a></li>
           </ul>
+          <!--
 
           <table class="table table-striped table-bordered">
             <thead>
@@ -70,10 +103,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </s:iterator>
             </tbody>
           </table>
-
-          <div class="pagination">
-            <%@include file="../share/fenye.jsp" %>
-          </div>
+		  -->
+		  		<table id="flexigrid" style="display: none;"></table>
+          
 				</div>
 			</div>
 		</div>

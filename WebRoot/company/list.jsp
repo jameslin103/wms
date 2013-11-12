@@ -13,6 +13,29 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
+		<script>
+		
+			<!--$(function (){
+				$("#viewdetail").click(function(){
+				   var listr=$("#list1").val();
+				  	alert(listr);
+				  	 return;
+  					$.each(listr, function(i,value){
+  						alert(value);
+  						alert(i);
+  					
+  					
+  					});
+  					
+				});
+			});-->
+		
+		
+		</script>
+		
+		
+		
+		
 	</head>
 	<body>
 	<div id="container">
@@ -31,7 +54,7 @@
 								<a href="toBeResponsibleEnterprise">所有企业</a>
 							</li>
 						--></ul>
-
+						<input type="hidden" name="list1" id="list1" value="${menuList}"/> 
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -83,7 +106,7 @@
 											<a href="#info-for-check" data-toggle="modal" onclick="modalEnterprise('${enterpriseId}')" >修改联系人</a>
 										</td>
 										<td>
-											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">
+											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>" id="viewdetail">
 												<s:property  value="%{#enterprise.balanceDetailTotal}"/></a>
 										</td>
 										<td>
@@ -102,8 +125,10 @@
 																		<s:else>
 																			<s:property value="%{#cr.name}"/>
 																		</s:else>
-																				    	
-															    	（<s:property value="%{#cr.note}"/>）
+																		<s:if test="#cr.note!=null && !#cr.note.isEmpty()">
+																			（<s:property value="%{#cr.note}"/>）
+																		</s:if>		    	
+															    	
 															    </a>
 														    </li>
 														   </s:if>

@@ -55,13 +55,5 @@
 			%>
 		</div>
 	</div>
-
-	<div id="main">
-		<div class="row-fluid">
-			<div id="center-pane"></div>
-		</div>
-	</div>
-	<div id="footer">
-	</div>
 </div>
 

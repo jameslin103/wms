@@ -14,6 +14,7 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
+		 
 	</head>
 <body>
 <div id="container">
@@ -77,8 +78,6 @@
 	</div>
 
 	<div id="footer">
-
-
 	</div>
 </div>
 </body>

@@ -18,6 +18,8 @@ import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.permissions.RoleService;
 import cn.fm.service.user.WmsUserService;
 import cn.fm.utils.Constant;
+import cn.fm.utils.DateUtil;
+import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
@@ -251,13 +253,13 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		request.getSession().setAttribute("enterprise", enterprise);
 		return SUCCESS;
 	}
+	
 	public String viewWorkersIncreased()
 	{
 		if(enterprise.getEnterpriseId()==null)return INPUT;
 		
 		Enterprise enterprisePO=enterpriseService.find(enterprise.getEnterpriseId());
 		request.getSession().setAttribute("enterprise", enterprisePO);
-		
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("employeesId", "desc");
 		StringBuffer jpql = new StringBuffer("");
@@ -280,6 +282,8 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
+			request.setAttribute("insuranceYear", DateUtil.getCurrentTime().substring(0, 4));
+			request.setAttribute("month", DateUtil.getCurrentTime().substring(5,7));
 		}
 		
 		return SUCCESS;
@@ -314,5 +318,10 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		
 		return SUCCESS;
 	}
-
+	public String findEnterpriseGrid()
+	{
+		enterpriseJson=enterpriseService.find(20);
+		
+		return SUCCESS;
+	}
 }

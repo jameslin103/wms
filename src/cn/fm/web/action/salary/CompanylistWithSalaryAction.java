@@ -141,8 +141,10 @@ public class CompanylistWithSalaryAction extends BaseAction{
 		{
 			if(month!=null && month!=0){
 				
-				jpql.append(" month(o.salaryDate)=?").append(params.size()+1).append(" and");
+				jpql.append(" month(o.salaryDate)=?").append(params.size()+1);
 				params.add(month);
+				jpql.append(" and year(o.salaryDate)=?").append(params.size()+1);
+				params.add(Integer.parseInt(year));
 			}else{
 
 				jpql.append(" year(o.salaryDate)=?").append(params.size()+1);

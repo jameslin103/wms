@@ -28,12 +28,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <div class="row-fluid">
 
         <div id="center-pane">
-          <ul class="nav nav-tabs">
-            <li><a href="company/index.jsp">综合</a></li>
-            <li><a href="viewEnterpriseEmployees">员工档案</a></li>
-            <li class="active"><a href="viewSalaryBudgetTable">工资预算表</a></li>
-            <li><a href="viewInsuranceWithMonth">增减员与参保明细</a></li>
-          </ul>
+         								<ul class="nav nav-tabs">
+							<s:iterator value="#session.menuList" id="menu">
+								<s:if test="#menu.url=='viewEnterpriseDetailed'">
+									<li >
+										<a href="viewEnterpriseDetailed"  ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewEnterpriseEmployees'">
+									<li >
+										<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewSalaryBudgetTable'">
+									<li class="active">
+										<a href="viewSalaryBudgetTable" >
+											<s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewInsuranceWithMonth'">
+									<li >
+										<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewBalanceDetail'">
+									<li >
+										<a href="viewBalanceDetail" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+							</s:iterator>
+					</ul>
  
           <ul class="normal action-container clearfix">
             <li><a href="#info-for-check" data-toggle="modal"> 新建工资模板</a></li>

@@ -108,7 +108,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 				employeesSalaryDetailVO.setEnterpriseUnemploymentInsurance(detail.getEnterpriseUnemploymentInsurance());
 				employeesSalaryDetailVO.setPersonalUnemploymentInsurance(detail.getPersonalUnemploymentInsurance());
 				employeesSalaryDetailVO.setBirthInsuranceBase(detail.getBirthInsuranceBase());
-				employeesSalaryDetailVO.setEnterpriseBirthInsurance(detail.getInductrialInjuryBase());
+				employeesSalaryDetailVO.setEnterpriseBirthInsurance(detail.getEnterpriseBirthInsurance());
 				employeesSalaryDetailVO.setInductrialInjuryBase(detail.getInductrialInjuryBase());
 				employeesSalaryDetailVO.setEnterpriseInductrialInjuryBase(detail.getEnterpriseInductrialInjuryBase());
 				employeesSalaryDetailVO.setMedicalPaymentBase(detail.getMedicalPaymentBase());
@@ -211,7 +211,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 					employeesSalaryDetailVO.setEnterpriseUnemploymentInsurance(employeesSalaryDetailInsurances.getEnterpriseUnemploymentInsurance());
 					employeesSalaryDetailVO.setPersonalUnemploymentInsurance(employeesSalaryDetailInsurances.getPersonalUnemploymentInsurance());
 					employeesSalaryDetailVO.setBirthInsuranceBase(employeesSalaryDetailInsurances.getBirthInsuranceBase());
-					employeesSalaryDetailVO.setEnterpriseBirthInsurance(employeesSalaryDetailInsurances.getInductrialInjuryBase());
+					employeesSalaryDetailVO.setEnterpriseBirthInsurance(employeesSalaryDetailInsurances.getEnterpriseBirthInsurance());
 					employeesSalaryDetailVO.setInductrialInjuryBase(employeesSalaryDetailInsurances.getInductrialInjuryBase());
 					employeesSalaryDetailVO.setEnterpriseInductrialInjuryBase(employeesSalaryDetailInsurances.getEnterpriseInductrialInjuryBase());
 					employeesSalaryDetailVO.setMedicalPaymentBase(employeesSalaryDetailInsurances.getMedicalPaymentBase());

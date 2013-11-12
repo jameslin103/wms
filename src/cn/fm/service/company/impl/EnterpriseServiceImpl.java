@@ -22,6 +22,7 @@ import cn.fm.service.company.EnterpriseService;
 public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements EnterpriseService {
 
 	private SearchImpl searchImpl;
+	
 
 	public void setSearchImpl(SearchImpl searchImpl) {
 		this.searchImpl = searchImpl;
@@ -61,6 +62,18 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		}
 		
 		return enterpriseListVO;
+
+	}
+	@SuppressWarnings("unchecked")
+	public List<Enterprise> getUserToAllEnterprise(WmsUser user)
+	{
+		try {
+		 return	em.createQuery("select t from Enterprise t join WmsUser u on t.enterpriseId=u.userId where u.userId=?1 ")
+		 		.setParameter(1, user.getUserId()).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 
 	}
 	/**
@@ -198,7 +211,7 @@ public BigDecimal findBalanceDetail(Integer enterpriseId) {
 	@SuppressWarnings("unchecked")
 	public List<Enterprise> getAllEnterprise() {
 		try {
-			return em.createQuery("select e from Enterprise e").getResultList();
+			return em.createQuery("select e from Enterprise e order by e.enterpriseId asc ").getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -234,11 +247,10 @@ public BigDecimal findBalanceDetail(Integer enterpriseId) {
 		
 		
 	}
-	@Override
-	public BaseGrid findDivisionPage(BaseGrid baseGrid) {
+	public BaseGrid findEnterprisePage(BaseGrid baseGrid) {
 		GridParameter gridParameter = GridParameter.getInstance()
-		.setModuleNameVal("division").setObjectNameVal("Division")
-		.setObjectAliasVal("division");
+		.setModuleNameVal("enterprise").setObjectNameVal("Enterprise")
+		.setObjectAliasVal("enterprise");
 		return searchImpl.findPage(gridParameter, baseGrid);
 	}
 	

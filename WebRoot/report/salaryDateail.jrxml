@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" pageWidth="1580" pageHeight="840" whenNoDataType="AllSectionsNoDetail" columnWidth="1540" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="aa20f712-3df1-4c6e-9a64-4eb82b1c20c4">
 	<property name="ireport.zoom" value="1.2100000000000024"/>
-	<property name="ireport.x" value="802"/>
-	<property name="ireport.y" value="91"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="salaryDate" class="java.lang.String"/>
 	<parameter name="budgetName" class="java.lang.String"/>
 	<parameter name="createDate" class="java.lang.String"/>
@@ -252,7 +252,7 @@
 			</textField>
 			<image>
 				<reportElement uuid="230c5746-25c2-47b7-893f-1dddc8484494" x="0" y="2" width="98" height="61"/>
-				<imageExpression><![CDATA["C:\\Users\\intel\\Desktop\\fullname.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{image}]]></imageExpression>
 				<anchorNameExpression><![CDATA[$P{image}]]></anchorNameExpression>
 			</image>
 		</band>
