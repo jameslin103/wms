@@ -10,8 +10,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-
-
 import cn.fm.bean.PageData;
 import cn.fm.bean.QuerySymbol;
 import cn.fm.bean.SearchBean;
@@ -29,14 +27,14 @@ public class AbstractPageQueryUtil {
     private String sortName;
     private String sortOrder;
     private String filterSql;
-    private String sessionDivisionId;
+    private String sessionEnterpriseId;
 
-    public String getSessionDivisionId() {
-        return sessionDivisionId;
+    public String getSessionEnterpriseId() {
+        return sessionEnterpriseId;
     }
 
-    public void setSessionDivisionId(String sessionDivisionId) {
-        this.sessionDivisionId = sessionDivisionId;
+    public void setSessionEnterpriseId(String sessionEnterpriseId) {
+        this.sessionEnterpriseId = sessionEnterpriseId;
     }
 
     public String getFilterSql() {
@@ -185,7 +183,7 @@ public class AbstractPageQueryUtil {
             proc.setString(8, filterSql);
             proc.setString(9, sortOrder);
             proc.setString(10, genSQLOrderBy());
-            proc.setString(11, sessionDivisionId);
+            proc.setString(11, sessionEnterpriseId);
 
             proc.registerOutParameter(3, 1);
             proc.registerOutParameter(4, 1);

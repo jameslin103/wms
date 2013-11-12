@@ -110,7 +110,7 @@ public class JpaDAO {
 	    }
 	 	public PageData findPageDataProcedure(AbstractPageQueryUtil pageQuery)
 	 	{
-	        pageQuery.setSession();
+	        //pageQuery.setSession();
 	        return pageQuery.queryDataProcedure();
 	    }
 	
@@ -118,7 +118,7 @@ public class JpaDAO {
 	 	 {
 	         if(!pageQuery.isValidInputParameters())
 	             return null;
-	         pageQuery.setSession(getSession());
+	         //pageQuery.setSession(getSession());
 	         return pageQuery.queryData();
 	     }
 	 	 public List getDatals(int fromrow,int recordCount,List list){ 

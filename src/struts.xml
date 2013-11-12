@@ -440,7 +440,19 @@
             </result>
         </action> 
         <action name="findToIdCustomBonus" class="cn.fm.web.action.company.CustomBonusAction" method="findToIdCustomBonus">
-            <result name="customBonus" type="json"></result>
+            <result name="customBonus" type="json">
+            	<param name="includeProperties">
+                    baseGrid,
+                    baseGrid.total,
+                    baseGrid.rp,
+                    baseGrid.page,
+                    baseGrid.gridList\[\d+\]\.id,
+                    baseGrid.gridList\[\d+\]\.name,
+                    baseGrid.gridList\[\d+\]\.topParent,
+                    baseGrid.gridList\[\d+\]\.topParent.name
+                </param>
+            
+            </result>
         </action>
          <action name="updateCustomBonus" class="cn.fm.web.action.company.CustomBonusAction" method="updateCustomBonus">
             <result name="success" type="redirectAction">
