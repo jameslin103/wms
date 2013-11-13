@@ -31,4 +31,26 @@ public class EnterpriseGridAction extends BaseGridAction{
 	        return super.baseGrid;
 	    }
 
+
+
+
+
+
+	@Override
+	public boolean getIsJsonSessionExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+
+
+
+	@Override
+	public boolean getIsJsonUserLogin() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

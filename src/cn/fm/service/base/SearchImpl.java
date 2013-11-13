@@ -20,6 +20,7 @@ import cn.fm.utils.StringUtil;
  * @author jameslin
  * @version 1.0
  */
+
 public class SearchImpl{
 
     private JpaDAO  dao;

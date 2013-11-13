@@ -5,18 +5,23 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.fm.bean.GridParameter;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.company.InsurancesBaseSettings;
 import cn.fm.bean.company.InsurancesTax;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.bean.salary.TaxOfPerson;
+import cn.fm.service.base.BaseGrid;
 import cn.fm.service.base.DaoSupport;
+import cn.fm.service.base.SearchImpl;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.utils.GenerateSqlFromExcel;
 import cn.fm.utils.PersonalTaxUtil;
@@ -24,8 +29,17 @@ import cn.fm.utils.StringUtil;
 
 @Service @Transactional
 public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalaryDetail> implements	EmployeesSalaryDetailService {
-
 	
+	private SearchImpl searchImpl;
+	
+	
+	
+	
+	
+	
+	public void setSearchImpl(SearchImpl searchImpl) {
+		this.searchImpl = searchImpl;
+	}
 	/**
 	 * @version 1.0
 	 * 批量上传员工工资基本工资信息
@@ -751,6 +765,24 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			return null;
 		}
 	
+	}
+	public BaseGrid getPayrollStaff(BaseGrid baseGrid) {
+		
+		 String defaultHql="select e from EmployeesSalaryDetail e where e.budgettableId=50";
+		 String defaultValue="";
+		 
+		 GridParameter gridParameter = GridParameter.getInstance()
+		 .setModuleNameVal("employeesSalaryDetail").setObjectAliasVal("employeesSalaryDetail")
+         .setDefaultHQLVal(defaultHql).setDefaultValueVal(defaultValue);
+		 
+        return searchImpl.findPage(gridParameter, baseGrid);
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<EmployeesSalaryDetail> getPayrollStaff(Integer budgetId) {
+		String defaultHql="select e from EmployeesSalaryDetail e where e.budgettableId=?1";
+		return em.createQuery(defaultHql).setParameter(1, budgetId).getResultList();
 	}
 	
 	

@@ -1,10 +1,15 @@
 package cn.fm.utils;
 
+
+
+
 public class Constant {
 	public static final String WMS_SEARCH_ERROR = "error";
 	public final static String WMS_REPORT_EXCEL_EXPORT_TYPE="excel";
 	
-	
+	public static final String WMS_REGEX_YEAR = "[0-9]{1}[0-9]{1}[0-9]{2}";
+	public static final String WMS_REGEX_DATE = "[0-9]{1,2}";
+	public static final String WMS_REGEX_TIME = "[0-9]{2}";
 	public static final String WMS_DATE_WITH_TIME = "yyyy-MM-dd HH:mm";
 	public static final String WMS_MSG_DATE_TIME = "yyyy-MM-dd HH:mm:ss";
 	public static final String WMS_ACTIVITY_DATE = "yyyy-MM-dd";
@@ -46,5 +51,8 @@ public class Constant {
 	public static final int WMS_PAGE_SIZE = 5;
 	public static final String WMS_SEARCH_FALSE = "0";
 	public static final String WMS_FELX_SEARCH_DATE = "date";
+	public static final String WMS_ORDER_DESC = "desc";
+	public static final String WMS_SEARCH_TRUE = "1";
+	public final static String WMS_DYNAMIC_QUERY_FIELD_LENTH="60";
 	
 }

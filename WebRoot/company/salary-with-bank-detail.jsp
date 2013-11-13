@@ -104,6 +104,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </tbody>
           </table>
 		  -->
+		  		<s:hidden name="budgetId" value="%{#request.budgetId}"></s:hidden>
 		  		<table id="flexigrid" style="display: none;"></table>
           
 				</div>

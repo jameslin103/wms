@@ -1,22 +1,27 @@
 package cn.fm.web.action.salary;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+
+import org.apache.struts2.json.annotations.JSON;
 
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.bean.json.JSONObject;
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.bean.salary.SalaryTemplate;
-import cn.fm.service.company.CustomBonusServices;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.salary.BalanceDetailService;
@@ -48,6 +53,9 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	private CreateSalaryBudgetTable   createSalaryBudgetTable;
 	private EmployeesSalaryDetail     employeesSalaryDetail;
 	
+	private List<EmployeesSalaryDetail>    details=new ArrayList<EmployeesSalaryDetail>();
+	
+	
 	
 	private File file;
 	
@@ -66,8 +74,25 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	/*生成哪月工资？*/
 	private Date    salaryDate;
 	
+	private Integer   page;
+	private String    rp;
+	private String   query;
+	private String   qtype;
+	private String   sortname;
+	private String   sortorder;
+	private String   qop;
+	private long  total=0;
 	
 	
+	
+	@JSON(name="details")
+	public List<EmployeesSalaryDetail> getDetails() {
+		return details;
+	}
+
+	public void setDetails(List<EmployeesSalaryDetail> details) {
+		this.details = details;
+	}
 
 	public Date getSalaryDate() {
 		return salaryDate;
@@ -144,7 +169,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	public BigDecimal getBonusTotal() {
 		return bonusTotal;
 	}
-
+	
 	public void setBonusTotal(BigDecimal bonusTotal) {
 		this.bonusTotal = bonusTotal;
 	}
@@ -200,8 +225,72 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	public void setFile(File file) {
 		this.file = file;
 	}
+	
+	
+	@JSON(name="page")
+	public Integer getPpage() {
+		return page;
+	}
 
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+	@JSON(name="total")
+	public long getTotal() {
+		return total;
+	}
 
+	public void setTotal(long total) {
+		this.total = total;
+	}
+	@JSON(name="rp")
+	public String getRp() {
+		return rp;
+	}
+
+	public void setRp(String rp) {
+		this.rp = rp;
+	}
+	@JSON(name="query")
+	public String getQuery() {
+		return query;
+	}
+
+	public void setQuery(String query) {
+		this.query = query;
+	}
+
+	public String getQtype() {
+		return qtype;
+	}
+
+	public void setQtype(String qtype) {
+		this.qtype = qtype;
+	}
+
+	public String getSortname() {
+		return sortname;
+	}
+
+	public void setSortname(String sortname) {
+		this.sortname = sortname;
+	}
+
+	public String getSortorder() {
+		return sortorder;
+	}
+
+	public void setSortorder(String sortorder) {
+		this.sortorder = sortorder;
+	}
+
+	public String getQop() {
+		return qop;
+	}
+
+	public void setQop(String qop) {
+		this.qop = qop;
+	}
 
 	public void setEnterpriseEmployeesService(
 			EnterpriseEmployeesService enterpriseEmployeesService) {
@@ -353,7 +442,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 			jpql.append(" and o.budgettableId=?").append(params.size()+1);
 			params.add(budgetId);
 			
-			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(8,  this.getPage());
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
 			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("budgetId", budgetId);
@@ -369,24 +458,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	}
 	
 	
-	public String viewSalaryWithBankPersonalNumber()
-	{
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("salaryId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-			jpql.append(" o.budgettableId=?").append(params.size()+1);
-			params.add(this.budgetId);
-			
-			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
-			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("pageView", pageView);
-		
-			request.setAttribute("budgetId", budgetId);
-		return SUCCESS;
-		
-	}
+
 	/**
 	 * 查看民生银行发放人数
 	 * @return
@@ -485,4 +557,105 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		
 		return SUCCESS;
 	}
+	
+	public String viewSalaryWithBankPersonalNumber()
+	{
+		request.setAttribute("budgetId", budgetId);
+		return SUCCESS;
+		
+	}
+	
+	public String viewSalaryWithBankPersonalNumberJson()
+	{
+		
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+			jpql.append(" o.budgettableId=?").append(params.size()+1);
+			params.add(50);
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+		
+			if(pageView==null || pageView.getRecords().size()==0)
+			{
+				pageView=new PageView<EmployeesSalaryDetail>(10, this.page);
+			}
+
+//			details=toJSONList(pageView.getRecords());
+			request.setAttribute("budgetId", budgetId);
+			this.setTotal(pageView.getTotalpage());
+			
+			
+			
+		Map<String,String> map = new HashMap<String,String>();
+
+		map.put("page", page+"");
+		map.put("total", pageView.getTotalrecord()+"");
+		
+		//to JSON
+		String json = toJSON(pageView.getRecords(), map);
+
+		try {
+			response.setContentType("text/html;charset=utf-8");
+			response.setHeader("Cache-Control", "no-cache");
+			response.getWriter().write(json);
+			response.getWriter().flush();
+			response.getWriter().close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		return SUCCESS;
+	}
+	public List<EmployeesSalaryDetail> toJSONList(List list) {
+		if(list==null)return null;
+		List<EmployeesSalaryDetail>  detailList=new ArrayList<EmployeesSalaryDetail>();
+		for (Object obj : list) {
+			
+			EmployeesSalaryDetail	 detail=(EmployeesSalaryDetail)obj;
+			
+			EmployeesSalaryDetail employeesSalaryDetailVO=new EmployeesSalaryDetail();
+			employeesSalaryDetailVO.setSalaryId(detail.getSalaryId());
+			employeesSalaryDetailVO.setEmployeesName(detail.getEmployeesName());
+			employeesSalaryDetailVO.setCardNumber(detail.getCardNumber());
+			employeesSalaryDetailVO.setBankCardNumber(detail.getBankCardNumber());
+			employeesSalaryDetailVO.setWage(detail.getWage());
+			employeesSalaryDetailVO.setNote(detail.getNote());
+			detailList.add(employeesSalaryDetailVO);
+		}
+		return detailList;
+		
+	}
+	
+	
+	
+	
+	
+	@SuppressWarnings({ "unchecked"})
+	public String toJSON(List list, Map map) {
+		List mapList = new ArrayList();
+		for (Object obj : list) {
+			
+			EmployeesSalaryDetail	 detail=(EmployeesSalaryDetail)obj;
+			Map<String ,Object> cellMap = new HashMap<String ,Object>();
+			cellMap.put("salaryId", detail.getSalaryId());
+			cellMap.put("cell", new Object[] { (detail.getSalaryId()),
+					(detail.getEmployeesName()),(detail.getCardNumber()),
+					(detail.getNote()),(detail.getBankCardNumber()),
+					(detail.getWage()) });
+			mapList.add(cellMap);
+			
+		}
+		map.put("rows", mapList);
+		JSONObject object = new JSONObject(map);
+		System.out.println("object="+object.toString());
+		return object.toString();
+		
+	}
+
 }

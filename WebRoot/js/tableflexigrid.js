@@ -2,11 +2,11 @@ $(function() {
 	
         $("#flexigrid").flexigrid({  
         		
-                //url : 'viewSalaryWithBankPersonalNumber.action',  
+                url : 'viewSalaryWithBankPersonalNumberJson.action',  
                 dataType:'json',  
                 colModel:[{  
                         display : '序',  
-                        name : 'id',  
+                        name : 'salaryId',  
                         width : '50',// 得加上 要不IE报错  
                         sortable : true,  
                         align : 'center'  
@@ -18,25 +18,25 @@ $(function() {
                         align : 'center'  
                     }, {  
                         display : '身份证',  
-                        name : 'stand',  
+                        name : 'cardNumber',  
                         width : 200,  
                         sortable : true,  
                         align : 'center'  
                     }, {  
                         display : '银行名称',  
-                        name : 'money',  
+                        name : 'note',  
                         width : 200,  
                         sortable : true,  
                         align : 'center'  
                     }, {  
                         display : '卡号',  
-                        name : 'leavings',  
+                        name : 'bankCardNumber',  
                         width : 200,  
                         sortable : true,  
                         align : 'center'  
                     }, {  
                         display : '工资金额（元）',  
-                        name : 'orders',  
+                        name : 'wage',  
                         width : 200,  
                         sortable : true,  
                         align : 'center'  
@@ -70,8 +70,8 @@ $(function() {
                 useRp : true,  
                 checkbox : true,// 是否要多选框  
                 rowId : 'id',// 多选框绑定行的id  
-                pagestat:'显示{from}至{to} 条  共{total}条',
-                rpOptions: [5,10],    //可选择设定的每页结果数
+            	pagestat: '显示记录从{from}到{to}，总数 {total} 条',
+                rpOptions: [10,20],    //可选择设定的每页结果数
                 errormsg:'连接失败,请重试',
 				usepager: true,       //是否分页
 				showcheckbox: true,  //是否显示第一列的checkbox（用于全选）	
@@ -90,7 +90,8 @@ $(function() {
 				method:'post',
                 width : 1173,  
                 height : 300 
-            });  
+            }); 
+        
         var actions="";  
         function action(com, grid) {  
             switch (com) {  

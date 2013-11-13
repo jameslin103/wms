@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.hibernate.Session;
 import org.springframework.transaction.annotation.Transactional;
 import cn.fm.bean.PageData;
 import cn.fm.bean.utils.AbstractPageQueryUtil;
@@ -15,8 +14,9 @@ import cn.fm.utils.CommonUtil;
 import cn.fm.utils.Constant;
 import cn.fm.utils.StringUtil;
 
-@Transactional
+
 @SuppressWarnings("unchecked")
+@Transactional
 public class JpaDAO {
 	
 	@PersistenceContext protected EntityManager em;
@@ -79,7 +79,54 @@ public class JpaDAO {
 
 	        return pdata;
 	    }
-	 
+	  public PageData findPageData(final String hsql,String alias,final Map pmap, final int topage, final int pagesize, final String orderby) {
+	        String hstr = hsql;
+	        if (StringUtil.isEmptyStr(hstr)) {
+	            return null;
+	        }
+	        if (hstr.toUpperCase().trim().indexOf("SELECT") == 0) {
+	            hstr = "select count("+ alias + ") " + hstr.substring(hstr.toUpperCase().indexOf("FROM"), hstr.length());
+	        } else {
+	            hstr = "select count("+ alias + ") " + hstr;
+	        }
+	        Query query = null;
+	        try {
+	            query =em.createQuery(hstr);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        if (pmap != null)
+	            CommonUtil.addQueryParams(query, pmap);
+	        Object totalRecod = query.getSingleResult();
+	        int totalrow = (Integer)totalRecod;
+
+	        String qhsql = hsql;
+	        if (orderby != null && !orderby.equals("")) {
+	            qhsql = hsql + " order by " + orderby;
+	        }
+	        query = em.createQuery(qhsql);
+	        if (pmap != null)
+	            CommonUtil.addQueryParams(query, pmap);
+	        int size = pagesize;
+	        if (size <= 0) size = Constant.WMS_PAGE_SIZE;
+	        int fromrow = (topage - 1) * size;
+	        query.setFirstResult(fromrow);
+	        query.setMaxResults(size);
+	        List datals = query.getResultList();
+	        PageData pdata = new PageData();
+	        pdata.setDatals(datals);
+	        pdata.setTotalRows(totalrow);
+	        int torowid = fromrow + size;
+	        if (torowid > totalrow) torowid = totalrow;
+	        pdata.setFromRowId(fromrow + 1);
+	        pdata.setToRowId(torowid);
+	        int pagenum = (totalrow % size == 0) ? totalrow / size : totalrow / size + 1;
+	        pdata.setPagesize(size);
+	        pdata.setTotalPageNum(pagenum);
+	        pdata.setCurrentPage(topage);
+	        pdata.setHql(qhsql);
+	        return pdata;
+	    }
 	public PageData findPageByList(final int topage, final int pagesize, final String sortName,String sortOrder,List list)
 	  {
 	        boolean reverse = false;

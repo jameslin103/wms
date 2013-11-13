@@ -10,6 +10,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+
+
 @SuppressWarnings("unused")
 public class DateUtil {
 	    public final static String FORMAT_DATE = "yyyy-MM-dd";
@@ -22,7 +24,36 @@ public class DateUtil {
 
 	
 
-
+	    public static String dateFormat(String date, String userSetFormat, String dataBaseFormat) {
+	        return dateToString(StringtoDate(date, userSetFormat), dataBaseFormat);
+	    }
+	    public static boolean isDateRegex(String str) {
+	        Pattern pattern = Pattern.compile(regxForDate());
+	        Matcher isNum = pattern.matcher(str);
+	        if (!isNum.matches()) {
+	            return false;
+	        }
+	        return true;
+	    }
+	    public static String regxForDate() {
+	        String format = getDateFormat();
+	        format = format.replaceAll("yyyy", Constant.WMS_REGEX_YEAR);
+	        format = format.replaceAll("dd", Constant.WMS_REGEX_DATE);
+	        format = format.replaceAll("mm", Constant.WMS_REGEX_DATE);
+	        format = format.replaceAll("YYYY", Constant.WMS_REGEX_YEAR);
+	        format = format.replaceAll("DD", Constant.WMS_REGEX_DATE);
+	        format = format.replaceAll("MM", Constant.WMS_REGEX_DATE);
+	        return format;
+	    }
+	    
+	    /**
+	     * @return yyyy-MM-dd
+	     */
+	    public static String getDateFormat() {
+	    	
+	    	Date  date=new Date();
+	        return dateToString(date,FORMAT_DATE);
+	    }
 	    /**
 	     * date to string and set formate and set locale
 	     * @param date
@@ -110,8 +141,7 @@ public class DateUtil {
 	     * @param formatType
 	     * @return empty if converting error
 	     */
-	    public final static String calendarToString(java.util.Calendar calendar,
-	                                                String formatType) {
+	    public final static String calendarToString(java.util.Calendar calendar, String formatType) {
 	        if (calendar == null) {
 	            return "";
 	        }
@@ -311,6 +341,94 @@ public class DateUtil {
 	        return dateString;  
 	    }  
 	    
-	    
+	    public static String getNextDay(String date){
+	    	if(StringUtil.isEmptyStr(date)){
+	    		return date;
+	    	}
+	    	Calendar defaultValue = DateUtil.StringtoCalendar(date,DateUtil.FORMAT_DATE );
+	    	defaultValue.add(Calendar.DATE, 1);
+	    	return DateUtil.calendarToString(defaultValue,getDateFormat());
+	    }
 
+	    public static Calendar getNextDay(Calendar calendar){
+	        Calendar cal = Calendar.getInstance();
+	        cal.setTime(calendar.getTime());
+	        cal.add(Calendar.DATE,1);
+	        return cal;
+	    }
+	  
+	    /**
+	     * string to Calendar and set formate and set locale
+	     *
+	     * @param stringTime
+	     * @param format
+	     * @return
+	     */
+	    public final static Calendar StringtoCalendar(String stringTime, String format) {
+	        if (StringUtil.isEmptyStr(stringTime) || StringUtil.isEmptyStr(format)) return null;
+	        Date dateTime = StringtoDate(stringTime, format);
+	        Calendar calendar = Calendar.getInstance();
+	        calendar.setTime(dateTime);
+	        return calendar;
+	    }
+	    /**
+	     * string to date and set formate and set locale
+	     *
+	     * @param stringTime
+	     * @param format
+	     * @return
+	     */
+	    public static Date StringtoDate(String stringTime, String format) {
+	        if (StringUtil.isEmpty(stringTime)) return null;
+	        if (format == null || ("").equals(format)) {
+	            format = getDateFormat();
+	        }
+	        Date dateTime = null;
+	        try {
+	            String rs = chinaDateTran(stringTime);
+	            if (!stringTime.equals(rs)) {
+	                if (format.equals(getDateFormat())) {
+	                    format = Constant.WMS_ACTIVITY_DATE;
+	                } else if (format.equals(getCurrentTime())) {
+	                    format = Constant.WMS_DATE_WITH_TIME;
+	                } else {
+	                    format = Constant.WMS_MSG_DATE_TIME;
+	                }
+
+	            }
+	            SimpleDateFormat sdf = new SimpleDateFormat(format);
+	            dateTime = sdf.parse(rs);
+	        } catch (ParseException e) {
+
+	            e.printStackTrace();
+	        }
+	        return dateTime;
+	    }
+	    public static String chinaDateTran(String stringTime) {
+	        String rs = "";
+	        boolean flag = false;
+	        for (int i = 0; i < stringTime.length(); i++) {
+	            int number = String.valueOf(stringTime.charAt(i)).getBytes().length;
+	            if (number == 2) {
+	                flag = true;
+	                rs += stringTime.substring(0, i).trim() + "-";
+	                stringTime = stringTime.substring(i + 1, stringTime.length());
+	                i = 0;
+	            }
+	        }
+	        if (!flag) {
+	            return stringTime;
+	        }
+	        rs = rs.substring(0, rs.lastIndexOf("-")) + stringTime;
+	        return rs;
+	    }
+	    public static String stringToString(String dateStr, String destFormat) {
+	        Date date = stringToDate(dateStr);
+	        return dateToString(date, destFormat);
+	    }
+	    public static Date stringToDate(String dateStr) {
+	        return StringtoDate(dateStr, FORMAT_DATE);
+	    }
+
+	 
 }

@@ -14,6 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
+import cn.fm.service.base.BaseGrid;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.utils.PersonalTaxUtil;
 
@@ -273,5 +274,17 @@ public class EmployeesSalaryDetailServiceTest {
 	   System.out.println(eDetail.getShouldPay());
 	   System.out.println(eDetail.getBonus());
 	   System.out.println(eDetail.getPersonalTax());
+   }
+   @Test
+   public void getPayrollStaff()
+   {
+	   BaseGrid  gr=new BaseGrid();
+	   gr.setTotal(1);
+	   gr.setAlis("22");
+	   gr.setCountPage(2);
+	   gr.setModuleName("EmployeesSalaryDetailService");
+	   //employeesSalaryDetailService.getPayrollStaff(gr);
+	   
+	   
    }
 }

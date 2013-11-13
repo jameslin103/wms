@@ -6,6 +6,7 @@ import java.util.List;
 
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
+import cn.fm.service.base.BaseGrid;
 import cn.fm.service.base.DAO;
 
 public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail> {
@@ -81,4 +82,7 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	
 	public EmployeesSalaryDetail structureEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail ,Integer templateId);
 	
+	public  List<EmployeesSalaryDetail>   getPayrollStaff(Integer budgetId);
+
+
 }
