@@ -27,8 +27,6 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 	public void setSearchImpl(SearchImpl searchImpl) {
 		this.searchImpl = searchImpl;
 	}
-	
-	
 	public List<Enterprise> getAllEnterprise(WmsUser user)
 	{
 		if(user==null)return null;
@@ -102,12 +100,7 @@ public BigDecimal findBalanceDetail(Integer enterpriseId) {
 	return (BigDecimal)query.getSingleResult();
 		
 	}
-	public void saveEnterprise(Enterprise enterprise){
-		
-		
-		super.save(enterprise);
-		
-	}
+
 	public List<Enterprise> getAllEnterprise(Integer userId) {
 		// TODO Auto-generated method stub
 		return null;

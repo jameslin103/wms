@@ -203,18 +203,6 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * 构造exce传入的数据
 	 * @param data
@@ -228,11 +216,11 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		employees.setEmployeesName(data[2].toString());
 		employees.setEmployeesSex(data[3].toString());
 		employees.setNativePlace(data[4].toString());
-		employees.setHouseholdRegister(data[5]==null?null:data[5].equals(Constant.WMS_YES)?1:0);
+		employees.setHouseholdRegister(data[5]==null?0:data[5].equals(Constant.WMS_YES)?1:2);
 		employees.setHomeAddress(data[6].toString());
-		employees.setMaritalStatus(data[7].toString()==null?null:data[7].equals(Constant.WMS_YES)?1:0);
+		employees.setMaritalStatus(data[7]==null?0:data[7].equals(Constant.WMS_YES)?1:2);
 		employees.setLevelEducation(data[8].toString());
-		employees.setPhoto(data[9].toString()==null?null:data[9].equals(Constant.WMS_PHOTO_YES)?1:0);
+		employees.setPhoto(data[9]==null?0:data[9].equals(Constant.WMS_YES)?1:0);
 		employees.setCardNumber(data[10].toString());
 		employees.setPhone(data[11].toString());
 		employees.setIndustry(data[12].toString());
@@ -243,7 +231,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		employees.setEndContractDeadline(data[17].toString()==null?null:DateUtil.StringToDate(data[17], DateUtil.FORMAT_DATE));
 		employees.setServiceCost(data[18].toString().equals("")?null:Double.valueOf(data[18]));
 		employees.setGinsengProtectNature(data[19].toString()==null?null:(data[19].toString().equals(Constant.WMS_ZENG_YUAN)?1:2));
-		employees.setWhetherGinseng(data[20].toString()==null?null:data[20].equals(Constant.WMS_YES)?1:0);
+		employees.setWhetherGinseng(data[20]==null?0:data[20].equals(Constant.WMS_YES)?1:0);
 		employees.setCinsengDate(data[21].toString()==null?null:DateUtil.StringToDate(data[21], DateUtil.FORMAT_DATE));
 		/*社保 */
 		employees.setHealthCare(data[22].toString()==null?"":data[22].toString());

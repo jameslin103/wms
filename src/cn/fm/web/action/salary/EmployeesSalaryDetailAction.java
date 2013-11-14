@@ -575,13 +575,13 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 			jpql.append(" o.budgettableId=?").append(params.size()+1);
 			params.add(50);
 			
-			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(Integer.parseInt(this.rp),  this.getPage());
 			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 		
 			if(pageView==null || pageView.getRecords().size()==0)
 			{
-				pageView=new PageView<EmployeesSalaryDetail>(10, this.page);
+				pageView=new PageView<EmployeesSalaryDetail>(Integer.parseInt(this.rp), this.page);
 			}
 
 //			details=toJSONList(pageView.getRecords());
@@ -594,6 +594,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 
 		map.put("page", page+"");
 		map.put("total", pageView.getTotalrecord()+"");
+		map.put("rp", this.rp);
 		
 		//to JSON
 		String json = toJSON(pageView.getRecords(), map);

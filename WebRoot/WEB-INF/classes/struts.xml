@@ -172,8 +172,12 @@
         
         <!-- ===========EnterpriseEmployess======== -->
          <action name="addEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="addEnterpriseEmployees">
-            <result name="success" type="redirect">/company/employee-list.jsp</result>
-            <result name="input">/company/employee-list.jsp</result>
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterpriseEmployees</param>
+            </result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">viewEnterpriseEmployees</param>
+            </result>
         </action> 
          <action name="findIdToEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="findIdToEmployees">
             <result name="enterpriseEmployees" type="json"></result>

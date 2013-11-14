@@ -6,7 +6,7 @@
 *
 * Licensed like jQuery, see http://docs.jquery.com/License
 *
-* ×÷Õß£ºÌìÌìÎÞÓÃ
+* ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 * blog: http://blog.csdn.net/luq885
 */
 
@@ -37,7 +37,7 @@ jQuery.fn.FillOptions = function(url,options){
     }
     if(datas == undefined)
     {
-		alert("no datas");
+		//alert("no datas");
 		return;
 	}
     this.each(function(){

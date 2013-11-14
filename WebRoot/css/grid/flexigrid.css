@@ -1,7 +1,7 @@
 .bbit-grid
 {
     font-family: "微软雅黑","宋体",Arial, sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     position: relative;
     border: none;
     overflow: hidden;
@@ -9,14 +9,14 @@
 }
 .bbit-grid .gBlock
 {
-    background: #E3E3E3 url('../images/flexigrid/load-bg.png');        
+    background: #E3E3E3 url('../../images/flexigrid/load-bg.png');        
 }
 .bbit-grid .gBlock .loading
 {
     width: 100%;
     height: 100%;
     display: block;
-    background: url('../images/flexigrid/indicator_waitanim.gif') no-repeat center center;  
+    background: url('../../images/flexigrid/indicator_waitanim.gif') no-repeat center center;  
 }
 .bbit-grid.hideBody
 {
@@ -32,7 +32,7 @@
 
 .bbit-grid div.nDiv
 {
-    background: #eee url(../images/flexigrid/line.gif) repeat-y -1px top;
+    background: #eee url(../../images/flexigrid/line.gif) repeat-y -1px top;
     border: 1px solid #ccc;
     border-top: 0px;
     overflow: auto;
@@ -55,7 +55,7 @@
 
 .bbit-grid div.bDiv table
 {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .bbit-grid div.bDiv table.autoht
@@ -73,7 +73,7 @@
 
 .bbit-grid div.nDiv tr:hover td, .bbit-grid div.nDiv tr.ndcolover td
 {
-    background: #d5effc url(../images/flexigrid/hl.png) repeat-x top;
+    background: #d5effc url(../../images/flexigrid/hl.png) repeat-x top;
     border: 1px solid #a8d8eb;
 }
 
@@ -105,7 +105,7 @@
     height: 25px;
     width: 14px;
     z-index: 900;
-    background: #e3f7ff url(../images/flexigrid/gridth.gif) repeat-x bottom;
+    background: #e3f7ff url(../../images/flexigrid/gridth.gif) repeat-x bottom;
     border: 0px solid #ccc;
     border-left: 1px solid #ccc;
     top: 0px;
@@ -121,18 +121,18 @@
     width: 12px;
     border-left: 1px solid #fff;
     float: left;
-    background: url(../images/flexigrid/ddn.png) no-repeat center;
+    background: url(../../images/flexigrid/ddn.png) no-repeat center;
 }		
 
 .bbit-grid div.nBtn.srtd
 {
-    background: #e3f7ff url(../images/flexigrid/gridth.gif) repeat-x bottom;
+    background: #e3f7ff url(../../images/flexigrid/gridth.gif) repeat-x bottom;
 }
 
 
 .bbit-grid div.mDiv
 {
-    background: url(../images/flexigrid/headbg.gif) repeat-x top;
+    background: url(../../images/flexigrid/headbg.gif) repeat-x top;
     border: 1px solid #99bbe8;
     border-top: 0px;
     font-weight: bold;
@@ -149,7 +149,7 @@
 }
 .bbit-grid div.mDiv div.ftitle
 {
-    background:url("../images/flexigrid/grid.png") no-repeat left ;
+    background:url("../../images/flexigrid/grid.png") no-repeat left ;
     color:#15428b;
     margin-left:10px;
     padding-left:20px;
@@ -181,19 +181,19 @@
     border-bottom: 1px solid #ddd;
     width: 14px;
     height: 14px;
-    background: url(../images/flexigrid/uup.png) no-repeat center;
+    background: url(../../images/flexigrid/uup.png) no-repeat center;
 }
 
 .bbit-grid div.mDiv div.ptogtitle.vsble span
 {
-    background: url(../images/flexigrid/ddn.png) no-repeat center;			
+    background: url(../../images/flexigrid/ddn.png) no-repeat center;			
 }			
 
 .bbit-grid div.tDiv /*toolbar*/
 {
-    background:#ccc url(../images/flexigrid/tbg.gif) repeat-x top;
+    background:#ccc url(../../images/flexigrid/tbg.gif) repeat-x top;
     position: relative;	
-    height:25px;	
+    height:30px;	
     border: 1px solid #99bbe8;
     border-top:0px;	  
     overflow: hidden;
@@ -208,7 +208,7 @@
 
 .bbit-grid div.sDiv /*toolbar*/
 {
-    background: #fafafa url(../images/flexigrid/page-bg.gif) repeat-x top;
+    background: #fafafa url(../../images/flexigrid/page-bg.gif) repeat-x top;
     position: relative;
     border: 1px solid #ccc;
     border-top: 0px;
@@ -286,7 +286,7 @@
 
 .bbit-grid div.hDiv
 {
-    background: #e3f7ff url(../images/flexigrid/gridth.gif) repeat-x left bottom;
+    background: #e3f7ff url(../../images/flexigrid/gridth.gif) repeat-x left bottom;
     position: relative;
     border: 1px solid #ccc;	
     border-top:solid 1px #fff;
@@ -320,7 +320,7 @@
 
 .bbit-grid div.cDrag div:hover, .bbit-grid div.cDrag div.dragging
 {
-    background: url(../images/flexigrid/line.gif) repeat-y 2px center;
+    background: url(../../images/flexigrid/line.gif) repeat-y 2px center;
 }
 
 .bbit-grid div.iDiv
@@ -367,7 +367,7 @@
     right: 0px;
     height: 5px;
     width: 5px;
-    background: url(../images/flexigrid/line.gif) repeat-x center;
+    background: url(../../images/flexigrid/line.gif) repeat-x center;
     margin-right: 1px;
     cursor: e-resize;
 }
@@ -383,7 +383,7 @@
     height: 5px;
     overflow: hidden;
     position: relative;
-    background: #fafafa url(../images/flexigrid/headbg.gif) repeat-x 0px -1px;
+    background: #fafafa url(../../images/flexigrid/headbg.gif) repeat-x 0px -1px;
     border: 1px solid #ccc;
     border-top: 0px;
     text-align: center;
@@ -455,7 +455,7 @@
     border:none;
 }
 div.colCopy {	
-    background: #e3f7ff url(../images/flexigrid/gridth.gif) repeat-x bottom;
+    background: #e3f7ff url(../../images/flexigrid/gridth.gif) repeat-x bottom;
     border: 1px solid #ccc;
     border-bottom: 0px;
     overflow: hidden;
@@ -463,7 +463,7 @@ div.colCopy {
 
 .bbit-grid div.hDiv th.sorted
 {
-    background:#e3f7ff url(../images/flexigrid/gridth.gif) repeat-x bottom;
+    background:#e3f7ff url(../../images/flexigrid/gridth.gif) repeat-x bottom;
     border-bottom: 0px solid #ccc;
 }
 
@@ -502,12 +502,12 @@ div.colCopy {
 
 .bbit-grid div.hDiv th div.sdesc
 {
-    background: url(../images/flexigrid/sort_desc.gif) no-repeat center top;
+    background: url(../../images/flexigrid/sort_desc.gif) no-repeat center top;
 }	
 
 .bbit-grid div.hDiv th div.sasc
 {
-    background: url(../images/flexigrid/sort_asc.gif) no-repeat center top;
+    background: url(../../images/flexigrid/sort_asc.gif) no-repeat center top;
 }	
 
 
@@ -518,7 +518,7 @@ div.colCopy {
 .bbit-grid span.cdropleft
 {
     display: block;
-    background: url(../images/flexigrid/prev.gif) no-repeat -4px center;
+    background: url(../../images/flexigrid/prev.gif) no-repeat -4px center;
     width: 24px;
     height: 24px;
     position: relative;
@@ -530,7 +530,7 @@ div.colCopy {
 .bbit-grid div.hDiv span.cdropright
 {
     display: block;
-    background: url(../images/flexigrid/next.gif) no-repeat 12px center;
+    background: url(../../images/flexigrid/next.gif) no-repeat 12px center;
     width: 24px;
     height: 24px;
     float: right;
@@ -586,7 +586,7 @@ div.colCopy {
 .bbit-grid tr.trSelected td.sorted, 
 .bbit-grid tr.trSelected td
 {
-    background: #d5effc url(../images/flexigrid/hl.png) repeat-x top;
+    background: #d5effc url(../../images/flexigrid/hl.png) repeat-x top;
     border-right: 1px solid #d2e3ec;
     border-left: 1px solid #eef8ff;	
     border-top:none;			
@@ -642,7 +642,7 @@ div.colCopy {
 
 .bbit-grid div.pDiv
 {
-    background: url(../images/flexigrid/page-bg.gif) repeat-x;
+    background: url(../../images/flexigrid/page-bg.gif) repeat-x;
     /*padding-top: 3px;*/
     border: 1px solid #ccc;
     border-top: 0px;
@@ -723,37 +723,37 @@ div.pGroup select
 
 .bbit-grid .pSearch
 {
-    background: url(../images/flexigrid/magnifier.png) no-repeat center;
+    background: url(../../images/flexigrid/magnifier.png) no-repeat center;
 }
 
 .bbit-grid .pFirst
 {
-    background: url(../images/flexigrid/page-first.png) no-repeat center;
+    background: url(../../images/flexigrid/page-first.png) no-repeat center;
 }
 
 .bbit-grid .pPrev
 {
-    background: url(../images/flexigrid/page-prev.png) no-repeat center;
+    background: url(../../images/flexigrid/page-prev.png) no-repeat center;
 }
 
 .bbit-grid .pNext
 {
-    background: url(../images/flexigrid/page-next.png) no-repeat center;
+    background: url(../../images/flexigrid/page-next.png) no-repeat center;
 }
 
 .bbit-grid .pLast
 {
-    background: url(../images/flexigrid/page-last.png) no-repeat center;
+    background: url(../../images/flexigrid/page-last.png) no-repeat center;
 }
 
 .bbit-grid .pReload
 {
-    background: url(../images/flexigrid/load.png) no-repeat center;
+    background: url(../../images/flexigrid/load.png) no-repeat center;
 }
 
 .bbit-grid .pReload.loading
 {
-    background: url(../images/flexigrid/load.gif) no-repeat center;
+    background: url(../../images/flexigrid/load.gif) no-repeat center;
 }															
 
 /* ie adjustments */

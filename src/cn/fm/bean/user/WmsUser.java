@@ -57,7 +57,7 @@ public class WmsUser implements Serializable{
 	
 	
 	 
-    @ManyToMany(cascade={CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.MERGE},mappedBy="user",fetch=FetchType.EAGER)          
+    @ManyToMany(cascade={CascadeType.REFRESH},mappedBy="user",fetch=FetchType.EAGER)          
 	public Set<Enterprise> getEnterprise() {
 		return enterprise;
 	}

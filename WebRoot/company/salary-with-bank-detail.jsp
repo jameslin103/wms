@@ -77,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="viewCashIssue?budgetId=<s:property value="%{#request.budgetId}"/>">现金</a></li>
             <li class="right"><a href="downloadBankIssueSalary" class="btn btn-primary">下载Excel表格</a></li>
           </ul>
-          <!--
+        <!--
 
           <table class="table table-striped table-bordered">
             <thead>
@@ -106,7 +106,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  -->
 		  		<s:hidden name="budgetId" value="%{#request.budgetId}"></s:hidden>
 		  		<table id="flexigrid" style="display: none;"></table>
-          
 				</div>
 			</div>
 		</div>

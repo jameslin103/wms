@@ -27,7 +27,7 @@ public class EnterpriseEmployees implements Serializable{
 	/*员工性别*/
 	private String employeesSex;
 	
-	/*户口性质  0非农  1 农村*/
+	/*户口性质  1非农  2 农村*/
 	private Integer householdRegister;
 	
 	/*籍贯*/
@@ -69,7 +69,7 @@ public class EnterpriseEmployees implements Serializable{
 	/*岗位*/
 	private String  jobs;
 	
-	/*婚姻状况*/
+	/*婚姻状况  1 2*/
 	private Integer  maritalStatus;
 	
 	/*文化程度*/
