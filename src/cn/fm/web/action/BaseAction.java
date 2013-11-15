@@ -27,7 +27,6 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
 	protected HttpServletRequest request;
 	protected HttpSession session;
 	protected HttpServletResponse response;
-	protected int  page=1;
 	
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
@@ -45,15 +44,6 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
 	public void setResourceName(String resourceName) {
 		this.resourceName = resourceName;
 	}
-
-	public int getPage() {
-		return page<1? 1 : page;
-	}
-
-	public void setpage(int page) {
-		this.page = page;
-	}
-
 
 	protected void responseJson(Object obj){
 		String json = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(obj);

@@ -45,7 +45,14 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	private Integer				userId;
 	private boolean      isSystemAdmin;
 	
+	private int page;
 	
+	public int getPage() {
+		return page<1?1:page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	public boolean isSystemAdmin() {
 		return isSystemAdmin;
 	}
@@ -211,6 +218,8 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	}
 	public String toBeResponsibleEnterprise()
 	{
+		enterprise=WebUtil.getEnterprise(request);
+		if(enterprise!=null)request.getSession().removeAttribute("enterprise");
 		WmsUser user=WebUtil.getWmsUser(request);
 		WmsUser userPO=wmsUserService.find(user.getUserId());
 		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(userPO);

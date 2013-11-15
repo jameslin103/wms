@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
+import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
@@ -188,6 +189,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	 */
 	public String  addSalaryBudgetTable()
 	{
+			WmsUser user=WebUtil.getWmsUser(request);
 			CreateSalaryBudgetTable	createSalaryBudgetTablePO=null;
 			if(createSalaryBudgetTable!=null && createSalaryBudgetTable.getBudgetId()!=null)
 			{
@@ -201,7 +203,11 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 					CreateSalaryBudgetTable createSalaryBudgetTable_PO=createSalaryBudgetTableService.find(budgetId);
 					createSalaryBudgetTable.setChooseTax(createSalaryBudgetTable_PO.getName());
 				}
+				if(user!=null){
+					createSalaryBudgetTable.setUser(user);
+				}
 				createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
+				
 				try {
 					createSalaryBudgetTableService.saveCreateSalaryBudgetTable(createSalaryBudgetTable,enterpriseId,templateId);
 					

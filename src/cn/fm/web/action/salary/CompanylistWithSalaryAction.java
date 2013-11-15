@@ -35,6 +35,8 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	private   EnterpriseService    enterpriseService;
 	
 	
+	private  CreateSalaryBudgetTable   createSalaryBudgetTable;
+	
 	private  List<EnterpriseEmployees> employeesRecution;
 	
 	private   Integer        month; 
@@ -44,6 +46,25 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	private   Integer        reductionState;
 	private   String         reductionNote;
 	
+	private int page;
+	
+	
+	
+	
+	
+	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
+		return createSalaryBudgetTable;
+	}
+	public void setCreateSalaryBudgetTable(
+			CreateSalaryBudgetTable createSalaryBudgetTable) {
+		this.createSalaryBudgetTable = createSalaryBudgetTable;
+	}
+	public int getPage() {
+		return page<1?1:page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	
 	public Integer getReductionState() {
 		return reductionState;
@@ -153,7 +174,7 @@ public class CompanylistWithSalaryAction extends BaseAction{
 			}
 		}
 		
-		PageView<CreateSalaryBudgetTable> pageView = new PageView<CreateSalaryBudgetTable>(10,  this.getPage());
+		PageView<CreateSalaryBudgetTable> pageView = new PageView<CreateSalaryBudgetTable>(5,  this.getPage());
 		pageView.setQueryResult(createSalaryBudgetTableService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
@@ -316,5 +337,11 @@ public class CompanylistWithSalaryAction extends BaseAction{
 		
 		return SUCCESS;
 	}
-	
+	public String updateSaralyStatus()
+	{
+		
+		createSalaryBudgetTableService.update(createSalaryBudgetTable);
+		
+		return SUCCESS;
+	}
 }

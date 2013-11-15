@@ -51,12 +51,30 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private String    insuranceYear;
 	private Integer   staff_renewal_reduction;
 	
+	private Integer   pseudoDelete;
+	private Integer   departure;
+	
 	 //工程目录下的模板文件名称
    private String employeeFileName;
 	
     
 	
-   
+    
+	public Integer getDeparture()
+	{
+		return departure;
+	}
+	public void setDeparture(Integer departure) 
+	{
+		this.departure = departure;
+	}
+	public Integer getPseudoDelete()
+	{
+		return pseudoDelete;
+	}
+	public void setPseudoDelete(Integer pseudoDelete) {
+		this.pseudoDelete = pseudoDelete;
+	}
 	public Integer getStaff_renewal_reduction() {
 		return staff_renewal_reduction;
 	}
@@ -96,7 +114,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	}
 	
 	public int getPage() {
-		return page<=0?1:page;
+		return page<1?1:page;
 	}
 	public void setPage(int page) {
 		this.page = page;
@@ -236,27 +254,71 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	 * @return
 	 */
 	public String viewEnterpriseEmployees(){
-		Enterprise enter=WebUtil.getEnterprise(request);
-		if(enter!=null)this.setEnterpriseId(enter.getEnterpriseId());
+		
+		if(this.enterpriseId==null || this.enterpriseId==0)
+		{
+			Enterprise enter=WebUtil.getEnterprise(request);
+			if(enter!=null)
+			{
+				this.setEnterpriseId(enter.getEnterpriseId());
+			}
+		}else{
+			Enterprise  enterprise=enterpriseService.find(this.enterpriseId);
+			request.getSession().setAttribute("enterprise", enterprise);
+		}
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("createDate", "desc");
 		StringBuffer jpql = new StringBuffer("");
 		List<Object> params = new ArrayList<Object>();
 		if(this.enterpriseId!=null)
 		{
-			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(this.enterpriseId);
-			jpql.append(" and o.reduction=?").append(params.size()+1);
-			params.add(0);
-			jpql.append(" and o.departure=?").append(params.size()+1);
-			params.add(0);
-			jpql.append(" and o.pseudoDelete=?").append(params.size()+1);
-			params.add(0);
+			if(insurance==null && pseudoDelete==null && departure==null){
+				
+				jpql.append(" o.reduction=?").append(params.size()+1);
+				params.add(0);
+				jpql.append(" and o.departure=?").append(params.size()+1);
+				params.add(0);
+				jpql.append(" and o.pseudoDelete=?").append(params.size()+1);
+				params.add(0);
+				jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
+				params.add(this.enterpriseId);
+			}
+			if(insurance!=null){
+				
+			    jpql.append(" o.reduction=?").append(params.size()+1);
+				params.add(0);
+				jpql.append(" and o.departure=?").append(params.size()+1);
+				params.add(0);
+				jpql.append(" and o.pseudoDelete=?").append(params.size()+1);
+				params.add(0);
+				jpql.append(" and o.whetherGinseng=?").append(params.size()+1);
+				params.add(this.insurance);
+				jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
+				params.add(this.enterpriseId);
+			}
+
+			//隐藏员工
+			if(pseudoDelete!=null && pseudoDelete==1){
+				jpql.append(" o.pseudoDelete=?").append(params.size()+1);
+				params.add(1);
+				jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
+				params.add(this.enterpriseId);
+			}
+			///查找离职员工
+			if(departure!=null && departure==1){
+				jpql.append(" o.departure=?").append(params.size()+1);
+				params.add(1);	
+				jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
+				params.add(this.enterpriseId);
+			}
+			
 			
 			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			
 			request.setAttribute("pageView", pageView);
+			
 		}
 		
 		return SUCCESS;
@@ -275,95 +337,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		request.setAttribute("employees", employees);
 		return SUCCESS;
 	}
-	
-	/**
-	 * 查看参保人员与未参保人员
-	 * @return
-	 */
-	public String fildInsuranceEnterpriseEmployees()
-	{
-		Enterprise enterprise=WebUtil.getEnterprise(request);
-		if(enterprise==null || enterprise.getEnterpriseId()==null)return SUCCESS;
-		
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("createDate", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-		if(enterprise.getEnterpriseId()!=null)
-		{
-			
-			jpql.append("  o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(enterprise.getEnterpriseId());
-		    jpql.append(" and o.reduction=?").append(params.size()+1);
-			params.add(0);
-			jpql.append(" and o.departure=?").append(params.size()+1);
-			params.add(0);
-			jpql.append(" and o.pseudoDelete=?").append(params.size()+1);
-			params.add(0);
-			jpql.append(" and o.whetherGinseng=?").append(params.size()+1);
-			params.add(this.insurance);
-			
-			
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
-			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("pageView", pageView);
-		}
-		
-		
-		
-		return SUCCESS;
-	}
-	/**
-	 * 查找隐藏的员工
-	 * @return
-	 */
-	public String findEmployeesHidden()
-	{
-		
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("employeesId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-		if(this.enterpriseId!=null)
-		{
-			jpql.append(" o.pseudoDelete=?").append(params.size()+1);
-			params.add(1);
-			jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(this.enterpriseId);
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
-			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("pageView", pageView);
-		}
-		return SUCCESS;
-	}
-	/**
-	 * 查找离职员工
-	 * @return
-	 */
-	public String findEmployeesDeparture()
-	{
-		
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("employeesId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-		if(this.enterpriseId!=null)
-		{
-			jpql.append(" o.departure=?").append(params.size()+1);
-			params.add(1);
-			jpql.append(" and  o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(this.enterpriseId);
-			
-			
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
-			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("pageView", pageView);
-		}
-		return SUCCESS;
-	}
+
 	/**
 	 * 
 	 * @return

@@ -13,7 +13,14 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
-
+		<script type="text/javascript">
+			 function topage(page){
+				var form = document.getElementById("myforminsurance");
+					form.page.value=page;
+				//form.action='viewEnterpriseEmployees?page='+page;
+				form.submit();
+			}
+		</script>
 	</head>
 	<body>
 		<div id="container">
@@ -66,7 +73,10 @@
 							</s:iterator>
 					</ul>
 						
-
+						<s:form action="insuranceWithEmployeeList" method="post" id="myforminsurance">
+							<s:hidden name="page"/>
+							<s:hidden name="insuranceYear"/>
+							<s:hidden name="month"/>
 						<ul class="normal action-container clearfix">
 							<li class="right">
 								<s:a href="downloadInsuranceWithEmployeeList" cssClass="btn btn-primary" >下载社医保办理与减员表</s:a>
@@ -288,7 +298,7 @@
 						<div>
 							<%@ include file="../share/fenye.jsp" %>
 						</div>
-
+						</s:form>
 					</div>
 				</div>
 			</div>

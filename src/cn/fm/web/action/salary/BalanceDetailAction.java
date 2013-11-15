@@ -28,7 +28,14 @@ public class BalanceDetailAction extends BaseAction {
 	private Integer				 employeeId;
 	private Integer				 detailId;
 
+	private int page;
 	
+	public int getPage() {
+		return page<1?1:page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	public BalanceDetail getBalanceDetail() {
 		return balanceDetail;
 	}

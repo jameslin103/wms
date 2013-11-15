@@ -523,7 +523,13 @@ Date.prototype.format = function(format) {
     return format;  
 }  
 
-
+function topage(page){
+	
+	var form = document.getElementById("myform");
+		form.page.value=page;
+	//form.action='viewEnterpriseEmployees?page='+page;
+	form.submit();
+}
 
 
 

@@ -17,13 +17,8 @@
 		<meta http-equiv="expires" content="0"/>  
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script type="text/javascript">
-		function topage(page){
-			var form = document.getElementById("myform");
-			form.page.value=page;
-			form.submit();
-		}
+		
 		function reset(){
-			alert("xxxxx");
 			$('#loginForm')[0].reset();
 		}
 		$(document).ready(function(){
@@ -126,23 +121,22 @@
 								查看：
 							</li>
 							<li>
-								<a href="fildInsuranceEnterpriseEmployees?insurance=1">参保</a>，
+								<a href="viewEnterpriseEmployees?insurance=1">参保</a>，
 							</li>
 							<li>
-								<a href="fildInsuranceEnterpriseEmployees?insurance=0">未参保</a>，
+								<a href="viewEnterpriseEmployees?insurance=0">未参保</a>，
 							</li>
 							<li>
-								<a href="findEmployeesDeparture?enterpriseId=<s:property value="%{#session.enterprise.enterpriseId}" />">离职员工</a>，
+								<a href="viewEnterpriseEmployees?departure=1">离职员工</a>，
 							</li>
 							<li>
-								<a href="findEmployeesHidden?enterpriseId=<s:property value="%{#session.enterprise.enterpriseId}" />">隐藏信息</a>
+								<a href="viewEnterpriseEmployees?pseudoDelete=1">隐藏信息</a>
 							</li>
 							<li class="right">
 								<a href="exportEmployeesExcel" class="btn btn-primary">下载全体在职员工信息</a>
 							</li>
 							<li class="right">
 								<s:form cssClass="navbar-form pull-left" action="fildAllEnterpriseEmployees" method="post">
-									
 									<input type="text" name="employessName" placeholder="输入姓名"/>
 									<input type="checkbox" name="all" value="1"/>&nbsp;全站
                 					<s:submit type="submit" cssClass="btn" value="搜索" />

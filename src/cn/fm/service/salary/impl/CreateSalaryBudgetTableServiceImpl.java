@@ -218,5 +218,16 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 		return createTableList;
 	}
 
+	public void updateSalaryStatus(CreateSalaryBudgetTable createSalaryBudgetTable) 
+	{
+		CreateSalaryBudgetTable ceateSalaryBudgetTablePO=em.find(CreateSalaryBudgetTable.class, createSalaryBudgetTable.getBudgetId());
+		em.clear();
+		ceateSalaryBudgetTablePO.setChooseTax(createSalaryBudgetTable.getChooseTax());
+		ceateSalaryBudgetTablePO.setCashnumber(createSalaryBudgetTable.getCashnumber());
+		em.merge(ceateSalaryBudgetTablePO);
+		
+		
+	}
+
 
 }

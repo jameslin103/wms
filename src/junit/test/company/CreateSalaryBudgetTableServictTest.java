@@ -108,5 +108,15 @@ public class CreateSalaryBudgetTableServictTest {
 		
 		createSalaryBudgetTableService.saveCreateSalaryBudgetTable(c, 1, 3);
 	}
-	
+	@Test
+	public void update()
+	{
+		CreateSalaryBudgetTable  createSalaryBudgetTable=new CreateSalaryBudgetTable();
+		
+		createSalaryBudgetTable.setBudgetId(44);
+		createSalaryBudgetTable.setCashnumber(5);
+		createSalaryBudgetTable.setChooseTax("8888");
+		createSalaryBudgetTableService.updateSalaryStatus(createSalaryBudgetTable);
+		
+	}
 }

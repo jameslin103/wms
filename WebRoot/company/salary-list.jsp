@@ -15,7 +15,12 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script type="text/javascript">
-			 
+			 function topage(page){
+				var form = document.getElementById("myformdate");
+					form.page.value=page;
+				//form.action='viewEnterpriseEmployees?page='+page;
+				form.submit();
+			}
 		
 		
 		</script>
@@ -75,7 +80,9 @@
             <li class="title"><s:date name="%{#request.employeesSalaryDetail[1].salaryDate}" format="yyyy年MM月"/>工资明细</li>
             <li class="right"><a href="downloadEmployeesSalaryDetail?budgetId=<s:property value="%{#request.budgetId}"/>" class="btn btn-primary">下载Excel表格</a></li>
           </ul>
-
+		  <s:form action="viewAllEmployeesSalaryDetail" method="post" id="myformdate">
+            	<s:hidden name="budgetId"/>
+            	<s:hidden name="page"/>
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
@@ -158,11 +165,10 @@
             </thbody>
             </s:iterator>
           </table>
-
           <div class="pagination">
             <%@include file="/share/fenye.jsp" %>
           </div>
-          
+           </s:form>
         </div>
       </div>
     </div>

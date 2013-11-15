@@ -54,4 +54,8 @@ public interface CreateSalaryBudgetTableService extends DAO<CreateSalaryBudgetTa
 	 * @param createSalaryBudgetTable
 	 */
 	public void saveCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable,Integer enterpriseId,Integer templateId);
+	
+	
+	public void updateSalaryStatus(CreateSalaryBudgetTable createSalaryBudgetTable);
+	
 }

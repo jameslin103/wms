@@ -83,7 +83,7 @@ $(function() {
                         //alert("删除，产品编号=" + id);
                         $.ajax({
     						type: "POST",
-    						url: "flexGridServlet.do?action=delete",
+    						//url: "flexGridServlet.do?action=delete",
     						data: "id="+id,
     						dataType:"text",
     						success: function(msg){
@@ -149,7 +149,7 @@ $(function() {
     			      //alert("id="+ids);
     			      $.ajax({
     						type: "POST",
-    						url: "flexGridServlet.do?action=delete",
+    						//url: "flexGridServlet.do?action=delete",
     						data: "id="+ids,
     						dataType:"text",
     						success: function(msg){
@@ -186,7 +186,7 @@ $(function() {
     					var params=$("#dialogAdd #form1").serialize();
     					$.ajax({
     							type: "POST",
-    							url: "flexGridServlet.do?action=add",
+    							//url: "flexGridServlet.do?action=add",
     							data: encodeURI(params),
     							dataType:"text",
     							success: function(msg){
@@ -239,7 +239,7 @@ $(function() {
     					var id=$('.trSelected td:nth-child(2)',grid).text();
     					$.ajax({
     							type: "POST",
-    							url: "flexGridServlet.do?action=modify&id="+id,
+    							//url: "flexGridServlet.do?action=modify&id="+id,
     							data: encodeURI(params),
     							dataType:"text",
     							success: function(msg){
@@ -303,7 +303,7 @@ $(function() {
         
         //联动select option start
          $("#province").FillOptions(
-         		"flexGridServlet.do?action=getProvince",
+         		//"flexGridServlet.do?action=getProvince",
          		{
           		datatype:"json",
           		textfield:"province",
@@ -316,7 +316,7 @@ $(function() {
          $("#city").AddOption("请选择城市：","-1",true,0);
           $("#province").CascadingSelect(
                $("#city"),//需要联动的下拉列表框，必须
-               "flexGridServlet.do?action=getCity",
+               //"flexGridServlet.do?action=getCity",
                {datatype:"json",textfield:"city",valuefiled:"cityID",parameter:"p"},//通过设置parameter:”p”这个参数会生成一个"handler1.ashx?p=xxx”这样的地址来做ajax请求
                function(){//完成联动后执行
                		//log.info("测试");

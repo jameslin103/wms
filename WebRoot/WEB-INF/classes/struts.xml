@@ -187,14 +187,7 @@
             	<param name="actionName">viewEnterpriseEmployees</param>
             </result>
         </action>
-        <!-- 离职员工 -->
-         <action name="findEmployeesDeparture" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="findEmployeesDeparture">
-            <result name="success">company/employee-list.jsp</result>
-        </action>
-        <!-- 隐藏员工 -->
-         <action name="findEmployeesHidden" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="findEmployeesHidden">
-            <result name="success">company/employee-list.jsp</result>
-        </action>
+        
           <!-- 增减员与参保明细 -->
         <action name="viewInsuranceWithMonth" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewInsuranceWithMonth">
             <result name="success">company/insurance-with-month.jsp</result>
@@ -211,6 +204,7 @@
             <result name="success">/company/employee-list.jsp</result>
             <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterpriseEmployees</param>
+            	<param name="page">${page}</param>
             </result>
         </action>  
         <action name="batchExcelDataEmployee" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="batchExcelDataEmployee">
@@ -565,13 +559,12 @@
         </action>
         <action name="viewSalaryWithBankPersonalNumber" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewSalaryWithBankPersonalNumber">
             <result name="success">company/salary-with-bank-detail.jsp</result>
-            <param name="budgetId">${budgetId}</param>
         </action>
-        <action name="viewSalaryWithBankPersonalNumberJson" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewSalaryWithBankPersonalNumberJson">
+        <!--<action name="viewSalaryWithBankPersonalNumberJson" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewSalaryWithBankPersonalNumberJson">
             <result name="success" type="json">
             </result>
         </action>
-        <action name="findToIdSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="findToIdSalaryDetail">
+        --><action name="findToIdSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="findToIdSalaryDetail">
             <result name="employeesSalaryDetail" type="json"></result>
         </action>
         <action name="updateEmployeesSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="updateEmployeesSalaryDetail">
@@ -619,6 +612,11 @@
         <!-- ==============汇总============== -->
         <action name="viewCompanyListWithSaraly" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="viewCompanyListWithSaraly">
             <result name="success" >all/company-list-with-salary.jsp</result>
+        </action>
+        <action name="updateSaralyStatus" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="updateSaralyStatus">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewCompanyListWithSaraly</param>
+            </result>
         </action>
         <action name="viewCompanyListWithInsurance" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="viewCompanyListWithInsurance">
             <result name="success" >all/company-list-with-insurance.jsp</result>
