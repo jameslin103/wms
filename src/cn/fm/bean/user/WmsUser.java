@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,6 +25,7 @@ import javax.persistence.Transient;
 
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.permissions.Role;
+import cn.fm.bean.salary.CreateSalaryBudgetTable;
 
 
 @Entity
@@ -54,10 +56,10 @@ public class WmsUser implements Serializable{
 	
 	private List<Role> roles = new ArrayList<Role>();
 	
-	
+	private Set<CreateSalaryBudgetTable> createSalaryBudgetTable=new HashSet<CreateSalaryBudgetTable>();
 	
 	 
-    @ManyToMany(cascade={CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.MERGE},mappedBy="user",fetch=FetchType.EAGER)          
+    @ManyToMany(cascade={CascadeType.REFRESH},mappedBy="user",fetch=FetchType.EAGER)          
 	public Set<Enterprise> getEnterprise() {
 		return enterprise;
 	}
@@ -65,6 +67,17 @@ public class WmsUser implements Serializable{
 	public void setEnterprise(Set<Enterprise> enterprise) {
 		this.enterprise = enterprise;
 	}
+	
+	@OneToMany(cascade={CascadeType.REFRESH},mappedBy="user",fetch=FetchType.EAGER)
+	public Set<CreateSalaryBudgetTable> getCreateSalaryBudgetTable() {
+		return createSalaryBudgetTable;
+	}
+
+	public void setCreateSalaryBudgetTable(
+			Set<CreateSalaryBudgetTable> createSalaryBudgetTable) {
+		this.createSalaryBudgetTable = createSalaryBudgetTable;
+	}
+
 	@Id @GeneratedValue
 	public Integer getUserId() {
 		return userId;

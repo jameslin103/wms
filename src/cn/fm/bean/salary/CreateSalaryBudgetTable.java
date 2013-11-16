@@ -6,14 +6,15 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.user.WmsUser;
 
 
 /**
@@ -79,8 +80,13 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 	private Date    updateDate=new Date();
 	
-	/**选择模板*/
-	private SalaryTemplate  salaryTemplate;
+	private Date    cmbcDate;
+	
+	private Date    cashnumberDate;
+	
+	private Date    heLinesDate;
+	
+
 	
 	/*是否已经合并 0未合并，1合并*/
 	private Integer    isTax=0;   
@@ -88,8 +94,12 @@ public class CreateSalaryBudgetTable implements Serializable {
 	/**跟哪个预算表合并**/
 	private Integer    mergeId;
 	
+	/**选择模板*/
+	private SalaryTemplate  salaryTemplate;
+	
 	private Enterprise enterprise;
 	
+	private WmsUser    user;
 
 	@Id @GeneratedValue
 	public Integer getBudgetId() {
@@ -116,7 +126,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setSalaryDate(Date salaryDate) {
 		this.salaryDate = salaryDate;
 	}
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -260,6 +270,30 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setMergeId(Integer mergeId) {
 		this.mergeId = mergeId;
 	}
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getCmbcDate() {
+		return cmbcDate;
+	}
+
+	public void setCmbcDate(Date cmbcDate) {
+		this.cmbcDate = cmbcDate;
+	}
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getCashnumberDate() {
+		return cashnumberDate;
+	}
+
+	public void setCashnumberDate(Date cashnumberDate) {
+		this.cashnumberDate = cashnumberDate;
+	}
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getHeLinesDate() {
+		return heLinesDate;
+	}
+
+	public void setHeLinesDate(Date heLinesDate) {
+		this.heLinesDate = heLinesDate;
+	}
 
 	@ManyToOne(cascade = { CascadeType.REFRESH},optional=true)
 	@JoinColumn(name = "enterpriseId")
@@ -270,7 +304,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.enterprise = enterprise;
 	}
 	
-	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST},optional=true)
+	@ManyToOne(cascade={CascadeType.REFRESH},optional=true)
 	@JoinColumn(name="templateId")
 	public SalaryTemplate getSalaryTemplate() {
 		return salaryTemplate;
@@ -279,12 +313,17 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setSalaryTemplate(SalaryTemplate salaryTemplate) {
 		this.salaryTemplate = salaryTemplate;
 	}
-	
-	
-	
-	
-	
-	
+
+	@ManyToOne(cascade={CascadeType.REFRESH},fetch=FetchType.EAGER)
+	@JoinColumn(name="user_id")
+	public WmsUser getUser() {
+		return user;
+	}
+
+	public void setUser(WmsUser user) {
+		this.user = user;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

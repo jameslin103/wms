@@ -74,7 +74,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	/*生成哪月工资？*/
 	private Date    salaryDate;
 	
-	private Integer   page;
+	private int   page=1;
 	private String    rp;
 	private String   query;
 	private String   qtype;
@@ -84,6 +84,12 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	private long  total=0;
 	
 	
+	public int getPage() {
+		return page<1?1:page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	
 	@JSON(name="details")
 	public List<EmployeesSalaryDetail> getDetails() {
@@ -560,6 +566,18 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	
 	public String viewSalaryWithBankPersonalNumber()
 	{
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+			jpql.append(" o.budgettableId=?").append(params.size()+1);
+			params.add(this.budgetId);
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			
+		request.setAttribute("pageView", pageView);
 		request.setAttribute("budgetId", budgetId);
 		return SUCCESS;
 		
@@ -568,45 +586,46 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	public String viewSalaryWithBankPersonalNumberJson()
 	{
 		
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("salaryId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-			jpql.append(" o.budgettableId=?").append(params.size()+1);
-			params.add(1);
-			
-			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
-			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-		
-			if(pageView==null || pageView.getRecords().size()==0)
-			{
-				pageView=new PageView<EmployeesSalaryDetail>(10, this.page);
-			}
+//		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+//		orderby.put("salaryId", "desc");
+//		StringBuffer jpql = new StringBuffer("");
+//		List<Object> params = new ArrayList<Object>();
+//			jpql.append(" o.budgettableId=?").append(params.size()+1);
+//			params.add(50);
+//			
+//			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(Integer.parseInt(this.rp),  this.getPage());
+//			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+//					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+//		
+//			if(pageView==null || pageView.getRecords().size()==0)
+//			{
+//				pageView=new PageView<EmployeesSalaryDetail>(Integer.parseInt(this.rp), this.page);
+//			}
 
 //			details=toJSONList(pageView.getRecords());
-			request.setAttribute("budgetId", budgetId);
-			this.setTotal(pageView.getTotalpage());
-			
-			
-			
-		Map<String,String> map = new HashMap<String,String>();
+//			request.setAttribute("budgetId", budgetId);
+//			this.setTotal(pageView.getTotalpage());
+//			
+//			
+//			
+//		Map<String,String> map = new HashMap<String,String>();
+//
+//		map.put("page", page+"");
+//		map.put("total", pageView.getTotalrecord()+"");
+//		map.put("rp", this.rp);
+//		
+//		//to JSON
+//		String json = toJSON(pageView.getRecords(), map);
 
-		map.put("page", page+"");
-		map.put("total", pageView.getTotalrecord()+"");
-		
-		//to JSON
-		String json = toJSON(pageView.getRecords(), map);
-
-		try {
-			response.setContentType("text/html;charset=utf-8");
-			response.setHeader("Cache-Control", "no-cache");
-			response.getWriter().write(json);
-			response.getWriter().flush();
-			response.getWriter().close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			response.setContentType("text/html;charset=utf-8");
+//			response.setHeader("Cache-Control", "no-cache");
+//			response.getWriter().write(json);
+//			response.getWriter().flush();
+//			response.getWriter().close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 		
 		

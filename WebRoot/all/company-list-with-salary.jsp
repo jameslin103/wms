@@ -14,13 +14,24 @@
 		<title>富民人力银行派遣系统</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<%@ include file="/help/public_css_js.jsp"%>
-
+		<script>
+			function topage(page)
+			{
+				var form = document.getElementById("myformlist");
+					form.page.value=page;
+				//form.action='viewEnterpriseEmployees?page='+page;
+				form.submit();
+			}
+			$(function(){
+				alert("xxx");
+			});
+		</script>
 	</head>
 	<body>
 
 		<div id="container">
 			<div id="header">
-				<jsp:include page="../layout/list_header.jsp" />
+				<jsp:include page="../layout/header.jsp" />
 			</div>
 			<div id="main">
 				<div class="row-fluid">
@@ -51,7 +62,7 @@
 							<form action="viewCompanyListWithSaraly" class="select-for-year" method="post" id="myform1">
 									按年份查询:<input type="text" name="year"  value="${year}"  maxlength="4" onkeyup="value=value.replace(/[^\d]/g,'')"/>
 									
-								</form>	
+							</form>	
 							</li>
 								<li><a href="viewCompanyListWithSaraly?month=1&year=${year}">1月</a>，</li>
 					            <li><a href="viewCompanyListWithSaraly?month=2&year=${year}">2月</a>，</li>
@@ -66,7 +77,8 @@
 					            <li><a href="viewCompanyListWithSaraly?month=11&year=${year}">11月</a>，</li>
 					            <li><a href="viewCompanyListWithSaraly?month=12&year=${year}">12月</a></li>
 						</ul>
-					
+						<s:form action="viewCompanyListWithSaraly"  method="post" id="myformlist">
+							<s:hidden name="page"></s:hidden>
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -111,7 +123,7 @@
 								</th>
 								<th>
 									五险一金
-									<br>
+									<br/>
 									总额（元）
 								</th>
 								<th>
@@ -163,7 +175,7 @@
 										<s:property value="%{#createSalaryBudgetTable.serviceTotal}"/>
 									</td>
 									<td>
-										600
+										<s:property value="%{#createSalaryBudgetTable.fiveInsurancesTotal}"/>
 									</td>
 									<td>
 										<s:property value="%{#createSalaryBudgetTable.issueNumber}"/>
@@ -175,29 +187,30 @@
 										<br/>
 										<span class="em">（已发放）</span>
 										<br/>
-										2013年7月15日9时
+										<s:date name="%{#createSalaryBudgetTable.cmbcDate}" format="yyyy年MM月dd日HH时"/>
 									</td>
 									<td>
-										2
+										<s:property value="%{#request.createSalaryBudgetTable.cmbc}"/>
 										<br/>
 										<span class="em">（已发放）</span>
 										<br/>
-										2013年7月15日9：30时
+										<s:date name="%{#createSalaryBudgetTable.cashnumberDate}" format="yyyy年MM月dd日HH时"/>
 									</td>
 									<td>
-										5
+										<s:property value="%{#request.createSalaryBudgetTable.heLines}"/>
 										<br/>
 										<span class="em">（已发放）</span>
 										<br/>
-										2013年7月16日11时
+										<s:date name="%{#createSalaryBudgetTable.heLinesDate}" format="yyyy年MM月dd日HH时"/>
 									</td>
 									<td>
 										<ul>
 											<li>
-												制作：倪姐，2013-07-18，9:00，
+												制作：<s:property value="#createSalaryBudgetTable.user.username"/>，
+												<s:date name="%{#createSalaryBudgetTable.createDate}" format="yyyy-MM-dd,HH:ss"/>
 											</li>
 											<li>
-												发放：小柴
+												发放：<s:property value=""/>
 												<a href="#info-for-check2" data-toggle="modal">操作</a>
 											</li>
 										</ul>
@@ -212,6 +225,7 @@
 						<div class="pagination">
 							<%@include file="../share/fenye.jsp"  %>
 						</div>
+					</s:form>
 					</div>
 				</div>
 			</div>
@@ -284,164 +298,39 @@
 
 			<div class="modal-body">
 				<div class="row-fluid">
-					<form action="" method="post">
+					<form action="updateSaralyStatus" method="post">
 						<div class="input-container">
 							<label>
 								民生银行
 							</label>
-							<select class="span3">
-								<option value="">
-									2014年
-								</option>
-								<option value="" selected>
-									2013年
-								</option>
-								<option value="">
-									2012年
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									7月
-								</option>
-								<option value="" selected>
-									8月
-								</option>
-								<option value="">
-									9月
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									15日
-								</option>
-								<option value="" selected>
-									19日
-								</option>
-								<option value="">
-									22日
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									9时
-								</option>
-								<option value="" selected>
-									9时
-								</option>
-								<option value="">
-									10时
-								</option>
-							</select>
+							<input type="text" id="d4311"
+								name="createSalaryBudgetTable.cmbcDate"
+								 onfocus="WdatePicker(d4311)" class="Wdate" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								他行
 							</label>
-							<select class="span3">
-								<option value="">
-									2014年
-								</option>
-								<option value="" selected>
-									2013年
-								</option>
-								<option value="">
-									2012年
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									7月
-								</option>
-								<option value="" selected>
-									8月
-								</option>
-								<option value="">
-									9月
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									15日
-								</option>
-								<option value="" selected>
-									19日
-								</option>
-								<option value="">
-									22日
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									9时
-								</option>
-								<option value="" selected>
-									9时
-								</option>
-								<option value=""10>
-									时
-								</option>
-							</select>
+							<input type="text" id="d4312"
+								name="createSalaryBudgetTable.heLinesDate"
+								 onfocus="WdatePicker(d4312)" class="Wdate" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								现金
 							</label>
-							<select class="span3">
-								<option value="">
-									2014年
-								</option>
-								<option value="" selected>
-									2013年
-								</option>
-								<option value="">
-									2012年
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									7月
-								</option>
-								<option value="" selected>
-									8月
-								</option>
-								<option value="">
-									9月
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									15日
-								</option>
-								<option value="" selected>
-									19日
-								</option>
-								<option value="">
-									22日
-								</option>
-							</select>
-							<select class="span2">
-								<option value="">
-									9时
-								</option>
-								<option value="" selected>
-									9时
-								</option>
-								<option value=""10>
-									时
-								</option>
-							</select>
+							<input type="text" id="d4313"
+								name="createSalaryBudgetTable.cashnumberDate"
+								 onfocus="WdatePicker(d4313)" class="Wdate" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								&nbsp;
 							</label>
-							<button type="button" class="btn btn-primary">
-								提交
-							</button>
+							<s:submit value="提交" cssClass="btn btn-primary"/>
 						</div>
 					</form>
 				</div>

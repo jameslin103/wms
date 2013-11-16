@@ -12,15 +12,45 @@
 		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache"/> 
+		<meta http-equiv="cache-control" content="no-cache"/> 
+		<meta http-equiv="expires" content="0"/>  
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script type="text/javascript">
-		function topage(page){
-			var form = document.getElementById("myform");
-			form.page.value=page;
-			form.submit();
+		
+		function reset(){
+			$('#loginForm')[0].reset();
 		}
-		$(function(){
-			　$("#loginForm").validate();
+		$(document).ready(function(){
+			$("#submit").click(function()
+			{
+				
+				var name=$("#employeesName")val();
+				var carnumber=$("#carnumber")val();
+				if(name=="" && carnumber=="")
+				{
+					$("#name").text("姓名必填项!");
+					$("#errorcar").text("身份证必填项!");
+					return false;
+				}
+				if(name=="" && carnumber!="")
+				{
+					$("#name").text("姓名必填项!")
+					$("#errorcar").text(" ");
+					$("#errorcar").css(" ");
+					$("#name").css("color","red");
+					return false;
+				}
+				if(name!="" && carnumber=="")
+				{
+					$("#name").text(" ")
+					$("#errorcar").text("身份证必填项!");
+					$("#name").css(" ")
+					$("#errorcar").css("color","red")
+					return false;
+				}
+			
+			});
 		
 		});
 		</script>
@@ -82,7 +112,7 @@
 								<a href="batchExcelDataEmployee">批量录入</a>，
 							</li>
 							<li>
-								<a href="#info-for-check" data-toggle="modal">单个录入</a>
+								<a href="#info-for-check" data-toggle="modal" onclick="reset()">单个录入</a>
 							</li>
 							<li>
 								&nbsp;/&nbsp;
@@ -91,23 +121,22 @@
 								查看：
 							</li>
 							<li>
-								<a href="fildInsuranceEnterpriseEmployees?insurance=1">参保</a>，
+								<a href="viewEnterpriseEmployees?insurance=1">参保</a>，
 							</li>
 							<li>
-								<a href="fildInsuranceEnterpriseEmployees?insurance=0">未参保</a>，
+								<a href="viewEnterpriseEmployees?insurance=0">未参保</a>，
 							</li>
 							<li>
-								<a href="findEmployeesDeparture?enterpriseId=<s:property value="%{#session.enterprise.enterpriseId}" />">离职员工</a>，
+								<a href="viewEnterpriseEmployees?departure=1">离职员工</a>，
 							</li>
 							<li>
-								<a href="findEmployeesHidden?enterpriseId=<s:property value="%{#session.enterprise.enterpriseId}" />">隐藏信息</a>
+								<a href="viewEnterpriseEmployees?pseudoDelete=1">隐藏信息</a>
 							</li>
 							<li class="right">
 								<a href="exportEmployeesExcel" class="btn btn-primary">下载全体在职员工信息</a>
 							</li>
 							<li class="right">
 								<s:form cssClass="navbar-form pull-left" action="fildAllEnterpriseEmployees" method="post">
-									
 									<input type="text" name="employessName" placeholder="输入姓名"/>
 									<input type="checkbox" name="all" value="1"/>&nbsp;全站
                 					<s:submit type="submit" cssClass="btn" value="搜索" />
@@ -193,20 +222,20 @@
 											<s:property value="%{#emp.employeesSex}" />
 										</td>
 										<td>
-											<s:if test="#emp.householdRegister==0">
+											<s:if test="#emp.householdRegister==1">
 												<span>非农</span>
 											</s:if>
-											<s:elseif test="#emp.householdRegister==1">
+											<s:elseif test="#emp.householdRegister==2">
 												<span>农村</span>
 											</s:elseif>
 											<s:else>
 											</s:else>
 										</td>
 										<td>
-											<s:if test="#emp.maritalStatus==0">
+											<s:if test="#emp.maritalStatus==1">
 												<span>已婚</span>
 											</s:if>
-											<s:elseif test="#emp.maritalStatus==1">
+											<s:elseif test="#emp.maritalStatus==2">
 												<span>未婚</span>
 											</s:elseif>
 											<s:else>
@@ -317,14 +346,16 @@
 							<label>
 								姓名
 							</label>
-							<s:textfield name="enterpriseEmployees.employeesName" />
+							<s:textfield name="enterpriseEmployees.employeesName" id="employeesName"/>
+							<span style="color:red;">*</span><span style="color:red;" id="errorname"></span>
 						</div>
 
 						<div class="input-container">
 							<label>
 								身份证
 							</label>
-							<s:textfield name="enterpriseEmployees.cardNumber" />
+							<s:textfield name="enterpriseEmployees.cardNumber" id="carnumber"/>
+							<span style="color:red;">*</span><span style="color:red;" id="errorcar"></span>
 						</div>
 
 						<div class="input-container">
@@ -552,8 +583,8 @@
 							<s:textfield name="enterpriseEmployees.serviceCost" />
 						</div>
 
-						<div class="input-container">
-							<s:submit cssClass="btn btn-primary" value="提交" />
+						<div class="input-container" >
+							<s:submit cssClass="btn btn-primary" value="提交" id="submit"/>
 						</div>
 
 					</div>

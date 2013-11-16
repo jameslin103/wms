@@ -75,7 +75,7 @@ public class EnterpriseServiceTest {
 		WmsUser  user=new WmsUser();
 		user.setUserId(2);
 		en.addWmsUser(user);
-		enterpriseService.saveEnterprise(en);
+		enterpriseService.save(en);
 		
 	}
 	@Test
@@ -165,5 +165,6 @@ public class EnterpriseServiceTest {
 //		enterpriseService.getUserToAllEnterprise(user);
 //		
 //	}
+
 
 }

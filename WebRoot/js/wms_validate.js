@@ -223,15 +223,23 @@ function findIdToEmployees(employeesId)
 		    	$("input[name='enterpriseEmployees.paymentWay'][value="+way+"]").attr("checked",true) 
 		    	$("input[name='enterpriseEmployees.pseudoDelete'][value="+data.enterpriseEmployees.pseudoDelete+"]").attr("checked",true); 
 		    	$("input[name='enterpriseEmployees.serviceCost']").val(data.enterpriseEmployees.serviceCost); 
-		    	
+		    	reset();
 		    },    
 		     error : function() {  
 		    	 alert("系统异常，请稍后重试！");
 		     }    
-		});	
+		});
+		
 	}
 }
-
+function reset(){
+	
+	$("#info-for-check").on("show",function(){
+		alert("xxxxx");
+		$("form :checkbox",this).removeAttr("checked");
+		$("form",this)[0].reset();
+	});
+}
 
 function findToIdBalanceDetail(detailId)
 {
@@ -515,7 +523,13 @@ Date.prototype.format = function(format) {
     return format;  
 }  
 
-
+function topage(page){
+	
+	var form = document.getElementById("myform");
+		form.page.value=page;
+	//form.action='viewEnterpriseEmployees?page='+page;
+	form.submit();
+}
 
 
 

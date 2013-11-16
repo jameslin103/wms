@@ -20,7 +20,6 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	public long getCountEmployees(Integer enterpriseId);
 	
 	
-	public void saveEnterprise(Enterprise enterprise);
 	
 	public List<Enterprise> getAllEnterprise(WmsUser user);
 	
@@ -70,7 +69,6 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	
 	
 	public BaseGrid findEnterprisePage(BaseGrid baseGrid);
-	
 	
 	
 }

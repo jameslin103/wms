@@ -100,7 +100,7 @@ public class Enterprise implements Serializable{
 	private Set<CustomBonus>   customBonus=new HashSet<CustomBonus>();
 
     
-	 @ManyToMany(fetch=FetchType.EAGER,cascade={CascadeType.REFRESH,CascadeType.MERGE,CascadeType.PERSIST})  
+	 @ManyToMany(fetch=FetchType.EAGER,cascade={CascadeType.REFRESH})  
 	  @JoinTable(name = "user_enterprise",
 			   inverseJoinColumns =@JoinColumn (name ="user_id" ),//被维护端外键
               joinColumns =  @JoinColumn (name ="enterprise_id" ))//维护端外键

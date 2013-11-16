@@ -10,10 +10,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache"/> 
+		<meta http-equiv="cache-control" content="no-cache"/> 
+		<meta http-equiv="expires" content="0"/>  
 	    <%@ include file="/help/public_css_js.jsp" %>
 	<script type="text/javascript">
 		function topage(page){
-			var form = document.getElementById("myform");
+			var form = document.getElementById("myform1");
 			form.page.value=page;
 			form.submit();
 		}
@@ -77,8 +81,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="viewCashIssue?budgetId=<s:property value="%{#request.budgetId}"/>">现金</a></li>
             <li class="right"><a href="downloadBankIssueSalary" class="btn btn-primary">下载Excel表格</a></li>
           </ul>
-          <!--
-
+		  <s:form action="viewSalaryWithBankPersonalNumber" method="post" id="myform1">
+		  	 <input type="hidden" name="page"/>
+		  	 <input type="hidden" name="budgetId" value="${budgetId}"/>
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
@@ -103,14 +108,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </s:iterator>
             </tbody>
           </table>
-		  -->
-		  		<s:hidden name="budgetId" value="%{#request.budgetId}"></s:hidden>
-		  		<table id="flexigrid" style="display: none;"></table>
-          
-				</div>
+          	<div class="pagination">
+				<%@ include file="../share/fenye.jsp" %>
 			</div>
+		  </s:form>
 		</div>
-
+		</div>
+				<!--<s:hidden name="budgetId" value="%{#request.budgetId}"></s:hidden>
+		  		<table id="flexigrid" style="display: none;"></table>
+				-->
+		</div>
 		<div id="footer"></div>
 	</div>
 </body>
