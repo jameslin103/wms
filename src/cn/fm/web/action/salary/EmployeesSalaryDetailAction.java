@@ -573,7 +573,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		StringBuffer jpql = new StringBuffer("");
 		List<Object> params = new ArrayList<Object>();
 			jpql.append(" o.budgettableId=?").append(params.size()+1);
-			params.add(50);
+			params.add(1);
 			
 			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
 			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
