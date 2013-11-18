@@ -56,13 +56,21 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	private Integer   pseudoDelete;
 	private Integer   departure;
+	private String    errorMessage;
+	
 	
 	 //工程目录下的模板文件名称
    private String employeeFileName;
 	
     
 	
-   @JSON(serialize=false)
+   public String getErrorMessage() {
+	   return errorMessage;
+   }
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+@JSON(serialize=false)
 	public EnterpriseEmployees getEnterpriseEmployeesJson()
 	{
 		return enterpriseEmployeesJson;
@@ -243,8 +251,13 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	    if(enterprise==null)return INPUT;
 		
 		if(enterpriseEmployees==null || enterpriseEmployees.getEmployeesName()==null || enterpriseEmployees.getEmployeesName().equals(""))return INPUT;
-			enterpriseEmployees.setEnterprise(enterprise);
-			enterpriseEmployeesService.save(enterpriseEmployees);
+		String[]filedate={"","",enterpriseEmployees.getEmployeesName(),"","","","","","",enterpriseEmployees.getCardNumber()};
+		errorMessage=enterpriseEmployeesService.isExitSameEnterpriseEmployees(filedate);
+		if(StringUtil.isEmpty(errorMessage))return INPUT;
+		String sex=(enterpriseEmployees.getEmployeesSex().toString()=="1")?"男":"女";
+		enterpriseEmployees.setEmployeesSex(sex);
+		enterpriseEmployees.setEnterprise(enterprise);
+		enterpriseEmployeesService.save(enterpriseEmployees);
 		
 		
 		return SUCCESS;
@@ -581,7 +594,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	public String findIdToEmployees()
 	{
-		enterpriseEmployeesJson=enterpriseEmployeesService.find(employeesId);
+		enterpriseEmployees=enterpriseEmployeesService.find(employeesId);
 		return "enterpriseEmployees";
 	}
 	

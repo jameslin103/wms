@@ -100,7 +100,7 @@ public class Enterprise implements Serializable{
 	private Set<CustomBonus>   customBonus=new HashSet<CustomBonus>();
 
     
-	 @ManyToMany(fetch=FetchType.EAGER,cascade={CascadeType.REFRESH})  
+	 @ManyToMany(cascade={CascadeType.REFRESH})  
 	  @JoinTable(name = "user_enterprise",
 			   inverseJoinColumns =@JoinColumn (name ="user_id" ),//被维护端外键
               joinColumns =  @JoinColumn (name ="enterprise_id" ))//维护端外键
@@ -111,7 +111,7 @@ public class Enterprise implements Serializable{
 		this.user = user;
 	}
 
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER ,mappedBy="enterprise")
+	@OneToMany(cascade={CascadeType.ALL},mappedBy="enterprise")
 	public Set<SalaryTemplate> getSalaryTemplates() {
 		return salaryTemplates;
 	}
@@ -327,7 +327,7 @@ public class Enterprise implements Serializable{
 	}
 	
 	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.MERGE},
-			fetch=FetchType.EAGER,mappedBy="enterprise")
+			mappedBy="enterprise")
 	public Set<CustomBonus> getCustomBonus() {
 		return customBonus;
 	}

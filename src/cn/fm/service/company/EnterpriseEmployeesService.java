@@ -154,6 +154,13 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 
 	
 	/**
+	 * 判断是否未离职的员工；重复上传数据
+	 * @param employees
+	 * @return
+	 */
+	public  String isExitSameEnterpriseEmployees(String[] fileDate);
+	
+	/**
 	 * 查看增减员的执行状态
 	 * @param enterpriseId
 	 * @return
@@ -167,8 +174,6 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 */
 	public void updateRecutionState(Integer enterpriseId,Integer recutionState,String reductionNote,Integer month,Integer year);
 	
-	
-	public  String isExitSameEnterpriseEmployees(String[] fileDate);
 	
 	
 	/**
