@@ -2,15 +2,18 @@ package cn.fm.web.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.lang.reflect.Type;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
-
+import org.hibernate.collection.internal.PersistentList;
+import org.hibernate.proxy.HibernateProxy;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.opensymphony.xwork2.ActionSupport;
 
 public abstract class BaseAction extends ActionSupport implements ServletRequestAware, ServletResponseAware{
@@ -64,4 +67,25 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
 		}
 	}
 	
+	/**
+	 * Object转换Json格式
+	 * @param obj
+	 * @return
+	 */
+	protected String toJson(Object obj){
+		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss");
+		gb.registerTypeHierarchyAdapter(HibernateProxy.class,new JsonSerializer<HibernateProxy>(){
+			public JsonElement serialize(HibernateProxy src,Type typeOfSrc, JsonSerializationContext context) {
+				return null;
+			}
+		});
+		gb.registerTypeHierarchyAdapter(PersistentList.class,new JsonSerializer<PersistentList>(){
+			public JsonElement serialize(PersistentList src,Type typeOfSrc, JsonSerializationContext context) {
+				return null;
+			}
+		});
+		String json = gb.create().toJson(obj);
+		System.out.println(json);
+		return json;
+	}
 }

@@ -178,6 +178,6 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 */
 	public List<Object[]>     getViewInsuranceWithMonthTotal(Integer year,Integer enterpriseId);
 	
-	
+	public EnterpriseEmployees findId(Integer employeesId);
 	
 }

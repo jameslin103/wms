@@ -1,9 +1,9 @@
 package cn.fm.bean.company;
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -15,9 +15,8 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 
-@SuppressWarnings("serial")
 @Entity
-public class EnterpriseEmployees implements Serializable{
+public class EnterpriseEmployees{
 	
 	private Integer employeesId;
 	
@@ -453,7 +452,7 @@ public class EnterpriseEmployees implements Serializable{
 		this.seriousDiseaseBase = seriousDiseaseBase;
 	}
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.REFRESH},fetch=FetchType.LAZY)
 	    @JoinColumn(name="enterpriseId")  
 	@NotFound(action=NotFoundAction.IGNORE)
 	public Enterprise getEnterprise() {

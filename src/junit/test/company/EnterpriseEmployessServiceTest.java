@@ -82,6 +82,9 @@ public class EnterpriseEmployessServiceTest {
 		enterpriseEmployees.setBank("民生银行");
 		enterpriseEmployees.setBankCardNumber("东街");
 		enterpriseEmployees.setCardNumber("82006549758469587");
+		Enterprise enterprise=new Enterprise();
+		enterprise.setEnterpriseId(1);
+		enterpriseEmployees.setEnterprise(enterprise);
 		enterpriseEmployeesService.save(enterpriseEmployees);
 	}
 	@Test

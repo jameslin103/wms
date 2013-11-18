@@ -53,8 +53,18 @@ form .input-container input[type="checkbox"] { margin: -5px 5px 0 0; margin-righ
 #container { width: 1170px; margin: 0 auto; }
  
 /*login 盒子*/
-#container .login { margin-top: 150px; padding: 25px; }
+#container .main { background: transparent url(../images/1.png) no-repeat  center top;      }
+
+#container .login {
+ margin-top: 180px; padding: 25px; 
+}
+
 #header .navbar { margin-bottom: 0px; }
+#header .navbar .brand { 
+	padding-left: 40px; background: transparent url(../images/2.png) no-repeat  left center; 
+	color: #901707;
+}
+
 #header .user { float: right; margin: 10px; }
 #header .user li { float: left; padding: 0px 10px; border-right: 1px solid gray; }
 #header .user li:last-child { border-right: none; }
