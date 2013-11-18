@@ -219,7 +219,15 @@
 												<s:property value="%{#emp.employeesName}" /> </a>
 										</td>
 										<td>
-											<s:property value="%{#emp.employeesSex}" />
+											<s:if test="#emp.employeesSex==1">
+												<span>男</span>
+											</s:if>
+											<s:elseif test="#emp.employeesSex==0">
+												<span>女</span>
+											</s:elseif>
+											<s:else>
+												<s:property value="%{#emp.employeesSex}" />
+											</s:else>
 										</td>
 										<td>
 											<s:if test="#emp.householdRegister==1">
@@ -298,7 +306,16 @@
 						                	<s:else></s:else>
 										</td>
 										<td>
-											<s:property value="%{#emp.paymentWay}" />
+											<s:if test="#emp.paymentWay==1">
+												<span>个人缴纳</span>
+											</s:if>
+											<s:elseif test="#emp.paymentWay==0">
+												<span>企业缴纳</span>
+											</s:elseif>
+											<s:else>
+												<s:property value="%{#emp.paymentWay}" />
+											</s:else>
+											
 										</td>
 										<td>
 											<s:set value="%{#emp.employeesId}" var="employeesId"></s:set>

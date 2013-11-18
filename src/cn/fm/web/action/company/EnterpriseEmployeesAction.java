@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.json.annotations.JSON;
+
 import com.opensymphony.xwork2.Preparable;
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
@@ -33,6 +35,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private EnterpriseService			enterpriseService;
 	
 	private EnterpriseEmployees  enterpriseEmployees;
+	private EnterpriseEmployees  enterpriseEmployeesJson;
 	
 	private String    endContractDeadline;
 	private String    startContractDeadline;
@@ -59,7 +62,14 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
     
 	
-    
+   @JSON(serialize=false)
+	public EnterpriseEmployees getEnterpriseEmployeesJson()
+	{
+		return enterpriseEmployeesJson;
+	}
+	public void setEnterpriseEmployeesJson(EnterpriseEmployees enterpriseEmployeesJson) {
+		this.enterpriseEmployeesJson = enterpriseEmployeesJson;
+	}
 	public Integer getDeparture()
 	{
 		return departure;
@@ -229,8 +239,11 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	public String  addEnterpriseEmployees()
 	{
+	    Enterprise enterprise=WebUtil.getEnterprise(request);
+	    if(enterprise==null)return INPUT;
 		
 		if(enterpriseEmployees==null || enterpriseEmployees.getEmployeesName()==null || enterpriseEmployees.getEmployeesName().equals(""))return INPUT;
+			enterpriseEmployees.setEnterprise(enterprise);
 			enterpriseEmployeesService.save(enterpriseEmployees);
 		
 		
@@ -568,8 +581,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	public String findIdToEmployees()
 	{
-		enterpriseEmployees=enterpriseEmployeesService.find(employeesId);
-		return SUCCESS;
+		enterpriseEmployeesJson=enterpriseEmployeesService.find(employeesId);
+		return "enterpriseEmployees";
 	}
 	
 	public String updateEnterpriseEmployees()

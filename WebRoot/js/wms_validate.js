@@ -187,9 +187,10 @@ function findIdToEmployees(employeesId)
 		    url:'findIdToEmployees',// 跳转到 action  
 		    data:{employeesId:employeesId},    
 		    type:'post',    
-		    cache:false,
+		    cache:true,
 		    dataType:'json',    
 		    success:function(data){
+		    	alert(data.enterpriseEmployeesJson.employeesSex);
 		    	var sex=(data.enterpriseEmployees.employeesSex=='男')?1:0;
 		    	var way=(data.enterpriseEmployees.paymentWay='企业')?0:1;
 		    	$("input[name='enterpriseEmployees.employeesId']").val(data.enterpriseEmployees.employeesId); 

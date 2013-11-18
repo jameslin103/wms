@@ -16,7 +16,7 @@
 		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="#">富民</a>
+					<a class="brand">富民派遣系统</a>
 					<ul class="nav">
 					<s:iterator value="#session.menuList" var="menu">
 						<s:if test="parentMenu.menuId==1">

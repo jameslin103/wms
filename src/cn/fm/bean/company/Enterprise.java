@@ -232,7 +232,7 @@ public class Enterprise implements Serializable{
 		this.count = count;
 	}
 
-	@OneToMany(cascade ={CascadeType.REFRESH, CascadeType.REMOVE,CascadeType.PERSIST},fetch=FetchType.EAGER , mappedBy = "enterprise")
+	@OneToMany(cascade ={CascadeType.REFRESH, CascadeType.REMOVE,CascadeType.PERSIST}, mappedBy = "enterprise")
 	@OrderBy("budgetId asc")
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBugetTables() {
 		return createSalaryBugetTables;
@@ -247,7 +247,7 @@ public class Enterprise implements Serializable{
 	        this.createSalaryBugetTables.add(createSalaryBudgetTable);  
 	 } 
 	
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "enterprise") 
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "enterprise") 
 	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<EnterpriseEmployees> getEnterpriseEmployees(){
 		return enterpriseEmployees;
@@ -256,13 +256,21 @@ public class Enterprise implements Serializable{
 	public void setEnterpriseEmployees(Set<EnterpriseEmployees> enterpriseEmployees) {
 		this.enterpriseEmployees = enterpriseEmployees;
 	}
+	
 	public void addEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees)
 	{
 		enterpriseEmployees.setEnterprise(this);
 		this.enterpriseEmployees.add(enterpriseEmployees);
 	}
 	
-	
+	public void romveEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees){
+		if(this.enterpriseEmployees.contains(enterpriseEmployees)){
+			this.enterpriseEmployees.remove(enterpriseEmployees);
+			
+		}
+		
+		
+	}
 	
 	/**
 	 * 添加企业负责人
@@ -330,7 +338,7 @@ public class Enterprise implements Serializable{
 	
 	
 	@OneToMany(cascade = {CascadeType.ALL},  
-                       fetch = FetchType.EAGER, mappedBy = "enterprise")
+                       fetch = FetchType.LAZY, mappedBy = "enterprise")
 	public Set<BalanceDetail> getBalanceDetail() {
 		return balanceDetail;
 	}

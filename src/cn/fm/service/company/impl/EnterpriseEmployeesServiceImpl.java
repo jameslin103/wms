@@ -1029,9 +1029,15 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 
 	}
 	
-	
-	
-	
-	
+	public EnterpriseEmployees findId(Integer employeesId){
+		try {
+			return (EnterpriseEmployees)em.createQuery("select e  from EnterpriseEmployees e where e.employeesId=?1")
+			.setParameter(1, employeesId).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	
 }
