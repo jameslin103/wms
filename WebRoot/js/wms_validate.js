@@ -266,6 +266,10 @@ function findToIdBalanceDetail(detailId)
 		     }    
 		});	
 	}
+	$("#add-role,#edit-user").on("hidden",function(){
+		$("form :checkbox",this).removeAttr("checked");
+		$("form",this)[0].reset();
+	});
 }
 
 

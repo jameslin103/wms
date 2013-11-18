@@ -114,9 +114,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  </s:form>
 		</div>
 		</div>
-				<!--<s:hidden name="budgetId" value="%{#request.budgetId}"></s:hidden>
+				<s:hidden name="budgetId" value="%{#request.budgetId}"></s:hidden>
 		  		<table id="flexigrid" style="display: none;"></table>
-				-->
+				
 		</div>
 		<div id="footer"></div>
 	</div>

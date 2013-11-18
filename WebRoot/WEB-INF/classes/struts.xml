@@ -180,7 +180,11 @@
             </result>
         </action> 
          <action name="findIdToEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="findIdToEmployees">
-            <result name="enterpriseEmployees" type="json"></result>
+            <result name="success" type="json">
+            	 <param name="includeProperties">
+            	 	
+            	 </param>
+            </result>
         </action> 
         <action name="updateEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="updateEnterpriseEmployees">
             <result name="success" type="redirectAction">

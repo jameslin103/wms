@@ -568,10 +568,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	public String findIdToEmployees()
 	{
-		enterpriseEmployees=new EnterpriseEmployees();
 		enterpriseEmployees=enterpriseEmployeesService.find(employeesId);
-		
-		return "enterpriseEmployees";
+		return SUCCESS;
 	}
 	
 	public String updateEnterpriseEmployees()

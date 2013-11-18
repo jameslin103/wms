@@ -112,7 +112,7 @@
 								<a href="batchExcelDataEmployee">批量录入</a>，
 							</li>
 							<li>
-								<a href="#info-for-check" data-toggle="modal" onclick="reset()">单个录入</a>
+								<a href="#add-employees-bnt" data-toggle="modal" onclick="reset()">单个录入</a>
 							</li>
 							<li>
 								&nbsp;/&nbsp;
@@ -302,7 +302,7 @@
 										</td>
 										<td>
 											<s:set value="%{#emp.employeesId}" var="employeesId"></s:set>
-											<a href="#info-for-check1" onclick="findIdToEmployees('${employeesId}')" data-toggle="modal">修改</a>
+											<a href="#edit-employees-bnt" onclick="findIdToEmployees('${employeesId}')" data-toggle="modal">修改</a>
 										</td>
 									</tr>
 								</tbody>
@@ -321,7 +321,7 @@
 
 		</div>
 		<!-- ================================== AddEnterpriseEmpoloyess ===============================-->
-		<div id="info-for-check" class="modal hide fade" tabindex="-1"
+		<div id="add-employees-bnt" class="modal hide fade" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -598,7 +598,7 @@
 		</div>
 	
 	<!-- ================================== updateEnterpriseEmpoloyess ===============================-->
-		<div id="info-for-check1" class="modal hide fade" tabindex="-1"	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="edit-employees-bnt" class="modal hide fade" tabindex="-1"	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					×
