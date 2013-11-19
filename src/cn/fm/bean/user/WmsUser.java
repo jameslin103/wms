@@ -59,7 +59,7 @@ public class WmsUser implements Serializable{
 	private Set<CreateSalaryBudgetTable> createSalaryBudgetTable=new HashSet<CreateSalaryBudgetTable>();
 	
 	 
-    @ManyToMany(cascade={CascadeType.REFRESH},mappedBy="user",fetch=FetchType.EAGER)          
+    @ManyToMany(cascade={CascadeType.REFRESH},mappedBy="user")          
 	public Set<Enterprise> getEnterprise() {
 		return enterprise;
 	}
@@ -68,7 +68,7 @@ public class WmsUser implements Serializable{
 		this.enterprise = enterprise;
 	}
 	
-	@OneToMany(cascade={CascadeType.REFRESH},mappedBy="user",fetch=FetchType.EAGER)
+	@OneToMany(cascade={CascadeType.REFRESH},mappedBy="user")
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBudgetTable() {
 		return createSalaryBudgetTable;
 	}

@@ -14,33 +14,7 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/help/public_css_js.jsp"%>
-<script>
-	$(document).ready(function(){
-		$("#add-role,#edit-role").on("hidden",function(){
-			$("form :checkbox",this).removeAttr("checked");
-			$("form",this)[0].reset();
-		});
-		$("#delete-role .btn-confirm").on("click",function(){
-			$("#delete-role form").submit();
-		});
-		$(".delete-role-btn").on("click",function(){
-			$("#delete-role form .roleId").val($(this).data("id"));
-		});
-		$(".edit-role-btn").on("click",function(){
-			$.getJSON("loadRole",{"role.roleId":$(this).data("id")}).success(function(data){
-				$("#edit-role .roleName").html(data.name);
-				$("#edit-role .roleId").val(data.roleId);
-				var menuIds = data.menuIds.split(",");
-				for(var i=0;i<menuIds.length;i++){
-					var menuId=menuIds[i];
-					$("#edit-role .menu-id").each(function(){
-						if($(this).val()==menuId)$(this).attr("checked",true);
-					});
-				}
-			});
-		});
-	});
-</script>
+
 </head>
 <body>
 	<div id="container">
@@ -101,7 +75,7 @@
 					<div class="input-container">
 						<label>角色名:</label><input type="text" name="role.name"></input>
 					</div>
-					<hr>
+					<hr/>
 					<s:iterator value="menuList" var="menu">
 						<s:if test="parentMenu.menuId==1">
 							<div class="input-container">

@@ -265,7 +265,10 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	
 	public String viewWorkersIncreased()
 	{
-		if(enterprise.getEnterpriseId()==null)return INPUT;
+	
+		
+		
+		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
 		
 		Enterprise enterprisePO=enterpriseService.find(enterprise.getEnterpriseId());
 		request.getSession().setAttribute("enterprise", enterprisePO);
@@ -275,24 +278,28 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		List<Object> params = new ArrayList<Object>();
 		if(enterprise.getEnterpriseId()!=null)
 		{
-			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(enterprise.getEnterpriseId());
-			jpql.append(" and (o.whetherGinseng=?").append(params.size()+1);
-			params.add(1);
-			jpql.append(" or o.reduction=?").append(params.size()+1);
+			
+			jpql.append("( o.ginsengProtectNature=?").append(params.size()+1);
 			params.add(1);
 			jpql.append(" or o.ginsengProtectNature=?").append(params.size()+1);
-			params.add(1);
-
-			jpql.append(" ) and o.pseudoDelete=?").append(params.size()+1);
+			params.add(2);
+			jpql.append(" or o.ginsengProtectNature=?").append(params.size()+1);
+			params.add(3);
+			jpql.append(" )and o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(enterprise.getEnterpriseId());
+			jpql.append("  and o.pseudoDelete=?").append(params.size()+1);
 			params.add(0);
+			jpql.append(" and o.departure=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and year(o.createDate)=?").append(params.size()+1);
+			params.add(Integer.parseInt(DateUtil.getCurrentTime().substring(0, 4)));
 			
 			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("pageView", pageView);
 			request.setAttribute("insuranceYear", DateUtil.getCurrentTime().substring(0, 4));
-			request.setAttribute("month", DateUtil.getCurrentTime().substring(5,7));
+
 		}
 		
 		return SUCCESS;

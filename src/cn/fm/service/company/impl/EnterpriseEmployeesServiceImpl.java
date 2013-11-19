@@ -184,11 +184,19 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			if(same_carNumber>0 && same_carNumber>0)
 			{
 				String endDate=DateUtil.dateToString(endContractDeadline_PO,DateUtil.FORMAT_DATE);
-				String currentDate=DateUtil.getCurrentTime();
-				if(DateUtil.timeCompare(currentDate,endDate)==-1){
-					message=empName+"，已在，"+fullName+"，未离职，合同到期为，"+endDate;
+				if(endDate!=null && !endDate.equals(""))
+				{
+					String currentDate=DateUtil.getCurrentTime();
+					if(DateUtil.timeCompare(currentDate,endDate)==-1)
+					{
+						message=empName+"，已在，"+fullName+"，未离职，合同到期为，"+endDate;
+					}
+				}else{
+						message=empName+"，已在，"+fullName+"，未离职";
 				}
+				
 			}
+				
 			if(isSameName>0 && same_carNumber==0)
 			{
 				if(StringUtil.isEmpty(empCarNumber)){
@@ -230,26 +238,32 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		employees.setStartContractDeadline(data[16].toString()==null?null:DateUtil.StringToDate(data[16], DateUtil.FORMAT_DATE));
 		employees.setEndContractDeadline(data[17].toString()==null?null:DateUtil.StringToDate(data[17], DateUtil.FORMAT_DATE));
 		employees.setServiceCost(data[18].toString().equals("")?null:Double.valueOf(data[18]));
-		employees.setGinsengProtectNature(data[19].toString()==null?null:(data[19].toString().equals(Constant.WMS_ZENG_YUAN)?1:2));
-		employees.setWhetherGinseng(data[20]==null?0:data[20].equals(Constant.WMS_YES)?1:0);
-		employees.setCinsengDate(data[21].toString()==null?null:DateUtil.StringToDate(data[21], DateUtil.FORMAT_DATE));
-		/*社保 */
-		employees.setHealthCare(data[22].toString()==null?"":data[22].toString());
-		/*医保*/
-		employees.setSociaSecurity(data[23].toString()==null?null:data[23].toString());
-		/*公积金*/
-		employees.setAccumulationFund(data[24].toString()==null?null:data[24]);
-		/*大病统筹*/
-		employees.setSeriousDisease(data[25].toString()==null?null:data[25].toString());
+	
+		//判断是否参保
+		int ginseng=data[20]==null?0:data[20].equals(Constant.WMS_YES)?1:0;
+		employees.setWhetherGinseng(ginseng);
+		if(ginseng==1)
+		{
+			employees.setGinsengProtectNature(data[19].toString()==null?null:(data[19].toString().equals(Constant.WMS_ZENG_YUAN)?1:2));
+			employees.setCinsengDate(data[21].toString()==null?null:DateUtil.StringToDate(data[21], DateUtil.FORMAT_DATE));
+			/*社保 */
+			employees.setHealthCare(data[22].toString()==null?"":data[22].toString());
+			/*医保*/
+			employees.setSociaSecurity(data[23].toString()==null?null:data[23].toString());
+			/*公积金*/
+			employees.setAccumulationFund(data[24].toString()==null?null:data[24]);
+		}
 		
-		employees.setBase(data[26].toString()==null?null:data[26].equals(Constant.WMS_YES)?1:0);
+		/*大病统筹*/
+		employees.setSeriousDisease(data[25]==null?null:data[25].toString());
+		employees.setBase(data[26]==null?null:data[26].equals(Constant.WMS_YES)?1:0);
 		employees.setSocialInsurance(data[27].toString().equals("")?null:Double.valueOf(data[27]));
 		employees.setFertilityInsurance(data[28].toString().equals("")?null:Double.valueOf(data[28]));
 		employees.setInductrialBase(data[29].toString().equals("")?null:Double.valueOf(data[29]));
 		employees.setBasicMedical(data[30].toString().equals("")?null:Double.valueOf(data[30]));
 		employees.setHousingFund(data[31].toString().equals("")?null:Double.valueOf(data[31]));
 		employees.setSeriousDiseaseBase(data[32].toString().equals("")?null:Double.valueOf(data[32]));
-		employees.setPaymentWay(data[33].toString());
+		employees.setPaymentWay(data[33]==null?null:data[33].equals(Constant.WMS_YES)?1:0);
 		employees.setDeparture(0);
 		employees.setPseudoDelete(0);
 		return employees;
@@ -341,8 +355,10 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				" and e.ginsengProtectNature=1 " +
 				" and e.departure=0" +
 				" and e.reduction=0 " +
+				" and year(e.createDate)=?2" +
 				" and e.pseudoDelete=0");
 		query.setParameter(1, enterpriseId);
+		query.setParameter(2, Integer.parseInt(DateUtil.getCurrentTime().substring(0, 4)));
 		return (Long)query.getSingleResult();
 		
 	}
@@ -357,8 +373,10 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				" and e.ginsengProtectNature=2  " +
 				" and e.departure=0 " +
 				" and e.reduction=0 " +
+				" and year(e.createDate)=?2" +
 				" and e.pseudoDelete=0");
 		query.setParameter(1, enterpriseId);
+		query.setParameter(2, Integer.parseInt(DateUtil.getCurrentTime().substring(0, 4)));
 		return (Long)query.getSingleResult();
 		
 	}
@@ -369,12 +387,14 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 */
 	public long ginsengPersonnel(Integer enterpriseId){
 		Query query=em.createQuery("select count(e) from  EnterpriseEmployees e " +
-				"where e.enterprise.enterpriseId=?1 " +
-				"and e.whetherGinseng=1" +
+				" where e.enterprise.enterpriseId=?1 " +
+				" and e.whetherGinseng=1" +
 				" and e.departure=0 " +
 				" and e.reduction=0 " +
+				" and year(e.createDate)=?2" +
 				" and e.pseudoDelete=0");
 		query.setParameter(1, enterpriseId);
+		query.setParameter(2, Integer.parseInt(DateUtil.getCurrentTime().substring(0, 4)));
 		return (Long)query.getSingleResult();
 		
 	}
@@ -389,10 +409,12 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			Query query=em.createQuery("select count(e) from  EnterpriseEmployees e " +
 					"where e.enterprise.enterpriseId=?1 " +
 					" and e.departure=0 " +
-					" and e.reduction=1 " +
+					" and e.ginsengProtectNature=3 " +
+					" and year(e.createDate)=?2" +
 					" and e.pseudoDelete=0");
 			query.setParameter(1, enterpriseId);
-			return (Long)query.getSingleResult();
+			query.setParameter(2, Integer.parseInt(DateUtil.getCurrentTime().substring(0, 4)));
+			return (Long)(query.getSingleResult())==0?0l:(Long)query.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;

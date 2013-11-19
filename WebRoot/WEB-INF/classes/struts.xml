@@ -181,11 +181,48 @@
             </result>
         </action> 
          <action name="findIdToEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="findIdToEmployees">
-            <result name="enterpriseEmployees" type="json">
+            <result name="success" type="json">
+            	 <param name="includeProperties">
+            	 	enterpriseEmployeesJson\.employeesId,
+            	 	enterpriseEmployeesJson\.contractNo,
+            	 	enterpriseEmployeesJson\.employeesName,
+            	 	enterpriseEmployeesJson\.cardNumber,
+            	 	enterpriseEmployeesJson\.employeesSex,
+            	 	enterpriseEmployeesJson\.householdRegister,
+            	 	enterpriseEmployeesJson\.photo,
+            	 	enterpriseEmployeesJson\.phone,
+            	 	enterpriseEmployeesJson\.homeAddress,
+            	 	enterpriseEmployeesJson\.bankCardNumber,
+            	 	enterpriseEmployeesJson\.bank,
+            	 	enterpriseEmployeesJson\.nativePlace,
+            	 	enterpriseEmployeesJson\.industry,
+            	 	enterpriseEmployeesJson\.jobs,
+            	 	enterpriseEmployeesJson\.maritalStatus,
+            	 	enterpriseEmployeesJson\.levelEducation,
+            	 	enterpriseEmployeesJson\.startContractDeadline,
+            	 	enterpriseEmployeesJson\.endContractDeadline,
+            	 	enterpriseEmployeesJson\.whetherGinseng,
+            	 	enterpriseEmployeesJson\.sociaSecurity,
+            	 	enterpriseEmployeesJson\.ginsengProtectNature,
+            	 	enterpriseEmployeesJson\.cinsengDate,
+            	 	enterpriseEmployeesJson\.base,
+            	 	enterpriseEmployeesJson\.socialInsurance,
+            	 	enterpriseEmployeesJson\.fertilityInsurance,
+            	 	enterpriseEmployeesJson\.inductrialBase,
+            	 	enterpriseEmployeesJson\.basicMedical,
+            	 	enterpriseEmployeesJson\.housingFund,
+            	 	enterpriseEmployeesJson\.paymentWay,
+            	 	enterpriseEmployeesJson\.pseudoDelete,
+            	 	enterpriseEmployeesJson\.serviceCost
+            	 	
+            	 </param>   
             </result>
         </action> 
         <action name="updateEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="updateEnterpriseEmployees">
             <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterpriseEmployees</param>
+            </result>
+            <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterpriseEmployees</param>
             </result>
         </action>
@@ -378,8 +415,8 @@
         </action>
         <action name="viewWorkersIncreased" class="cn.fm.web.action.company.EnterpriseAction" method="viewWorkersIncreased">
             <result name="success">company/insurance-with-employee-list.jsp</result>
-            <result name="input" type="redirectAction">
-            	<param name="actionName">toBeResponsibleEnterprise</param>
+            <result name="input">
+            	company/insurance-with-employee-list.jsp
             </result>
         </action>
       

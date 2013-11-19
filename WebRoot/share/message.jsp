@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 
-<%@include file="/help/public_css_js.jsp" %>
+
 <html>
 <link rel="stylesheet" href="/css/vip.css" type="text/css">
 <body>
@@ -23,13 +23,13 @@
 					<table width="273" border="0" cellpadding="0" cellspacing="10" bgcolor="#FFFFFF">
 					  <tr>
 						<td width="253" height="60" align="center" valign="bottom" class="font12">
-								<s:property value="%{#message}" escapeXml="false"/>						
+								${message}	
 						</td>
 					  </tr>
 					  <tr>
 						<td height="80" align="center" valign="middle"><font size="2"><span class="content">
 						 <input type="button" name="sure" value="确 定"
-						 onclick="javascript:window.location.href='%{#urladdress}'"
+						 onclick="javascript:window.location.href='${urladdress}'"
 						 >
 						</span></font></td>
 					  </tr>

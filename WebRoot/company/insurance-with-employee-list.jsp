@@ -82,7 +82,10 @@
 								<s:a href="downloadInsuranceWithEmployeeList" cssClass="btn btn-primary" >下载社医保办理与减员表</s:a>
 							</li>
 							<li>
-								<s:property value="%{#request.insuranceYear}"/>年<s:property value="%{#request.month}"/>月
+								<s:property value="%{#request.insuranceYear}"/>年
+								<s:if test="#request.month!=null">
+									<s:property value="%{#request.month}"/>月
+								</s:if>
 							</li>
 							<li>
 								&nbsp;/&nbsp;

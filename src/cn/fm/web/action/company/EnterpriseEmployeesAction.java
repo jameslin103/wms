@@ -12,8 +12,6 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.json.annotations.JSON;
-
 import com.opensymphony.xwork2.Preparable;
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
@@ -70,7 +68,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
-@JSON(serialize=false)
 	public EnterpriseEmployees getEnterpriseEmployeesJson()
 	{
 		return enterpriseEmployeesJson;
@@ -251,16 +248,21 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	    if(enterprise==null)return INPUT;
 		
 		if(enterpriseEmployees==null || enterpriseEmployees.getEmployeesName()==null || enterpriseEmployees.getEmployeesName().equals(""))return INPUT;
-		String[]filedate={"","",enterpriseEmployees.getEmployeesName(),"","","","","","",enterpriseEmployees.getCardNumber()};
+		String[]filedate={"","",enterpriseEmployees.getEmployeesName(),"","","","","","","",enterpriseEmployees.getCardNumber()};
 		errorMessage=enterpriseEmployeesService.isExitSameEnterpriseEmployees(filedate);
-		if(StringUtil.isEmpty(errorMessage))return INPUT;
+		if(!StringUtil.isEmpty(errorMessage)){
+			request.setAttribute("message", errorMessage);
+			request.setAttribute("urladdress", "viewEnterpriseEmployees");
+			return "message";
+		}
 		String sex=(enterpriseEmployees.getEmployeesSex().toString()=="1")?"男":"女";
 		enterpriseEmployees.setEmployeesSex(sex);
 		enterpriseEmployees.setEnterprise(enterprise);
 		enterpriseEmployeesService.save(enterpriseEmployees);
+		request.setAttribute("message", "添加成功!");
+		request.setAttribute("urladdress", "viewEnterpriseEmployees");
 		
-		
-		return SUCCESS;
+		return "message";
 	}
 	/**
 	 * excel批量导入
@@ -492,6 +494,11 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		if(StringUtil.isEmpty(insuranceYear))
 		{
 			this.insuranceYear=DateUtil.getCurrentTime().substring(0, 4);
+			
+		}if(month==null){
+			
+			this.month=Integer.parseInt(DateUtil.getCurrentTime().substring(5, 7));
+			
 		}else{
 			this.insuranceYear=insuranceYear.substring(0,4);
 		}
@@ -594,8 +601,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	public String findIdToEmployees()
 	{
-		enterpriseEmployees=enterpriseEmployeesService.find(employeesId);
-		return "enterpriseEmployees";
+		enterpriseEmployeesJson=enterpriseEmployeesService.find(employeesId);
+		return SUCCESS;
 	}
 	
 	public String updateEnterpriseEmployees()
@@ -603,9 +610,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		if(enterpriseEmployees==null)return SUCCESS;
 		
 		String sex=Integer.parseInt(enterpriseEmployees.getEmployeesSex())==1?"男":"女";
-		String paymentWay= Integer.parseInt(enterpriseEmployees.getPaymentWay())==1?"个人":"企业";
 		enterpriseEmployees.setEmployeesSex(sex);
-		enterpriseEmployees.setPaymentWay(paymentWay);
 		enterpriseEmployeesService.updateEnterpriseEmployees(enterpriseEmployees);
 		return SUCCESS;
 	}

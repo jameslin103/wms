@@ -83,6 +83,9 @@ public class EnterpriseEmployees{
 	/*是否参保  0否 1是*/
 	private  Integer whetherGinseng=0;
 	
+	/*参保性质  1增员  2续保  3减员  */
+	private Integer ginsengProtectNature;
+	
 	/*医保*/
 	private String  sociaSecurity;
 	
@@ -97,10 +100,6 @@ public class EnterpriseEmployees{
 	
 	/*大病统筹基数*/
 	private Double  seriousDiseaseBase;
-	
-	
-	/*参保性质  1增员  2续保  3减员  */
-	private Integer ginsengProtectNature;
  
 	/*参保日期*/
 	private Date  cinsengDate;
@@ -109,7 +108,7 @@ public class EnterpriseEmployees{
 	private Integer  base;
 	
 	/*个税缴纳方式  0个人缴纳，  1企业缴纳*/
-	private String  paymentWay;
+	private Integer  paymentWay;
 	
 	/*工伤基数*/
 	private Double  inductrialBase;
@@ -366,10 +365,10 @@ public class EnterpriseEmployees{
 		this.base = base;
 	}
 	@Column(length=10)
-	public String getPaymentWay() {
+	public Integer getPaymentWay() {
 		return paymentWay;
 	}
-	public void setPaymentWay(String paymentWay) {
+	public void setPaymentWay(Integer paymentWay) {
 		this.paymentWay = paymentWay;
 	}
 	@Column(length=1)

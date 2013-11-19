@@ -326,7 +326,7 @@ public class Enterprise implements Serializable{
 		this.reductionTotal = reductionTotal;
 	}
 	
-	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.MERGE},
+	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.PERSIST},
 			mappedBy="enterprise")
 	public Set<CustomBonus> getCustomBonus() {
 		return customBonus;
@@ -337,9 +337,8 @@ public class Enterprise implements Serializable{
 	
 	
 	
-	@OneToMany(cascade = {CascadeType.ALL},  
-                       fetch = FetchType.LAZY, mappedBy = "enterprise")
-	public Set<BalanceDetail> getBalanceDetail() {
+	@OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.LAZY, mappedBy = "enterprise")
+	public Set<BalanceDetail> getBalanceDetail(){
 		return balanceDetail;
 	}
 	public void setBalanceDetail(Set<BalanceDetail> balanceDetail) {

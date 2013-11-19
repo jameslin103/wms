@@ -25,8 +25,8 @@
 			$("#submit").click(function()
 			{
 				
-				var name=$("#employeesName")val();
-				var carnumber=$("#carnumber")val();
+				var name=$("#employeesName").val();
+				var carnumber=$("#carnumber").val();
 				if(name=="" && carnumber=="")
 				{
 					$("#name").text("姓名必填项!");
@@ -56,7 +56,6 @@
 		</script>
 	</head>
 	<body>
-
 		<div id="container">
 			<div id="header">
 				<jsp:include page="../layout/header.jsp" />
@@ -121,16 +120,16 @@
 								查看：
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees?insurance=1">参保</a>，
+								<a href="viewEnterpriseEmployees?insurance=1" class="choose1">参保</a>，
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees?insurance=0">未参保</a>，
+								<a href="viewEnterpriseEmployees?insurance=0" class="choose2">未参保</a>，
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees?departure=1">离职员工</a>，
+								<a href="viewEnterpriseEmployees?departure=1" class="choose3">离职员工</a>，
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees?pseudoDelete=1">隐藏信息</a>
+								<a href="viewEnterpriseEmployees?pseudoDelete=1" class="choose4">隐藏信息</a>
 							</li>
 							<li class="right">
 								<a href="exportEmployeesExcel" class="btn btn-primary">下载全体在职员工信息</a>
@@ -145,6 +144,10 @@
 						</ul>
 					<s:form action="viewEnterpriseEmployees" method="post" id="myform">
 						 <input type="hidden" name="page"/>
+						 <input type="hidden" name="pseudoDelete"/>
+						 <input type="hidden" name="departure"/>
+						 <input type="hidden" name="insurance"/>
+						 <input type="hidden" name="departure"/>
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -589,7 +592,9 @@
 							<label>
 								状态?
 							</label>
-							<input type="checkbox" name="enterpriseEmployees.pseudoDelete" value="1" />
+							<input type="radio" name="enterpriseEmployees.pseudoDelete" value="0" checked="checked"/>
+							显示
+							<input type="radio" name="enterpriseEmployees.pseudoDelete" value="1"/>
 							隐藏
 						</div>
 
@@ -857,7 +862,9 @@
 							<label>
 								状态?
 							</label>
-							<input type="checkbox" name="enterpriseEmployees.pseudoDelete" value="0" />
+							<input type="radio" name="enterpriseEmployees.pseudoDelete" value="0" checked="checked"/>
+							显示
+							<input type="radio" name="enterpriseEmployees.pseudoDelete" value="1"/>
 							隐藏
 						</div>
 
@@ -881,10 +888,6 @@
 				</button>
 			</div>
 		</div>
-	
-	
-	
-	
 	</body>
 
 </html>

@@ -176,7 +176,7 @@ function findIdToBaseTax(baseId)
 		     }    
 		});	
 	}
-}
+	}
 
 
 
@@ -187,42 +187,41 @@ function findIdToEmployees(employeesId)
 		    url:'findIdToEmployees',// 跳转到 action  
 		    data:{employeesId:employeesId},    
 		    type:'post',    
-		    cache:true,
 		    dataType:'json',    
 		    success:function(data){
-		    	var sex=(data.enterpriseEmployees.employeesSex=='男')?1:0;
-		    	var way=(data.enterpriseEmployees.paymentWay='企业')?0:1;
-		    	$("input[name='enterpriseEmployees.employeesId']").val(data.enterpriseEmployees.employeesId); 
-		    	$("input[name='enterpriseEmployees.contractNo']").val(data.enterpriseEmployees.contractNo);  
-		    	$("input[name='enterpriseEmployees.employeesName']").val(data.enterpriseEmployees.employeesName); 
-		    	$("input[name='enterpriseEmployees.cardNumber']").val(data.enterpriseEmployees.cardNumber); 
+		    	
+		    	var sex=(data.enterpriseEmployeesJson.employeesSex=='男')?1:0;
+		    	$("input[name='enterpriseEmployees.employeesId']").val(employeesId); 
+		    	$("input[name='enterpriseEmployees.contractNo']").val(data.enterpriseEmployeesJson.contractNo);  
+		    	$("input[name='enterpriseEmployees.employeesName']").val(data.enterpriseEmployeesJson.employeesName); 
+		    	$("input[name='enterpriseEmployees.cardNumber']").val(data.enterpriseEmployeesJson.cardNumber); 
 		    	$("input[name='enterpriseEmployees.employeesSex'][value="+sex+"]").attr("checked",true);
-		    	$("input[name='enterpriseEmployees.householdRegister'][value="+data.enterpriseEmployees.householdRegister+"]").attr("checked",true);
-		    	$("input[name='enterpriseEmployees.photo'][value="+data.enterpriseEmployees.photo+"]").attr("checked",true);
-		    	$("input[name='enterpriseEmployees.phone']").val(data.enterpriseEmployees.phone); 
-		    	$("input[name='enterpriseEmployees.homeAddress']").val(data.enterpriseEmployees.homeAddress); 
-		    	$("input[name='enterpriseEmployees.bankCardNumber']").val(data.enterpriseEmployees.bankCardNumber); 
-		    	$("input[name='enterpriseEmployees.bank']").val(data.enterpriseEmployees.bank); 
-		    	$("input[name='enterpriseEmployees.nativePlace']").val(data.enterpriseEmployees.nativePlace); 
-		    	$("input[name='enterpriseEmployees.industry']").val(data.enterpriseEmployees.industry); 
-		    	$("input[name='enterpriseEmployees.jobs']").val(data.enterpriseEmployees.jobs); 
-		    	$("input[name='enterpriseEmployees.maritalStatus'][value="+data.enterpriseEmployees.maritalStatus+"]").attr("checked",true);
-		    	$("input[name='enterpriseEmployees.levelEducation']").val(data.enterpriseEmployees.levelEducation); 
-		    	$("input[name='enterpriseEmployees.startContractDeadline']").val(data.enterpriseEmployees.startContractDeadline); 
-		    	$("input[name='enterpriseEmployees.endContractDeadline']").val(data.enterpriseEmployees.endContractDeadline); 
-		    	$("input[name='enterpriseEmployees.whetherGinseng']").val(data.enterpriseEmployees.whetherGinseng); 
-		    	$("input[name='enterpriseEmployees.sociaSecurity']").val(data.enterpriseEmployees.sociaSecurity); 
-		    	$("input[name='enterpriseEmployees.ginsengProtectNature']").val(data.enterpriseEmployees.ginsengProtectNature); 
-		    	$("input[name='enterpriseEmployees.cinsengDate']").val(data.enterpriseEmployees.cinsengDate); 
-		    	$("input[name='enterpriseEmployees.base'][value="+data.enterpriseEmployees.base+"]").attr("checked",true);
-		    	$("input[name='enterpriseEmployees.socialInsurance']").val(data.enterpriseEmployees.socialInsurance); 
-		    	$("input[name='enterpriseEmployees.fertilityInsurance']").val(data.enterpriseEmployees.fertilityInsurance);
-		    	$("input[name='enterpriseEmployees.inductrialBase']").val(data.enterpriseEmployees.inductrialBase); 
-		    	$("input[name='enterpriseEmployees.basicMedical']").val(data.enterpriseEmployees.basicMedical); 
-		    	$("input[name='enterpriseEmployees.housingFund']").val(data.enterpriseEmployees.housingFund); 
-		    	$("input[name='enterpriseEmployees.paymentWay'][value="+way+"]").attr("checked",true) 
-		    	$("input[name='enterpriseEmployees.pseudoDelete'][value="+data.enterpriseEmployees.pseudoDelete+"]").attr("checked",true); 
-		    	$("input[name='enterpriseEmployees.serviceCost']").val(data.enterpriseEmployees.serviceCost); 
+		    	$("input[name='enterpriseEmployees.householdRegister'][value="+data.enterpriseEmployeesJson.householdRegister+"]").attr("checked",true);
+		    	$("input[name='enterpriseEmployees.photo'][value="+data.enterpriseEmployeesJson.photo+"]").attr("checked",true);
+		    	$("input[name='enterpriseEmployees.phone']").val(data.enterpriseEmployeesJson.phone); 
+		    	$("input[name='enterpriseEmployees.homeAddress']").val(data.enterpriseEmployeesJson.homeAddress); 
+		    	$("input[name='enterpriseEmployees.bankCardNumber']").val(data.enterpriseEmployeesJson.bankCardNumber); 
+		    	$("input[name='enterpriseEmployees.bank']").val(data.enterpriseEmployeesJson.bank); 
+		    	$("input[name='enterpriseEmployees.nativePlace']").val(data.enterpriseEmployeesJson.nativePlace); 
+		    	$("input[name='enterpriseEmployees.industry']").val(data.enterpriseEmployeesJson.industry); 
+		    	$("input[name='enterpriseEmployees.jobs']").val(data.enterpriseEmployeesJson.jobs); 
+		    	$("input[name='enterpriseEmployees.maritalStatus'][value="+data.enterpriseEmployeesJson.maritalStatus+"]").attr("checked",true);
+		    	$("input[name='enterpriseEmployees.levelEducation']").val(data.enterpriseEmployeesJson.levelEducation); 
+		    	$("input[name='enterpriseEmployees.startContractDeadline']").val(data.enterpriseEmployeesJson.startContractDeadline); 
+		    	$("input[name='enterpriseEmployees.endContractDeadline']").val(data.enterpriseEmployeesJson.endContractDeadline); 
+		    	$("input[name='enterpriseEmployees.whetherGinseng']").val(data.enterpriseEmployeesJson.whetherGinseng); 
+		    	$("input[name='enterpriseEmployees.sociaSecurity']").val(data.enterpriseEmployeesJson.sociaSecurity); 
+		    	$("input[name='enterpriseEmployees.ginsengProtectNature']").val(data.enterpriseEmployeesJson.ginsengProtectNature); 
+		    	$("input[name='enterpriseEmployees.cinsengDate']").val(data.enterpriseEmployeesJson.cinsengDate); 
+		    	$("input[name='enterpriseEmployees.base'][value="+data.enterpriseEmployeesJson.base+"]").attr("checked",true);
+		    	$("input[name='enterpriseEmployees.socialInsurance']").val(data.enterpriseEmployeesJson.socialInsurance); 
+		    	$("input[name='enterpriseEmployees.fertilityInsurance']").val(data.enterpriseEmployeesJson.fertilityInsurance);
+		    	$("input[name='enterpriseEmployees.inductrialBase']").val(data.enterpriseEmployeesJson.inductrialBase); 
+		    	$("input[name='enterpriseEmployees.basicMedical']").val(data.enterpriseEmployeesJson.basicMedical); 
+		    	$("input[name='enterpriseEmployees.housingFund']").val(data.enterpriseEmployeesJson.housingFund); 
+		    	$("input[name='enterpriseEmployees.paymentWay'][value="+data.enterpriseEmployeesJson.paymentWay+"]").attr("checked",true) 
+		    	$("input[name='enterpriseEmployees.pseudoDelete'][value="+data.enterpriseEmployeesJson.pseudoDelete+"]").attr("checked",true); 
+		    	$("input[name='enterpriseEmployees.serviceCost']").val(data.enterpriseEmployeesJson.serviceCost); 
 		    	reset();
 		    },    
 		     error : function() {  
@@ -530,10 +529,47 @@ Date.prototype.format = function(format) {
 function topage(page){
 	
 	var form = document.getElementById("myform");
-		form.page.value=page;
-	//form.action='viewEnterpriseEmployees?page='+page;
-	form.submit();
+	form.page.value=page;
+//		$(".choose1").click(function(){
+//			form.insurance=1;
+//		});
+//		$(".choose2").click(function(){
+//			form.insurance=0;
+//		});
+//		$(".choose3").click(function(){
+//			form.departure=1;
+//		});
+//		$(".choose4").click(function(){
+//			form.pseudoDelete=1;
+//		});
+		//form.action='viewEnterpriseEmployees?page='+page;
+		form.submit();
 }
-
+//权限角色管理
+$(document).ready(function(){
+	$("#add-role,#edit-role").on("hidden",function(){
+		$("form :checkbox",this).removeAttr("checked");
+		$("form",this)[0].reset();
+	});
+	$("#delete-role .btn-confirm").on("click",function(){
+		$("#delete-role form").submit();
+	});
+	$(".delete-role-btn").on("click",function(){
+		$("#delete-role form .roleId").val($(this).data("id"));
+	});
+	$(".edit-role-btn").on("click",function(){
+		$.getJSON("loadRole",{"role.roleId":$(this).data("id")}).success(function(data){
+			$("#edit-role .roleName").html(data.name);
+			$("#edit-role .roleId").val(data.roleId);
+			var menuIds = data.menuIds.split(",");
+			for(var i=0;i<menuIds.length;i++){
+				var menuId=menuIds[i];
+				$("#edit-role .menu-id").each(function(){
+					if($(this).val()==menuId)$(this).attr("checked",true);
+				});
+			}
+		});
+	});
+});
 
 

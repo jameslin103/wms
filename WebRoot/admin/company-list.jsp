@@ -38,8 +38,7 @@
 								<a href="#info-for-check1" data-toggle="modal">添加新企业</a>
 							</li>
 						</ul>
-						<!-- ======================================According to  Enterprise==================================== --><!--
-
+						<!-- ======================================According to  Enterprise==================================== -->
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -95,16 +94,14 @@
 									</tr>
 								</tbody>
 							</s:iterator>
-						</table>-->
+						</table>
 						<!-- ================================================End According to  Enterprise=========================== -->
-						<table id="enterpriseflexigrid" style="display:none;">
-						
-						
+						<!--<table id="enterpriseflexigrid" style="display:none;">
 						</table>
 					
 					
 					
-					</div>
+					--></div>
 				</div>
 			</div>
 
@@ -122,6 +119,7 @@
 				</h3>
 			</div>
 			<!-- ==================================addEnterprise====================================== -->
+			
 			<div class="modal-body">
 				<s:form action="addEnterprise" method="post">
 					<div class="row-fluid">
