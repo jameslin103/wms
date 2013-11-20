@@ -126,7 +126,7 @@
                 <td>个人</td>
               </tr>
             </thead>  
-            <s:iterator value="#request.employeesSalaryDetail" id="employeesSalaryDetail">
+            <s:iterator value="#request.pageView.records" id="employeesSalaryDetail">
             <thbody >
               <tr>
                 <td><s:property value="%{#employeesSalaryDetail.employeesName}"/></td>
@@ -196,17 +196,17 @@
 
           <div class="input-container">
             <label>工资</label>
-            <input type="text" name="employeesSalaryDetail.wage">
+            <input type="text" name="employeesSalaryDetail.wage"/>
           </div>
 
           <div class="input-container">
             <label>奖金</label>
-            <input type="text" name="employeesSalaryDetail.bonus">
+            <input type="text" name="employeesSalaryDetail.bonus"/>
           </div>
 
           <div class="input-container">
             <label>补贴</label>
-            <input type="text" name="employeesSalaryDetail.subsidies">
+            <input type="text" name="employeesSalaryDetail.subsidies"/>
           </div>
           
           <div class="input-container">

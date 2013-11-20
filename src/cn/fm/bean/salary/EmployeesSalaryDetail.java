@@ -4,12 +4,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.company.EnterpriseEmployees;
 
 
 @SuppressWarnings("serial")
@@ -107,13 +113,7 @@ public class EmployeesSalaryDetail implements Serializable
 	
 	/*生成哪月工资？*/
 	private Date    salaryDate;
-	
-	@Column(length=80)
-	private Integer     enterpriseId;
-	
-	@Column(length=80)
-	private Integer     empolyessId;
-	
+
 	private Date        createDate=new Date();
 	
 	private Integer     budgettableId;
@@ -122,6 +122,10 @@ public class EmployeesSalaryDetail implements Serializable
 	private String  cardNumber;
 	
 	private String  bankCardNumber;
+	
+	private EnterpriseEmployees    enterpriseEmployees;
+	
+	private Enterprise			   enterprise;
 	
 	
 	@Column(length=20)
@@ -407,22 +411,6 @@ public class EmployeesSalaryDetail implements Serializable
 		this.note = note;
 	}
 
-	public Integer getEnterpriseId() {
-		return enterpriseId;
-	}
-
-	public void setEnterpriseId(Integer enterpriseId) {
-		this.enterpriseId = enterpriseId;
-	}
-
-	public Integer getEmpolyessId() {
-		return empolyessId;
-	}
-
-	public void setEmpolyessId(Integer empolyessId) {
-		this.empolyessId = empolyessId;
-	}
-
 	public String getEmployeesName() {
 		return employeesName;
 	}
@@ -438,7 +426,24 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setSalaryDate(Date salaryDate) {
 		this.salaryDate = salaryDate;
 	}
-	
 
+	@ManyToOne(cascade={CascadeType.REFRESH})
+	@JoinColumn(name="employees_id")
+	public EnterpriseEmployees getEnterpriseEmployees() {
+		return enterpriseEmployees;
+	}
+
+	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
+		this.enterpriseEmployees = enterpriseEmployees;
+	}
+	@ManyToOne(cascade={CascadeType.REFRESH})
+	@JoinColumn(name="enterprise_id")
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
 	
 }

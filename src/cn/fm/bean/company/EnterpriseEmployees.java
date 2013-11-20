@@ -1,5 +1,8 @@
 package cn.fm.bean.company;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,11 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+
+import cn.fm.bean.salary.EmployeesSalaryDetail;
 
 
 @Entity
@@ -152,6 +158,7 @@ public class EnterpriseEmployees{
 	/*增减员；备注说明*/
 	private String      reductionNote;
 	
+	private Set<EmployeesSalaryDetail>  employeesSalaryDetails=new HashSet<EmployeesSalaryDetail>();
 	
 	@Column(length=30)
 	public String getReductionNote() {
@@ -482,7 +489,23 @@ public class EnterpriseEmployees{
 	public void setWhetherGinsengCount(long whetherGinsengCount) {
 		this.whetherGinsengCount = whetherGinsengCount;
 	}
-	
-	
+	@OneToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY,mappedBy="enterpriseEmployees")
+	public Set<EmployeesSalaryDetail> getEmployeesSalaryDetails() {
+		return employeesSalaryDetails;
+	}
+	public void setEmployeesSalaryDetails(
+			Set<EmployeesSalaryDetail> employeesSalaryDetails) {
+		this.employeesSalaryDetails = employeesSalaryDetails;
+	}
+	public void addEmployeesSalaryDetails(EmployeesSalaryDetail employeesSalaryDetail){
+		this.employeesSalaryDetails.add(employeesSalaryDetail);
+		
+	}
+	public void romveEmployeesSalaryDetails(EmployeesSalaryDetail employeesSalaryDetail){
+		if(this.employeesSalaryDetails.contains(employeesSalaryDetail)){
+			this.employeesSalaryDetails.remove(employeesSalaryDetail);
+			
+		}
+	}
 	
 }

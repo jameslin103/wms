@@ -56,13 +56,20 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private Integer   departure;
 	private String    errorMessage;
 	
+	private String employees_id;
 	
 	 //工程目录下的模板文件名称
    private String employeeFileName;
-	
+   
     
 	
-   public String getErrorMessage() {
+   public String getEmployees_id() {
+	return employees_id;
+	}
+	public void setEmployees_id(String employeesId) {
+		employees_id = employeesId;
+	}
+	public String getErrorMessage() {
 	   return errorMessage;
    }
 	public void setErrorMessage(String errorMessage) {
@@ -393,7 +400,13 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		
 		return employees;
 	}
-	
+	public String deleteEmpoyeesCheckbox()
+	{
+		 String[] ids=employees_id.split(",");
+		 long rows=enterpriseEmployeesService.deleteEmployeesChecbox(ids);
+		 if(rows>0)System.out.println("删除"+rows+"个员工");
+		 return SUCCESS;
+	}
 	public String  batchExcelDataEmployee()
 	{
 		

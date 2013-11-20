@@ -185,4 +185,8 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	
 	public EnterpriseEmployees findId(Integer employeesId);
 	
+	
+	public long deleteEmployees(Serializable ... ids);
+	public long deleteEmployeesChecbox(Serializable ... ids);
+	
 }

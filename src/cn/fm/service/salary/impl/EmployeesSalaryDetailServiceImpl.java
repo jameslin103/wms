@@ -53,7 +53,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		List<String>  employeesName=new ArrayList<String>();
 		List<EmployeesSalaryDetail> detailList=new ArrayList<EmployeesSalaryDetail>();
 		List<EnterpriseEmployees> enterpriseEmployeesListPO=getAllEnterpriseEmployees(enterpriseId);
-	    if(employeesSalaryDetail==null || employeesSalaryDetail.getEnterpriseId()==null)return null;
+	    if(employeesSalaryDetail==null || employeesSalaryDetail.getEnterprise()==null || employeesSalaryDetail.getEnterprise().getEnterpriseId()==null)return null;
 		GenerateSqlFromExcel excel =new GenerateSqlFromExcel();
 		try {
 			List<String[]> arrayList=excel.generateStationBugSql(file,fileName,number,readRows);
@@ -75,7 +75,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 					EmployeesSalaryDetail employeesSalaryDetailBySalaryDetail= recordEnterpriseEmployeesBySalaryDetail(enterpriseEmployeesListPO,data,number);
 					EmployeesSalaryDetail employeesSalaryDetailVO=structureEmployeesSalaryDetail(employeesSalaryDetailBySalaryDetail,templateId);
 					employeesSalaryDetailVO.setSalaryDate(employeesSalaryDetail.getSalaryDate());
-					employeesSalaryDetailVO.setEnterpriseId(employeesSalaryDetail.getEnterpriseId());
+					employeesSalaryDetailVO.setEnterprise(employeesSalaryDetail.getEnterprise());
 					employeesSalaryDetailVO.setBudgettableId(employeesSalaryDetail.getBudgettableId());
 					detailList.add(employeesSalaryDetailVO);
 				}
@@ -112,7 +112,6 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 				employeesSalaryDetailVO.setMorbidityStatistics(detail.getMorbidityStatistics());
 				employeesSalaryDetailVO.setEmployeesName(detail.getEmployeesName());
 				employeesSalaryDetailVO.setCardNumber(detail.getCardNumber());
-				employeesSalaryDetailVO.setEmpolyessId(detail.getEmpolyessId());
 				employeesSalaryDetailVO.setNote(detail.getNote());
 				employeesSalaryDetailVO.setServiceCharge(detail.getServiceCharge());
 				employeesSalaryDetailVO.setBankCardNumber(detail.getBankCardNumber());
@@ -131,7 +130,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 				employeesSalaryDetailVO.setHousingReserveBase(detail.getHousingReserveBase());
 				employeesSalaryDetailVO.setEnterpriseReserveBase(detail.getEnterpriseReserveBase());
 				employeesSalaryDetailVO.setPersonalReserveBase(detail.getPersonalReserveBase());
-				employeesSalaryDetailVO.setEnterpriseId(detail.getEnterpriseId());
+				employeesSalaryDetailVO.setEnterprise(detail.getEnterprise());
 				employeesSalaryDetailVO.setSalaryDate(detail.getSalaryDate());
 				employeesSalaryDetailVO.setWage(detail.getWage());
 				employeesSalaryDetailVO.setPersonalSubtotal(detail.getPersonalSubtotal());
@@ -139,7 +138,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 				employeesSalaryDetailVO.setMoneyToCards(detail.getMoneyToCards());
 				employeesSalaryDetailVO.setEnterpriseSubtotal(detail.getEnterpriseSubtotal());
 				employeesSalaryDetailVO.setBudgettableId(detail.getBudgettableId());
-				employeesSalaryDetailVO.setEmpolyessId(detail.getEmpolyessId());
+				employeesSalaryDetailVO.setEnterpriseEmployees(detail.getEnterpriseEmployees());
 				employeesSalaryDetailVO.setBeforeSalary(detail.getBeforeSalary());
 				employeesSalaryDetailVO.setCreateDate(detail.getCreateDate());
 				employeesSalaryDetailVO.setPersonalTax(detail.getPersonalTax());
@@ -208,7 +207,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			employeesSalaryDetailVO.setMorbidityStatistics(employeesSalaryDetail.getMorbidityStatistics());
 			employeesSalaryDetailVO.setEmployeesName(employeesSalaryDetail.getEmployeesName());
 			employeesSalaryDetailVO.setCardNumber(employeesSalaryDetail.getCardNumber());
-			employeesSalaryDetailVO.setEmpolyessId(employeesSalaryDetail.getEmpolyessId());
+			employeesSalaryDetailVO.setEnterpriseEmployees(employeesSalaryDetail.getEnterpriseEmployees());
 			employeesSalaryDetailVO.setNote(employeesSalaryDetail.getNote());
 			employeesSalaryDetailVO.setServiceCharge(employeesSalaryDetail.getServiceCharge());
 			employeesSalaryDetailVO.setBankCardNumber(employeesSalaryDetail.getBankCardNumber());
@@ -530,7 +529,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 						     }
 					    	    employeesSalaryDetail.setWage(new BigDecimal(fileDate[2].toString()==null?null:fileDate[2].toString()));
 					    	    employeesSalaryDetail.setCardNumber(carNumber);
-					    	    employeesSalaryDetail.setEmpolyessId(emp.getEmployeesId());
+					    	    employeesSalaryDetail.setEnterpriseEmployees(emp);
 					    	    employeesSalaryDetail.setEmployeesName(emp.getEmployeesName());
 					    	    employeesSalaryDetail.setBankCardNumber(emp.getBankCardNumber());
 					    	    
@@ -585,7 +584,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	@SuppressWarnings("unchecked")
 	public List<EmployeesSalaryDetail>  getAllEmployeesSalaryDetail(Integer enterpriseId,Integer budgetId)
 	{
-		Query query=em.createQuery("select e from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");
+		Query query=em.createQuery("select e from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");
 		
 		return query.setParameter(1, enterpriseId).setParameter(2, budgetId).getResultList();
 	}
@@ -596,7 +595,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 */
 	public List<EmployeesSalaryDetail> findImportEmployeesSalaryDetailStatistics(Integer budgetId,Integer enterpriseId) {
 		
-		Query query=em.createQuery("select e from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");
+		Query query=em.createQuery("select e from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");
 		
 		return query.setParameter(1, enterpriseId).setParameter(2, budgetId).getResultList();
 
@@ -614,7 +613,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
           "e.enterprisePensionInsurance+"+
           "e.personalPensionInsurance+"+
           "e.enterpriseUnemploymentInsurance+"+
-          "e.personalUnemploymentInsurance) from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");
+          "e.personalUnemploymentInsurance) from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");
 		
 		return (BigDecimal)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
 		
@@ -627,7 +626,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		Query query=null;
 		try {
 			
-			query=em.createQuery("select sum(e.wage) from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");		
+			query=em.createQuery("select sum(e.wage) from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");		
 				
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -643,7 +642,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		Query query=null;
 		try {
 			
-			query=em.createQuery("select count(e.salaryId) from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");		
+			query=em.createQuery("select count(e.salaryId) from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");		
 				
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -660,7 +659,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		Query query=null;
 		try {
 			
-			query=em.createQuery("select sum(e.serviceCharge) from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");		
+			query=em.createQuery("select sum(e.serviceCharge) from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");		
 				
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -685,7 +684,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 					"e.enterpriseInductrialInjuryBase+" +
 					"e.enterpriseMedicalBase+" +
 					"e.personalMedicalBase) " +
-					"from EmployeesSalaryDetail e where e.enterpriseId=?1 and e.budgettableId=?2");		
+					"from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");		
 				
 		} catch (Exception e) {
 			e.printStackTrace();

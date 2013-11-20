@@ -43,15 +43,21 @@
 							<thead>
 								<tr>
 									<th width="8%">
-										序号
+										&nbsp;&nbsp;&nbsp;&nbsp;序号
 									</th>
-									<th width="50%">
+									<th width="8%">
+										&nbsp;&nbsp;&nbsp;&nbsp;全选<br/>
+										&nbsp;&nbsp;<input type="button" id="delete" value="删除	" 
+										style="background-color:transparent; border:0px; color:#2E9AFE"/><br/>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="all_box"/>
+									</th>
+									<th width="50%" style="text-align: center;">
 										企业
 									</th>
-									<th width="30%">
+									<th width="30%" style="text-align: center;">
 										负责人
 									</th>
-									<th width="12%">
+									<th width="12%" style="text-align: center;">
 										操作
 									</th>
 								</tr>
@@ -60,7 +66,11 @@
 								<tbody>
 									<tr>
 										<td>
-											<s:property value="%{#list.index+1}" />
+											&nbsp;&nbsp;&nbsp;&nbsp;<s:property value="%{#list.index+1}" />
+										</td>
+										<td>
+											&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type="checkbox" value="<s:property  value="%{#enterprise.enterpriseId}" />"/>
 										</td>
 										<td class="with-complement">
 											<s:property value="%{#enterprise.fullName}" />

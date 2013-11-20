@@ -256,12 +256,15 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		
 		/*大病统筹*/
 		employees.setSeriousDisease(data[25]==null?null:data[25].toString());
-		employees.setBase(data[26]==null?null:data[26].equals(Constant.WMS_YES)?1:0);
+		int base=data[26]==null?null:data[26].equals(Constant.WMS_YES)?1:0;
+		employees.setBase(base);
+		if(base==1){
+			employees.setInductrialBase(data[29].toString().equals("")?null:Double.valueOf(data[29]));
+			employees.setBasicMedical(data[30].toString().equals("")?null:Double.valueOf(data[30]));
+			employees.setHousingFund(data[31].toString().equals("")?null:Double.valueOf(data[31]));
+		}
 		employees.setSocialInsurance(data[27].toString().equals("")?null:Double.valueOf(data[27]));
 		employees.setFertilityInsurance(data[28].toString().equals("")?null:Double.valueOf(data[28]));
-		employees.setInductrialBase(data[29].toString().equals("")?null:Double.valueOf(data[29]));
-		employees.setBasicMedical(data[30].toString().equals("")?null:Double.valueOf(data[30]));
-		employees.setHousingFund(data[31].toString().equals("")?null:Double.valueOf(data[31]));
 		employees.setSeriousDiseaseBase(data[32].toString().equals("")?null:Double.valueOf(data[32]));
 		employees.setPaymentWay(data[33]==null?null:data[33].equals(Constant.WMS_YES)?1:0);
 		employees.setDeparture(0);
@@ -1060,6 +1063,38 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			return null;
 		}
 	}
+	
+	
+	public long deleteEmployees(Serializable ... ids){
+		
+		long rows=0;
+		if(ids!=null && ids.length>0){
+			StringBuffer jpql = new StringBuffer();
+			for(int i=0; i<ids.length;i++){
+				jpql.append('?').append(i+1).append(',');
+				
+			}
+			jpql.deleteCharAt(jpql.length()-1);
+			Query query =em.createQuery("delete EnterpriseEmployees b  where b.employeesId in("+ jpql.toString() +")");
+			
+			String[]idss=(String[])ids;
 
+			for(int i=0; i<idss.length;i++){
+				int id=idss[i].indexOf(",");
+				query.setParameter(i+1, id);
+			}
+			rows=query.executeUpdate();
+		}
+		return rows;
+	}
+	public long deleteEmployeesChecbox(Serializable ... ids){
+		long rows=0;
+		for(int i=0; i<ids.length;i++){
+			Integer id=Integer.parseInt(ids[i].toString());
+			super.delete(id);
+			rows++;
+		}
+		return rows;
+	}
 	
 }

@@ -14,28 +14,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script>
-		
-			<!--$(function (){
-				$("#viewdetail").click(function(){
-				   var listr=$("#list1").val();
-				  	alert(listr);
-				  	 return;
-  					$.each(listr, function(i,value){
-  						alert(value);
-  						alert(i);
-  					
-  					
-  					});
-  					
-				});
-			});-->
-		
+			
 		
 		</script>
-		
-		
-		
-		
+
 	</head>
 	<body>
 	<div id="container">
@@ -60,6 +42,12 @@
 								<tr>
 									<th rowspan="2">
 										序号
+									</th>
+									<th rowspan="2">
+										&nbsp;&nbsp;全选<br/>
+										<input type="button" id="delete" value="删除	" 
+										style="background-color:transparent; border:0px; color:#2E9AFE"/><br/>
+										&nbsp;&nbsp;<input type="checkbox" id="all_box"/>
 									</th>
 									<th rowspan="2">
 										企业
@@ -92,6 +80,9 @@
 									<tr>
 										<td>
 											<s:property value="%{#list.index+1}" />
+										</td>
+										<td>
+											&nbsp;&nbsp;<input type="checkbox" value="<s:property  value="%{#enterprise.enterpriseId}" />"/>
 										</td>
 										<td class="with-complement">
 											<a href="viewEnterpriseDetailed?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">

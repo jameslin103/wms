@@ -18,10 +18,11 @@
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script type="text/javascript">
 		
+		
 		function reset(){
 			$('#loginForm')[0].reset();
 		}
-		$(document).ready(function(){
+		  $(function(){
 			$("#submit").click(function()
 			{
 				
@@ -53,6 +54,7 @@
 			});
 		
 		});
+       	
 		</script>
 	</head>
 	<body>
@@ -155,6 +157,12 @@
 										序
 									</th>
 									<th rowspan="2" width="">
+										&nbsp;&nbsp;全选<br/>
+										<input type="button" id="delete" value="删除	" 
+										style="background-color:transparent; border:0px; color:#2E9AFE"/><br/>
+										&nbsp;&nbsp;<input type="checkbox" id="all_box"/>
+									</th>
+									<th rowspan="2" width="">
 										姓名
 									</th>
 									<th rowspan="2" width="">
@@ -212,7 +220,10 @@
 								<tbody>
 									<tr>
 										<td>
-											<s:property value="%{#list.index+1}" />
+											<s:property value="#list.index+1"/>
+										</td>
+										<td>
+											&nbsp;&nbsp;<input type="checkbox" name="enterpriseEmployees.employeesId" value="<s:property value="%{#emp.employeesId}" />"/>
 										</td>
 										<td>
 											<s:hidden value="%{#emp.employeesId}" name="employeesId" />

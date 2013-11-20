@@ -27,20 +27,40 @@
 
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
-							<li>
-								<a href="company/index.jsp">综合</a>
-							</li>
-							<li class="active">
-								<a href="viewEnterpriseEmployees">员工档案</a>
-							</li>
-							<li>
-								<a href="viewSalaryBudgetTable">工资预算表</a>
-							</li>
-							<li>
-								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
-							</li>
+							<s:iterator value="#session.menuList" id="menu">
+								<s:if test="#menu.url=='viewEnterpriseEmployees'">
+									<li class="active">
+										<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewSalaryBudgetTable'">
+									<li >
+										<a href="viewSalaryBudgetTable" >
+											<s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewInsuranceWithMonth'">
+									<li >
+										<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewBalanceDetail'">
+									<li >
+										<a href="viewBalanceDetail" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewEnterpriseDetailed'">
+									<li>
+										<a href="viewEnterpriseDetailed" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+							</s:iterator>
 						</ul>
-
 						<ul class="normal action-container clearfix">
 							<li>
 								员工：
@@ -240,25 +260,42 @@
 							<tbody>
 								<tr>
 									<td>
-										<s:if test="%{#request.employees.whetherGinseng}=='1'">
+										<s:if test="#request.employees.whetherGinseng==1">
 											<span>是</span>
 										</s:if>
-										<s:else>
+										<s:elseif test="#request.employees.whetherGinseng==0">
 											<span>否</span>
+										</s:elseif>
+										<s:else>
+											
 										</s:else>
 									</td>
 									<td>
-										<s:property value="%{#request.employees.ginsengProtectNature}" />
+										<s:if test="#request.employees.ginsengProtectNature==1">
+											<span>增员</span>
+										</s:if>
+										<s:elseif test="#request.employees.ginsengProtectNature==2">
+											<span>续保</span>
+										</s:elseif>
+										<s:elseif test="#request.employees.ginsengProtectNature==3">
+											<span>减员</span>
+										</s:elseif>
+										<s:else>
+											
+										</s:else>
 									</td>
 									<td>
 										<s:date name="%{#request.employees.cinsengDate}" format="yyyy年MM月dd"/>
 									</td>
 									<td>
-										<s:if test="%{#request.employees.base}=='0'">
+										<s:if test="#request.employees.base==0">
 											<span>默认</span>
 										</s:if>
-										<s:else>
+										<s:elseif test="#request.employees.base==1">
 											<span>个性设置</span>
+										</s:elseif>
+										<s:else>
+										
 										</s:else>
 									</td>
 									<td>
@@ -280,7 +317,15 @@
 										<s:property value="%{#request.employees.seriousDiseaseBase}" />
 									</td>
 									<td>
-										<s:property value="%{#request.employees.paymentWay}" />
+									<s:if test="#request.employees.paymentWay==0">
+											<span>个人缴税</span>
+										</s:if>
+										<s:elseif test="#request.employees.paymentWay==1">
+											<span>企业缴税</span>
+										</s:elseif>
+										<s:else>
+										
+										</s:else>
 									</td>
 								</tr>
 							</tbody>
