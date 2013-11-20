@@ -13,7 +13,15 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="../help/public_css_js.jsp"%>
-
+		<script type="text/javascript">
+			 function topage(page){
+				var form = document.getElementById("salary_myform");
+					form.page.value=page;
+					form.submit();
+			}
+		
+		
+		</script>
 	</head>
 	<body>
 
@@ -27,23 +35,43 @@
 
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
-							<li>
-								<a href="company/index.jsp">综合</a>
-							</li>
-							<li class="active">
-								<a href="viewEnterpriseEmployees">员工档案</a>
-							</li>
-							<li>
-								<a href="viewSalaryBudgetTable">工资预算表</a>
-							</li>
-							<li>
-								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
-							</li>
+							<s:iterator value="#session.menuList" id="menu">
+								<s:if test="#menu.url=='viewEnterpriseEmployees'">
+									<li class="active">
+										<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewSalaryBudgetTable'">
+									<li >
+										<a href="viewSalaryBudgetTable" >
+											<s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewInsuranceWithMonth'">
+									<li >
+										<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewBalanceDetail'">
+									<li >
+										<a href="viewBalanceDetail" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewEnterpriseDetailed'">
+									<li>
+										<a href="viewEnterpriseDetailed" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+							</s:iterator>
 						</ul>
-
 						<ul class="normal action-container clearfix">
 							<li>
-								员工：<s:property value="%{#request.employees.employeesName}"/>
+								员工：<s:property value="%{#request.enterpriseEmployees.employeesName}"/>
 							</li>
 							<li>
 								&nbsp;/&nbsp;
@@ -52,15 +80,15 @@
 								查看各类明细：
 							</li>
 							<li>
-								<a href="viewEmployeePersonalSalary?employeesId=<s:property value="%{#request.employees.employeesId}"/>">工资</a>，
+								<a href="viewEmployeePersonalSalary?employeesId=<s:property value="%{#request.enterpriseEmployees.employeesId}"/>">工资</a>，
 							</li>
 							<li>
 								<a
-									href="viewEmployeeContract?employeesId=<s:property value="%{#request.employees.employeesId}"/>">合同</a>，
+									href="viewEmployeeContract?employeesId=<s:property value="%{#request.enterpriseEmployees.employeesId}"/>">合同</a>，
 							</li>
 							<li>
 								<a
-									href="selectEnterpriseEmployeesWage?employeesId=<s:property value="%{#request.employees.employeesId}"/>">基本信息</a>，
+									href="selectEnterpriseEmployeesWage?employeesId=<s:property value="%{#request.enterpriseEmployees.employeesId}"/>">基本信息</a>，
 							</li>
 							<li>
 								&nbsp;/&nbsp;
@@ -69,7 +97,7 @@
 								操作：
 							</li>
 						</ul>
-						<s:if test="#request.employeesSalaryDetails.size()==0 ">
+						<s:if test="#request.pageView.records.size()==0 ">
 							<table class="table table-striped table-bordered">
 				            <thead>
 			              	<tr>
@@ -203,11 +231,15 @@
 						</s:if>
 						
 						<s:else>
-						<s:iterator value="#request.employeesSalaryDetails"	id="employeesSalaryDetail">
-					
+						<s:form action="viewEmployeePersonalSalary" method="post" id="salary_myform">
+							<input type="hidden" name="page"/>
+							<input  type="hidden" name="employeesId" value="${employeesId}"/>
+						</s:form>
+						<s:iterator value="#request.pageView.records"	id="employeesSalaryDetail">
 							<h3>
-								<s:date name="%{#employeesSalaryDetail.createDate}" format="yyyy年MM月dd"/>
+								<s:date name="%{#employeesSalaryDetail.salaryDate}" format="yyyy年MM月"/>
 							</h3>
+							
 							<table class="table table-striped table-bordered">
 								<thead>
 									<tr>
@@ -410,14 +442,13 @@
 								</tr>
 							  </thbody>
 							</table>
-						</s:iterator>
+							</s:iterator>
 					</s:else>
 					<div class="pagination">
 						<%@ include  file="../share/fenye.jsp"%>		
 					</div>
 
 					</div>
-
 				</div>
 			</div>
 		</div>

@@ -26,6 +26,7 @@ import org.hibernate.annotations.NotFoundAction;
 
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
+import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.bean.user.WmsUser;
 
@@ -99,7 +100,9 @@ public class Enterprise implements Serializable{
 	
 	private Set<CustomBonus>   customBonus=new HashSet<CustomBonus>();
 
-    
+    private Set<EmployeesSalaryDetail>  employeesSalaryDetails=new HashSet<EmployeesSalaryDetail>();
+	
+	
 	 @ManyToMany(cascade={CascadeType.REFRESH})  
 	  @JoinTable(name = "user_enterprise",
 			   inverseJoinColumns =@JoinColumn (name ="user_id" ),//被维护端外键
@@ -356,5 +359,15 @@ public class Enterprise implements Serializable{
 			this.balanceDetail.remove(balanceDetail);
 
 	}
+	@OneToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY, mappedBy = "enterprise")
+	public Set<EmployeesSalaryDetail> getEmployeesSalaryDetails() {
+		return employeesSalaryDetails;
+	}
+	public void setEmployeesSalaryDetails(
+			Set<EmployeesSalaryDetail> employeesSalaryDetails) {
+		this.employeesSalaryDetails = employeesSalaryDetails;
+	}
+	
+	
 	
 }

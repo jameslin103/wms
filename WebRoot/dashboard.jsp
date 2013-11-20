@@ -76,7 +76,6 @@
 			<div id="center-pane"></div>
 		</div>
 	</div>
-	<table id="flexigrid" style="display:none"></table>
 </div>
 </body>
 </html>

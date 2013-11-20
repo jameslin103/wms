@@ -327,4 +327,14 @@ public class EnterpriseEmployessServiceTest {
 		
 	}
    
+   @Test
+   public void deleteemployees()
+   {
+	   int[] ids={192,193};
+//	   long rows=enterpriseEmployeesService.deleteEmployees(ids); 
+//	   
+//	   System.out.println(rows);
+	   enterpriseEmployeesService.deleteEmployeesChecbox(ids);
+	   
+   }
 }

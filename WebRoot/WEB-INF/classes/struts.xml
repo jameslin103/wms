@@ -259,6 +259,11 @@
          <action name="fildInsuranceEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="fildInsuranceEnterpriseEmployees">
              <result name="success">company/employee-list.jsp</result>
         </action>
+        <action name="deleteEmpoyeesCheckbox" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="deleteEmpoyeesCheckbox">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterpriseEmployees</param>
+            </result>
+        </action>
         
         <action name="fildAllEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="fildAllEnterpriseEmployees">
              <result name="success">company/employee-search-result.jsp</result>

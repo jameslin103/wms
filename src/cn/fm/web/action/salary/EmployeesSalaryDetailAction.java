@@ -339,7 +339,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
 		employeesSalaryDetail=new EmployeesSalaryDetail();
-		employeesSalaryDetail.setEnterpriseId(enterprise.getEnterpriseId());
+		employeesSalaryDetail.setEnterprise(enterprise);
 		employeesSalaryDetail.setBudgettableId(budgetId);
 		employeesSalaryDetail.setSalaryDate(salaryDate);
 		
@@ -396,14 +396,28 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	
 	public String viewEmployeePersonalSalary()
 	{
-		Enterprise enterprise=(Enterprise)request.getSession().getAttribute("enterprise");
-		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getAllEmployeesSalaryDetail( enterprise.getEnterpriseId(),employeesId);
-		if(employeesSalaryDetailList.size()==0)
-			employeesSalaryDetailList=new ArrayList<EmployeesSalaryDetail>();
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		EnterpriseEmployees  enterpriseEmployees=enterpriseEmployeesService.find(employeesId);
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryDate", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(enterprise.getEnterpriseId()!=null)
+		{
+			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(enterprise.getEnterpriseId());
+			jpql.append(" and o.enterpriseEmployees.employeesId=?").append(params.size()+1);
+			params.add(employeesId);
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("employeesId", employeesId);
+			request.setAttribute("pageView", pageView);
+			request.setAttribute("enterpriseEmployees", enterpriseEmployees);
+			
+		}
 		
-		EnterpriseEmployees employees=enterpriseEmployeesService.findEnterpriseEmployees(employeesId);
-		request.setAttribute("employeesSalaryDetails", employeesSalaryDetailList);
-		request.setAttribute("employees", employees);
 		return SUCCESS;
 		
 	}
@@ -434,16 +448,13 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 			request.getSession().setAttribute("enterprise", enterprise);
 		}
 		
-		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getAllEmployeesSalaryDetail(enterprise.getEnterpriseId(), budgetId);
-		if(employeesSalaryDetailList==null ||employeesSalaryDetailList.size()==0)
-			employeesSalaryDetailList=new ArrayList<EmployeesSalaryDetail>();
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("createDate", "desc");
 		StringBuffer jpql = new StringBuffer("");
 		List<Object> params = new ArrayList<Object>();
 		if(enterprise.getEnterpriseId()!=null)
 		{
-			jpql.append(" o.enterpriseId=?").append(params.size()+1);
+			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
 			params.add(enterprise.getEnterpriseId());
 			jpql.append(" and o.budgettableId=?").append(params.size()+1);
 			params.add(budgetId);
@@ -455,11 +466,6 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 			request.setAttribute("pageView", pageView);
 		}
 		
-		
-		
-		
-		
-		request.setAttribute("employeesSalaryDetail", employeesSalaryDetailList);
 		return SUCCESS;
 	}
 	

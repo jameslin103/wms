@@ -2,9 +2,6 @@ package cn.fm.service.base;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
-import java.util.Map;
-
-import cn.fm.bean.PageData;
 import cn.fm.bean.QueryResult;
 
 public interface DAO<T> {

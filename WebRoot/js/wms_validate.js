@@ -571,5 +571,43 @@ $(document).ready(function(){
 		});
 	});
 });
-
+//删除员工全选
+$(function(){
+	 	
+    $("#all_box").click(function() {
+         $('input[name="enterpriseEmployees.employeesId"]').attr("checked",this.checked);
+     });
+     var $subBox = $("input[name='enterpriseEmployees.employeesId']");
+     $subBox.click(function(){
+         $("#all_box").attr("checked",$subBox.length == $("input[name='enterpriseEmployees.employeesId']:checked").length ? true : false);
+     });
+     
+	  $('#delete').click(function (){
+	    	 var array = new Array();
+	    	 var flag;
+	    	 $("input[name='enterpriseEmployees.employeesId']:checkbox").each(function() {
+	    		 if ($(this).attr("checked")) { //判断是否选中    
+	    		        flag = true; //只要有一个被选择 设置为 true  
+                 }  
+             });
+	    	  if (flag)
+	    	  {  
+	    		  if(confirm("确定要删除选定的员工；删除后将不可恢复?")){
+	    			  $("input[name='enterpriseEmployees.employeesId']:checkbox").each(function() { //遍历所有的name为selectFlag的 checkbox  
+                          if ($(this).attr("checked")) { //判断是否选中    
+                              //alert($(this).val());  
+                              array.push($(this).val()); //将选中的值 添加到 array中  
+                             // str+=$(this).val()+",";  
+                          }  
+                      }) ;
+	    			  //将要集体删除的数据 传递给action处理   
+	    			  window.self.location="deleteEmpoyeesCheckbox?employees_id="+ array;  
+	    		  }
+	            
+	          } else{  
+	              alert("请至少选择一条数据?");  
+	              return false;
+	          }  
+	    });
+ });
 
