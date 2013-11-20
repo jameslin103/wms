@@ -17,6 +17,15 @@
 		<meta http-equiv="expires" content="0"/>  
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script type="text/javascript">
+		$(function(){
+			$("input[name='all_id']").click(function(){
+				alert("xxxx");
+				//$("input[name='all_id']").checkbox
+			});
+			
+		
+		});
+		
 		
 		function reset(){
 			$('#loginForm')[0].reset();
@@ -151,7 +160,11 @@
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
-									<th rowspan="2" width="">
+									<th rowspan="2" width="50px;" style="padding-left: 5px;">
+										<span><input type="checkbox" name="all_id"/>
+										全选<a href="#">删除</a></span>
+									</th>
+									<th rowspan="2" width="50px;" align="center">
 										序
 									</th>
 									<th rowspan="2" width="">
@@ -211,6 +224,9 @@
 							<s:iterator value="#request.pageView.records" id="emp" status="list">
 								<tbody>
 									<tr>
+										<td>
+											<input type="checkbox" name="enterpriseEmployees.employeesId" value="<s:property value="%{#emp.employeesId}" />"/>
+										</td>
 										<td>
 											<s:property value="%{#list.index+1}" />
 										</td>
