@@ -168,6 +168,19 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		
 		request.setAttribute("wmsUsers", wmsUsers);
 		
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("enterpriseId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		
+			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(enterprise.getEnterpriseId());
+			
+			PageView<Enterprise> pageView = new PageView<Enterprise>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		
 		return SUCCESS;
 	}
 	/**
