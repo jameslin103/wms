@@ -254,7 +254,7 @@ public class BalanceDetail implements Serializable{
 		this.updteDate = updteDate;
 	}
 	
-	@ManyToOne(cascade={CascadeType.REFRESH }, optional= true)  
+	@ManyToOne(cascade={CascadeType.REFRESH },optional=true)
 	@JoinColumn(name="enterprise_id")
 	public Enterprise getEnterprise() {
 		return enterprise;

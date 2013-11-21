@@ -9,24 +9,17 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import cn.fm.bean.GridParameter;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.base.BaseGrid;
 import cn.fm.service.base.DaoSupport;
-import cn.fm.service.base.SearchImpl;
 import cn.fm.service.company.EnterpriseService;
 
 
 @Service @Transactional
 public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements EnterpriseService {
 
-	private SearchImpl searchImpl;
-	
 
-	public void setSearchImpl(SearchImpl searchImpl) {
-		this.searchImpl = searchImpl;
-	}
 	public List<Enterprise> getAllEnterprise(WmsUser user)
 	{
 		if(user==null)return null;
@@ -66,7 +59,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 	public List<Enterprise> getUserToAllEnterprise(WmsUser user)
 	{
 		try {
-		 return	em.createQuery("select t from Enterprise t join WmsUser u on t.enterpriseId=u.userId where u.userId=?1 ")
+		 return	em.createQuery("select e from Enterprise e join e.user u  where u.userId=?1 order by e.enterpriseId desc")
 		 		.setParameter(1, user.getUserId()).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -236,21 +229,11 @@ public BigDecimal findBalanceDetail(Integer enterpriseId) {
 		WmsUser userPo=em.find(WmsUser.class, userId);
 		Enterprise enterprisePO=em.getReference(Enterprise.class,enterpriseId);
 		enterprisePO.removeWmsUser(userPo);
-		em.remove(enterprisePO);
-		
-		
 	}
 	public BaseGrid findEnterprisePage(BaseGrid baseGrid) {
-		GridParameter gridParameter = GridParameter.getInstance()
-		.setModuleNameVal("enterprise").setObjectNameVal("Enterprise")
-		.setObjectAliasVal("enterprise");
-		return searchImpl.findPage(gridParameter, baseGrid);
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	
-	
-	
-	
 	
 
 }

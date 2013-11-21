@@ -18,8 +18,6 @@ function modalEnterprise(enterpriseId)
 		    cache:false,
 		    dataType:'json',    
 		    success:function(data){
-		     
-		    	
 		      $("input[name='enterprise.enterpriseId']").val(data.enterpriseJson.enterpriseId);
 		      $("input[name='enterprise.rferred']").val(data.enterpriseJson.rferred);
 		      $("input[name='enterprise.fullName']").val(data.enterpriseJson.fullName);
@@ -33,11 +31,6 @@ function modalEnterprise(enterpriseId)
 		      $("input[name='enterprise.fax']").val(data.enterpriseJson.fax);
 		      $("input[name='enterprise.email']").val(data.enterpriseJson.email);
 		      $("input[name='enterprise.status'][value="+data.enterpriseJson.status+"]").attr("checked",true); 
-		    
-		       
-		       
-		       
-		       
 		        
 		     },    
 		     error : function() {  
@@ -45,7 +38,27 @@ function modalEnterprise(enterpriseId)
 		     }    
 		});	
 	}
+	
 }
+//清除所有表单
+function clearForm(objE){//objE为form表单  
+    $(objE).find(':input').each(  
+        function(){  
+            switch(this.type){  
+                case 'passsword':  
+                case 'select-multiple':  
+                case 'select-one':  
+                case 'text':  
+                case 'textarea':  
+                    $(this).val('');  
+                    break;  
+                case 'checkbox':  
+                case 'radio':  
+                    this.checked = false;  
+            }  
+        }  
+    );  
+} 
 
 function findEnterpriseToUser(enterpriseId)
 {
@@ -62,7 +75,7 @@ function findEnterpriseToUser(enterpriseId)
 		      $("#fullName").html(data.enterpriseJson.fullName);
 		      $("input[name='enterpriseId']").val(data.enterpriseJson.enterpriseId);
 		      $(".list-of-items-for-delete").html('');
-			      $.each(data.enterpriseJson.user,function(i,value){
+			      $.each(data.user,function(i,value){
 			    	  $(".list-of-items-for-delete").
 			    	  append("<li>"+value.username+"<a href='removeToEnterpriseHeadUser?userId="+value.userId+"" +
 			    	  		"&enterpriseId="+data.enterpriseJson.enterpriseId+"'style='width: 50px;'>(删除)</a></li>");

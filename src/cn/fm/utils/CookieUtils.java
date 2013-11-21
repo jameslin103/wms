@@ -19,7 +19,7 @@ public class CookieUtils {
 	    // 添加一个cookie  
 	    public Cookie addCookie(WmsUser user) {  
 	        Cookie cookie = new Cookie(USER_COOKIE, user.getPhone() + ","  
-	                + user.getPassword());  
+	                + MD5.MD5Encode(user.getPassword()));  
 	        System.out.println("添加cookie");  
 	        cookie.setMaxAge(60 * 60 * 24 * 14);// cookie保存两周  
 	        return cookie;  

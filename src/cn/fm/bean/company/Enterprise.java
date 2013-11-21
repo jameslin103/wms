@@ -103,11 +103,11 @@ public class Enterprise implements Serializable{
     private Set<EmployeesSalaryDetail>  employeesSalaryDetails=new HashSet<EmployeesSalaryDetail>();
 	
 	
-	 @ManyToMany(cascade={CascadeType.REFRESH})  
+	 @ManyToMany(cascade={CascadeType.REFRESH})
 	  @JoinTable(name = "user_enterprise",
 			   inverseJoinColumns =@JoinColumn (name ="user_id" ),//被维护端外键
               joinColumns =  @JoinColumn (name ="enterprise_id" ))//维护端外键
-	public Set<WmsUser> getUser() {
+	public Set<WmsUser> getUser(){
 		return user;
 	}
 	public void setUser(Set<WmsUser> user) {
@@ -235,7 +235,7 @@ public class Enterprise implements Serializable{
 		this.count = count;
 	}
 
-	@OneToMany(cascade ={CascadeType.REFRESH, CascadeType.REMOVE,CascadeType.PERSIST}, mappedBy = "enterprise")
+	@OneToMany(cascade ={CascadeType.ALL}, mappedBy = "enterprise")
 	@OrderBy("budgetId asc")
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBugetTables() {
 		return createSalaryBugetTables;
@@ -250,7 +250,7 @@ public class Enterprise implements Serializable{
 	        this.createSalaryBugetTables.add(createSalaryBudgetTable);  
 	 } 
 	
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "enterprise") 
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "enterprise") 
 	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<EnterpriseEmployees> getEnterpriseEmployees(){
 		return enterpriseEmployees;

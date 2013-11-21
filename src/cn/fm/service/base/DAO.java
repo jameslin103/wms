@@ -60,4 +60,5 @@ public interface DAO<T> {
 		
 		public QueryResult<T> getScrollDataSum(int firstindex, int maxresult, String wherejpql, Object[] queryParams,String orderby,String fromCurrentSql);
 		
+		public QueryResult<T> getScrollDataManytoMany(int firstindex, int maxresult ,String formManaySql,String wherehql);
 	}
