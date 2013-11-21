@@ -112,20 +112,6 @@ public class EnterpriseEmployessServiceTest {
 	}
 	
 	@Test
-	public void getAllEnterpris()
-	{
-		List<Enterprise> listEnterprise=enterpriseService.getAllEnterprise(1);
-		for (Enterprise enterprise : listEnterprise) {
-			System.out.println(enterprise.getAddress());
-			System.out.println(enterprise.getCount());
-			System.out.println(enterprise.getEmail());
-
-			
-		}
-		
-	}
-	
-	@Test
 	public void countSafft()
 	{
 		

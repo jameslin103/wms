@@ -14,7 +14,11 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script>
-			
+			function topage(page){
+				var form = document.getElementById("to_enter_form");
+				form.page.value=page;
+				form.submit();
+		  }
 		
 		</script>
 
@@ -36,55 +40,56 @@
 								<a href="toBeResponsibleEnterprise">所有企业</a>
 							</li>
 						--></ul>
-						<input type="hidden" name="list1" id="list1" value="${menuList}"/> 
+						<s:form action="toBeResponsibleEnterprise" method="post" id="to_enter_form">
+						<input name="page" type="hidden"/>
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
-									<th rowspan="2">
+									<th rowspan="2" style="text-align: center;">
 										序号
 									</th>
-									<th rowspan="2">
+									<!--<th rowspan="2">
 										&nbsp;&nbsp;全选<br/>
 										<input type="button" id="delete" value="删除	" 
 										style="background-color:transparent; border:0px; color:#2E9AFE"/><br/>
 										&nbsp;&nbsp;<input type="checkbox" id="all_box"/>
 									</th>
-									<th rowspan="2">
+									--><th rowspan="2" style="text-align: center;">
 										企业
 									</th>
-									<th colspan="2">
+									<th colspan="2" style="text-align: center;">
 										资金往来（元）
 									</th>
-									<th rowspan="2">
+									<th rowspan="2" style="text-align: center;">
 										工资发放
 									</th>
-									<th rowspan="2">
+									<th rowspan="2" style="text-align: center;">
 										本月增减员
 									</th>
-									<th rowspan="2">
+									<th rowspan="2" style="text-align: center;">
 										负责人
 									</th>
 								</tr>
 								<tr>
-									<th>
+									<th style="text-align: center;">
 										企业
 									</th>
-									<th>
+									<th style="text-align: center;">
 										员工
 									</th>
 								</tr>
 							</thead>
 								
-							<s:iterator value="#request.enterpriseList" var="enterprise" status="list">
+							<s:iterator value="#request.enterprises" id="enterprise" status="list">
 								<tbody>
 									<tr>
-										<td>
+										<td style="text-align: center;">
 											<s:property value="%{#list.index+1}" />
 										</td>
-										<td>
-											&nbsp;&nbsp;<input type="checkbox" value="<s:property  value="%{#enterprise.enterpriseId}" />"/>
-										</td>
-										<td class="with-complement">
+										<!--<td>
+											<input type="checkbox" value="<s:property  value="%{#enterprise.enterpriseId}" />"/>
+										</td>-->
+										<td class="with-complement" >
 											<a href="viewEnterpriseDetailed?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">
 											<s:property  value="%{#enterprise.fullName}" /></a>
 											<span class="complement">
@@ -105,9 +110,7 @@
 										</td>
 										<td>
 										<ol>
-											<s:iterator value="%{#request.enterprises}" id="en">
-												<s:iterator value="%{#en.createSalaryBugetTables}" id="cr">
-														 <s:if test="#en.enterpriseId==#enterprise.enterpriseId">
+											<s:iterator value="%{#request.createSalaryBugetTables}" id="cr">
 														    <li>
 															    <a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>&budgetId=<s:property value="%{#cr.budgetId}"/>">
 																    	<s:if test="#cr.name.length()>15">
@@ -122,9 +125,7 @@
 															    	
 															    </a>
 														    </li>
-														   </s:if>
-														</s:iterator>
-													</s:iterator>
+												</s:iterator>
 											</ol>
 										</td>
 										<td>
@@ -145,10 +146,13 @@
 								</tbody>
 							</s:iterator>
 						</table>
-
+						<div class="pagination">
+							<%@ include file="/share/fenye.jsp" %>
+						</div>
+					</s:form>
+	
 					</div>
-
-
+					
 				</div>
 			</div>
 

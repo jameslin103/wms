@@ -173,19 +173,6 @@ public class EnterpriseAction extends BaseAction{
 		request.setAttribute("pageView", pageView);
 		request.setAttribute("wmsUsers", wmsUsers);
 		
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("enterpriseId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-		
-			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(enterprise.getEnterpriseId());
-			
-			PageView<Enterprise> pageView = new PageView<Enterprise>(10,  this.getPage());
-			pageView.setQueryResult(enterpriseService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("pageView", pageView);
-		
 		return SUCCESS;
 	}
 	/**
@@ -239,10 +226,25 @@ public class EnterpriseAction extends BaseAction{
 		enterprise=WebUtil.getEnterprise(request);
 		if(enterprise!=null)request.getSession().removeAttribute("enterprise");
 		WmsUser user=WebUtil.getWmsUser(request);
-		WmsUser userPO=wmsUserService.find(user.getUserId());
-		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(userPO);
-		request.setAttribute("enterpriseList", enterpriseList);
-		request.setAttribute("enterprises", findToBeEnterpriseAndCreateSalaryBudgetTable(enterpriseList));
+		StringBuffer jpql = new StringBuffer("");
+		StringBuffer countjpql = new StringBuffer("");
+		
+//		WmsUser userPO=wmsUserService.find(user.getUserId());
+//		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(userPO);
+//		request.setAttribute("enterpriseList", enterpriseList);
+		
+		
+		jpql.append("select e from Enterprise e join e.user u  where u.userId=")
+		.append(user.getUserId()).append(" order by e.enterpriseId desc");
+		 countjpql.append("Enterprise e join e.user u  where u.userId=")
+		.append(user.getUserId()).append(" order by e.enterpriseId desc");
+		 
+		PageView<Enterprise> pageView = new PageView<Enterprise>(10,  this.getPage());
+		pageView.setQueryResult(enterpriseService.getScrollDataManytoMany(pageView.getFirstResult(), pageView.getMaxresult(),jpql.toString(),countjpql.toString()));
+		List<Enterprise> list=findToBeEnterpriseAndCreateSalaryBudgetTable(pageView.getRecords());
+		request.setAttribute("enterprises", list);
+		request.setAttribute("pageView", pageView);
+		
 		return SUCCESS;
 	}
 	/**
@@ -260,14 +262,18 @@ public class EnterpriseAction extends BaseAction{
 	
 	public List<Enterprise> findToBeEnterpriseAndCreateSalaryBudgetTable(List<Enterprise> enterpriseList)
 	{
+		Enterprise enterpriseVO;
 		List<Enterprise> enterprises=new ArrayList<Enterprise>();
 		for (Enterprise enterprise : enterpriseList) {
-			Enterprise enterprisePO=enterpriseService.find(enterprise.getEnterpriseId());
-			enterprisePO.setAddCount(enterpriseEmployeesService.newStaffCount(enterprisePO.getEnterpriseId()));
+			enterpriseVO=new Enterprise();
+			enterpriseVO=enterprise;
+			
+			enterpriseVO.setCount(enterpriseService.getCountEmployees(enterprise.getEnterpriseId()));
+			enterpriseVO.setAddCount(enterpriseEmployeesService.newStaffCount(enterprise.getEnterpriseId()));
 			//enterprisePO.setRenewalCount(enterpriseEmployeesService.renewalPersonnel(enterprisePO.getEnterpriseId()));
-			enterprisePO.setWhetherGinsengCount(enterpriseEmployeesService.ginsengPersonnel(enterprisePO.getEnterpriseId()));
-			enterprisePO.setReductionTotal(enterpriseEmployeesService.reductionTotal(enterprisePO.getEnterpriseId()));
-			enterprises.add(enterprisePO);
+			enterpriseVO.setWhetherGinsengCount(enterpriseEmployeesService.ginsengPersonnel(enterprise.getEnterpriseId()));
+			enterpriseVO.setReductionTotal(enterpriseEmployeesService.reductionTotal(enterprise.getEnterpriseId()));
+			enterprises.add(enterpriseVO);
 			
 		}
 		return enterprises;

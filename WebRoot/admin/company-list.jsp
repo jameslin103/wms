@@ -105,7 +105,14 @@
 										</td>
 										<td class="with-complement" style="text-align: center;">
 											<s:iterator value="#request.enterprise.user" id="user">
-												<s:property value="%{#user.username}" />
+												<s:if test="#request.session.user==#user">
+													<s:property value="%{#user.username}" />
+												</s:if>
+												<s:elseif test="#request.isSystemAdmin==true">
+													<s:property value="%{#user.username}" />
+												</s:elseif>
+												<s:else>
+												</s:else>
 											</s:iterator>
 											<s:set value="%{#enterprise.enterpriseId}" var="enterpriseId"></s:set>
 											<s:hidden value='%{#enterprise.id}' id="enterId"/>

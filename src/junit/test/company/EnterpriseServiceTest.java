@@ -28,26 +28,6 @@ public class EnterpriseServiceTest {
 		}
 	}
 
-
-	@Test
-	public void find()
-	{
-		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(1);
-		for (Enterprise enterprise : enterpriseList) {
-			for ( CreateSalaryBudgetTable str : enterprise.getCreateSalaryBugetTables()) {
-			      System.out.println(str.getName());
-			      
-			}
-			
-		}
-		
-		Enterprise  en=enterpriseService.find(1);
-		
-		for (CreateSalaryBudgetTable str : en.getCreateSalaryBugetTables()) {
-			System.out.println(str.getName());
-		}
-		
-	}
 	@Test
 	public void findEnterpriseBalanceDetail()
 	{

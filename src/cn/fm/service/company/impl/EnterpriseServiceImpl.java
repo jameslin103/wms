@@ -80,7 +80,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		return (Long) query.getSingleResult();
 	}
 	
-public BigDecimal findBalanceDetail(Integer enterpriseId) {
+	public BigDecimal findBalanceDetail(Integer enterpriseId) {
 		
 		Query query=null;
 		try {
@@ -93,12 +93,6 @@ public BigDecimal findBalanceDetail(Integer enterpriseId) {
 	return (BigDecimal)query.getSingleResult();
 		
 	}
-
-	public List<Enterprise> getAllEnterprise(Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	
 	/**
 	 * 查询这个企业的所有负责人
