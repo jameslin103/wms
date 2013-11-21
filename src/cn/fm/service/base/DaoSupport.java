@@ -111,6 +111,27 @@ public abstract class DaoSupport<T> implements DAO<T>{
 		qr.setTotalrecord((Long)query.getSingleResult());
 		return qr;
 	}
+	/**
+	 * 多对多查询结果
+	 * @param firstindex
+	 * @param maxresult
+	 * @param wherejpql
+	 * @param queryParams
+	 * @param orderby
+	 * @return
+	 * Date 2013-11-21
+	 */
+	@Transactional(readOnly=true,propagation=Propagation.NOT_SUPPORTED)
+	public QueryResult<T> getScrollDataManytoMany(int firstindex, int maxresult ,String formManaySql,String wherehql) {
+		
+		QueryResult qr = new QueryResult<T>();
+		Query query = em.createQuery(formManaySql);
+		if(firstindex!=-1 && maxresult!=-1) query.setFirstResult(firstindex).setMaxResults(maxresult);
+		qr.setResultlist(query.getResultList());
+		query = em.createQuery("select count(e) from "+wherehql);
+		qr.setTotalrecord((Long)query.getSingleResult());
+		return qr;
+	}
 	
 	
 	protected static void setQueryParams(Query query, Object[] queryParams){

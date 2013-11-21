@@ -3,6 +3,7 @@ package cn.fm.web.action.company;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -19,12 +20,11 @@ import cn.fm.service.permissions.RoleService;
 import cn.fm.service.user.WmsUserService;
 import cn.fm.utils.Constant;
 import cn.fm.utils.DateUtil;
-import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
 @SuppressWarnings("serial")
-public class EnterpriseAction extends BaseAction implements Preparable{
+public class EnterpriseAction extends BaseAction{
 	
 	@Resource
 	private EnterpriseService enterpriseService;
@@ -44,8 +44,8 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	
 	private Integer				userId;
 	private boolean      isSystemAdmin;
-	
 	private int page;
+	private List<WmsUser> user=new ArrayList<WmsUser>();
 	
 	public int getPage() {
 		return page<1?1:page;
@@ -99,13 +99,11 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	
 	
 	
-	
-	
-	public void prepare() throws Exception {
-		// TODO Auto-generated method stub
-	
-		
-		
+	public List<WmsUser> getUser() {
+		return user;
+	}
+	public void setUser(List<WmsUser> user) {
+		this.user = user;
 	}
 	/**
 	 * 分配负责人
@@ -148,24 +146,31 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		WmsUser user=WebUtil.getWmsUser(request);
 		isSystemAdmin=isStysemUserRole(user);
 		
+		StringBuffer jpql = new StringBuffer("");
+		StringBuffer countjpql = new StringBuffer("");
+
 		List<WmsUser> wmsUsers=wmsUserService.getAllWmsUser();
 		if(wmsUsers.size()==0)wmsUsers=new ArrayList<WmsUser>();
 		
 		
 		if(isSystemAdmin==true)
 		{
-			List<Enterprise> allEnterpsie=enterpriseService.getAllEnterprise();
-			if(allEnterpsie==null || allEnterpsie.size()==0)allEnterpsie=new ArrayList<Enterprise>();
+			jpql.append("select e from Enterprise e ").append(" order by e.enterpriseId desc");
+			countjpql.append("Enterprise e ").append(" order by e.enterpriseId desc");
 			request.setAttribute("isSystemAdmin", isSystemAdmin);
-			request.setAttribute("enterpsie", allEnterpsie);
 		}
 		if(isSystemAdmin!=true)
 		{
-			List<Enterprise> enterpsies=getWmsUserToBeEnterprise();
-			request.setAttribute("enterpsie", enterpsies);
-			
+
+			jpql.append("select e from Enterprise e join e.user u  where u.userId=")
+			.append(user.getUserId()).append(" order by e.enterpriseId desc");
+			 countjpql.append("Enterprise e join e.user u  where u.userId=")
+			.append(user.getUserId()).append(" order by e.enterpriseId desc");
 		}
+		PageView<Enterprise> pageView = new PageView<Enterprise>(10,  this.getPage());
+		pageView.setQueryResult(enterpriseService.getScrollDataManytoMany(pageView.getFirstResult(), pageView.getMaxresult(),jpql.toString(),countjpql.toString()));
 		
+		request.setAttribute("pageView", pageView);
 		request.setAttribute("wmsUsers", wmsUsers);
 		
 		return SUCCESS;
@@ -231,14 +236,14 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	 * 查询当前用户所负责的企业
 	 * @return
 	 */
-	public List<Enterprise> getWmsUserToBeEnterprise()
-	{
-		WmsUser user=WebUtil.getWmsUser(request);
-		WmsUser userPO=wmsUserService.find(user.getUserId());
-		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(userPO);
-		if(enterpriseList.size()==0)enterpriseList=new ArrayList<Enterprise>();
-		return enterpriseList;
-	}
+//	public List<Enterprise> getWmsUserToBeEnterprise()
+//	{
+//		WmsUser user=WebUtil.getWmsUser(request);
+//		WmsUser userPO=wmsUserService.find(user.getUserId());
+//		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(userPO);
+//		if(enterpriseList.size()==0)enterpriseList=new ArrayList<Enterprise>();
+//		return enterpriseList;
+//	}
 	
 	public List<Enterprise> findToBeEnterpriseAndCreateSalaryBudgetTable(List<Enterprise> enterpriseList)
 	{
@@ -310,12 +315,20 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 	 */
 	public String findToIdEnterprise()
 	{
+		WmsUser  us=null;
 		if(enterpriseId==null)return INPUT;
 		enterpriseJson=enterpriseService.find(enterpriseId);
+		for (WmsUser u : enterpriseJson.getUser()) {
+			us=new WmsUser();
+			us.setUserId(u.getUserId());
+			us.setUsername(u.getUsername());
+			user.add(us);
+		}
+		
 		if(enterpriseJson==null)
 			enterpriseJson=new Enterprise();
 		
-		return "enterpriseJson";
+		return SUCCESS;
 	}
 	public String updateEnterprise()
 	{
@@ -334,10 +347,5 @@ public class EnterpriseAction extends BaseAction implements Preparable{
 		
 		return SUCCESS;
 	}
-	public String findEnterpriseGrid()
-	{
-		enterpriseJson=enterpriseService.find(20);
-		
-		return SUCCESS;
-	}
+
 }

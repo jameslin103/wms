@@ -458,7 +458,7 @@ public class EnterpriseEmployees{
 		this.seriousDiseaseBase = seriousDiseaseBase;
 	}
 	
-	@ManyToOne(cascade = {CascadeType.REFRESH},fetch=FetchType.LAZY)
+	@ManyToOne(cascade = {CascadeType.REFRESH},fetch=FetchType.LAZY,optional=true)
 	    @JoinColumn(name="enterpriseId")  
 	@NotFound(action=NotFoundAction.IGNORE)
 	public Enterprise getEnterprise() {
@@ -469,7 +469,7 @@ public class EnterpriseEmployees{
 	}
 	
 	@Transient
-	public long getAddCount() {
+	public long getAddCount(){
 		return addCount;
 	}
 	public void setAddCount(long addCount) {

@@ -90,7 +90,7 @@ public class EnterpriseServiceTest {
 	@Test
 	public void removeToEnterpriseHeadUser()
 	{
-		enterpriseService.removeToEnterpriseHeadUser(17, 3);
+		enterpriseService.removeToEnterpriseHeadUser(1, 1);
 		
 	}
 	
@@ -156,15 +156,15 @@ public class EnterpriseServiceTest {
 			System.out.println(cr.getName());
 		}
 	}
-//	
-//	@Test
-//	public void getUserToAllEnterprise()
-//	{
-//		WmsUser user=new WmsUser();
-//		user.setUserId(5);
-//		enterpriseService.getUserToAllEnterprise(user);
-//		
-//	}
+	
+	@Test
+	public void getUserToAllEnterprise()
+	{
+		WmsUser user=new WmsUser();
+		user.setUserId(5);
+		enterpriseService.getUserToAllEnterprise(user);
+		
+	}
 
 
 }

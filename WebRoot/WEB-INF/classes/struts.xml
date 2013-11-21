@@ -389,7 +389,25 @@
             </result>
         </action> 
         <action name="findToIdEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="findToIdEnterprise">
-           <result type="json" name="enterpriseJson"></result>
+           <result name="success" type="json">
+           		<param name="includeProperties">
+           			enterpriseJson\.enterpriseId,
+           			enterpriseJson\.rferred,
+           			enterpriseJson\.fullName,
+           			enterpriseJson\.legalRepresentative,
+           			enterpriseJson\.accountLine,
+           			enterpriseJson\.enterpriseBankAccount,
+           			enterpriseJson\.address,
+           			enterpriseJson\.contact,
+           			enterpriseJson\.phone,
+           			enterpriseJson\.qq,
+           			enterpriseJson\.fax,
+           			enterpriseJson\.email,
+           			enterpriseJson\.status,
+           			user\[\d+\]\.userId,
+           			user\[\d+\]\.username
+            	 </param>
+           </result>
             <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
             </result>

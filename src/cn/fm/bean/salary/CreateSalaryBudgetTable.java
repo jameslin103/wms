@@ -314,7 +314,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.salaryTemplate = salaryTemplate;
 	}
 
-	@ManyToOne(cascade={CascadeType.REFRESH},fetch=FetchType.EAGER)
+	@ManyToOne(cascade={CascadeType.REFRESH})
 	@JoinColumn(name="user_id")
 	public WmsUser getUser() {
 		return user;

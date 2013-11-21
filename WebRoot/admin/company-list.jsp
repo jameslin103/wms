@@ -15,7 +15,26 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
-
+	<script >
+		function topage(page){
+			var form = document.getElementById("my_enterprise");
+				form.page.value=page;
+				form.submit();
+		}
+		function reset_enterprise(){
+			
+			var form=$('#add_form');
+			clearForm(form);
+		}
+		function reset(){
+			$("#add-enterprise-bnt,#edit-enterprise-bnt").on("hidden",function(){
+				$("form :checkbox",this).removeAttr("checked");
+				$("form",this)[0].reset();
+				clearForm(this);
+			});
+		
+		}
+	</script>
 	</head>
 	<body>
 
@@ -35,23 +54,27 @@
 
 						<ul class="normal action-container clearfix">
 							<li>
-								<a href="#info-for-check1" data-toggle="modal">添加新企业</a>
+								<a href="#add-enterprise-bnt" data-toggle="modal" onclick="reset_enterprise()">添加新企业</a>
 							</li>
 						</ul>
 						<!-- ======================================According to  Enterprise==================================== -->
+						<s:form action="viewEnterprise" method="post" id="my_enterprise">
+							<input type="hidden" name="page"/>
+						
+						
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
-									<th width="8%">
-										&nbsp;&nbsp;&nbsp;&nbsp;序号
+									<th width="8%" style="text-align: center;">
+										序号
 									</th>
-									<th width="8%">
+									<!--<th width="8%">
 										&nbsp;&nbsp;&nbsp;&nbsp;全选<br/>
 										&nbsp;&nbsp;<input type="button" id="delete" value="删除	" 
 										style="background-color:transparent; border:0px; color:#2E9AFE"/><br/>
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="all_box"/>
 									</th>
-									<th width="50%" style="text-align: center;">
+									--><th width="50%" style="text-align: center;">
 										企业
 									</th>
 									<th width="30%" style="text-align: center;">
@@ -62,17 +85,17 @@
 									</th>
 								</tr>
 							</thead>
-							<s:iterator value="#request.enterpsie" id="enterprise" status="list">
+							<s:iterator value="#request.pageView.records" id="enterprise" status="list">
 								<tbody>
 									<tr>
-										<td>
-											&nbsp;&nbsp;&nbsp;&nbsp;<s:property value="%{#list.index+1}" />
+										<td style="text-align: center;">
+											<s:property value="%{#list.index+1}" />
 										</td>
-										<td>
+										<!--<td>
 											&nbsp;&nbsp;&nbsp;&nbsp;
 											<input type="checkbox" value="<s:property  value="%{#enterprise.enterpriseId}" />"/>
 										</td>
-										<td class="with-complement">
+										--><td class="with-complement">
 											<s:property value="%{#enterprise.fullName}" />
 											<span class="complement"> 
 													<s:property value="%{#enterprise.contact}" />  
@@ -80,7 +103,7 @@
 													QQ： <s:property value="%{#enterprise.qq}" /> 
 											</span>
 										</td>
-										<td class="with-complement">
+										<td class="with-complement" style="text-align: center;">
 											<s:iterator value="#request.enterprise.user" id="user">
 												<s:property value="%{#user.username}" />
 											</s:iterator>
@@ -98,13 +121,18 @@
 													
 											 </a>
 										</td>
-										<td>
-											<a href="#info-for-check3"  data-toggle="modal" id="updateto" onclick="modalEnterprise('${enterpriseId}')" >修改</a>
+										<td style="text-align: center;">
+											<a href="#edit-enterprise-bnt"  data-toggle="modal" id="updateto" onclick="modalEnterprise('${enterpriseId}')" >修改</a>
 										</td>
 									</tr>
 								</tbody>
 							</s:iterator>
 						</table>
+						<div class="pagination">
+							<%@ include file="/share/fenye.jsp" %>
+						</div>
+						</s:form>
+						
 						<!-- ================================================End According to  Enterprise=========================== -->
 						<!--<table id="enterpriseflexigrid" style="display:none;">
 						</table>
@@ -118,7 +146,7 @@
 			<div id="footer"></div>
 
 		</div>
-		<div id="info-for-check1" class="modal hide fade" tabindex="-1"
+		<div id="add-enterprise-bnt" class="modal hide fade" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -131,7 +159,7 @@
 			<!-- ==================================addEnterprise====================================== -->
 			
 			<div class="modal-body">
-				<s:form action="addEnterprise" method="post">
+				<s:form action="addEnterprise" method="post" id="add_form">
 					<div class="row-fluid">
 						<div class="input-container">
 							<label>
@@ -230,7 +258,7 @@
 			</div>
 		</div>
 		<!-- =================================updateEnterprise====================================== -->
-		<div id="info-for-check3" class="modal hide fade" tabindex="-1"
+		<div id="edit-enterprise-bnt" class="modal hide fade" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -241,7 +269,7 @@
 				</h3>
 			</div>
 			<div class="modal-body" id="updateEnterprise">
-				<s:form action="/updateEnterprise" method="post">
+				<s:form action="updateEnterprise" method="post">
 				<s:hidden name="enterprise.enterpriseId" value=""></s:hidden>
 					<div class="row-fluid">
 						<div class="input-container">

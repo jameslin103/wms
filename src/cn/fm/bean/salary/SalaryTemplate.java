@@ -55,7 +55,7 @@ public class SalaryTemplate implements Serializable {
 	
 	private Set<CustomBonus>  customBonus=new HashSet<CustomBonus>();
 	
-	@ManyToOne(cascade=CascadeType.REFRESH)
+	@ManyToOne(cascade=CascadeType.REFRESH,optional=true)
 	@JoinColumn(name="enterpriseId")
 	public Enterprise getEnterprise() {
 		return enterprise;
@@ -106,7 +106,7 @@ public class SalaryTemplate implements Serializable {
 		this.tax = tax;
 	}
 	@Column(length=1)
-	public Integer getStatus() {
+	public Integer getStatus(){
 		return status;
 	}
 
@@ -162,7 +162,5 @@ public class SalaryTemplate implements Serializable {
 		if(this.customBonus.contains(customBonus)){
 			this.customBonus.remove(customBonus);
 		}
-		
-		
 	}
 }

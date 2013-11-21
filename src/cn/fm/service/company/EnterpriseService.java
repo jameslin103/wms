@@ -71,4 +71,5 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	public BaseGrid findEnterprisePage(BaseGrid baseGrid);
 	
 	
+	public List<Enterprise> getUserToAllEnterprise(WmsUser user);
 }
