@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.fm.bean.company.EmployeesContract;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.service.base.DaoSupport;
@@ -278,10 +279,12 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	 */
 	public void saveEnterpriseEmployees(List<EnterpriseEmployees> enterpriseEmployeesList,Enterprise enterprise){
 		if(enterpriseEmployeesList==null ||enterpriseEmployeesList.size()==0)return;
+		EmployeesContract   employeesContract;
 		EnterpriseEmployees  employees;
 		for (EnterpriseEmployees emp : enterpriseEmployeesList) {
 			if(emp==null || emp.equals(""))continue;
 			employees=new EnterpriseEmployees();
+			employeesContract=new EmployeesContract();
 			employees.setContractNo(emp.getContractNo());
 			employees.setEmployeesName(emp.getEmployeesName());
 			employees.setEmployeesSex(emp.getEmployeesSex());
@@ -297,8 +300,8 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			employees.setJobs(emp.getJobs());
 			employees.setBank(emp.getBank());
 			employees.setBankCardNumber(emp.getCardNumber());
-			employees.setStartContractDeadline(emp.getStartContractDeadline());
-			employees.setEndContractDeadline(emp.getEndContractDeadline());
+//			employees.setStartContractDeadline(emp.getStartContractDeadline());
+//			employees.setEndContractDeadline(emp.getEndContractDeadline());
 			employees.setServiceCost(emp.getServiceCost());
 			employees.setGinsengProtectNature(emp.getGinsengProtectNature());
 			employees.setWhetherGinseng(emp.getWhetherGinseng());
@@ -317,6 +320,10 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			employees.setPaymentWay(emp.getPaymentWay());
 			employees.setDeparture(emp.getDeparture());
 			employees.setPseudoDelete(emp.getPseudoDelete());
+			employeesContract.setContractStatrDate(emp.getStartContractDeadline());
+			employeesContract.setContractEndDate(emp.getEndContractDeadline());
+			employeesContract.setContractNo(emp.getContractNo());
+			employees.addEmployeesContract(employeesContract);
 			
 			if(enterprise!=null)employees.setEnterprise(em.find(Enterprise.class, enterprise.getEnterpriseId()));
 			try {
@@ -526,7 +533,6 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 				}
 				
 			}catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				messageList.add("文件出错请重试!");
 			
@@ -553,7 +559,6 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			   .setParameter(9, enterpriseEmployees.getCinsengDate()).setParameter(10, enterpriseEmployees.getEmployeesId()).executeUpdate();
 			return true;
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			return false;
 		}

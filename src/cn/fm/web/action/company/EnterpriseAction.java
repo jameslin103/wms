@@ -3,12 +3,7 @@ package cn.fm.web.action.company;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
-
 import javax.annotation.Resource;
-
-import com.opensymphony.xwork2.Preparable;
-
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
@@ -229,9 +224,6 @@ public class EnterpriseAction extends BaseAction{
 		StringBuffer jpql = new StringBuffer("");
 		StringBuffer countjpql = new StringBuffer("");
 		
-//		WmsUser userPO=wmsUserService.find(user.getUserId());
-//		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(userPO);
-//		request.setAttribute("enterpriseList", enterpriseList);
 		
 		
 		jpql.append("select e from Enterprise e join e.user u  where u.userId=")

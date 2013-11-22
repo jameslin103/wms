@@ -77,7 +77,7 @@
 					</ul>
           
           <ul class="normal action-container clearfix">
-            <li class="title"><s:date name="%{#request.employeesSalaryDetail[1].salaryDate}" format="yyyy年MM月"/>工资明细</li>
+            <li class="title"><s:date name="%{#request.pageView.records[1].salaryDate}" format="yyyy年MM月"/>工资明细</li>
             <li class="right"><a href="downloadEmployeesSalaryDetail?budgetId=<s:property value="%{#request.budgetId}"/>" class="btn btn-primary">下载Excel表格</a></li>
           </ul>
 		  <s:form action="viewAllEmployeesSalaryDetail" method="post" id="myformdate">
@@ -214,7 +214,6 @@
           </div>
         </div>
       </form>
-
     </div>
 
     <div class="modal-footer">

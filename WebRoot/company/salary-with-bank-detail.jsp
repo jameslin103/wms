@@ -87,23 +87,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th>序</th>
-                <th>姓名</th>
-                <th>身份证</th>
-                <th>银行名称</th>
-                <th>卡号</th>
-                <th>工资金额（元）</th>
+                <th style="text-align: center;">序</th>
+                <th style="text-align: center;">姓名</th>
+                <th style="text-align: center;">身份证</th>
+                <th style="text-align: center;">银行名称</th>
+                <th style="text-align: center;">卡号</th>
+                <th style="text-align: center;">工资金额（元）</th>
               </tr>
             </thead>
             <tbody>
-            <s:iterator value="#request.pageView.records" id="employeesSalaryDetail">
+            <s:iterator value="#request.pageView.records" id="employeesSalaryDetail" status="list">
               <tr>
-                <td><s:property value="%{#employeesSalaryDetail.salaryId}"/></td>
-                <td><s:property value="%{#employeesSalaryDetail.employeesName}"/></td>
-                <td><s:property value="%{#employeesSalaryDetail.cardNumber}"/></td>
-                <td><s:property value="%{#employeesSalaryDetail.note}"/></td>
-                <td><s:property value="%{#employeesSalaryDetail.bankCardNumber}"/></td>
-                <td><s:property value="%{#employeesSalaryDetail.wage}"/></td>
+                <td style="text-align: center;"><s:property value="%{#list.index+1}"/></td>
+                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.employeesName}"/></td>
+                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.cardNumber}"/></td>
+                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.note}"/></td>
+                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.bankCardNumber}"/></td>
+                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.wage}"/></td>
               </tr>
               </s:iterator>
             </tbody>
@@ -114,10 +114,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  </s:form>
 		</div>
 		</div>
-				<s:hidden name="budgetId" value="%{#request.budgetId}"></s:hidden>
+				<!--<s:hidden name="budgetId" value="%{#request.budgetId}"></s:hidden>
 		  		<table id="flexigrid" style="display: none;"></table>
 				
-		</div>
+		--></div>
 		<div id="footer"></div>
 	</div>
 </body>

@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.Preparable;
 import cn.fm.bean.PageView;
+import cn.fm.bean.company.EmployeesContract;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.service.company.EnterpriseEmployeesService;
@@ -34,6 +35,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	private EnterpriseEmployees  enterpriseEmployees;
 	private EnterpriseEmployees  enterpriseEmployeesJson;
+	private EmployeesContract    employeesContract;
 	
 	private String    endContractDeadline;
 	private String    startContractDeadline;
@@ -134,7 +136,12 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	public void setCinsengDate(String cinsengDate) {
 		this.cinsengDate = cinsengDate;
 	}
-	
+	public EmployeesContract getEmployeesContract() {
+		return employeesContract;
+	}
+	public void setEmployeesContract(EmployeesContract employeesContract) {
+		this.employeesContract = employeesContract;
+	}
 	public int getPage() {
 		return page<1?1:page;
 	}
@@ -251,6 +258,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	
 	public String  addEnterpriseEmployees()
 	{
+		
 	    Enterprise enterprise=WebUtil.getEnterprise(request);
 	    if(enterprise==null)return INPUT;
 		
@@ -262,10 +270,16 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			request.setAttribute("urladdress", "viewEnterpriseEmployees");
 			return "message";
 		}
+		EmployeesContract  employeesContract=new EmployeesContract();
 		String sex=(enterpriseEmployees.getEmployeesSex().toString()=="1")?"男":"女";
 		enterpriseEmployees.setEmployeesSex(sex);
 		enterpriseEmployees.setEnterprise(enterprise);
+		employeesContract.setContractStatrDate(enterpriseEmployees.getStartContractDeadline());
+		employeesContract.setContractEndDate(enterpriseEmployees.getEndContractDeadline());
+		employeesContract.setContractNo(enterpriseEmployees.getContractNo());
+		enterpriseEmployees.addEmployeesContract(employeesContract);
 		enterpriseEmployeesService.save(enterpriseEmployees);
+		
 		request.setAttribute("message", "添加成功!");
 		request.setAttribute("urladdress", "viewEnterpriseEmployees");
 		

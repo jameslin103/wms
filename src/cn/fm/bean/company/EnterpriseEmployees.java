@@ -160,6 +160,9 @@ public class EnterpriseEmployees{
 	
 	private Set<EmployeesSalaryDetail>  employeesSalaryDetails=new HashSet<EmployeesSalaryDetail>();
 	
+	private Set<EmployeesContract>  employeesContract=new HashSet<EmployeesContract>();
+	
+	
 	@Column(length=30)
 	public String getReductionNote() {
 		return reductionNote;
@@ -490,6 +493,7 @@ public class EnterpriseEmployees{
 		this.whetherGinsengCount = whetherGinsengCount;
 	}
 	@OneToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY,mappedBy="enterpriseEmployees")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<EmployeesSalaryDetail> getEmployeesSalaryDetails() {
 		return employeesSalaryDetails;
 	}
@@ -506,6 +510,28 @@ public class EnterpriseEmployees{
 			this.employeesSalaryDetails.remove(employeesSalaryDetail);
 			
 		}
+	}
+	@OneToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY,mappedBy="enterpriseEmployees")
+	@NotFound(action=NotFoundAction.IGNORE)
+	public Set<EmployeesContract> getEmployeesContract() {
+		return employeesContract;
+	}
+	public void setEmployeesContract(Set<EmployeesContract> employeesContract) {
+		this.employeesContract = employeesContract;
+	}
+	public void addEmployeesContract(EmployeesContract employeesContract){
+		employeesContract.setEnterpriseEmployees(this);
+		this.employeesContract.add(employeesContract);
+		
+	}
+	public void romveEmployeesContract()
+	{
+		if(this.employeesContract.contains(employeesContract))
+		{
+			this.employeesContract.remove(employeesContract);
+		}
+		
+		
 	}
 	
 }

@@ -21,24 +21,44 @@
 			<div id="header">
 				<jsp:include page="../layout/header.jsp" />
 			</div>
-
 			<div id="main">
 				<div class="row-fluid">
 
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
-							<li>
-								<a href="company/index.jsp">综合</a>
-							</li>
-							<li class="active">
-								<a href="viewEnterpriseEmployees">员工档案</a>
-							</li>
-							<li>
-								<a href="viewSalaryBudgetTable">工资预算表</a>
-							</li>
-							<li>
-								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
-							</li>
+							<s:iterator value="#session.menuList" id="menu">
+								<s:if test="#menu.url=='viewEnterpriseEmployees'">
+									<li class="active">
+										<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewSalaryBudgetTable'">
+									<li >
+										<a href="viewSalaryBudgetTable" >
+											<s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewInsuranceWithMonth'">
+									<li >
+										<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewBalanceDetail'">
+									<li >
+										<a href="viewBalanceDetail" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewEnterpriseDetailed'">
+									<li>
+										<a href="viewEnterpriseDetailed" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+							</s:iterator>
 						</ul>
 
 						<ul class="normal action-container clearfix">
@@ -60,61 +80,72 @@
 									href="viewEmployeeContract?employeesId=<s:property value="%{#request.employees.employeesId}"/>">合同</a>，
 							</li>
 							<li>
-								<a href="selectEnterpriseEmployeesWage?employeesId=<s:property value="%{#request.employees.employeesId}"/>">基本信息</a>，
+								<a href="selectEnterpriseEmployeesWage?employeesId=<s:property value="%{#request.employees.employeesId}"/>">基本信息</a>
 							</li>
-							<li>
-								&nbsp;/&nbsp;
-							</li>
-							<li>
-								操作：
-							</li>
-							<!--<li>
-								<s:set value="%{#request.employees.employeesId}" var="employeesId"></s:set>
-								<a href="#info-for-check" onclick="findIdToEmployees('${employeesId}')" data-toggle="modal">修改</a>
-							</li>
-						--></ul>
+							<li>/</li>
+							
+						</ul>
 
 						<h3>
 							合同记录
 						</h3>
-
+							
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
-									<th>
+									<th style="text-align: center;">
 										序
 									</th>
-									<th>
+									<th style="text-align: center;">
+										合同编号
+									</th>
+									<th style="text-align: center;">
 										起
 									</th>
-									<th>
+									<th style="text-align: center;">
 										止
 									</th>
-									<th>
+									<th style="text-align: center;">
 										实际终止
 									</th>
-									<th>
+									<th style="text-align: center;">
 										性质
+									</th>
+									<th style="text-align: center;">
+										操作
 									</th>
 								</tr>
 							</thead>
+							<s:iterator value="#request.employees.employeesContract" id="employeesContract" status="list">
+							
 							<tbody>
 								<tr>
-									<td>
-										<s:property value="#request.employees.employeesId" />
+									<td style="text-align: center;">
+										<s:property value="#list.index+1"/>
 									</td>
-									<td>
-										<s:date name="#request.employees.startContractDeadline" format="yyyy年MM月dd日"/>
+									<td style="text-align: center;">
+										<s:property value="%{#employeesContract.contractNo}"/>
 									</td>
-									<td>
-										<s:date name="#request.employees.endContractDeadline" format="yyyy年MM月dd日"/>
+									<td style="text-align: center;">
+										<s:date name="%{#employeesContract.contractStatrDate}" format="yyyy年MM月dd日"/>
 									</td>
-									<td>
-										<s:date name="#request.employees.reductionDate" format="yyyy年MM月dd日"/>
+									<td style="text-align: center;">
+										<s:date name="%{#employeesContract.contractEndDate}" format="yyyy年MM月dd日"/>
 									</td>
-									<td>续签</td>
+									<td style="text-align: center;">
+										<s:date name="%{#employeesContract.actualTerminationDate}" format="yyyy年MM月dd日"/>
+									</td>
+									<td style="text-align: center;"><s:property value="%{#employeesContract.status}"/></td>
+									<td style="text-align: center;">
+									  <s:if test="#employeesContract.actualTerminationDate==null">
+									  		<s:set value="%{#employeesContract.contractid}" var="contractid"></s:set>
+									  		<s:set value="%{#request.employeesId}" var="employeesId"></s:set>
+										<a href="#info-for-check" onclick="findContractJson('${contractid},${employeesId}')" data-toggle="modal">续签/修改</a>
+									  </s:if>
+									</td>
 								</tr>
 							</tbody>
+							</s:iterator>
 						</table>
 
 					</div>
@@ -126,266 +157,45 @@
 
 		</div>
 		<!-- Modal -->
-		<div id="#info-for-check" class="modal hide fade modal-of-info-for-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="info-for-check" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"aria-hidden="true">
 					×
 				</button>
 				<h3 id="myModalLabel">
-					员工信息
+					合同信息
 				</h3>
 			</div>
 			<div class="modal-body">
-				<s:form action="updateEnterpriseEmployees" method="post" id="loginForm">
+				<s:form action="updateEmployeesContract" method="post" id="con_form">
+					
 					<s:hidden name="enterpriseEmployees.employeesId"></s:hidden>
+					<s:hidden name="enterpriseEmployees.contractid"></s:hidden>
 					<div class="row-fluid">
 						<div class="input-container">
 							<label>
 								合同编号
 							</label>
-							<s:textfield name="enterpriseEmployees.contractNo" cssClass="required email" id="input_e"/>
-
+							<s:textfield name="employeesContract.contractNo" cssClass="required email" id="input_e"/>
 						</div>
-
-						<div class="input-container">
-							<label>
-								姓名
-							</label>
-							<s:textfield name="enterpriseEmployees.employeesName" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								身份证
-							</label>
-							<s:textfield name="enterpriseEmployees.cardNumber" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								性别
-							</label>
-							<input type="radio" name="enterpriseEmployees.employeesSex"
-								value="1" checked="checked" />
-							男
-							<input type="radio" name="enterpriseEmployees.employeesSex"
-								value="0" />
-							女
-						</div>
-
-						<div class="input-container">
-							<label>
-								户口性质
-							</label>
-							<input type="radio" name="enterpriseEmployees.householdRegister"
-								value="1" checked="checked" />
-							非农
-							<input type="radio" name="enterpriseEmployees.householdRegister"
-								value="0" />
-							农村
-						</div>
-
-						<div class="input-container">
-							<label>
-								是否有照片？
-							</label>
-							<input type="radio" name="enterpriseEmployees.photo" value="1"
-								checked="checked" />
-							无
-							<input type="radio" name="enterpriseEmployees.photo" value="0" />
-							有
-						</div>
-
-						<div class="input-container">
-							<label>
-								电话
-							</label>
-							<s:textfield name="enterpriseEmployees.phone" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								家庭住址
-							</label>
-							<s:textfield name="enterpriseEmployees.homeAddress" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								银行卡号
-							</label>
-							<s:textfield name="enterpriseEmployees.bankCardNumber" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								开户银行
-							</label>
-							<s:textfield name="enterpriseEmployees.bank" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								籍贯
-							</label>
-							<s:textfield name="enterpriseEmployees.nativePlace" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								行业
-							</label>
-							<s:textfield name="enterpriseEmployees.industry" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								岗位
-							</label>
-							<s:textfield name="enterpriseEmployees.jobs" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								婚姻状况
-							</label>
-							<input type="radio" name="enterpriseEmployees.maritalStatus" value="1" checked="checked" />
-							未婚，
-							<input type="radio" name="enterpriseEmployees.maritalStatus" value="0" />
-							已婚
-						</div>
-
-						<div class="input-container">
-							<label>
-								文化程度
-							</label>
-							<s:textfield name="enterpriseEmployees.jobs" />
-						</div>
-
 						<div class="input-container">
 							<label>
 								合同期限
 							</label>
 							起：
-							<s:textfield id="d11"
-								name="enterpriseEmployees.startContractDeadline"
-								onclick="WdatePicker()" cssClass="Wdate" />
+							<input type="text" id="d4311"
+								name="employeesContract.contractStatrDate"
+								 onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'d4311\')||\'2020-10-01\'}',skin:'whyGreen'})" class="Wdate" />
 						</div>
-
 						<div class="input-container">
 							止：
-							<s:textfield id="d11" name="enterpriseEmployees.endContractDeadline"
-								onclick="WdatePicker()" cssClass="Wdate" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								是否参保?
-							</label>
-							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="1" checked="checked" />
-							是，
-							<input type="radio" name="enterpriseEmployees.whetherGinseng"
-								value="0" />
-							否
-						</div>
-
-						<div class="input-container">
-							<label>
-								参保类型
-							</label>
-							<input type="checkbox" name="enterpriseEmployees.sociaSecurity"	value="医保" />
-							医保
-							<input type="checkbox" name="enterpriseEmployees.healthCare"  value="社保" />
-							社保
-							<input type="checkbox" name="enterpriseEmployees.accumulationFund" value="公积金" />
-							公积金
-						</div>
-
-						<div class="input-container">
-							<label>
-								参保性质
-							</label>
-							<input type="radio" 	name="enterpriseEmployees.ginsengProtectNature" value="1" checked="checked" />
-							新增，
-							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="0" />
-							续保
-						</div>
-
-						<div class="input-container">
-							<label>
-								开始参保日期:
-							</label>
-							<s:textfield id="d11" name="enterpriseEmployees.cinsengDate"
-								onclick="WdatePicker()" cssClass="Wdate" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								参保基数
-							</label>
-							<input type="radio" name="enterpriseEmployees.base" value="1"
-								checked="checked" />
-							默认基数，
-							<input type="radio" name="enterpriseEmployees.base" value="0" />
-							个性设置
-						</div>
-
-						<div class="input-container">
-							<label>
-								社会保险基数
-							</label>
-							<s:textfield name="enterpriseEmployees.socialInsurance" />
+							<input type="text" id="d4312" name="employeesContract.contractEndDate"
+								 class="Wdate" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'d4311\')}',maxDate:'2020-10-01',skin:'whyGreen'})"/>
 						</div>
 						<div class="input-container">
-							<label>
-								生育保险基数
-							</label>
-							<s:textfield name="enterpriseEmployees.fertilityInsurance" />
+							续签
+							<input type="checkbox" name="employeesContract.status" value="续签"/>
 						</div>
-						<div class="input-container">
-							<label>
-								工伤基数
-							</label>
-							<s:textfield name="enterpriseEmployees.inductrialBase" />
-						</div>
-						<div class="input-container">
-							<label>
-								基本医疗保险基数
-							</label>
-							<s:textfield name="enterpriseEmployees.basicMedical" />
-						</div>
-						<div class="input-container">
-							<label>
-								住房公积金基数
-							</label>
-							<s:textfield name="enterpriseEmployees.housingFund" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								个税缴纳方式?
-							</label>
-							<input type="radio" name="enterpriseEmployees.paymentWay" value="1" checked="checked" />
-							个人缴纳，
-							<input type="radio" name="enterpriseEmployees.paymentWay" value="0" />
-							企业缴纳
-						</div>
-
-						<div class="input-container">
-							<label>
-								状态?
-							</label>
-							<input type="checkbox" name="enterpriseEmployees.pseudoDelete" value="1" />
-							隐藏
-						</div>
-
-						<div class="input-container">
-							<label>
-								服务费
-							</label>
-							<s:textfield name="enterpriseEmployees.serviceCost" />
-						</div>
-
 						<div class="input-container">
 							<s:submit cssClass="btn btn-primary" value="提交" />
 						</div>
@@ -393,12 +203,6 @@
 					</div>
 				</s:form>
 			</div>
-			
-			
-			
-			
-			
-			
 			<div class="modal-footer">
 				<button class="btn" data-dismiss="modal" aria-hidden="true">
 					Close

@@ -20,6 +20,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import cn.fm.bean.company.CustomBonus;
 import cn.fm.bean.company.Enterprise;
 
@@ -57,6 +60,7 @@ public class SalaryTemplate implements Serializable {
 	
 	@ManyToOne(cascade=CascadeType.REFRESH,optional=true)
 	@JoinColumn(name="enterpriseId")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Enterprise getEnterprise() {
 		return enterprise;
 	}
@@ -130,6 +134,7 @@ public class SalaryTemplate implements Serializable {
 		this.subsidys = subsidys;
 	}
 	@OneToMany(cascade={CascadeType.REFRESH},fetch=FetchType.EAGER,mappedBy="salaryTemplate")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBudgetTable() {
 		return createSalaryBudgetTable;
 	}
@@ -147,6 +152,7 @@ public class SalaryTemplate implements Serializable {
 		}
 	}
 	@OneToMany(cascade={CascadeType.REFRESH},fetch=FetchType.EAGER,mappedBy="salaryTemplate")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<CustomBonus> getCustomBonus() {
 		return customBonus;
 	}

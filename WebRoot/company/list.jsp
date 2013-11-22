@@ -12,7 +12,11 @@
 		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache"/> 
+		<meta http-equiv="cache-control" content="no-cache"/> 
+		<meta http-equiv="expires" content="0"/>  
 		<%@ include file="/help/public_css_js.jsp"%>
+		
 		<script>
 			function topage(page){
 				var form = document.getElementById("to_enter_form");
@@ -101,16 +105,16 @@
 											<a href="#info-of-company" onclick="modalEnterprise('${enterpriseId}')" data-toggle="modal">详细信息</a>，
 											<a href="#info-for-check" data-toggle="modal" onclick="modalEnterprise('${enterpriseId}')" >修改联系人</a>
 										</td>
-										<td>
+										<td style="text-align: center;">
 											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>" id="viewdetail">
 												<s:property  value="%{#enterprise.balanceDetailTotal}"/></a>
 										</td>
-										<td>
+										<td style="text-align: center;">
 											<a href="viewEnterpriseEmployees?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/> "><s:property value="%{#enterprise.count}"/></a>
 										</td>
 										<td>
 										<ol>
-											<s:iterator value="%{#request.createSalaryBugetTables}" id="cr">
+											<s:iterator value="#enterprise.createSalaryBugetTables" id="cr">
 														    <li>
 															    <a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>&budgetId=<s:property value="%{#cr.budgetId}"/>">
 																    	<s:if test="#cr.name.length()>15">
@@ -126,20 +130,17 @@
 															    </a>
 														    </li>
 												</s:iterator>
-											</ol>
+										
+										</ol>
 										</td>
 										<td>
-											<s:iterator value="%{#request.enterprises}" id="en">
-												 <s:if test="#en.enterpriseId==#enterprise.enterpriseId">
-													<a href="viewWorkersIncreased?enterprise.enterpriseId=<s:property value="%{#en.enterpriseId}"/>">
-														增员<s:property value="%{#en.addCount}"/>人，
-														减员<s:property value="%{#en.reduction}"/>人，
-														参保<s:property value="%{#en.whetherGinsengCount}"/>人
-													</a>
-											</s:if>
-											</s:iterator>
+											<a href="viewWorkersIncreased?enterprise.enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">
+													增员<s:property value="%{#enterprise.addCount}"/>人，
+													减员<s:property value="%{#enterprise.reduction}"/>人，
+													参保<s:property value="%{#enterprise.whetherGinsengCount}"/>人
+											</a>
 										</td>
-										<td>
+										<td style="text-align: center;">
 											<s:property value="%{#session.user.username}"/>
 										</td>
 									</tr>

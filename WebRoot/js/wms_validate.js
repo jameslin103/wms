@@ -247,7 +247,6 @@ function findIdToEmployees(employeesId)
 function reset(){
 	
 	$("#info-for-check").on("show",function(){
-		alert("xxxxx");
 		$("form :checkbox",this).removeAttr("checked");
 		$("form",this)[0].reset();
 	});
@@ -451,7 +450,16 @@ function findEnterpriseEmployeesRecution(enterpriseId,month,year)
 
 }
 
+//合同续签
 
+function  findContractJson(contractid,employeesId){
+	$.getJSON("findContractJson",{"contractid":contractid}).success(function(data){
+		    $.each(data, function(i, field){
+		      //$("div").append(field + " ");
+		    });
+		  });
+
+}
 
 
 
@@ -506,6 +514,12 @@ $(function (){
  	  });
  	   
  });
+
+
+
+
+
+
 
 
 

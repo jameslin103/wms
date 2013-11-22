@@ -226,6 +226,16 @@
             	<param name="actionName">viewEnterpriseEmployees</param>
             </result>
         </action>
+        <action name="findContractJson"  class="cn.fm.web.action.company.EmployeesContractAction" method="findContractJson">
+        	<result name="success" type="json"></result>
+        </action>
+        <!-- 续签合同 -->
+         <action name="updateEmployeesContract" class="cn.fm.web.action.company.EmployeesContractAction" method="updateEmployeesContract">
+             <result name="success" type="redirectAction">
+            	<param name="actionName">viewEmployeeContract</param>
+            	<param name="employeesId">${employeesId}</param>
+            </result>
+        </action>
         
           <!-- 增减员与参保明细 -->
         <action name="viewInsuranceWithMonth" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewInsuranceWithMonth">

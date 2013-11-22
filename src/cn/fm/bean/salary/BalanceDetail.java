@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import cn.fm.bean.company.Enterprise;
 
 /**
@@ -256,6 +259,7 @@ public class BalanceDetail implements Serializable{
 	
 	@ManyToOne(cascade={CascadeType.REFRESH },optional=true)
 	@JoinColumn(name="enterprise_id")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Enterprise getEnterprise() {
 		return enterprise;
 	}

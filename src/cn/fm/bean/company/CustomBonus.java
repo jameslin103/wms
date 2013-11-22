@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import cn.fm.bean.salary.SalaryTemplate;
 
 
@@ -63,6 +66,7 @@ public class CustomBonus implements Serializable{
 	}
 	@ManyToOne(cascade={CascadeType.REFRESH},optional=true)
 	@JoinColumn(name="enterprise_id")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Enterprise getEnterprise() {
 		return enterprise;
 	}
@@ -72,6 +76,7 @@ public class CustomBonus implements Serializable{
 	
 	@ManyToOne(cascade={CascadeType.REFRESH,CascadeType.MERGE},optional=true)
 	@JoinColumn(name="template_id")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public SalaryTemplate getSalaryTemplate(){
 		return salaryTemplate;
 	}

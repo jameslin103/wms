@@ -235,8 +235,8 @@ public class Enterprise implements Serializable{
 		this.count = count;
 	}
 
-	@OneToMany(cascade ={CascadeType.ALL}, mappedBy = "enterprise")
-	@OrderBy("budgetId asc")
+	@OneToMany(cascade ={CascadeType.ALL},fetch=FetchType.LAZY, mappedBy = "enterprise")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBugetTables() {
 		return createSalaryBugetTables;
 	}
@@ -329,8 +329,8 @@ public class Enterprise implements Serializable{
 		this.reductionTotal = reductionTotal;
 	}
 	
-	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.PERSIST},
-			mappedBy="enterprise")
+	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.PERSIST},fetch=FetchType.LAZY,mappedBy="enterprise")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<CustomBonus> getCustomBonus() {
 		return customBonus;
 	}

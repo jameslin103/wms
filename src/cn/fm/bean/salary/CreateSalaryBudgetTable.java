@@ -6,13 +6,16 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.user.WmsUser;
 
@@ -297,6 +300,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 
 	@ManyToOne(cascade = { CascadeType.REFRESH},optional=true)
 	@JoinColumn(name = "enterpriseId")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Enterprise getEnterprise() {
 		return enterprise;
 	}
@@ -306,6 +310,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 	@ManyToOne(cascade={CascadeType.REFRESH},optional=true)
 	@JoinColumn(name="templateId")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public SalaryTemplate getSalaryTemplate() {
 		return salaryTemplate;
 	}
@@ -316,6 +321,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 
 	@ManyToOne(cascade={CascadeType.REFRESH})
 	@JoinColumn(name="user_id")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public WmsUser getUser() {
 		return user;
 	}
