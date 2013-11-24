@@ -452,18 +452,76 @@ function findEnterpriseEmployeesRecution(enterpriseId,month,year)
 
 //合同续签
 
-function  findContractJson(contractid,employeesId){
-	$.getJSON("findContractJson",{"contractid":contractid}).success(function(data){
-		    $.each(data, function(i, field){
-		      //$("div").append(field + " ");
-		    });
-		  });
+function  findContractJson(contractid){
+	if(contractid==null || contractid==undefined)return;
+	var employeesId=$("#employeesId").val();
+	$.ajax({    
+	    url:'findContractJson',// 跳转到 action  
+	    data:{contractid:contractid},    
+	    type:'post',    
+	    cache:false,
+	    dataType:'json',    
+	    success:function(data){
+	    	
+	    	var   contractStatrDate=new   Date(data.employeesContract.contractStatrDate).format("yyyy-MM-dd");   
+	    	var   contractEndDate=new   Date(data.employeesContract.contractEndDate).format("yyyy-MM-dd");  
+	    	
+	    	$("input[name='employeesId']").val(employeesId);
+	    	$("input[name='employeesContract.contractNo']").val(data.employeesContract.contractNo);
+	    	$("input[name='employeesContract.contractStatrDate']").val(contractStatrDate);
+	    	$("input[name='employeesContract.contractEndDate']").val(contractEndDate);
+	    	
+	    	var currentDate=new Date().format("yyyy-MM-dd");
+	    	var data=$("#d4311").val();
+	    	if(data<currentDate){
+	    		//$("#d4311").attr("disabled",true);
+	    	}else{
+	    		//$("#d4311").removeAttr("disabled");
+	    	}
+	    },    
+	     error : function() {  
+	    	 alert("系统异常，请稍后重试！");
+	     }    
+	});	
+		
 
 }
 
-
-
-
+/** 
+ * 时间对象的格式化 
+ */  
+ Date.prototype.format = function(format)  
+ {  
+ /* 
+ * format="yyyy-MM-dd hh:mm:ss"; 
+ */  
+	 var o = {  
+		 "M+" : this.getMonth() + 1,  
+		 "d+" : this.getDate(),  
+		 "h+" : this.getHours(),  
+		 "m+" : this.getMinutes(),  
+		 "s+" : this.getSeconds(),  
+		 "q+" : Math.floor((this.getMonth() + 3) / 3),  
+		 "S" : this.getMilliseconds()  
+	 }  
+	   
+	 if (/(y+)/.test(format))  
+	 {  
+		 format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4  
+		 - RegExp.$1.length));  
+	 }  
+	   
+	 for (var k in o)  
+	 {  
+		 if (new RegExp("(" + k + ")").test(format))  
+		 {  
+			 format = format.replace(RegExp.$1, RegExp.$1.length == 1  
+			 ? o[k]  
+			 : ("00" + o[k]).substr(("" + o[k]).length));  
+		 }  
+	 }  
+	 return format;  
+ }  
 
 
 
@@ -481,7 +539,6 @@ function valitate_xls()
 		{
 			
 			var file_format=file.lastindexof(".")+1;
-			alert(file_format);
 		    if (file_format!='xlsx'  && file_format!='xls')
 		       {
 		         alert('不支持该格式文件请重新选择！！');

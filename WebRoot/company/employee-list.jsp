@@ -409,7 +409,7 @@
 								value="1" checked="checked" />
 							非农
 							<input type="radio" name="enterpriseEmployees.householdRegister"
-								value="0" />
+								value="2" />
 							农村
 						</div>
 
@@ -419,9 +419,9 @@
 							</label>
 							<input type="radio" name="enterpriseEmployees.photo" value="1"
 								checked="checked" />
-							无
-							<input type="radio" name="enterpriseEmployees.photo" value="0" />
 							有
+							<input type="radio" name="enterpriseEmployees.photo" value="0" />
+							无
 						</div>
 
 						<div class="input-container">
@@ -487,7 +487,7 @@
 							<label>
 								文化程度
 							</label>
-							<s:textfield name="enterpriseEmployees.jobs" />
+							<s:textfield name="enterpriseEmployees.levelEducation" />
 						</div>
 
 						<div class="input-container">

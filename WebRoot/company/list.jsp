@@ -83,7 +83,6 @@
 									</th>
 								</tr>
 							</thead>
-								
 							<s:iterator value="#request.enterprises" id="enterprise" status="list">
 								<tbody>
 									<tr>

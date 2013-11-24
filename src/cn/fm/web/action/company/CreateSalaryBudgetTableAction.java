@@ -53,90 +53,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	private Integer  year;
 	
 	
-	
-	public Integer getYear() {
-		return year;
-	}
-	public void setYear(Integer year) {
-		this.year = year;
-	}
-	public Integer getBudgetId() {
-		return budgetId;
-	}
-	public void setBudgetId(Integer budgetId) {
-		this.budgetId = budgetId;
-	}
-	public Integer getEnterpriseId() {
-		return enterpriseId;
-	}
-	public void setEnterpriseId(Integer enterpriseId) {
-		this.enterpriseId = enterpriseId;
-	}
-	public String getExcelName() {
-		return excelName;
-	}
-	public void setExcelName(String excelName) {
-		this.excelName = excelName;
-	}
-	public String getMessage() {   
-	        return message;   
-	  }   
-	 public void setMessage(String message) {   
-	        this.message = message;   
-	 }   
-	public String getSalaryDate() {
-		return salaryDate;
-	}
 
-	public void setSalaryDate(String salaryDate) {
-		this.salaryDate = salaryDate;
-	}
-	
-	
-	public Integer getTemplateId() {
-		return templateId;
-	}
-	public void setTemplateId(Integer templateId) {
-		this.templateId = templateId;
-	}
-	public String getError() {
-		return error;
-	}
-
-	public void setError(String error) {
-		this.error = error;
-	}
-	
-	
-	public File getFile() {
-		return file;
-	}
-	public void setFile(File file) {
-		this.file = file;
-	}
-	public List<CreateSalaryBudgetTable> getCreateSalaryBudgetTableList() {
-		return createSalaryBudgetTableList;
-	}
-
-	public void setCreateSalaryBudgetTableList(
-			List<CreateSalaryBudgetTable> createSalaryBudgetTableList) {
-		this.createSalaryBudgetTableList = createSalaryBudgetTableList;
-	}
-
-	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
-		return createSalaryBudgetTable;
-	}
-
-	public void setCreateSalaryBudgetTable(
-			CreateSalaryBudgetTable createSalaryBudgetTable) {
-		this.createSalaryBudgetTable = createSalaryBudgetTable;
-	}
-	
-	public void setCreateSalaryBudgetTableService(
-			CreateSalaryBudgetTableService createSalaryBudgetTableService) {
-		this.createSalaryBudgetTableService = createSalaryBudgetTableService;
-	}
-	
 	/**
 	 * 查看当前企业的预算表
 	 * @return
@@ -190,6 +107,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	public String  addSalaryBudgetTable()
 	{
 			WmsUser user=WebUtil.getWmsUser(request);
+			Enterprise  enterprise=WebUtil.getEnterprise(request);
 			CreateSalaryBudgetTable	createSalaryBudgetTablePO=null;
 			if(createSalaryBudgetTable!=null && createSalaryBudgetTable.getBudgetId()!=null)
 			{
@@ -203,14 +121,18 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 					CreateSalaryBudgetTable createSalaryBudgetTable_PO=createSalaryBudgetTableService.find(budgetId);
 					createSalaryBudgetTable.setChooseTax(createSalaryBudgetTable_PO.getName());
 				}
-				if(user!=null){
-					createSalaryBudgetTable.setUser(user);
-				}
+				if(user==null || enterprise==null)return INPUT;
+				createSalaryBudgetTable.setUser(user);
 				createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
+				createSalaryBudgetTable.setEnterprise(enterprise);
+				
+				SalaryTemplate salaryTemplate=salaryTemplateService.find(templateId);
+				createSalaryBudgetTable.setTemplateName(salaryTemplate.getTemplateName());
+				createSalaryBudgetTable.setSalaryTemplate(salaryTemplate);
+				createSalaryBudgetTableService.save(createSalaryBudgetTable);
 				
 				try {
-					createSalaryBudgetTableService.saveCreateSalaryBudgetTable(createSalaryBudgetTable,enterpriseId,templateId);
-					
+					createSalaryBudgetTableService.save(createSalaryBudgetTable);
 				} catch (Exception e) {
 						e.printStackTrace();
 						this.addActionError("系统繁忙!!");
@@ -353,5 +275,88 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			return SUCCESS;
 		}
 	 
+		
+		public Integer getYear() {
+			return year;
+		}
+		public void setYear(Integer year) {
+			this.year = year;
+		}
+		public Integer getBudgetId() {
+			return budgetId;
+		}
+		public void setBudgetId(Integer budgetId) {
+			this.budgetId = budgetId;
+		}
+		public Integer getEnterpriseId() {
+			return enterpriseId;
+		}
+		public void setEnterpriseId(Integer enterpriseId) {
+			this.enterpriseId = enterpriseId;
+		}
+		public String getExcelName() {
+			return excelName;
+		}
+		public void setExcelName(String excelName) {
+			this.excelName = excelName;
+		}
+		public String getMessage() {   
+		        return message;   
+		  }   
+		 public void setMessage(String message) {   
+		        this.message = message;   
+		 }   
+		public String getSalaryDate() {
+			return salaryDate;
+		}
+
+		public void setSalaryDate(String salaryDate) {
+			this.salaryDate = salaryDate;
+		}
+		
+		
+		public Integer getTemplateId() {
+			return templateId;
+		}
+		public void setTemplateId(Integer templateId) {
+			this.templateId = templateId;
+		}
+		public String getError() {
+			return error;
+		}
+
+		public void setError(String error) {
+			this.error = error;
+		}
+		
+		
+		public File getFile() {
+			return file;
+		}
+		public void setFile(File file) {
+			this.file = file;
+		}
+		public List<CreateSalaryBudgetTable> getCreateSalaryBudgetTableList() {
+			return createSalaryBudgetTableList;
+		}
+
+		public void setCreateSalaryBudgetTableList(
+				List<CreateSalaryBudgetTable> createSalaryBudgetTableList) {
+			this.createSalaryBudgetTableList = createSalaryBudgetTableList;
+		}
+
+		public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
+			return createSalaryBudgetTable;
+		}
+
+		public void setCreateSalaryBudgetTable(
+				CreateSalaryBudgetTable createSalaryBudgetTable) {
+			this.createSalaryBudgetTable = createSalaryBudgetTable;
+		}
+		
+		public void setCreateSalaryBudgetTableService(
+				CreateSalaryBudgetTableService createSalaryBudgetTableService) {
+			this.createSalaryBudgetTableService = createSalaryBudgetTableService;
+		}
 		
 }

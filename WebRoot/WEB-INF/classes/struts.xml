@@ -227,7 +227,17 @@
             </result>
         </action>
         <action name="findContractJson"  class="cn.fm.web.action.company.EmployeesContractAction" method="findContractJson">
-        	<result name="success" type="json"></result>
+        	<result name="success" type="json">
+        		<param name="includeProperties">
+        			employeesContract\.contractid,
+        			employeesContract\.contractNo,
+        			employeesContract\.contractStatrDate,
+        			employeesContract\.contractEndDate,
+        			employeesContract\.actualTerminationDate,
+        			employeesContract\.status
+        			
+        		</param>
+        	</result>
         </action>
         <!-- 续签合同 -->
          <action name="updateEmployeesContract" class="cn.fm.web.action.company.EmployeesContractAction" method="updateEmployeesContract">

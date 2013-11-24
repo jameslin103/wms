@@ -142,11 +142,14 @@
 									</td>
 
 									<td>
-										<s:if test="#request.employees.householdRegister=='0'">
-											<span>非农</span>
-										</s:if>
-										<s:else>
+										<s:if test="#request.employees.householdRegister==2">
 											<span>农村</span>
+										</s:if>
+										<s:elseif test="#request.employees.householdRegister==1">
+											<span>非农</span>
+										</s:elseif>
+										<s:else>
+											
 										</s:else>
 									</td>
 									<td>
@@ -158,11 +161,14 @@
 										</s:else>
 									</td>
 									<td>
-										<s:if test="#request.employees.photo=='1'">
+										<s:if test="#request.employees.photo==1">
 											<span>有</span>
 										</s:if>
+										<s:elseif test="#request.employees.photo==0">
+											<span>无</span>
+										</s:elseif>
 										<s:else>
-											<span>否</span>
+											
 										</s:else>
 									</td>
 									<td>

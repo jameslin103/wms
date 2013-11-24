@@ -157,6 +157,7 @@
 													</s:else>
 													<s:date name="#value.createSalaryBudgetTable.salaryDate" format="MM月"/>工资
 													<span class="blue">（<s:property value="#value.createSalaryBudgetTable.note"/>）</span>
+													<a href="returnToModifySalaryBudgetTable?createSalaryBudgetTable.budgetId=<s:property value="#value.createSalaryBudgetTable.budgetId"/>" style="color: red;">修改</a>
 												</li>
 												</s:if>
 												
@@ -164,7 +165,6 @@
 											
 										</ol>
 									</td>
-								
 								</tr>
 								</s:iterator>
 							</tbody>

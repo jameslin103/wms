@@ -104,6 +104,9 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 	private WmsUser    user;
 
+	
+	
+	
 	@Id @GeneratedValue
 	public Integer getBudgetId() {
 		return budgetId;
@@ -319,7 +322,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.salaryTemplate = salaryTemplate;
 	}
 
-	@ManyToOne(cascade={CascadeType.REFRESH})
+	@ManyToOne(cascade={CascadeType.REFRESH},optional=false)
 	@JoinColumn(name="user_id")
 	@NotFound(action=NotFoundAction.IGNORE)
 	public WmsUser getUser() {

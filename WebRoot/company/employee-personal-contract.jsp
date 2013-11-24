@@ -12,8 +12,12 @@
 		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache"/> 
+		<meta http-equiv="cache-control" content="no-cache"/> 
+		<meta http-equiv="expires" content="0"/> 
+		
+		
 		<%@ include file="/help/public_css_js.jsp"%>
-
 	</head>
 	<body>
 
@@ -139,8 +143,8 @@
 									<td style="text-align: center;">
 									  <s:if test="#employeesContract.actualTerminationDate==null">
 									  		<s:set value="%{#employeesContract.contractid}" var="contractid"></s:set>
-									  		<s:set value="%{#request.employeesId}" var="employeesId"></s:set>
-										<a href="#info-for-check" onclick="findContractJson('${contractid},${employeesId}')" data-toggle="modal">续签/修改</a>
+									  		<input type="hidden" value="${employeesId}" id="employeesId"/>
+										<a href="#info-for-check" onclick="findContractJson('${contractid}')" data-toggle="modal">续签/修改</a>
 									  </s:if>
 									</td>
 								</tr>
@@ -169,7 +173,7 @@
 			<div class="modal-body">
 				<s:form action="updateEmployeesContract" method="post" id="con_form">
 					
-					<s:hidden name="enterpriseEmployees.employeesId"></s:hidden>
+					<s:hidden name="employeesId"></s:hidden>
 					<s:hidden name="enterpriseEmployees.contractid"></s:hidden>
 					<div class="row-fluid">
 						<div class="input-container">
@@ -185,7 +189,7 @@
 							起：
 							<input type="text" id="d4311"
 								name="employeesContract.contractStatrDate"
-								 onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'d4311\')||\'2020-10-01\'}',skin:'whyGreen'})" class="Wdate" />
+								 onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'d4311\')}',skin:'whyGreen'})" class="Wdate" />
 						</div>
 						<div class="input-container">
 							止：

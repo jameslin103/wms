@@ -27,10 +27,7 @@ public class EmployeesContractAction extends BaseAction {
 
 	public String findContractJson()
 	{
-		System.out.println(contractid);
 		employeesContract=employeesContractService.find(contractid);
-		
-		toJson(employeesContract);
 		return SUCCESS;
 	}
 	
@@ -45,11 +42,7 @@ public class EmployeesContractAction extends BaseAction {
 		employeesContractService.save(employeesContract);
 		return SUCCESS;
 	}
-	
-	
-	
-	
-	
+
 	
 	
 	
