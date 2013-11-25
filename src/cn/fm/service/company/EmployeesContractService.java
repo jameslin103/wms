@@ -5,5 +5,7 @@ import cn.fm.service.base.DAO;
 
 public interface EmployeesContractService extends DAO<EmployeesContract>{
 
+	public void updateEmployeesContract(EmployeesContract employeesContract);
+
 	
 }

@@ -17,8 +17,10 @@ import cn.fm.bean.PageView;
 import cn.fm.bean.company.EmployeesContract;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.service.company.EmployeesContractService;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
+import cn.fm.utils.Constant;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
@@ -32,6 +34,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	private EnterpriseEmployeesService enterpriseEmployeesService;
 	@Resource
 	private EnterpriseService			enterpriseService;
+	@Resource
+	private EmployeesContractService    employeesContractService;
 	
 	private EnterpriseEmployees  enterpriseEmployees;
 	private EnterpriseEmployees  enterpriseEmployeesJson;
@@ -418,6 +422,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	{
 		 String[] ids=employees_id.split(",");
 		 long rows=enterpriseEmployeesService.deleteEmployeesChecbox(ids);
+		 
 		 if(rows>0)System.out.println("删除"+rows+"个员工");
 		 return SUCCESS;
 	}
@@ -629,6 +634,20 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	public String findIdToEmployees()
 	{
 		enterpriseEmployeesJson=enterpriseEmployeesService.find(employeesId);
+		if(enterpriseEmployeesJson!=null && enterpriseEmployeesJson.getEmployeesContract()!=null){
+			for (EmployeesContract con : enterpriseEmployeesJson.getEmployeesContract()) {
+				if(con!=null){
+					 if(con.getStatus()==null || !con.getStatus().equals(Constant.WMS_XUQIAN)){
+						 EmployeesContract employeesContractVO=new EmployeesContract();
+						 employeesContractVO.setContractStatrDate(con.getContractStatrDate());
+						 employeesContractVO.setContractEndDate(con.getContractEndDate());
+						 employeesContractVO.setContractid(con.getContractid());
+						 this.setEmployeesContract(employeesContractVO);
+					 }
+				}
+			}
+		}
+		
 		return SUCCESS;
 	}
 	
@@ -639,6 +658,8 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		String sex=Integer.parseInt(enterpriseEmployees.getEmployeesSex())==1?"男":"女";
 		enterpriseEmployees.setEmployeesSex(sex);
 		enterpriseEmployeesService.updateEnterpriseEmployees(enterpriseEmployees);
+	
+		employeesContractService.updateEmployeesContract(employeesContract);
 		return SUCCESS;
 	}
 	

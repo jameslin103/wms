@@ -12,10 +12,10 @@ import cn.fm.service.company.EmployeesContractService;
 public class EmployeesContractServiceImpl extends DaoSupport<EmployeesContract>implements EmployeesContractService {
 	
 	
-	public void updateEmployeesContract(){
-		
-		
-		
+	public void updateEmployeesContract(EmployeesContract employeesContract){
+		em.createQuery("update EmployeesContract e set e.contractStatrDate=?1,e.contractEndDate=?2 where e.contractid=?3")
+					  .setParameter(1, employeesContract.getContractStatrDate()).setParameter(2, employeesContract.getContractEndDate())
+					  .setParameter(3, employeesContract.getContractid()).executeUpdate();
 	}
 
 }

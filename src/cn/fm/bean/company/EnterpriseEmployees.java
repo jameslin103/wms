@@ -524,7 +524,7 @@ public class EnterpriseEmployees{
 		this.employeesContract.add(employeesContract);
 		
 	}
-	public void romveEmployeesContract()
+	public void romveEmployeesContract(EmployeesContract employeesContract)
 	{
 		if(this.employeesContract.contains(employeesContract))
 		{

@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
+import cn.fm.bean.company.EmployeesContract;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.service.company.EnterpriseEmployeesService;
@@ -323,4 +324,20 @@ public class EnterpriseEmployessServiceTest {
 	   enterpriseEmployeesService.deleteEmployeesChecbox(ids);
 	   
    }
+   @Test
+   public void update()
+   {
+	   EmployeesContract  employeesContract=new EmployeesContract();
+	   
+	   EnterpriseEmployees  enterpriseEmployeesPO=enterpriseEmployeesService.find(170);
+	   enterpriseEmployeesService.clear();
+	   enterpriseEmployeesPO.setAccumulationFund("是");
+	   enterpriseEmployeesPO.setBank("交通银行");
+	   employeesContract.setContractStatrDate(enterpriseEmployeesPO.getStartContractDeadline());
+	   employeesContract.setContractEndDate(enterpriseEmployeesPO.getEndContractDeadline());
+	   enterpriseEmployeesPO.addEmployeesContract(employeesContract);
+	   
+	   enterpriseEmployeesService.update(enterpriseEmployeesPO);
+   }
+   
 }

@@ -183,6 +183,10 @@
          <action name="findIdToEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="findIdToEmployees">
             <result name="success" type="json">
             	 <param name="includeProperties">
+            	    employeesContract\.contractid,
+            	 	employeesContract\.contractNo,
+            	 	employeesContract\.contractStatrDate,
+           			employeesContract\.contractEndDate,
             	 	enterpriseEmployeesJson\.employeesId,
             	 	enterpriseEmployeesJson\.contractNo,
             	 	enterpriseEmployeesJson\.employeesName,
@@ -214,6 +218,7 @@
             	 	enterpriseEmployeesJson\.paymentWay,
             	 	enterpriseEmployeesJson\.pseudoDelete,
             	 	enterpriseEmployeesJson\.serviceCost
+            	 	
             	 	
             	 </param>   
             </result>

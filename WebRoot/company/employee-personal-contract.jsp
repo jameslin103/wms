@@ -189,7 +189,7 @@
 							起：
 							<input type="text" id="d4311"
 								name="employeesContract.contractStatrDate"
-								 onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'d4311\')}',skin:'whyGreen'})" class="Wdate" />
+								 onfocus="WdatePicker({skin:'whyGreen'})" class="Wdate" />
 						</div>
 						<div class="input-container">
 							止：
@@ -198,7 +198,7 @@
 						</div>
 						<div class="input-container">
 							续签
-							<input type="checkbox" name="employeesContract.status" value="续签"/>
+							<input type="radio" name="employeesContract.status" value="续签" checked="checked"/>
 						</div>
 						<div class="input-container">
 							<s:submit cssClass="btn btn-primary" value="提交" />

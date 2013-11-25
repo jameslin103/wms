@@ -220,12 +220,12 @@ function findIdToEmployees(employeesId)
 		    	$("input[name='enterpriseEmployees.jobs']").val(data.enterpriseEmployeesJson.jobs); 
 		    	$("input[name='enterpriseEmployees.maritalStatus'][value="+data.enterpriseEmployeesJson.maritalStatus+"]").attr("checked",true);
 		    	$("input[name='enterpriseEmployees.levelEducation']").val(data.enterpriseEmployeesJson.levelEducation); 
-		    	$("input[name='enterpriseEmployees.startContractDeadline']").val(data.enterpriseEmployeesJson.startContractDeadline); 
-		    	$("input[name='enterpriseEmployees.endContractDeadline']").val(data.enterpriseEmployeesJson.endContractDeadline); 
+		    
 		    	$("input[name='enterpriseEmployees.whetherGinseng']").val(data.enterpriseEmployeesJson.whetherGinseng); 
 		    	$("input[name='enterpriseEmployees.sociaSecurity']").val(data.enterpriseEmployeesJson.sociaSecurity); 
 		    	$("input[name='enterpriseEmployees.ginsengProtectNature']").val(data.enterpriseEmployeesJson.ginsengProtectNature); 
-		    	$("input[name='enterpriseEmployees.cinsengDate']").val(data.enterpriseEmployeesJson.cinsengDate); 
+		    	var   cinsengDate=new   Date(data.enterpriseEmployeesJson.cinsengDate).format("yyyy-MM-dd");  
+		    	$("input[name='enterpriseEmployees.cinsengDate']").val(cinsengDate); 
 		    	$("input[name='enterpriseEmployees.base'][value="+data.enterpriseEmployeesJson.base+"]").attr("checked",true);
 		    	$("input[name='enterpriseEmployees.socialInsurance']").val(data.enterpriseEmployeesJson.socialInsurance); 
 		    	$("input[name='enterpriseEmployees.fertilityInsurance']").val(data.enterpriseEmployeesJson.fertilityInsurance);
@@ -235,6 +235,20 @@ function findIdToEmployees(employeesId)
 		    	$("input[name='enterpriseEmployees.paymentWay'][value="+data.enterpriseEmployeesJson.paymentWay+"]").attr("checked",true) 
 		    	$("input[name='enterpriseEmployees.pseudoDelete'][value="+data.enterpriseEmployeesJson.pseudoDelete+"]").attr("checked",true); 
 		    	$("input[name='enterpriseEmployees.serviceCost']").val(data.enterpriseEmployeesJson.serviceCost); 
+		    	
+		    	if(data.employeesContract!=null){
+			    	if(data.employeesContract.contractStatrDate!=null){
+			    		var   contractStatrDate=new   Date(data.employeesContract.contractStatrDate).format("yyyy-MM-dd");  
+				    	$("input[name='employeesContract.contractStatrDate']").val(contractStatrDate); 
+			    	}
+			    	if(data.employeesContract.contractEndDate!=null){
+				    	var   contractEndDate=new   Date(data.employeesContract.contractEndDate).format("yyyy-MM-dd");  
+				    	$("input[name='employeesContract.contractEndDate']").val(contractEndDate); 
+			    	}
+			    	if(data.employeesContract.contractid!=null){
+			    		$("input[name='employeesContract.contractid']").val(data.employeesContract.contractid); 
+			    	}
+		    	}
 		    	reset();
 		    },    
 		     error : function() {  

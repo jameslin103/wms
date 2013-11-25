@@ -320,10 +320,10 @@
 						                	<s:else></s:else>
 										</td>
 										<td>
-											<s:if test="#emp.paymentWay==1">
+											<s:if test="#emp.paymentWay==0">
 												<span>个人缴纳</span>
 											</s:if>
-											<s:elseif test="#emp.paymentWay==0">
+											<s:elseif test="#emp.paymentWay==1">
 												<span>企业缴纳</span>
 											</s:elseif>
 											<s:else>
@@ -593,9 +593,9 @@
 							<label>
 								个税缴纳方式?
 							</label>
-							<input type="radio" name="enterpriseEmployees.paymentWay" value="1" checked="checked" />
+							<input type="radio" name="enterpriseEmployees.paymentWay" value="0" checked="checked" />
 							个人缴纳，
-							<input type="radio" name="enterpriseEmployees.paymentWay" value="0" />
+							<input type="radio" name="enterpriseEmployees.paymentWay" value="1" />
 							企业缴纳
 						</div>
 
@@ -643,6 +643,7 @@
 			<div class="modal-body">
 				<s:form action="updateEnterpriseEmployees" method="post">
 					<s:hidden name="enterpriseEmployees.employeesId"></s:hidden>
+					<input type="hidden" name="employeesContract.contractid"/>
 					<div class="row-fluid">
 						<div class="input-container">
 							<label>
@@ -670,7 +671,7 @@
 							<label>
 								性别
 							</label>
-							<input type="radio" name="enterpriseEmployees.employeesSex"	value="1" />
+							<input type="radio" name="enterpriseEmployees.employeesSex"	value="1" checked="checked"/>
 							男
 							<input type="radio" name="enterpriseEmployees.employeesSex"	value="0" />
 							女
@@ -749,7 +750,7 @@
 							<label>
 								婚姻状况
 							</label>
-							<input type="radio" name="enterpriseEmployees.maritalStatus" value="1" />
+							<input type="radio" name="enterpriseEmployees.maritalStatus" value="1" checked="checked"/>
 							未婚，
 							<input type="radio" name="enterpriseEmployees.maritalStatus"value="0" />
 							已婚
@@ -769,13 +770,13 @@
 							</label>
 							起：
 							<input type="text" id="d11"
-								name="enterpriseEmployees.startContractDeadline" onclick="WdatePicker()" class="Wdate" />
+								name="employeesContract.contractStatrDate" onclick="WdatePicker()" class="Wdate" />
 						</div>
 
 						<div class="input-container">
 							止：
 							<s:textfield id="d11"
-								name="enterpriseEmployees.endContractDeadline" onclick="WdatePicker()" cssClass="Wdate" />
+								name="employeesContract.contractEndDate" onclick="WdatePicker()" cssClass="Wdate" />
 						</div>
 
 						<div class="input-container">
@@ -863,9 +864,9 @@
 							<label>
 								个税缴纳方式?
 							</label>
-							<input type="radio" name="enterpriseEmployees.paymentWay" value="1" checked="checked"/>
+							<input type="radio" name="enterpriseEmployees.paymentWay" value="0" checked="checked"/>
 							个人缴纳，
-							<input type="radio" name="enterpriseEmployees.paymentWay"value="0" />
+							<input type="radio" name="enterpriseEmployees.paymentWay"value="1" />
 							企业缴纳
 						</div>
 

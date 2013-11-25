@@ -107,6 +107,7 @@ public class LoginAction extends BaseAction{
 			
 				loginUser=wmsUserService.find(wmsUser.getPhone());
 				if( loginUser!=null){
+					System.out.println(loginUser.getUsername());
 					request.getSession().setAttribute("user",loginUser);
 					if (userCookie==true) 
 					{  

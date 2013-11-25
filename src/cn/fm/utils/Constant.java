@@ -55,4 +55,5 @@ public class Constant {
 	public static final String WMS_SEARCH_TRUE = "1";
 	public final static String WMS_DYNAMIC_QUERY_FIELD_LENTH="60";
 	
+	public final  static String WMS_XUQIAN="续签";
 }

@@ -299,9 +299,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			employees.setIndustry(emp.getIndustry());
 			employees.setJobs(emp.getJobs());
 			employees.setBank(emp.getBank());
-			employees.setBankCardNumber(emp.getCardNumber());
-//			employees.setStartContractDeadline(emp.getStartContractDeadline());
-//			employees.setEndContractDeadline(emp.getEndContractDeadline());
+			employees.setBankCardNumber(emp.getBankCardNumber());
 			employees.setServiceCost(emp.getServiceCost());
 			employees.setGinsengProtectNature(emp.getGinsengProtectNature());
 			employees.setWhetherGinseng(emp.getWhetherGinseng());
@@ -773,6 +771,16 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		
 		return true;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<EmployeesContract>   isExitEmployeesContartNo(Integer employeesId)
+	{
+		return em.createQuery("select e from EmployeesContract e where e.enterpriseEmployees.employeesId=?1 ")
+				.setParameter(1, employeesId).getResultList();
+		
+	}
+	
+	
 	
 	/**
 	 * 查询离职员工
