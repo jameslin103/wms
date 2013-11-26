@@ -1,6 +1,7 @@
 package cn.fm.web.action.user;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import cn.fm.service.permissions.MenuService;
 import cn.fm.service.permissions.RoleService;
 import cn.fm.service.user.WmsUserService;
 import cn.fm.utils.CookieUtils;
+import cn.fm.utils.DateUtil;
 import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
@@ -107,7 +109,7 @@ public class LoginAction extends BaseAction{
 			
 				loginUser=wmsUserService.find(wmsUser.getPhone());
 				if( loginUser!=null){
-					System.out.println(loginUser.getUsername());
+					System.out.println(loginUser.getUsername()+"登录系统，系统时间："+DateUtil.getCurrentTime());
 					request.getSession().setAttribute("user",loginUser);
 					if (userCookie==true) 
 					{  

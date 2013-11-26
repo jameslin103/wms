@@ -320,7 +320,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			request.getSession().setAttribute("enterprise", enterprise);
 		}
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("createDate", "desc");
+		orderby.put("employeesId", "asc");
 		StringBuffer jpql = new StringBuffer("");
 		List<Object> params = new ArrayList<Object>();
 		if(this.enterpriseId!=null)

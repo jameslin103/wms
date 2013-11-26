@@ -74,7 +74,7 @@ public class EnterpriseEmployees{
 	/*岗位*/
 	private String  jobs;
 	
-	/*婚姻状况  1 2*/
+	/*婚姻状况  1未婚 2已婚*/
 	private Integer  maritalStatus;
 	
 	/*文化程度*/
@@ -87,7 +87,7 @@ public class EnterpriseEmployees{
 	private Date  endContractDeadline;
 	
 	/*是否参保  0否 1是*/
-	private  Integer whetherGinseng=0;
+	private  Integer whetherGinseng;
 	
 	/*参保性质  1增员  2续保  3减员  */
 	private Integer ginsengProtectNature;
@@ -111,7 +111,7 @@ public class EnterpriseEmployees{
 	private Date  cinsengDate;
 	
 	/*参保基数 0.默认基数 1.个性设置*/
-	private Integer  base;
+	private Integer  base=0;
 	
 	/*个税缴纳方式  0个人缴纳，  1企业缴纳*/
 	private Integer  paymentWay;

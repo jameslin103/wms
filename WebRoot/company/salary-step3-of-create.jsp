@@ -73,12 +73,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li>工资总额：<s:property value="%{#request.createSalaryBudgetTable.wageTotal}"/>（元）；</li>
                     <li>五险一金总额：<s:property value="%{#request.createSalaryBudgetTable.fiveInsurancesTotal}"/>（元）；</li>
                     <li>服务费总额：<s:property value="%{#request.createSalaryBudgetTable.serviceTotal}"/>（元）；</li>
-                    <li>发放人数：<s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/>（人）；</li>                 
-                    <li>本工资表中，3人没有工资！分别是：张三、王五</li>
+                    <li>发放人数：<s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/>（人）；</li>
+                    <!--               
+                    	<li>本工资表中，3人没有工资！分别是：张三、王五</li>
+                 	-->
                   </ul>
                   <p><a href="toImportSalaryData">重新导入数据</a></p>
                 </div>
-                <hr>
+                <hr/>
 
                 <div>
                 	<s:token></s:token>

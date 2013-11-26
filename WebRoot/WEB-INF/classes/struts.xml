@@ -207,6 +207,8 @@
             	 	enterpriseEmployeesJson\.endContractDeadline,
             	 	enterpriseEmployeesJson\.whetherGinseng,
             	 	enterpriseEmployeesJson\.sociaSecurity,
+            	 	enterpriseEmployeesJson\.healthCare,
+            	 	enterpriseEmployeesJson\.accumulationFund,
             	 	enterpriseEmployeesJson\.ginsengProtectNature,
             	 	enterpriseEmployeesJson\.cinsengDate,
             	 	enterpriseEmployeesJson\.base,

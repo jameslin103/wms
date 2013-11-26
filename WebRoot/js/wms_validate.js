@@ -220,12 +220,28 @@ function findIdToEmployees(employeesId)
 		    	$("input[name='enterpriseEmployees.jobs']").val(data.enterpriseEmployeesJson.jobs); 
 		    	$("input[name='enterpriseEmployees.maritalStatus'][value="+data.enterpriseEmployeesJson.maritalStatus+"]").attr("checked",true);
 		    	$("input[name='enterpriseEmployees.levelEducation']").val(data.enterpriseEmployeesJson.levelEducation); 
-		    
 		    	$("input[name='enterpriseEmployees.whetherGinseng']").val(data.enterpriseEmployeesJson.whetherGinseng); 
-		    	$("input[name='enterpriseEmployees.sociaSecurity']").val(data.enterpriseEmployeesJson.sociaSecurity); 
-		    	$("input[name='enterpriseEmployees.ginsengProtectNature']").val(data.enterpriseEmployeesJson.ginsengProtectNature); 
+		    	
+
+		    	
+				var sociaSecurity=data.enterpriseEmployeesJson.sociaSecurity;
+				var healthCare=data.enterpriseEmployeesJson.healthCare;
+				var accumulationFund=data.enterpriseEmployeesJson.accumulationFund;
+				
+				if(sociaSecurity=='是'){
+					$("input[name='enterpriseEmployees.sociaSecurity']").attr("checked",'true');
+				}
+				if(healthCare=='是'){
+					$("input[name='enterpriseEmployees.healthCare']").attr("checked",'true');
+				}
+				if(accumulationFund=='是'){
+					$("input[name='enterpriseEmployees.accumulationFund']").attr("checked",'true');
+				}
+				$("input[name='enterpriseEmployees.ginsengProtectNature'][value="+data.enterpriseEmployeesJson.ginsengProtectNature+"]").attr("checked",true);
+		    	
 		    	var   cinsengDate=new   Date(data.enterpriseEmployeesJson.cinsengDate).format("yyyy-MM-dd");  
 		    	$("input[name='enterpriseEmployees.cinsengDate']").val(cinsengDate); 
+		    	
 		    	$("input[name='enterpriseEmployees.base'][value="+data.enterpriseEmployeesJson.base+"]").attr("checked",true);
 		    	$("input[name='enterpriseEmployees.socialInsurance']").val(data.enterpriseEmployeesJson.socialInsurance); 
 		    	$("input[name='enterpriseEmployees.fertilityInsurance']").val(data.enterpriseEmployeesJson.fertilityInsurance);
@@ -249,7 +265,6 @@ function findIdToEmployees(employeesId)
 			    		$("input[name='employeesContract.contractid']").val(data.employeesContract.contractid); 
 			    	}
 		    	}
-		    	reset();
 		    },    
 		     error : function() {  
 		    	 alert("系统异常，请稍后重试！");
@@ -258,13 +273,7 @@ function findIdToEmployees(employeesId)
 		
 	}
 }
-function reset(){
-	
-	$("#info-for-check").on("show",function(){
-		$("form :checkbox",this).removeAttr("checked");
-		$("form",this)[0].reset();
-	});
-}
+
 
 function findToIdBalanceDetail(detailId)
 {

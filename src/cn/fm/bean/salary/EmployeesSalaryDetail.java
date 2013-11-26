@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 
@@ -102,6 +105,7 @@ public class EmployeesSalaryDetail implements Serializable
 	private BigDecimal  personalTax;
 	/*服务费  */
 	private BigDecimal  serviceCharge;
+	
 	/*合计（企业应付）*/
 	private BigDecimal  aggregate;
 
@@ -117,6 +121,17 @@ public class EmployeesSalaryDetail implements Serializable
 	private Date        createDate=new Date();
 	
 	private Integer     budgettableId;
+	
+	
+	private  BigDecimal  specialOldSubsidies;
+	
+	private  BigDecimal   specialUnemploymentSubsidies;
+	
+	private  BigDecimal   specialHealthCareSubsidies;
+	
+	private  BigDecimal   specialAccumulationFundSubsidies;
+	
+	private CreateSalaryBudgetTable   createSalaryBudgetTable;
 	
 	/*身份证号*/
 	private String  cardNumber;
@@ -436,14 +451,61 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
 		this.enterpriseEmployees = enterpriseEmployees;
 	}
-	@ManyToOne(cascade={CascadeType.REFRESH})
+	@ManyToOne(cascade={CascadeType.REFRESH},optional=false)
 	@JoinColumn(name="enterprise_id")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Enterprise getEnterprise() {
 		return enterprise;
 	}
 
 	public void setEnterprise(Enterprise enterprise) {
 		this.enterprise = enterprise;
+	}
+
+	public BigDecimal getSpecialOldSubsidies() {
+		return specialOldSubsidies;
+	}
+
+	public void setSpecialOldSubsidies(BigDecimal specialOldSubsidies) {
+		this.specialOldSubsidies = specialOldSubsidies;
+	}
+
+	public BigDecimal getSpecialUnemploymentSubsidies() {
+		return specialUnemploymentSubsidies;
+	}
+
+	public void setSpecialUnemploymentSubsidies(
+			BigDecimal specialUnemploymentSubsidies) {
+		this.specialUnemploymentSubsidies = specialUnemploymentSubsidies;
+	}
+
+	public BigDecimal getSpecialHealthCareSubsidies() {
+		return specialHealthCareSubsidies;
+	}
+
+	public void setSpecialHealthCareSubsidies(BigDecimal specialHealthCareSubsidies) {
+		this.specialHealthCareSubsidies = specialHealthCareSubsidies;
+	}
+
+	public BigDecimal getSpecialAccumulationFundSubsidies() {
+		return specialAccumulationFundSubsidies;
+	}
+
+	public void setSpecialAccumulationFundSubsidies(
+			BigDecimal specialAccumulationFundSubsidies) {
+		this.specialAccumulationFundSubsidies = specialAccumulationFundSubsidies;
+	}
+	
+	@ManyToOne(cascade={CascadeType.REFRESH},optional=false)
+	@JoinColumn(name="budget_id")
+	@NotFound(action=NotFoundAction.IGNORE)
+	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
+		return createSalaryBudgetTable;
+	}
+
+	public void setCreateSalaryBudgetTable(
+			CreateSalaryBudgetTable createSalaryBudgetTable) {
+		this.createSalaryBudgetTable = createSalaryBudgetTable;
 	}
 	
 }

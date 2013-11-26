@@ -16,12 +16,18 @@
 		<meta http-equiv="cache-control" content="no-cache"/> 
 		<meta http-equiv="expires" content="0"/>  
 		<%@ include file="/help/public_css_js.jsp"%>
-		<script type="text/javascript">
+		<script>
+		$(document).ready(function(){
+			$("#edit-employees-bnt").on("hidden",function(){
+				clearForm(this);
+			});
+			$("#add-employees-bnt").on("hidden",function(){
+				clearForm(this);
+			});
+			
+		});
 		
-		
-		function reset(){
-			$('#loginForm')[0].reset();
-		}
+	
 		  $(function(){
 			$("#submit").click(function()
 			{
@@ -158,7 +164,7 @@
 									</th>
 									<th rowspan="2" width="">
 										&nbsp;&nbsp;全选<br/>
-										<input type="button" id="delete" value="删除	" 
+										<input type="button" id="delete" value="删除	"
 										style="background-color:transparent; border:0px; color:#2E9AFE"/><br/>
 										&nbsp;&nbsp;<input type="checkbox" id="all_box"/>
 									</th>
@@ -255,10 +261,10 @@
 										</td>
 										<td>
 											<s:if test="#emp.maritalStatus==1">
-												<span>已婚</span>
+												<span>未婚</span>
 											</s:if>
 											<s:elseif test="#emp.maritalStatus==2">
-												<span>未婚</span>
+												<span>已婚</span>
 											</s:elseif>
 											<s:else>
 												
@@ -269,7 +275,7 @@
 												<span>有</span>
 											</s:if>
 											<s:elseif test="#emp.photo==0">
-												<span>否</span>
+												<span>无</span>
 											</s:elseif>
 											<s:else>
 												
@@ -293,12 +299,12 @@
 												<span>否</span>
 											</s:elseif>
 											<s:else>
-												<span>&nbsp;&nbsp;</span>
+												
 											</s:else>
 										</td>
 										<td>
 											<s:if test="#emp.ginsengProtectNature==1">
-													<span>增员</span>
+													<span>新增</span>
 											</s:if>
 											<s:elseif test="#emp.ginsengProtectNature==2">
 													<span>续保</span>
@@ -317,7 +323,8 @@
 											<s:elseif test="#emp.base==1">
 						                		个性设置
 						                	</s:elseif>
-						                	<s:else></s:else>
+						                	<s:else>
+						                	</s:else>
 										</td>
 										<td>
 											<s:if test="#emp.paymentWay==0">
@@ -479,7 +486,7 @@
 							</label>
 							<input type="radio" name="enterpriseEmployees.maritalStatus" value="1" checked="checked" />
 							未婚，
-							<input type="radio" name="enterpriseEmployees.maritalStatus" value="0" />
+							<input type="radio" name="enterpriseEmployees.maritalStatus" value="2" />
 							已婚
 						</div>
 
@@ -512,20 +519,21 @@
 							</label>
 							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="1" checked="checked" />
 							是，
-							<input type="radio" name="enterpriseEmployees.whetherGinseng"
-								value="0" />
-							否
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="0" />
+							否，
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="2" />
+							特殊参保(<span style="color:blue;">补贴</span>)
 						</div>
 
 						<div class="input-container">
 							<label>
 								参保类型
 							</label>
-							<input type="checkbox" name="enterpriseEmployees.sociaSecurity"	value="医保" />
+							<input type="checkbox" name="enterpriseEmployees.sociaSecurity"	value="是" />
 							医保
-							<input type="checkbox" name="enterpriseEmployees.healthCare"  value="社保" />
+							<input type="checkbox" name="enterpriseEmployees.healthCare"  value="是" />
 							社保
-							<input type="checkbox" name="enterpriseEmployees.accumulationFund" value="公积金" />
+							<input type="checkbox" name="enterpriseEmployees.accumulationFund" value="是" />
 							公积金
 						</div>
 
@@ -535,7 +543,7 @@
 							</label>
 							<input type="radio" 	name="enterpriseEmployees.ginsengProtectNature" value="1" checked="checked" />
 							新增，
-							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="0" />
+							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="2" />
 							续保
 						</div>
 
@@ -543,18 +551,17 @@
 							<label>
 								开始参保日期:
 							</label>
-							<s:textfield id="d11" name="enterpriseEmployees.cinsengDate"
-								onclick="WdatePicker()" cssClass="Wdate" />
+							<s:textfield id="d11" name="enterpriseEmployees.cinsengDate" onclick="WdatePicker()" cssClass="Wdate" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								参保基数
 							</label>
-							<input type="radio" name="enterpriseEmployees.base" value="1"
+							<input type="radio" name="enterpriseEmployees.base" value="0"
 								checked="checked" />
 							默认基数，
-							<input type="radio" name="enterpriseEmployees.base" value="0" />
+							<input type="radio" name="enterpriseEmployees.base" value="1" />
 							个性设置
 						</div>
 
@@ -752,7 +759,7 @@
 							</label>
 							<input type="radio" name="enterpriseEmployees.maritalStatus" value="1" checked="checked"/>
 							未婚，
-							<input type="radio" name="enterpriseEmployees.maritalStatus"value="0" />
+							<input type="radio" name="enterpriseEmployees.maritalStatus"value="2" />
 							已婚
 						</div>
 
@@ -789,15 +796,18 @@
 							<input type="radio" name="enterpriseEmployees.whetherGinseng"
 								value="0" />
 							否
+							<input type="radio" name="enterpriseEmployees.whetherGinseng"
+								value="2" />
+							 特殊参保(<span style="color:blue;">补贴</span>)
 						</div>
 
 						<div class="input-container">
 							<label>	参保类型	</label>
-							<input type="checkbox" name="enterpriseEmployees.sociaSecurity"	value="0" />
+							<input type="checkbox" name="enterpriseEmployees.sociaSecurity"	value="是" />
 							医保
-							<input type="checkbox" name="enterpriseEmployees.healthCare" value="1" />
+							<input type="checkbox" name="enterpriseEmployees.healthCare" value="是" />
 							社保
-							<input type="checkbox" name="enterpriseEmployees.accumulationFund" value="2" />
+							<input type="checkbox" name="enterpriseEmployees.accumulationFund" value="是" />
 							公积金
 						</div>
 
@@ -808,7 +818,7 @@
 							<input type="radio"
 								name="enterpriseEmployees.ginsengProtectNature" value="1" checked="checked"/>
 							新增，
-							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="0" />
+							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="2" />
 							续保
 						</div>
 
@@ -823,9 +833,9 @@
 							<label>
 								参保基数
 							</label>
-							<input type="radio" name="enterpriseEmployees.base" value="1" checked="checked" id="base"/>
+							<input type="radio" name="enterpriseEmployees.base" value="0" checked="checked" id="base"/>
 							默认基数，
-							<input type="radio" name="enterpriseEmployees.base" value="0" id="base"/>
+							<input type="radio" name="enterpriseEmployees.base" value="1" id="base"/>
 							个性设置
 						</div>
 

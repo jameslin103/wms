@@ -111,7 +111,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <br/><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/></td>
                 <td>
                   <ul>
-                    <li>制作:<s:property value="%{#request.session.user.username}"/>
+                    <li>制作:<s:property value="%{#request.createSalaryBudgetTable.user.username}"/>
                     </li>
                     <li>发放：<s:property value="%{#request.session.user.username}"/></li>
                   </ul>

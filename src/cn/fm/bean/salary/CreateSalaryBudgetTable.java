@@ -3,13 +3,18 @@ package cn.fm.bean.salary;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -104,7 +109,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 	private WmsUser    user;
 
-	
+	private Set<EmployeesSalaryDetail>  employeesSalaryDetail=new HashSet<EmployeesSalaryDetail>();
 	
 	
 	@Id @GeneratedValue
@@ -331,6 +336,16 @@ public class CreateSalaryBudgetTable implements Serializable {
 
 	public void setUser(WmsUser user) {
 		this.user = user;
+	}
+	
+	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.MERGE,CascadeType.PERSIST},fetch=FetchType.LAZY,mappedBy="createSalaryBudgetTable")
+	public Set<EmployeesSalaryDetail> getEmployeesSalaryDetail() {
+		return employeesSalaryDetail;
+	}
+
+	public void setEmployeesSalaryDetail(
+			Set<EmployeesSalaryDetail> employeesSalaryDetail) {
+		this.employeesSalaryDetail = employeesSalaryDetail;
 	}
 
 	@Override

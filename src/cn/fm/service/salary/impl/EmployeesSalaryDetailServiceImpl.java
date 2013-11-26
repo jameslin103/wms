@@ -4,9 +4,6 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.Resource;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Service;
@@ -73,6 +70,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 				if(employeesName.size()==0){
 					//记录封装每个字段
 					EmployeesSalaryDetail employeesSalaryDetailBySalaryDetail= recordEnterpriseEmployeesBySalaryDetail(enterpriseEmployeesListPO,data,number);
+					//计算工资
 					EmployeesSalaryDetail employeesSalaryDetailVO=structureEmployeesSalaryDetail(employeesSalaryDetailBySalaryDetail,templateId);
 					employeesSalaryDetailVO.setSalaryDate(employeesSalaryDetail.getSalaryDate());
 					employeesSalaryDetailVO.setEnterprise(employeesSalaryDetail.getEnterprise());
@@ -171,7 +169,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * @author jameslin
 	 * @date 2013-09-01
 	 * @return  EmployeesSalaryDetail
-	 * 从excel导入的数据重新构造数据
+	 * 计算工资，
 	 */
 	public EmployeesSalaryDetail structureEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail ,Integer templateId)
 	{
@@ -190,7 +188,6 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		
 		EmployeesSalaryDetail   employeesSalaryDetailVO=new EmployeesSalaryDetail();
 		try {
-			
 			
 			/*基本工资*/ 
 		    wage=Double.valueOf(employeesSalaryDetail.getWage()==null?"0.00":employeesSalaryDetail.getWage().toString());
@@ -215,9 +212,11 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			//计算五险一金规则
 			SalaryTemplate salaryTemplate=getIsFiveBase(templateId);
 			EmployeesSalaryDetail employeesSalaryDetailInsurances=new EmployeesSalaryDetail();
-			if(salaryTemplate!=null && salaryTemplate.getStatus()==1)
+			if(salaryTemplate!=null && salaryTemplate.getStatus()==1 && salaryTemplate.getFiveInsurances()==0)
 			{
+					//基数计算所得数
 				    employeesSalaryDetailInsurances=toCalculateFiveInsurances();
+				    
 					employeesSalaryDetailVO.setSocialInsuranceBase(employeesSalaryDetailInsurances.getSocialInsuranceBase());
 					employeesSalaryDetailVO.setEnterprisePensionInsurance(employeesSalaryDetailInsurances.getEnterprisePensionInsurance());
 					employeesSalaryDetailVO.setPersonalPensionInsurance(employeesSalaryDetailInsurances.getPersonalPensionInsurance());
@@ -233,8 +232,6 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 					employeesSalaryDetailVO.setHousingReserveBase(employeesSalaryDetailInsurances.getHousingReserveBase());
 					employeesSalaryDetailVO.setEnterpriseReserveBase(employeesSalaryDetailInsurances.getEnterpriseReserveBase());
 					employeesSalaryDetailVO.setPersonalReserveBase(employeesSalaryDetailInsurances.getPersonalReserveBase());
-					
-					
 					
 			}
 			
@@ -337,15 +334,25 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	}
 	
 	/**
-	 * 计算五险一金规则
+	 * 计算五险一金规则或者个性基数计算
 	 * @param wage
-	 * @param tax
+	 * @param tax  
 	 */
-	public EmployeesSalaryDetail toCalculateFiveInsurances()
+	public EmployeesSalaryDetail toCalculateFiveInsurances(EnterpriseEmployees enterpriseEmployees)
 	{
+		EmployeesSalaryDetail employeesSalaryDetail=new EmployeesSalaryDetail();
 		InsurancesTax tax=getCustomBonus();
 		InsurancesBaseSettings base=getInsurancesBaseSettings();
-		EmployeesSalaryDetail employeesSalaryDetail=new EmployeesSalaryDetail();
+		
+		if(enterpriseEmployees!=null && enterpriseEmployees.getBase()!=null && enterpriseEmployees.getBase()==1){
+			
+			employeesSalaryDetail=personalityCalculationRules(enterpriseEmployees,tax);
+			
+		}else{
+			
+			
+		}
+
 		
 		//*社会保险基数*/
 		employeesSalaryDetail.setSocialInsuranceBase(base.getSocialInsurance());
@@ -392,6 +399,65 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		
 		//住房公积金 - 个人
 		employeesSalaryDetail.setPersonalReserveBase(proportionToCalculate(base.getHousingMPF(),tax.getPersonalHousingFund()));
+		
+		return employeesSalaryDetail;
+	}
+	/**
+	 * 个性计算规则
+	 * @return
+	 */
+	public EmployeesSalaryDetail personalityCalculationRules(EnterpriseEmployees enterpriseEmployees,InsurancesTax tax)
+	{
+		EmployeesSalaryDetail employeesSalaryDetail=new EmployeesSalaryDetail();
+		if(enterpriseEmployees!=null && enterpriseEmployees.getBase()==1)
+		{
+			//*社会保险基数*/
+			employeesSalaryDetail.setSocialInsuranceBase(new BigDecimal(enterpriseEmployees.getSocialInsurance()));
+			
+			//生育保险基数
+			employeesSalaryDetail.setBirthInsuranceBase(new BigDecimal(enterpriseEmployees.getFertilityInsurance()));
+			
+			//工伤基数
+			employeesSalaryDetail.setInductrialInjuryBase(new BigDecimal(enterpriseEmployees.getInductrialBase()));
+			
+			//基本医疗保险   缴费基数
+			employeesSalaryDetail.setMedicalPaymentBase(new BigDecimal(enterpriseEmployees.getBasicMedical()));
+			
+			//住房公积金-缴费基数
+			employeesSalaryDetail.setHousingReserveBase(new BigDecimal(enterpriseEmployees.getHousingFund()));
+			
+
+			//养老保险  企业
+			employeesSalaryDetail.setEnterprisePensionInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()),tax.getEndowmentInsurance()));
+			
+			//计算个人养老保险
+			employeesSalaryDetail.setPersonalPensionInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()),tax.getPersonalEndowmentInsurance()));
+			
+			//计算失业保险  (个人)
+			employeesSalaryDetail.setPersonalUnemploymentInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()),tax.getUnemploymentInsurance()));
+			
+			//计算失业保险  (企业)
+			employeesSalaryDetail.setEnterpriseUnemploymentInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()),tax.getPersonalUnemploymentInsurance()));
+			
+			//计算生育（企业)
+			employeesSalaryDetail.setEnterpriseBirthInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getFertilityInsurance()),tax.getBirthEnterprise()));
+			
+			//计算工伤（企业）
+			employeesSalaryDetail.setEnterpriseInductrialInjuryBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getInductrialBase()),tax.getInjuriesEnterprise()));
+			
+			//计算基本医疗保险  (企业)
+			employeesSalaryDetail.setEnterpriseMedicalBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getInductrialBase()),tax.getMedicalEnterprise()));
+			
+			//计算基本医疗保险 (个人)
+			employeesSalaryDetail.setPersonalMedicalBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getBasicMedical()),tax.getPersonalEnterprise()));
+			
+			//计算住房公积金-(企业)
+			employeesSalaryDetail.setEnterpriseReserveBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getHousingFund()),tax.getHousingFundEnterprise()));
+			
+			//住房公积金 - 个人
+			employeesSalaryDetail.setPersonalReserveBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getHousingFund()),tax.getPersonalHousingFund()));
+		
+		}
 		
 		return employeesSalaryDetail;
 	}
@@ -503,7 +569,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	
 		
 		Double bonusesTotal=0.0;
-		String carNumber = null;     //身份证
+		String carNumber = null;   //身份证
 		
 		EmployeesSalaryDetail employeesSalaryDetail=new EmployeesSalaryDetail();
 		carNumber=fileDate[3]==null?"":fileDate[3].toString();

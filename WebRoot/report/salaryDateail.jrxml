@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" pageWidth="1580" pageHeight="840" whenNoDataType="AllSectionsNoDetail" columnWidth="1540" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="aa20f712-3df1-4c6e-9a64-4eb82b1c20c4">
 	<property name="ireport.zoom" value="1.2100000000000024"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="91"/>
 	<parameter name="salaryDate" class="java.lang.String"/>
 	<parameter name="budgetName" class="java.lang.String"/>
 	<parameter name="createDate" class="java.lang.String"/>
@@ -18,6 +18,9 @@
 	<field name="aggregate" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[aggregate]]></fieldDescription>
 	</field>
+	<field name="bankCardNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[bankCardNumber]]></fieldDescription>
+	</field>
 	<field name="beforeSalary" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[beforeSalary]]></fieldDescription>
 	</field>
@@ -30,6 +33,9 @@
 	<field name="budgettableId" class="java.lang.Integer">
 		<fieldDescription><![CDATA[budgettableId]]></fieldDescription>
 	</field>
+	<field name="cardNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[cardNumber]]></fieldDescription>
+	</field>
 	<field name="class" class="java.lang.Class">
 		<fieldDescription><![CDATA[class]]></fieldDescription>
 	</field>
@@ -39,14 +45,14 @@
 	<field name="employeesName" class="java.lang.String">
 		<fieldDescription><![CDATA[employeesName]]></fieldDescription>
 	</field>
-	<field name="empolyessId" class="java.lang.Integer">
-		<fieldDescription><![CDATA[empolyessId]]></fieldDescription>
+	<field name="enterprise" class="cn.fm.bean.company.Enterprise">
+		<fieldDescription><![CDATA[enterprise]]></fieldDescription>
 	</field>
 	<field name="enterpriseBirthInsurance" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[enterpriseBirthInsurance]]></fieldDescription>
 	</field>
-	<field name="enterpriseId" class="java.lang.Integer">
-		<fieldDescription><![CDATA[enterpriseId]]></fieldDescription>
+	<field name="enterpriseEmployees" class="cn.fm.bean.company.EnterpriseEmployees">
+		<fieldDescription><![CDATA[enterpriseEmployees]]></fieldDescription>
 	</field>
 	<field name="enterpriseInductrialInjuryBase" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[enterpriseInductrialInjuryBase]]></fieldDescription>

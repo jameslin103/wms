@@ -193,10 +193,10 @@
 										<s:property value="%{#emp.homeAddress}"/>
 									</td>
 									<td>
-										<s:if test="#emp.householdRegister==0">
+										<s:if test="#emp.householdRegister==1">
 												<span>非农</span>
 										</s:if>
-										<s:elseif test="#emp.householdRegister==1">
+										<s:elseif test="#emp.householdRegister==2">
 												<span>农村</span>
 										</s:elseif>
 										<s:else>&nbsp;&nbsp;</s:else>
@@ -220,12 +220,13 @@
 									</td>
 									<td>
 										<s:if test="#emp.photo==0">
-											没有
+											无
 										</s:if>
 										<s:elseif test="#emp.photo==1">
 											有
 										</s:elseif>
-										<s:else>&nbsp;&nbsp;</s:else>
+										<s:else>
+										</s:else>
 									</td>
 									<td>
 										<s:if test="#emp.ginsengProtectNature==1">

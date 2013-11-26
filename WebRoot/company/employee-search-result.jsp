@@ -32,21 +32,40 @@
 
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
-							<li>
-								<a href="index.jsp">综合</a>
-							</li>
-							<li class="active">
-								<a href="viewEnterpriseEmployees">员工档案</a>
-							</li>
-							<li>
-								<a href="viewSalaryBudgetTable">工资预算表</a>
-							</li>
-							<li>
-								<a href="viewInsuranceWithMonth">增减员与参保明细</a>
-							</li>
+							<s:iterator value="#session.menuList" id="menu">
+								<s:if test="#menu.url=='viewEnterpriseEmployees'">
+									<li class="active">
+										<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewSalaryBudgetTable'">
+									<li >
+										<a href="viewSalaryBudgetTable" >
+											<s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewInsuranceWithMonth'">
+									<li >
+										<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewBalanceDetail'">
+									<li >
+										<a href="viewBalanceDetail" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+								<s:if test="#menu.url=='viewEnterpriseDetailed'">
+									<li>
+										<a href="viewEnterpriseDetailed" ><s:property value="#menu.name" />
+										</a>
+									</li>
+								</s:if>
+							</s:iterator>
 						</ul>
-
-
 						<h3>
 							搜索结果
 						</h3>
@@ -83,11 +102,11 @@
 									</th>
 								</tr>
 							</thead>
-							<s:iterator value="#request.enterpriseEmployeesList" id="enterpriseEmployees">
+							<s:iterator value="#request.enterpriseEmployeesList" id="enterpriseEmployees" status="list">
 							<tbody>
 								<tr>
 									<td>
-										<s:property value="%{#enterpriseEmployees.employeesId}"/>
+										<s:property value="%{#list.index+1}"/>
 									</td>
 									<td>
 										<a href="selectEnterpriseEmployeesWage?employeesId=<s:property value='%{#enterpriseEmployees.employeesId}'/>">
@@ -105,11 +124,11 @@
 										<s:if test="#enterpriseEmployees.householdRegister==1 ">
 											非农
 										</s:if>
-										<s:elseif test="#enterpriseEmployees.householdRegister==0 ">
+										<s:elseif test="#enterpriseEmployees.householdRegister==02 ">
 											农村
 										</s:elseif>
 										<s:else>
-											&npsp;&npsp;&npsp;&npsp;
+											
 										</s:else>
 									</td>
 									<td>
@@ -121,7 +140,7 @@
 											未婚
 										</s:elseif>
 										<s:else>
-											&npsp;&npsp;&npsp;&npsp;
+											
 										</s:else>
 									</td>
 									<td>
@@ -129,10 +148,10 @@
 											有
 										</s:if>
 										<s:elseif test="#enterpriseEmployees.photo==0">
-											没有
+											无
 										</s:elseif>
 										<s:else>
-											&npsp;&npsp;&npsp;&npsp;
+											
 										</s:else>
 									</td>
 									<td>

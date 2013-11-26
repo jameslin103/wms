@@ -60,15 +60,15 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		if(!StringUtil.isEmpty(employeesName)  && all!=null)
 		{
 			query = em.createQuery("select e from EnterpriseEmployees e where e.employeesName like ?1  and e.departure=0 ")
-			.setParameter(1, "%"+employeesName+"%");
+			.setParameter(1, "%"+employeesName.trim()+"%");
 		}
 		if(StringUtil.isEmpty(employeesName) && all!=null){
 			query = em.createQuery("select e from EnterpriseEmployees e  where e.departure=0 ");
 		}
-		if(all==null && !StringUtil.isEmpty(employeesName))
+		if(all==null && !StringUtil.isEmpty(employeesName.trim()))
 		{
 			query = em.createQuery("select e from EnterpriseEmployees e where e.employeesName like ?1 and e.enterprise.id=?2  and e.departure=0 ")
-			.setParameter(1, "%"+employeesName+"%").setParameter(2, enterpriseId);
+			.setParameter(1, "%"+employeesName.trim()+"%").setParameter(2, enterpriseId);
 			
 		}
 		
@@ -225,11 +225,11 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		employees.setEmployeesName(data[2].toString());
 		employees.setEmployeesSex(data[3].toString());
 		employees.setNativePlace(data[4].toString());
-		employees.setHouseholdRegister(data[5]==null?0:data[5].equals(Constant.WMS_YES)?1:2);
+		employees.setHouseholdRegister(data[5].equals("")?null:data[5].equals(Constant.WMS_YES)?1:2);
 		employees.setHomeAddress(data[6].toString());
-		employees.setMaritalStatus(data[7]==null?0:data[7].equals(Constant.WMS_YES)?1:2);
+		employees.setMaritalStatus(data[7].equals("")?1:data[7].equals(Constant.WMS_YES)?2:1);
 		employees.setLevelEducation(data[8].toString());
-		employees.setPhoto(data[9]==null?0:data[9].equals(Constant.WMS_YES)?1:0);
+		employees.setPhoto(data[9].equals("")?null:data[9].equals(Constant.WMS_YES)?1:0);
 		employees.setCardNumber(data[10].toString());
 		employees.setPhone(data[11].toString());
 		employees.setIndustry(data[12].toString());
@@ -241,23 +241,27 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		employees.setServiceCost(data[18].toString().equals("")?null:Double.valueOf(data[18]));
 	
 		//判断是否参保
-		int ginseng=data[20]==null?0:data[20].equals(Constant.WMS_YES)?1:0;
+		
+		
+		int ginseng=data[19]==null?0:data[19].equals(Constant.WMS_YES)?1:0;
 		employees.setWhetherGinseng(ginseng);
 		if(ginseng==1)
 		{
-			employees.setGinsengProtectNature(data[19].toString()==null?null:(data[19].toString().equals(Constant.WMS_ZENG_YUAN)?1:2));
+			employees.setGinsengProtectNature(data[20]==null?null:(data[20].toString().equals(Constant.WMS_XIN_ZENG)?1:2));
 			employees.setCinsengDate(data[21].toString()==null?null:DateUtil.StringToDate(data[21], DateUtil.FORMAT_DATE));
 			/*社保 */
-			employees.setHealthCare(data[22].toString()==null?"":data[22].toString());
+			employees.setHealthCare(data[22]==null?"":data[22].toString());
 			/*医保*/
-			employees.setSociaSecurity(data[23].toString()==null?null:data[23].toString());
+			employees.setSociaSecurity(data[23]==null?null:data[23].toString());
 			/*公积金*/
-			employees.setAccumulationFund(data[24].toString()==null?null:data[24]);
+			employees.setAccumulationFund(data[24]==null?null:data[24]);
+			/*大病统筹*/
+			employees.setSeriousDisease(data[25]==null?null:data[25].toString());
 		}
 		
-		/*大病统筹*/
-		employees.setSeriousDisease(data[25]==null?null:data[25].toString());
-		int base=data[26]==null?null:data[26].equals(Constant.WMS_YES)?1:0;
+		
+		
+		int base=data[26]==null?null:data[26].toString().equals(Constant.WMS_YES)?1:0;
 		employees.setBase(base);
 		if(base==1){
 			employees.setInductrialBase(data[29].toString().equals("")?null:Double.valueOf(data[29]));
@@ -694,7 +698,6 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 	public boolean updateEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
 		
 		try {
-			
 			Query query=em.createQuery("update EnterpriseEmployees set employeesName=?1," +
 					"employeesSex=?2," +
 					"householdRegister=?3," +
@@ -727,6 +730,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 					"inductrialBase=?31," +
 					"housingFund=?32," +
 					"basicMedical=?33," +
+					"accumulationFund=?36," +
 					"pseudoDelete=?34 where employeesId=?35");
 			query.setParameter(1, enterpriseEmployees.getEmployeesName())
 			     .setParameter(2, enterpriseEmployees.getEmployeesSex())
@@ -761,7 +765,8 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			     .setParameter(32, enterpriseEmployees.getHousingFund())
 			     .setParameter(33, enterpriseEmployees.getBasicMedical())
 			     .setParameter(34, enterpriseEmployees.getPseudoDelete())
-			     .setParameter(35, enterpriseEmployees.getEmployeesId()).executeUpdate();
+			     .setParameter(35, enterpriseEmployees.getEmployeesId())
+			      .setParameter(36, enterpriseEmployees.getAccumulationFund()).executeUpdate();
 			
 			
 		} catch (Exception e) {

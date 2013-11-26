@@ -22,14 +22,19 @@ public class InsurancesTax implements Serializable{
 
 	
 	private  Integer id;
+	
 	/*医保类型*/
 	private  Integer     insurancesType;
+	
 	/*养老保险（公司）%*/
 	private  BigDecimal endowmentInsurance;
+	
 	/*养老保险（个人）*/
 	private  BigDecimal personalEndowmentInsurance;
+	
 	/*失业保险（公司）*/
 	private  BigDecimal unemploymentInsurance;
+	
 	/*失业保险（个人）*/
 	private  BigDecimal personalUnemploymentInsurance;
 	
