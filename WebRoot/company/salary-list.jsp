@@ -18,11 +18,18 @@
 			 function topage(page){
 				var form = document.getElementById("myformdate");
 					form.page.value=page;
-				//form.action='viewEnterpriseEmployees?page='+page;
-				form.submit();
+					form.submit();
 			}
-		
-		
+			function selected(){
+				var budgetid=$("#bud").val();
+				var select=$("#se").is(':checked');
+				if(select==true){
+					window.self.location="downloadEmployeesSalaryDetail?budgetId="+budgetid+"&selected="+select;  
+				}else{
+					window.self.location="downloadEmployeesSalaryDetail?budgetId="+budgetid+"&selected=false";
+				
+				}
+			}
 		</script>
 	</head>
 	<body>
@@ -78,9 +85,14 @@
           
           <ul class="normal action-container clearfix">
             <li class="title"><s:date name="%{#request.pageView.records[1].salaryDate}" format="yyyy年MM月"/>工资明细</li>
-            <li class="right"><a href="downloadEmployeesSalaryDetail?budgetId=<s:property value="%{#request.budgetId}"/>" class="btn btn-primary">下载Excel表格</a></li>
+            <li class="right">
+            	<a class="btn btn-primary" onclick="selected()">下载Excel表格</a>
+            	<s:hidden value="%{#request.budgetId}" name="budgetId" id="bud"/>
+            	&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="true" name="selected" id="se"/>&nbsp;(<span style="color:red;">特殊补贴</span>)
+            </li>
           </ul>
 		  <s:form action="viewAllEmployeesSalaryDetail" method="post" id="myformdate">
+		  		
             	<s:hidden name="budgetId"/>
             	<s:hidden name="page"/>
           <table class="table table-striped table-bordered">
@@ -127,7 +139,7 @@
               </tr>
             </thead>  
             <s:iterator value="#request.pageView.records" id="employeesSalaryDetail">
-            <thbody >
+            <thbody>
               <tr>
                 <td><s:property value="%{#employeesSalaryDetail.employeesName}"/></td>
                 <td>

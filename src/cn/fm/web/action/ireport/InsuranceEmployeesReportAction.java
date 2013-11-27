@@ -1,5 +1,6 @@
 package cn.fm.web.action.ireport;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,10 +8,12 @@ import javax.annotation.Resource;
 import org.apache.struts2.ServletActionContext;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.bean.company.InsurancesTax;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseEmployeesService;
+import cn.fm.service.company.InsurancesTaxService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.utils.DateUtil;
@@ -25,17 +28,28 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	private EmployeesSalaryDetailService        employeesSalaryDetailService;
 	@Resource
 	private CreateSalaryBudgetTableService		createSalaryBudgetTableService;
+	@Resource
+	private InsurancesTaxService				insurancesTaxService;
 	
+	
+	
+	private InsurancesTax						InsurancesTax;
 	
 	private Integer								budgetId;
 	
-	
+	private String      selected;
 	
 	
 	
 	
 
 	
+	public String getSelected() {
+		return selected;
+	}
+	public void setSelected(String selected) {
+		this.selected = selected;
+	}
 	public Integer getBudgetId() {
 		return budgetId;
 	}
@@ -45,6 +59,14 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	public void setEnterpriseEmployeesService(
 			EnterpriseEmployeesService enterpriseEmployeesService) {
 		this.enterpriseEmployeesService = enterpriseEmployeesService;
+	}
+	
+	
+public InsurancesTax getInsurancesTax() {
+		return InsurancesTax;
+	}
+	public void setInsurancesTax(InsurancesTax insurancesTax) {
+		InsurancesTax = insurancesTax;
 	}
 /**
  * 下载社医保办理与减员表
@@ -106,6 +128,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		StringBuffer  sb=new StringBuffer();
 		WmsUser    user=WebUtil.getWmsUser(request);
 		if(enterprise.getEnterpriseId()==null)return INPUT;
+		InsurancesTax=insurancesTaxService.getInsurancesTax();
 		CreateSalaryBudgetTable createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
 		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getAllEmployeesSalaryDetail(enterprise.getEnterpriseId(),budgetId);
 		Map<String, Object> parameters=new HashMap<String, Object>();
@@ -125,12 +148,27 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		parameters.put("fullname",enterprise.getFullName()); 
 		parameters.put("username",user.getUsername());
 		parameters.put("image", images);
+		parameters.put("endowmentInsurance", InsurancesTax.getBirthEnterprise()+"%");
+		parameters.put("personalEndowmentInsurance", InsurancesTax.getPersonalEndowmentInsurance()+"%");
+		parameters.put("unemploymentInsurance", InsurancesTax.getUnemploymentInsurance()+"%");
+		parameters.put("personalUnemploymentInsurance", InsurancesTax.getPersonalUnemploymentInsurance()+"%");
+		parameters.put("birthEnterprise", InsurancesTax.getBirthEnterprise()+"%");
+		parameters.put("injuriesEnterprise", InsurancesTax.getInjuriesEnterprise()+"%");
+		parameters.put("medicalEnterprise", InsurancesTax.getMedicalEnterprise()+"%");
+		parameters.put("personalEnterprise", InsurancesTax.getPersonalEnterprise()+"%");
+		parameters.put("housingFundEnterprise", InsurancesTax.getHousingFundEnterprise()+"%");
+		parameters.put("personalHousingFund", InsurancesTax.getPersonalHousingFund()+"%");
 		
-		
-		String sqlJasper="salaryDateail.jasper";
+		String sqlJasper;
+		if(selected.equals("true")){
+			sqlJasper="special_salaryDateail.jasper";
+		}else{
+			sqlJasper="salaryDateail.jasper";
+		}
+	
 		 
 		try {
-			downloadExcel(sqlJasper, "员工工资明细表", parameters,employeesSalaryDetailList);
+			downloadExcel(sqlJasper, sb.toString()+"工资明细表", parameters,employeesSalaryDetailList);
 			
 		} catch (Exception e) {
 			
@@ -190,10 +228,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	}
 	
 	
-	
-	
-	
-	
-	
 
+	
+	
 }

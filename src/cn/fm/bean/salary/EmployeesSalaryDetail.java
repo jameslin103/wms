@@ -122,15 +122,19 @@ public class EmployeesSalaryDetail implements Serializable
 	
 	private Integer     budgettableId;
 	
-	
+	/*特殊养老保险补贴*/
 	private  BigDecimal  specialOldSubsidies;
 	
+	/*特殊工伤生育补贴*/
 	private  BigDecimal   specialUnemploymentSubsidies;
 	
+	/*特殊医保补贴*/
 	private  BigDecimal   specialHealthCareSubsidies;
 	
+	/*特殊公积金补贴*/
 	private  BigDecimal   specialAccumulationFundSubsidies;
 	
+
 	private CreateSalaryBudgetTable   createSalaryBudgetTable;
 	
 	/*身份证号*/
@@ -461,7 +465,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterprise(Enterprise enterprise) {
 		this.enterprise = enterprise;
 	}
-
+	@Column(length=80 ,scale=2)
 	public BigDecimal getSpecialOldSubsidies() {
 		return specialOldSubsidies;
 	}
@@ -469,16 +473,16 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setSpecialOldSubsidies(BigDecimal specialOldSubsidies) {
 		this.specialOldSubsidies = specialOldSubsidies;
 	}
-
+	@Column(length=80 ,scale=2)
 	public BigDecimal getSpecialUnemploymentSubsidies() {
 		return specialUnemploymentSubsidies;
 	}
-
+	
 	public void setSpecialUnemploymentSubsidies(
 			BigDecimal specialUnemploymentSubsidies) {
 		this.specialUnemploymentSubsidies = specialUnemploymentSubsidies;
 	}
-
+	@Column(length=80 ,scale=2)
 	public BigDecimal getSpecialHealthCareSubsidies() {
 		return specialHealthCareSubsidies;
 	}
@@ -486,7 +490,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setSpecialHealthCareSubsidies(BigDecimal specialHealthCareSubsidies) {
 		this.specialHealthCareSubsidies = specialHealthCareSubsidies;
 	}
-
+	@Column(length=80 ,scale=2)
 	public BigDecimal getSpecialAccumulationFundSubsidies() {
 		return specialAccumulationFundSubsidies;
 	}
@@ -496,7 +500,7 @@ public class EmployeesSalaryDetail implements Serializable
 		this.specialAccumulationFundSubsidies = specialAccumulationFundSubsidies;
 	}
 	
-	@ManyToOne(cascade={CascadeType.REFRESH},optional=false)
+	@ManyToOne(cascade={CascadeType.REFRESH},optional=true)
 	@JoinColumn(name="budget_id")
 	@NotFound(action=NotFoundAction.IGNORE)
 	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {

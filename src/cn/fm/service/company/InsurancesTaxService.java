@@ -18,4 +18,7 @@ public interface InsurancesTaxService extends DAO<InsurancesTax> {
 		 */
 		public boolean updateInsurancesTax(InsurancesTax insurancesTax);
 		
+		
+		public InsurancesTax  getInsurancesTax();
+		
 }

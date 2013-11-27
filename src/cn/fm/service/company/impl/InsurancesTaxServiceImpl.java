@@ -55,4 +55,9 @@ public class InsurancesTaxServiceImpl extends DaoSupport<InsurancesTax> implemen
 		return true;
 	}
 
+	public InsurancesTax getInsurancesTax() {
+		
+		return (InsurancesTax)em.createQuery("select t from InsurancesTax t").getSingleResult();
+	}
+
 }

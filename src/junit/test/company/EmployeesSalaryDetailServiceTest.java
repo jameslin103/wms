@@ -63,9 +63,30 @@ public class EmployeesSalaryDetailServiceTest {
 	public void fiveDetail()
 	{
 		EmployeesSalaryDetail employeesSalaryDetail=new EmployeesSalaryDetail();
-		employeesSalaryDetailService.toCalculateFiveInsurances();
+		EnterpriseEmployees   enterpriseEmployees=new EnterpriseEmployees();
+		enterpriseEmployees.setBase(0);
+		
+		//*社会保险基数*/
+		enterpriseEmployees.setSocialInsurance(1500.00);
+		
+		//生育保险基数
+		enterpriseEmployees.setFertilityInsurance(2404.45);
+		
+		//工伤基数
+		enterpriseEmployees.setInductrialBase(2404.45);
+		
+		//基本医疗保险   缴费基数
+		enterpriseEmployees.setBasicMedical(2805.19);
+		
+		//住房公积金-缴费基数
+		enterpriseEmployees.setHousingFund(1050.00);
+		
+		employeesSalaryDetail=employeesSalaryDetailService.toCalculateFiveInsurances(enterpriseEmployees);
+		
 		System.out.println(employeesSalaryDetail.getBirthInsuranceBase());
 		System.out.println(employeesSalaryDetail.getSocialInsuranceBase());
+		System.out.println(employeesSalaryDetail.getSpecialAccumulationFundSubsidies());
+		System.out.println(employeesSalaryDetail.getSpecialHealthCareSubsidies());
 		
 		
 //		  System.out.println("===========================================");
@@ -287,4 +308,15 @@ public class EmployeesSalaryDetailServiceTest {
 	   
 	   
    }
+   @Test
+	public void proportionToCalculate()
+	{
+	    BigDecimal proportion=new BigDecimal(100);
+	    BigDecimal tax=new BigDecimal(0.8);
+	    BigDecimal resultsTax=tax.divide(proportion, 3, BigDecimal.ROUND_HALF_UP);
+		BigDecimal baseTax=tax.multiply(resultsTax);
+		BigDecimal resultsBase= baseTax.setScale(2, BigDecimal.ROUND_HALF_UP);  
+		
+		System.out.println(resultsBase);
+	}
 }

@@ -6,7 +6,6 @@ import java.util.List;
 
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
-import cn.fm.service.base.BaseGrid;
 import cn.fm.service.base.DAO;
 
 public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail> {
@@ -72,7 +71,7 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	 * @param wage
 	 * @param tax
 	 */
-	public EmployeesSalaryDetail toCalculateFiveInsurances();
+	public EmployeesSalaryDetail toCalculateFiveInsurances(EnterpriseEmployees enterprsieEmployees);
 
 	
 	public List<String> isExitUploadEnterpriseEmployees(List<EnterpriseEmployees> enterpriseEmployeesListPO,EmployeesSalaryDetail employeesSalaryDetailVO);

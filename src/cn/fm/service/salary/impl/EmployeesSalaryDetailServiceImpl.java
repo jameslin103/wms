@@ -215,7 +215,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			if(salaryTemplate!=null && salaryTemplate.getStatus()==1 && salaryTemplate.getFiveInsurances()==0)
 			{
 					//基数计算所得数
-				    employeesSalaryDetailInsurances=toCalculateFiveInsurances();
+				    employeesSalaryDetailInsurances=toCalculateFiveInsurances(employeesSalaryDetail.getEnterpriseEmployees());
 				    
 					employeesSalaryDetailVO.setSocialInsuranceBase(employeesSalaryDetailInsurances.getSocialInsuranceBase());
 					employeesSalaryDetailVO.setEnterprisePensionInsurance(employeesSalaryDetailInsurances.getEnterprisePensionInsurance());
@@ -350,56 +350,79 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			
 		}else{
 			
+			//*社会保险基数*/
+			employeesSalaryDetail.setSocialInsuranceBase(base.getSocialInsurance());
+			
+			//生育保险基数
+			employeesSalaryDetail.setBirthInsuranceBase(base.getBirthInsurance());
+			
+			//工伤基数
+			employeesSalaryDetail.setInductrialInjuryBase(base.getInductrialInjury());
+			
+			//基本医疗保险   缴费基数
+			employeesSalaryDetail.setMedicalPaymentBase(base.getBasicMedical());
+			
+			//住房公积金-缴费基数
+			employeesSalaryDetail.setHousingReserveBase(base.getHousingMPF());
+			
+			
+			//养老保险  企业
+			employeesSalaryDetail.setEnterprisePensionInsurance(proportionToCalculate(base.getSocialInsurance(),tax.getEndowmentInsurance()));
+			
+			//计算个人养老保险
+			employeesSalaryDetail.setPersonalPensionInsurance(proportionToCalculate(base.getSocialInsurance(),tax.getPersonalEndowmentInsurance()));
+			
+			//计算失业保险  (个人)
+			employeesSalaryDetail.setPersonalUnemploymentInsurance(proportionToCalculate(base.getSocialInsurance(),tax.getUnemploymentInsurance()));
+			
+			//计算失业保险  (企业)
+			employeesSalaryDetail.setEnterpriseUnemploymentInsurance(proportionToCalculate(base.getSocialInsurance(),tax.getPersonalUnemploymentInsurance()));
+			
+			//计算生育（企业)
+			employeesSalaryDetail.setEnterpriseBirthInsurance(proportionToCalculate(base.getBirthInsurance(),tax.getBirthEnterprise()));
+			
+			//计算工伤（企业）
+			employeesSalaryDetail.setEnterpriseInductrialInjuryBase(proportionToCalculate(base.getInductrialInjury(),tax.getInjuriesEnterprise()));
+			
+			//计算基本医疗保险  (企业)
+			employeesSalaryDetail.setEnterpriseMedicalBase(proportionToCalculate(base.getBasicMedical(),tax.getMedicalEnterprise()));
+			
+			//计算基本医疗保险 (个人)
+			employeesSalaryDetail.setPersonalMedicalBase(proportionToCalculate(base.getBasicMedical(),tax.getPersonalEnterprise()));
+			
+			//计算住房公积金-(企业)
+			employeesSalaryDetail.setEnterpriseReserveBase(proportionToCalculate(base.getHousingMPF(),tax.getHousingFundEnterprise()));
+			
+			//住房公积金 - 个人
+			employeesSalaryDetail.setPersonalReserveBase(proportionToCalculate(base.getHousingMPF(),tax.getPersonalHousingFund()));
+			
+			if(enterpriseEmployees.getWhetherGinseng()==2){
+				//特殊养老失业保险补贴
+				BigDecimal specialOldSubsidies=proportionToCalculate(base.getBasicMedical(),tax.getEndowmentInsurance());
+				BigDecimal unemploymentInsurance=proportionToCalculate(base.getBasicMedical(),tax.getUnemploymentInsurance());//失业保险
+				BigDecimal total_subsid=specialOldSubsidies.add(unemploymentInsurance).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+				employeesSalaryDetail.setSpecialOldSubsidies(total_subsid);
+				
+				
+				/*特殊工伤生育补贴*/
+				BigDecimal birthInsurance=proportionToCalculate(base.getBirthInsurance(),tax.getBirthEnterprise());//生育
+				BigDecimal inductrialInjury=proportionToCalculate(base.getInductrialInjury(),tax.getInjuriesEnterprise());//工伤
+				BigDecimal total_birth=birthInsurance.add(inductrialInjury).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+				employeesSalaryDetail.setSpecialUnemploymentSubsidies(total_birth);
+				
+				
+				/*特殊医保补贴*/
+				BigDecimal basicMedical=proportionToCalculate(base.getBasicMedical(),tax.getMedicalEnterprise());//医疗保险
+				employeesSalaryDetail.setSpecialHealthCareSubsidies(basicMedical.setScale(2,BigDecimal.ROUND_HALF_DOWN));
+				
+				/*特殊公积金补贴*/
+				BigDecimal housingMPF=proportionToCalculate(base.getHousingMPF(),tax.getHousingFundEnterprise());//公积金
+				employeesSalaryDetail.setSpecialAccumulationFundSubsidies(housingMPF.setScale(2,BigDecimal.ROUND_HALF_DOWN));
+			}
 			
 		}
 
-		
-		//*社会保险基数*/
-		employeesSalaryDetail.setSocialInsuranceBase(base.getSocialInsurance());
-		
-		//生育保险基数
-		employeesSalaryDetail.setBirthInsuranceBase(base.getBirthInsurance());
-		
-		//工伤基数
-		employeesSalaryDetail.setInductrialInjuryBase(base.getInductrialInjury());
-		
-		//基本医疗保险   缴费基数
-		employeesSalaryDetail.setMedicalPaymentBase(base.getBasicMedical());
-		
-		//住房公积金-缴费基数
-		employeesSalaryDetail.setHousingReserveBase(base.getHousingMPF());
-		
-		
-		//养老保险  企业
-		employeesSalaryDetail.setEnterprisePensionInsurance(proportionToCalculate(base.getSocialInsurance(),tax.getEndowmentInsurance()));
-		
-		//计算个人养老保险
-		employeesSalaryDetail.setPersonalPensionInsurance(proportionToCalculate(base.getSocialInsurance(),tax.getPersonalEndowmentInsurance()));
-		
-		//计算失业保险  (个人)
-		employeesSalaryDetail.setPersonalUnemploymentInsurance(proportionToCalculate(base.getSocialInsurance(),tax.getUnemploymentInsurance()));
-		
-		//计算失业保险  (企业)
-		employeesSalaryDetail.setEnterpriseUnemploymentInsurance(proportionToCalculate(base.getSocialInsurance(),tax.getPersonalUnemploymentInsurance()));
-		
-		//计算生育（企业)
-		employeesSalaryDetail.setEnterpriseBirthInsurance(proportionToCalculate(base.getBirthInsurance(),tax.getBirthEnterprise()));
-		
-		//计算工伤（企业）
-		employeesSalaryDetail.setEnterpriseInductrialInjuryBase(proportionToCalculate(base.getInductrialInjury(),tax.getInjuriesEnterprise()));
-		
-		//计算基本医疗保险  (企业)
-		employeesSalaryDetail.setEnterpriseMedicalBase(proportionToCalculate(base.getBasicMedical(),tax.getMedicalEnterprise()));
-		
-		//计算基本医疗保险 (个人)
-		employeesSalaryDetail.setPersonalMedicalBase(proportionToCalculate(base.getBasicMedical(),tax.getPersonalEnterprise()));
-		
-		//计算住房公积金-(企业)
-		employeesSalaryDetail.setEnterpriseReserveBase(proportionToCalculate(base.getHousingMPF(),tax.getHousingFundEnterprise()));
-		
-		//住房公积金 - 个人
-		employeesSalaryDetail.setPersonalReserveBase(proportionToCalculate(base.getHousingMPF(),tax.getPersonalHousingFund()));
-		
+	
 		return employeesSalaryDetail;
 	}
 	/**
@@ -412,55 +435,86 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		if(enterpriseEmployees!=null && enterpriseEmployees.getBase()==1)
 		{
 			//*社会保险基数*/
-			employeesSalaryDetail.setSocialInsuranceBase(new BigDecimal(enterpriseEmployees.getSocialInsurance()));
+			employeesSalaryDetail.setSocialInsuranceBase(new BigDecimal(enterpriseEmployees.getSocialInsurance()==null?0.00:enterpriseEmployees.getSocialInsurance()).setScale(2,BigDecimal.ROUND_HALF_DOWN));
 			
 			//生育保险基数
-			employeesSalaryDetail.setBirthInsuranceBase(new BigDecimal(enterpriseEmployees.getFertilityInsurance()));
+			employeesSalaryDetail.setBirthInsuranceBase(new BigDecimal(enterpriseEmployees.getFertilityInsurance()==null?0.00:enterpriseEmployees.getFertilityInsurance()).setScale(2,BigDecimal.ROUND_HALF_DOWN));
 			
 			//工伤基数
-			employeesSalaryDetail.setInductrialInjuryBase(new BigDecimal(enterpriseEmployees.getInductrialBase()));
+			employeesSalaryDetail.setInductrialInjuryBase(new BigDecimal(enterpriseEmployees.getInductrialBase()==null?0.00:enterpriseEmployees.getInductrialBase()).setScale(2,BigDecimal.ROUND_HALF_DOWN));
 			
 			//基本医疗保险   缴费基数
-			employeesSalaryDetail.setMedicalPaymentBase(new BigDecimal(enterpriseEmployees.getBasicMedical()));
+			employeesSalaryDetail.setMedicalPaymentBase(new BigDecimal(enterpriseEmployees.getBasicMedical()==null?0.00:enterpriseEmployees.getBasicMedical()).setScale(2,BigDecimal.ROUND_HALF_DOWN));
 			
 			//住房公积金-缴费基数
-			employeesSalaryDetail.setHousingReserveBase(new BigDecimal(enterpriseEmployees.getHousingFund()));
+			employeesSalaryDetail.setHousingReserveBase(new BigDecimal(enterpriseEmployees.getHousingFund()==null?0.00:enterpriseEmployees.getHousingFund()).setScale(2,BigDecimal.ROUND_HALF_DOWN));
 			
 
 			//养老保险  企业
-			employeesSalaryDetail.setEnterprisePensionInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()),tax.getEndowmentInsurance()));
+			employeesSalaryDetail.setEnterprisePensionInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()==null?0.00:enterpriseEmployees.getSocialInsurance()),tax.getEndowmentInsurance()));
 			
 			//计算个人养老保险
-			employeesSalaryDetail.setPersonalPensionInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()),tax.getPersonalEndowmentInsurance()));
+			employeesSalaryDetail.setPersonalPensionInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()==null?0.00:enterpriseEmployees.getSocialInsurance()),tax.getPersonalEndowmentInsurance()));
 			
 			//计算失业保险  (个人)
-			employeesSalaryDetail.setPersonalUnemploymentInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()),tax.getUnemploymentInsurance()));
+			employeesSalaryDetail.setPersonalUnemploymentInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()==null?0.00:enterpriseEmployees.getSocialInsurance()),tax.getUnemploymentInsurance()));
 			
 			//计算失业保险  (企业)
-			employeesSalaryDetail.setEnterpriseUnemploymentInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()),tax.getPersonalUnemploymentInsurance()));
+			employeesSalaryDetail.setEnterpriseUnemploymentInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()==null?0.00:enterpriseEmployees.getSocialInsurance()),tax.getPersonalUnemploymentInsurance()));
 			
 			//计算生育（企业)
-			employeesSalaryDetail.setEnterpriseBirthInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getFertilityInsurance()),tax.getBirthEnterprise()));
+			employeesSalaryDetail.setEnterpriseBirthInsurance(proportionToCalculate(new BigDecimal(enterpriseEmployees.getFertilityInsurance()==null?0.00:enterpriseEmployees.getFertilityInsurance()),tax.getBirthEnterprise()));
 			
 			//计算工伤（企业）
-			employeesSalaryDetail.setEnterpriseInductrialInjuryBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getInductrialBase()),tax.getInjuriesEnterprise()));
+			employeesSalaryDetail.setEnterpriseInductrialInjuryBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getInductrialBase()==null?0.00:enterpriseEmployees.getInductrialBase()),tax.getInjuriesEnterprise()));
 			
 			//计算基本医疗保险  (企业)
-			employeesSalaryDetail.setEnterpriseMedicalBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getInductrialBase()),tax.getMedicalEnterprise()));
+			employeesSalaryDetail.setEnterpriseMedicalBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getBasicMedical()==null?0.00:enterpriseEmployees.getInductrialBase()),tax.getMedicalEnterprise()));
 			
 			//计算基本医疗保险 (个人)
-			employeesSalaryDetail.setPersonalMedicalBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getBasicMedical()),tax.getPersonalEnterprise()));
+			employeesSalaryDetail.setPersonalMedicalBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getBasicMedical()==null?0.00:enterpriseEmployees.getBasicMedical()),tax.getPersonalEnterprise()));
 			
 			//计算住房公积金-(企业)
-			employeesSalaryDetail.setEnterpriseReserveBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getHousingFund()),tax.getHousingFundEnterprise()));
+			employeesSalaryDetail.setEnterpriseReserveBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getHousingFund()==null?0.00:enterpriseEmployees.getHousingFund()),tax.getHousingFundEnterprise()));
 			
 			//住房公积金 - 个人
-			employeesSalaryDetail.setPersonalReserveBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getHousingFund()),tax.getPersonalHousingFund()));
-		
+			employeesSalaryDetail.setPersonalReserveBase(proportionToCalculate(new BigDecimal(enterpriseEmployees.getHousingFund()==null?0.00:enterpriseEmployees.getHousingFund()),tax.getPersonalHousingFund()));
+			
+			
+			//选择特殊补贴的计算方式
+			if(enterpriseEmployees.getWhetherGinseng()==2)
+			{
+			
+				//特殊养老失业保险补贴
+				BigDecimal specialOldSubsidies=proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()==null?0.00:enterpriseEmployees.getSocialInsurance()),tax.getEndowmentInsurance());
+				BigDecimal unemploymentInsurance=proportionToCalculate(new BigDecimal(enterpriseEmployees.getSocialInsurance()==null?0.00:enterpriseEmployees.getSocialInsurance()),tax.getUnemploymentInsurance());//失业保险
+				BigDecimal total_subsid=specialOldSubsidies.add(unemploymentInsurance).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+				employeesSalaryDetail.setSpecialOldSubsidies(total_subsid);
+				
+				
+				/*特殊工伤生育补贴*/
+				BigDecimal birthInsurance=proportionToCalculate(new BigDecimal(enterpriseEmployees.getInductrialBase()==null?0.00:enterpriseEmployees.getInductrialBase()),tax.getBirthEnterprise());//生育
+				BigDecimal inductrialInjury=proportionToCalculate(new BigDecimal(enterpriseEmployees.getFertilityInsurance()==null?0.00:enterpriseEmployees.getFertilityInsurance()),tax.getInjuriesEnterprise());//工伤
+				BigDecimal total_birth=birthInsurance.add(inductrialInjury).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+				employeesSalaryDetail.setSpecialUnemploymentSubsidies(total_birth);
+				
+				
+				/*特殊医保补贴*/
+				BigDecimal basicMedical=proportionToCalculate(new BigDecimal(enterpriseEmployees.getBasicMedical()==null?0.00:enterpriseEmployees.getBasicMedical()),tax.getMedicalEnterprise());//医疗保险
+				employeesSalaryDetail.setSpecialHealthCareSubsidies(basicMedical.setScale(2,BigDecimal.ROUND_HALF_DOWN));
+				
+				
+				/*特殊公积金补贴*/
+				BigDecimal housingMPF=proportionToCalculate(new BigDecimal(enterpriseEmployees.getHousingFund()==null?0.00:enterpriseEmployees.getHousingFund()),tax.getHousingFundEnterprise());//公积金
+				employeesSalaryDetail.setSpecialAccumulationFundSubsidies(housingMPF.setScale(2,BigDecimal.ROUND_HALF_DOWN));
+			}
 		}
 		
 		return employeesSalaryDetail;
 	}
+	
+	
+	
 	/**
 	 * 计税规则除法%
 	 * @param tax

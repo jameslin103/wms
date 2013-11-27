@@ -86,7 +86,7 @@ public class EnterpriseEmployees{
 	/*合同期限 终止*/
 	private Date  endContractDeadline;
 	
-	/*是否参保  0否 1是*/
+	/*是否参保  0否 1是 2特殊补贴*/
 	private  Integer whetherGinseng;
 	
 	/*参保性质  1增员  2续保  3减员  */
