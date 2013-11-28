@@ -509,6 +509,46 @@ function  findContractJson(contractid){
 		
 
 }
+function findSalaryTable(budgetId){
+	if(budgetId==null || budgetId==undefined)return;
+	$.ajax({    
+	    url:'findSalaryTable',// 跳转到 action  
+	    data:{budgetId:budgetId},    
+	    type:'post',    
+	    cache:false,
+	    dataType:'json',    
+	    success:function(data){
+	    	
+	    	$("input[name='budgetId']").val(budgetId);
+	    	$("input[name='createSalaryBudgetTable.cmbcDate']").val('');
+	    	$("input[name='createSalaryBudgetTable.cashnumberDate']").val('');
+	    	$("input[name='createSalaryBudgetTable.heLinesDate']").val('');
+	    	if(data.createSalaryBudgetTable.cmbcDate!=null && data.createSalaryBudgetTable.cmbcDate!=""){
+	    		var   cmbcDate=new Date(data.createSalaryBudgetTable.cmbcDate).format("yyyy-MM-dd"); 
+	    		$("input[name='createSalaryBudgetTable.cmbcDate']").val(cmbcDate);
+	    	}
+	    	if(data.createSalaryBudgetTable.cashnumberDate!=null){
+	    		var   cashnumberDate=new Date(data.createSalaryBudgetTable.cashnumberDate).format("yyyy-MM-dd"); 
+	    		$("input[name='createSalaryBudgetTable.cashnumberDate']").val(cashnumberDate);
+	    	}
+	    	if(data.createSalaryBudgetTable.heLinesDate!=null){
+	    		var   heLinesDate=new  Date(data.createSalaryBudgetTable.heLinesDate).format("yyyy-MM-dd");
+	    		$("input[name='createSalaryBudgetTable.heLinesDate']").val(heLinesDate);
+	    	}
+	 
+	    },    
+	     error : function() {  
+	    	 alert("系统异常，请稍后重试！");
+	     }    
+	});	
+	
+}
+
+
+
+
+
+
 
 /** 
  * 时间对象的格式化 
@@ -636,20 +676,7 @@ Date.prototype.format = function(format) {
 function topage(page){
 	
 	var form = document.getElementById("myform");
-	form.page.value=page;
-//		$(".choose1").click(function(){
-//			form.insurance=1;
-//		});
-//		$(".choose2").click(function(){
-//			form.insurance=0;
-//		});
-//		$(".choose3").click(function(){
-//			form.departure=1;
-//		});
-//		$(".choose4").click(function(){
-//			form.pseudoDelete=1;
-//		});
-		//form.action='viewEnterpriseEmployees?page='+page;
+		form.page.value=page;
 		form.submit();
 }
 //权限角色管理
@@ -717,4 +744,44 @@ $(function(){
 	          }  
 	    });
  });
+
+$(function (){
+	$("#sub").click(function(){
+		$("#nameerror").css("");
+		$("#temp").text("");
+		$("#temp").css("");
+		$("#nameerror").text("");
+		$("#salaryDate").text("");
+		$("#salaryDate").css("");
+		var name=$("#budgetName").val();
+		var tempid=$("#tempid").val();
+		var salaryDate=$("input[name='salaryDate']").val();
+		if(name==""){
+			$("#nameerror").text("预算表名称必填项!");
+			$("#nameerror").css("color","red");
+			return false;
+		}
+		if(tempid==0)
+		{
+			$("#temp").text("模板必填项!");
+			$("#temp").css("color","red");
+			return false;
+		}
+		if(tempid=="")
+		{
+			$("#temp").text("模板必填项!");
+			$("#temp").css("color","red");
+			return false;
+		}
+		if(salaryDate==""){
+			$("#salaryDate").text("生成那月工资必填项!");
+			$("#salaryDate").css("color","red");
+			return false;
+		
+		}
+	});
+
+});
+
+
 

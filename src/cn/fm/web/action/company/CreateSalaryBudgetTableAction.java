@@ -14,6 +14,7 @@ import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.utils.DateUtil;
+import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
@@ -109,6 +110,12 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			WmsUser user=WebUtil.getWmsUser(request);
 			Enterprise  enterprise=WebUtil.getEnterprise(request);
 			CreateSalaryBudgetTable	createSalaryBudgetTablePO=null;
+			if(createSalaryBudgetTable==null || StringUtil.isEmpty(createSalaryBudgetTable.getName()) || templateId==0){
+				this.addFieldError("message", "工资预算表必填项!");
+				this.addFieldError("message", "模板必填项!");
+				return INPUT;
+			
+			}
 			if(createSalaryBudgetTable!=null && createSalaryBudgetTable.getBudgetId()!=null)
 			{
 				createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
@@ -160,6 +167,11 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
     	return SUCCESS;
 		
+	}
+	public String returnToModifyBudgetTable(){
+		createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
+		return SUCCESS;
 	}
 	/**
 	 * 新建工资预算表
@@ -274,7 +286,20 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			employeesSalaryDetailService.deleteEmployeesSalaryDetail(budgetId);
 			return SUCCESS;
 		}
-	 
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		public Integer getYear() {
 			return year;

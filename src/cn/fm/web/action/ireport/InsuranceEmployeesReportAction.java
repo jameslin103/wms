@@ -79,14 +79,17 @@ public InsurancesTax getInsurancesTax() {
 		if(enterprise.getEnterpriseId()==null)return INPUT;
 		List<EnterpriseEmployees> employeesList=enterpriseEmployeesService.getAllEnterpriseEmployees(enterprise.getEnterpriseId());
 		Map<String, Object> parameters=new HashMap<String, Object>();
+		String currentPath = ServletActionContext.getServletContext().getRealPath("");
+		String images= currentPath+"/images/fullname.jpg";
 		parameters.put("title",enterprise.getFullName()); 
 		parameters.put("username",user.getUsername()); 
+		parameters.put("image",images); 
 		 //String currentPath = ServletActionContext.getServletContext().getRealPath("");
 		 //String sqlJasper= currentPath+"/report/insurance_with_employee_list.jrxml";
 		 //String sqlXmlFile= WMSResource.getResourcesRootPath()+"/report/insurance_with_employee_list.jrxml";
 		  String sqlJasper="insurance_with_employee_list.jasper";
 		try {
-			downloadExcel(sqlJasper, "社医保办理与减员表", parameters,employeesList);
+			downloadExcel(sqlJasper, enterprise.getFullName()+"社医保办理与减员表", parameters,employeesList);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -109,12 +112,15 @@ public InsurancesTax getInsurancesTax() {
 		if(enterprise.getEnterpriseId()==null)return INPUT;
 		List<EnterpriseEmployees> employeesList=enterpriseEmployeesService.getAllEnterpriseEmployees(enterprise.getEnterpriseId());
 		Map<String, Object> parameters=new HashMap<String, Object>();
+		String currentPath = ServletActionContext.getServletContext().getRealPath("");
+		String images= currentPath+"/images/fullname.jpg";
 		parameters.put("fullname",enterprise.getFullName()); 
 		parameters.put("username",user.getUsername()); 
+		parameters.put("image",images); 
 		String sqlJasper="employee-list.jasper";
 		 
 		try {
-			downloadExcel(sqlJasper, "全体在职员工信息表", parameters,employeesList);
+			downloadExcel(sqlJasper, enterprise.getFullName()+"在职员工信息表", parameters,employeesList);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

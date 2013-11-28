@@ -18,7 +18,7 @@ var keep;
 
 jQuery.fn.FillOptions = function(url,options){
     if(url.length == 0) throw "request is required";        
-    text = options.textfield || "text";
+    //text = options.textfield || "text";
     value = options.valuefiled || "value";    
     type = options.datatype.toLowerCase() || "json";
     if(type != "xml")type="json";

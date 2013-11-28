@@ -220,13 +220,18 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 
 	public void updateSalaryStatus(CreateSalaryBudgetTable createSalaryBudgetTable) 
 	{
-		CreateSalaryBudgetTable ceateSalaryBudgetTablePO=em.find(CreateSalaryBudgetTable.class, createSalaryBudgetTable.getBudgetId());
-		em.clear();
-		ceateSalaryBudgetTablePO.setChooseTax(createSalaryBudgetTable.getChooseTax());
-		ceateSalaryBudgetTablePO.setCashnumber(createSalaryBudgetTable.getCashnumber());
-		em.merge(ceateSalaryBudgetTablePO);
 		
-		
+		em.createQuery("update CreateSalaryBudgetTable c" +
+				" set c.cmbcDate=?1," +
+				"c.cashnumberDate=?2," +
+				"c.heLinesDate=?3," +
+				"c.user_operator=?4 " +
+				" where c.budgetId=?5")
+				.setParameter(1, createSalaryBudgetTable.getCmbcDate())
+				.setParameter(2, createSalaryBudgetTable.getCashnumberDate())
+				.setParameter(3, createSalaryBudgetTable.getHeLinesDate())
+				.setParameter(4, createSalaryBudgetTable.getUser_operator())
+				.setParameter(5, createSalaryBudgetTable.getBudgetId()).executeUpdate();
 	}
 
 

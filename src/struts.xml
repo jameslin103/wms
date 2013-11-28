@@ -577,6 +577,9 @@
            		<result name="invalid.token">company/salary-step2-of-create.jsp</result>
                <result name="input"> company/salary-step2-of-create.jsp</result>
         </action> 
+         <action name="returnToModifyBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="returnToModifyBudgetTable">
+               <result name="success"> company/salary-step2-of-create.jsp</result>
+        </action> 
         <action name="downloadSalaryBudgetTable" class="cn.fm.web.action.company.ExportSalaryBudgetByPoiAction" method="downloadSalaryBudgetTable">
              <result name="success" type="stream">
                <!-- 指定被下载文件的文件类型 -->
@@ -701,6 +704,17 @@
         <!-- ==============汇总============== -->
         <action name="viewCompanyListWithSaraly" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="viewCompanyListWithSaraly">
             <result name="success" >all/company-list-with-salary.jsp</result>
+        </action>
+         <action name="findSalaryTable" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="findSalaryTable">
+            <result name="success" type="json">
+				<param name="includeProperties">
+           			createSalaryBudgetTable\.budgetId,
+           			createSalaryBudgetTable\.cmbcDate,
+           			createSalaryBudgetTable\.cashnumberDate,
+           			createSalaryBudgetTable\.heLinesDate
+				
+				</param>
+			</result>
         </action>
         <action name="updateSaralyStatus" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="updateSaralyStatus">
             <result name="success" type="redirectAction">

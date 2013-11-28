@@ -18,7 +18,7 @@
   
   
   
-  <!-- grid  flexigrid 插件-->
+  <!-- grid  flexigrid 插件--><!--
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.8.0.min.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/grid/jquery.draggable.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/grid/jquery.resizable.js"></script>
@@ -37,17 +37,17 @@
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/grid/linkbutton.css">
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/grid/shadow.css">
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/grid/dialog.css">
-  <!-- 调试插件 -->
+   调试插件 
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/grid/blackbird.css">
-  <!-- 右键快显菜单 -->
+   右键快显菜单 
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/grid/jquery.contextmenu.packed.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/grid/blackbird.js"></script>
-  <!-- 下拉列表框 -->
+   下拉列表框 
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/grid/jQuery.FillOptions.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/grid/jQuery.CascadingSelect.js"></script>
   
   
-  <!--
+  --><!--
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/flexigrid/flexigrid.css">
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/flexigrid/flexigrid.pack.css">
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/flexigrid.js"></script>

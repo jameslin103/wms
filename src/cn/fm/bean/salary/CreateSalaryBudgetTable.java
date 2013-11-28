@@ -108,6 +108,8 @@ public class CreateSalaryBudgetTable implements Serializable {
 	private Enterprise enterprise;
 	
 	private WmsUser    user;
+	
+	private String    user_operator;
 
 	private Set<EmployeesSalaryDetail>  employeesSalaryDetail=new HashSet<EmployeesSalaryDetail>();
 	
@@ -304,6 +306,15 @@ public class CreateSalaryBudgetTable implements Serializable {
 
 	public void setHeLinesDate(Date heLinesDate) {
 		this.heLinesDate = heLinesDate;
+	}
+
+	@Column(length=20)
+	public String getUser_operator() {
+		return user_operator;
+	}
+
+	public void setUser_operator(String userOperator) {
+		user_operator = userOperator;
 	}
 
 	@ManyToOne(cascade = { CascadeType.REFRESH},optional=true)

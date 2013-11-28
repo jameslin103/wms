@@ -19,12 +19,9 @@
 			{
 				var form = document.getElementById("myformlist");
 					form.page.value=page;
-				//form.action='viewEnterpriseEmployees?page='+page;
+				  //form.action='viewEnterpriseEmployees?page='+page;
 				form.submit();
 			}
-			$(function(){
-				alert("xxx");
-			});
 		</script>
 	</head>
 	<body>
@@ -158,7 +155,7 @@
 										<s:property value="%{#createSalaryBudgetTable.enterprise.fullName}"/>
 									</td>
 									<td>
-										<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#createSalaryBudgetTable.enterprise.enterpriseId}"/>
+										<a href="viewAllEmployeesSalaryDetail?enterpriseId=<s:property value="%{#createSalaryBudgetTable.enterprise.enterpriseId}"/>
 													&budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">
 										<s:property value="%{#createSalaryBudgetTable.name}"/></a>
 									</td>
@@ -185,23 +182,30 @@
 									<td>
 										<s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/>
 										<br/>
-										<span class="em">（已发放）</span>
-										<br/>
-										<s:date name="%{#createSalaryBudgetTable.cmbcDate}" format="yyyy年MM月dd日HH时"/>
+										<s:if test="#createSalaryBudgetTable.cmbcDate!=null">
+											<span class="em">（已发放）</span>
+											<br/>
+											<s:date name="%{#createSalaryBudgetTable.cmbcDate}" format="yyyy年MM月dd日HH时"/>
+										</s:if>
 									</td>
 									<td>
 										<s:property value="%{#request.createSalaryBudgetTable.cmbc}"/>
 										<br/>
-										<span class="em">（已发放）</span>
-										<br/>
-										<s:date name="%{#createSalaryBudgetTable.cashnumberDate}" format="yyyy年MM月dd日HH时"/>
+										<s:if test="#createSalaryBudgetTable.cashnumberDate!=null">
+											<span class="em">（已发放）</span>
+											<br/>
+											<s:date name="%{#createSalaryBudgetTable.cashnumberDate}" format="yyyy年MM月dd日HH时"/>
+										</s:if>
 									</td>
 									<td>
+									
 										<s:property value="%{#request.createSalaryBudgetTable.heLines}"/>
 										<br/>
-										<span class="em">（已发放）</span>
-										<br/>
-										<s:date name="%{#createSalaryBudgetTable.heLinesDate}" format="yyyy年MM月dd日HH时"/>
+										<s:if test="#createSalaryBudgetTable.heLinesDate!=null">
+											<span class="em">（已发放）</span>
+											<br/>
+											<s:date name="%{#createSalaryBudgetTable.heLinesDate}" format="yyyy年MM月dd日HH时"/>
+										</s:if>
 									</td>
 									<td>
 										<ul>
@@ -210,8 +214,9 @@
 												<s:date name="%{#createSalaryBudgetTable.createDate}" format="yyyy-MM-dd,HH:ss"/>
 											</li>
 											<li>
-												发放：<s:property value=""/>
-												<a href="#info-for-check2" data-toggle="modal">操作</a>
+												发放：<s:property value="%{#createSalaryBudgetTable.user_operator}"/>
+												<s:set value="%{#createSalaryBudgetTable.budgetId}" id="budgetId"/>
+												<a href="#info-for-check2" data-toggle="modal" onclick="findSalaryTable('${budgetId}')">操作</a>
 											</li>
 										</ul>
 									</td>
@@ -299,6 +304,7 @@
 			<div class="modal-body">
 				<div class="row-fluid">
 					<form action="updateSaralyStatus" method="post">
+					   <input type="hidden" name="budgetId"/>
 						<div class="input-container">
 							<label>
 								民生银行

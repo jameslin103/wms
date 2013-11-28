@@ -272,6 +272,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		employees.setFertilityInsurance(data[28].toString().equals("")?null:Double.valueOf(data[28]));
 		employees.setSeriousDiseaseBase(data[32].toString().equals("")?null:Double.valueOf(data[32]));
 		employees.setPaymentWay(data[33]==null?null:data[33].equals(Constant.WMS_YES)?1:0);
+		employees.setWhetherGinseng(data[34]==null?null:data[34].equals(Constant.WMS_YES)?2:null);
 		employees.setDeparture(0);
 		employees.setPseudoDelete(0);
 		return employees;
