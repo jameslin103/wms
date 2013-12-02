@@ -18,9 +18,6 @@
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script>
 		$(document).ready(function(){
-			$("#edit-employees-bnt").on("hidden",function(){
-				clearForm(this);
-			});
 			$("#add-employees-bnt").on("hidden",function(){
 				clearForm(this);
 			});
@@ -128,16 +125,16 @@
 								查看：
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees?insurance=1" class="choose1">参保</a>，
+								<a href="ginsengInsurance?insurance=1">参保</a>，
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees?insurance=0" class="choose2">未参保</a>，
+								<a href="uninsuredInsurance?insurance=0">未参保</a>，
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees?departure=1" class="choose3">离职员工</a>，
+								<a href="departureEmployees?departure=1">离职员工</a>，
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees?pseudoDelete=1" class="choose4">隐藏信息</a>
+								<a href="hideEmployees?pseudoDelete=1">隐藏信息</a>
 							</li>
 							<li class="right">
 								<a href="exportEmployeesExcel" class="btn btn-primary">下载全体在职员工信息</a>
@@ -152,10 +149,6 @@
 						</ul>
 					<s:form action="viewEnterpriseEmployees" method="post" id="myform">
 						 <input type="hidden" name="page"/>
-						 <input type="hidden" name="pseudoDelete"/>
-						 <input type="hidden" name="departure"/>
-						 <input type="hidden" name="insurance"/>
-						 <input type="hidden" name="departure"/>
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>

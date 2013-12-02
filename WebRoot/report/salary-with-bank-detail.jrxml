@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salary-with-bank-detail" pageWidth="900" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="860" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b90490cb-f2da-4549-b4e8-415554831a05">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salary-with-bank-detail" pageWidth="900" pageHeight="750" whenNoDataType="AllSectionsNoDetail" columnWidth="860" leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="10" uuid="b90490cb-f2da-4549-b4e8-415554831a05">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -9,131 +9,26 @@
 	<queryString language="plsql">
 		<![CDATA[]]>
 	</queryString>
-	<field name="accumulationFund" class="java.lang.String">
-		<fieldDescription><![CDATA[accumulationFund]]></fieldDescription>
+	<field name="wage" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[wage]]></fieldDescription>
 	</field>
-	<field name="addCount" class="java.lang.Long">
-		<fieldDescription><![CDATA[addCount]]></fieldDescription>
-	</field>
-	<field name="bank" class="java.lang.String">
-		<fieldDescription><![CDATA[bank]]></fieldDescription>
-	</field>
-	<field name="bankCardNumber" class="java.lang.String">
-		<fieldDescription><![CDATA[bankCardNumber]]></fieldDescription>
-	</field>
-	<field name="base" class="java.lang.Integer">
-		<fieldDescription><![CDATA[base]]></fieldDescription>
-	</field>
-	<field name="basicMedical" class="java.lang.Double">
-		<fieldDescription><![CDATA[basicMedical]]></fieldDescription>
-	</field>
-	<field name="cardNumber" class="java.lang.String">
-		<fieldDescription><![CDATA[cardNumber]]></fieldDescription>
-	</field>
-	<field name="cinsengDate" class="java.util.Date">
-		<fieldDescription><![CDATA[cinsengDate]]></fieldDescription>
-	</field>
-	<field name="class" class="java.lang.Class">
-		<fieldDescription><![CDATA[class]]></fieldDescription>
-	</field>
-	<field name="contractNo" class="java.lang.String">
-		<fieldDescription><![CDATA[contractNo]]></fieldDescription>
-	</field>
-	<field name="createDate" class="java.util.Date">
-		<fieldDescription><![CDATA[createDate]]></fieldDescription>
-	</field>
-	<field name="employeesId" class="java.lang.Integer">
-		<fieldDescription><![CDATA[employeesId]]></fieldDescription>
+	<field name="moneyToCards" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[moneyToCards]]></fieldDescription>
 	</field>
 	<field name="employeesName" class="java.lang.String">
 		<fieldDescription><![CDATA[employeesName]]></fieldDescription>
 	</field>
-	<field name="employeesSex" class="java.lang.String">
-		<fieldDescription><![CDATA[employeesSex]]></fieldDescription>
+	<field name="bankCardNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[bankCardNumber]]></fieldDescription>
 	</field>
-	<field name="endContractDeadline" class="java.util.Date">
-		<fieldDescription><![CDATA[endContractDeadline]]></fieldDescription>
-	</field>
-	<field name="enterprise" class="cn.fm.bean.company.Enterprise">
-		<fieldDescription><![CDATA[enterprise]]></fieldDescription>
-	</field>
-	<field name="fertilityInsurance" class="java.lang.Double">
-		<fieldDescription><![CDATA[fertilityInsurance]]></fieldDescription>
-	</field>
-	<field name="ginsengProtectNature" class="java.lang.String">
-		<fieldDescription><![CDATA[ginsengProtectNature]]></fieldDescription>
-	</field>
-	<field name="healthCare" class="java.lang.String">
-		<fieldDescription><![CDATA[healthCare]]></fieldDescription>
-	</field>
-	<field name="homeAddress" class="java.lang.String">
-		<fieldDescription><![CDATA[homeAddress]]></fieldDescription>
-	</field>
-	<field name="householdRegister" class="java.lang.Integer">
-		<fieldDescription><![CDATA[householdRegister]]></fieldDescription>
-	</field>
-	<field name="housingFund" class="java.lang.Double">
-		<fieldDescription><![CDATA[housingFund]]></fieldDescription>
-	</field>
-	<field name="inductrialBase" class="java.lang.Double">
-		<fieldDescription><![CDATA[inductrialBase]]></fieldDescription>
-	</field>
-	<field name="industry" class="java.lang.String">
-		<fieldDescription><![CDATA[industry]]></fieldDescription>
-	</field>
-	<field name="jobs" class="java.lang.String">
-		<fieldDescription><![CDATA[jobs]]></fieldDescription>
-	</field>
-	<field name="levelEducation" class="java.lang.String">
-		<fieldDescription><![CDATA[levelEducation]]></fieldDescription>
-	</field>
-	<field name="maritalStatus" class="java.lang.Integer">
-		<fieldDescription><![CDATA[maritalStatus]]></fieldDescription>
-	</field>
-	<field name="nativePlace" class="java.lang.String">
-		<fieldDescription><![CDATA[nativePlace]]></fieldDescription>
+	<field name="cardNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[cardNumber]]></fieldDescription>
 	</field>
 	<field name="note" class="java.lang.String">
 		<fieldDescription><![CDATA[note]]></fieldDescription>
 	</field>
-	<field name="paymentWay" class="java.lang.String">
-		<fieldDescription><![CDATA[paymentWay]]></fieldDescription>
-	</field>
-	<field name="phone" class="java.lang.String">
-		<fieldDescription><![CDATA[phone]]></fieldDescription>
-	</field>
-	<field name="photo" class="java.lang.Integer">
-		<fieldDescription><![CDATA[photo]]></fieldDescription>
-	</field>
-	<field name="pseudoDelete" class="java.lang.Integer">
-		<fieldDescription><![CDATA[pseudoDelete]]></fieldDescription>
-	</field>
-	<field name="renewalCount" class="java.lang.Long">
-		<fieldDescription><![CDATA[renewalCount]]></fieldDescription>
-	</field>
-	<field name="seriousDisease" class="java.lang.Integer">
-		<fieldDescription><![CDATA[seriousDisease]]></fieldDescription>
-	</field>
-	<field name="seriousDiseaseBase" class="java.lang.Double">
-		<fieldDescription><![CDATA[seriousDiseaseBase]]></fieldDescription>
-	</field>
-	<field name="serviceCost" class="java.lang.Double">
-		<fieldDescription><![CDATA[serviceCost]]></fieldDescription>
-	</field>
-	<field name="sociaSecurity" class="java.lang.String">
-		<fieldDescription><![CDATA[sociaSecurity]]></fieldDescription>
-	</field>
-	<field name="socialInsurance" class="java.lang.Double">
-		<fieldDescription><![CDATA[socialInsurance]]></fieldDescription>
-	</field>
-	<field name="startContractDeadline" class="java.util.Date">
-		<fieldDescription><![CDATA[startContractDeadline]]></fieldDescription>
-	</field>
-	<field name="whetherGinseng" class="java.lang.Integer">
-		<fieldDescription><![CDATA[whetherGinseng]]></fieldDescription>
-	</field>
-	<field name="whetherGinsengCount" class="java.lang.Long">
-		<fieldDescription><![CDATA[whetherGinsengCount]]></fieldDescription>
+	<field name="bank" class="java.lang.String">
+		<fieldDescription><![CDATA[bank]]></fieldDescription>
 	</field>
 	<group name="salaryId">
 		<groupExpression><![CDATA[]]></groupExpression>
@@ -142,16 +37,17 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="32" splitType="Stretch">
+		<band height="74" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="01925ee5-2d63-4f75-8311-0474b5688091" x="84" y="0" width="687" height="32"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="01925ee5-2d63-4f75-8311-0474b5688091" x="110" y="0" width="705" height="74"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="22" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement uuid="b7088228-11dc-4afb-af6d-0074a4884b44" x="0" y="0" width="84" height="32"/>
+				<reportElement uuid="b7088228-11dc-4afb-af6d-0074a4884b44" x="0" y="0" width="110" height="74"/>
+				<imageExpression><![CDATA[$P{image}]]></imageExpression>
 				<anchorNameExpression><![CDATA[$P{image}]]></anchorNameExpression>
 			</image>
 		</band>
@@ -226,19 +122,6 @@
 				<text><![CDATA[银行名称]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="63365889-c711-40bd-b460-84f80b2b033f" mode="Opaque" x="547" y="1" width="153" height="34" backcolor="#FFFF99"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[卡号]]></text>
-			</staticText>
-			<staticText>
 				<reportElement uuid="7b1576fe-03c3-4292-bc3e-fc7476c49c8c" mode="Opaque" x="700" y="1" width="160" height="34" backcolor="#FF0000"/>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -264,6 +147,19 @@
 				</textElement>
 				<text><![CDATA[序号]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="63365889-c711-40bd-b460-84f80b2b033f" mode="Opaque" x="547" y="1" width="153" height="34" backcolor="#FFFF99"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[卡号]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -277,7 +173,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{cardNumber}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cardNumber}==null?"":$F{cardNumber}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="ac6d57d6-a24c-4d1d-ade4-8c871d20d882" x="0" y="0" width="52" height="22"/>
@@ -288,7 +184,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{employeesId}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="f6d2c08c-e330-4f45-8328-5493e298dc04" x="52" y="0" width="157" height="22"/>
@@ -310,7 +206,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{seriousDisease}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{wage}==null?"":$F{wage}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="9631ff5d-1e27-4960-8f08-db01f1575325" x="366" y="0" width="181" height="22"/>
@@ -321,7 +217,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{bank}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bank}==null?"":$F{bank}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="b0326998-d1f2-4fa5-ab1c-1822ee488e46" x="547" y="0" width="153" height="22"/>
@@ -332,7 +228,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{bankCardNumber}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bankCardNumber}==null?"":$F{bankCardNumber}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

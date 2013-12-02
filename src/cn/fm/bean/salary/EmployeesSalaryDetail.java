@@ -140,7 +140,11 @@ public class EmployeesSalaryDetail implements Serializable
 	/*身份证号*/
 	private String  cardNumber;
 	
+	
 	private String  bankCardNumber;
+	
+	/*开户银行*/
+	private String  bank;
 	
 	private EnterpriseEmployees    enterpriseEmployees;
 	
@@ -389,6 +393,15 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterpriseTax(BigDecimal enterpriseTax) {
 		this.enterpriseTax = enterpriseTax;
 	}
+	
+	@Column(length=20)
+	public String getBank() {
+		return bank;
+	}
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+	
 	@Column(length=80 ,scale=2)
 	public BigDecimal getPersonalTax() {
 		return personalTax;

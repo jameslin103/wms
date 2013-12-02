@@ -19,8 +19,7 @@
 			{
 				var form = document.getElementById("myformlist");
 					form.page.value=page;
-				  //form.action='viewEnterpriseEmployees?page='+page;
-				form.submit();
+					form.submit();
 			}
 		</script>
 	</head>
@@ -152,12 +151,24 @@
 										<s:property value="%{#list.index+1}"/>
 									</td>
 									<td>
-										<s:property value="%{#createSalaryBudgetTable.enterprise.fullName}"/>
+										<s:if test="#createSalaryBudgetTable.enterprise.fullName.length()>10">
+											<s:property value="#createSalaryBudgetTable.enterprise.fullName.substring(0,10)+'...'"/>
+										</s:if>
+										<s:else>
+											<s:property value="#createSalaryBudgetTable.enterprise.fullName"/>
+										</s:else>
 									</td>
 									<td>
 										<a href="viewAllEmployeesSalaryDetail?enterpriseId=<s:property value="%{#createSalaryBudgetTable.enterprise.enterpriseId}"/>
 													&budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">
-										<s:property value="%{#createSalaryBudgetTable.name}"/></a>
+										<s:if test="#createSalaryBudgetTable.name.length()>10">
+											<s:property value="#createSalaryBudgetTable.name.substring(0,10)+'...'"/>
+										</s:if>
+										<s:else>
+											<s:property value="%{#createSalaryBudgetTable.name}"/>
+										</s:else>
+										
+										</a>
 									</td>
 									<td>
 										<s:date name="%{#createSalaryBudgetTable.salaryDate}" format="yyyy年MM月"/>

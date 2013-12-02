@@ -79,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="viewMinshengBank?budgetId=<s:property value="%{#request.budgetId}"/>">民生银行</a>，</li>
             <li><a href="viewOtherBank?budgetId=<s:property value="%{#request.budgetId}"/>">他行</a>，</li>
             <li><a href="viewCashIssue?budgetId=<s:property value="%{#request.budgetId}"/>">现金</a></li>
-            <li class="right"><a href="downloadBankIssueSalary" class="btn btn-primary">下载Excel表格</a></li>
+            <li class="right"><a href="downloadBankIssueSalary?budgetId=<s:property value="%{#request.budgetId}"/>" class="btn btn-primary">下载Excel表格</a></li>
           </ul>
 		  <s:form action="viewSalaryWithBankPersonalNumber" method="post" id="myform1">
 		  	 <input type="hidden" name="page"/>
@@ -101,7 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td style="text-align: center;"><s:property value="%{#list.index+1}"/></td>
                 <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.employeesName}"/></td>
                 <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.cardNumber}"/></td>
-                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.note}"/></td>
+                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.bank}"/></td>
                 <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.bankCardNumber}"/></td>
                 <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.wage}"/></td>
               </tr>

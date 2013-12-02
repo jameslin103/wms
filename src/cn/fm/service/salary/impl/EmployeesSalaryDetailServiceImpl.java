@@ -627,6 +627,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		
 		EmployeesSalaryDetail employeesSalaryDetail=new EmployeesSalaryDetail();
 		carNumber=fileDate[3]==null?"":fileDate[3].toString();
+		String note=fileDate[4]==null?"":fileDate[4].toString();
 		if(!StringUtil.isEmpty(fileDate[1].toString()))
 		{
 			for (EnterpriseEmployees emp : enterpriseEmployeesListPO) 
@@ -652,7 +653,8 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 					    	    employeesSalaryDetail.setEnterpriseEmployees(emp);
 					    	    employeesSalaryDetail.setEmployeesName(emp.getEmployeesName());
 					    	    employeesSalaryDetail.setBankCardNumber(emp.getBankCardNumber());
-					    	    
+					    	    employeesSalaryDetail.setBank(emp.getBank());
+					    	    employeesSalaryDetail.setNote(note);
 							    
 							    //服务费
 							    employeesSalaryDetail.setServiceCharge(new BigDecimal(emp.getServiceCost()==null?"0.0":emp.getServiceCost().toString()));
@@ -903,6 +905,13 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		String defaultHql="select e from EmployeesSalaryDetail e where e.budgettableId=?1";
 		return em.createQuery(defaultHql).setParameter(1, budgetId).getResultList();
 	}
-	
+	/**
+	 * 查看发放人员情况
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<EmployeesSalaryDetail>  getBankEmployeesSalaryDetail(Integer budgetId){
+		return em.createQuery("select e from EmployeesSalaryDetail e where e.createSalaryBudgetTable.budgetId=?1").setParameter(1, budgetId).getResultList();
+	}
 	
 }

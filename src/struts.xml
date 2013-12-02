@@ -273,6 +273,44 @@
             	<param name="page">${page}</param>
             </result>
         </action>  
+         <!-- 查看参保员工 -->
+         <action name="ginsengInsurance" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="ginsengInsurance">
+            <result name="success">/account/ginseng_insurance.jsp</result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">ginsengInsurance</param>
+            	<param name="insurance">${insurance}</param>
+            	<param name="page">${page}</param>
+            </result>
+        </action> 
+          <!-- 查看未参保员工 -->
+        <action name="uninsuredInsurance" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="uninsuredInsurance">
+            <result name="success">/account/uninsured_insurance.jsp</result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">uninsuredInsurance</param>
+            	<param name="page">${page}</param>
+            	<param name="insurance">${insurance}</param>
+            </result>
+        </action> 
+          <!-- 查看离职员工 -->
+        <action name="departureEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="departureEmployees">
+            <result name="success">/account/departure_employees.jsp</result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">departureEmployees</param>
+            	<param name="page">${page}</param>
+            	<param name="insurance">${insurance}</param>
+            </result>
+        </action> 
+         <!-- 查看隐藏员工 -->
+        <action name="hideEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="hideEmployees">
+            <result name="success">/account/hide_employees.jsp</result>
+            <result name="input" type="redirectAction">
+            	<param name="actionName">hideEmployees</param>
+            	<param name="page">${page}</param>
+            	<param name="pseudoDelete">${pseudoDelete}</param>
+            </result>
+        </action>
+        
+        
         <action name="batchExcelDataEmployee" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="batchExcelDataEmployee">
             <result name="success">company/employee-step1-of-create.jsp</result>
         </action>  
@@ -666,13 +704,13 @@
             </result>
         </action>
         <action name="viewMinshengBank" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewMinshengBank">
-            <result name="success">company/salary-with-bank-detail.jsp</result>
+            <result name="success">account/salary-minsheng-bank-detail.jsp</result>
         </action>
         <action name="viewOtherBank" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewOtherBank">
-            <result name="success">company/salary-with-bank-detail.jsp</result>
+            <result name="success">account/salary-other-banks-detail.jsp</result>
         </action>
         <action name="viewCashIssue" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="viewCashIssue">
-            <result name="success">company/salary-with-bank-detail.jsp</result>
+            <result name="success">account/salary-cash-detail.jsp</result>
         </action>
         
            <!-- report  导出数据======================== -->

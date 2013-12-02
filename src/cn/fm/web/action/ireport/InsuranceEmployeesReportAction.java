@@ -1,6 +1,5 @@
 package cn.fm.web.action.ireport;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -190,7 +189,7 @@ public InsurancesTax getInsurancesTax() {
 		if(enterprise.getEnterpriseId()==null)return INPUT;
 		String currentPath = ServletActionContext.getServletContext().getRealPath("");
 		String images= currentPath+"/images/fullname.jpg";
-		List<EnterpriseEmployees> employeesList=enterpriseEmployeesService.getAllEnterpriseEmployees(enterprise.getEnterpriseId());
+		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getBankEmployeesSalaryDetail(budgetId);
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		parameters.put("title",enterprise.getFullName()); 
 		parameters.put("username",user.getUsername()); 
@@ -198,7 +197,7 @@ public InsurancesTax getInsurancesTax() {
 		String sqlJasper="salary-with-bank-detail.jasper";
 		 
 		try {
-			downloadExcel(sqlJasper, "银行发放信息表", parameters,employeesList);
+			downloadExcel(sqlJasper, enterprise.getFullName()+"-(银行发放信息表)", parameters,employeesSalaryDetailList);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

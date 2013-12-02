@@ -83,5 +83,9 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	
 	public  List<EmployeesSalaryDetail>   getPayrollStaff(Integer budgetId);
 
-
+	/**
+	 * 查看发放人员情况
+	 * @return
+	 */
+	public List<EmployeesSalaryDetail>  getBankEmployeesSalaryDetail(Integer budgetId);
 }

@@ -2,7 +2,18 @@ function Ctrl($scope) {
 
   $scope.user = {name: 'guest', last: 'visitor'};
 }
+$(document).ready( function() {  
+    $("table td").mouseout( function() {  
 
+        $(this).parent().find("td").each(function(i){ $(this).css({color:"black",background: '#efefef' }) });  
+              
+        });  
+
+    $("table td").mouseover( function() {  
+          
+    $(this).parent().find("td").each(function(i){ $(this).css({color:"red",background: '#cccccc' }) });  
+    });  
+});  
 /**
  * json 请求查询企业信息
  * @param enterpriseId

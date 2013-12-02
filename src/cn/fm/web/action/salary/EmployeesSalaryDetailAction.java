@@ -482,8 +482,8 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		List<Object> params = new ArrayList<Object>();
 			jpql.append(" o.budgettableId=?").append(params.size()+1);
 			params.add(this.budgetId);
-			jpql.append(" and o.note like ?").append(params.size()+1);
-			params.add("%民生银行%");
+			jpql.append(" and o.bank like ?").append(params.size()+1);
+			params.add("%民生%");
 			
 			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
 			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
@@ -505,10 +505,8 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		List<Object> params = new ArrayList<Object>();
 			jpql.append(" o.budgettableId=?").append(params.size()+1);
 			params.add(this.budgetId);
-			jpql.append(" and o.note!=?").append(params.size()+1);
-			params.add(" 民生银行");
-			jpql.append(" and o.note!=?").append(params.size()+1);
-			params.add("现金");
+			jpql.append(" and o.bank is not ''").append(params.size()+1);
+			params.add(" %民生%");
 			
 			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
 			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
@@ -530,8 +528,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		List<Object> params = new ArrayList<Object>();
 			jpql.append(" o.budgettableId=?").append(params.size()+1);
 			params.add(this.budgetId);
-			jpql.append(" and o.note=?").append(params.size()+1);
-			params.add("like '现金' ");
+			jpql.append(" and o.bank is null");
 			
 			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
 			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 

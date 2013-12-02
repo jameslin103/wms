@@ -169,7 +169,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 						if(empName.equals(empName_PO))
 						{
 							isSameName++;
-							fullName=empPO.getEnterprise().getFullName();
+							fullName=empPO==null?"":empPO.getEnterprise()==null?"":empPO.getEnterprise().getFullName();
 							if(empCarNumber!=null && empCarNumber_PO!=null)
 							{
 								if(empCarNumber_PO.equals(empCarNumber))
