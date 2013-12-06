@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="employee-list" language="groovy" pageWidth="1000" pageHeight="838" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="dd17921c-567b-4ade-8d05-b1015dd7cfb7">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="52"/>
+	<property name="ireport.x" value="58"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fullname" class="java.lang.String"/>
 	<parameter name="username" class="java.lang.String"/>
@@ -406,7 +406,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{employeesName}==null?"":$F{employeesName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{employeesName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="f61caf82-0243-47cb-99ec-1961fad4685a" x="109" y="0" width="35" height="20"/>
@@ -417,7 +417,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{employeesSex}==null?"":$F{employeesSex}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{employeesSex}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="7c4622e3-812e-4b16-9259-8d0d1a292f6f" x="144" y="0" width="34" height="20"/>
@@ -439,7 +439,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{maritalStatus}==null?"":($F{maritalStatus})==1?"未婚":"已婚"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{maritalStatus}==1?"未婚":"已婚"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="acb20536-8948-4427-848d-1340731cf65b" x="207" y="0" width="29" height="20"/>
@@ -450,7 +450,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{photo}==null?"":($F{photo})==1?"有":"无"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{photo}==1?"有":"无"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="d72543bc-f94e-4c5e-8926-c0c8f0fbc067" x="236" y="0" width="131" height="20"/>
@@ -461,7 +461,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{cardNumber}==null?"":$F{cardNumber}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cardNumber}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="33e3da6e-8723-4a89-a52b-6335b2ba0d29" x="367" y="0" width="122" height="20"/>
@@ -472,7 +472,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{phone}==null?"":$F{phone}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="32261e15-0183-4d02-a1b6-efa310baba01" x="489" y="0" width="94" height="20"/>
@@ -483,7 +483,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{serviceCost}==null?"":$F{serviceCost}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{serviceCost}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="aeb5674f-2701-4c2c-a809-35d129ad6cc7" x="583" y="0" width="48" height="20"/>
@@ -528,7 +528,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{base}==null?"":$F{base}==0?"默认基数":"个性基数"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{base}==0?"默认基数":"个性基数"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="0a6a3c20-423a-4775-86ff-563ab26874c1" x="865" y="0" width="94" height="20"/>
@@ -539,7 +539,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{paymentWay}==null?"":$F{paymentWay}==0?"个人缴税":"企业缴税"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{paymentWay}==0?"个人缴税":"企业缴税"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
