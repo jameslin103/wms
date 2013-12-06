@@ -12,9 +12,11 @@ import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseEmployeesService;
+import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.company.InsurancesTaxService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
+import cn.fm.utils.Constant;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.ReportAction;
@@ -29,7 +31,8 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	private CreateSalaryBudgetTableService		createSalaryBudgetTableService;
 	@Resource
 	private InsurancesTaxService				insurancesTaxService;
-	
+	@Resource
+	private EnterpriseService					enterpriseService;
 	
 	
 	private InsurancesTax						InsurancesTax;
@@ -38,35 +41,24 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	
 	private String      selected;
 	
+	private Integer     enterpriseId;
 	
+	//全部
+	private boolean     allexport;
+	
+	//民生银行
+	private boolean     minshengbank;
+	
+	//其它银行
+	private boolean     otherbanks;
+	
+	//现金
+	private boolean     cashissue;
 	
 	
 
 	
-	public String getSelected() {
-		return selected;
-	}
-	public void setSelected(String selected) {
-		this.selected = selected;
-	}
-	public Integer getBudgetId() {
-		return budgetId;
-	}
-	public void setBudgetId(Integer budgetId) {
-		this.budgetId = budgetId;
-	}
-	public void setEnterpriseEmployeesService(
-			EnterpriseEmployeesService enterpriseEmployeesService) {
-		this.enterpriseEmployeesService = enterpriseEmployeesService;
-	}
-	
-	
-public InsurancesTax getInsurancesTax() {
-		return InsurancesTax;
-	}
-	public void setInsurancesTax(InsurancesTax insurancesTax) {
-		InsurancesTax = insurancesTax;
-	}
+
 /**
  * 下载社医保办理与减员表
  * @return  
@@ -105,6 +97,7 @@ public InsurancesTax getInsurancesTax() {
 	* @Parameters: 无
 	* @Return: 无
 	*/
+	
 	public String exportEmployeesExcel(){
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		WmsUser    user=WebUtil.getWmsUser(request);
@@ -127,11 +120,14 @@ public InsurancesTax getInsurancesTax() {
 		return null;
 
 	}
+	/**
+	 * 工资各类明细
+	 * @return
+	 */
 	public String downloadEmployeesSalaryDetail()
 	{
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		StringBuffer  sb=new StringBuffer();
-		WmsUser    user=WebUtil.getWmsUser(request);
 		if(enterprise.getEnterpriseId()==null)return INPUT;
 		InsurancesTax=insurancesTaxService.getInsurancesTax();
 		CreateSalaryBudgetTable createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
@@ -151,7 +147,7 @@ public InsurancesTax getInsurancesTax() {
 		parameters.put("fiveInsurancesTotal",createSalaryBudgetTable.getFiveInsurancesTotal()==null?"":createSalaryBudgetTable.getFiveInsurancesTotal().toString());
 		parameters.put("budgetName", createSalaryBudgetTable.getName());
 		parameters.put("fullname",enterprise.getFullName()); 
-		parameters.put("username",user.getUsername());
+		parameters.put("username",createSalaryBudgetTable.getUser().getUsername());
 		parameters.put("image", images);
 		parameters.put("endowmentInsurance", InsurancesTax.getBirthEnterprise()+"%");
 		parameters.put("personalEndowmentInsurance", InsurancesTax.getPersonalEndowmentInsurance()+"%");
@@ -173,7 +169,7 @@ public InsurancesTax getInsurancesTax() {
 	
 		 
 		try {
-			downloadExcel(sqlJasper, sb.toString()+"工资明细表", parameters,employeesSalaryDetailList);
+			downloadExcel(sqlJasper, sb.toString()+"-工资明细表", parameters,employeesSalaryDetailList);
 			
 		} catch (Exception e) {
 			
@@ -182,17 +178,31 @@ public InsurancesTax getInsurancesTax() {
 		return null;
 	}
 	
+	/**
+	 * 银行发放明细表
+	 * @return
+	 */
 	public String downloadBankIssueSalary()
 	{
 		Enterprise enterprise=WebUtil.getEnterprise(request);
-		WmsUser    user=WebUtil.getWmsUser(request);
+		if(enterprise==null){
+			if(enterpriseId==null)return INPUT;
+				enterprise=enterpriseService.find(enterpriseId);
+				request.getSession().setAttribute("enterprise", enterprise);
+		}
 		if(enterprise.getEnterpriseId()==null)return INPUT;
 		String currentPath = ServletActionContext.getServletContext().getRealPath("");
 		String images= currentPath+"/images/fullname.jpg";
+		CreateSalaryBudgetTable createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		
 		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getBankEmployeesSalaryDetail(budgetId);
 		Map<String, Object> parameters=new HashMap<String, Object>();
+		if(createSalaryBudgetTable==null)createSalaryBudgetTable=new CreateSalaryBudgetTable();
+		
+		String username=(createSalaryBudgetTable.getUser()!=null)?(createSalaryBudgetTable.getUser().getUsername()):"".toString();
 		parameters.put("title",enterprise.getFullName()); 
-		parameters.put("username",user.getUsername()); 
+		parameters.put("username",username); 
+		parameters.put("salaryDate",createSalaryBudgetTable.getSalaryDate()==null?"":DateUtil.dateToString(createSalaryBudgetTable.getSalaryDate(), DateUtil.FORMAT_DATE_MONTH)+Constant.WMS_SALARY); 
 		parameters.put("image",images); 
 		String sqlJasper="salary-with-bank-detail.jasper";
 		 
@@ -235,5 +245,65 @@ public InsurancesTax getInsurancesTax() {
 	
 
 	
+	
+	
+	
+	
+	
+	
+	public boolean isAllexport() {
+		return allexport;
+	}
+	public void setAllexport(boolean allexport) {
+		this.allexport = allexport;
+	}
+	public boolean isMinshengbank() {
+		return minshengbank;
+	}
+	public void setMinshengbank(boolean minshengbank) {
+		this.minshengbank = minshengbank;
+	}
+	public boolean isOtherbanks() {
+		return otherbanks;
+	}
+	public void setOtherbanks(boolean otherbanks) {
+		this.otherbanks = otherbanks;
+	}
+	public boolean isCashissue() {
+		return cashissue;
+	}
+	public void setCashissue(boolean cashissue) {
+		this.cashissue = cashissue;
+	}
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+	public String getSelected() {
+		return selected;
+	}
+	public void setSelected(String selected) {
+		this.selected = selected;
+	}
+	public Integer getBudgetId() {
+		return budgetId;
+	}
+	public void setBudgetId(Integer budgetId) {
+		this.budgetId = budgetId;
+	}
+	public void setEnterpriseEmployeesService(
+			EnterpriseEmployeesService enterpriseEmployeesService) {
+		this.enterpriseEmployeesService = enterpriseEmployeesService;
+	}
+	
+	
+	public InsurancesTax getInsurancesTax() {
+		return InsurancesTax;
+	}
+	public void setInsurancesTax(InsurancesTax insurancesTax) {
+		InsurancesTax = insurancesTax;
+	}
 	
 }

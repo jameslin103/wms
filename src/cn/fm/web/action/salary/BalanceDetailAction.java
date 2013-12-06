@@ -1,12 +1,16 @@
 package cn.fm.web.action.salary;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.persistence.Column;
+
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.BalanceDetail;
+import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.salary.BalanceDetailService;
 import cn.fm.utils.WebUtil;
@@ -97,13 +101,21 @@ public class BalanceDetailAction extends BaseAction {
 	public String findToIdBalanceDetail()
 	{
 		balanceDetail=balanceDetailService.find(detailId);
-		return "balanceDetail";
+		return SUCCESS;
 	}
 	public String   addBalanceDetail()
 	{
 		if(balanceDetail==null)return INPUT;
+		WmsUser user=WebUtil.getWmsUser(request);
+		balanceDetail.setUserIusse(user.getUsername());
+		Double endblan=(balanceDetail.getWages()==null?0.00:balanceDetail.getWages().doubleValue()+
+				(balanceDetail.getServiceWith()==null?0.00:balanceDetail.getServiceWith().doubleValue())+
+				(balanceDetail.getFiveFund()==null?0.00:balanceDetail.getFiveFund().doubleValue()));
+			
+		balanceDetail.setEndingBalance(new BigDecimal(endblan).setScale(2,BigDecimal.ROUND_HALF_UP));
 		balanceDetailService.updateBalanceDetail(balanceDetail);
 		return SUCCESS;
+		
 	}
 	
 	

@@ -359,6 +359,18 @@
           <action name="viewStaffAndRenewalAndReductionEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewStaffAndRenewalAndReductionEmployees">
             <result name="success">company/insurance-with-employee-list.jsp</result>
         </action>
+         <!-- 查看 减员--> 
+       <action name="viewDepletion" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewDepletion">
+            <result name="success">insurance/view-depletion-with-employee.jsp</result>
+       </action>
+        <!-- 查看  续保--> 
+        <action name="viewRenewal" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewRenewal">
+            <result name="success">insurance/view-renewal-with-employee.jsp</result>
+       </action>
+        <!-- 查看 增员--> 
+       <action name="viewIncrease" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="viewIncrease">
+            <result name="success">insurance/view-insurance-with-employee.jsp</result>
+       </action>
       
          <action name="downloadInsuranceWithEmployeeList" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="downloadInsuranceWithEmployeeList">
             <result name="success"  type="jasper"></result>
@@ -565,7 +577,12 @@
             </result>
         </action> 
         <action name="findToIdCustomBonus" class="cn.fm.web.action.company.CustomBonusAction" method="findToIdCustomBonus">
-            <result name="customBonus" type="json">
+            <result name="success" type="json">
+            		<param name="includeProperties">
+           				customBonus\.id,
+	           			customBonus\.bonusName,
+	           			customBonus\.state
+           			</param>
             </result>
         </action>
          <action name="updateCustomBonus" class="cn.fm.web.action.company.CustomBonusAction" method="updateCustomBonus">
@@ -588,7 +605,17 @@
         </action>
         
          <action name="findToIdSalaryTemplate" class="cn.fm.web.action.company.SalaryTemplateAction" method="findToIdSalaryTemplate">
-            <result name="salaryTemplate" type="json" ></result>
+            <result name="success" type="json" >
+            <param name="includeProperties">
+           			salaryTemplate\.templateId,
+           			salaryTemplate\.templateName,
+           			salaryTemplate\.subsidyList,
+           			salaryTemplate\.fiveInsurances,
+           			salaryTemplate\.tax,
+           			salaryTemplate\.status
+           	
+            	 </param>
+            </result>
         </action> 
         <action name="updateSalaryTemplate" class="cn.fm.web.action.company.SalaryTemplateAction" method="updateSalaryTemplate">
           <result name="success" type="redirectAction">
@@ -650,7 +677,16 @@
             <result name="success">company/salary-with-sum-of-categories.jsp</result>
         </action>
         <action name="findToIdSalayBudegTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="findToIdSalayBudegTable">
-            <result name="createSalaryBudgetTable" type="json"></result>
+            <result name="success" type="json">
+            	<param name="includeProperties">
+            		createSalaryBudgetTable\.name,
+            		createSalaryBudgetTable\.salaryDate,
+            		createSalaryBudgetTable\.note,
+            		createSalaryBudgetTable\.chooseTax,
+            		createSalaryBudgetTable\.templateName
+            		
+            	</param>
+            </result>
         </action>
         <action name="updateSalayBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="updateSalayBudgetTable">
             <result name="success" type="redirectAction">
@@ -673,7 +709,16 @@
             <result name="success" >company/balance-detail.jsp</result>
         </action>
         <action name="findToIdBalanceDetail" class="cn.fm.web.action.salary.BalanceDetailAction" method="findToIdBalanceDetail">
-            <result name="balanceDetail"  type="json"></result>
+            <result name="success"  type="json">
+            	<param name="includeProperties">
+            		balanceDetail\.detailId,
+            		balanceDetail\.receivedFunds,
+            		balanceDetail\.wages,
+            		balanceDetail\.serviceWith,
+            		balanceDetail\.fiveFund,
+            		balanceDetail\.note
+            	</param>
+            </result>
         </action>
         
          <action name="addBalanceDetail" class="cn.fm.web.action.salary.BalanceDetailAction" method="addBalanceDetail">
@@ -694,8 +739,18 @@
             <result name="success" type="json">
             </result>
         </action>
-        --><action name="findToIdSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="findToIdSalaryDetail">
-            <result name="employeesSalaryDetail" type="json"></result>
+        -->
+        <action name="findToIdSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="findToIdSalaryDetail">
+            <result name="success" type="json">
+            	<param name="includeProperties">
+            		employeesSalaryDetail\.salaryId,
+            		employeesSalaryDetail\.wage,
+            		employeesSalaryDetail\.employeesName,
+            		employeesSalaryDetail\.bonus,
+            		employeesSalaryDetail\.subsidies
+            	</param>
+            
+            </result>
         </action>
         <action name="updateEmployeesSalaryDetail" class="cn.fm.web.action.salary.EmployeesSalaryDetailAction" method="updateEmployeesSalaryDetail">
             <result name="success" type="redirectAction">
@@ -717,7 +772,8 @@
         <action name="downloadBankIssueSalary" class="cn.fm.web.action.ireport.InsuranceEmployeesReportAction" method="downloadBankIssueSalary">
             <result name="success"  type="jasper"></result>
             <result name="input" type="redirectAction">
-            	<param name="actionName">viewSalaryWithBankDetail</param>
+            	<param name="actionName">viewSalaryWithBankPersonalNumber</param>
+            	<param name="budgetId">${budgetId}</param>
             </result>
         </action>
         

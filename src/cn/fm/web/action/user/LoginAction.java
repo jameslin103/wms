@@ -1,18 +1,18 @@
 package cn.fm.web.action.user;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
-
 import cn.fm.bean.permissions.Menu;
 import cn.fm.bean.permissions.Role;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.permissions.MenuService;
 import cn.fm.service.permissions.RoleService;
 import cn.fm.service.user.WmsUserService;
+import cn.fm.utils.Constant;
 import cn.fm.utils.CookieUtils;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.StringUtil;
@@ -109,6 +109,7 @@ public class LoginAction extends BaseAction{
 			
 				loginUser=wmsUserService.find(wmsUser.getPhone());
 				if( loginUser!=null){
+					//Map<String, String> loginUserMap = (Map<String, String>) super.getApplicationAttr(Constant.LOGIN_USER_MAP);  
 					System.out.println(loginUser.getUsername()+"登录系统，系统时间："+DateUtil.getCurrentTime());
 					request.getSession().setAttribute("user",loginUser);
 					if (userCookie==true) 

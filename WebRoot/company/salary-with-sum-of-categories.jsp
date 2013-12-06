@@ -113,7 +113,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <ul>
                     <li>制作:<s:property value="%{#request.createSalaryBudgetTable.user.username}"/>
                     </li>
-                    <li>发放：<s:property value="%{#request.session.user.username}"/></li>
+                    <li>发放：<s:property value="#createSalaryBudgetTable.user_operator"/></li>
                   </ul>
                 </td>
                 <td>

@@ -297,7 +297,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	{
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-		List<String> messageList=enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",35,2,enterprise);
+		List<String> messageList=enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",36,2,enterprise);
 		if(messageList!=null && messageList.size()>0){request.setAttribute("messageList", messageList);return INPUT;}
 		
 		return SUCCESS;
@@ -532,10 +532,121 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		return SUCCESS;
 	}
 	
-	
-	
-	
-	
+	/**
+	 * 增员
+	 * @return
+	 */
+	public String viewIncrease(){
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(StringUtil.isEmpty(insuranceYear)){
+			insuranceYear=DateUtil.getCurrentTime();	
+		}
+		if(enterprise.getEnterpriseId()!=null)
+		{
+			
+			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(enterprise.getEnterpriseId());
+			jpql.append(" and o.ginsengProtectNature=?").append(params.size()+1);
+			params.add(staff_renewal_reduction);
+			jpql.append(" and o.pseudoDelete=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and o.departure=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and year(o.cinsengDate)=?").append(params.size()+1);
+			params.add(Integer.parseInt(insuranceYear.toString()));
+			jpql.append(" and month(o.cinsengDate)=?").append(params.size()+1);
+			params.add(this.month);
+			
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+		
+		
+		return SUCCESS;
+	}
+	/**
+	 * 续保
+	 * @return
+	 */
+	public String viewRenewal(){
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(StringUtil.isEmpty(insuranceYear)){
+			insuranceYear=DateUtil.getCurrentTime();	
+		}
+		if(enterprise.getEnterpriseId()!=null)
+		{
+			
+			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(enterprise.getEnterpriseId());
+			jpql.append(" and o.ginsengProtectNature=?").append(params.size()+1);
+			params.add(staff_renewal_reduction);
+			jpql.append(" and o.pseudoDelete=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and o.departure=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and year(o.cinsengDate)=?").append(params.size()+1);
+			params.add(Integer.parseInt(insuranceYear.toString()));
+			jpql.append(" and month(o.cinsengDate)=?").append(params.size()+1);
+			params.add(this.month);
+			
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}	
+			
+			
+		return SUCCESS;
+	}
+	/**
+	 * 减员
+	 * @return
+	 */
+	public String viewDepletion()
+	{
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(StringUtil.isEmpty(insuranceYear)){
+			insuranceYear=DateUtil.getCurrentTime();	
+		}
+		if(enterprise.getEnterpriseId()!=null)
+		{
+			
+			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(enterprise.getEnterpriseId());
+			jpql.append(" and o.ginsengProtectNature=?").append(params.size()+1);
+			params.add(staff_renewal_reduction);
+			jpql.append(" and o.pseudoDelete=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and o.departure=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and year(o.cinsengDate)=?").append(params.size()+1);
+			params.add(Integer.parseInt(insuranceYear.toString()));
+			jpql.append(" and month(o.cinsengDate)=?").append(params.size()+1);
+			params.add(this.month);
+			
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(10,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		}
+		
+		
+		return SUCCESS;
+	}
 	
 	
 	public String selectEnterpriseEmployeesWage()

@@ -1,13 +1,9 @@
 package cn.fm.service.salary.impl;
-
 import java.math.BigDecimal;
 import java.util.List;
-
 import javax.persistence.Query;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.salary.BalanceDetailService;
@@ -36,17 +32,12 @@ public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implemen
 	public  boolean  updateBalanceDetail(BalanceDetail balanceDetail)
 	{
 		try {
-			if(balanceDetail!=null && balanceDetail.getReceivableFiveFund()!=null){
-				//BigDecimal blan=BigDecimal(balanceDetail.getReceivableFiveFund()-balanceDetail.getBallotsToal());
-			}
-			
-			
-			
-			
-			em.createQuery("update BalanceDetail o set o.receivedFunds=?1 , o.wages=?2 , o.serviceWith=?3 , o.fiveFund=?4 , o.note=?5 where o.detailId=?6 ")
+			em.createQuery("update BalanceDetail o set o.receivedFunds=?1 , o.wages=?2 , o.serviceWith=?3 , o.fiveFund=?4 , o.note=?5, o.userIusse=?6,o.endingBalance=?7 where o.detailId=?8 ")
 			.setParameter(1, balanceDetail.getReceivedFunds()).setParameter(2, balanceDetail.getWages())
 			.setParameter(3, balanceDetail.getServiceWith()).setParameter(4,balanceDetail.getFiveFund())
-			.setParameter(5,balanceDetail.getNote()).setParameter(6,balanceDetail.getDetailId()).executeUpdate();
+			.setParameter(5,balanceDetail.getNote()).setParameter(6, balanceDetail.getUserIusse())
+			.setParameter(7,balanceDetail.getEndingBalance())
+			.setParameter(8,balanceDetail.getDetailId()).executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -94,7 +95,8 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 	private Date    heLinesDate;
 	
-
+	//是否发放
+	private Integer  issue;
 	
 	/*是否已经合并 0未合并，1合并*/
 	private Integer    isTax=0;   
@@ -113,6 +115,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 
 	private Set<EmployeesSalaryDetail>  employeesSalaryDetail=new HashSet<EmployeesSalaryDetail>();
 	
+	private BalanceDetail   balanceDetail;
 	
 	@Id @GeneratedValue
 	public Integer getBudgetId() {
@@ -130,7 +133,15 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	@Column(length=2)
+	public Integer getIssue() {
+		return issue;
+	}
+
+	public void setIssue(Integer issue) {
+		this.issue = issue;
+	}
+
 	@Temporal(TemporalType.DATE)
 	public Date getSalaryDate() {
 		return salaryDate;
@@ -349,7 +360,9 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.user = user;
 	}
 	
-	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.MERGE,CascadeType.PERSIST},fetch=FetchType.LAZY,mappedBy="createSalaryBudgetTable")
+	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.MERGE,CascadeType.PERSIST},
+			fetch=FetchType.LAZY,mappedBy="createSalaryBudgetTable")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<EmployeesSalaryDetail> getEmployeesSalaryDetail() {
 		return employeesSalaryDetail;
 	}
@@ -357,6 +370,16 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setEmployeesSalaryDetail(
 			Set<EmployeesSalaryDetail> employeesSalaryDetail) {
 		this.employeesSalaryDetail = employeesSalaryDetail;
+	}
+	
+	@OneToOne(cascade=CascadeType.ALL,mappedBy="createSalaryBudgetTable")
+	@NotFound(action=NotFoundAction.IGNORE)
+	public BalanceDetail getBalanceDetail() {
+		return balanceDetail;
+	}
+
+	public void setBalanceDetail(BalanceDetail balanceDetail) {
+		this.balanceDetail = balanceDetail;
 	}
 
 	@Override

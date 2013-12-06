@@ -468,16 +468,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
 		this.enterpriseEmployees = enterpriseEmployees;
 	}
-	@ManyToOne(cascade={CascadeType.REFRESH},optional=false)
-	@JoinColumn(name="enterprise_id")
-	@NotFound(action=NotFoundAction.IGNORE)
-	public Enterprise getEnterprise() {
-		return enterprise;
-	}
-
-	public void setEnterprise(Enterprise enterprise) {
-		this.enterprise = enterprise;
-	}
+	
 	@Column(length=80 ,scale=2)
 	public BigDecimal getSpecialOldSubsidies() {
 		return specialOldSubsidies;
@@ -513,6 +504,7 @@ public class EmployeesSalaryDetail implements Serializable
 		this.specialAccumulationFundSubsidies = specialAccumulationFundSubsidies;
 	}
 	
+	
 	@ManyToOne(cascade={CascadeType.REFRESH},optional=true)
 	@JoinColumn(name="budget_id")
 	@NotFound(action=NotFoundAction.IGNORE)
@@ -525,4 +517,14 @@ public class EmployeesSalaryDetail implements Serializable
 		this.createSalaryBudgetTable = createSalaryBudgetTable;
 	}
 	
+	@ManyToOne(cascade={CascadeType.REFRESH},optional=false)
+	@JoinColumn(name="enterprise_id")
+	@NotFound(action=NotFoundAction.IGNORE)
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
 }

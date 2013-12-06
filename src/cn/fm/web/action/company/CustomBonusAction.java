@@ -69,7 +69,7 @@ public class CustomBonusAction extends BaseAction {
 	{
 		customBonus=customBonusService.find(id);
 		
-		return "customBonus";
+		return SUCCESS;
 		
 	}
 	public String   updateCustomBonus()

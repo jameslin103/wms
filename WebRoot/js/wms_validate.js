@@ -390,8 +390,11 @@ function findToIdSalaryTemplate(templateId){
 		    	
 		    	$("input[name='salaryTemplate.templateId']").val(data.salaryTemplate.templateId); 
 		    	$("input[name='salaryTemplate.templateName']").val(data.salaryTemplate.templateName); 
-		    	//$("input[name='salaryTemplate.subsidyList'][value="+data.salaryTemplate.subsidyList+"]").attr("checked",true);
-		    	//alert(data.salaryTemplate.subsidyList);
+		    	
+		    	var sublist=data.salaryTemplate.subsidyList;
+		    	//alert(sublist.split(","));
+		    	$("input[name='salaryTemplate.subsidyList'][value="+data.salaryTemplate.subsidyList+"]").attr("checked",true);
+		    	
 		    	
 		    	$("input[name='salaryTemplate.fiveInsurances'][value="+data.salaryTemplate.fiveInsurances+"]").attr("checked",true);
 		    	$("input[name='salaryTemplate.tax'][value="+data.salaryTemplate.tax+"]").attr("checked",true);

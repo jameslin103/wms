@@ -18,9 +18,12 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.CellStyle;
 import cn.fm.bean.company.CustomBonus;
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.company.CustomBonusServices;
 import cn.fm.service.salary.SalaryTemplateService;
+import cn.fm.utils.StringUtil;
+import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
 @SuppressWarnings("serial")
@@ -32,7 +35,7 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	private SalaryTemplateService			salaryTemplateService;
 	
 	
-	 private  String fileName="员工基本工资信息表.xls";
+	 private  String fileName;
 	 
 	 private  InputStream excelFile;
 	
@@ -86,6 +89,8 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	    public String downloadSalaryBudgetTable()
 	    {
 	    	try {
+	    		Enterprise enterprise=WebUtil.getEnterprise(request);
+	    		this.setFileName(enterprise.getFullName()+"-员工基本工资信息表.xls");
 				fileName = new String(fileName.getBytes(),"ISO8859-1");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
@@ -110,18 +115,23 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	 	   List<String> header=new ArrayList<String>();
 		 	  header.add("序号");
 		 	  header.add("姓名");
+		 	  header.add("身份证号码");
 		 	  header.add("基本工资");
-			  header.add("身份证号码");
 			  header.add("备注");
 		 	  SalaryTemplate salaryTemplate=salaryTemplateService.find(templateId);
-		 	  String[] customt=salaryTemplate.getSubsidyList().split(",");
+		 	  if(salaryTemplate==null)salaryTemplate=new SalaryTemplate();
 		 	 
-	 	   for (int i = 0; i <customt.length; i++)
-	 	   {
-	 		  CustomBonus customBonus=customBonusServices.find(Integer.parseInt(customt[i].trim()));
-	 		  header.add(customBonus.getBonusName());
-	 		  
-	 	   }
+		 	  if(!StringUtil.isEmpty(salaryTemplate.getSubsidyList())){
+		 		 String[] customt=salaryTemplate.getSubsidyList().split(",");
+			 	  for (int i = 0; i <customt.length; i++)
+			 	   {
+			 		  CustomBonus customBonus=customBonusServices.find(Integer.parseInt(customt[i].trim()));
+			 		  header.add(customBonus.getBonusName());
+			 		  
+		 	   }
+		 	  }
+		 	 
+	 	  
 	 	  
 		    // 表头
 		    for (int i=0; i <header.size(); i++)

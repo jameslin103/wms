@@ -5,11 +5,11 @@
 	<div id="header">
 		<ul class="user normal clearfix">
 			<li>
-				<a href="toPassword">用户:&nbsp;&nbsp;<s:property value="%{#session.user.username}" />
+				<a href="toPassword">欢迎用户:&nbsp;&nbsp;<s:property value="%{#session.user.username}" />
 				</a>
 			</li>
 			<li>
-				<s:a href="loginOut">退出</s:a>
+				<s:a href="loginOut">退出系统</s:a>
 			</li>
 		</ul>
 	<!-- begin -->

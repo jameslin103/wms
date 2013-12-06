@@ -302,6 +302,9 @@
 											<s:elseif test="#emp.ginsengProtectNature==2">
 													<span>续保</span>
 											</s:elseif>
+											<s:elseif test="#emp.ginsengProtectNature==3">
+													<span>无参保</span>
+											</s:elseif>
 											<s:else>
 											
 											</s:else>
@@ -538,6 +541,8 @@
 							新增，
 							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="2" />
 							续保
+							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="3" />
+							无参保
 						</div>
 
 						<div class="input-container">
@@ -783,14 +788,11 @@
 							<label>
 								是否参保?
 							</label>
-							<input type="radio" name="enterpriseEmployees.whetherGinseng"
-								value="1" checked="checked" />
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="1" checked="checked" />
 							是，
-							<input type="radio" name="enterpriseEmployees.whetherGinseng"
-								value="0" />
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="0" />
 							否
-							<input type="radio" name="enterpriseEmployees.whetherGinseng"
-								value="2" />
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="2" />
 							 特殊参保(<span style="color:blue;">补贴</span>)
 						</div>
 
@@ -813,6 +815,8 @@
 							新增，
 							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="2" />
 							续保
+							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="3" />
+							无参保
 						</div>
 
 						<div class="input-container">

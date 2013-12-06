@@ -39,13 +39,13 @@ public class SalaryTemplate implements Serializable {
 	/*各种补贴*/
 	private String subsidyList;
 
-	/*是否包含五险一金* 0 是 1 否*/
+	/*是否包含五险一金* 1 是 0 否*/
 	private  Integer  fiveInsurances;
 
-	/*是否包含个税* 0 是 1 否*/
+	/*是否包含个税* 1 是 0 否*/
 	private  Integer  tax;
 
-	/*是否启用 0 启用 1 停用*/
+	/*是否启用 1 启用 0 停用*/
 	private  Integer  status;
 	 
 	private   Date    createDate=new Date();

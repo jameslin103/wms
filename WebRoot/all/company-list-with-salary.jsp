@@ -188,7 +188,7 @@
 									<td>
 										<s:property value="%{#createSalaryBudgetTable.issueNumber}"/>
 										<br/>
-										<a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">查看</a>
+										<a href="viewSalaryWithBankPersonalNumber?enterpriseId=<s:property value="%{#createSalaryBudgetTable.enterprise.enterpriseId}"/>&budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">查看</a>
 									</td>
 									<td>
 										<s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/>

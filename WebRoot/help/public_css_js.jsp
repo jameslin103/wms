@@ -14,6 +14,7 @@
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.validate.min.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/messages_zh.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.noty.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.8.0.min.js"></script>
   
   
   

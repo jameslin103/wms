@@ -79,7 +79,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="viewMinshengBank?budgetId=<s:property value="%{#request.budgetId}"/>">民生银行</a>，</li>
             <li><a href="viewOtherBank?budgetId=<s:property value="%{#request.budgetId}"/>">他行</a>，</li>
             <li><a href="viewCashIssue?budgetId=<s:property value="%{#request.budgetId}"/>">现金</a></li>
-            <li class="right"><a href="downloadBankIssueSalary?budgetId=<s:property value="%{#request.budgetId}"/>" class="btn btn-primary">下载Excel表格</a></li>
+             <li style="color:#2E9AFE;">
+             	<div style="padding-left:580px;">
+             		<input type="radio" checked="checked" name="allexport"/>全部
+             		<input type="radio" name="minshengbank"/>民生银行
+             		<input type="radio" name="otherbanks"/>其它银行
+             		<input type="radio" name="cashissue"/>现金
+             	</div>
+             	
+             </li>
+            <li class="right">
+            	<a href="downloadBankIssueSalary?budgetId=<s:property value="%{#request.budgetId}"/>" class="btn btn-primary">下载Excel表格</a>
+            </li>
           </ul>
 		  <s:form action="viewSalaryWithBankPersonalNumber" method="post" id="myform1">
 		  	 <input type="hidden" name="page"/>

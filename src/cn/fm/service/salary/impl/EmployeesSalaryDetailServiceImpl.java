@@ -161,7 +161,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		EmployeesSalaryDetail  salaryDetailExcelDate=new EmployeesSalaryDetail();
 		
 		salaryDetailExcelDate.setEmployeesName(fileDate[1]==null?"":fileDate[1].toString());
-		salaryDetailExcelDate.setCardNumber(fileDate[3]==null?"":fileDate[3].toString());
+		salaryDetailExcelDate.setCardNumber(fileDate[2]==null?"":fileDate[2].toString());
 		
 		return salaryDetailExcelDate;
 	}
@@ -212,11 +212,11 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			//计算五险一金规则
 			SalaryTemplate salaryTemplate=getIsFiveBase(templateId);
 			EmployeesSalaryDetail employeesSalaryDetailInsurances=new EmployeesSalaryDetail();
-			if(salaryTemplate!=null && salaryTemplate.getStatus()==1 && salaryTemplate.getFiveInsurances()==0)
+			
+			if(salaryTemplate!=null && salaryTemplate.getStatus()==1 && salaryTemplate.getFiveInsurances()==1)
 			{
 					//基数计算所得数
-				    employeesSalaryDetailInsurances=toCalculateFiveInsurances(employeesSalaryDetail.getEnterpriseEmployees());
-				    
+				 	employeesSalaryDetailInsurances=toCalculateFiveInsurances(employeesSalaryDetail.getEnterpriseEmployees());
 					employeesSalaryDetailVO.setSocialInsuranceBase(employeesSalaryDetailInsurances.getSocialInsuranceBase());
 					employeesSalaryDetailVO.setEnterprisePensionInsurance(employeesSalaryDetailInsurances.getEnterprisePensionInsurance());
 					employeesSalaryDetailVO.setPersonalPensionInsurance(employeesSalaryDetailInsurances.getPersonalPensionInsurance());
@@ -233,6 +233,11 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 					employeesSalaryDetailVO.setEnterpriseReserveBase(employeesSalaryDetailInsurances.getEnterpriseReserveBase());
 					employeesSalaryDetailVO.setPersonalReserveBase(employeesSalaryDetailInsurances.getPersonalReserveBase());
 					
+			}else{
+				// employeesSalaryDetailInsurances 
+				
+				// TODO: handle exception  如果不包含个税计算方式
+				
 			}
 			
 			// TODO: handle exception 
@@ -287,13 +292,13 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	public Double   enterpriseSubtotal(EmployeesSalaryDetail employeesSalaryDetailInsurances,BigDecimal morbidityStatistics)
 	{
 		
-	  Double enterpriseSubtotal=Double.valueOf(employeesSalaryDetailInsurances.getEnterprisePensionInsurance().toString())+
-							    Double.valueOf(employeesSalaryDetailInsurances.getEnterpriseUnemploymentInsurance().toString())+
-								Double.valueOf(employeesSalaryDetailInsurances.getEnterpriseBirthInsurance().toString())+
-								Double.valueOf(employeesSalaryDetailInsurances.getEnterpriseInductrialInjuryBase().toString())+
-								Double.valueOf(employeesSalaryDetailInsurances.getEnterpriseReserveBase().toString())+
-								Double.valueOf(employeesSalaryDetailInsurances.getPersonalReserveBase().toString())+
-								Double.valueOf(morbidityStatistics.toString());
+	  Double enterpriseSubtotal=Double.valueOf((Double)(employeesSalaryDetailInsurances.getEnterprisePensionInsurance()==null?0.00:employeesSalaryDetailInsurances.getEnterprisePensionInsurance().doubleValue()))+
+							    Double.valueOf((Double)(employeesSalaryDetailInsurances.getEnterpriseUnemploymentInsurance()==null?0.00:employeesSalaryDetailInsurances.getEnterpriseUnemploymentInsurance().doubleValue()))+
+								Double.valueOf((Double)(employeesSalaryDetailInsurances.getEnterpriseBirthInsurance()==null?0.00:employeesSalaryDetailInsurances.getEnterpriseBirthInsurance().doubleValue()))+
+								Double.valueOf((Double)(employeesSalaryDetailInsurances.getEnterpriseInductrialInjuryBase()==null?0.00:employeesSalaryDetailInsurances.getEnterpriseInductrialInjuryBase().doubleValue()))+
+								Double.valueOf((Double)(employeesSalaryDetailInsurances.getEnterpriseReserveBase()==null?0.00:employeesSalaryDetailInsurances.getEnterpriseInductrialInjuryBase().doubleValue()))+
+								Double.valueOf((Double)(employeesSalaryDetailInsurances.getPersonalReserveBase()==null?0.00:employeesSalaryDetailInsurances.getEnterpriseInductrialInjuryBase().doubleValue()))+
+								Double.valueOf((Double)(morbidityStatistics==null?0.00:morbidityStatistics.doubleValue()));
 
 		return enterpriseSubtotal;
 	}
@@ -305,10 +310,10 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 */
 	public Double  personalSubtotal(EmployeesSalaryDetail employeesSalaryDetailInsurances){
 		
-		 Double personalSubtotal=Double.valueOf(employeesSalaryDetailInsurances.getPersonalPensionInsurance().toString())+
-								 Double.valueOf(employeesSalaryDetailInsurances.getPersonalUnemploymentInsurance().toString())+
-								 Double.valueOf(employeesSalaryDetailInsurances.getPersonalMedicalBase().toString())+
-								 Double.valueOf(employeesSalaryDetailInsurances.getPersonalReserveBase().toString());
+		 Double personalSubtotal=Double.valueOf(employeesSalaryDetailInsurances.getPersonalPensionInsurance()==null?0.00:employeesSalaryDetailInsurances.getPersonalPensionInsurance().doubleValue())+
+								 Double.valueOf(employeesSalaryDetailInsurances.getPersonalUnemploymentInsurance()==null?0.00:employeesSalaryDetailInsurances.getPersonalUnemploymentInsurance().doubleValue())+
+								 Double.valueOf(employeesSalaryDetailInsurances.getPersonalMedicalBase()==null?0.00:employeesSalaryDetailInsurances.getPersonalMedicalBase().doubleValue())+
+								 Double.valueOf(employeesSalaryDetailInsurances.getPersonalReserveBase()==null?0.00:employeesSalaryDetailInsurances.getPersonalReserveBase().doubleValue());
 		
 		return personalSubtotal;
 	}
@@ -626,7 +631,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		String carNumber = null;   //身份证
 		
 		EmployeesSalaryDetail employeesSalaryDetail=new EmployeesSalaryDetail();
-		carNumber=fileDate[3]==null?"":fileDate[3].toString();
+		carNumber=fileDate[2]==null?"":fileDate[2].toString();
 		String note=fileDate[4]==null?"":fileDate[4].toString();
 		if(!StringUtil.isEmpty(fileDate[1].toString()))
 		{
@@ -648,7 +653,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 							    	}
 	
 						     }
-					    	    employeesSalaryDetail.setWage(new BigDecimal(fileDate[2].toString()==null?null:fileDate[2].toString()));
+					    	    employeesSalaryDetail.setWage(new BigDecimal(fileDate[3].toString()==null?null:fileDate[3].toString()));
 					    	    employeesSalaryDetail.setCardNumber(carNumber);
 					    	    employeesSalaryDetail.setEnterpriseEmployees(emp);
 					    	    employeesSalaryDetail.setEmployeesName(emp.getEmployeesName());
@@ -911,7 +916,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 */
 	@SuppressWarnings("unchecked")
 	public List<EmployeesSalaryDetail>  getBankEmployeesSalaryDetail(Integer budgetId){
-		return em.createQuery("select e from EmployeesSalaryDetail e where e.createSalaryBudgetTable.budgetId=?1").setParameter(1, budgetId).getResultList();
+		return em.createQuery("select e from EmployeesSalaryDetail e where e.budgettableId=?1").setParameter(1, budgetId).getResultList();
 	}
 	
 }

@@ -263,7 +263,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			
 			createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
 			
-			return "createSalaryBudgetTable";
+			return SUCCESS;
 		}
 		/**
 		 * 更新预算表名称

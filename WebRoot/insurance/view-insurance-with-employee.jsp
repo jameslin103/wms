@@ -15,7 +15,7 @@
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script type="text/javascript">
 			 function topage(page){
-				var form = document.getElementById("myforminsurance");
+				var form = document.getElementById("viewIncrease");
 					form.page.value=page;
 				    form.submit();
 			}
@@ -72,10 +72,11 @@
 							</s:iterator>
 					</ul>
 						
-						<s:form action="insuranceWithEmployeeList" method="post" id="myforminsurance">
+						<s:form action="viewIncrease" method="post" id="viewIncrease">
 							<s:hidden name="page"/>
 							<s:hidden name="insuranceYear"/>
 							<s:hidden name="month"/>
+							<input type="hidden" name="staff_renewal_reduction" value="1"/>
 						<ul class="normal action-container clearfix">
 							<li class="right">
 								<s:a href="downloadInsuranceWithEmployeeList" cssClass="btn btn-primary" >下载社医保办理与减员表</s:a>
