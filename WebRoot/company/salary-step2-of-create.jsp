@@ -14,7 +14,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 <script type="text/javascript">
 	    function commit(){
 	        var myform=document.getElementById('myForm');
-	        
 	       	myform.submit();
 	        return false;
     }

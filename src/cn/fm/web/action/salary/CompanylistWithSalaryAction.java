@@ -196,10 +196,6 @@ public class CompanylistWithSalaryAction extends BaseAction{
 			}
 			jpql.append(" year(o.yearMonth)=?").append(params.size()+1);
 			params.add(Integer.parseInt(year));
-			
-			
-			
-			
 		}
 		PageView<BalanceDetail> pageView = new PageView<BalanceDetail>(10,  this.getPage());
 		pageView.setQueryResult(balanceDetailService.getScrollDataSum(pageView.getFirstResult(), pageView.getMaxresult(),jpql.toString(),params.toArray(), groupby,formCurrentSql));

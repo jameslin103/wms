@@ -46,7 +46,7 @@
 						</s:if>
 						<s:if test="#menu.url=='viewCompanyListWithBalance'">
 							<li>
-								<a href="viewCompanyListWithBalance">资金往来</a>
+								<a href="viewCompanyListWithBalance">资金往来</a>	
 							</li>
 						</s:if>
 					 </s:iterator>
@@ -200,22 +200,22 @@
 										</s:if>
 									</td>
 									<td>
-										<s:property value="%{#request.createSalaryBudgetTable.cmbc}"/>
-										<br/>
-										<s:if test="#createSalaryBudgetTable.cashnumberDate!=null">
-											<span class="em">（已发放）</span>
-											<br/>
-											<s:date name="%{#createSalaryBudgetTable.cashnumberDate}" format="yyyy年MM月dd日HH时"/>
-										</s:if>
-									</td>
-									<td>
-									
 										<s:property value="%{#request.createSalaryBudgetTable.heLines}"/>
 										<br/>
 										<s:if test="#createSalaryBudgetTable.heLinesDate!=null">
 											<span class="em">（已发放）</span>
 											<br/>
 											<s:date name="%{#createSalaryBudgetTable.heLinesDate}" format="yyyy年MM月dd日HH时"/>
+										</s:if>
+										
+									</td>
+									<td>
+										<s:property value="%{#request.createSalaryBudgetTable.cmbc}"/>
+										<br/>
+										<s:if test="#createSalaryBudgetTable.cashnumberDate!=null">
+											<span class="em">（已发放）</span>
+											<br/>
+											<s:date name="%{#createSalaryBudgetTable.cashnumberDate}" format="yyyy年MM月dd日HH时"/>
 										</s:if>
 									</td>
 									<td>

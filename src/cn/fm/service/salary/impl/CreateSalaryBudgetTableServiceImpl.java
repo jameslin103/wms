@@ -43,7 +43,7 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 			return em.createQuery("select c from CreateSalaryBudgetTable  c " +
 					"where c.enterprise.enterpriseId=?1 " +
 					" and YEAR(c.createDate)=?2 " +
-					" order by c.createDate desc ")
+					" order by c.salaryDate desc ")
 					.setParameter(1, enterpriseId).setParameter(2,year).getResultList();
 			  
 		

@@ -31,6 +31,10 @@
 	<field name="bank" class="java.lang.String">
 		<fieldDescription><![CDATA[bank]]></fieldDescription>
 	</field>
+	<variable name="sum_wage" class="java.lang.Long">
+		<variableExpression><![CDATA[new java.lang.Long($V{sum_wage}.longValue()+$F{wage}.longValue())]]></variableExpression>
+		<initialValueExpression><![CDATA[new java.lang.Long(0)]]></initialValueExpression>
+	</variable>
 	<group name="salaryId">
 		<groupExpression><![CDATA[]]></groupExpression>
 	</group>
@@ -216,7 +220,7 @@
 				<reportElement uuid="ac6d57d6-a24c-4d1d-ade4-8c871d20d882" x="0" y="0" width="31" height="22"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
@@ -235,7 +239,7 @@
 				<textFieldExpression><![CDATA[($F{employeesName}==null) ? "/":$F{employeesName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b0326998-d1f2-4fa5-ab1c-1822ee488e46" x="316" y="0" width="132" height="22"/>
+				<reportElement uuid="b0326998-d1f2-4fa5-ab1c-1822ee488e46" x="316" y="0" width="133" height="22"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -246,10 +250,10 @@
 				<textFieldExpression><![CDATA[$F{bankCardNumber}==null?"":$F{bankCardNumber}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="13dbf389-b08e-404a-96a2-b09f552abc44" x="449" y="0" width="87" height="22"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<reportElement uuid="13dbf389-b08e-404a-96a2-b09f552abc44" x="449" y="0" width="88" height="22"/>
+				<box topPadding="0" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
@@ -260,9 +264,9 @@
 				<reportElement uuid="b73a9e1e-cb53-41ae-983c-d715e92f8d9b" x="537" y="0" width="101" height="22"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[]]></textFieldExpression>
@@ -298,6 +302,85 @@
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3f5814b0-27f0-4bc5-a94a-0348db8b67fa" mode="Opaque" x="0" y="0" width="111" height="28" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[合计:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c3ba0362-edec-4d56-8623-2db24612dcea" x="112" y="0" width="83" height="28" forecolor="#000000"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sum_wage}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6517699f-e4d3-4dc5-bd16-ae7b6b9414e6" x="195" y="0" width="121" height="28" forecolor="#000000"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="be8fae9b-1dc0-4867-9987-dd4015ab06ad" x="316" y="0" width="133" height="28" forecolor="#000000"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5003b760-8ba9-43bf-9b16-74e015cb9170" x="449" y="0" width="88" height="28" forecolor="#000000"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3e0da73b-fe67-412b-a2e5-d449835af1c5" x="537" y="0" width="101" height="28" forecolor="#000000"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+		</band>
 	</summary>
 </jasperReport>

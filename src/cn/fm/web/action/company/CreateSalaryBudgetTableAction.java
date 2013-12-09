@@ -89,7 +89,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		Map<String, Object> map=null;
 		for (CreateSalaryBudgetTable table : createSalaryBudgetTableList) {
 			map=new HashMap<String, Object>();
-			String date=table.getCreateDate().toString();
+			String date=table.getSalaryDate()==null?"":table.getSalaryDate().toString();
 			map.put("date", date);
 			map.put("createSalaryBudgetTable", table);
 			list.add(map);

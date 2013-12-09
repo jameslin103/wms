@@ -62,7 +62,12 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	private BigDecimal   bonusTotal; //开票总额
 	private BigDecimal   wargeTotal;//工资总额
 	private BigDecimal   fiveInsuranceTotal;//五险一金总额
-	private long		 numberPeopleTotal;	//发放人数		
+	private long		 numberPeopleTotal;	//发放人数	
+	private long         mingshengsum;
+	private long         hebanksum;
+	private long         isussesum;
+	
+	
 	private BigDecimal   serviceTotal;//服务费总额
 	
 	private Integer  	 enterpriseId;
@@ -83,244 +88,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	private String   qop;
 	private long  total=0;
 	
-	
-	public int getPage() {
-		return page<1?1:page;
-	}
-	public void setPage(int page) {
-		this.page = page;
-	}
-	
-	@JSON(name="details")
-	public List<EmployeesSalaryDetail> getDetails() {
-		return details;
-	}
 
-	public void setDetails(List<EmployeesSalaryDetail> details) {
-		this.details = details;
-	}
-
-	public Date getSalaryDate() {
-		return salaryDate;
-	}
-
-	public void setSalaryDate(Date salaryDate) {
-		this.salaryDate = salaryDate;
-	}
-
-	public Integer getSalaryId() {
-		return salaryId;
-	}
-
-	public void setSalaryId(Integer salaryId) {
-		this.salaryId = salaryId;
-	}
-
-	public BigDecimal getFiveInsuranceTotal() {
-		return fiveInsuranceTotal;
-	}
-
-	public void setFiveInsuranceTotal(BigDecimal fiveInsuranceTotal) {
-		this.fiveInsuranceTotal = fiveInsuranceTotal;
-	}
-
-	public long getNumberPeopleTotal() {
-		return numberPeopleTotal;
-	}
-
-	public void setNumberPeopleTotal(long numberPeopleTotal) {
-		this.numberPeopleTotal = numberPeopleTotal;
-	}
-
-	public BigDecimal getServiceTotal() {
-		return serviceTotal;
-	}
-
-	public void setServiceTotal(BigDecimal serviceTotal) {
-		this.serviceTotal = serviceTotal;
-	}
-	
-	public Integer getTemplateId() {
-		return templateId;
-	}
-
-	public void setTemplateId(Integer templateId) {
-		this.templateId = templateId;
-	}
-
-	public Integer getBudgetId() {
-		return budgetId;
-	}
-
-	public void setBudgetId(Integer budgetId) {
-		this.budgetId = budgetId;
-	}
-
-	public Integer getEnterpriseId() {
-		return enterpriseId;
-	}
-
-	public void setEnterpriseId(Integer enterpriseId) {
-		this.enterpriseId = enterpriseId;
-	}
-
-	public Integer getEmployeesId() {
-		return employeesId;
-	}
-
-	public void setEmployeesId(Integer employeesId) {
-		this.employeesId = employeesId;
-	}
-
-	public BigDecimal getBonusTotal() {
-		return bonusTotal;
-	}
-	
-	public void setBonusTotal(BigDecimal bonusTotal) {
-		this.bonusTotal = bonusTotal;
-	}
-
-	public BigDecimal getWargeTotal() {
-		return wargeTotal;
-	}
-
-	public void setWargeTotal(BigDecimal wargeTotal) {
-		this.wargeTotal = wargeTotal;
-	}
-
-	public EnterpriseEmployees getEnterpriseEmployees() {
-		return enterpriseEmployees;
-	}
-
-	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
-		this.enterpriseEmployees = enterpriseEmployees;
-	}
-
-	public Enterprise getEnterprise() {
-		return enterprise;
-	}
-	
-	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
-		return createSalaryBudgetTable;
-	}
-	
-	public EmployeesSalaryDetail getEmployeesSalaryDetail() {
-		return employeesSalaryDetail;
-	}
-
-	public void setEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail) {
-		this.employeesSalaryDetail = employeesSalaryDetail;
-	}
-
-	public void setCreateSalaryBudgetTable(
-			CreateSalaryBudgetTable createSalaryBudgetTable) {
-		this.createSalaryBudgetTable = createSalaryBudgetTable;
-	}
-
-	public void setSalaryTemplateService(SalaryTemplateService salaryTemplateService) {
-		this.salaryTemplateService = salaryTemplateService;
-	}
-
-	public void setEnterprise(Enterprise enterprise) {
-		this.enterprise = enterprise;
-	}
-	public File getFile() {
-		return file;
-	}
-
-	public void setFile(File file) {
-		this.file = file;
-	}
-	
-	
-	@JSON(name="page")
-	public Integer getPpage() {
-		return page;
-	}
-
-	public void setPage(Integer page) {
-		this.page = page;
-	}
-	@JSON(name="total")
-	public long getTotal() {
-		return total;
-	}
-
-	public void setTotal(long total) {
-		this.total = total;
-	}
-	@JSON(name="rp")
-	public String getRp() {
-		return rp;
-	}
-
-	public void setRp(String rp) {
-		this.rp = rp;
-	}
-	@JSON(name="query")
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
-
-	public String getQop() {
-		return qop;
-	}
-
-	public void setQop(String qop) {
-		this.qop = qop;
-	}
-
-	public void setEnterpriseEmployeesService(
-			EnterpriseEmployeesService enterpriseEmployeesService) {
-		this.enterpriseEmployeesService = enterpriseEmployeesService;
-	}
-
-	public void setCreateSalaryBudgetTableService(
-			CreateSalaryBudgetTableService createSalaryBudgetTableService) {
-		this.createSalaryBudgetTableService = createSalaryBudgetTableService;
-	}
-
-	public void setBalanceDetailService(BalanceDetailService balanceDetailService) {
-		this.balanceDetailService = balanceDetailService;
-	}
-	public void setEmployeesSalaryDetailService(EmployeesSalaryDetailService employeesSalaryDetailService) {
-		this.employeesSalaryDetailService = employeesSalaryDetailService;
-	}
-	
-
-	public void setEnterpriseService(EnterpriseService enterpriseService) {
-		this.enterpriseService = enterpriseService;
-	}
-
-	
 	
 	
 	
@@ -363,6 +131,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		wargeTotal=employeesSalaryDetailService.getWageTotal(enterprise.getEnterpriseId(), budgetId);
 		fiveInsuranceTotal=employeesSalaryDetailService.getFiveInsuranceTotal(enterprise.getEnterpriseId(), budgetId);
 		numberPeopleTotal=employeesSalaryDetailService.getNumberPersonlTotal(enterprise.getEnterpriseId(), budgetId);
+		
 		serviceTotal=employeesSalaryDetailService.getServiceTotal(enterprise.getEnterpriseId(), budgetId);
 
 		
@@ -696,5 +465,271 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		return object.toString();
 		
 	}
+	
+	
+	
+	
+	
+	public int getPage() {
+		return page<1?1:page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	
+	@JSON(name="details")
+	public List<EmployeesSalaryDetail> getDetails() {
+		return details;
+	}
+
+	public void setDetails(List<EmployeesSalaryDetail> details) {
+		this.details = details;
+	}
+
+	public Date getSalaryDate() {
+		return salaryDate;
+	}
+
+	public void setSalaryDate(Date salaryDate) {
+		this.salaryDate = salaryDate;
+	}
+
+	public Integer getSalaryId() {
+		return salaryId;
+	}
+
+	public void setSalaryId(Integer salaryId) {
+		this.salaryId = salaryId;
+	}
+
+	public BigDecimal getFiveInsuranceTotal() {
+		return fiveInsuranceTotal;
+	}
+
+	public void setFiveInsuranceTotal(BigDecimal fiveInsuranceTotal) {
+		this.fiveInsuranceTotal = fiveInsuranceTotal;
+	}
+
+	public long getNumberPeopleTotal() {
+		return numberPeopleTotal;
+	}
+
+	public void setNumberPeopleTotal(long numberPeopleTotal) {
+		this.numberPeopleTotal = numberPeopleTotal;
+	}
+
+	public BigDecimal getServiceTotal() {
+		return serviceTotal;
+	}
+
+	public void setServiceTotal(BigDecimal serviceTotal) {
+		this.serviceTotal = serviceTotal;
+	}
+	
+	public Integer getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(Integer templateId) {
+		this.templateId = templateId;
+	}
+
+	public Integer getBudgetId() {
+		return budgetId;
+	}
+
+	public void setBudgetId(Integer budgetId) {
+		this.budgetId = budgetId;
+	}
+
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+
+	public Integer getEmployeesId() {
+		return employeesId;
+	}
+
+	public void setEmployeesId(Integer employeesId) {
+		this.employeesId = employeesId;
+	}
+
+	public BigDecimal getBonusTotal() {
+		return bonusTotal;
+	}
+	
+	public void setBonusTotal(BigDecimal bonusTotal) {
+		this.bonusTotal = bonusTotal;
+	}
+
+	public BigDecimal getWargeTotal() {
+		return wargeTotal;
+	}
+
+	public void setWargeTotal(BigDecimal wargeTotal) {
+		this.wargeTotal = wargeTotal;
+	}
+
+	public EnterpriseEmployees getEnterpriseEmployees() {
+		return enterpriseEmployees;
+	}
+
+	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
+		this.enterpriseEmployees = enterpriseEmployees;
+	}
+
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+	
+	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
+		return createSalaryBudgetTable;
+	}
+	
+	public EmployeesSalaryDetail getEmployeesSalaryDetail() {
+		return employeesSalaryDetail;
+	}
+
+	public void setEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail) {
+		this.employeesSalaryDetail = employeesSalaryDetail;
+	}
+
+	public void setCreateSalaryBudgetTable(
+			CreateSalaryBudgetTable createSalaryBudgetTable) {
+		this.createSalaryBudgetTable = createSalaryBudgetTable;
+	}
+
+	public void setSalaryTemplateService(SalaryTemplateService salaryTemplateService) {
+		this.salaryTemplateService = salaryTemplateService;
+	}
+
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+	
+	
+	@JSON(name="page")
+	public Integer getPpage() {
+		return page;
+	}
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+	@JSON(name="total")
+	public long getTotal() {
+		return total;
+	}
+
+	public void setTotal(long total) {
+		this.total = total;
+	}
+	@JSON(name="rp")
+	public String getRp() {
+		return rp;
+	}
+
+	public void setRp(String rp) {
+		this.rp = rp;
+	}
+	@JSON(name="query")
+	public String getQuery() {
+		return query;
+	}
+
+	public void setQuery(String query) {
+		this.query = query;
+	}
+
+	public String getQtype() {
+		return qtype;
+	}
+
+	public void setQtype(String qtype) {
+		this.qtype = qtype;
+	}
+
+	public String getSortname() {
+		return sortname;
+	}
+
+	public void setSortname(String sortname) {
+		this.sortname = sortname;
+	}
+
+	public String getSortorder() {
+		return sortorder;
+	}
+
+	public void setSortorder(String sortorder) {
+		this.sortorder = sortorder;
+	}
+
+	public String getQop() {
+		return qop;
+	}
+
+	public void setQop(String qop) {
+		this.qop = qop;
+	}
+
+	public void setEnterpriseEmployeesService(
+			EnterpriseEmployeesService enterpriseEmployeesService) {
+		this.enterpriseEmployeesService = enterpriseEmployeesService;
+	}
+
+	public void setCreateSalaryBudgetTableService(
+			CreateSalaryBudgetTableService createSalaryBudgetTableService) {
+		this.createSalaryBudgetTableService = createSalaryBudgetTableService;
+	}
+
+	public void setBalanceDetailService(BalanceDetailService balanceDetailService) {
+		this.balanceDetailService = balanceDetailService;
+	}
+	public void setEmployeesSalaryDetailService(EmployeesSalaryDetailService employeesSalaryDetailService) {
+		this.employeesSalaryDetailService = employeesSalaryDetailService;
+	}
+	
+
+	public void setEnterpriseService(EnterpriseService enterpriseService) {
+		this.enterpriseService = enterpriseService;
+	}
+
+	public long getMingshengsum() {
+		return mingshengsum;
+	}
+
+	public void setMingshengsum(long mingshengsum) {
+		this.mingshengsum = mingshengsum;
+	}
+
+	public long getHebanksum() {
+		return hebanksum;
+	}
+
+	public void setHebanksum(long hebanksum) {
+		this.hebanksum = hebanksum;
+	}
+
+	public long getIsussesum() {
+		return isussesum;
+	}
+
+	public void setIsussesum(long isussesum) {
+		this.isussesum = isussesum;
+	}
+
+	
 
 }

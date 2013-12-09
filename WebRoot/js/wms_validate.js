@@ -249,10 +249,11 @@ function findIdToEmployees(employeesId)
 					$("input[name='enterpriseEmployees.accumulationFund']").attr("checked",'true');
 				}
 				$("input[name='enterpriseEmployees.ginsengProtectNature'][value="+data.enterpriseEmployeesJson.ginsengProtectNature+"]").attr("checked",true);
-		    	
-		    	var   cinsengDate=new   Date(data.enterpriseEmployeesJson.cinsengDate).format("yyyy-MM-dd");  
-		    	$("input[name='enterpriseEmployees.cinsengDate']").val(cinsengDate); 
-		    	
+		    	if(data.enterpriseEmployeesJson.cinsengDate!=null){
+		    		var   cinsengDate=new   Date(data.enterpriseEmployeesJson.cinsengDate).format("yyyy-MM-dd"); 
+			    	$("input[name='enterpriseEmployees.cinsengDate']").val(cinsengDate); 	
+		    	}
+
 		    	$("input[name='enterpriseEmployees.base'][value="+data.enterpriseEmployeesJson.base+"]").attr("checked",true);
 		    	$("input[name='enterpriseEmployees.socialInsurance']").val(data.enterpriseEmployeesJson.socialInsurance); 
 		    	$("input[name='enterpriseEmployees.fertilityInsurance']").val(data.enterpriseEmployeesJson.fertilityInsurance);

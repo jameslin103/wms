@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salaryDetail" pageWidth="1580" pageHeight="840" whenNoDataType="AllSectionsNoDetail" columnWidth="1540" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="aa20f712-3df1-4c6e-9a64-4eb82b1c20c4">
 	<property name="ireport.zoom" value="1.2100000000000024"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="117"/>
+	<property name="ireport.y" value="32"/>
 	<parameter name="salaryDate" class="java.lang.String"/>
 	<parameter name="budgetName" class="java.lang.String"/>
 	<parameter name="createDate" class="java.lang.String"/>
@@ -936,18 +936,6 @@
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="8c651c4e-87da-4a90-a0f9-80ebbe959105" x="0" y="0" width="22" height="20"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<pen lineColor="#000000"/>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{salaryId}==null?"":$F{salaryId}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
 				<reportElement uuid="db12749a-58d3-48d8-923b-9fcdaaa931fd" x="22" y="0" width="45" height="20"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<pen lineColor="#000000"/>
@@ -957,7 +945,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{employeesName}==null?"":$F{employeesName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{employeesName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="22e12876-f8cd-433e-b1ec-d6f90ccd3108" x="67" y="0" width="45" height="20"/>
@@ -969,7 +957,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{wage}==null?"":$F{wage}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{wage}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="4333da1d-65e7-41e1-abb1-d62285b92f4e" x="112" y="0" width="45" height="20"/>
@@ -981,7 +969,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{bonus}==null?"":$F{bonus}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bonus}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="9267d346-ad3a-48bf-a95e-64142bad3aec" x="158" y="0" width="44" height="20"/>
@@ -993,7 +981,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{subsidies}==null?"":$F{subsidies}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{subsidies}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="b5deae37-9b6b-4d70-a9d3-bb1b4810bb11" x="202" y="0" width="45" height="20"/>
@@ -1005,7 +993,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{shouldPay}==null?"":$F{shouldPay}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{shouldPay}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="02ac80d6-85a7-47a7-8474-c71cde28ff28" x="247" y="0" width="45" height="20"/>
@@ -1017,7 +1005,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{socialInsuranceBase}==null?"":$F{socialInsuranceBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{socialInsuranceBase}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="bee22aee-9394-4250-938f-476e797164df" x="292" y="0" width="50" height="20"/>
@@ -1029,7 +1017,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterprisePensionInsurance}==null?"":$F{enterprisePensionInsurance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterprisePensionInsurance}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="d48fdaa6-b55c-473f-92d4-0eb9962de12d" x="342" y="0" width="50" height="20"/>
@@ -1041,7 +1029,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{personalPensionInsurance}==null?"":$F{personalPensionInsurance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{personalPensionInsurance}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="2aa0aade-820c-4820-9dc3-a78dd6d23c1a" x="392" y="0" width="50" height="20"/>
@@ -1053,7 +1041,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseUnemploymentInsurance}==null?"":$F{enterpriseUnemploymentInsurance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseUnemploymentInsurance}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="6109f5fb-0c96-4913-b335-3b753e56a586" x="442" y="0" width="50" height="20"/>
@@ -1065,7 +1053,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{personalUnemploymentInsurance}==null?"":$F{personalUnemploymentInsurance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{personalUnemploymentInsurance}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="c5d41843-7ec2-4e08-a20c-493c5920b887" x="492" y="0" width="45" height="20"/>
@@ -1077,7 +1065,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{birthInsuranceBase}==null?"":$F{birthInsuranceBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{birthInsuranceBase}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="23ae213f-8488-445f-8eb7-9f196a956a7c" x="537" y="0" width="45" height="20"/>
@@ -1089,7 +1077,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseBirthInsurance}==null?"":$F{enterpriseBirthInsurance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseBirthInsurance}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="ad0150df-7bba-4670-a739-13ad9c303f70" x="582" y="0" width="45" height="20"/>
@@ -1101,7 +1089,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{inductrialInjuryBase}==null?"":$F{inductrialInjuryBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{inductrialInjuryBase}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="b9086ac2-f91c-4b0b-97cc-bf3ac1fa363a" x="627" y="0" width="45" height="20"/>
@@ -1113,7 +1101,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseInductrialInjuryBase}==null?"":$F{enterpriseInductrialInjuryBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseInductrialInjuryBase}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="07a24f58-1b92-48f6-8254-58e3aada960a" x="672" y="0" width="70" height="20"/>
@@ -1125,7 +1113,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{medicalPaymentBase}==null?"":$F{medicalPaymentBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{medicalPaymentBase}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="bd7e5f82-63dc-4086-8afb-6aae5034a29e" x="742" y="0" width="50" height="20"/>
@@ -1137,7 +1125,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseMedicalBase}==null?"":$F{enterpriseMedicalBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseMedicalBase}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="8cc9cce0-bf3a-415e-898a-df0932280ebc" x="792" y="0" width="50" height="20"/>
@@ -1149,7 +1137,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{personalMedicalBase}==null?"":$F{personalMedicalBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{personalMedicalBase}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="a4c08699-3d32-4407-9a9d-6be2aa043a1d" x="842" y="0" width="70" height="20"/>
@@ -1161,7 +1149,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{housingReserveBase}==null?"":$F{housingReserveBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{housingReserveBase}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="97318563-8476-4392-a2b4-69588334df35" x="912" y="0" width="50" height="20"/>
@@ -1173,7 +1161,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseReserveBase}==null?"":$F{enterpriseReserveBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseReserveBase}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="0fc702f3-102c-47d3-b00a-463287888656" x="962" y="0" width="50" height="20"/>
@@ -1185,7 +1173,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{personalReserveBase}==null?"":$F{personalReserveBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{personalReserveBase}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="50df33f5-f513-42dd-b2ca-53d6cecb91e9" x="1012" y="0" width="45" height="20"/>
@@ -1197,7 +1185,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{morbidityStatistics}==null?"":$F{personalReserveBase}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{personalReserveBase}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="d583766c-b82d-4b9a-90eb-01a9499b7986" x="1057" y="0" width="50" height="20"/>
@@ -1209,7 +1197,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseSubtotal}==null?"":$F{enterpriseSubtotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseSubtotal}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="f565b639-d3d5-4f4b-88a5-8592dc870aad" x="1107" y="0" width="50" height="20"/>
@@ -1221,7 +1209,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{personalSubtotal}==null?"":$F{enterpriseSubtotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseSubtotal}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="b40c720a-8c9e-45d5-92ca-43b09c58c120" x="1157" y="0" width="45" height="20"/>
@@ -1233,7 +1221,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{beforeSalary}==null?"":$F{beforeSalary}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{beforeSalary}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="89949668-6ae4-41f8-9a9f-d250bfbb6c05" x="1202" y="0" width="50" height="20"/>
@@ -1245,7 +1233,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{enterpriseTax}==null?"":$F{enterpriseTax}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{enterpriseTax}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="1524517e-4071-46ac-a1ed-9bfe9212cef1" x="1252" y="0" width="50" height="20"/>
@@ -1257,7 +1245,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{personalTax}==null?"":$F{personalTax}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{personalTax}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="919df6d8-faf5-4783-b1b7-809f69d9da73" x="1302" y="0" width="30" height="20"/>
@@ -1269,7 +1257,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{serviceCharge}==null?"":$F{serviceCharge}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{serviceCharge}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="8e4d39d5-c907-4536-a281-3d32d782a88b" x="1332" y="0" width="45" height="20"/>
@@ -1281,7 +1269,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{aggregate}==null?"":$F{aggregate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{aggregate}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="24097c24-6055-45be-b85d-fc6434a6643c" x="1377" y="0" width="87" height="20"/>
@@ -1293,7 +1281,7 @@
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{moneyToCards}==null?"":$F{moneyToCards}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{moneyToCards}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="a0888ae0-1da6-4650-acb2-ed92dfe275ea" x="1464" y="0" width="74" height="20"/>
@@ -1305,7 +1293,18 @@
 					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{note}==null?"":$F{note}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{note}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fbd1fc8d-227f-4822-b28a-0d9c5aba5253" x="1" y="0" width="21" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
