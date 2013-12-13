@@ -210,7 +210,8 @@ function findIdToEmployees(employeesId)
 		$.ajax( {    
 		    url:'findIdToEmployees',// 跳转到 action  
 		    data:{employeesId:employeesId},    
-		    type:'post',    
+		    type:'post',   
+		    cache:false,
 		    dataType:'json',    
 		    success:function(data){
 		    	
@@ -250,8 +251,8 @@ function findIdToEmployees(employeesId)
 				}
 				$("input[name='enterpriseEmployees.ginsengProtectNature'][value="+data.enterpriseEmployeesJson.ginsengProtectNature+"]").attr("checked",true);
 		    	if(data.enterpriseEmployeesJson.cinsengDate!=null){
-		    		var   cinsengDate=new   Date(data.enterpriseEmployeesJson.cinsengDate).format("yyyy-MM-dd"); 
-			    	$("input[name='enterpriseEmployees.cinsengDate']").val(cinsengDate); 	
+		    		var   cinsengDate=new   Date(data.enterpriseEmployeesJson.cinsengDate).format("yyyy-MM-dd");
+			    	$("input[name='enterpriseEmployees.cinsengDate']").val(data.enterpriseEmployeesJson.cinsengDate); 	
 		    	}
 
 		    	$("input[name='enterpriseEmployees.base'][value="+data.enterpriseEmployeesJson.base+"]").attr("checked",true);
@@ -263,20 +264,20 @@ function findIdToEmployees(employeesId)
 		    	$("input[name='enterpriseEmployees.paymentWay'][value="+data.enterpriseEmployeesJson.paymentWay+"]").attr("checked",true) 
 		    	$("input[name='enterpriseEmployees.pseudoDelete'][value="+data.enterpriseEmployeesJson.pseudoDelete+"]").attr("checked",true); 
 		    	$("input[name='enterpriseEmployees.serviceCost']").val(data.enterpriseEmployeesJson.serviceCost); 
+		    	$("input[name='enterpriseEmployees.seriousDisease']").val(data.enterpriseEmployeesJson.seriousDisease); 
 		    	
-		    	if(data.employeesContract!=null){
+		    	
 			    	if(data.employeesContract.contractStatrDate!=null){
 			    		var   contractStatrDate=new   Date(data.employeesContract.contractStatrDate).format("yyyy-MM-dd");  
-				    	$("input[name='employeesContract.contractStatrDate']").val(contractStatrDate); 
+				    	$("input[name='employeesContract.contractStatrDate']").val(data.employeesContract.contractStatrDate); 
 			    	}
 			    	if(data.employeesContract.contractEndDate!=null){
 				    	var   contractEndDate=new   Date(data.employeesContract.contractEndDate).format("yyyy-MM-dd");  
-				    	$("input[name='employeesContract.contractEndDate']").val(contractEndDate); 
+				    	$("input[name='employeesContract.contractEndDate']").val(data.employeesContract.contractEndDate); 
 			    	}
 			    	if(data.employeesContract.contractid!=null){
 			    		$("input[name='employeesContract.contractid']").val(data.employeesContract.contractid); 
 			    	}
-		    	}
 		    },    
 		     error : function() {  
 		    	 alert("系统异常，请稍后重试！");
@@ -285,7 +286,18 @@ function findIdToEmployees(employeesId)
 		
 	}
 }
+function time(time){
 
+     var data = new Date(time);  
+     var year = data.getFullYear();  //获取年
+     var month = data.getMonth() + 1;    //获取月
+     var day = data.getDate(); //获取日
+     var hours = data.getHours(); 
+     var minutes = data.getMinutes();
+     time = year + "年" + month + "月" + day + "日"
+     alert(time);
+
+}
 
 function findToIdBalanceDetail(detailId)
 {
@@ -333,7 +345,8 @@ function findToIdSalayBudegTable(budgetId)
 		    	$("input[name='createSalaryBudgetTable.budgetId']").val(data.createSalaryBudgetTable.budgetId); 
 		    	$("#templateName").text(data.createSalaryBudgetTable.templateName)
 		    	$("input[name='createSalaryBudgetTable.name']").val(data.createSalaryBudgetTable.name==null?"":data.createSalaryBudgetTable.name); 
-		    	$("input[name='createSalaryBudgetTable.salaryDate']").val((new Date(data.book.otherPublishDate)).format("yyyy-MM-dd"));  
+		    	(new Date(data.book.otherPublishDate)).format("yyyy-MM-dd")
+		    	$("input[name='createSalaryBudgetTable.salaryDate']").val(data.book.otherPublishDate);  
 		    	$("#salaryTable").empty();
 		    	$("#salaryTable").append("<option>"+data.createSalaryBudgetTable.chooseTax+"</option>");
 		    	
@@ -538,19 +551,20 @@ function findSalaryTable(budgetId){
 	    	$("input[name='createSalaryBudgetTable.cmbcDate']").val('');
 	    	$("input[name='createSalaryBudgetTable.cashnumberDate']").val('');
 	    	$("input[name='createSalaryBudgetTable.heLinesDate']").val('');
+	    	$("input[name='createSalaryBudgetTable.status']").val('');
 	    	if(data.createSalaryBudgetTable.cmbcDate!=null && data.createSalaryBudgetTable.cmbcDate!=""){
 	    		var   cmbcDate=new Date(data.createSalaryBudgetTable.cmbcDate).format("yyyy-MM-dd"); 
-	    		$("input[name='createSalaryBudgetTable.cmbcDate']").val(cmbcDate);
+	    		$("input[name='createSalaryBudgetTable.cmbcDate']").val(data.createSalaryBudgetTable.cmbcDate);
 	    	}
 	    	if(data.createSalaryBudgetTable.cashnumberDate!=null){
 	    		var   cashnumberDate=new Date(data.createSalaryBudgetTable.cashnumberDate).format("yyyy-MM-dd"); 
-	    		$("input[name='createSalaryBudgetTable.cashnumberDate']").val(cashnumberDate);
+	    		$("input[name='createSalaryBudgetTable.cashnumberDate']").val(data.createSalaryBudgetTable.cashnumberDate);
 	    	}
 	    	if(data.createSalaryBudgetTable.heLinesDate!=null){
 	    		var   heLinesDate=new  Date(data.createSalaryBudgetTable.heLinesDate).format("yyyy-MM-dd");
-	    		$("input[name='createSalaryBudgetTable.heLinesDate']").val(heLinesDate);
+	    		$("input[name='createSalaryBudgetTable.heLinesDate']").val(data.createSalaryBudgetTable.heLinesDate);
 	    	}
-	 
+	    	$("input[name='createSalaryBudgetTable.status']").val(data.createSalaryBudgetTable.status);
 	    },    
 	     error : function() {  
 	    	 alert("系统异常，请稍后重试！");
@@ -567,40 +581,26 @@ function findSalaryTable(budgetId){
 
 /** 
  * 时间对象的格式化 
- */  
- Date.prototype.format = function(format)  
- {  
- /* 
- * format="yyyy-MM-dd hh:mm:ss"; 
- */  
-	 var o = {  
-		 "M+" : this.getMonth() + 1,  
-		 "d+" : this.getDate(),  
-		 "h+" : this.getHours(),  
-		 "m+" : this.getMinutes(),  
-		 "s+" : this.getSeconds(),  
-		 "q+" : Math.floor((this.getMonth() + 3) / 3),  
-		 "S" : this.getMilliseconds()  
-	 }  
-	   
-	 if (/(y+)/.test(format))  
-	 {  
-		 format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4  
-		 - RegExp.$1.length));  
-	 }  
-	   
-	 for (var k in o)  
-	 {  
-		 if (new RegExp("(" + k + ")").test(format))  
-		 {  
-			 format = format.replace(RegExp.$1, RegExp.$1.length == 1  
-			 ? o[k]  
-			 : ("00" + o[k]).substr(("" + o[k]).length));  
-		 }  
-	 }  
-	 return format;  
- }  
-
+ */   
+ Date.prototype.format = function(format) //author: meizz 
+ { 
+   var o = { 
+     "M+" : this.getMonth()+1, //month 
+     "d+" : this.getDate(),    //day 
+     "h+" : this.getHours(),   //hour 
+     "m+" : this.getMinutes(), //minute 
+     "s+" : this.getSeconds(), //second 
+     "q+" : Math.floor((this.getMonth()+3)/3),  //quarter 
+     "S" : this.getMilliseconds() //millisecond 
+   } 
+   if(/(y+)/.test(format)) format=format.replace(RegExp.$1, 
+     (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+   for(var k in o)if(new RegExp("("+ k +")").test(format)) 
+     format = format.replace(RegExp.$1, 
+       RegExp.$1.length==1 ? o[k] : 
+         ("00"+ o[k]).substr((""+ o[k]).length)); 
+   return format; 
+ } 
 
 
 
@@ -650,43 +650,6 @@ $(function (){
  	   
  });
 
-
-
-
-
-
-
-
-
-/** 
- * 时间对象的格式化; 
- */  
-Date.prototype.format = function(format) {  
-    /* 
-     * eg:format="yyyy-MM-dd hh:mm:ss"; 
-     */  
-    var o = {  
-        "M+" : this.getMonth() + 1, // month  
-        "d+" : this.getDate(), // day  
-        "h+" : this.getHours(), // hour  
-        "m+" : this.getMinutes(), // minute  
-        "s+" : this.getSeconds(), // second  
-        "q+" : Math.floor((this.getMonth() + 3) / 3), // quarter  
-        "S" : this.getMilliseconds()  
-        // millisecond  
-    }  
-  
-    if (/(y+)/.test(format)) {  
-        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4- RegExp.$1.length));  
-    }  
-  
-    for (var k in o) {  
-        if (new RegExp("(" + k + ")").test(format)) {  
-            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]  : ("00" + o[k]).substr(("" + o[k]).length));  
-        }  
-    }  
-    return format;  
-}  
 
 function topage(page){
 	
@@ -798,5 +761,89 @@ $(function (){
 
 });
 
+/*
+02
+函数：把字符串转换为日期对象
+03
+参数：yyyy-mm-dd或dd/mm/yyyy形式的字符串
+04
+返回：Date对象
+05
+注：IE下不支持直接实例化日期对象，如new Date("2011-04-06")
+06
+*/
+Date.prototype.convertDate = function (date)
+{
+	alert(date);
+    var flag = true;
+    var dateArray = date.split("-");
+    if (dateArray.length != 3)
+    {
+        dateArray = date.split("/");
+        if (dateArray.length != 3)
+        {
+            return null;
+        }
+        flag = false;
+    }
+    var newDate = new Date();
+    if (flag)
+    {
+        // month从0开始
+        newDate.setFullYear(dateArray[0], dateArray[1] - 1, dateArray[2]);
+    }
+    else
+    {
+        newDate.setFullYear(dateArray[2], dateArray[1] - 1, dateArray[0]);
+    }
+    newDate.setHours(0, 0, 0);
+    return newDate;
+};
+
+//$(function (){
+//	
+//	var w= $("input[name='enterpriseEmployees.whetherGinseng']:checked").val();
+//	if(w!=null && w!=undefined){
+//		if(w==1){
+//			$("#fundType").show();
+//		}else{
+//			$("#fundType").hide();
+//		}	
+//	}
+//	$("input[name='enterpriseEmployees.whetherGinseng']").click(function(){
+//		var w= $("input[name='enterpriseEmployees.whetherGinseng']:checked").val();
+//		if(w!=null && w!=undefined){
+//			if(w==1){
+//				$("#fundType").show();
+//			}else{
+//				$("#fundType").hide();
+//			}	
+//		}
+//	});
+//});
+function reset(){
+	var form=document.getElementById("loginForm");
+	 $(form).find(':input').each(  
+		        function(){  
+		            switch(this.type){  
+		                case 'passsword':  
+		                case 'select-multiple':  
+		                case 'select-one':  
+		                case 'text':  
+		                case 'textarea':  
+		                    $(this).val('');  
+		                    break;  
+//		                case 'checkbox':  
+//		                case 'radio':  
+//		                    this.checked = false;  
+		            }  
+		        }  
+		    );  
+	//clearForm(form);
+	
+	
+}
+
+	
 
 

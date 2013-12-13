@@ -92,28 +92,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </td>
                 <td><s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.chooseTax}"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.nture}"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.enterprise.insurancesTax.insurancesType==0?'市医保':'省医保'}"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.makeTotal}"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.wageTotal}"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.serviceTotal}"/></td>
                 <td align="center"><br/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br/>
-                <a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}"/>">查看</a>
+                <td>
+	                <s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/>
+	                <br/>
+	                <a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}"/>">查看</a>
                 </td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br/><span class="em">
-                	（<s:property value="%{#request.createSalaryBudgetTable.note}"/>）</span>
-                <br/><s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月dd日HH时"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.heLines}"/><br/><span class="em">
-               	（<s:property value="%{#request.createSalaryBudgetTable.note}"/>）</span>
-                <br/><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.cashnumber}"/><br/><span class="em">
-                	（<s:property value="%{#request.createSalaryBudgetTable.note}"/>）</span>
-                <br/><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/></td>
+                <td>
+                	<s:if test="#request.createSalaryBudgetTable.cmbc!=null">
+		                <s:property value="%{#request.createSalaryBudgetTable.cmbc}"/><br/><span class="em">
+		                	（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
+		                <br/><s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月dd日HH时"/>
+	                </s:if>
+                </td>
+                <td>
+                <s:if test="#request.createSalaryBudgetTable.heLines!=null">
+	                <s:property value="%{#request.createSalaryBudgetTable.heLines}"/><br/><span class="em">
+	               	（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
+	                <br/><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/>
+                 </s:if>
+                </td>
+                <td>
+                <s:if test="#request.createSalaryBudgetTable.cashnumber!=null">
+	                <s:property value="%{#request.createSalaryBudgetTable.cashnumber}"/><br/><span class="em">
+	                	（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
+	                <br/><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/>
+                </s:if>
+                </td>
                 <td>
                   <ul>
                     <li>制作:<s:property value="%{#request.createSalaryBudgetTable.user.username}"/>
                     </li>
-                    <li>发放：<s:property value="#createSalaryBudgetTable.user_operator"/></li>
+                    <li>发放：<s:property value="%{#request.createSalaryBudgetTable.user_operator}"/></li>
                   </ul>
                 </td>
                 <td>

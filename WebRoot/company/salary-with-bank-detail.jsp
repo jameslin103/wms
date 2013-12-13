@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta http-equiv="pragma" content="no-cache"/> 
 		<meta http-equiv="cache-control" content="no-cache"/> 
-		<meta http-equiv="expires" content="0"/>  
+		<meta http-equiv="expires" content="0"/>
 	    <%@ include file="/help/public_css_js.jsp" %>
 	<script type="text/javascript">
 		function topage(page){
@@ -81,10 +81,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="viewCashIssue?budgetId=<s:property value="%{#request.budgetId}"/>">现金</a></li>
              <li style="color:#2E9AFE;">
              	<div style="padding-left:580px;">
-             		<input type="radio" checked="checked" name="allexport"/>全部
-             		<input type="radio" name="minshengbank"/>民生银行
-             		<input type="radio" name="otherbanks"/>其它银行
-             		<input type="radio" name="cashissue"/>现金
+             		<input type="radio" checked="checked" name="ischoosie" value="0"/>全部
+             		<input type="radio" name="ischoosie" value="1"/>民生银行
+             		<input type="radio" name="ischoosie" value="2"/>他行
+             		<input type="radio" name="ischoosie" value="3"/>现金
              	</div>
              	
              </li>

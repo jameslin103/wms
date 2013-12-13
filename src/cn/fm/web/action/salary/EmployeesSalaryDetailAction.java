@@ -133,6 +133,11 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		numberPeopleTotal=employeesSalaryDetailService.getNumberPersonlTotal(enterprise.getEnterpriseId(), budgetId);
 		
 		serviceTotal=employeesSalaryDetailService.getServiceTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		//统计发放人数
+		 isussesum=employeesSalaryDetailService.getSumCashNumber(enterprise.getEnterpriseId(), budgetId);
+		 mingshengsum=employeesSalaryDetailService.getSumMingShengBank(enterprise.getEnterpriseId(), budgetId);
+		 hebanksum=employeesSalaryDetailService.getSumHeLineBank(enterprise.getEnterpriseId(), budgetId);
 
 		
 		//记录到工资预算表汇总信息
@@ -143,6 +148,9 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		createSalaryBudgetTableSummary.setWageTotal(wargeTotal);
 		createSalaryBudgetTableSummary.setServiceTotal(serviceTotal);
 		createSalaryBudgetTableSummary.setIssueNumber(Integer.parseInt(numberPeopleTotal+""));
+		createSalaryBudgetTableSummary.setCmbc(Integer.parseInt(mingshengsum+""));
+		createSalaryBudgetTableSummary.setHeLines(Integer.parseInt(hebanksum+""));
+		createSalaryBudgetTableSummary.setCashnumber(Integer.parseInt(isussesum+""));
 
 		//TODO 医保类型待定
 		
@@ -155,6 +163,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		balanceDetail.setServiceToal(serviceTotal);
 		balanceDetail.setReceivableFiveFund(fiveInsuranceTotal);
 		balanceDetail.setYearMonth(createSalaryBudgetTableVO.getSalaryDate());
+		balanceDetail.setCreateSalaryBudgetTable(createSalaryBudgetTableVO);
 		balanceDetail.setBudgetId(createSalaryBudgetTableVO.getBudgetId());
 		balanceDetail.setNote(createSalaryBudgetTableVO.getNote());
 		balanceDetail.setEnterprise(enterprise);
@@ -218,12 +227,16 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	 */
 	public String viewAllEmployeesSalaryDetail()
 	{
-		
 		Enterprise enterprise=WebUtil.getEnterprise(request);
-		if(enterprise==null || enterprise.getEnterpriseId()==null){
+		if(enterpriseId!=null)
+		{
+			if(enterprise!=null){
+				request.getSession().removeAttribute("enterprise");
+			}
 			enterprise=enterpriseService.find(enterpriseId);
 			request.getSession().setAttribute("enterprise", enterprise);
 		}
+		
 		
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("createDate", "desc");

@@ -137,7 +137,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		String currentPath = ServletActionContext.getServletContext().getRealPath("");
 		String images= currentPath+"/images/fullname.jpg";
 		
-		sb.append(salaryDate).append("份各类费用预算表");
+		sb.append(salaryDate).append("-份各类费用预算表");
 		
 		parameters.put("salaryDate",sb.toString());
 		parameters.put("createDate",DateUtil.dateToString(createSalaryBudgetTable.getCreateDate(),DateUtil.FORMAT_DATE_MONTH));
@@ -146,7 +146,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		parameters.put("serviceTotal",createSalaryBudgetTable.getServiceTotal()==null?"":createSalaryBudgetTable.getServiceTotal().toString());
 		parameters.put("fiveInsurancesTotal",createSalaryBudgetTable.getFiveInsurancesTotal()==null?"":createSalaryBudgetTable.getFiveInsurancesTotal().toString());
 		parameters.put("budgetName", createSalaryBudgetTable.getName());
-		parameters.put("fullname",enterprise.getFullName()); 
+		parameters.put("fullname",createSalaryBudgetTable.getEnterprise().getFullName()); 
 		parameters.put("username",createSalaryBudgetTable.getUser().getUsername());
 		parameters.put("image", images);
 		parameters.put("endowmentInsurance", InsurancesTax.getBirthEnterprise()+"%");
@@ -167,7 +167,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 			sqlJasper="salaryDateail.jasper";
 		}
 	
-		 
+		 sb.append("-"+enterprise.getFullName());
 		try {
 			downloadExcel(sqlJasper, sb.toString()+"-工资明细表", parameters,employeesSalaryDetailList);
 			
@@ -194,7 +194,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		String currentPath = ServletActionContext.getServletContext().getRealPath("");
 		String images= currentPath+"/images/fullname.jpg";
 		CreateSalaryBudgetTable createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
-		
+		String salaryDate=DateUtil.dateToString(createSalaryBudgetTable.getSalaryDate(),DateUtil.FORMAT_DATE_MONTH);
 		List<EmployeesSalaryDetail> employeesSalaryDetailList=employeesSalaryDetailService.getBankEmployeesSalaryDetail(budgetId);
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		if(createSalaryBudgetTable==null)createSalaryBudgetTable=new CreateSalaryBudgetTable();
@@ -207,7 +207,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		String sqlJasper="salary-with-bank-detail.jasper";
 		 
 		try {
-			downloadExcel(sqlJasper, enterprise.getFullName()+"-(银行发放信息表)", parameters,employeesSalaryDetailList);
+			downloadExcel(sqlJasper, enterprise.getFullName()+"-"+salaryDate+"-(银行发放信息表)", parameters,employeesSalaryDetailList);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -220,14 +220,14 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	public String downloadSalaryWithSumOfCategoriesReport()
 	{       
 		Enterprise enterprise=WebUtil.getEnterprise(request);
-		WmsUser    user=WebUtil.getWmsUser(request);
 		if(enterprise.getEnterpriseId()==null)return INPUT;
 		String currentPath = ServletActionContext.getServletContext().getRealPath("");
 		String images= currentPath+"/images/fullname.jpg";
 		List<CreateSalaryBudgetTable> wageBudgetSummaryList=createSalaryBudgetTableService.getFindCreateSalaryBudgetTables(budgetId);
+		CreateSalaryBudgetTable createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		parameters.put("fullName",enterprise.getFullName()); 
-		parameters.put("username",user.getUsername()); 
+		parameters.put("username",createSalaryBudgetTable.getUser().getUsername()); 
 		parameters.put("image",images); 
 
 		String sqlJasper="salary-with-sum-of-categories.jasper";

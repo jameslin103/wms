@@ -15,8 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -102,6 +102,9 @@ public class Enterprise implements Serializable{
 
     private Set<EmployeesSalaryDetail>  employeesSalaryDetails=new HashSet<EmployeesSalaryDetail>();
 	
+    private InsurancesBaseSettings      insurancesBaseSettings;
+    
+    private InsurancesTax               insurancesTax;
 	
 	 @ManyToMany(cascade={CascadeType.REFRESH})
 	  @JoinTable(name = "user_enterprise",
@@ -366,6 +369,25 @@ public class Enterprise implements Serializable{
 	public void setEmployeesSalaryDetails(
 			Set<EmployeesSalaryDetail> employeesSalaryDetails) {
 		this.employeesSalaryDetails = employeesSalaryDetails;
+	}
+	@ManyToOne(cascade=CascadeType.REFRESH,fetch=FetchType.LAZY,optional=true)
+	@JoinColumn(name="insurancesbase_id")
+	@NotFound(action=NotFoundAction.IGNORE)
+	public InsurancesBaseSettings getInsurancesBaseSettings() {
+		return insurancesBaseSettings;
+	}
+	public void setInsurancesBaseSettings(
+			InsurancesBaseSettings insurancesBaseSettings) {
+		this.insurancesBaseSettings = insurancesBaseSettings;
+	}
+	@ManyToOne(cascade=CascadeType.REFRESH,fetch=FetchType.LAZY,optional=true)
+	@JoinColumn(name="tax_id")
+	@NotFound(action=NotFoundAction.IGNORE)
+	public InsurancesTax getInsurancesTax() {
+		return insurancesTax;
+	}
+	public void setInsurancesTax(InsurancesTax insurancesTax) {
+		this.insurancesTax = insurancesTax;
 	}
 	
 	

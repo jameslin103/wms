@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jxl.Cell;
 import jxl.CellType;
@@ -75,10 +76,10 @@ public class GenerateSqlFromExcel {
 		ArrayList list=new ArrayList();
 		for (int j =readRow; j < sheet[i].getRows(); j++)
 		{
+
 			String[] valStr = new String[number];
 			for (int k = 0; k < sheet[i].getColumns(); k++) 
 			{
-				
 				Cell cell = sheet[i].getCell(k, j);
 				String content = "";
 				if (cell.getType() == CellType.DATE) {
@@ -89,8 +90,19 @@ public class GenerateSqlFromExcel {
 				}
 				valStr[k] = content;
 				
-			} 
-			list.add(j-readRow,valStr);
+			}
+			List<String> filedName=null;
+			for (int d = 0; d < valStr.length; d++) {
+				if(!StringUtil.isEmpty(valStr[d])){
+					filedName=new ArrayList<String>();
+					filedName.add(valStr[d]);
+				}
+			}
+			if(filedName!=null && filedName.size()!=0){
+				list.add(j-readRow,valStr);
+				
+			}
+			
 		}
 		return list;
 	}

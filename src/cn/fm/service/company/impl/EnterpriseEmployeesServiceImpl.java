@@ -2,6 +2,7 @@ package cn.fm.service.company.impl;
 
 import java.io.File;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -102,18 +103,27 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		try {
 			List<String[]> arrayList=excel.generateStationBugSql(file,fiName,number,readRow);
 			if(arrayList==null || arrayList.equals("")){messageList.add("请填充你要上传的数据!"); return messageList;}
-			for (int i = 0; i < arrayList.size(); i++) 
-			{
-				String[] data = arrayList.get(i);
-				String messge=isExitSameEnterpriseEmployees(data);
-				if(!StringUtil.isEmpty(messge))	messageList.add(messge);
-				if(messageList.size()==0)
+			if(arrayList!=null && arrayList.size()>0){
+				messageList.addAll(duplicateData(arrayList));
+			}
+			if(messageList==null || messageList.size()==0 || !messageList.equals("")){
+				
+				List<EnterpriseEmployees> EnterpriseEmployeesListPO=getAllEnterpriseEmployees();
+				for (int i = 0; i < arrayList.size(); i++) 
 				{
-					employeesListVO.add(recordEnterpriseEmployeesExcelDate(data));
-				}	
+					String[] data = arrayList.get(i);
+					String messge=isExitSameEnterpriseEmployees(data,EnterpriseEmployeesListPO);
+					if(messge!=null && !StringUtil.isEmpty(messge))messageList.add(messge);
+					if(messageList==null || messageList.size()==0)
+					{
+						employeesListVO.add(recordEnterpriseEmployeesExcelDate(data));
+					}	
+					
+				}
 				
 			}
-			if(messageList.size()==0){
+			
+			if(messageList==null || messageList.size()==0){
 				try {
 					saveEnterpriseEmployees(employeesListVO,enterprise);
 				} catch (Exception e) {
@@ -131,11 +141,40 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		return messageList;
 	}
 	/**
+	 * 判断是否上传重复数据
+	 * @return
+	 */
+	public List<String> duplicateData(List list){
+		
+		if(list==null || list.size()==0)return null;
+		List<String> duplicateData = null;
+		
+		 for( int  i  =   0 ; i  <  list.size()-1 ; i ++ )
+		   {
+		          for  ( int  j  =  list.size()-1 ; j > i; j -- ) 
+		          {
+		        	  String name=list.get(2).toString();
+		        	  String carId=list.get(10).toString();
+		        	  if(!StringUtil.isEmpty(name) && !StringUtil.isEmpty(carId)){
+		        		  if (name.equals(carId))  
+			               {
+			                  duplicateData=new ArrayList<String>();
+			                  duplicateData.add("存在重复员工："+list.get(j)+"");
+			                } 
+		        	  }
+		               
+		            } 
+		    } 
+
+		return duplicateData==null?duplicateData=new ArrayList<String>():duplicateData;
+		
+	}
+	/**
 	 * 判断是否未离职的员工；重复上传数据
 	 * @param employees
 	 * @return
 	 */
-	public  String isExitSameEnterpriseEmployees(String[] fileDate){
+	public  String isExitSameEnterpriseEmployees(String[] fileDate,List<EnterpriseEmployees> EnterpriseEmployeesListPO){
 		
 		String message=null;
 		
@@ -158,7 +197,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		}
 		if(empName!=null)
 		{
-			List<EnterpriseEmployees> EnterpriseEmployeesListPO=getAllEnterpriseEmployees();
+			
 			if(EnterpriseEmployeesListPO==null || EnterpriseEmployeesListPO.size()==0)return null;
 			for (EnterpriseEmployees empPO : EnterpriseEmployeesListPO)
 				{
@@ -256,7 +295,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			/*公积金*/
 			employees.setAccumulationFund(data[24]==null?null:data[24]);
 			/*大病统筹*/
-			employees.setSeriousDisease(data[25]==null?null:data[25].toString());
+			employees.setSeriousDisease(data[25]==null?null:new BigDecimal(data[25]));
 		}
 		
 		
@@ -293,7 +332,7 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			employees.setContractNo(emp.getContractNo());
 			employees.setEmployeesName(emp.getEmployeesName());
 			employees.setEmployeesSex(emp.getEmployeesSex());
-			employees.setNativePlace(emp.getContractNo());
+			employees.setNativePlace(emp.getNativePlace());
 			employees.setHouseholdRegister(emp.getHouseholdRegister());
 			employees.setHomeAddress(emp.getHomeAddress());
 			employees.setMaritalStatus(emp.getMaritalStatus());

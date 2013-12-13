@@ -1,4 +1,5 @@
 package cn.fm.bean.company;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -87,7 +88,7 @@ public class EnterpriseEmployees{
 	private Date  endContractDeadline;
 	
 	/*是否参保  0否 1是 2特殊补贴*/
-	private  Integer whetherGinseng;
+	private  Integer whetherGinseng=0;
 	
 	/*参保性质  1增员  2续保  3减员  */
 	private Integer ginsengProtectNature;
@@ -102,7 +103,7 @@ public class EnterpriseEmployees{
 	private String  accumulationFund;
 	
 	/*大病统筹*/
-	private String  seriousDisease;
+	private BigDecimal  seriousDisease=new BigDecimal("0.00");
 	
 	/*大病统筹基数*/
 	private Double  seriousDiseaseBase;
@@ -446,11 +447,11 @@ public class EnterpriseEmployees{
 		this.accumulationFund = accumulationFund;
 	}
 	@Column(length=10)
-	public String getSeriousDisease() {
+	public BigDecimal getSeriousDisease() {
 		return seriousDisease;
 	}
 	@Column(length=80)
-	public void setSeriousDisease(String seriousDisease) {
+	public void setSeriousDisease(BigDecimal seriousDisease) {
 		this.seriousDisease = seriousDisease;
 	}
 	@Column(length=80)

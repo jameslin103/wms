@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salaryDetail" pageWidth="1580" pageHeight="840" whenNoDataType="AllSectionsNoDetail" columnWidth="1540" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="aa20f712-3df1-4c6e-9a64-4eb82b1c20c4">
 	<property name="ireport.zoom" value="1.2100000000000024"/>
-	<property name="ireport.x" value="117"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="32"/>
 	<parameter name="salaryDate" class="java.lang.String"/>
 	<parameter name="budgetName" class="java.lang.String"/>
@@ -12,6 +12,7 @@
 	<parameter name="fiveInsurancesTotal" class="java.lang.String"/>
 	<parameter name="username" class="java.lang.String"/>
 	<parameter name="image" class="java.lang.String"/>
+	<parameter name="fullname" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -305,7 +306,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{budgetName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{fullname}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="e8fb0ecf-d366-4e4d-a0ed-b143e84d57b1" x="0" y="60" width="67" height="25" forecolor="#333333"/>

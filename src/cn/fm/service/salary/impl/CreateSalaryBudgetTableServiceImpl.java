@@ -166,6 +166,10 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 	
 		
 	}
+	public void deleteCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable){
+		em.remove(createSalaryBudgetTable);
+	}
+	
 
 	/**
 	 * 所有企业工资预算表汇总
@@ -225,13 +229,15 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 				" set c.cmbcDate=?1," +
 				"c.cashnumberDate=?2," +
 				"c.heLinesDate=?3," +
-				"c.user_operator=?4 " +
-				" where c.budgetId=?5")
+				"c.user_operator=?4 ," +
+				"c.status=?5 " +
+				" where c.budgetId=?6")
 				.setParameter(1, createSalaryBudgetTable.getCmbcDate())
 				.setParameter(2, createSalaryBudgetTable.getCashnumberDate())
 				.setParameter(3, createSalaryBudgetTable.getHeLinesDate())
 				.setParameter(4, createSalaryBudgetTable.getUser_operator())
-				.setParameter(5, createSalaryBudgetTable.getBudgetId()).executeUpdate();
+				.setParameter(5, createSalaryBudgetTable.getStatus())
+				.setParameter(6, createSalaryBudgetTable.getBudgetId()).executeUpdate();
 	}
 
 

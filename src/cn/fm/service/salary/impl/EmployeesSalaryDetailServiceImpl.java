@@ -5,20 +5,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import cn.fm.bean.GridParameter;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.company.InsurancesBaseSettings;
 import cn.fm.bean.company.InsurancesTax;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.bean.salary.TaxOfPerson;
-import cn.fm.service.base.BaseGrid;
 import cn.fm.service.base.DaoSupport;
-import cn.fm.service.base.SearchImpl;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.utils.Constant;
 import cn.fm.utils.GenerateSqlFromExcel;
@@ -46,6 +41,9 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		try {
 			List<String[]> arrayList=excel.generateStationBugSql(file,fileName,number,readRows);
 			if(arrayList.size()==0)return null;
+			if(arrayList!=null && arrayList.size()>0){
+				employeesName=duplicateData(arrayList);
+			}
 			for (int i = 0; i < arrayList.size(); i++)
 			{
 				String[] data = arrayList.get(i);
@@ -82,6 +80,30 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		return employeesName;
 		
 	}
+	/**
+	 * 判断是否上传重复数据
+	 * @return
+	 */
+	public List<String> duplicateData(List list){
+		
+		if(list==null || list.size()==0)return null;
+		List<String> duplicateData=null;
+		 for  ( int  i  =   0 ; i  <  list.size()-1 ; i ++ )
+		   {
+		          for  ( int  j  =  list.size()-1 ; j > i; j -- )  {
+		               if  (list.get(j).equals(list.get(i)))  {
+		                  duplicateData=new ArrayList<String>();
+		                  duplicateData.add("存在"+list.get(i)+"");
+		                } 
+		            } 
+		    } 
+		return duplicateData;
+		
+	}
+	
+	
+	
+	
 	/**
 	 * 保存数据到数据库
 	 * @param employeesSalaryDetailList
@@ -131,6 +153,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 				employeesSalaryDetailVO.setBeforeSalary(detail.getBeforeSalary());
 				employeesSalaryDetailVO.setCreateDate(detail.getCreateDate());
 				employeesSalaryDetailVO.setPersonalTax(detail.getPersonalTax());
+				employeesSalaryDetailVO.setBank(detail.getBank());
 				 
 			   super.save(employeesSalaryDetailVO);
 			}
@@ -182,21 +205,22 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			
 			/*基本工资*/ 
 		    wage=Double.valueOf(employeesSalaryDetail.getWage()==null?"0.00":employeesSalaryDetail.getWage().toString());
-		    employeesSalaryDetailVO.setWage(new BigDecimal(wage));
+		    employeesSalaryDetailVO.setWage(new BigDecimal(wage).setScale(2,BigDecimal.ROUND_HALF_DOWN));
 			//应发工资=奖金+补贴+工资
-			Double bonus=Double.valueOf(employeesSalaryDetail.getBonus()==null?"0.00":employeesSalaryDetail.getBonus().toString());
-			subsidies=Double.valueOf(employeesSalaryDetail.getSubsidies()==null?"0.00":employeesSalaryDetail.getSubsidies().toString());
+			Double bonus=Double.valueOf(employeesSalaryDetail.getBonus()==null?0.00:employeesSalaryDetail.getBonus().doubleValue());
+			subsidies=Double.valueOf(employeesSalaryDetail.getSubsidies()==null?0.00:employeesSalaryDetail.getSubsidies().doubleValue());
 			
 			shouldPayTotal=wage+subsidies+bonus;
 			
-			employeesSalaryDetailVO.setSubsidies(new BigDecimal(subsidies));
-			employeesSalaryDetailVO.setShouldPay(new BigDecimal(shouldPayTotal));
-			employeesSalaryDetailVO.setBonus(new BigDecimal(bonus));
+			employeesSalaryDetailVO.setSubsidies(new BigDecimal(subsidies).setScale(2,BigDecimal.ROUND_HALF_DOWN));
+			employeesSalaryDetailVO.setShouldPay(new BigDecimal(shouldPayTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN));
+			employeesSalaryDetailVO.setBonus(new BigDecimal(bonus).setScale(2,BigDecimal.ROUND_HALF_DOWN));
 			employeesSalaryDetailVO.setMorbidityStatistics(employeesSalaryDetail.getMorbidityStatistics());
 			employeesSalaryDetailVO.setEmployeesName(employeesSalaryDetail.getEmployeesName());
 			employeesSalaryDetailVO.setCardNumber(employeesSalaryDetail.getCardNumber());
 			employeesSalaryDetailVO.setEnterpriseEmployees(employeesSalaryDetail.getEnterpriseEmployees());
 			employeesSalaryDetailVO.setNote(employeesSalaryDetail.getNote());
+			employeesSalaryDetailVO.setBank(employeesSalaryDetail.getBank());
 			employeesSalaryDetailVO.setServiceCharge(employeesSalaryDetail.getServiceCharge());
 			employeesSalaryDetailVO.setBankCardNumber(employeesSalaryDetail.getBankCardNumber());
 			
@@ -423,7 +447,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			}
 			
 			
-			if(enterpriseEmployees.getWhetherGinseng()==2){
+			if(enterpriseEmployees.getWhetherGinseng()!=null && enterpriseEmployees.getWhetherGinseng()==2){
 				//特殊养老失业保险补贴
 				BigDecimal specialOldSubsidies=proportionToCalculate(base.getBasicMedical(),tax.getEndowmentInsurance());
 				BigDecimal unemploymentInsurance=proportionToCalculate(base.getBasicMedical(),tax.getUnemploymentInsurance());//失业保险
@@ -525,7 +549,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			}
 			
 			//选择特殊补贴的计算方式
-			if(enterpriseEmployees.getWhetherGinseng()==2)
+			if(enterpriseEmployees.getWhetherGinseng()!=null && enterpriseEmployees.getWhetherGinseng()==2)
 			{
 			
 				//特殊养老失业保险补贴
@@ -703,21 +727,23 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 							    employeesSalaryDetail.setServiceCharge(new BigDecimal(emp.getServiceCost()==null?"0.0":emp.getServiceCost().toString()));
 							    
 							    //大病统筹
-							    employeesSalaryDetail.setMorbidityStatistics(new BigDecimal(emp.getSeriousDiseaseBase()==null?"0.0".toString():emp.getSeriousDiseaseBase().toString()));
+							    employeesSalaryDetail.setMorbidityStatistics(emp.getSeriousDisease()==null? new BigDecimal("0.0"):emp.getSeriousDisease());
 						    	
 							  
 						    	 //备注
 						    	 employeesSalaryDetail.setNote(fileDate[4].toString()==null?"0.0":fileDate[4].toString());
 		
 								//统计excel导入各种奖金
-								for(int i=5;i<number;i++)
-								{
-									Double bonuses=Double.valueOf(fileDate[i]==null?"0.0":fileDate[i].toString());
-									if(bonuses==null)continue;
-										bonusesTotal+=bonuses;
-		
-								}
-								employeesSalaryDetail.setBonus(new BigDecimal(bonusesTotal));
+						    	if(number>5){
+									for(int i=5;i<number;i++)
+									{
+										Double bonuses=Double.valueOf(fileDate[i]==null?"0.0":fileDate[i].toString());
+										if(bonuses==null)continue;
+											bonusesTotal+=bonuses;
+			
+									}
+						    	}
+								employeesSalaryDetail.setBonus(new BigDecimal((bonusesTotal==null?0.00:bonusesTotal.doubleValue())));
 						    
 								//电脑补贴
 								employeesSalaryDetail.setSubsidies(new BigDecimal(0.00));
@@ -823,10 +849,13 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		Query query=null;
 		try {
 			
-			query=em.createQuery("select count(e.salaryId) from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");		
-				
+			query=em.createQuery("select count(e.salaryId) from EmployeesSalaryDetail e " +
+					"where e.enterprise.enterpriseId=?1 " +
+					" and e.budgettableId=?2" +
+					" and e.bank like '%民生%'");		
 		} catch (Exception e) {
 			e.printStackTrace();
+			return 0;
 		}
 		
 		return (Long)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
@@ -840,10 +869,13 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		Query query=null;
 		try {
 			
-			query=em.createQuery("select count(e.salaryId) from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");		
-				
+			query=em.createQuery("select count(e.salaryId) from EmployeesSalaryDetail e " +
+					"where e.enterprise.enterpriseId=?1 " +
+					" and e.budgettableId=?2" +
+					" and ( e.bank is null  or e.bank like '%现金%' )");		
 		} catch (Exception e) {
 			e.printStackTrace();
+			return 0;
 		}
 		
 		return (Long)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
@@ -858,10 +890,14 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		Query query=null;
 		try {
 			
-			query=em.createQuery("select count(e.salaryId) from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");		
-				
+			query=em.createQuery("select count(e.salaryId) from EmployeesSalaryDetail e " +
+					"where e.enterprise.enterpriseId=?1 " +
+					" and e.budgettableId=?2" +
+					" and e.bank not like '%民生%'" +
+					" and e.bank is not null ");		
 		} catch (Exception e) {
 			e.printStackTrace();
+			return 0;
 		}
 		
 		return (Long)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
@@ -880,6 +916,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 				
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new BigDecimal("0.00");
 		}
 		
 		return (BigDecimal)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();
@@ -905,6 +942,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 				
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new BigDecimal("0.00");
 		}
 		
 		return (BigDecimal)query.setParameter(1, enterpriseId).setParameter(2, budgettableId).getSingleResult();

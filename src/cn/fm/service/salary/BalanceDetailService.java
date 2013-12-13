@@ -1,6 +1,5 @@
 package cn.fm.service.salary;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import cn.fm.bean.salary.BalanceDetail;
@@ -18,7 +17,7 @@ public interface BalanceDetailService extends DAO<BalanceDetail> {
 	public boolean  updateBalanceDetail(BalanceDetail balanceDetail);
 	
 	
-	
+	public void deleteBalanceDetail(Integer budgetId);
 	
 	
 	

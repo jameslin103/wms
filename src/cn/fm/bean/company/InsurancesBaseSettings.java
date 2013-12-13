@@ -3,11 +3,16 @@ package cn.fm.bean.company;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -47,6 +52,7 @@ public class InsurancesBaseSettings implements Serializable{
 	/*开始执行年月份*/
 	private Date   startDate;
 	
+	private Set<Enterprise> enterprise=new HashSet<Enterprise>();
 	
 	@Id @GeneratedValue
 	public Integer getId() {
@@ -110,6 +116,13 @@ public class InsurancesBaseSettings implements Serializable{
 	}
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+	}
+	@OneToMany(cascade=CascadeType.REFRESH,mappedBy="insurancesBaseSettings",fetch=FetchType.LAZY)
+	public Set<Enterprise> getEnterprise() {
+		return enterprise;
+	}
+	public void setEnterprise(Set<Enterprise> enterprise) {
+		this.enterprise = enterprise;
 	}
 	
 	

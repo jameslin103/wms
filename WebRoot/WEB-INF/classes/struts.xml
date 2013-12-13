@@ -147,6 +147,7 @@
             <result name="input">company/employee-step1-of-create.jsp</result>
             <result name="success" type="redirectAction">
             	<param name="actionName">viewEnterpriseEmployees</param>
+            	<param name="page">${page}</param>
             </result>
         </action> 
         
@@ -174,6 +175,7 @@
          <action name="addEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="addEnterpriseEmployees">
             <result name="success" type="redirectAction">
             	<param name="actionName">viewEnterpriseEmployees</param>
+            	<param name="page">${page}</param>
             </result>
             <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterpriseEmployees</param>
@@ -219,7 +221,8 @@
             	 	enterpriseEmployeesJson\.housingFund,
             	 	enterpriseEmployeesJson\.paymentWay,
             	 	enterpriseEmployeesJson\.pseudoDelete,
-            	 	enterpriseEmployeesJson\.serviceCost
+            	 	enterpriseEmployeesJson\.serviceCost,
+            	 	enterpriseEmployeesJson\.seriousDisease
             	 	
             	 	
             	 </param>   
@@ -228,9 +231,11 @@
         <action name="updateEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="updateEnterpriseEmployees">
             <result name="success" type="redirectAction">
             	<param name="actionName">viewEnterpriseEmployees</param>
+            	<param name="page">${page}</param>
             </result>
             <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterpriseEmployees</param>
+            	<param name="page">${page}</param>
             </result>
         </action>
         <action name="findContractJson"  class="cn.fm.web.action.company.EmployeesContractAction" method="findContractJson">
@@ -437,6 +442,9 @@
        <!-- Enterprise  -->
         <action name="viewEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterprise">
             <result name="success">admin/company-list.jsp</result>
+        </action>
+        <action name="isExitFullname" class="cn.fm.web.action.company.EnterpriseAction" method="isExitFullname">
+        	<result name="success" type="json"></result>
         </action>
          <action name="addEnterpriseToUser" class="cn.fm.web.action.company.EnterpriseAction" method="addEnterpriseToUser">
            <result name="success" type="redirectAction">
@@ -747,7 +755,8 @@
             		employeesSalaryDetail\.wage,
             		employeesSalaryDetail\.employeesName,
             		employeesSalaryDetail\.bonus,
-            		employeesSalaryDetail\.subsidies
+            		employeesSalaryDetail\.subsidies,
+            		employeesSalaryDetail\.budgettableId
             	</param>
             
             </result>
@@ -805,7 +814,8 @@
            			createSalaryBudgetTable\.budgetId,
            			createSalaryBudgetTable\.cmbcDate,
            			createSalaryBudgetTable\.cashnumberDate,
-           			createSalaryBudgetTable\.heLinesDate
+           			createSalaryBudgetTable\.heLinesDate,
+           			createSalaryBudgetTable\.status
 				
 				</param>
 			</result>
@@ -813,6 +823,7 @@
         <action name="updateSaralyStatus" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="updateSaralyStatus">
             <result name="success" type="redirectAction">
             	<param name="actionName">viewCompanyListWithSaraly</param>
+            	<param name="page">${page}</param>
             </result>
         </action>
         <action name="viewCompanyListWithInsurance" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="viewCompanyListWithInsurance">
@@ -827,9 +838,11 @@
         <action name="updateRecutionState" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="updateRecutionState">
             <result name="success" type="redirectAction" >
             	<param name="actionName">viewCompanyListWithInsurance</param>
+            	<param name="page">${page}</param>
             </result>
             <result name="input" type="redirectAction" >
             	<param name="actionName">viewCompanyListWithInsurance</param>
+            	<param name="page">${page}</param>
             </result>
         </action>
         

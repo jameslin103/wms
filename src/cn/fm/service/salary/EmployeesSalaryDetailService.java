@@ -88,4 +88,19 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	 * @return
 	 */
 	public List<EmployeesSalaryDetail>  getBankEmployeesSalaryDetail(Integer budgetId);
+	
+	/**
+	 * 统计民生人数
+	 */
+	public long getSumMingShengBank(Integer enterpriseId,Integer budgettableId);
+	
+	/**
+	 * 统计现在人数
+	 */
+	public long getSumCashNumber(Integer enterpriseId,Integer budgettableId);
+	
+	/**
+	 * 统计他行人数
+	 */
+	public long getSumHeLineBank(Integer enterpriseId,Integer budgettableId);
 }

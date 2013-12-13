@@ -224,9 +224,16 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		Enterprise enterprisePO=em.getReference(Enterprise.class,enterpriseId);
 		enterprisePO.removeWmsUser(userPo);
 	}
-	public BaseGrid findEnterprisePage(BaseGrid baseGrid) {
-		// TODO Auto-generated method stub
-		return null;
+	public Long findByFullName(String fullName) {
+		try {
+			return (Long)em.createQuery(" select count(*) from Enterprise e where 1=1 and e.fullName=?1")
+			.setParameter(1, fullName).getSingleResult();
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
 

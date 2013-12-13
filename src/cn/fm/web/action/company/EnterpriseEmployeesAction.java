@@ -268,11 +268,11 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		
 		if(enterpriseEmployees==null || enterpriseEmployees.getEmployeesName()==null || enterpriseEmployees.getEmployeesName().equals(""))return INPUT;
 		String[]filedate={"","",enterpriseEmployees.getEmployeesName(),"","","","","","","",enterpriseEmployees.getCardNumber()};
-		errorMessage=enterpriseEmployeesService.isExitSameEnterpriseEmployees(filedate);
+		List<EnterpriseEmployees>  enterpriseEmployeesList=enterpriseEmployeesService.getAllEnterpriseEmployees();
+		errorMessage=enterpriseEmployeesService.isExitSameEnterpriseEmployees(filedate,enterpriseEmployeesList);
 		if(!StringUtil.isEmpty(errorMessage)){
-			request.setAttribute("message", errorMessage);
-			request.setAttribute("urladdress", "viewEnterpriseEmployees");
-			return "message";
+			request.setAttribute("errorMessage", errorMessage);
+			return SUCCESS;
 		}
 		EmployeesContract  employeesContract=new EmployeesContract();
 		String sex=(enterpriseEmployees.getEmployeesSex().toString()=="1")?"男":"女";
@@ -283,11 +283,10 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		employeesContract.setContractNo(enterpriseEmployees.getContractNo());
 		enterpriseEmployees.addEmployeesContract(employeesContract);
 		enterpriseEmployeesService.save(enterpriseEmployees);
+		request.setAttribute("errorMessage", "添加成功!");
 		
-		request.setAttribute("message", "添加成功!");
-		request.setAttribute("urladdress", "viewEnterpriseEmployees");
 		
-		return "message";
+		return SUCCESS;
 	}
 	/**
 	 * excel批量导入
@@ -297,7 +296,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	{
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-		List<String> messageList=enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",36,2,enterprise);
+		List<String> messageList=enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",37,2,enterprise);
 		if(messageList!=null && messageList.size()>0){request.setAttribute("messageList", messageList);return INPUT;}
 		
 		return SUCCESS;
@@ -321,7 +320,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			request.getSession().setAttribute("enterprise", enterprise);
 		}
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("employeesId", "asc");
+		orderby.put("employeesId", "desc");
 		StringBuffer jpql = new StringBuffer("");
 		List<Object> params = new ArrayList<Object>();
 		if(this.enterpriseId!=null)

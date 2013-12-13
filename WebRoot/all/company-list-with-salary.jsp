@@ -191,10 +191,10 @@
 										<a href="viewSalaryWithBankPersonalNumber?enterpriseId=<s:property value="%{#createSalaryBudgetTable.enterprise.enterpriseId}"/>&budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">查看</a>
 									</td>
 									<td>
-										<s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/>
+										<s:property value="%{#request.createSalaryBudgetTable.cmbc}"/>
 										<br/>
 										<s:if test="#createSalaryBudgetTable.cmbcDate!=null">
-											<span class="em">（已发放）</span>
+											<span class="em">（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
 											<br/>
 											<s:date name="%{#createSalaryBudgetTable.cmbcDate}" format="yyyy年MM月dd日HH时"/>
 										</s:if>
@@ -203,17 +203,17 @@
 										<s:property value="%{#request.createSalaryBudgetTable.heLines}"/>
 										<br/>
 										<s:if test="#createSalaryBudgetTable.heLinesDate!=null">
-											<span class="em">（已发放）</span>
+											<span class="em">（<s:property value="%{#request.createSalaryBudgetTable.heLines_status}"/>）</span>
 											<br/>
 											<s:date name="%{#createSalaryBudgetTable.heLinesDate}" format="yyyy年MM月dd日HH时"/>
 										</s:if>
 										
 									</td>
 									<td>
-										<s:property value="%{#request.createSalaryBudgetTable.cmbc}"/>
+										<s:property value="%{#request.createSalaryBudgetTable.cashnumber}"/>
 										<br/>
 										<s:if test="#createSalaryBudgetTable.cashnumberDate!=null">
-											<span class="em">（已发放）</span>
+											<span class="em">（<s:property value="%{#request.createSalaryBudgetTable.cashnumber_status}"/>）</span>
 											<br/>
 											<s:date name="%{#createSalaryBudgetTable.cashnumberDate}" format="yyyy年MM月dd日HH时"/>
 										</s:if>
@@ -316,6 +316,7 @@
 				<div class="row-fluid">
 					<form action="updateSaralyStatus" method="post">
 					   <input type="hidden" name="budgetId"/>
+					   <input type="hidden" name="page" value="${page}"/>
 						<div class="input-container">
 							<label>
 								民生银行
@@ -324,7 +325,12 @@
 								name="createSalaryBudgetTable.cmbcDate"
 								 onfocus="WdatePicker(d4311)" class="Wdate" />
 						</div>
-
+						<div class="input-container">
+							<label>
+								民生发放备注:
+							</label>
+							<input type="text" name="" maxlength="10"/>
+						</div>
 						<div class="input-container">
 							<label>
 								他行
@@ -333,7 +339,7 @@
 								name="createSalaryBudgetTable.heLinesDate"
 								 onfocus="WdatePicker(d4312)" class="Wdate" />
 						</div>
-
+						
 						<div class="input-container">
 							<label>
 								现金
@@ -342,7 +348,12 @@
 								name="createSalaryBudgetTable.cashnumberDate"
 								 onfocus="WdatePicker(d4313)" class="Wdate" />
 						</div>
-
+						<div class="input-container">
+							<label>
+								备注:
+							</label>
+							<input name="createSalaryBudgetTable.status" type="text"/>
+						</div>
 						<div class="input-container">
 							<label>
 								&nbsp;

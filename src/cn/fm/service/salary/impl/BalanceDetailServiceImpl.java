@@ -45,4 +45,10 @@ public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implemen
 
 	return true;
 	}
+	public void deleteBalanceDetail(Integer budgetId)
+	{
+		  em.createQuery("delete  BalanceDetail b where b.createSalaryBudgetTable.budgetId=?1")
+		  .setParameter(1, budgetId).executeUpdate();
+		
+	}
 }

@@ -20,11 +20,10 @@
 		$(document).ready(function(){
 			$("#add-employees-bnt").on("hidden",function(){
 				clearForm(this);
+				
 			});
-			
 		});
 		
-	
 		  $(function(){
 			$("#submit").click(function()
 			{
@@ -57,10 +56,11 @@
 			});
 		
 		});
-       	
+	
 		</script>
 	</head>
 	<body>
+		
 		<div id="container">
 			<div id="header">
 				<jsp:include page="../layout/header.jsp" />
@@ -513,11 +513,11 @@
 							<label>
 								是否参保?
 							</label>
-							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="1" checked="checked" />
-							是，
-							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="0" />
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="0" checked="checked"/>
 							否，
-							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="2" />
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="1"/>
+							是，
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="2"/>
 							特殊参保(<span style="color:blue;">补贴</span>)
 						</div>
 
@@ -537,11 +537,11 @@
 							<label>
 								参保性质
 							</label>
-							<input type="radio" 	name="enterpriseEmployees.ginsengProtectNature" value="1" checked="checked" />
+							<input type="radio" 	name="enterpriseEmployees.ginsengProtectNature" value="1"  />
 							新增，
 							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="2" />
 							续保
-							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="3" />
+							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="3" checked="checked"/>
 							无参保
 						</div>
 
@@ -593,7 +593,12 @@
 							</label>
 							<s:textfield name="enterpriseEmployees.housingFund" />
 						</div>
-
+						<div class="input-container">
+							<label>
+								大病统筹
+							</label>
+							<s:textfield name="enterpriseEmployees.seriousDisease" />
+						</div>
 						<div class="input-container">
 							<label>
 								个税缴纳方式?
@@ -647,7 +652,8 @@
 			</div>
 			<div class="modal-body">
 				<s:form action="updateEnterpriseEmployees" method="post">
-					<s:hidden name="enterpriseEmployees.employeesId"></s:hidden>
+					<input type="hidden" name="enterpriseEmployees.employeesId"/>
+					<input type="hidden" name="page" value="${page}"/>
 					<input type="hidden" name="employeesContract.contractid"/>
 					<div class="row-fluid">
 						<div class="input-container">
@@ -780,18 +786,18 @@
 
 						<div class="input-container">
 							止：
-							<s:textfield id="d11"
-								name="employeesContract.contractEndDate" onclick="WdatePicker()" cssClass="Wdate" />
+							<input type="text" id="d11"
+								name="employeesContract.contractEndDate" onclick="WdatePicker()" class="Wdate" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								是否参保?
 							</label>
-							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="1" checked="checked" />
-							是，
-							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="0" />
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="0" checked="checked"/>
 							否
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="1"  />
+							是，
 							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="2" />
 							 特殊参保(<span style="color:blue;">补贴</span>)
 						</div>
@@ -866,7 +872,12 @@
 							</label>
 							<s:textfield name="enterpriseEmployees.housingFund" />
 						</div>
-
+						<div class="input-container">
+							<label>
+								大病统筹
+							</label>
+							<s:textfield name="enterpriseEmployees.seriousDisease" />
+						</div>
 						<div class="input-container">
 							<label>
 								个税缴纳方式?

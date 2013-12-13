@@ -22,6 +22,7 @@
 	<parameter name="personalEnterprise" class="java.lang.String"/>
 	<parameter name="housingFundEnterprise" class="java.lang.String"/>
 	<parameter name="personalHousingFund" class="java.lang.String"/>
+	<parameter name="fullname" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -305,58 +306,58 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="85">
+		<band height="91">
 			<staticText>
-				<reportElement uuid="4d47bec0-30b4-4a66-b4f0-e8075efd20ab" x="0" y="40" width="67" height="20" forecolor="#333333"/>
+				<reportElement uuid="4d47bec0-30b4-4a66-b4f0-e8075efd20ab" x="0" y="44" width="82" height="20" forecolor="#333333"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[制表时间:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="eb959c1a-60ab-4d82-95ae-b546d36d0756" x="0" y="20" width="67" height="20" forecolor="#333333"/>
+				<reportElement uuid="eb959c1a-60ab-4d82-95ae-b546d36d0756" x="0" y="23" width="82" height="20" forecolor="#333333"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[数据时间:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a303c1c5-06ce-4a28-9af8-a95a407cdf99" x="0" y="0" width="67" height="20" forecolor="#333333"/>
+				<reportElement uuid="a303c1c5-06ce-4a28-9af8-a95a407cdf99" x="0" y="0" width="82" height="23" forecolor="#333333"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[企       业:]]></text>
+				<text><![CDATA[企      业:]]></text>
 			</staticText>
 			<textField pattern="yyyy年MM月份">
-				<reportElement uuid="768008ad-9063-4a1f-8ff7-fc2a4c3f6115" x="67" y="40" width="1671" height="20" forecolor="#333333"/>
+				<reportElement uuid="768008ad-9063-4a1f-8ff7-fc2a4c3f6115" x="82" y="44" width="1656" height="20" forecolor="#333333"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{createDate}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy年MM月份">
-				<reportElement uuid="d9536d92-1948-49af-89db-545ef8e77ed2" x="67" y="20" width="1671" height="20" forecolor="#333333"/>
+				<reportElement uuid="d9536d92-1948-49af-89db-545ef8e77ed2" x="82" y="23" width="1656" height="20" forecolor="#333333"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="7805eae2-e215-412c-b180-7226c65d27d9" x="67" y="0" width="1671" height="20" forecolor="#333333"/>
+				<reportElement uuid="7805eae2-e215-412c-b180-7226c65d27d9" x="82" y="0" width="1656" height="23" forecolor="#333333"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{budgetName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{fullname}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="e8fb0ecf-d366-4e4d-a0ed-b143e84d57b1" x="0" y="60" width="67" height="25" forecolor="#333333"/>
+				<reportElement uuid="e8fb0ecf-d366-4e4d-a0ed-b143e84d57b1" x="0" y="65" width="82" height="25" forecolor="#333333"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[制  表  人:]]></text>
 			</staticText>
 			<textField pattern="yyyy年MM月份">
-				<reportElement uuid="b3408099-56a1-4e15-8905-c714502927e2" x="67" y="60" width="1671" height="25" forecolor="#333333"/>
+				<reportElement uuid="b3408099-56a1-4e15-8905-c714502927e2" x="82" y="65" width="1656" height="25" forecolor="#333333"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>

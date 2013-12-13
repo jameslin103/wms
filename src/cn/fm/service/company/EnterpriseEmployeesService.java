@@ -143,13 +143,21 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 */
     public List<String>  uploadExcelDateByDatabaseEmployees(String[] fileDate,Integer enterpriseId);
 	
-
+    /**
+	 * 
+	 * @return 所有企业员工
+	 */
+	public List<EnterpriseEmployees> getAllEnterpriseEmployees();
+	
 	/**
 	 * 封装excel上传的数据
 	 * @param fileDate
 	 * @param employeesId
 	 * @return
 	 */
+   
+
+	
 	public EnterpriseEmployees temporaryBuildingEmployees(String[] fileDate,Integer employeesId );
 
 	
@@ -158,7 +166,8 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	 * @param employees
 	 * @return
 	 */
-	public  String isExitSameEnterpriseEmployees(String[] fileDate);
+	
+	public  String isExitSameEnterpriseEmployees(String[] fileDate,List<EnterpriseEmployees> enterpriseEmployeeslist);
 	
 	/**
 	 * 查看增减员的执行状态
@@ -187,6 +196,14 @@ public interface EnterpriseEmployeesService extends DAO<EnterpriseEmployees>{
 	
 	
 	public long deleteEmployees(Serializable ... ids);
+	
 	public long deleteEmployeesChecbox(Serializable ... ids);
+	
+	/**
+	 * 判断是否上传重复数据
+	 * @return
+	 */
+	public List<String> duplicateData(List list);
+	
 	
 }

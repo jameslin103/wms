@@ -1,5 +1,7 @@
 package cn.fm.web.action.company;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,6 +13,8 @@ import cn.fm.bean.permissions.Role;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
+import cn.fm.service.company.InsurancesBaseSettingsService;
+import cn.fm.service.company.InsurancesTaxService;
 import cn.fm.service.permissions.RoleService;
 import cn.fm.service.user.WmsUserService;
 import cn.fm.utils.Constant;
@@ -29,6 +33,11 @@ public class EnterpriseAction extends BaseAction{
 	private EnterpriseEmployeesService  enterpriseEmployeesService;
 	@Resource
 	private RoleService					roleService;
+	@Resource
+	private InsurancesTaxService       insurancesTaxService;
+	@Resource
+	private InsurancesBaseSettingsService insurancesBaseSettingsService;
+	
 	
 	private Enterprise        enterprise;
 	private Integer			  enterpriseId;
@@ -40,66 +49,12 @@ public class EnterpriseAction extends BaseAction{
 	private Integer				userId;
 	private boolean      isSystemAdmin;
 	private int page;
-	private List<WmsUser> user=new ArrayList<WmsUser>();
-	
-	public int getPage() {
-		return page<1?1:page;
-	}
-	public void setPage(int page) {
-		this.page = page;
-	}
-	public boolean isSystemAdmin() {
-		return isSystemAdmin;
-	}
-	public void setSystemAdmin(boolean isSystemAdmin) {
-		this.isSystemAdmin = isSystemAdmin;
-	}
-	public Enterprise getEnterpriseJson() {
-		return enterpriseJson;
-	}
-	public void setEnterpriseJson(Enterprise enterpriseJson) {
-		this.enterpriseJson = enterpriseJson;
-	}
-	public Integer getEnterpriseId() {
-		return enterpriseId;
-	}
-	public void setEnterpriseId(Integer enterpriseId) {
-		this.enterpriseId = enterpriseId;
-	}
-	public Enterprise getEnterprise() {
-		return enterprise;
-	}
-	public void setEnterprise(Enterprise enterprise) {
-		this.enterprise = enterprise;
-	}
-	public void setEnterpriseService(EnterpriseService enterpriseService) {
-		this.enterpriseService = enterpriseService;
-	}
-	public void setEnterpriseEmployeesService(
-			EnterpriseEmployeesService enterpriseEmployeesService) {
-		this.enterpriseEmployeesService = enterpriseEmployeesService;
-	}
-	public EnterpriseEmployees getEnterpriseEmployees() {
-		return enterpriseEmployees;
-	}
-	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
-		this.enterpriseEmployees = enterpriseEmployees;
-	}
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+	private Long  isExitFullName;
 	
 	
 	
-	public List<WmsUser> getUser() {
-		return user;
-	}
-	public void setUser(List<WmsUser> user) {
-		this.user = user;
-	}
+	
+
 	/**
 	 * 分配负责人
 	 * @return
@@ -129,6 +84,8 @@ public class EnterpriseAction extends BaseAction{
 		if(enterprise==null)return INPUT;
 		if(enterprise!=null){
 			enterprise.addWmsUser(wmsUserService.find(user.getUserId()));
+			enterprise.setInsurancesBaseSettings(insurancesBaseSettingsService.find(1));
+			enterprise.setInsurancesTax(insurancesTaxService.find(1));
 			enterpriseService.save(enterprise); 	
 		  }
 
@@ -358,5 +315,92 @@ public class EnterpriseAction extends BaseAction{
 		
 		return SUCCESS;
 	}
+	public String isExitFullname(){
+		
+		String name=null;
+		try {
+			name=URLDecoder.decode(enterprise.getFullName().trim(),"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		isExitFullName=enterpriseService.findByFullName(name);
+		responseJson(isExitFullName);
+		
+		return NONE;
+	}
+	
+	
+	
+	
+	private List<WmsUser> user=new ArrayList<WmsUser>();
+	
+	public int getPage() {
+		return page<1?1:page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public boolean isSystemAdmin() {
+		return isSystemAdmin;
+	}
+	public void setSystemAdmin(boolean isSystemAdmin) {
+		this.isSystemAdmin = isSystemAdmin;
+	}
+	public Enterprise getEnterpriseJson() {
+		return enterpriseJson;
+	}
+	public void setEnterpriseJson(Enterprise enterpriseJson) {
+		this.enterpriseJson = enterpriseJson;
+	}
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
+	public void setEnterpriseService(EnterpriseService enterpriseService) {
+		this.enterpriseService = enterpriseService;
+	}
+	public void setEnterpriseEmployeesService(
+			EnterpriseEmployeesService enterpriseEmployeesService) {
+		this.enterpriseEmployeesService = enterpriseEmployeesService;
+	}
+	public EnterpriseEmployees getEnterpriseEmployees() {
+		return enterpriseEmployees;
+	}
+	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
+		this.enterpriseEmployees = enterpriseEmployees;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	
+	
+	
+	public List<WmsUser> getUser() {
+		return user;
+	}
+	public void setUser(List<WmsUser> user) {
+		this.user = user;
+	}
+
+	public Long getIsExitFullName() {
+		return isExitFullName;
+	}
+
+	public void setIsExitFullName(Long isExitFullName) {
+		this.isExitFullName = isExitFullName;
+	}
+	
+	
 
 }

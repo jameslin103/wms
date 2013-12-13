@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseService;
+import cn.fm.service.salary.BalanceDetailService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.service.salary.SalaryTemplateService;
@@ -29,6 +31,8 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	private EnterpriseService               enterpriseService;
 	@Resource 
 	private EmployeesSalaryDetailService  employeesSalaryDetailService;
+	@Resource
+	private BalanceDetailService		 balanceDetailService;
 	
 	private CreateSalaryBudgetTable      createSalaryBudgetTable;
 	
@@ -282,8 +286,9 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		public String deleteSalayBudgetTable()
 		{
 			
-			createSalaryBudgetTableService.deleteCreateSalaryBudgetTable(budgetId);
+			balanceDetailService.deleteBalanceDetail(budgetId);
 			employeesSalaryDetailService.deleteEmployeesSalaryDetail(budgetId);
+			createSalaryBudgetTableService.delete(budgetId);
 			return SUCCESS;
 		}
 

@@ -91,12 +91,6 @@ public class BalanceDetail implements Serializable{
 	@Column(length=100)
 	private String       note;
 
-
-	@Column(length=80)
-	private Integer      employeesId;
-	
-	@Column(length=80)
-	private Integer      budgetId;
 	
 	@Column(length=20)
 	private String       userIusse;
@@ -105,6 +99,10 @@ public class BalanceDetail implements Serializable{
 	
 	private CreateSalaryBudgetTable  createSalaryBudgetTable;
 	
+	private Integer  budgetId;
+	
+	
+	@Column
 	public Integer getBudgetId() {
 		return budgetId;
 	}
@@ -116,12 +114,6 @@ public class BalanceDetail implements Serializable{
 	}
 	public void setReceivableFiveFund(BigDecimal receivableFiveFund) {
 		this.receivableFiveFund = receivableFiveFund;
-	}
-	public Integer getEmployeesId() {
-		return employeesId;
-	}
-	public void setEmployeesId(Integer employeesId) {
-		this.employeesId = employeesId;
 	}
 
 	@Id @GeneratedValue
@@ -279,7 +271,7 @@ public class BalanceDetail implements Serializable{
 	
 	
 	
-	@OneToOne(cascade=CascadeType.REFRESH ,optional=true)
+	@OneToOne(cascade=CascadeType.REFRESH)
 	@JoinColumn(name="budget_id")
 	@NotFound(action=NotFoundAction.IGNORE)
 	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {

@@ -171,6 +171,7 @@
 						<input type="hidden" name="enterpriseId"/>
 						<input type="hidden" name="year"/>
 						<input type="hidden" name="month"/>
+						<input type="hidden" name="page" value="${page}"/>
 						<span id="stateus"></span>
 						<div class="input-container">
 							<label>

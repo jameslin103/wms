@@ -285,8 +285,8 @@ public class EnterpriseEmployessServiceTest {
    public void isExitSameEnterpriseEmployees()
    {
 	   String[] employees={"关羽","33333333338888"};
-	   
-	  String error=enterpriseEmployeesService.isExitSameEnterpriseEmployees(employees);
+	   List<EnterpriseEmployees> enterpriseEmployeeslist=new ArrayList<EnterpriseEmployees>();
+	  String error=enterpriseEmployeesService.isExitSameEnterpriseEmployees(employees,enterpriseEmployeeslist);
 	  System.out.println(error);
    }
    @Test
@@ -339,5 +339,40 @@ public class EnterpriseEmployessServiceTest {
 	   
 	   enterpriseEmployeesService.update(enterpriseEmployeesPO);
    }
-   
+   @Test
+   public void duplicateData(){
+	   
+	   List<String> list= new ArrayList<String>();
+	   String  file=" 1	, DNNNC001,	杨斌	,男	,福建	,是	,福建福州市,	是	,本科,	是	,3.52202E+17,	88888888888	,领导,	民生银行	,xxxx-xxxx-xxxx-xxxx	,2013/9/1	,2015/8/31	,30	,新增	是	,2015/8/31	,是	,是	,是	,65	,是	,1200	,1200	,1200	,1200	,1200	,50	,是";
+	   String  file1=" 杨斌,  88888888888";
+	   String  file2="韩运财, 88888888888";
+	   String  file3=" 杨斌, 88888888888";
+	   String  file4=" 1, DNNNC001,	杨斌	,男	,福建	,是	,福建福州市,	是	,本科,	是	,3.52202E+17,	88888888888	,领导,	民生银行	,xxxx-xxxx-xxxx-xxxx	,2013/9/1	,2015/8/31	,30	,新增	是	,2015/8/31	,是	,是	,是	,65	,是	,1200	,1200	,1200	,1200	,1200	,50	,是";
+
+	   list.add(file);
+	   list.add(file1);
+	   list.add(file2);
+	   list.add(file3);
+	   list.add(file4);
+	 
+//	   for  ( int  i  =   0 ; i  <  list.size()  -   1 ; i ++ )//外循环是循环的次数
+//	   {
+//	          for  ( int  j  =  list.size()  -   1 ; j  >  i; j -- )  {//内循环是 外循环一次比较的次数
+//	               if  (list.get(j).equals(list.get(i)))  {
+//	                  //list.remove(j);
+//	                  System.out.println("重复"+list.get(i));
+//	                } 
+//	            } 
+//	    } 
+//	   
+	   
+	   
+	   List<String>  s= enterpriseEmployeesService.duplicateData(list);
+	   for (String string : s) {
+		System.out.println(string);
+	}
+	   
+	   
+   }
+  
 }

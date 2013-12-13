@@ -64,10 +64,9 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	 */
 	public void removeToEnterpriseHeadUser(Integer enterpriseId,Integer userId);
 	
-	
-	
-	public BaseGrid findEnterprisePage(BaseGrid baseGrid);
-	
-	
 	public List<Enterprise> getUserToAllEnterprise(WmsUser user);
+
+
+
+	public Long findByFullName(String fullName);
 }
