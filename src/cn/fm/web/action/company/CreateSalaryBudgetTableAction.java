@@ -1,5 +1,6 @@
 package cn.fm.web.action.company;
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -159,6 +160,15 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTablePO);
 			return SUCCESS;
 	}
+	public String  updateSalaryBudgetTable()
+	{
+		
+		CreateSalaryBudgetTable createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		getSalaryTemplate();
+		request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable);
+		return SUCCESS;
+	}
+	
 	/**
 	 * 
 	 * @return 返回修改页面
@@ -276,6 +286,13 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		public String updateSalayBudgetTable()
 		{
 			
+			BigDecimal maketotal=createSalaryBudgetTable.getMakeTotal()==null?new BigDecimal("0.00"):createSalaryBudgetTable.getMakeTotal();
+			BigDecimal serviceHeTotal=createSalaryBudgetTable.getServiceHeTotal()==null?new BigDecimal("0.00"):createSalaryBudgetTable.getServiceHeTotal();
+			BigDecimal serviceTotal=createSalaryBudgetTable.getServiceTotal()==null?new BigDecimal("0.00"):createSalaryBudgetTable.getServiceTotal();
+			BigDecimal summaketotal=serviceHeTotal.add(maketotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+			BigDecimal sumServiceTotal=serviceTotal.add(serviceHeTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+			createSalaryBudgetTable.setMakeTotal(summaketotal);
+			createSalaryBudgetTable.setServiceTotal(sumServiceTotal);
 			createSalaryBudgetTableService.updateSalaryBudgetTable(createSalaryBudgetTable);
 			return SUCCESS;
 		}

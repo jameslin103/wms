@@ -21,6 +21,7 @@
 					form.page.value=page;
 					form.submit();
 			}
+		
 		</script>
 	</head>
 	<body>
@@ -129,7 +130,7 @@
 								</th>
 								<th>
 									民生
-									<br>
+									<br/>
 									银行（人）
 								</th>
 								<th>
@@ -203,7 +204,7 @@
 										<s:property value="%{#request.createSalaryBudgetTable.heLines}"/>
 										<br/>
 										<s:if test="#createSalaryBudgetTable.heLinesDate!=null">
-											<span class="em">（<s:property value="%{#request.createSalaryBudgetTable.heLines_status}"/>）</span>
+											<span class="em">（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
 											<br/>
 											<s:date name="%{#createSalaryBudgetTable.heLinesDate}" format="yyyy年MM月dd日HH时"/>
 										</s:if>
@@ -213,7 +214,7 @@
 										<s:property value="%{#request.createSalaryBudgetTable.cashnumber}"/>
 										<br/>
 										<s:if test="#createSalaryBudgetTable.cashnumberDate!=null">
-											<span class="em">（<s:property value="%{#request.createSalaryBudgetTable.cashnumber_status}"/>）</span>
+											<span class="em">（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
 											<br/>
 											<s:date name="%{#createSalaryBudgetTable.cashnumberDate}" format="yyyy年MM月dd日HH时"/>
 										</s:if>
@@ -324,12 +325,6 @@
 							<input type="text" id="d4311"
 								name="createSalaryBudgetTable.cmbcDate"
 								 onfocus="WdatePicker(d4311)" class="Wdate" />
-						</div>
-						<div class="input-container">
-							<label>
-								民生发放备注:
-							</label>
-							<input type="text" name="" maxlength="10"/>
 						</div>
 						<div class="input-container">
 							<label>

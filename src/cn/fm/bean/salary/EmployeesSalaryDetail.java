@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import cn.fm.bean.company.Enterprise;
@@ -111,6 +112,10 @@ public class EmployeesSalaryDetail implements Serializable
 	/*到卡金额 */
 	private BigDecimal  moneyToCards=new BigDecimal("0.00");
 	
+	/*意外险*/
+	private BigDecimal  accident=new BigDecimal("0.00");
+	
+	
 	/*备注**/
 	private String      note;
 	
@@ -139,7 +144,6 @@ public class EmployeesSalaryDetail implements Serializable
 	/*身份证号*/
 	private String  cardNumber;
 	
-	
 	private String  bankCardNumber;
 	
 	/*开户银行*/
@@ -148,6 +152,10 @@ public class EmployeesSalaryDetail implements Serializable
 	private EnterpriseEmployees    enterpriseEmployees;
 	
 	private Enterprise			   enterprise;
+	
+
+	
+	
 	
 	
 	@Column(length=20)
@@ -433,13 +441,23 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setMoneyToCards(BigDecimal moneyToCards) {
 		this.moneyToCards = moneyToCards;
 	}
-
+	
+	@Column(length=80)
 	public String getNote() {
 		return note;
 	}
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+	
+	@Column(length=60 ,scale=2)
+	public BigDecimal getAccident() {
+		return accident;
+	}
+
+	public void setAccident(BigDecimal accident) {
+		this.accident = accident;
 	}
 
 	public String getEmployeesName() {
@@ -526,4 +544,5 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterprise(Enterprise enterprise) {
 		this.enterprise = enterprise;
 	}
+
 }

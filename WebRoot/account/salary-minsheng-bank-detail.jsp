@@ -89,7 +89,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <tr>
                 <th style="text-align: center;">序</th>
                 <th style="text-align: center;">姓名</th>
-                <th style="text-align: center;">身份证</th>
                 <th style="text-align: center;">银行名称</th>
                 <th style="text-align: center;">卡号</th>
                 <th style="text-align: center;">工资金额（元）</th>
@@ -100,7 +99,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <tr>
                 <td style="text-align: center;"><s:property value="%{#list.index+1}"/></td>
                 <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.employeesName}"/></td>
-                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.cardNumber}"/></td>
                 <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.bank}"/></td>
                 <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.bankCardNumber}"/></td>
                 <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.wage}"/></td>

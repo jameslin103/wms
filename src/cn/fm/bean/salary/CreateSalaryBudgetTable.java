@@ -104,7 +104,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	/**现金发放情况**/
 	private String   cashnumber_status;
 	
-	
+	private BigDecimal serviceHeTotal;
 	
 	/*是否已经合并 0未合并，1合并*/
 	private Integer    isTax=0;   
@@ -355,6 +355,17 @@ public class CreateSalaryBudgetTable implements Serializable {
 
 	public void setUser_operator(String userOperator) {
 		user_operator = userOperator;
+	}
+	
+	
+	
+	@Column(length=80,scale=2)
+	public BigDecimal getServiceHeTotal() {
+		return serviceHeTotal;
+	}
+
+	public void setServiceHeTotal(BigDecimal serviceHeTotal) {
+		this.serviceHeTotal = serviceHeTotal;
 	}
 
 	@ManyToOne(cascade = { CascadeType.REFRESH},optional=true)

@@ -52,6 +52,8 @@ public class Enterprise implements Serializable{
 	private  String   address;
 	/*联系人*/
 	private  String   contact;
+	/*企业派遣人员*/
+	private  String   send;
 	/*电话*/
 	private  String   phone;
 	/*QQ号*/
@@ -180,6 +182,13 @@ public class Enterprise implements Serializable{
 	}
 	public void setContact(String contact) {
 		this.contact = contact;
+	}
+	@Column(length=20)
+	public String getSend() {
+		return send;
+	}
+	public void setSend(String send) {
+		this.send = send;
 	}
 	@Column(length=20)
 	public String getPhone() {

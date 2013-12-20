@@ -4,10 +4,8 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -16,7 +14,6 @@ import org.apache.struts2.json.annotations.JSON;
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
-import cn.fm.bean.json.JSONObject;
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
@@ -101,17 +98,16 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	 */
 	public String  uploadEmployeesSalaryDetail()
 	{
-		CreateSalaryBudgetTable createSalaryBudgetTableVO=createSalaryBudgetTableService.find(budgetId);
-		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTableVO);
+		CreateSalaryBudgetTable createSalaryBudgetTablePO=createSalaryBudgetTableService.find(budgetId);
+		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTablePO);
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
 		employeesSalaryDetail=new EmployeesSalaryDetail();
 		employeesSalaryDetail.setEnterprise(enterprise);
-		createSalaryBudgetTableService.clear();
-		employeesSalaryDetail.setCreateSalaryBudgetTable(createSalaryBudgetTableVO);
 		employeesSalaryDetail.setBudgettableId(budgetId);
 		employeesSalaryDetail.setSalaryDate(salaryDate);
+		employeesSalaryDetail.setCreateSalaryBudgetTable(createSalaryBudgetTablePO);
 		
 		 int count=0;
 		 SalaryTemplate salaryTemplate=salaryTemplateService.find(templateId);
@@ -123,16 +119,42 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 			 count+=5; 
 		 }
 		//上传的名字是否重复
-		List<String> employeesNames=employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "员工基本工资信息表", count,1,employeesSalaryDetail,createSalaryBudgetTableVO.getSalaryTemplate().getTemplateId(),enterprise.getEnterpriseId());
+		List<String> employeesNames=employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "员工基本工资信息表", count,1,employeesSalaryDetail,createSalaryBudgetTablePO.getSalaryTemplate().getTemplateId(),enterprise.getEnterpriseId());
 		if(employeesNames!=null && employeesNames.size()>0){request.setAttribute("employeesNames", employeesNames);return INPUT;}
 		
-		//查找统计上传员工工资的总额
-		bonusTotal=employeesSalaryDetailService.getInvoiceTotal(enterprise.getEnterpriseId(), budgetId);
-		wargeTotal=employeesSalaryDetailService.getWageTotal(enterprise.getEnterpriseId(), budgetId);
-		fiveInsuranceTotal=employeesSalaryDetailService.getFiveInsuranceTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		
+		//统计五险一金总额
+		fiveInsuranceTotal=employeesSalaryDetailService.getEnterpriseSubtotalTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		
+		//统计工资总额
+		
+		BigDecimal wage=employeesSalaryDetailService.getWageTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		BigDecimal getspecialUnemploymentSubsidiesTotal=employeesSalaryDetailService.getspecialUnemploymentSubsidiesTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		BigDecimal getspecialOldSubsidiesTotal=employeesSalaryDetailService.getspecialOldSubsidiesTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		BigDecimal getSpecialHealthCareSubsidiesTotal=employeesSalaryDetailService.getSpecialHealthCareSubsidiesTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		BigDecimal getSpecialAccumulationFundSubsidiesTotal=employeesSalaryDetailService.getSpecialAccumulationFundSubsidiesTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		
+		wargeTotal=wage.add(getspecialUnemploymentSubsidiesTotal).
+					add(getspecialOldSubsidiesTotal).
+				    add(getSpecialHealthCareSubsidiesTotal).
+					add(getSpecialAccumulationFundSubsidiesTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+		
+		//统计服务费
+		serviceTotal=employeesSalaryDetailService.getServiceTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		
+		//统计开票总额
+		bonusTotal=wargeTotal.add(serviceTotal).add(fiveInsuranceTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+
 		numberPeopleTotal=employeesSalaryDetailService.getNumberPersonlTotal(enterprise.getEnterpriseId(), budgetId);
 		
-		serviceTotal=employeesSalaryDetailService.getServiceTotal(enterprise.getEnterpriseId(), budgetId);
 		
 		//统计发放人数
 		 isussesum=employeesSalaryDetailService.getSumCashNumber(enterprise.getEnterpriseId(), budgetId);
@@ -162,20 +184,16 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		balanceDetail.setWagesToal(wargeTotal);
 		balanceDetail.setServiceToal(serviceTotal);
 		balanceDetail.setReceivableFiveFund(fiveInsuranceTotal);
-		balanceDetail.setYearMonth(createSalaryBudgetTableVO.getSalaryDate());
-		balanceDetail.setCreateSalaryBudgetTable(createSalaryBudgetTableVO);
-		balanceDetail.setBudgetId(createSalaryBudgetTableVO.getBudgetId());
-		balanceDetail.setNote(createSalaryBudgetTableVO.getNote());
+		balanceDetail.setYearMonth(createSalaryBudgetTablePO.getSalaryDate());
+		balanceDetail.setCreateSalaryBudgetTable(createSalaryBudgetTablePO);
+		balanceDetail.setBudgetId(createSalaryBudgetTablePO.getBudgetId());
+		balanceDetail.setNote(createSalaryBudgetTablePO.getNote());
 		balanceDetail.setEnterprise(enterprise);
-		
 		
 		balanceDetailService.save(balanceDetail);
 		
-		
-		
-		CreateSalaryBudgetTable createSalaryBudgetTablePO=createSalaryBudgetTableService.find(budgetId);
-		
-		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTablePO);
+		CreateSalaryBudgetTable createSalaryBudgetTableNew=createSalaryBudgetTableService.find(budgetId);
+		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTableNew);
 		
 		return SUCCESS;
 	}
@@ -239,7 +257,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		
 		
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("createDate", "desc");
+		orderby.put("salaryId", "desc");
 		StringBuffer jpql = new StringBuffer("");
 		List<Object> params = new ArrayList<Object>();
 		if(enterprise.getEnterpriseId()!=null)
@@ -255,6 +273,9 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 			request.setAttribute("budgetId", budgetId);
 			request.setAttribute("pageView", pageView);
 		}
+		createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		employeesSalaryDetail=employeesSalaryDetailService.getSumDateSalaryDeatil(createSalaryBudgetTable);
+		if(employeesSalaryDetail==null)employeesSalaryDetail=new EmployeesSalaryDetail();
 		
 		return SUCCESS;
 	}
@@ -297,6 +318,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 			params.add(this.budgetId);
 			jpql.append(" and o.bank not like '%民生%' ");
 			jpql.append(" and o.bank is not null ");
+			jpql.append(" and o.bank !='' ");
 			
 			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
 			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
@@ -319,7 +341,8 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 			jpql.append(" o.budgettableId=?").append(params.size()+1);
 			params.add(this.budgetId);
 			jpql.append(" and ( o.bank is null");
-			jpql.append(" or o.bank like '%现金%' )");
+			jpql.append(" or o.bank like '%现金%' or o.bank='' )");
+			
 			
 			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
 			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
@@ -385,99 +408,6 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		
 	}
 	
-	public String viewSalaryWithBankPersonalNumberJson()
-	{
-		
-//		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-//		orderby.put("salaryId", "desc");
-//		StringBuffer jpql = new StringBuffer("");
-//		List<Object> params = new ArrayList<Object>();
-//			jpql.append(" o.budgettableId=?").append(params.size()+1);
-//			params.add(50);
-//			
-//			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(Integer.parseInt(this.rp),  this.getPage());
-//			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
-//					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-//		
-//			if(pageView==null || pageView.getRecords().size()==0)
-//			{
-//				pageView=new PageView<EmployeesSalaryDetail>(Integer.parseInt(this.rp), this.page);
-//			}
-
-//			details=toJSONList(pageView.getRecords());
-//			request.setAttribute("budgetId", budgetId);
-//			this.setTotal(pageView.getTotalpage());
-//			
-//			
-//			
-//		Map<String,String> map = new HashMap<String,String>();
-//
-//		map.put("page", page+"");
-//		map.put("total", pageView.getTotalrecord()+"");
-//		map.put("rp", this.rp);
-//		
-//		//to JSON
-//		String json = toJSON(pageView.getRecords(), map);
-
-//		try {
-//			response.setContentType("text/html;charset=utf-8");
-//			response.setHeader("Cache-Control", "no-cache");
-//			response.getWriter().write(json);
-//			response.getWriter().flush();
-//			response.getWriter().close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		
-		
-		
-		return SUCCESS;
-	}
-	public List<EmployeesSalaryDetail> toJSONList(List list) {
-		if(list==null)return null;
-		List<EmployeesSalaryDetail>  detailList=new ArrayList<EmployeesSalaryDetail>();
-		for (Object obj : list) {
-			
-			EmployeesSalaryDetail	 detail=(EmployeesSalaryDetail)obj;
-			
-			EmployeesSalaryDetail employeesSalaryDetailVO=new EmployeesSalaryDetail();
-			employeesSalaryDetailVO.setSalaryId(detail.getSalaryId());
-			employeesSalaryDetailVO.setEmployeesName(detail.getEmployeesName());
-			employeesSalaryDetailVO.setCardNumber(detail.getCardNumber());
-			employeesSalaryDetailVO.setBankCardNumber(detail.getBankCardNumber());
-			employeesSalaryDetailVO.setWage(detail.getWage());
-			employeesSalaryDetailVO.setNote(detail.getNote());
-			detailList.add(employeesSalaryDetailVO);
-		}
-		return detailList;
-		
-	}
-	
-	
-	
-	
-	
-	@SuppressWarnings({ "unchecked"})
-	public String toJSON(List list, Map map) {
-		List mapList = new ArrayList();
-		for (Object obj : list) {
-			
-			EmployeesSalaryDetail	 detail=(EmployeesSalaryDetail)obj;
-			Map<String ,Object> cellMap = new HashMap<String ,Object>();
-			cellMap.put("salaryId", detail.getSalaryId());
-			cellMap.put("cell", new Object[] { (detail.getSalaryId()),
-					(detail.getEmployeesName()),(detail.getCardNumber()),
-					(detail.getNote()),(detail.getBankCardNumber()),
-					(detail.getWage()) });
-			mapList.add(cellMap);
-			
-		}
-		map.put("rows", mapList);
-		JSONObject object = new JSONObject(map);
-		System.out.println("object="+object.toString());
-		return object.toString();
-		
-	}
 	
 	
 	

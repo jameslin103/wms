@@ -146,6 +146,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		parameters.put("serviceTotal",createSalaryBudgetTable.getServiceTotal()==null?"":createSalaryBudgetTable.getServiceTotal().toString());
 		parameters.put("fiveInsurancesTotal",createSalaryBudgetTable.getFiveInsurancesTotal()==null?"":createSalaryBudgetTable.getFiveInsurancesTotal().toString());
 		parameters.put("budgetName", createSalaryBudgetTable.getName());
+		parameters.put("serviceHeTotal", createSalaryBudgetTable.getServiceHeTotal());
 		parameters.put("fullname",createSalaryBudgetTable.getEnterprise().getFullName()); 
 		parameters.put("username",createSalaryBudgetTable.getUser().getUsername());
 		parameters.put("image", images);

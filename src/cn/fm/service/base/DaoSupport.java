@@ -5,6 +5,7 @@ import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -14,8 +15,10 @@ import javax.persistence.Query;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import cn.fm.bean.QueryResult;
 import cn.fm.utils.GenericsUtils;
+import cn.fm.utils.StringUtil;
 
 
 @SuppressWarnings("unchecked")
@@ -106,11 +109,19 @@ public abstract class DaoSupport<T> implements DAO<T>{
 		setQueryParams(query, queryParams);
 		if(firstindex!=-1 && maxresult!=-1) query.setFirstResult(firstindex).setMaxResults(maxresult);
 		qr.setResultlist(query.getResultList());
-		query = em.createQuery("select count("+ getCountField(this.entityClass)+ ") from "+ entityname+ " o "+(wherejpql==null || "".equals(wherejpql.trim())? "": "where "+ wherejpql));
+		query = em.createQuery(" select o from "+ entityname+ " o where "+ wherejpql+" "+orderby+" ");
+	
 		setQueryParams(query, queryParams);
-		qr.setTotalrecord((Long)query.getSingleResult());
+		List list=query.getResultList();
+		if(list!=null && list.size()!=0){
+			qr.setTotalrecord(list.size());
+		}else{
+			qr.setTotalrecord(0l);
+		}
+		
 		return qr;
 	}
+	
 	/**
 	 * 多对多查询结果
 	 * @param firstindex

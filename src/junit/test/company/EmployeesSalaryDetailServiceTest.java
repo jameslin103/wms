@@ -32,26 +32,10 @@ public class EmployeesSalaryDetailServiceTest {
 		
 	}
 	@Test
-	public void   fiveInsuter()
-	{
-		
-		BigDecimal total=employeesSalaryDetailService.getFiveInsuranceTotal(17, 22);
-		System.out.println(total);
-		
-	}
-	@Test
 	public void   numberPersonlTotal()
 	{
 		
 		Integer total=Integer.parseInt(employeesSalaryDetailService.getNumberPersonlTotal(17, 22)+"");
-		System.out.println(total);
-		
-	}
-	@Test
-	public void   invoiceTotal()
-	{
-		
-		BigDecimal total=employeesSalaryDetailService.getInvoiceTotal(17, 22);
 		System.out.println(total);
 		
 	}
@@ -132,7 +116,7 @@ public class EmployeesSalaryDetailServiceTest {
    @Test 
    public void personalTax()
    {
-	   BigDecimal result=PersonalTaxUtil.getPersonalTaxResults(4000.00,3500.00, 1000.00);
+	   BigDecimal result=PersonalTaxUtil.getPersonalTaxResults(3816.52,3500.00);
 	   System.out.println(result);
 	   
    }

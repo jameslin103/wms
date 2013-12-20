@@ -115,6 +115,11 @@ public abstract class ReportAction extends BaseAction implements ServletContextA
         write(bytes,"application/vnd.ms-excel");
     }
     
+    
+    
+    
+    
+    
     private void setExporterDefault(JRXlsExporter exporter,JasperPrint jasperPrint,ByteArrayOutputStream oStream){
     	exporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
         exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, true);

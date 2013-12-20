@@ -113,6 +113,7 @@ public class BalanceDetailAction extends BaseAction {
 				(balanceDetail.getFiveFund()==null?0.00:balanceDetail.getFiveFund().doubleValue()));
 			
 		balanceDetail.setEndingBalance(new BigDecimal(endblan).setScale(2,BigDecimal.ROUND_HALF_UP));
+		balanceDetail.setBalance(balanceDetail.getEndingBalance());
 		balanceDetailService.updateBalanceDetail(balanceDetail);
 		return SUCCESS;
 		

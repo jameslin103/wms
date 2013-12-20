@@ -159,11 +159,24 @@ public class EnterpriseEmployees{
 	/*增减员；备注说明*/
 	private String      reductionNote;
 	
+	/*意外险*/
+	private BigDecimal   accident=new BigDecimal(0.00);
+	
+	
+	
 	private Set<EmployeesSalaryDetail>  employeesSalaryDetails=new HashSet<EmployeesSalaryDetail>();
 	
 	private Set<EmployeesContract>  employeesContract=new HashSet<EmployeesContract>();
 	
 	
+	
+	@Column(length=65,scale=2)
+	public BigDecimal getAccident() {
+		return accident;
+	}
+	public void setAccident(BigDecimal accident) {
+		this.accident = accident;
+	}
 	@Column(length=30)
 	public String getReductionNote() {
 		return reductionNote;

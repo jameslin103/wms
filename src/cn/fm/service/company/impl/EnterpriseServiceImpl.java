@@ -119,16 +119,18 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		try {
 			Query query=em.createQuery("update Enterprise set rferred=?1," +
 					" fullName=?2," +
-					"legalRepresentative=?3," +
-					"accountLine=?4," +
-					"enterpriseBankAccount=?5," +
-					"address=?6," +
-					"contact=?7," +
-					"phone=?8," +
-					"qq=?9," +
-					"fax=?10," +
-					"email=?11," +
-					"status=?12 where enterpriseId=?13");
+					" legalRepresentative=?3," +
+					"  accountLine=?4," +
+					" enterpriseBankAccount=?5," +
+					" address=?6," +
+					" contact=?7," +
+					" phone=?8," +
+					" qq=?9," +
+					" fax=?10," +
+					" email=?11," +
+					" status=?12" +
+					" send=?13"+
+					" where enterpriseId=?14");
 			query.setParameter(1, enterprise.getRferred())
 				 .setParameter(2, enterprise.getFullName())
 				 .setParameter(3, enterprise.getLegalRepresentative())
@@ -141,7 +143,8 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 				 .setParameter(10, enterprise.getFax())
 				 .setParameter(11, enterprise.getEmail())
 				 .setParameter(12, enterprise.getStatus())
-				 .setParameter(13, enterprise.getEnterpriseId())
+				 .setParameter(13, enterprise.getSend())
+				 .setParameter(14, enterprise.getEnterpriseId())
 				 .executeUpdate();
 			flag=true;
 			

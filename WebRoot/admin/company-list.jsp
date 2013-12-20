@@ -255,7 +255,12 @@
 							</label>
 							<s:textfield name="enterprise.contact" />
 						</div>
-
+						<div class="input-container">
+							<label>
+								派遣联系人
+							</label>
+							<s:textfield name="enterprise.send" />
+						</div>
 						<div class="input-container">
 							<label>
 								电话
@@ -366,7 +371,12 @@
 							</label>
 							<s:textfield name="enterprise.contact"  value="%{#enterprise.contact}"/>
 						</div>
-
+						<div class="input-container">
+							<label>
+								派遣联系人
+							</label>
+							<s:textfield name="enterprise.send" />
+						</div>
 						<div class="input-container">
 							<label>
 								电话

@@ -20,5 +20,4 @@ public interface BalanceDetailService extends DAO<BalanceDetail> {
 	public void deleteBalanceDetail(Integer budgetId);
 	
 	
-	
 }

@@ -31,9 +31,9 @@
 	<field name="bank" class="java.lang.String">
 		<fieldDescription><![CDATA[bank]]></fieldDescription>
 	</field>
-	<variable name="sum_wage" class="java.lang.Long">
-		<variableExpression><![CDATA[new java.lang.Long($V{sum_wage}.longValue()+$F{wage}.longValue())]]></variableExpression>
-		<initialValueExpression><![CDATA[new java.lang.Long(0)]]></initialValueExpression>
+	<variable name="sum_wage" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new java.math.BigDecimal($V{sum_wage}.doubleValue()+$F{moneyToCards}.doubleValue())]]></variableExpression>
+		<initialValueExpression><![CDATA[new java.math.BigDecimal(0.00)]]></initialValueExpression>
 	</variable>
 	<group name="salaryId">
 		<groupExpression><![CDATA[]]></groupExpression>
@@ -126,7 +126,7 @@
 	<columnHeader>
 		<band height="35" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="8399ea1e-c51f-473e-968c-6301a401b138" mode="Opaque" x="31" y="1" width="66" height="34" backcolor="#999999"/>
+				<reportElement uuid="8399ea1e-c51f-473e-968c-6301a401b138" mode="Opaque" x="31" y="1" width="80" height="34" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -139,7 +139,7 @@
 				<text><![CDATA[姓名]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7b1576fe-03c3-4292-bc3e-fc7476c49c8c" mode="Opaque" x="98" y="1" width="71" height="34" backcolor="#999999"/>
+				<reportElement uuid="7b1576fe-03c3-4292-bc3e-fc7476c49c8c" mode="Opaque" x="268" y="1" width="71" height="34" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -165,20 +165,7 @@
 				<text><![CDATA[序号]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b6c11b10-b67d-426a-ab69-ec70027ee933" mode="Opaque" x="169" y="1" width="104" height="34" backcolor="#999999"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[银行名称]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="8aaea9d1-9d69-4b83-aa55-23528a19b69e" mode="Opaque" x="388" y="1" width="70" height="34" backcolor="#999999"/>
+				<reportElement uuid="8aaea9d1-9d69-4b83-aa55-23528a19b69e" mode="Opaque" x="339" y="1" width="87" height="34" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -191,7 +178,7 @@
 				<text><![CDATA[签收]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="63365889-c711-40bd-b460-84f80b2b033f" mode="Opaque" x="273" y="1" width="115" height="34" backcolor="#999999"/>
+				<reportElement uuid="63365889-c711-40bd-b460-84f80b2b033f" mode="Opaque" x="111" y="1" width="156" height="34" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -204,7 +191,7 @@
 				<text><![CDATA[卡号]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2453ab65-107e-429f-af18-a5a40c8e85c4" mode="Opaque" x="458" y="1" width="84" height="34" backcolor="#999999"/>
+				<reportElement uuid="2453ab65-107e-429f-af18-a5a40c8e85c4" mode="Opaque" x="426" y="1" width="116" height="34" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -234,7 +221,7 @@
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="f6d2c08c-e330-4f45-8328-5493e298dc04" isPrintRepeatedValues="false" x="31" y="0" width="65" height="22"/>
+				<reportElement uuid="f6d2c08c-e330-4f45-8328-5493e298dc04" isPrintRepeatedValues="false" x="31" y="0" width="80" height="22"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -247,20 +234,7 @@
 				<textFieldExpression><![CDATA[($F{employeesName}==null) ? "/":$F{employeesName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b0326998-d1f2-4fa5-ab1c-1822ee488e46" x="273" y="0" width="115" height="22"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bankCardNumber}==null?"":$F{bankCardNumber}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="13dbf389-b08e-404a-96a2-b09f552abc44" x="388" y="0" width="70" height="22"/>
+				<reportElement uuid="13dbf389-b08e-404a-96a2-b09f552abc44" x="339" y="0" width="87" height="22"/>
 				<box topPadding="0" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.0"/>
@@ -273,7 +247,7 @@
 				<textFieldExpression><![CDATA[]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b73a9e1e-cb53-41ae-983c-d715e92f8d9b" x="458" y="0" width="84" height="22"/>
+				<reportElement uuid="b73a9e1e-cb53-41ae-983c-d715e92f8d9b" x="426" y="0" width="116" height="22"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.0"/>
@@ -283,10 +257,10 @@
 				<textElement textAlignment="Center">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bank}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="8c07db98-b40f-4a1f-a988-1db49bab3c31" x="97" y="0" width="72" height="22"/>
+				<reportElement uuid="b0326998-d1f2-4fa5-ab1c-1822ee488e46" x="111" y="0" width="156" height="22"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -296,10 +270,10 @@
 				<textElement textAlignment="Center">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{wage}==null?"":$F{wage}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bankCardNumber}==null?"":$F{bankCardNumber}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="9631ff5d-1e27-4960-8f08-db01f1575325" x="169" y="0" width="104" height="22"/>
+				<reportElement uuid="8c07db98-b40f-4a1f-a988-1db49bab3c31" x="267" y="0" width="72" height="22"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -309,7 +283,7 @@
 				<textElement textAlignment="Center">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bank}==null?"":$F{bank}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{moneyToCards}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -322,7 +296,7 @@
 	<summary>
 		<band height="28" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="3f5814b0-27f0-4bc5-a94a-0348db8b67fa" mode="Opaque" x="0" y="0" width="97" height="28" backcolor="#FFFFFF"/>
+				<reportElement uuid="3f5814b0-27f0-4bc5-a94a-0348db8b67fa" mode="Opaque" x="0" y="0" width="111" height="28" backcolor="#FFFFFF"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="1.0"/>
@@ -335,20 +309,7 @@
 				<text><![CDATA[合计:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="c3ba0362-edec-4d56-8623-2db24612dcea" x="98" y="0" width="71" height="28" forecolor="#000000"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{sum_wage}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="6517699f-e4d3-4dc5-bd16-ae7b6b9414e6" x="169" y="0" width="104" height="28" forecolor="#000000"/>
+				<reportElement uuid="be8fae9b-1dc0-4867-9987-dd4015ab06ad" x="111" y="0" width="156" height="28" forecolor="#000000"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -361,7 +322,7 @@
 				<textFieldExpression><![CDATA[]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="be8fae9b-1dc0-4867-9987-dd4015ab06ad" x="273" y="0" width="115" height="28" forecolor="#000000"/>
+				<reportElement uuid="5003b760-8ba9-43bf-9b16-74e015cb9170" x="339" y="0" width="87" height="28" forecolor="#000000"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -374,20 +335,7 @@
 				<textFieldExpression><![CDATA[]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="5003b760-8ba9-43bf-9b16-74e015cb9170" x="388" y="0" width="70" height="28" forecolor="#000000"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="3e0da73b-fe67-412b-a2e5-d449835af1c5" x="458" y="0" width="84" height="28" forecolor="#000000"/>
+				<reportElement uuid="3e0da73b-fe67-412b-a2e5-d449835af1c5" x="426" y="0" width="116" height="28" forecolor="#000000"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.5"/>
@@ -398,6 +346,19 @@
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c3ba0362-edec-4d56-8623-2db24612dcea" x="267" y="0" width="72" height="28" forecolor="#000000"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sum_wage}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

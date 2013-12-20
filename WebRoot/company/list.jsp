@@ -122,7 +122,7 @@
 																		<s:else>
 																			<s:property value="%{#cr.name}"/>
 																		</s:else>
-																		<s:if test="#cr.note!=null && !#cr.note.isEmpty()">
+																		<s:if test="#cr.note!=null && #!cr.note.isEmpty()">
 																			（<s:property value="%{#cr.note}"/>）
 																		</s:if>		    	
 															    	

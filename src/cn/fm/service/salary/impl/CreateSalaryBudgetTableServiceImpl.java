@@ -61,15 +61,17 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 	public void updateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable,Integer budgerId)
 	{
 		CreateSalaryBudgetTable createSalaryBudgetTablePO=em.find(CreateSalaryBudgetTable.class, budgerId);
-		CreateSalaryBudgetTable  createSalaryBudgetTableVO=new CreateSalaryBudgetTable();
-		createSalaryBudgetTableVO.setBudgetId(createSalaryBudgetTablePO.getBudgetId());
-		createSalaryBudgetTableVO.setChooseTax(createSalaryBudgetTable.getChooseTax());
-		createSalaryBudgetTableVO.getCreateDate();
-		createSalaryBudgetTableVO.setName(createSalaryBudgetTable.getName());
-		createSalaryBudgetTableVO.setNote(createSalaryBudgetTable.getNote());
-
+		createSalaryBudgetTablePO.setBudgetId(createSalaryBudgetTablePO.getBudgetId());
+		createSalaryBudgetTablePO.setChooseTax(createSalaryBudgetTable.getChooseTax());
+		createSalaryBudgetTablePO.getCreateDate();
+		createSalaryBudgetTablePO.setServiceHeTotal(createSalaryBudgetTable.getServiceHeTotal());
+		//BigDecimal mmakeTotal=createSalaryBudgetTable.getServiceHeTotal().add(createSalaryBudgetTablePO.getMakeTotal().setScale(2, BigDecimal.ROUND_HALF_EVEN));
 		
-		super.update(createSalaryBudgetTableVO);
+		
+		createSalaryBudgetTablePO.setName(createSalaryBudgetTable.getName());
+		createSalaryBudgetTablePO.setNote(createSalaryBudgetTable.getNote());
+		
+		super.update(createSalaryBudgetTablePO);
 		
 	}
 	public boolean updateCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable)
@@ -78,7 +80,7 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 		boolean falag=true;
 		try {
 			Query query=em.createQuery("update CreateSalaryBudgetTable c set name=?1 ," +
-					" salaryDate=?2,chooseTax=?3 , note=?4, updateDate=?5  where c.budgetId=?6");
+					" salaryDate=?2,chooseTax=?3 , note=?4, updateDate=?5 where c.budgetId=?7");
 			query.setParameter(1, createSalaryBudgetTable.getName())
 				.setParameter(2, createSalaryBudgetTable.getSalaryDate())
 				.setParameter(3, createSalaryBudgetTable.getChooseTax())
@@ -110,18 +112,23 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 			em.createQuery("update CreateSalaryBudgetTable c " +
 					"set c.name=?1," +
 					"c.salaryDate=?2," +
-					"c.chooseTax=?3," +
 					"c.note=?4, " +
 					"c.updateDate=?5, " +
-					"c.mergeId=?6 " +
-					" where c.budgetId=?7")
-				.setParameter(1, createSalaryBudgetTable.getName())
+					"c.mergeId=?6, " +
+					"c.serviceHeTotal=?7,"+
+					"c.serviceTotal=?8,"+
+					"c.makeTotal=?9"+
+					" where c.budgetId=?10")
+				.setParameter(1, createSalaryBudgetTable.getName().trim())
 				.setParameter(2, createSalaryBudgetTable.getSalaryDate())
-				.setParameter(3, createSalaryBudgetTable.getChooseTax())
-				.setParameter(4, createSalaryBudgetTable.getNote())
+				//.setParameter(3, createSalaryBudgetTable.getChooseTax())
+				.setParameter(4, createSalaryBudgetTable.getNote().trim())
 				.setParameter(5, createSalaryBudgetTable.getUpdateDate())
-				.setParameter(6, createSalaryBudgetTable.getMergeId()).
-				 setParameter(7, createSalaryBudgetTable.getBudgetId())
+				.setParameter(6, createSalaryBudgetTable.getMergeId())
+				.setParameter(7, createSalaryBudgetTable.getServiceHeTotal())
+				.setParameter(8, createSalaryBudgetTable.getServiceTotal())
+				.setParameter(9, createSalaryBudgetTable.getMakeTotal())
+				.setParameter(10, createSalaryBudgetTable.getBudgetId())
 				.executeUpdate();
 			
 			
@@ -138,16 +145,24 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 		
 			try {
 				em.createQuery("update CreateSalaryBudgetTable c set c.makeTotal=?1," +
-						"c.wageTotal=?2," +
-						"c.serviceTotal=?3," +
-						"c.fiveInsurancesTotal=?4," +
-						"c.issueNumber=?5 where c.budgetId=?6")
+						" c.wageTotal=?2," +
+						" c.serviceTotal=?3," +
+						" c.fiveInsurancesTotal=?4, " +
+						" c.issueNumber=?5, " +
+						" c.cmbc=?6," +
+						" c.heLines=?7, " +
+						" c.cashnumber=?8 " +
+						" where c.budgetId=?9 ")
+
 						.setParameter(1, createSalaryBudgetTable.getMakeTotal())
 						.setParameter(2, createSalaryBudgetTable.getWageTotal())
 						.setParameter(3, createSalaryBudgetTable.getServiceTotal())
 						.setParameter(4, createSalaryBudgetTable.getFiveInsurancesTotal())
 						.setParameter(5, createSalaryBudgetTable.getIssueNumber())
-						.setParameter(6, createSalaryBudgetTable.getBudgetId())
+						.setParameter(6, createSalaryBudgetTable.getCmbc())
+						.setParameter(7, createSalaryBudgetTable.getHeLines())
+						.setParameter(8, createSalaryBudgetTable.getCashnumber())
+						.setParameter(9, createSalaryBudgetTable.getBudgetId())
 						.executeUpdate();
 			} catch (Exception e) {
 				e.printStackTrace();

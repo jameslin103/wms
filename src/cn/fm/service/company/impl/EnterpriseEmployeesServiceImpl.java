@@ -103,9 +103,9 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 		try {
 			List<String[]> arrayList=excel.generateStationBugSql(file,fiName,number,readRow);
 			if(arrayList==null || arrayList.equals("")){messageList.add("请填充你要上传的数据!"); return messageList;}
-			if(arrayList!=null && arrayList.size()>0){
-				messageList.addAll(duplicateData(arrayList));
-			}
+//			if(arrayList!=null && arrayList.size()>0){
+//				//messageList.addAll(duplicateData(arrayList));
+//			}
 			if(messageList==null || messageList.size()==0 || !messageList.equals("")){
 				
 				List<EnterpriseEmployees> EnterpriseEmployeesListPO=getAllEnterpriseEmployees();

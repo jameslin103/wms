@@ -65,7 +65,7 @@ public class CompanylistWithSalaryAction extends BaseAction{
 			this.year=DateUtil.getCurrentTime().toString().substring(0, 4);
 		}
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("budgetId", "asc");
+		orderby.put("budgetId", "desc");
 		StringBuffer jpql = new StringBuffer("");
 		List<Object> params = new ArrayList<Object>();
 		
@@ -182,8 +182,8 @@ public class CompanylistWithSalaryAction extends BaseAction{
 			this.year=DateUtil.getCurrentTime().toString().substring(0, 4);
 		}
 		String formCurrentSql=" o.enterprise.enterpriseId, SUM(o.balance)";
-		String groupby="   group by o.enterprise.enterpriseId order by o.enterprise.enterpriseId asc ";
-		
+		String groupby="   group by o.enterprise.enterpriseId order by o.enterprise.enterpriseId desc ";
+		String groupCount="group by o.enterprise.enterpriseId";
 		StringBuffer jpql = new StringBuffer("");
 		
 		List<Object> params = new ArrayList<Object>();

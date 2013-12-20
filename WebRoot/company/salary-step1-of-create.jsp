@@ -73,7 +73,8 @@
               <div class="row-fluid">
                 <div class="input-container">
                   <label>名称</label>
-                  <s:textfield name="createSalaryBudgetTable.name" id="budgetName" maxlength="30"/><span style="color:red;">*</span>
+                  <s:textfield name="createSalaryBudgetTable.name" id="budgetName" maxlength="30" value="%{#request.createSalaryBudgetTable.name}"/>
+                  <span style="color:red;">*</span>
                   <span id="nameerror"></span>
                   <s:fielderror fieldName="message" theme="simple"></s:fielderror>
                 </div>
@@ -96,9 +97,9 @@
 
                 <div class="input-container">
                   <label>选择与其他工资表合并计税</label>
-                  <select id="salaryTable" name="budgetId" >
+                  <select id="salaryTable" name="budgetId"  disabled="disabled">
                     <option value="0">--请选择--</option>
-                  </select><span style="color:red;">(需要合并的请选择)</span>
+                  </select>
                 </div>
 
                 <div class="input-container">

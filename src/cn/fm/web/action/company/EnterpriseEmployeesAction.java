@@ -258,7 +258,11 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	    	return SUCCESS;
 	    }
 	
-	
+	public String toAddEmployees()
+	{
+		
+		return SUCCESS;
+	}
 	
 	public String  addEnterpriseEmployees()
 	{
@@ -296,7 +300,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	{
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-		List<String> messageList=enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",37,2,enterprise);
+		List<String> messageList=enterpriseEmployeesService.saveImportExcelEmployees(file, "增员员工信息表",35,2,enterprise);
 		if(messageList!=null && messageList.size()>0){request.setAttribute("messageList", messageList);return INPUT;}
 		
 		return SUCCESS;

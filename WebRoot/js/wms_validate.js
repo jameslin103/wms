@@ -3,16 +3,16 @@ function Ctrl($scope) {
   $scope.user = {name: 'guest', last: 'visitor'};
 }
 $(document).ready( function() {  
-    $("table td").mouseout( function() {  
-
-        $(this).parent().find("td").each(function(i){ $(this).css({color:"black",background: '#efefef' }) });  
-              
-        });  
-
-    $("table td").mouseover( function() {  
-          
-    $(this).parent().find("td").each(function(i){ $(this).css({color:"red",background: '#cccccc' }) });  
-    });  
+//    $("table td").mouseout( function() {  
+//
+//        $(this).parent().find("td").each(function(i){ $(this).css({color:"black",background: '#efefef' }) });  
+//              
+//        });  
+//
+//    $("table td").mouseover( function() {  
+//          
+//    $(this).parent().find("td").each(function(i){ $(this).css({color:"red",background: '#cccccc' }) });  
+//    });  
 });  
 /**
  * json 请求查询企业信息
@@ -232,9 +232,8 @@ function findIdToEmployees(employeesId)
 		    	$("input[name='enterpriseEmployees.jobs']").val(data.enterpriseEmployeesJson.jobs); 
 		    	$("input[name='enterpriseEmployees.maritalStatus'][value="+data.enterpriseEmployeesJson.maritalStatus+"]").attr("checked",true);
 		    	$("input[name='enterpriseEmployees.levelEducation']").val(data.enterpriseEmployeesJson.levelEducation); 
-		    	$("input[name='enterpriseEmployees.whetherGinseng']").val(data.enterpriseEmployeesJson.whetherGinseng); 
-		    	
-
+		    	$("input[name='enterpriseEmployees.whetherGinseng'][value="+data.enterpriseEmployeesJson.whetherGinseng+"]").attr("checked",true);
+		    	$("input[name='enterpriseEmployees.accident']").val(data.enterpriseEmployeesJson.accident); 
 		    	
 				var sociaSecurity=data.enterpriseEmployeesJson.sociaSecurity;
 				var healthCare=data.enterpriseEmployeesJson.healthCare;
@@ -342,7 +341,10 @@ function findToIdSalayBudegTable(budgetId)
 		    dataType:'json',    
 		    success:function(data){
 		    	$("input[name='budgetId']").val(budgetId); 
-		    	$("input[name='createSalaryBudgetTable.budgetId']").val(data.createSalaryBudgetTable.budgetId); 
+		    	$("input[name='createSalaryBudgetTable.budgetId']").val(data.createSalaryBudgetTable.budgetId);
+		    	$("input[name='createSalaryBudgetTable.makeTotal']").val(data.createSalaryBudgetTable.makeTotal);
+		    	$("input[name='createSalaryBudgetTable.serviceHeTotal']").val(data.createSalaryBudgetTable.serviceHeTotal);
+		    	$("input[name='createSalaryBudgetTable.serviceTotal']").val(data.createSalaryBudgetTable.serviceTotal); 
 		    	$("#templateName").text(data.createSalaryBudgetTable.templateName)
 		    	$("input[name='createSalaryBudgetTable.name']").val(data.createSalaryBudgetTable.name==null?"":data.createSalaryBudgetTable.name); 
 		    	(new Date(data.book.otherPublishDate)).format("yyyy-MM-dd")

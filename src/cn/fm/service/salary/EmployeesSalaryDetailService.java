@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.service.base.DAO;
 
@@ -32,16 +33,39 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	 * 统计预算工资
 	 */
 	public List<EmployeesSalaryDetail> findImportEmployeesSalaryDetailStatistics(Integer budgetId,Integer enterpriseId);
-	/**
-	 * 统计开票总额
-	 * 
-	 */
-	public BigDecimal   getInvoiceTotal(Integer enterpriseId,Integer budgettableId);
+	
 	
 	/**
 	 * 统计工资总额（元）
 	 */
-	public BigDecimal getWageTotal(Integer enterpriseId,Integer budgettableId);
+	public BigDecimal getWageTotal(Integer enterpriseId, Integer budgettableId);
+	
+	/**
+	 * 工伤生育补贴总额（元）
+	 */
+	public BigDecimal getspecialUnemploymentSubsidiesTotal(Integer enterpriseId, Integer budgettableId);
+
+	/**
+	 * 特殊养老保险补贴总额（元）
+	 */
+	public BigDecimal getspecialOldSubsidiesTotal(Integer enterpriseId, Integer budgettableId);
+	
+	/**
+	 * 特殊医保补贴补贴总额（元）
+	 */
+	public BigDecimal getSpecialHealthCareSubsidiesTotal(Integer enterpriseId, Integer budgettableId);
+	
+	/**
+	 * 特殊公积金补贴补贴总额（元）
+	 */
+	public BigDecimal getSpecialAccumulationFundSubsidiesTotal(Integer enterpriseId, Integer budgettableId);
+	
+	
+	/**
+	 * 统计企业小计总额（元）
+	 */
+	public BigDecimal getEnterpriseSubtotalTotal(Integer enterpriseId, Integer budgettableId);
+	
 	
 	/**
 	 * 统计发放人数
@@ -53,11 +77,6 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	 */
 	public BigDecimal getServiceTotal(Integer enterpriseId,Integer budgettableId);
 	
-	/**
-	 * 统计五险总额
-	 */
-	public BigDecimal getFiveInsuranceTotal(Integer enterpriseId,Integer budgettableId);
-
 	
 	public void updateEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail);
 	
@@ -95,7 +114,7 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	public long getSumMingShengBank(Integer enterpriseId,Integer budgettableId);
 	
 	/**
-	 * 统计现在人数
+	 * 统计现金人数
 	 */
 	public long getSumCashNumber(Integer enterpriseId,Integer budgettableId);
 	
@@ -103,4 +122,7 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	 * 统计他行人数
 	 */
 	public long getSumHeLineBank(Integer enterpriseId,Integer budgettableId);
+	
+	
+	public EmployeesSalaryDetail  getSumDateSalaryDeatil(CreateSalaryBudgetTable createSalaryBudgetTable);
 }

@@ -11,11 +11,5 @@
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/wms_validate.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/DatePicker/WdatePicker.js"></script>
-  <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.8.0.min.js"></script>
-  
-  
-  
-  
-  <!-- grid  flexigrid 插件--><!--
-  <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.8.0.min.js"></script>
-  -->
+  <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.8.2.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/js/lhgdialog.js"></script>

@@ -17,12 +17,6 @@
 		<meta http-equiv="expires" content="0"/>  
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script>
-		$(document).ready(function(){
-			$("#add-employees-bnt").on("hidden",function(){
-				clearForm(this);
-				
-			});
-		});
 		
 		  $(function(){
 			$("#submit").click(function()
@@ -56,11 +50,38 @@
 			});
 		
 		});
+		$(document).ready(function(){
+			$("#add-employees-bnt").on("hidden",function(){
+				clearForm(this);
+				
+			});
+			
+			$("#addEmployees").click(function(){
+				$.dialog({
+					id:"addEmployees",
+					content:"url:toAddEmployees",
+					title:"${session.enterprise.fullName}-(添加企业员工信息)",
+					width:"900px",
+					height:"500px",
+					max: false,
+					name:"提交",
+					lock:true,
+					ok:function(){
+						var selCust=$.dialog.list["addEmployees"].content.selCust;
+						alert(selCust);
+						//$("#custid").val(selCust[0]);
+						//$("#custname").val(selCust[1]);
+					},
+					cancelVal: '关闭',
+					
+				 });
+			});
+		});
+		
 	
 		</script>
 	</head>
 	<body>
-		
 		<div id="container">
 			<div id="header">
 				<jsp:include page="../layout/header.jsp" />
@@ -116,7 +137,8 @@
 								<a href="batchExcelDataEmployee">批量录入</a>，
 							</li>
 							<li>
-								<a href="#add-employees-bnt" data-toggle="modal" onclick="reset()">单个录入</a>
+								<input type="button" id="addEmployees" value="添加员工" style="border:0px;"/>
+								<a href="#add-employees-bnt" data-toggle="modal" onclick="reset()" >单个录入</a>
 							</li>
 							<li>
 								&nbsp;/&nbsp;
@@ -625,7 +647,12 @@
 							</label>
 							<s:textfield name="enterpriseEmployees.serviceCost" />
 						</div>
-
+						<div class="input-container">
+							<label>
+								意外险
+							</label>
+							<input type="text" name="enterpriseEmployees.accident " maxlength="30"/>
+						</div>
 						<div class="input-container" >
 							<s:submit cssClass="btn btn-primary" value="提交" id="submit"/>
 						</div>
@@ -903,6 +930,12 @@
 								服务费
 							</label>
 							<input type="text" name="enterpriseEmployees.serviceCost" />
+						</div>
+						<div class="input-container">
+							<label>
+								意外险
+							</label>
+							<input type="text" name="enterpriseEmployees.accident " maxlength="30"/>
 						</div>
 
 						<div class="input-container">
