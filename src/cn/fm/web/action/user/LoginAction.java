@@ -2,17 +2,19 @@ package cn.fm.web.action.user;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
+
+import com.google.gson.GsonBuilder;
+
+import net.sf.json.JSONArray;
 import cn.fm.bean.permissions.Menu;
 import cn.fm.bean.permissions.Role;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.permissions.MenuService;
 import cn.fm.service.permissions.RoleService;
 import cn.fm.service.user.WmsUserService;
-import cn.fm.utils.Constant;
 import cn.fm.utils.CookieUtils;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.StringUtil;
@@ -124,7 +126,17 @@ public class LoginAction extends BaseAction{
 				
 		 }
 		
-		
+	@SuppressWarnings("unchecked")
+	public  String toViewMenuList()
+	  {
+		  List<Menu> menuList=(List<Menu>)request.getSession().getAttribute("menuList");
+
+		  //String menu= JSONArray.fromObject(menuList).toString();
+		  //request.setAttribute("menu", menu);
+		  String json = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(menuList);
+		  request.setAttribute("menu", json);
+		  return SUCCESS;
+	  }
 		
 		
 	   private boolean isInvalid(String value)

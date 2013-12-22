@@ -1,0 +1,166 @@
+body {
+	margin:0px 2px;
+	font-size:13px;
+}
+h1{
+	text-align: center;
+}
+a:link {font-size:12px; text-decoration:none; color:#43860c;}
+a:visited {font-size:12px; text-decoration:none; color:#43860c;}
+a:hover{font-size:12px; text-decoration:none; color:#FF0000;}
+
+#opr{
+	margin: 5px auto;
+	text-align: center;
+}
+
+.oprbtn{
+	background-image: url('../images/tab_14.gif');
+	height: 30px;
+	width: 70px;
+	border:1px green dotted;
+}
+
+#datalist #tableheader{
+	background-image: url('../images/tab_14.gif');
+}
+
+#datalist #tableheader th{
+	font-size:15px;
+}
+#datalist table{
+	margin:auto;
+	background-color: gray;
+	border-width: 0px;
+}
+#newdata table{
+	margin:auto;
+	border-width: 0px;
+	border-collapse:collapse;
+}
+
+#datalist table tbody tr:hover{
+	background-color: yellow;
+}
+
+#datalist tbody tr:nth-child(odd) {
+    background-color: #FFF;
+}
+#datalist tbody tr:nth-child(even) {
+    background-color: #CCC;
+}
+        
+.center{
+	text-align: center;
+}
+
+#datalist #tableheader tr td{
+	font-size:16px;
+	background-color: white;
+}
+
+#bottom #info{
+	float:left;
+	margin-top: 20px;
+}
+
+#bottom #nav{
+	float:right;
+	margin-top: 20px;
+}
+#bottom #nav *{
+	margin-right:10px;
+	vertical-align: middle;
+}
+
+#bottom #nav input{
+	width: 25px;
+} 
+
+#search{
+	text-align: center;
+}
+
+label.error{ 
+	color:Red; 
+	font-size:13px; 
+	margin-left:5px; 
+	padding-left:16px; 
+	background:url("../images/cancel.png") left no-repeat; 
+}
+
+#login{
+	width:40px;
+	height:22px;
+	background-image: url('../images/dl.gif');
+	background-position:0 0px;
+	border-width: 0px
+}
+#reset{
+	width:40px;
+	height:22px;
+	background-image: url('../images/dl.gif');
+	background-position:-40px 0px;
+	border-width: 0px
+}
+.input_desc{border:1px solid #EDEDED; font-size:13px; color:#777777;padding:6px 5px 4px 10px;line-height: 25px;}
+.input_error{background: url("../images/wrong_reg.png") no-repeat scroll 6px 5px #FFF2F5;border:1px solid #ED9A9A;font-size:13px; color:#777777; padding:6px 5px 4px 28px;line-height: 25px;}
+.input_ok{background: url("../images/right_reg.png") no-repeat scroll 6px 5px; padding:6px 5px 4px 28px;line-height: 25px;}
+
+#tabs1 {
+	float: left;
+	width: 100%;
+	background: #F4F7FB;
+	line-height: normal;
+	border-bottom: 1px solid #BCD2E6;
+}
+
+#tabs1 ul {
+	margin: 0;
+	padding: 10px 10px 0 30px;
+	list-style: none;
+}
+
+#tabs1 li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+#tabs1 a {
+	float: left;
+	background: url("../images/tableft1.gif") no-repeat left top;
+	margin: 0;
+	padding: 0 0 0 4px;
+	text-decoration: none;
+}
+
+#tabs1 a span {
+	float: left;
+	display: block;
+	background: url("../images/tabright1.gif") no-repeat right top;
+	padding: 5px 15px 4px 6px;
+	color: #627EB7;
+}
+
+#tabs1 a span {
+	float: none;
+}
+
+#tabs1 a:hover {
+	background-position: 0% -42px;
+}
+
+#tabs1 a:hover span {
+	background-position: 100% -42px;
+	color: #DF8210;
+}
+
+#tabs1 ul li.current a {
+	background-position: 0% -42px;
+}
+
+#tabs1 ul li.current a span {
+	background-position: 100% -42px;
+	color: #DF8210;
+}

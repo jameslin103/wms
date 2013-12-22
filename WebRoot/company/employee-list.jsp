@@ -67,7 +67,7 @@
 					name:"提交",
 					lock:true,
 					ok:function(){
-						var selCust=$.dialog.list["addEmployees"].content.selCust;
+						var selCust=$.dialog.list["addEmployees"].content.enterpriseEmployees;
 						alert(selCust);
 						//$("#custid").val(selCust[0]);
 						//$("#custname").val(selCust[1]);

@@ -24,15 +24,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			
   				alert("xxx");
   				if(confirm("您确定要关闭本页吗？")){
-					window.opener=null;
-					window.open('','_self');
+					//window.opener=null;
+					window.open('addEnterpriseEmployees','');
 					window.close();
+					this.close();
+					var DG = frameElement.lhgDG;
+					DG.cancel();  //关闭窗口
 				}
-  				var list = $.dialog.list;
-  				alert(list);
-				for( var i in list ){
-				    list[i].close();
-				}
+  				//var list = $.dialog.list;
+  				//alert(list);
+				//for( var i in list ){
+				 //   list[i].close();
+				//}
  
   			});
   		

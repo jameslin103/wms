@@ -54,8 +54,12 @@
 		
 		<action name="userLogin" class="cn.fm.web.action.user.LoginAction">  
             <result name="input">/login.jsp</result>
-            <result name="success">/dashboard.jsp</result>
+            <result name="success">/main.jsp</result>
         </action>
+        <action name="toViewMenuList" class="cn.fm.web.action.user.LoginAction" method="toViewMenuList">  
+            <result name="success">/left.jsp</result>
+        </action>
+        
 		<action name="toPassword" class="cn.fm.web.action.user.LoginAction" method="toPassword">  
             <result name="success">account/password.jsp</result>
         </action>
