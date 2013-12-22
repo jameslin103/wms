@@ -13,47 +13,6 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
-		<script>
-			
-			$(function(){
-				$("#sub").click(function(){
-					$("#nameerror").css("");
-					$("#temp").text("");
-					$("#temp").css("");
-					$("#nameerror").text("");
-					$("#salaryDate").text("");
-					$("#salaryDate").css("");
-					var name=$("#budgetName").val();
-					var tempid=$("#tempid").val();
-					var salaryDate=$("input[name='salaryDate']").val();
-					if(name==""){
-						$("#nameerror").text("预算表名称必填项!");
-						$("#nameerror").css("color","red");
-						return false;
-					}
-					if(tempid==0)
-					{
-						$("#temp").text("模板必填项!");
-						$("#temp").css("color","red");
-						return false;
-					}
-					if(tempid=="")
-					{
-						$("#temp").text("模板必填项!");
-						$("#temp").css("color","red");
-						return false;
-					}
-					if(salaryDate==""){
-						$("#salaryDate").text("生成那月工资必填项!");
-						$("#salaryDate").css("color","red");
-						return false;
-					
-					}
-				});
-			
-			})
-		
-		</script>
 
 	</head>
 	<body>
@@ -114,8 +73,10 @@
               <div class="row-fluid">
                 <div class="input-container">
                   <label>名称</label>
-                  <s:textfield name="createSalaryBudgetTable.name" id="budgetName" maxlength="30"/><span style="color:red;">*</span>
+                  <s:textfield name="createSalaryBudgetTable.name" id="budgetName" maxlength="30" value="%{#request.createSalaryBudgetTable.name}"/>
+                  <span style="color:red;">*</span>
                   <span id="nameerror"></span>
+                  <s:fielderror fieldName="message" theme="simple"></s:fielderror>
                 </div>
 
                 <div class="input-container">
@@ -136,9 +97,9 @@
 
                 <div class="input-container">
                   <label>选择与其他工资表合并计税</label>
-                  <select id="salaryTable" name="budgetId" >
+                  <select id="salaryTable" name="budgetId"  disabled="disabled">
                     <option value="0">--请选择--</option>
-                  </select><span style="color:red;">(需要合并的请选择)</span>
+                  </select>
                 </div>
 
                 <div class="input-container">
@@ -147,9 +108,8 @@
                   		<s:property value="%{#createSalaryBudgetTable.note}"/>
                   </textarea>
                 </div>
-
                 <div class="input-container">
-                  <s:submit   value="提交" cssClass="btn btn-primary"  id="sub"/>
+                  <s:submit   value="提交" cssClass="btn btn-primary" id="sub" onclick="submin()"/>
                 </div>
 				<s:actionerror />
               </div>

@@ -14,18 +14,17 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
-		 
-	</head>
+</head>
 <body>
 <div id="container">
 	<div id="header">
 		<ul class="user normal clearfix">
 			<li>
-				<a href="toPassword">用户:&nbsp;&nbsp;<s:property value="%{#session.user.username}" />
+				<a href="toPassword">欢迎用户:&nbsp;&nbsp;<s:property value="%{#session.user.username}" />
 				</a>
 			</li>
 			<li>
-				<s:a href="loginOut">退出</s:a>
+				<s:a href="loginOut">退出系统</s:a>
 			</li>
 		</ul>
 	<!-- begin -->
@@ -70,10 +69,13 @@
 			%>
 		</div>
 	</div>
-
-	<div id="main">
-		<div class="row-fluid">
-			<div id="center-pane"></div>
+	<div id="main"><!--
+					欢迎---<s:property value="#session.user.role.name"/>--<s:property value="#session.user.username"/>--进入系统
+			
+			--><div class="row-fluid">
+				
+				<div id="center-pane">
+				</div>
 		</div>
 	</div>
 </div>

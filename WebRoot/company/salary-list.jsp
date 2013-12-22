@@ -107,17 +107,18 @@
                 <th rowspan="2">社会保险基数</th>
                 <th colspan="2">养老保险</th>
                 <th colspan="2">失业保险</th>
-                <th rowspan="2">生育保险基数</th>
+                <th rowspan="2">生育工伤基数</th>
                 <th rowspan="2">生育（企业）</th>
-                <th rowspan="2">工伤基数</th>
                 <th rowspan="2">工伤（企业）</th>
-                <th colspan="3">基本医疗保险</th>
-                <th colspan="3">住房公积金</th>
-                <th rowspan="2">大病统筹</th>
+                <th colspan="4" style="text-align:center;">基本医疗保险</th>
+                <th colspan="3" style="text-align:center;">住房公积金</th>
+                <th colspan="4" style="background-color:#8D45C4; text-align:center;">特殊补贴</th>
                 <th colspan="2">小计</th>
                 <th rowspan="2">税前工资</th>
+                <th rowspan="2">意外险</th>
                 <th colspan="2">个税</th>
                 <th rowspan="2">服务费</th>
+                <th rowspan="2" style="text-align:center; content:#8D45C4">点数服务费</th>
                 <th rowspan="2">合计（企业应付）</th>
                 <th rowspan="2">到卡金额</th>
               </tr>
@@ -129,17 +130,22 @@
                 <td>缴费基数</td>
                 <td>企业</td>
                 <td>个人</td>
+                <td>大病统筹</td>
                 <td>缴费基数</td>
                 <td>企业</td>
                 <td>个人</td>
+                <td style="background-color:#E5D82A;">养老失业补贴</td>
+                <td style="background-color:#E5D82A;">工伤生育补贴</td>
+                <td style="background-color:#E5D82A;">医保补贴</td>
+                <td style="background-color:#E5D82A;">公积金补贴</td>
                 <td>企业</td>
                 <td>个人</td>
                 <td>企业</td>
                 <td>个人</td>
               </tr>
             </thead>  
-            <s:iterator value="#request.pageView.records" id="employeesSalaryDetail">
             <thbody>
+            <s:iterator value="#request.pageView.records" id="employeesSalaryDetail" status="list">
               <tr>
                 <td><s:property value="%{#employeesSalaryDetail.employeesName}"/></td>
                 <td>
@@ -156,26 +162,83 @@
                 <td><s:property value="%{#employeesSalaryDetail.personalUnemploymentInsurance}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.birthInsuranceBase}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.enterpriseBirthInsurance}"/></td>                
-                <td><s:property value="%{#employeesSalaryDetail.inductrialInjuryBase}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.enterpriseInductrialInjuryBase}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.medicalPaymentBase}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.enterpriseMedicalBase}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.personalMedicalBase}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.morbidityStatistics}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.HousingReserveBase}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.enterpriseReserveBase}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.personalReserveBase}"/></td>
-                <td><s:property value="%{#employeesSalaryDetail.morbidityStatistics}"/></td>
+                
+                <td style="color:#4912FD;"><s:property value="%{#employeesSalaryDetail.specialOldSubsidies}"/></td>
+                <td style="color:#4912FD;"><s:property value="%{#employeesSalaryDetail.specialUnemploymentSubsidies}"/></td>
+                <td style="color:#4912FD;"><s:property value="%{#employeesSalaryDetail.specialHealthCareSubsidies}"/></td>
+                <td style="color:#4912FD;"><s:property value="%{#employeesSalaryDetail.specialAccumulationFundSubsidies}"/></td>
+                
+                
                 <td><s:property value="%{#employeesSalaryDetail.enterpriseSubtotal}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.personalSubtotal}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.beforeSalary}"/></td>
+                <td><s:property value="%{#employeesSalaryDetail.accident}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.enterpriseTax}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.personalTax}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.serviceCharge}"/></td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
                 <td><s:property value="%{#employeesSalaryDetail.aggregate}"/></td>
                 <td><s:property value="%{#employeesSalaryDetail.moneyToCards}"/></td>
               </tr>
-            </thbody>
             </s:iterator>
+            
+            	<tr style="color:#EC222D;"> 
+            	<td colspan="2" >合计:</td>
+                <td><s:property value="employeesSalaryDetail.wage"/></td>
+                <td><s:property value="employeesSalaryDetail.bonus"/></td>
+                <td><s:property value="employeesSalaryDetail.subsidies"/></td>
+                <td><s:property value="employeesSalaryDetail.shouldPay"/></td>
+                <td style="text-align: center;">--</td>
+                <td colspan="4" style="text-align: center;">
+                		<s:property value="employeesSalaryDetail.enterprisePensionInsurance+
+						                    employeesSalaryDetail.personalPensionInsurance+
+						                    employeesSalaryDetail.enterpriseUnemploymentInsurance+
+						                    employeesSalaryDetail.personalUnemploymentInsurance"/>
+                </td>
+                <td style="text-align: center;">--</td>
+                <td  colspan="2" style="text-align: center;">
+                	<s:property value="employeesSalaryDetail.enterpriseBirthInsurance
+                					  +employeesSalaryDetail.enterpriseInductrialInjuryBase"/>
+                </td>                
+                <td style="text-align: center;">--</td>
+                <td colspan="3" style="text-align: center;">
+                	<s:property value="employeesSalaryDetail.enterpriseMedicalBase+
+                					    employeesSalaryDetail.personalMedicalBase+
+                					    employeesSalaryDetail.morbidityStatistics"/>
+                </td>
+                <td style="text-align: center;">--</td>
+                
+                <td colspan="2" style="text-align: center;">
+                	<s:property value="employeesSalaryDetail.enterpriseReserveBase+employeesSalaryDetail.personalReserveBase"/>
+                </td>
+                
+                <td><s:property value="employeesSalaryDetail.specialOldSubsidies"/></td>
+                <td><s:property value="employeesSalaryDetail.specialUnemploymentSubsidies"/></td>
+                <td><s:property value="employeesSalaryDetail.specialHealthCareSubsidies"/></td>
+                <td><s:property value="employeesSalaryDetail.specialAccumulationFundSubsidies"/></td>
+                
+                <td colspan="2" style="text-align: center;">
+                	<s:property value="employeesSalaryDetail.enterpriseSubtotal+employeesSalaryDetail.personalSubtotal"/>
+                </td>
+                <td><s:property value="employeesSalaryDetail.beforeSalary"/></td>
+                 <td><s:property value="employeesSalaryDetail.accident"/></td>
+                <td colspan="2" style="text-align: center;">
+                	<s:property value="employeesSalaryDetail.enterpriseTax+employeesSalaryDetail.personalTax"/>
+                </td>
+                <td colspan="2" style="text-align: center;">
+                	<s:property value="%{#employeesSalaryDetail.createSalaryBudgetTable.serviceTotal}"/>
+                </td>
+                <td><s:property value="employeesSalaryDetail.aggregate"/></td>
+                <td><s:property value="employeesSalaryDetail.moneyToCards"/></td></tr>
+             </thbody>
           </table>
           <div class="pagination">
             <%@include file="/share/fenye.jsp" %>
@@ -220,7 +283,10 @@
             <label>补贴</label>
             <input type="text" name="employeesSalaryDetail.subsidies"/>
           </div>
-          
+           <div class="input-container">
+            <label>意外险</label>
+            <input type="text" name="employeesSalaryDetail.accident"/>
+          </div>
           <div class="input-container">
             <s:submit value="提交" cssClass="btn btn-primary"/>
           </div>

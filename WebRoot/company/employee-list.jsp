@@ -17,17 +17,7 @@
 		<meta http-equiv="expires" content="0"/>  
 		<%@ include file="/help/public_css_js.jsp"%>
 		<script>
-		$(document).ready(function(){
-			$("#edit-employees-bnt").on("hidden",function(){
-				clearForm(this);
-			});
-			$("#add-employees-bnt").on("hidden",function(){
-				clearForm(this);
-			});
-			
-		});
 		
-	
 		  $(function(){
 			$("#submit").click(function()
 			{
@@ -60,7 +50,35 @@
 			});
 		
 		});
-       	
+		$(document).ready(function(){
+			$("#add-employees-bnt").on("hidden",function(){
+				clearForm(this);
+				
+			});
+			
+			$("#addEmployees").click(function(){
+				$.dialog({
+					id:"addEmployees",
+					content:"url:toAddEmployees",
+					title:"${session.enterprise.fullName}-(添加企业员工信息)",
+					width:"900px",
+					height:"500px",
+					max: false,
+					name:"提交",
+					lock:true,
+					ok:function(){
+						var selCust=$.dialog.list["addEmployees"].content.selCust;
+						alert(selCust);
+						//$("#custid").val(selCust[0]);
+						//$("#custname").val(selCust[1]);
+					},
+					cancelVal: '关闭',
+					
+				 });
+			});
+		});
+		
+	
 		</script>
 	</head>
 	<body>
@@ -119,7 +137,8 @@
 								<a href="batchExcelDataEmployee">批量录入</a>，
 							</li>
 							<li>
-								<a href="#add-employees-bnt" data-toggle="modal" onclick="reset()">单个录入</a>
+								<input type="button" id="addEmployees" value="添加员工" style="border:0px;"/>
+								<a href="#add-employees-bnt" data-toggle="modal" onclick="reset()" >单个录入</a>
 							</li>
 							<li>
 								&nbsp;/&nbsp;
@@ -128,16 +147,16 @@
 								查看：
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees?insurance=1" class="choose1">参保</a>，
+								<a href="ginsengInsurance?insurance=1">参保</a>，
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees?insurance=0" class="choose2">未参保</a>，
+								<a href="uninsuredInsurance?insurance=0">未参保</a>，
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees?departure=1" class="choose3">离职员工</a>，
+								<a href="departureEmployees?departure=1">离职员工</a>，
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees?pseudoDelete=1" class="choose4">隐藏信息</a>
+								<a href="hideEmployees?pseudoDelete=1">隐藏信息</a>
 							</li>
 							<li class="right">
 								<a href="exportEmployeesExcel" class="btn btn-primary">下载全体在职员工信息</a>
@@ -152,10 +171,6 @@
 						</ul>
 					<s:form action="viewEnterpriseEmployees" method="post" id="myform">
 						 <input type="hidden" name="page"/>
-						 <input type="hidden" name="pseudoDelete"/>
-						 <input type="hidden" name="departure"/>
-						 <input type="hidden" name="insurance"/>
-						 <input type="hidden" name="departure"/>
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -308,6 +323,9 @@
 											</s:if>
 											<s:elseif test="#emp.ginsengProtectNature==2">
 													<span>续保</span>
+											</s:elseif>
+											<s:elseif test="#emp.ginsengProtectNature==3">
+													<span>无参保</span>
 											</s:elseif>
 											<s:else>
 											
@@ -517,11 +535,11 @@
 							<label>
 								是否参保?
 							</label>
-							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="1" checked="checked" />
-							是，
-							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="0" />
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="0" checked="checked"/>
 							否，
-							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="2" />
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="1"/>
+							是，
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="2"/>
 							特殊参保(<span style="color:blue;">补贴</span>)
 						</div>
 
@@ -541,10 +559,12 @@
 							<label>
 								参保性质
 							</label>
-							<input type="radio" 	name="enterpriseEmployees.ginsengProtectNature" value="1" checked="checked" />
+							<input type="radio" 	name="enterpriseEmployees.ginsengProtectNature" value="1"  />
 							新增，
 							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="2" />
 							续保
+							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="3" checked="checked"/>
+							无参保
 						</div>
 
 						<div class="input-container">
@@ -595,7 +615,12 @@
 							</label>
 							<s:textfield name="enterpriseEmployees.housingFund" />
 						</div>
-
+						<div class="input-container">
+							<label>
+								大病统筹
+							</label>
+							<s:textfield name="enterpriseEmployees.seriousDisease" />
+						</div>
 						<div class="input-container">
 							<label>
 								个税缴纳方式?
@@ -622,7 +647,12 @@
 							</label>
 							<s:textfield name="enterpriseEmployees.serviceCost" />
 						</div>
-
+						<div class="input-container">
+							<label>
+								意外险
+							</label>
+							<input type="text" name="enterpriseEmployees.accident " maxlength="30"/>
+						</div>
 						<div class="input-container" >
 							<s:submit cssClass="btn btn-primary" value="提交" id="submit"/>
 						</div>
@@ -649,7 +679,8 @@
 			</div>
 			<div class="modal-body">
 				<s:form action="updateEnterpriseEmployees" method="post">
-					<s:hidden name="enterpriseEmployees.employeesId"></s:hidden>
+					<input type="hidden" name="enterpriseEmployees.employeesId"/>
+					<input type="hidden" name="page" value="${page}"/>
 					<input type="hidden" name="employeesContract.contractid"/>
 					<div class="row-fluid">
 						<div class="input-container">
@@ -782,22 +813,19 @@
 
 						<div class="input-container">
 							止：
-							<s:textfield id="d11"
-								name="employeesContract.contractEndDate" onclick="WdatePicker()" cssClass="Wdate" />
+							<input type="text" id="d11"
+								name="employeesContract.contractEndDate" onclick="WdatePicker()" class="Wdate" />
 						</div>
 
 						<div class="input-container">
 							<label>
 								是否参保?
 							</label>
-							<input type="radio" name="enterpriseEmployees.whetherGinseng"
-								value="1" checked="checked" />
-							是，
-							<input type="radio" name="enterpriseEmployees.whetherGinseng"
-								value="0" />
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="0" checked="checked"/>
 							否
-							<input type="radio" name="enterpriseEmployees.whetherGinseng"
-								value="2" />
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="1"  />
+							是，
+							<input type="radio" name="enterpriseEmployees.whetherGinseng" value="2" />
 							 特殊参保(<span style="color:blue;">补贴</span>)
 						</div>
 
@@ -820,6 +848,8 @@
 							新增，
 							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="2" />
 							续保
+							<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="3" />
+							无参保
 						</div>
 
 						<div class="input-container">
@@ -869,7 +899,12 @@
 							</label>
 							<s:textfield name="enterpriseEmployees.housingFund" />
 						</div>
-
+						<div class="input-container">
+							<label>
+								大病统筹
+							</label>
+							<s:textfield name="enterpriseEmployees.seriousDisease" />
+						</div>
 						<div class="input-container">
 							<label>
 								个税缴纳方式?
@@ -895,6 +930,12 @@
 								服务费
 							</label>
 							<input type="text" name="enterpriseEmployees.serviceCost" />
+						</div>
+						<div class="input-container">
+							<label>
+								意外险
+							</label>
+							<input type="text" name="enterpriseEmployees.accident " maxlength="30"/>
 						</div>
 
 						<div class="input-container">

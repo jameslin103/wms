@@ -17,8 +17,7 @@
 			 function topage(page){
 				var form = document.getElementById("myforminsurance");
 					form.page.value=page;
-				//form.action='viewEnterpriseEmployees?page='+page;
-				form.submit();
+				    form.submit();
 			}
 		</script>
 	</head>
@@ -94,17 +93,17 @@
 								查看：
 							</li>
 							<li>
-								<a href="viewStaffAndRenewalAndReductionEmployees?staff_renewal_reduction=1
+								<a href="viewIncrease?staff_renewal_reduction=1
 								&insuranceYear=<s:property value="%{#request.insuranceYear}"/>
 								&month=<s:property value="%{#request.month}"/>">新增</a>，
 							</li>
 							<li>
-								<a href="viewStaffAndRenewalAndReductionEmployees?staff_renewal_reduction=2
+								<a href="viewRenewal?staff_renewal_reduction=2
 								&insuranceYear=<s:property value="%{#request.insuranceYear}"/>
 								&month=<s:property value="%{#request.month}"/>">续保</a>，
 							</li>
 							<li>
-								<a href="viewStaffAndRenewalAndReductionEmployees?staff_renewal_reduction=3
+								<a href="viewDepletion?staff_renewal_reduction=3
 									&insuranceYear=<s:property value="%{#request.insuranceYear}"/>
 									&month=<s:property value="%{#request.month}"/>">减员</a>
 							</li>
@@ -214,9 +213,9 @@
 										<s:property value="%{#emp.levelEducation}"/>
 									</td>
 									<td>
-										<s:date name="%{#emp.startContractDeadline}" format="yyyy年MM月dd"/>
+										<s:date name="%{#emp.employeesContract.contractStatrDate}" format="yyyy年MM月dd"/>
 										—
-										<s:date name="%{#emp.endContractDeadline}" format="yyyy年MM月dd"/>
+										<s:date name="%{#emp.employeesContract.contractEndDate}" format="yyyy年MM月dd"/>
 									</td>
 									<td>
 										<s:if test="#emp.photo==0">

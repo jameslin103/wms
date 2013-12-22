@@ -169,19 +169,36 @@
 									</td>
 								</tr>
 								<tr>
+									<td colspan="7">
+										<span style="color:red;">预算表名称:
+											(
+												<span style="color:blue;">
+													<s:if test="#balanceDetail.createSalaryBudgetTable.name.length()>10">
+														<s:property value="#balanceDetail.createSalaryBudgetTable.name.substring(0,10)+'...'"/>
+													</s:if>
+													<s:else>
+														<s:property value="#balanceDetail.createSalaryBudgetTable.name"/>
+													</s:else>
+													
+												</span>
+												)
+										 制作人：(<s:property value="#balanceDetail.createSalaryBudgetTable.user.username"/>
+										 制作时间:<s:date name="#balanceDetail.createSalaryBudgetTable.createDate" format="yyyy年MM月dd日"/>
+										)</span>
+									</td>
 									<td colspan="11" class="align-right">
-										备注:（<s:property value="%{#request.session.user.username}"/>，
+										备注:（<s:property value="#balanceDetail.userIusse"/>，
 										<s:date name="%{#balanceDetail.createDate}" format="yyyy年MM月dd日"/>，
 										<s:property value="%{#balanceDetail.note}"/>）
 									</td>
-								</tr>
+								</tr>	
 							</tbody>
 							</s:iterator>
 						</table>
 						
 						<div class="pagination">
 							<ul>
-							<%@ include file="/share/fenye.jsp" %>
+								<%@ include file="/share/fenye.jsp" %>
 							</ul>
 						</div>
 						</s:form>
@@ -212,7 +229,7 @@
 							</label>
 							<s:textfield name="balanceDetail.receivedFunds" />
 						</div>
-						<hr>
+						<hr/>
 						<h3>
 							余额分配
 						</h3>
@@ -234,7 +251,7 @@
 							</label>
 							<s:textfield name="balanceDetail.fiveFund" />
 						</div>
-						<hr>
+						<hr/>
 						<div class="input-container">
 							<label>
 								备注

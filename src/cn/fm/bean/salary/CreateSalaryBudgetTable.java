@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -76,9 +77,6 @@ public class CreateSalaryBudgetTable implements Serializable {
 
 	/**现金（人数）**/
 	 private Integer      cashnumber;
-
-	/**状态 **/
-	private String       status;
 	
 	/**补充说明*/
 	private String   note;
@@ -94,7 +92,19 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 	private Date    heLinesDate;
 	
+	//是否发放
+	private Integer  issue;
 
+	/**状态  民生发放情况**/
+	private String       status;
+	
+	/**它行发放情况**/
+	private String   heLines_status;
+	
+	/**现金发放情况**/
+	private String   cashnumber_status;
+	
+	private BigDecimal serviceHeTotal;
 	
 	/*是否已经合并 0未合并，1合并*/
 	private Integer    isTax=0;   
@@ -108,10 +118,34 @@ public class CreateSalaryBudgetTable implements Serializable {
 	private Enterprise enterprise;
 	
 	private WmsUser    user;
+	
+	private String    user_operator;
 
 	private Set<EmployeesSalaryDetail>  employeesSalaryDetail=new HashSet<EmployeesSalaryDetail>();
 	
+	private BalanceDetail   balanceDetail;
 	
+
+	
+	
+	
+	@Column(length=10)
+	public String getHeLines_status() {
+		return heLines_status;
+	}
+
+	public void setHeLines_status(String heLinesStatus) {
+		heLines_status = heLinesStatus;
+	}
+	@Column(length=10)
+	public String getCashnumber_status() {
+		return cashnumber_status;
+	}
+
+	public void setCashnumber_status(String cashnumberStatus) {
+		cashnumber_status = cashnumberStatus;
+	}
+
 	@Id @GeneratedValue
 	public Integer getBudgetId() {
 		return budgetId;
@@ -128,7 +162,15 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	@Column(length=2)
+	public Integer getIssue() {
+		return issue;
+	}
+
+	public void setIssue(Integer issue) {
+		this.issue = issue;
+	}
+
 	@Temporal(TemporalType.DATE)
 	public Date getSalaryDate() {
 		return salaryDate;
@@ -306,6 +348,26 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.heLinesDate = heLinesDate;
 	}
 
+	@Column(length=20)
+	public String getUser_operator() {
+		return user_operator;
+	}
+
+	public void setUser_operator(String userOperator) {
+		user_operator = userOperator;
+	}
+	
+	
+	
+	@Column(length=80,scale=2)
+	public BigDecimal getServiceHeTotal() {
+		return serviceHeTotal;
+	}
+
+	public void setServiceHeTotal(BigDecimal serviceHeTotal) {
+		this.serviceHeTotal = serviceHeTotal;
+	}
+
 	@ManyToOne(cascade = { CascadeType.REFRESH},optional=true)
 	@JoinColumn(name = "enterpriseId")
 	@NotFound(action=NotFoundAction.IGNORE)
@@ -338,7 +400,9 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.user = user;
 	}
 	
-	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.MERGE,CascadeType.PERSIST},fetch=FetchType.LAZY,mappedBy="createSalaryBudgetTable")
+	@OneToMany(cascade={CascadeType.ALL},
+			fetch=FetchType.LAZY,mappedBy="createSalaryBudgetTable")
+	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<EmployeesSalaryDetail> getEmployeesSalaryDetail() {
 		return employeesSalaryDetail;
 	}
@@ -346,6 +410,16 @@ public class CreateSalaryBudgetTable implements Serializable {
 	public void setEmployeesSalaryDetail(
 			Set<EmployeesSalaryDetail> employeesSalaryDetail) {
 		this.employeesSalaryDetail = employeesSalaryDetail;
+	}
+	
+	@OneToOne(cascade=CascadeType.ALL,mappedBy="createSalaryBudgetTable",optional=true)
+	@NotFound(action=NotFoundAction.IGNORE)
+	public BalanceDetail getBalanceDetail() {
+		return balanceDetail;
+	}
+
+	public void setBalanceDetail(BalanceDetail balanceDetail) {
+		this.balanceDetail = balanceDetail;
 	}
 
 	@Override

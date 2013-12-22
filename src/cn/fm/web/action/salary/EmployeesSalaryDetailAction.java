@@ -1,14 +1,11 @@
 package cn.fm.web.action.salary;
 
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -17,7 +14,6 @@ import org.apache.struts2.json.annotations.JSON;
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
-import cn.fm.bean.json.JSONObject;
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
@@ -28,6 +24,7 @@ import cn.fm.service.salary.BalanceDetailService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.service.salary.SalaryTemplateService;
+import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
@@ -62,7 +59,12 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	private BigDecimal   bonusTotal; //开票总额
 	private BigDecimal   wargeTotal;//工资总额
 	private BigDecimal   fiveInsuranceTotal;//五险一金总额
-	private long		 numberPeopleTotal;	//发放人数		
+	private long		 numberPeopleTotal;	//发放人数	
+	private long         mingshengsum;
+	private long         hebanksum;
+	private long         isussesum;
+	
+	
 	private BigDecimal   serviceTotal;//服务费总额
 	
 	private Integer  	 enterpriseId;
@@ -82,6 +84,333 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 	private String   sortorder;
 	private String   qop;
 	private long  total=0;
+	
+
+	
+	
+	
+	
+	
+	/**
+	 * excel批量导入工资预算表数据
+	 * @return success
+	 * @date   2013-09-01
+	 */
+	public String  uploadEmployeesSalaryDetail()
+	{
+		CreateSalaryBudgetTable createSalaryBudgetTablePO=createSalaryBudgetTableService.find(budgetId);
+		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTablePO);
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		
+		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
+		employeesSalaryDetail=new EmployeesSalaryDetail();
+		employeesSalaryDetail.setEnterprise(enterprise);
+		employeesSalaryDetail.setBudgettableId(budgetId);
+		employeesSalaryDetail.setSalaryDate(salaryDate);
+		employeesSalaryDetail.setCreateSalaryBudgetTable(createSalaryBudgetTablePO);
+		
+		 int count=0;
+		 SalaryTemplate salaryTemplate=salaryTemplateService.find(templateId);
+		 if(salaryTemplate==null)salaryTemplate=new SalaryTemplate();
+		 if(!StringUtil.isEmpty(salaryTemplate.getSubsidyList())){
+		 	 String[] customt=salaryTemplate.getSubsidyList().split(",");
+			 count=customt.length+5;
+		 }else{
+			 count+=5; 
+		 }
+		//上传的名字是否重复
+		List<String> employeesNames=employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "员工基本工资信息表", count,1,employeesSalaryDetail,createSalaryBudgetTablePO.getSalaryTemplate().getTemplateId(),enterprise.getEnterpriseId());
+		if(employeesNames!=null && employeesNames.size()>0){request.setAttribute("employeesNames", employeesNames);return INPUT;}
+		
+		
+		
+		//统计五险一金总额
+		fiveInsuranceTotal=employeesSalaryDetailService.getEnterpriseSubtotalTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		
+		//统计工资总额
+		
+		BigDecimal wage=employeesSalaryDetailService.getWageTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		BigDecimal getspecialUnemploymentSubsidiesTotal=employeesSalaryDetailService.getspecialUnemploymentSubsidiesTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		BigDecimal getspecialOldSubsidiesTotal=employeesSalaryDetailService.getspecialOldSubsidiesTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		BigDecimal getSpecialHealthCareSubsidiesTotal=employeesSalaryDetailService.getSpecialHealthCareSubsidiesTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		BigDecimal getSpecialAccumulationFundSubsidiesTotal=employeesSalaryDetailService.getSpecialAccumulationFundSubsidiesTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		
+		wargeTotal=wage.add(getspecialUnemploymentSubsidiesTotal).
+					add(getspecialOldSubsidiesTotal).
+				    add(getSpecialHealthCareSubsidiesTotal).
+					add(getSpecialAccumulationFundSubsidiesTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+		
+		//统计服务费
+		serviceTotal=employeesSalaryDetailService.getServiceTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		
+		//统计开票总额
+		bonusTotal=wargeTotal.add(serviceTotal).add(fiveInsuranceTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+
+		numberPeopleTotal=employeesSalaryDetailService.getNumberPersonlTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		
+		//统计发放人数
+		 isussesum=employeesSalaryDetailService.getSumCashNumber(enterprise.getEnterpriseId(), budgetId);
+		 mingshengsum=employeesSalaryDetailService.getSumMingShengBank(enterprise.getEnterpriseId(), budgetId);
+		 hebanksum=employeesSalaryDetailService.getSumHeLineBank(enterprise.getEnterpriseId(), budgetId);
+
+		
+		//记录到工资预算表汇总信息
+		CreateSalaryBudgetTable createSalaryBudgetTableSummary=new CreateSalaryBudgetTable();
+		createSalaryBudgetTableSummary.setBudgetId(budgetId);
+		createSalaryBudgetTableSummary.setFiveInsurancesTotal(fiveInsuranceTotal);
+		createSalaryBudgetTableSummary.setMakeTotal(bonusTotal);
+		createSalaryBudgetTableSummary.setWageTotal(wargeTotal);
+		createSalaryBudgetTableSummary.setServiceTotal(serviceTotal);
+		createSalaryBudgetTableSummary.setIssueNumber(Integer.parseInt(numberPeopleTotal+""));
+		createSalaryBudgetTableSummary.setCmbc(Integer.parseInt(mingshengsum+""));
+		createSalaryBudgetTableSummary.setHeLines(Integer.parseInt(hebanksum+""));
+		createSalaryBudgetTableSummary.setCashnumber(Integer.parseInt(isussesum+""));
+
+		//TODO 医保类型待定
+		
+		createSalaryBudgetTableService.updateCreateSalaryBudgetTableSummary(createSalaryBudgetTableSummary);	
+		
+		//统计上传员工工资的总额,保险，开票总额 记录到<资金往来这个表中>
+		BalanceDetail   balanceDetail=new BalanceDetail();
+		balanceDetail.setBallotsToal(bonusTotal);
+		balanceDetail.setWagesToal(wargeTotal);
+		balanceDetail.setServiceToal(serviceTotal);
+		balanceDetail.setReceivableFiveFund(fiveInsuranceTotal);
+		balanceDetail.setYearMonth(createSalaryBudgetTablePO.getSalaryDate());
+		balanceDetail.setCreateSalaryBudgetTable(createSalaryBudgetTablePO);
+		balanceDetail.setBudgetId(createSalaryBudgetTablePO.getBudgetId());
+		balanceDetail.setNote(createSalaryBudgetTablePO.getNote());
+		balanceDetail.setEnterprise(enterprise);
+		
+		balanceDetailService.save(balanceDetail);
+		
+		CreateSalaryBudgetTable createSalaryBudgetTableNew=createSalaryBudgetTableService.find(budgetId);
+		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTableNew);
+		
+		return SUCCESS;
+	}
+	
+	public String viewEmployeePersonalSalary()
+	{
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		EnterpriseEmployees  enterpriseEmployees=enterpriseEmployeesService.find(employeesId);
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryDate", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(enterprise.getEnterpriseId()!=null)
+		{
+			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(enterprise.getEnterpriseId());
+			jpql.append(" and o.enterpriseEmployees.employeesId=?").append(params.size()+1);
+			params.add(employeesId);
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("employeesId", employeesId);
+			request.setAttribute("pageView", pageView);
+			request.setAttribute("enterpriseEmployees", enterpriseEmployees);
+			
+		}
+		
+		return SUCCESS;
+		
+	}
+	
+	public String updateSalaryEnterpriseEmployees()
+	{
+		try {
+			EnterpriseEmployees enterpriseEmployeesVO=new EnterpriseEmployees();
+			enterpriseEmployeesVO=enterpriseEmployees;
+			enterpriseEmployeesService.update(enterpriseEmployeesVO);
+		} catch (Exception e) {
+			return INPUT;
+			
+			
+		}
+		return SUCCESS;
+	}
+	/**
+	 * 
+	 * @return viewAllEmployeesSalaryDetail这个项目的所有工资明细
+	 */
+	public String viewAllEmployeesSalaryDetail()
+	{
+		Enterprise enterprise=WebUtil.getEnterprise(request);
+		if(enterpriseId!=null)
+		{
+			if(enterprise!=null){
+				request.getSession().removeAttribute("enterprise");
+			}
+			enterprise=enterpriseService.find(enterpriseId);
+			request.getSession().setAttribute("enterprise", enterprise);
+		}
+		
+		
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(enterprise.getEnterpriseId()!=null)
+		{
+			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(enterprise.getEnterpriseId());
+			jpql.append(" and o.budgettableId=?").append(params.size()+1);
+			params.add(budgetId);
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("budgetId", budgetId);
+			request.setAttribute("pageView", pageView);
+		}
+		createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		employeesSalaryDetail=employeesSalaryDetailService.getSumDateSalaryDeatil(createSalaryBudgetTable);
+		if(employeesSalaryDetail==null)employeesSalaryDetail=new EmployeesSalaryDetail();
+		
+		return SUCCESS;
+	}
+	
+	
+
+	/**
+	 * 查看民生银行发放人数
+	 * @return
+	 */
+	public String viewMinshengBank(){
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+			jpql.append(" o.budgettableId=?").append(params.size()+1);
+			params.add(this.budgetId);
+			jpql.append(" and o.bank like ?").append(params.size()+1);
+			params.add("%民生%");
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		
+			request.setAttribute("budgetId", budgetId);
+		
+		return SUCCESS;
+	}
+	/**
+	 * 查看其它银行发放人数
+	 * @return
+	 */
+	public String viewOtherBank(){
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+			jpql.append(" o.budgettableId=?").append(params.size()+1);
+			params.add(this.budgetId);
+			jpql.append(" and o.bank not like '%民生%' ");
+			jpql.append(" and o.bank is not null ");
+			jpql.append(" and o.bank !='' ");
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		
+			request.setAttribute("budgetId", budgetId);
+			
+			return SUCCESS;
+	}
+	/**
+	 * 查看现金发放人数
+	 * @return
+	 */
+	public String viewCashIssue(){
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+			jpql.append(" o.budgettableId=?").append(params.size()+1);
+			params.add(this.budgetId);
+			jpql.append(" and ( o.bank is null");
+			jpql.append(" or o.bank like '%现金%' or o.bank='' )");
+			
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("pageView", pageView);
+		
+			request.setAttribute("budgetId", budgetId);
+		
+		return SUCCESS;
+	}
+		
+	
+	
+	
+	/**
+	 * 重新获取工资预算表当前新增的数据信息
+	 * @return
+	 */
+	public String toImportSalaryData()
+	{
+		
+		return SUCCESS;
+	}
+	
+	public String findToIdSalaryDetail()
+	{
+		
+		employeesSalaryDetail=employeesSalaryDetailService.find(salaryId);
+		
+		return SUCCESS;
+	}
+	
+	public String updateEmployeesSalaryDetail()
+	{
+		employeesSalaryDetailService.updateEmployeesSalaryDetail(employeesSalaryDetail);
+		
+		return SUCCESS;
+	}
+	
+	public String viewSalaryWithBankPersonalNumber()
+	{
+		if(enterpriseId!=null)
+		{
+			Enterprise enterprise=WebUtil.getEnterprise(request);
+			if(enterprise!=null)request.removeAttribute("enterprise");
+			enterprise=enterpriseService.find(enterpriseId);
+			request.getSession().setAttribute("enterprise", enterprise);
+		}
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("salaryId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+			jpql.append(" o.budgettableId=?").append(params.size()+1);
+			params.add(this.budgetId);
+			
+			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
+			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			
+		request.setAttribute("pageView", pageView);
+		request.setAttribute("budgetId", budgetId);
+		return SUCCESS;
+		
+	}
+	
+	
+	
+	
 	
 	
 	public int getPage() {
@@ -320,367 +649,30 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		this.enterpriseService = enterpriseService;
 	}
 
-	
-	
-	
-	
-	
-	
-	/**
-	 * excel批量导入工资预算表数据
-	 * @return success
-	 * @date   2013-09-01
-	 */
-	public String  uploadEmployeesSalaryDetail()
-	{
-		createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
-		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTable);
-		Enterprise enterprise=WebUtil.getEnterprise(request);
-		
-		if(enterprise==null || enterprise.getEnterpriseId()==null)return INPUT;
-		employeesSalaryDetail=new EmployeesSalaryDetail();
-		employeesSalaryDetail.setEnterprise(enterprise);
-		employeesSalaryDetail.setBudgettableId(budgetId);
-		employeesSalaryDetail.setSalaryDate(salaryDate);
-		
-		 SalaryTemplate salaryTemplate=salaryTemplateService.find(templateId);
-	 	 String[] customt=salaryTemplate.getSubsidyList().split(",");
-		 int count=customt.length+5;
-		//上传的名字是否重复
-		List<String> employeesNames=employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "员工基本工资信息表", count,1,employeesSalaryDetail,createSalaryBudgetTable.getSalaryTemplate().getTemplateId(),enterprise.getEnterpriseId());
-		if(employeesNames.size()>0){request.setAttribute("employeesNames", employeesNames);return INPUT;}
-		
-		//查找统计上传员工工资的总额
-		bonusTotal=employeesSalaryDetailService.getInvoiceTotal(enterprise.getEnterpriseId(), budgetId);
-		wargeTotal=employeesSalaryDetailService.getWageTotal(enterprise.getEnterpriseId(), budgetId);
-		fiveInsuranceTotal=employeesSalaryDetailService.getFiveInsuranceTotal(enterprise.getEnterpriseId(), budgetId);
-		numberPeopleTotal=employeesSalaryDetailService.getNumberPersonlTotal(enterprise.getEnterpriseId(), budgetId);
-		serviceTotal=employeesSalaryDetailService.getServiceTotal(enterprise.getEnterpriseId(), budgetId);
+	public long getMingshengsum() {
+		return mingshengsum;
+	}
 
-		
-		//记录到工资预算表汇总信息
-		CreateSalaryBudgetTable createSalaryBudgetTableSummary=new CreateSalaryBudgetTable();
-		createSalaryBudgetTableSummary.setBudgetId(budgetId);
-		createSalaryBudgetTableSummary.setFiveInsurancesTotal(fiveInsuranceTotal);
-		createSalaryBudgetTableSummary.setMakeTotal(bonusTotal);
-		createSalaryBudgetTableSummary.setWageTotal(wargeTotal);
-		createSalaryBudgetTableSummary.setServiceTotal(serviceTotal);
-		createSalaryBudgetTableSummary.setIssueNumber(Integer.parseInt(numberPeopleTotal+""));
+	public void setMingshengsum(long mingshengsum) {
+		this.mingshengsum = mingshengsum;
+	}
 
-		//TODO 医保类型待定
-		
-		createSalaryBudgetTableService.updateCreateSalaryBudgetTableSummary(createSalaryBudgetTableSummary);	
-		
-		//统计上传员工工资的总额,保险，开票总额 记录到<资金往来这个表中>
-		BalanceDetail   balanceDetail=new BalanceDetail();
-		balanceDetail.setBallotsToal(bonusTotal);
-		balanceDetail.setWagesToal(wargeTotal);
-		balanceDetail.setServiceToal(serviceTotal);
-		balanceDetail.setReceivableFiveFund(fiveInsuranceTotal);
-		balanceDetail.setYearMonth(createSalaryBudgetTable.getSalaryDate());
-		balanceDetail.setBudgetId(createSalaryBudgetTable.getBudgetId());
-		balanceDetail.setNote(createSalaryBudgetTable.getNote());
-		balanceDetail.setEnterprise(enterprise);
-		
-		
-		balanceDetailService.save(balanceDetail);
-		
-		
-		
-		createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
-		
-		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTable);
-		
-		return SUCCESS;
+	public long getHebanksum() {
+		return hebanksum;
 	}
-	
-	public String viewEmployeePersonalSalary()
-	{
-		Enterprise enterprise=WebUtil.getEnterprise(request);
-		EnterpriseEmployees  enterpriseEmployees=enterpriseEmployeesService.find(employeesId);
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("salaryDate", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-		if(enterprise.getEnterpriseId()!=null)
-		{
-			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(enterprise.getEnterpriseId());
-			jpql.append(" and o.enterpriseEmployees.employeesId=?").append(params.size()+1);
-			params.add(employeesId);
-			
-			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
-			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("employeesId", employeesId);
-			request.setAttribute("pageView", pageView);
-			request.setAttribute("enterpriseEmployees", enterpriseEmployees);
-			
-		}
-		
-		return SUCCESS;
-		
-	}
-	
-	public String updateSalaryEnterpriseEmployees()
-	{
-		try {
-			EnterpriseEmployees enterpriseEmployeesVO=new EnterpriseEmployees();
-			enterpriseEmployeesVO=enterpriseEmployees;
-			enterpriseEmployeesService.update(enterpriseEmployeesVO);
-		} catch (Exception e) {
-			return INPUT;
-			
-			
-		}
-		return SUCCESS;
-	}
-	/**
-	 * 
-	 * @return viewAllEmployeesSalaryDetail这个项目的所有工资明细
-	 */
-	public String viewAllEmployeesSalaryDetail()
-	{
-		
-		Enterprise enterprise=WebUtil.getEnterprise(request);
-		if(enterprise==null || enterprise.getEnterpriseId()==null){
-			enterprise=enterpriseService.find(enterpriseId);
-			request.getSession().setAttribute("enterprise", enterprise);
-		}
-		
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("createDate", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-		if(enterprise.getEnterpriseId()!=null)
-		{
-			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
-			params.add(enterprise.getEnterpriseId());
-			jpql.append(" and o.budgettableId=?").append(params.size()+1);
-			params.add(budgetId);
-			
-			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
-			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("budgetId", budgetId);
-			request.setAttribute("pageView", pageView);
-		}
-		
-		return SUCCESS;
-	}
-	
-	
 
-	/**
-	 * 查看民生银行发放人数
-	 * @return
-	 */
-	public String viewMinshengBank(){
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("salaryId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-			jpql.append(" o.budgettableId=?").append(params.size()+1);
-			params.add(this.budgetId);
-			jpql.append(" and o.note like ?").append(params.size()+1);
-			params.add("%民生银行%");
-			
-			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
-			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("pageView", pageView);
-		
-			request.setAttribute("budgetId", budgetId);
-		
-		return SUCCESS;
+	public void setHebanksum(long hebanksum) {
+		this.hebanksum = hebanksum;
 	}
-	/**
-	 * 查看其它银行发放人数
-	 * @return
-	 */
-	public String viewOtherBank(){
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("salaryId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-			jpql.append(" o.budgettableId=?").append(params.size()+1);
-			params.add(this.budgetId);
-			jpql.append(" and o.note!=?").append(params.size()+1);
-			params.add(" 民生银行");
-			jpql.append(" and o.note!=?").append(params.size()+1);
-			params.add("现金");
-			
-			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
-			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("pageView", pageView);
-		
-			request.setAttribute("budgetId", budgetId);
-			
-			return SUCCESS;
-	}
-	/**
-	 * 查看现金发放人数
-	 * @return
-	 */
-	public String viewCashIssue(){
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("salaryId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-			jpql.append(" o.budgettableId=?").append(params.size()+1);
-			params.add(this.budgetId);
-			jpql.append(" and o.note=?").append(params.size()+1);
-			params.add("like '现金' ");
-			
-			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
-			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			request.setAttribute("pageView", pageView);
-		
-			request.setAttribute("budgetId", budgetId);
-		
-		return SUCCESS;
-	}
-		
-	
-	
-	
-	/**
-	 * 重新获取工资预算表当前新增的数据信息
-	 * @return
-	 */
-	public String toImportSalaryData()
-	{
-		
-		return SUCCESS;
-	}
-	
-	public String findToIdSalaryDetail()
-	{
-		
-		employeesSalaryDetail=employeesSalaryDetailService.find(salaryId);
-		return "employeesSalaryDetail";
-	}
-	
-	public String updateEmployeesSalaryDetail()
-	{
-		employeesSalaryDetailService.updateEmployeesSalaryDetail(employeesSalaryDetail);
-		
-		return SUCCESS;
-	}
-	
-	public String viewSalaryWithBankPersonalNumber()
-	{
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("salaryId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-			jpql.append(" o.budgettableId=?").append(params.size()+1);
-			params.add(this.budgetId);
-			
-			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
-			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-			
-		request.setAttribute("pageView", pageView);
-		request.setAttribute("budgetId", budgetId);
-		return SUCCESS;
-		
-	}
-	
-	public String viewSalaryWithBankPersonalNumberJson()
-	{
-		
-//		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-//		orderby.put("salaryId", "desc");
-//		StringBuffer jpql = new StringBuffer("");
-//		List<Object> params = new ArrayList<Object>();
-//			jpql.append(" o.budgettableId=?").append(params.size()+1);
-//			params.add(50);
-//			
-//			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(Integer.parseInt(this.rp),  this.getPage());
-//			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
-//					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
-//		
-//			if(pageView==null || pageView.getRecords().size()==0)
-//			{
-//				pageView=new PageView<EmployeesSalaryDetail>(Integer.parseInt(this.rp), this.page);
-//			}
 
-//			details=toJSONList(pageView.getRecords());
-//			request.setAttribute("budgetId", budgetId);
-//			this.setTotal(pageView.getTotalpage());
-//			
-//			
-//			
-//		Map<String,String> map = new HashMap<String,String>();
-//
-//		map.put("page", page+"");
-//		map.put("total", pageView.getTotalrecord()+"");
-//		map.put("rp", this.rp);
-//		
-//		//to JSON
-//		String json = toJSON(pageView.getRecords(), map);
+	public long getIsussesum() {
+		return isussesum;
+	}
 
-//		try {
-//			response.setContentType("text/html;charset=utf-8");
-//			response.setHeader("Cache-Control", "no-cache");
-//			response.getWriter().write(json);
-//			response.getWriter().flush();
-//			response.getWriter().close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		
-		
-		
-		return SUCCESS;
+	public void setIsussesum(long isussesum) {
+		this.isussesum = isussesum;
 	}
-	public List<EmployeesSalaryDetail> toJSONList(List list) {
-		if(list==null)return null;
-		List<EmployeesSalaryDetail>  detailList=new ArrayList<EmployeesSalaryDetail>();
-		for (Object obj : list) {
-			
-			EmployeesSalaryDetail	 detail=(EmployeesSalaryDetail)obj;
-			
-			EmployeesSalaryDetail employeesSalaryDetailVO=new EmployeesSalaryDetail();
-			employeesSalaryDetailVO.setSalaryId(detail.getSalaryId());
-			employeesSalaryDetailVO.setEmployeesName(detail.getEmployeesName());
-			employeesSalaryDetailVO.setCardNumber(detail.getCardNumber());
-			employeesSalaryDetailVO.setBankCardNumber(detail.getBankCardNumber());
-			employeesSalaryDetailVO.setWage(detail.getWage());
-			employeesSalaryDetailVO.setNote(detail.getNote());
-			detailList.add(employeesSalaryDetailVO);
-		}
-		return detailList;
-		
-	}
+
 	
-	
-	
-	
-	
-	@SuppressWarnings({ "unchecked"})
-	public String toJSON(List list, Map map) {
-		List mapList = new ArrayList();
-		for (Object obj : list) {
-			
-			EmployeesSalaryDetail	 detail=(EmployeesSalaryDetail)obj;
-			Map<String ,Object> cellMap = new HashMap<String ,Object>();
-			cellMap.put("salaryId", detail.getSalaryId());
-			cellMap.put("cell", new Object[] { (detail.getSalaryId()),
-					(detail.getEmployeesName()),(detail.getCardNumber()),
-					(detail.getNote()),(detail.getBankCardNumber()),
-					(detail.getWage()) });
-			mapList.add(cellMap);
-			
-		}
-		map.put("rows", mapList);
-		JSONObject object = new JSONObject(map);
-		System.out.println("object="+object.toString());
-		return object.toString();
-		
-	}
 
 }

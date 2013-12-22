@@ -11,17 +11,19 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
+@SuppressWarnings("serial")
 public class SessionIterceptor extends AbstractInterceptor {
 	
 	
-	 public String intercept(ActionInvocation actionInvocation) throws Exception {  
+	 @SuppressWarnings("unchecked")
+	public String intercept(ActionInvocation actionInvocation) throws Exception {  
 	        ActionContext ctx = ActionContext.getContext(); 
 	        Map session = ctx.getSession();  
 	        Action action = (Action) actionInvocation.getAction();
 	        if (action instanceof LoginAction) {  
 	            return actionInvocation.invoke();  
 	        }  
-	        WmsUser userName = (WmsUser)session.get(Constant.USER_SESSION);  
+	        WmsUser userName = (WmsUser)session.get(Constant.USER_SESSION); 
 	        if (userName == null) {  
 	            return Action.LOGIN;  
 	        } else {  

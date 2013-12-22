@@ -1,19 +1,23 @@
 package cn.fm.web.action.company;
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseService;
+import cn.fm.service.salary.BalanceDetailService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.utils.DateUtil;
+import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
@@ -28,6 +32,8 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	private EnterpriseService               enterpriseService;
 	@Resource 
 	private EmployeesSalaryDetailService  employeesSalaryDetailService;
+	@Resource
+	private BalanceDetailService		 balanceDetailService;
 	
 	private CreateSalaryBudgetTable      createSalaryBudgetTable;
 	
@@ -88,7 +94,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		Map<String, Object> map=null;
 		for (CreateSalaryBudgetTable table : createSalaryBudgetTableList) {
 			map=new HashMap<String, Object>();
-			String date=table.getCreateDate().toString();
+			String date=table.getSalaryDate()==null?"":table.getSalaryDate().toString();
 			map.put("date", date);
 			map.put("createSalaryBudgetTable", table);
 			list.add(map);
@@ -109,6 +115,12 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			WmsUser user=WebUtil.getWmsUser(request);
 			Enterprise  enterprise=WebUtil.getEnterprise(request);
 			CreateSalaryBudgetTable	createSalaryBudgetTablePO=null;
+			if(createSalaryBudgetTable==null || StringUtil.isEmpty(createSalaryBudgetTable.getName()) || templateId==0){
+				this.addFieldError("message", "工资预算表必填项!");
+				this.addFieldError("message", "模板必填项!");
+				return INPUT;
+			
+			}
 			if(createSalaryBudgetTable!=null && createSalaryBudgetTable.getBudgetId()!=null)
 			{
 				createSalaryBudgetTable.setSalaryDate(DateUtil.StringToDate(this.salaryDate, DateUtil.FORMAT_DATE));
@@ -148,6 +160,15 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTablePO);
 			return SUCCESS;
 	}
+	public String  updateSalaryBudgetTable()
+	{
+		
+		CreateSalaryBudgetTable createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		getSalaryTemplate();
+		request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable);
+		return SUCCESS;
+	}
+	
 	/**
 	 * 
 	 * @return 返回修改页面
@@ -160,6 +181,11 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
     	return SUCCESS;
 		
+	}
+	public String returnToModifyBudgetTable(){
+		createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
+		return SUCCESS;
 	}
 	/**
 	 * 新建工资预算表
@@ -251,7 +277,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			
 			createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
 			
-			return "createSalaryBudgetTable";
+			return SUCCESS;
 		}
 		/**
 		 * 更新预算表名称
@@ -260,6 +286,13 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		public String updateSalayBudgetTable()
 		{
 			
+			BigDecimal maketotal=createSalaryBudgetTable.getMakeTotal()==null?new BigDecimal("0.00"):createSalaryBudgetTable.getMakeTotal();
+			BigDecimal serviceHeTotal=createSalaryBudgetTable.getServiceHeTotal()==null?new BigDecimal("0.00"):createSalaryBudgetTable.getServiceHeTotal();
+			BigDecimal serviceTotal=createSalaryBudgetTable.getServiceTotal()==null?new BigDecimal("0.00"):createSalaryBudgetTable.getServiceTotal();
+			BigDecimal summaketotal=serviceHeTotal.add(maketotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+			BigDecimal sumServiceTotal=serviceTotal.add(serviceHeTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+			createSalaryBudgetTable.setMakeTotal(summaketotal);
+			createSalaryBudgetTable.setServiceTotal(sumServiceTotal);
 			createSalaryBudgetTableService.updateSalaryBudgetTable(createSalaryBudgetTable);
 			return SUCCESS;
 		}
@@ -270,11 +303,25 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		public String deleteSalayBudgetTable()
 		{
 			
-			createSalaryBudgetTableService.deleteCreateSalaryBudgetTable(budgetId);
+			balanceDetailService.deleteBalanceDetail(budgetId);
 			employeesSalaryDetailService.deleteEmployeesSalaryDetail(budgetId);
+			createSalaryBudgetTableService.delete(budgetId);
 			return SUCCESS;
 		}
-	 
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		public Integer getYear() {
 			return year;

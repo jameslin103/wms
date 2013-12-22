@@ -3,7 +3,6 @@ package cn.fm.bean.salary;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +15,6 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 
@@ -28,89 +26,95 @@ public class EmployeesSalaryDetail implements Serializable
 	
 	private Integer  salaryId;
 	
+	
 	private String   employeesName;
 	
 	/*工资*/ 
-	private BigDecimal  wage;
+	
+	private BigDecimal  wage=new BigDecimal("0.00");
 	
 	 /*奖金 */
-	private BigDecimal  bonus;
+	private BigDecimal  bonus=new BigDecimal("0.00");
 	
 	/*电脑补贴 */
-	private BigDecimal  subsidies;
+	private BigDecimal  subsidies=new BigDecimal("0.00");
 	
 	/*应发工资 */
-	private BigDecimal  shouldPay;
+	private BigDecimal  shouldPay=new BigDecimal("0.00");
 	  
 	/*社会保险基数*/
-	private BigDecimal  socialInsuranceBase;
+	private BigDecimal  socialInsuranceBase=new BigDecimal("0.00");
 	 
 	/* 养老保险  企业 */
-	private BigDecimal  enterprisePensionInsurance;
+	private BigDecimal  enterprisePensionInsurance=new BigDecimal("0.00");
 	 
 	/*个人养老保险 */
-	private BigDecimal  personalPensionInsurance;
+	private BigDecimal  personalPensionInsurance=new BigDecimal("0.00");
 
 	/*失业保险  企业 */
-	private BigDecimal  enterpriseUnemploymentInsurance;
+	private BigDecimal  enterpriseUnemploymentInsurance=new BigDecimal("0.00");
 	  
 	/*失业保险  个人*/
-	private BigDecimal  personalUnemploymentInsurance;
+	private BigDecimal  personalUnemploymentInsurance=new BigDecimal("0.00");
 	
 	/*生育保险基数  */
-	private BigDecimal  birthInsuranceBase;
+	private BigDecimal  birthInsuranceBase=new BigDecimal("0.00");
 	
 	/*生育（企业) */
-	private BigDecimal  enterpriseBirthInsurance;
+	private BigDecimal  enterpriseBirthInsurance=new BigDecimal("0.00");
 	
 	/*工伤基数 */
-	private BigDecimal  inductrialInjuryBase;
+	private BigDecimal  inductrialInjuryBase=new BigDecimal("0.00");
 	
 	/*工伤（企业）*/
-	private BigDecimal  enterpriseInductrialInjuryBase;
+	private BigDecimal  enterpriseInductrialInjuryBase=new BigDecimal("0.00");
  
 	/*基本医疗保险   缴费基数*/
-	private BigDecimal  medicalPaymentBase;
+	private BigDecimal  medicalPaymentBase=new BigDecimal("0.00");
 	  
 	/*基本医疗保险  企业*/
-	private BigDecimal  enterpriseMedicalBase;
+	private BigDecimal  enterpriseMedicalBase=new BigDecimal("0.00");
 	  
 	/*基本医疗保险  个人 */
-	private BigDecimal  personalMedicalBase;
+	private BigDecimal  personalMedicalBase=new BigDecimal("0.00");
 	    
 	/*住房公积金-缴费基数*/
-	private BigDecimal  housingReserveBase;
+	private BigDecimal  housingReserveBase=new BigDecimal("0.00");
 	 
 	/*住房公积金-企业 */
-	private BigDecimal  enterpriseReserveBase;
+	private BigDecimal  enterpriseReserveBase=new BigDecimal("0.00");
 	
 	/*住房公积金 - 个人 */
-	private BigDecimal  personalReserveBase;
+	private BigDecimal  personalReserveBase=new BigDecimal("0.00");
 	
 	/*疾病统计 */
-	private BigDecimal  morbidityStatistics;
+	private BigDecimal  morbidityStatistics=new BigDecimal("0.00");
 
 	/*小计- 企业  */
-	private BigDecimal  enterpriseSubtotal;
+	private BigDecimal  enterpriseSubtotal=new BigDecimal("0.00");
 	
 	/*小计- 个人 */
-	private BigDecimal  personalSubtotal;
+	private BigDecimal  personalSubtotal=new BigDecimal("0.00");
 
 	/*税前工资 */
-	private BigDecimal  beforeSalary;
+	private BigDecimal  beforeSalary=new BigDecimal("0.00");
 
 	/*企业 个税*/
-	private BigDecimal  enterpriseTax;
+	private BigDecimal  enterpriseTax=new BigDecimal("0.00");
 	/*个人 个税*/
-	private BigDecimal  personalTax;
+	private BigDecimal  personalTax=new BigDecimal("0.00");
 	/*服务费  */
-	private BigDecimal  serviceCharge;
+	private BigDecimal  serviceCharge=new BigDecimal("0.00");
 	
 	/*合计（企业应付）*/
-	private BigDecimal  aggregate;
+	private BigDecimal  aggregate=new BigDecimal("0.00");
 
 	/*到卡金额 */
-	private BigDecimal  moneyToCards;
+	private BigDecimal  moneyToCards=new BigDecimal("0.00");
+	
+	/*意外险*/
+	private BigDecimal  accident=new BigDecimal("0.00");
+	
 	
 	/*备注**/
 	private String      note;
@@ -123,16 +127,16 @@ public class EmployeesSalaryDetail implements Serializable
 	private Integer     budgettableId;
 	
 	/*特殊养老保险补贴*/
-	private  BigDecimal  specialOldSubsidies;
+	private  BigDecimal  specialOldSubsidies=new BigDecimal("0.00");
 	
 	/*特殊工伤生育补贴*/
-	private  BigDecimal   specialUnemploymentSubsidies;
+	private  BigDecimal   specialUnemploymentSubsidies=new BigDecimal("0.00");
 	
 	/*特殊医保补贴*/
-	private  BigDecimal   specialHealthCareSubsidies;
+	private  BigDecimal   specialHealthCareSubsidies=new BigDecimal("0.00");
 	
 	/*特殊公积金补贴*/
-	private  BigDecimal   specialAccumulationFundSubsidies;
+	private  BigDecimal   specialAccumulationFundSubsidies=new BigDecimal("0.00");
 	
 
 	private CreateSalaryBudgetTable   createSalaryBudgetTable;
@@ -142,9 +146,16 @@ public class EmployeesSalaryDetail implements Serializable
 	
 	private String  bankCardNumber;
 	
+	/*开户银行*/
+	private String  bank;
+	
 	private EnterpriseEmployees    enterpriseEmployees;
 	
 	private Enterprise			   enterprise;
+	
+
+	
+	
 	
 	
 	@Column(length=20)
@@ -389,6 +400,15 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterpriseTax(BigDecimal enterpriseTax) {
 		this.enterpriseTax = enterpriseTax;
 	}
+	
+	@Column(length=20)
+	public String getBank() {
+		return bank;
+	}
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+	
 	@Column(length=80 ,scale=2)
 	public BigDecimal getPersonalTax() {
 		return personalTax;
@@ -421,13 +441,23 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setMoneyToCards(BigDecimal moneyToCards) {
 		this.moneyToCards = moneyToCards;
 	}
-
+	
+	@Column(length=80)
 	public String getNote() {
 		return note;
 	}
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+	
+	@Column(length=60 ,scale=2)
+	public BigDecimal getAccident() {
+		return accident;
+	}
+
+	public void setAccident(BigDecimal accident) {
+		this.accident = accident;
 	}
 
 	public String getEmployeesName() {
@@ -455,16 +485,7 @@ public class EmployeesSalaryDetail implements Serializable
 	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
 		this.enterpriseEmployees = enterpriseEmployees;
 	}
-	@ManyToOne(cascade={CascadeType.REFRESH},optional=false)
-	@JoinColumn(name="enterprise_id")
-	@NotFound(action=NotFoundAction.IGNORE)
-	public Enterprise getEnterprise() {
-		return enterprise;
-	}
-
-	public void setEnterprise(Enterprise enterprise) {
-		this.enterprise = enterprise;
-	}
+	
 	@Column(length=80 ,scale=2)
 	public BigDecimal getSpecialOldSubsidies() {
 		return specialOldSubsidies;
@@ -500,6 +521,7 @@ public class EmployeesSalaryDetail implements Serializable
 		this.specialAccumulationFundSubsidies = specialAccumulationFundSubsidies;
 	}
 	
+	
 	@ManyToOne(cascade={CascadeType.REFRESH},optional=true)
 	@JoinColumn(name="budget_id")
 	@NotFound(action=NotFoundAction.IGNORE)
@@ -512,4 +534,15 @@ public class EmployeesSalaryDetail implements Serializable
 		this.createSalaryBudgetTable = createSalaryBudgetTable;
 	}
 	
+	@ManyToOne(cascade={CascadeType.REFRESH},optional=true)
+	@JoinColumn(name="enterprise_id")
+	@NotFound(action=NotFoundAction.IGNORE)
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
+
 }

@@ -12,12 +12,14 @@ import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
+import cn.fm.bean.user.WmsUser;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.salary.BalanceDetailService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.StringUtil;
+import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
 
@@ -47,101 +49,10 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	private   String         reductionNote;
 	
 	private int page;
-	
-	
-	
-	
-	
-	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
-		return createSalaryBudgetTable;
-	}
-	public void setCreateSalaryBudgetTable(
-			CreateSalaryBudgetTable createSalaryBudgetTable) {
-		this.createSalaryBudgetTable = createSalaryBudgetTable;
-	}
-	public int getPage() {
-		return page<1?1:page;
-	}
-	public void setPage(int page) {
-		this.page = page;
-	}
-	
-	public Integer getReductionState() {
-		return reductionState;
-	}
-
-	public void setReductionState(Integer reductionState) {
-		this.reductionState = reductionState;
-	}
-
-	public Integer getEnterpriseId() {
-		return enterpriseId;
-	}
-
-	public void setEnterpriseId(Integer enterpriseId) {
-		this.enterpriseId = enterpriseId;
-	}
-
-	public Integer getYearSub() {
-		return yearSub;
-	}
-
-	public void setYearSub(Integer yearSub) {
-		this.yearSub = yearSub;
-	}
-
-	public Integer getMonth() {
-		return month;
-	}
-
-	public void setMonth(Integer month) {
-		this.month = month;
-	}
-
-	public String getYear() {
-		return year;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
-
-	
-	public String getReductionNote() {
-		return reductionNote;
-	}
-
-	public void setReductionNote(String reductionNote) {
-		this.reductionNote = reductionNote;
-	}
-
-	public void setCreateSalaryBudgetTableService(
-			CreateSalaryBudgetTableService createSalaryBudgetTableService) {
-		this.createSalaryBudgetTableService = createSalaryBudgetTableService;
-	}
-
-	public void setEnterpriseEmployeesService(
-			EnterpriseEmployeesService enterpriseEmployeesService) {
-		this.enterpriseEmployeesService = enterpriseEmployeesService;
-	}
-
-	public void setBalanceDetailService(BalanceDetailService balanceDetailService) {
-		this.balanceDetailService = balanceDetailService;
-	}
+	private Integer   budgetId;
 	
 	
 
-	public void setEnterpriseService(EnterpriseService enterpriseService) {
-		this.enterpriseService = enterpriseService;
-	}
-
-	public List<EnterpriseEmployees> getEmployeesRecution() {
-		return employeesRecution;
-	}
-
-	public void setEmployeesRecution(List<EnterpriseEmployees> employeesRecution) {
-		this.employeesRecution = employeesRecution;
-	}
 
 	/**
 	 * 查看工资预算表
@@ -154,7 +65,7 @@ public class CompanylistWithSalaryAction extends BaseAction{
 			this.year=DateUtil.getCurrentTime().toString().substring(0, 4);
 		}
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("budgetId", "asc");
+		orderby.put("budgetId", "desc");
 		StringBuffer jpql = new StringBuffer("");
 		List<Object> params = new ArrayList<Object>();
 		
@@ -271,8 +182,8 @@ public class CompanylistWithSalaryAction extends BaseAction{
 			this.year=DateUtil.getCurrentTime().toString().substring(0, 4);
 		}
 		String formCurrentSql=" o.enterprise.enterpriseId, SUM(o.balance)";
-		String groupby="   group by o.enterprise.enterpriseId order by o.enterprise.enterpriseId asc ";
-		
+		String groupby="   group by o.enterprise.enterpriseId order by o.enterprise.enterpriseId desc ";
+		String groupCount="group by o.enterprise.enterpriseId";
 		StringBuffer jpql = new StringBuffer("");
 		
 		List<Object> params = new ArrayList<Object>();
@@ -285,10 +196,6 @@ public class CompanylistWithSalaryAction extends BaseAction{
 			}
 			jpql.append(" year(o.yearMonth)=?").append(params.size()+1);
 			params.add(Integer.parseInt(year));
-			
-			
-			
-			
 		}
 		PageView<BalanceDetail> pageView = new PageView<BalanceDetail>(10,  this.getPage());
 		pageView.setQueryResult(balanceDetailService.getScrollDataSum(pageView.getFirstResult(), pageView.getMaxresult(),jpql.toString(),params.toArray(), groupby,formCurrentSql));
@@ -337,11 +244,143 @@ public class CompanylistWithSalaryAction extends BaseAction{
 		
 		return SUCCESS;
 	}
+	public String findSalaryTable()
+	{
+		if(budgetId==null)return SUCCESS;
+		createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		return SUCCESS;
+	}
 	public String updateSaralyStatus()
 	{
-		
-		createSalaryBudgetTableService.update(createSalaryBudgetTable);
+//		CreateSalaryBudgetTable createSalaryBudgetTablePO=createSalaryBudgetTableService.find(budgetId);
+//		createSalaryBudgetTableService.clear();
+//		createSalaryBudgetTablePO.setHeLinesDate(createSalaryBudgetTable.getHeLinesDate());
+//		createSalaryBudgetTablePO.setCmbcDate(createSalaryBudgetTable.getCmbcDate());
+//		createSalaryBudgetTablePO.setCashnumberDate(createSalaryBudgetTable.getCashnumberDate());
+//		
+//		createSalaryBudgetTableService.update(createSalaryBudgetTablePO);
+		WmsUser user=WebUtil.getWmsUser(request);
+		createSalaryBudgetTable.setUser_operator(user.getUsername());
+		createSalaryBudgetTable.setBudgetId(budgetId);
+		createSalaryBudgetTableService.updateSalaryStatus(createSalaryBudgetTable);
 		
 		return SUCCESS;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public Integer getBudgetId() {
+		return budgetId;
+	}
+	public void setBudgetId(Integer budgetId) {
+		this.budgetId = budgetId;
+	}
+	public CreateSalaryBudgetTable getCreateSalaryBudgetTable() {
+		return createSalaryBudgetTable;
+	}
+	public void setCreateSalaryBudgetTable(
+			CreateSalaryBudgetTable createSalaryBudgetTable) {
+		this.createSalaryBudgetTable = createSalaryBudgetTable;
+	}
+	public int getPage() {
+		return page<1?1:page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	
+	public Integer getReductionState() {
+		return reductionState;
+	}
+
+	public void setReductionState(Integer reductionState) {
+		this.reductionState = reductionState;
+	}
+
+	public Integer getEnterpriseId() {
+		return enterpriseId;
+	}
+
+	public void setEnterpriseId(Integer enterpriseId) {
+		this.enterpriseId = enterpriseId;
+	}
+
+	public Integer getYearSub() {
+		return yearSub;
+	}
+
+	public void setYearSub(Integer yearSub) {
+		this.yearSub = yearSub;
+	}
+
+	public Integer getMonth() {
+		return month;
+	}
+
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	
+	public String getReductionNote() {
+		return reductionNote;
+	}
+
+	public void setReductionNote(String reductionNote) {
+		this.reductionNote = reductionNote;
+	}
+
+	public void setCreateSalaryBudgetTableService(
+			CreateSalaryBudgetTableService createSalaryBudgetTableService) {
+		this.createSalaryBudgetTableService = createSalaryBudgetTableService;
+	}
+
+	public void setEnterpriseEmployeesService(
+			EnterpriseEmployeesService enterpriseEmployeesService) {
+		this.enterpriseEmployeesService = enterpriseEmployeesService;
+	}
+
+	public void setBalanceDetailService(BalanceDetailService balanceDetailService) {
+		this.balanceDetailService = balanceDetailService;
+	}
+	
+	
+
+	public void setEnterpriseService(EnterpriseService enterpriseService) {
+		this.enterpriseService = enterpriseService;
+	}
+
+	public List<EnterpriseEmployees> getEmployeesRecution() {
+		return employeesRecution;
+	}
+
+	public void setEmployeesRecution(List<EnterpriseEmployees> employeesRecution) {
+		this.employeesRecution = employeesRecution;
 	}
 }

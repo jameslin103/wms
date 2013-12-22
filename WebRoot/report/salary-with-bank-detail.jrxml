@@ -1,140 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salary-with-bank-detail" pageWidth="900" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="860" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b90490cb-f2da-4549-b4e8-415554831a05">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salary-with-bank-detail" pageWidth="562" pageHeight="750" whenNoDataType="AllSectionsNoDetail" columnWidth="542" leftMargin="10" rightMargin="10" topMargin="5" bottomMargin="2" isIgnorePagination="true" uuid="b90490cb-f2da-4549-b4e8-415554831a05">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="title" class="java.lang.String"/>
 	<parameter name="username" class="java.lang.String"/>
 	<parameter name="image" class="java.lang.String"/>
+	<parameter name="salaryDate" class="java.lang.String"/>
 	<queryString language="plsql">
 		<![CDATA[]]>
 	</queryString>
-	<field name="accumulationFund" class="java.lang.String">
-		<fieldDescription><![CDATA[accumulationFund]]></fieldDescription>
+	<field name="wage" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[wage]]></fieldDescription>
 	</field>
-	<field name="addCount" class="java.lang.Long">
-		<fieldDescription><![CDATA[addCount]]></fieldDescription>
-	</field>
-	<field name="bank" class="java.lang.String">
-		<fieldDescription><![CDATA[bank]]></fieldDescription>
-	</field>
-	<field name="bankCardNumber" class="java.lang.String">
-		<fieldDescription><![CDATA[bankCardNumber]]></fieldDescription>
-	</field>
-	<field name="base" class="java.lang.Integer">
-		<fieldDescription><![CDATA[base]]></fieldDescription>
-	</field>
-	<field name="basicMedical" class="java.lang.Double">
-		<fieldDescription><![CDATA[basicMedical]]></fieldDescription>
-	</field>
-	<field name="cardNumber" class="java.lang.String">
-		<fieldDescription><![CDATA[cardNumber]]></fieldDescription>
-	</field>
-	<field name="cinsengDate" class="java.util.Date">
-		<fieldDescription><![CDATA[cinsengDate]]></fieldDescription>
-	</field>
-	<field name="class" class="java.lang.Class">
-		<fieldDescription><![CDATA[class]]></fieldDescription>
-	</field>
-	<field name="contractNo" class="java.lang.String">
-		<fieldDescription><![CDATA[contractNo]]></fieldDescription>
-	</field>
-	<field name="createDate" class="java.util.Date">
-		<fieldDescription><![CDATA[createDate]]></fieldDescription>
-	</field>
-	<field name="employeesId" class="java.lang.Integer">
-		<fieldDescription><![CDATA[employeesId]]></fieldDescription>
+	<field name="moneyToCards" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[moneyToCards]]></fieldDescription>
 	</field>
 	<field name="employeesName" class="java.lang.String">
 		<fieldDescription><![CDATA[employeesName]]></fieldDescription>
 	</field>
-	<field name="employeesSex" class="java.lang.String">
-		<fieldDescription><![CDATA[employeesSex]]></fieldDescription>
+	<field name="bankCardNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[bankCardNumber]]></fieldDescription>
 	</field>
-	<field name="endContractDeadline" class="java.util.Date">
-		<fieldDescription><![CDATA[endContractDeadline]]></fieldDescription>
-	</field>
-	<field name="enterprise" class="cn.fm.bean.company.Enterprise">
-		<fieldDescription><![CDATA[enterprise]]></fieldDescription>
-	</field>
-	<field name="fertilityInsurance" class="java.lang.Double">
-		<fieldDescription><![CDATA[fertilityInsurance]]></fieldDescription>
-	</field>
-	<field name="ginsengProtectNature" class="java.lang.String">
-		<fieldDescription><![CDATA[ginsengProtectNature]]></fieldDescription>
-	</field>
-	<field name="healthCare" class="java.lang.String">
-		<fieldDescription><![CDATA[healthCare]]></fieldDescription>
-	</field>
-	<field name="homeAddress" class="java.lang.String">
-		<fieldDescription><![CDATA[homeAddress]]></fieldDescription>
-	</field>
-	<field name="householdRegister" class="java.lang.Integer">
-		<fieldDescription><![CDATA[householdRegister]]></fieldDescription>
-	</field>
-	<field name="housingFund" class="java.lang.Double">
-		<fieldDescription><![CDATA[housingFund]]></fieldDescription>
-	</field>
-	<field name="inductrialBase" class="java.lang.Double">
-		<fieldDescription><![CDATA[inductrialBase]]></fieldDescription>
-	</field>
-	<field name="industry" class="java.lang.String">
-		<fieldDescription><![CDATA[industry]]></fieldDescription>
-	</field>
-	<field name="jobs" class="java.lang.String">
-		<fieldDescription><![CDATA[jobs]]></fieldDescription>
-	</field>
-	<field name="levelEducation" class="java.lang.String">
-		<fieldDescription><![CDATA[levelEducation]]></fieldDescription>
-	</field>
-	<field name="maritalStatus" class="java.lang.Integer">
-		<fieldDescription><![CDATA[maritalStatus]]></fieldDescription>
-	</field>
-	<field name="nativePlace" class="java.lang.String">
-		<fieldDescription><![CDATA[nativePlace]]></fieldDescription>
+	<field name="cardNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[cardNumber]]></fieldDescription>
 	</field>
 	<field name="note" class="java.lang.String">
 		<fieldDescription><![CDATA[note]]></fieldDescription>
 	</field>
-	<field name="paymentWay" class="java.lang.String">
-		<fieldDescription><![CDATA[paymentWay]]></fieldDescription>
+	<field name="bank" class="java.lang.String">
+		<fieldDescription><![CDATA[bank]]></fieldDescription>
 	</field>
-	<field name="phone" class="java.lang.String">
-		<fieldDescription><![CDATA[phone]]></fieldDescription>
-	</field>
-	<field name="photo" class="java.lang.Integer">
-		<fieldDescription><![CDATA[photo]]></fieldDescription>
-	</field>
-	<field name="pseudoDelete" class="java.lang.Integer">
-		<fieldDescription><![CDATA[pseudoDelete]]></fieldDescription>
-	</field>
-	<field name="renewalCount" class="java.lang.Long">
-		<fieldDescription><![CDATA[renewalCount]]></fieldDescription>
-	</field>
-	<field name="seriousDisease" class="java.lang.Integer">
-		<fieldDescription><![CDATA[seriousDisease]]></fieldDescription>
-	</field>
-	<field name="seriousDiseaseBase" class="java.lang.Double">
-		<fieldDescription><![CDATA[seriousDiseaseBase]]></fieldDescription>
-	</field>
-	<field name="serviceCost" class="java.lang.Double">
-		<fieldDescription><![CDATA[serviceCost]]></fieldDescription>
-	</field>
-	<field name="sociaSecurity" class="java.lang.String">
-		<fieldDescription><![CDATA[sociaSecurity]]></fieldDescription>
-	</field>
-	<field name="socialInsurance" class="java.lang.Double">
-		<fieldDescription><![CDATA[socialInsurance]]></fieldDescription>
-	</field>
-	<field name="startContractDeadline" class="java.util.Date">
-		<fieldDescription><![CDATA[startContractDeadline]]></fieldDescription>
-	</field>
-	<field name="whetherGinseng" class="java.lang.Integer">
-		<fieldDescription><![CDATA[whetherGinseng]]></fieldDescription>
-	</field>
-	<field name="whetherGinsengCount" class="java.lang.Long">
-		<fieldDescription><![CDATA[whetherGinsengCount]]></fieldDescription>
-	</field>
+	<variable name="sum_wage" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new java.math.BigDecimal($V{sum_wage}.doubleValue()+$F{moneyToCards}.doubleValue())]]></variableExpression>
+		<initialValueExpression><![CDATA[new java.math.BigDecimal(0.00)]]></initialValueExpression>
+	</variable>
 	<group name="salaryId">
 		<groupExpression><![CDATA[]]></groupExpression>
 	</group>
@@ -142,52 +42,91 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="32" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="01925ee5-2d63-4f75-8311-0474b5688091" x="84" y="0" width="687" height="32"/>
-				<textElement textAlignment="Center">
-					<font size="22" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
-			</textField>
+		<band height="74" splitType="Stretch">
 			<image>
-				<reportElement uuid="b7088228-11dc-4afb-af6d-0074a4884b44" x="0" y="0" width="84" height="32"/>
+				<reportElement uuid="b7088228-11dc-4afb-af6d-0074a4884b44" x="0" y="0" width="97" height="74"/>
+				<imageExpression><![CDATA[$P{image}]]></imageExpression>
 				<anchorNameExpression><![CDATA[$P{image}]]></anchorNameExpression>
 			</image>
+			<textField>
+				<reportElement uuid="b9fe21db-9e5b-472b-afb0-4fc871d28b2c" x="97" y="0" width="446" height="74"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["福建富民劳动保障事务代理有限公司工资发放表"]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="41" splitType="Stretch">
+		<band height="88" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="yyyy年MM月dd日">
-				<reportElement uuid="09250472-7f6c-465d-ad1d-d6a6078d1f50" x="84" y="0" width="100" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement uuid="09250472-7f6c-465d-ad1d-d6a6078d1f50" x="96" y="28" width="446" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="abb0138a-e0a1-4dd4-a878-323ff32d6348" x="0" y="0" width="84" height="20"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="abb0138a-e0a1-4dd4-a878-323ff32d6348" x="1" y="28" width="95" height="20"/>
+				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["制表时间:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="8e34455e-cebd-484a-8c76-9beef837259a" x="0" y="20" width="84" height="20"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="8e34455e-cebd-484a-8c76-9beef837259a" x="1" y="48" width="95" height="20"/>
+				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["制 表 人:"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["制  表  人:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e83c5172-9edd-481e-adaa-e490aefe6f0c" x="84" y="20" width="100" height="20"/>
-				<textElement/>
+				<reportElement uuid="e83c5172-9edd-481e-adaa-e490aefe6f0c" x="96" y="48" width="446" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{username}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement uuid="eb29bc5d-1866-4410-bfd0-4eba37f03ce7" x="1" y="0" width="95" height="28"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["客      户:"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="5b18f53e-5b2d-49b0-b7cc-d53d38e756ea" x="96" y="0" width="447" height="28"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy年MM" isBlankWhenNull="true">
+				<reportElement uuid="3fec7f9f-0915-46de-871a-cc534c3d6fc1" mode="Opaque" x="97" y="68" width="445" height="20" forecolor="#FF3300" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{salaryDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9f46b91c-8e6f-41ec-98d4-0787040416fb" x="1" y="68" width="95" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[工资月份：]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="35" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="8399ea1e-c51f-473e-968c-6301a401b138" mode="Opaque" x="52" y="1" width="157" height="34" backcolor="#999999"/>
+				<reportElement uuid="8399ea1e-c51f-473e-968c-6301a401b138" mode="Opaque" x="31" y="1" width="80" height="34" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -200,7 +139,20 @@
 				<text><![CDATA[姓名]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="110b943b-24eb-4e16-973f-e814ab552ffb" mode="Opaque" x="209" y="1" width="157" height="34" backcolor="#00FFCC"/>
+				<reportElement uuid="7b1576fe-03c3-4292-bc3e-fc7476c49c8c" mode="Opaque" x="268" y="1" width="71" height="34" backcolor="#999999"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[工资金额(元)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bae0a922-4e25-4699-a230-967574bac9dc" mode="Opaque" x="0" y="1" width="31" height="34" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -210,10 +162,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[身份证]]></text>
+				<text><![CDATA[序号]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b6c11b10-b67d-426a-ab69-ec70027ee933" mode="Opaque" x="366" y="1" width="181" height="34" backcolor="#999999"/>
+				<reportElement uuid="8aaea9d1-9d69-4b83-aa55-23528a19b69e" mode="Opaque" x="339" y="1" width="87" height="34" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -223,10 +175,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[银行名称]]></text>
+				<text><![CDATA[签收]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="63365889-c711-40bd-b460-84f80b2b033f" mode="Opaque" x="547" y="1" width="153" height="34" backcolor="#FFFF99"/>
+				<reportElement uuid="63365889-c711-40bd-b460-84f80b2b033f" mode="Opaque" x="111" y="1" width="156" height="34" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -239,7 +191,7 @@
 				<text><![CDATA[卡号]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7b1576fe-03c3-4292-bc3e-fc7476c49c8c" mode="Opaque" x="700" y="1" width="160" height="34" backcolor="#FF0000"/>
+				<reportElement uuid="2453ab65-107e-429f-af18-a5a40c8e85c4" mode="Opaque" x="426" y="1" width="116" height="34" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -249,90 +201,89 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[工资金额(元)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="bae0a922-4e25-4699-a230-967574bac9dc" mode="Opaque" x="0" y="1" width="52" height="34" backcolor="#00CCFF"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[序号]]></text>
+				<text><![CDATA[备注]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement uuid="dc42e6f7-a8e5-4950-b209-ec97b6e5dda3" x="209" y="0" width="157" height="22"/>
+				<reportElement uuid="ac6d57d6-a24c-4d1d-ade4-8c871d20d882" x="0" y="0" width="31" height="22"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{cardNumber}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="ac6d57d6-a24c-4d1d-ade4-8c871d20d882" x="0" y="0" width="52" height="22"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{employeesId}]]></textFieldExpression>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="f6d2c08c-e330-4f45-8328-5493e298dc04" x="52" y="0" width="157" height="22"/>
+				<reportElement uuid="f6d2c08c-e330-4f45-8328-5493e298dc04" isPrintRepeatedValues="false" x="31" y="0" width="80" height="22"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[($F{employeesName}==null) ? "/":$F{employeesName}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="8c07db98-b40f-4a1f-a988-1db49bab3c31" x="700" y="0" width="160" height="22"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="13dbf389-b08e-404a-96a2-b09f552abc44" x="339" y="0" width="87" height="22"/>
+				<box topPadding="0" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{seriousDisease}]]></textFieldExpression>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="9631ff5d-1e27-4960-8f08-db01f1575325" x="366" y="0" width="181" height="22"/>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b73a9e1e-cb53-41ae-983c-d715e92f8d9b" x="426" y="0" width="116" height="22"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{bank}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="b0326998-d1f2-4fa5-ab1c-1822ee488e46" x="547" y="0" width="153" height="22"/>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b0326998-d1f2-4fa5-ab1c-1822ee488e46" x="111" y="0" width="156" height="22"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{bankCardNumber}]]></textFieldExpression>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bankCardNumber}==null?"":$F{bankCardNumber}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8c07db98-b40f-4a1f-a988-1db49bab3c31" x="267" y="0" width="72" height="22"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{moneyToCards}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -343,6 +294,72 @@
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3f5814b0-27f0-4bc5-a94a-0348db8b67fa" mode="Opaque" x="0" y="0" width="111" height="28" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[合计:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="be8fae9b-1dc0-4867-9987-dd4015ab06ad" x="111" y="0" width="156" height="28" forecolor="#000000"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5003b760-8ba9-43bf-9b16-74e015cb9170" x="339" y="0" width="87" height="28" forecolor="#000000"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3e0da73b-fe67-412b-a2e5-d449835af1c5" x="426" y="0" width="116" height="28" forecolor="#000000"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c3ba0362-edec-4d56-8623-2db24612dcea" x="267" y="0" width="72" height="28" forecolor="#000000"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sum_wage}]]></textFieldExpression>
+			</textField>
+		</band>
 	</summary>
 </jasperReport>

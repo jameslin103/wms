@@ -10,7 +10,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<%@ include file="/help/public_css_js.jsp" %>
+		<%@ include file="/help/public_css_js.jsp" %>
+		<script>
+			function topage(page)
+			{
+				var form = document.getElementById("myform1");
+					form.page.value=page;
+					form.submit();
+			}
+		</script>
+		
 </head>
 <body>
 
@@ -43,6 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </ul>
          
 		<form action="viewCompanyListWithBalance" class="select-for-year" method="post" id="myform1">
+			<input type="hidden" name="page"/>
           <ul class="normal action-container clearfix">
             <li class="right">
 				按年份查询:
@@ -91,23 +101,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		<div id="footer"></div>
 	</div>
-
-<!--   <div id="info-for-check" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">增减员与参保</h3>
-    </div>
-
-    <div class="modal-body">
-      <div class="row-fluid">
-
-      </div>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-  </div> -->
 </body>
 
 </html>

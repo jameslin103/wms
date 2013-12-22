@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta http-equiv="pragma" content="no-cache"/> 
 		<meta http-equiv="cache-control" content="no-cache"/> 
-		<meta http-equiv="expires" content="0"/>  
+		<meta http-equiv="expires" content="0"/>
 	    <%@ include file="/help/public_css_js.jsp" %>
 	<script type="text/javascript">
 		function topage(page){
@@ -79,7 +79,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="viewMinshengBank?budgetId=<s:property value="%{#request.budgetId}"/>">民生银行</a>，</li>
             <li><a href="viewOtherBank?budgetId=<s:property value="%{#request.budgetId}"/>">他行</a>，</li>
             <li><a href="viewCashIssue?budgetId=<s:property value="%{#request.budgetId}"/>">现金</a></li>
-            <li class="right"><a href="downloadBankIssueSalary" class="btn btn-primary">下载Excel表格</a></li>
+             <li style="color:#2E9AFE;">
+             	<div style="padding-left:580px;">
+             		<input type="radio" checked="checked" name="ischoosie" value="0"/>全部
+             		<input type="radio" name="ischoosie" value="1"/>民生银行
+             		<input type="radio" name="ischoosie" value="2"/>他行
+             		<input type="radio" name="ischoosie" value="3"/>现金
+             	</div>
+             	
+             </li>
+            <li class="right">
+            	<a href="downloadBankIssueSalary?budgetId=<s:property value="%{#request.budgetId}"/>" class="btn btn-primary">下载Excel表格</a>
+            </li>
           </ul>
 		  <s:form action="viewSalaryWithBankPersonalNumber" method="post" id="myform1">
 		  	 <input type="hidden" name="page"/>
@@ -89,7 +100,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <tr>
                 <th style="text-align: center;">序</th>
                 <th style="text-align: center;">姓名</th>
-                <th style="text-align: center;">身份证</th>
                 <th style="text-align: center;">银行名称</th>
                 <th style="text-align: center;">卡号</th>
                 <th style="text-align: center;">工资金额（元）</th>
@@ -100,10 +110,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <tr>
                 <td style="text-align: center;"><s:property value="%{#list.index+1}"/></td>
                 <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.employeesName}"/></td>
-                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.cardNumber}"/></td>
-                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.note}"/></td>
+                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.bank}"/></td>
                 <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.bankCardNumber}"/></td>
-                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.wage}"/></td>
+                <td style="text-align: center;"><s:property value="%{#employeesSalaryDetail.moneyToCards}"/></td>
               </tr>
               </s:iterator>
             </tbody>

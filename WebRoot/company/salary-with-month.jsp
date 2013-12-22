@@ -13,6 +13,7 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
+		  
 		<script>
 			$(function (){
 				$("input[name='year']").blur(function (){
@@ -22,7 +23,6 @@
 					}
 				});
 			});
-		
 		</script>
 	</head>
 	<body>
@@ -156,8 +156,12 @@
 														<s:property value="#value.createSalaryBudgetTable.name"/>
 													</s:else>
 													<s:date name="#value.createSalaryBudgetTable.salaryDate" format="MM月"/>工资
-													<span class="blue">（<s:property value="#value.createSalaryBudgetTable.note"/>）</span>
-													<a href="returnToModifySalaryBudgetTable?createSalaryBudgetTable.budgetId=<s:property value="#value.createSalaryBudgetTable.budgetId"/>" style="color: red;">修改</a>
+													<span class="blue">
+														<s:if test="#value.createSalaryBudgetTable.note!=null && #!value.createSalaryBudgetTable.note.empty()">
+															（<s:property value="#value.createSalaryBudgetTable.note"/>）
+														</s:if>
+													</span>
+													<a href="returnToModifyBudgetTable?budgetId=<s:property value="#value.createSalaryBudgetTable.budgetId"/>" style="color: red;">修改</a>
 												</li>
 												</s:if>
 												

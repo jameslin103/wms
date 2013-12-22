@@ -19,12 +19,9 @@
 			{
 				var form = document.getElementById("myformlist");
 					form.page.value=page;
-				//form.action='viewEnterpriseEmployees?page='+page;
-				form.submit();
+					form.submit();
 			}
-			$(function(){
-				alert("xxx");
-			});
+		
 		</script>
 	</head>
 	<body>
@@ -50,7 +47,7 @@
 						</s:if>
 						<s:if test="#menu.url=='viewCompanyListWithBalance'">
 							<li>
-								<a href="viewCompanyListWithBalance">资金往来</a>
+								<a href="viewCompanyListWithBalance">资金往来</a>	
 							</li>
 						</s:if>
 					 </s:iterator>
@@ -133,7 +130,7 @@
 								</th>
 								<th>
 									民生
-									<br>
+									<br/>
 									银行（人）
 								</th>
 								<th>
@@ -155,12 +152,24 @@
 										<s:property value="%{#list.index+1}"/>
 									</td>
 									<td>
-										<s:property value="%{#createSalaryBudgetTable.enterprise.fullName}"/>
+										<s:if test="#createSalaryBudgetTable.enterprise.fullName.length()>10">
+											<s:property value="#createSalaryBudgetTable.enterprise.fullName.substring(0,10)+'...'"/>
+										</s:if>
+										<s:else>
+											<s:property value="#createSalaryBudgetTable.enterprise.fullName"/>
+										</s:else>
 									</td>
 									<td>
-										<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#createSalaryBudgetTable.enterprise.enterpriseId}"/>
+										<a href="viewAllEmployeesSalaryDetail?enterpriseId=<s:property value="%{#createSalaryBudgetTable.enterprise.enterpriseId}"/>
 													&budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">
-										<s:property value="%{#createSalaryBudgetTable.name}"/></a>
+										<s:if test="#createSalaryBudgetTable.name.length()>10">
+											<s:property value="#createSalaryBudgetTable.name.substring(0,10)+'...'"/>
+										</s:if>
+										<s:else>
+											<s:property value="%{#createSalaryBudgetTable.name}"/>
+										</s:else>
+										
+										</a>
 									</td>
 									<td>
 										<s:date name="%{#createSalaryBudgetTable.salaryDate}" format="yyyy年MM月"/>
@@ -180,28 +189,35 @@
 									<td>
 										<s:property value="%{#createSalaryBudgetTable.issueNumber}"/>
 										<br/>
-										<a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">查看</a>
-									</td>
-									<td>
-										<s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/>
-										<br/>
-										<span class="em">（已发放）</span>
-										<br/>
-										<s:date name="%{#createSalaryBudgetTable.cmbcDate}" format="yyyy年MM月dd日HH时"/>
+										<a href="viewSalaryWithBankPersonalNumber?enterpriseId=<s:property value="%{#createSalaryBudgetTable.enterprise.enterpriseId}"/>&budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">查看</a>
 									</td>
 									<td>
 										<s:property value="%{#request.createSalaryBudgetTable.cmbc}"/>
 										<br/>
-										<span class="em">（已发放）</span>
-										<br/>
-										<s:date name="%{#createSalaryBudgetTable.cashnumberDate}" format="yyyy年MM月dd日HH时"/>
+										<s:if test="#createSalaryBudgetTable.cmbcDate!=null">
+											<span class="em">（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
+											<br/>
+											<s:date name="%{#createSalaryBudgetTable.cmbcDate}" format="yyyy年MM月dd日HH时"/>
+										</s:if>
 									</td>
 									<td>
 										<s:property value="%{#request.createSalaryBudgetTable.heLines}"/>
 										<br/>
-										<span class="em">（已发放）</span>
+										<s:if test="#createSalaryBudgetTable.heLinesDate!=null">
+											<span class="em">（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
+											<br/>
+											<s:date name="%{#createSalaryBudgetTable.heLinesDate}" format="yyyy年MM月dd日HH时"/>
+										</s:if>
+										
+									</td>
+									<td>
+										<s:property value="%{#request.createSalaryBudgetTable.cashnumber}"/>
 										<br/>
-										<s:date name="%{#createSalaryBudgetTable.heLinesDate}" format="yyyy年MM月dd日HH时"/>
+										<s:if test="#createSalaryBudgetTable.cashnumberDate!=null">
+											<span class="em">（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
+											<br/>
+											<s:date name="%{#createSalaryBudgetTable.cashnumberDate}" format="yyyy年MM月dd日HH时"/>
+										</s:if>
 									</td>
 									<td>
 										<ul>
@@ -210,8 +226,9 @@
 												<s:date name="%{#createSalaryBudgetTable.createDate}" format="yyyy-MM-dd,HH:ss"/>
 											</li>
 											<li>
-												发放：<s:property value=""/>
-												<a href="#info-for-check2" data-toggle="modal">操作</a>
+												发放：<s:property value="%{#createSalaryBudgetTable.user_operator}"/>
+												<s:set value="%{#createSalaryBudgetTable.budgetId}" id="budgetId"/>
+												<a href="#info-for-check2" data-toggle="modal" onclick="findSalaryTable('${budgetId}')">操作</a>
 											</li>
 										</ul>
 									</td>
@@ -299,6 +316,8 @@
 			<div class="modal-body">
 				<div class="row-fluid">
 					<form action="updateSaralyStatus" method="post">
+					   <input type="hidden" name="budgetId"/>
+					   <input type="hidden" name="page" value="${page}"/>
 						<div class="input-container">
 							<label>
 								民生银行
@@ -307,7 +326,6 @@
 								name="createSalaryBudgetTable.cmbcDate"
 								 onfocus="WdatePicker(d4311)" class="Wdate" />
 						</div>
-
 						<div class="input-container">
 							<label>
 								他行
@@ -316,7 +334,7 @@
 								name="createSalaryBudgetTable.heLinesDate"
 								 onfocus="WdatePicker(d4312)" class="Wdate" />
 						</div>
-
+						
 						<div class="input-container">
 							<label>
 								现金
@@ -325,7 +343,12 @@
 								name="createSalaryBudgetTable.cashnumberDate"
 								 onfocus="WdatePicker(d4313)" class="Wdate" />
 						</div>
-
+						<div class="input-container">
+							<label>
+								备注:
+							</label>
+							<input name="createSalaryBudgetTable.status" type="text"/>
+						</div>
 						<div class="input-container">
 							<label>
 								&nbsp;

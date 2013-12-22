@@ -17,15 +17,15 @@ public class PersonalTaxUtil {
 	 * @param threshold
 	 * @return 所交的税
 	 */
-	public static BigDecimal  getPersonalTaxResults(Double wage,Double threshold, Double fiveBase){
+	public static BigDecimal  getPersonalTaxResults(Double beforeSalary,Double threshold){
 		
 		BigDecimal  results = null;
 		Double remainingWage=0.0;
-		if(wage<threshold){
+		if(beforeSalary<threshold){
 			results=new BigDecimal("0.0");
 			return results;
 		}else{
-			remainingWage=wage-threshold-fiveBase;
+			remainingWage=beforeSalary-threshold;
 		}
 		if(remainingWage<0){
 			results=new BigDecimal("0.0");
@@ -33,7 +33,7 @@ public class PersonalTaxUtil {
 		}
 		
 		if(remainingWage!=0){
-			if(remainingWage==1500){
+			if(remainingWage<=1500){
 				results=new BigDecimal(remainingWage*0.03-0).setScale(2,BigDecimal.ROUND_HALF_DOWN);
 			}else if(remainingWage>=1500 && remainingWage<=4500){
 				results=new BigDecimal(remainingWage*0.1-105).setScale(2,BigDecimal.ROUND_HALF_DOWN);

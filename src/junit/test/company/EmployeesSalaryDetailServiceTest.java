@@ -4,6 +4,7 @@ package junit.test.company;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,6 +16,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.service.base.BaseGrid;
+import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
 import cn.fm.utils.PersonalTaxUtil;
 
@@ -30,26 +32,10 @@ public class EmployeesSalaryDetailServiceTest {
 		
 	}
 	@Test
-	public void   fiveInsuter()
-	{
-		
-		BigDecimal total=employeesSalaryDetailService.getFiveInsuranceTotal(17, 22);
-		System.out.println(total);
-		
-	}
-	@Test
 	public void   numberPersonlTotal()
 	{
 		
 		Integer total=Integer.parseInt(employeesSalaryDetailService.getNumberPersonlTotal(17, 22)+"");
-		System.out.println(total);
-		
-	}
-	@Test
-	public void   invoiceTotal()
-	{
-		
-		BigDecimal total=employeesSalaryDetailService.getInvoiceTotal(17, 22);
 		System.out.println(total);
 		
 	}
@@ -130,7 +116,7 @@ public class EmployeesSalaryDetailServiceTest {
    @Test 
    public void personalTax()
    {
-	   BigDecimal result=PersonalTaxUtil.getPersonalTaxResults(4000.00,3500.00, 1000.00);
+	   BigDecimal result=PersonalTaxUtil.getPersonalTaxResults(3816.52,3500.00);
 	   System.out.println(result);
 	   
    }
@@ -319,4 +305,52 @@ public class EmployeesSalaryDetailServiceTest {
 		
 		System.out.println(resultsBase);
 	}
+   @Test
+   public void aa()
+   {
+	   List<String[]> list= new ArrayList<String[]>();
+	   String[]  file={" 1"	,"DNNNC001",	"杨斌"	,"男"	,"福建"	,"是	","福建福州市",	"是"	,"本科",	"是"	,"3.52202E+17",	"88888888888"	,"领导",	"民生银行"	,"xxxx-xxxx-xxxx-xxxx"	,"2013/9/1"	,"2015/8/31"	,"30"	,"新增"	,"是"	,"2015/8/31"	,"是	","是"	,"是"	,"65"	,"是	","1200"	,"1200"	,"1200"	,"1200"	,"1200"	,"50"	,"是"};
+//	   String  file1="杨斌,88888888888";
+//	   String  file2="韩运财,88888888888";
+//	   String  file3="杨斌,88888888888";
+	  // String[]  file4={" 1	,DNNNC001,	杨斌	,男	,福建	,是	,福建福州市,	是	,本科,	是	,3.52202E+17,	88888888888	,领导,	民生银行	,xxxx-xxxx-xxxx-xxxx	,2013/9/1	,2015/8/31	,30	,新增	是	,2015/8/31	,是	,是	,是	,65	,是	,1200	,1200	,1200	,1200	,1200	,50	,是"};
+	   String[]  file4={" 1" ,"DNNNC001",	"杨斌"	,"男"	,"福建"	,"是	","福建福州市",	"是"	,"本科",	"是"	,"3.52202E+17",	"88888888888"	,"领导",	"民生银行"	,"xxxx-xxxx-xxxx-xxxx"	,"2013/9/1"	,"2015/8/31"	,"30"	,"新增"	,"是"	,"2015/8/31"	,"是	","是"	,"是"	,"65"	,"是	","1200"	,"1200"	,"1200"	,"1200"	,"1200"	,"50"	,"是"};
+
+	   list.add(file);
+//	   list.add(file1);
+//	   list.add(file2);
+//	   list.add(file3);
+	   list.add(file4);
+	   
+	  
+	   List<String>  str=new ArrayList<String>();
+	   
+	   for (String[] string : list) 
+	   {
+		  
+		   System.out.println( string[0].toString());
+	   }
+	   
+	   for (int i = 0; i < list.size(); i++) {
+		    System.out.println(list.get(i));
+		    
+			str.add(list.get(i).toString());
+		}
+	   
+	   for  ( int  i  =   0 ; i  <  str.size()  -   1 ; i ++ )//外循环是循环的次数
+	   {
+	          for  ( int  j  =  str.size()  -   1 ; j  >  i; j -- )  {//内循环是 外循环一次比较的次数
+	        	  
+	        	  if  (str.get(j).equals(str.get(i)))  {
+	                  //list.remove(j);
+	                  System.out.println("重复"+str.get(i));
+	                } 
+	            } 
+	    } 
+	   
+	    for (int i = 0; i < str.size(); i++) {
+			System.out.println(str.get(i));
+		}
+	   
+   }
 }

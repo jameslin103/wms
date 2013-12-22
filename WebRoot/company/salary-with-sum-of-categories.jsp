@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th rowspan="2" style="text-align:center">工资所属月份</th>
                 <th rowspan="2" style="text-align:center">合并计税工资表</th>
                 <th rowspan="2" style="text-align:center">性质</th>
-                <th colspan="4" style="text-align:center">工资预算表汇总信息</th>
+                <th colspan="5" style="text-align:center">工资预算表汇总信息</th>
                 <th colspan="4" style="text-align:center">发放明细</th>
                 <th colspan="1" style="text-align:center">状态</th>
                 <th rowspan="2">操作</th>
@@ -78,6 +78,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th>开票<br/>总额（元）</th>
                 <th>工资<br/>总额（元）</th>
                 <th>服务费<br/>总额（元）</th>
+                <th style="color: red;">其它方式服务费<br/>总额（元）</th>
                 <th>五险一金<br/>总额（元）</th>
                 <th>发放<br/>人数（人）</th>
                 <th>民生<br/>银行（人）</th>
@@ -92,28 +93,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </td>
                 <td><s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.chooseTax}"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.nture}"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.enterprise.insurancesTax.insurancesType==0?'市医保':'省医保'}"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.makeTotal}"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.wageTotal}"/></td>
                 <td><s:property value="%{#request.createSalaryBudgetTable.serviceTotal}"/></td>
-                <td align="center"><br/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br/>
-                <a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}"/>">查看</a>
+                  <td><s:property value="%{#request.createSalaryBudgetTable.serviceHeTotal}"/></td>
+                <td><s:property value="%{#request.createSalaryBudgetTable.fiveInsurancesTotal}"/></td>
+                <td>
+	                <s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/>
+	                <br/>
+	                <a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}"/>">查看</a>
                 </td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/><br/><span class="em">
-                	（<s:property value="%{#request.createSalaryBudgetTable.note}"/>）</span>
-                <br/><s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月dd日HH时"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.heLines}"/><br/><span class="em">
-               	（<s:property value="%{#request.createSalaryBudgetTable.note}"/>）</span>
-                <br/><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.cashnumber}"/><br/><span class="em">
-                	（<s:property value="%{#request.createSalaryBudgetTable.note}"/>）</span>
-                <br/><s:date name="%{#request.createSalaryBudgetTable.createDate}" format="yyyy年MM月dd日HH时"/></td>
+                <td>
+                	
+		                <s:property value="%{#request.createSalaryBudgetTable.cmbc}"/><br/><span class="em">
+		                  <s:if test="#request.createSalaryBudgetTable.cmbcDate!=null" >
+		                	（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
+		                <br/><s:date name="%{#request.createSalaryBudgetTable.cmbcDate}" format="yyyy年MM月dd日HH时"/>
+	                	</s:if>
+                </td>
+                <td>
+	                <s:property value="%{#request.createSalaryBudgetTable.heLines}"/><br/><span class="em">
+	                   <s:if test="#request.createSalaryBudgetTable.heLinesDate!=null" >
+	               		（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
+	                	<br/><s:date name="%{#request.createSalaryBudgetTable.heLinesDate}" format="yyyy年MM月dd日HH时"/>
+	                  </s:if>
+                </td>
+                <td>
+
+	                <s:property value="%{#request.createSalaryBudgetTable.cashnumber}"/><br/><span class="em">
+	                <s:if test="#request.createSalaryBudgetTable.cashnumberDate!=null" >
+	                	（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）
+	                	</span>
+		                <br/>
+		                <s:date name="%{#request.createSalaryBudgetTable.cashnumberDate}" format="yyyy年MM月dd日HH时"/>
+	                </s:if>
+	              
+	                
+                </td>
                 <td>
                   <ul>
                     <li>制作:<s:property value="%{#request.createSalaryBudgetTable.user.username}"/>
                     </li>
-                    <li>发放：<s:property value="%{#request.session.user.username}"/></li>
+                    <li>发放：<s:property value="%{#request.createSalaryBudgetTable.user_operator}"/></li>
                   </ul>
                 </td>
                 <td>
@@ -143,6 +165,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row-fluid">
          <s:form action="updateSalayBudgetTable" method="post">
          	  <s:hidden name="enterpriseId" value="%{#request.session.enterprise.enterpriseId}"></s:hidden>
+         	  <input name="createSalaryBudgetTable.makeTotal" type="hidden"/>
+         	  <input name="createSalaryBudgetTable.serviceTotal" type="hidden"/>
          	  <s:hidden name="createSalaryBudgetTable.budgetId"></s:hidden>
          	  <s:hidden name="budgetId"></s:hidden>
               <div class="row-fluid">
@@ -168,7 +192,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <option value="0">--请选择--</option>
                   </select>
                 </div>
-
+                <div class="input-container">
+                  <label>其它方式服务费</label>
+                  <s:textfield name="createSalaryBudgetTable.serviceHeTotal" maxlength="30"/>
+                </div>
                 <div class="input-container">
                   <label>补充说明</label>
                   <textarea rows="3" name="createSalaryBudgetTable.note" cols="30" id="note">

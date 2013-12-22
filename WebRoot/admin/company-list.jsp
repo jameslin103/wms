@@ -34,6 +34,36 @@
 			});
 		
 		}
+		
+		$(function(){
+		
+			$("#fullname").blur(function (){
+			
+			var fullname=$("#fullname").val();
+			if(fullname=="")
+			{
+				$("#errorFullName").text("企业名称必填项");
+				return;
+			}else{
+				$("#errorFullName").text("");
+				$("#errorFullName").text("*");
+				
+				$.getJSON("isExitFullname",{"enterprise.fullName":encodeURI(fullname,"utf-8")}).success(function(data)
+				{
+					if(data==1){
+						$("#errorFullName").text("此企业已存在!");
+					}
+			   
+			    });
+				
+			 }
+				
+			});	
+				
+				
+		});
+		
+		
 	</script>
 	</head>
 	<body>
@@ -57,6 +87,13 @@
 								<a href="#add-enterprise-bnt" data-toggle="modal" onclick="reset_enterprise()">添加新企业</a>
 							</li>
 						</ul>
+						<div style="text-align: right">
+						<ul   class="normal clearfix">
+							<li style="color:#2E9AFE">
+								目前总共:&nbsp;<span style="color:red;">(${pageView.totalrecord})</span>&nbsp;&nbsp;家企业
+							</li>
+						</ul>
+						</div>
 						<!-- ======================================According to  Enterprise==================================== -->
 						<s:form action="viewEnterprise" method="post" id="my_enterprise">
 							<input type="hidden" name="page"/>
@@ -74,7 +111,8 @@
 										style="background-color:transparent; border:0px; color:#2E9AFE"/><br/>
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="all_box"/>
 									</th>
-									--><th width="50%" style="text-align: center;">
+									-->
+									<th width="50%" style="text-align: center;">
 										企业
 									</th>
 									<th width="30%" style="text-align: center;">
@@ -179,7 +217,8 @@
 							<label>
 								全称
 							</label>
-							<s:textfield name="enterprise.fullName" />
+							<s:textfield name="enterprise.fullName"  id="fullname"/>
+							<span id="errorFullName" style="color: red;">*</span>
 						</div>
 
 						<div class="input-container">
@@ -216,7 +255,12 @@
 							</label>
 							<s:textfield name="enterprise.contact" />
 						</div>
-
+						<div class="input-container">
+							<label>
+								派遣联系人
+							</label>
+							<s:textfield name="enterprise.send" />
+						</div>
 						<div class="input-container">
 							<label>
 								电话
@@ -327,7 +371,12 @@
 							</label>
 							<s:textfield name="enterprise.contact"  value="%{#enterprise.contact}"/>
 						</div>
-
+						<div class="input-container">
+							<label>
+								派遣联系人
+							</label>
+							<s:textfield name="enterprise.send" />
+						</div>
 						<div class="input-container">
 							<label>
 								电话

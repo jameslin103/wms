@@ -56,4 +56,8 @@ public class Constant {
 	public final static String WMS_DYNAMIC_QUERY_FIELD_LENTH="60";
 	
 	public final  static String WMS_XUQIAN="续签";
+	
+	public final  static String LOGIN_USER_MAP="loginUser";
+	
+	public final  static String WMS_SALARY="工资";
 }

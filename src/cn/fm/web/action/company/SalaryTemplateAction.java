@@ -101,7 +101,7 @@ public class SalaryTemplateAction extends BaseAction {
 		
 		salaryTemplate=salaryTemplateService.find(templateId);
 		
-		return "salaryTemplate";
+		return SUCCESS;
 	}
 	public String updateSalaryTemplate()
 	{
