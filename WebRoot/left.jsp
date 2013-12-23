@@ -8,9 +8,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <title>无标题文档</title>
 <base href="<%=basePath%>" />
-<link rel="stylesheet" href="<%=basePath%>styles/zTreeStyle.css" type="text/css"/>
-<script type="text/javascript" src="<%=basePath%>js/jquery.ztree.all-3.4.js"></script>
 <%@ include file="/help/public_css_js.jsp"%>
+<link rel="stylesheet" href="<%=basePath%>styles/zTreeStyle.css" type="text/css"/>
+  <link rel="stylesheet" type="text/css" href="<%=basePath%>styles/wms.css"/>
+<script type="text/javascript" src="<%=basePath%>js/jquery.ztree.all-3.4.js"></script>
 <script type="text/JavaScript">
 var setting = {
 		data : {
@@ -23,7 +24,7 @@ var setting = {
 			simpleData: {
 				enable: true,
 				idKey: "menuId",
-				pIdKey: "parentMenu",
+				pIdKey: "type",
 				rootPId: null
 			},
 			keep: {
@@ -32,7 +33,7 @@ var setting = {
 			}
 		},
 		callback : {
-			onClick : function(event, treeId, treeNode) {
+			onClick:function(event, treeId, treeNode) {
 				if (!treeNode.isParent) {
 					top.mainFrame.addTab(treeNode.name,treeNode.url);
 				}
@@ -41,7 +42,7 @@ var setting = {
 	};
 
 	$(document).ready(function() {
-		$.fn.zTree.init($("#tree"), setting, ${menu});
+		$.fn.zTree.init($("#tree"), setting,${menu});
 	});
 </script>
 </head>

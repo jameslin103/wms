@@ -16,15 +16,18 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.permissions.Privilege;
 import cn.fm.bean.permissions.Role;
+import cn.fm.bean.permissions.WmsRole;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 
 
@@ -57,6 +60,11 @@ public class WmsUser implements Serializable{
 	private List<Role> roles = new ArrayList<Role>();
 	
 	private Set<CreateSalaryBudgetTable> createSalaryBudgetTable=new HashSet<CreateSalaryBudgetTable>();
+	
+	private Set<WmsRole> roless= new HashSet<WmsRole>();
+	
+	private Set<Privilege> privileges = new HashSet<Privilege>();
+	
 	
 	 
     @ManyToMany(cascade={CascadeType.REFRESH},fetch=FetchType.LAZY,mappedBy="user")          
@@ -179,6 +187,31 @@ public class WmsUser implements Serializable{
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+	
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "user_role", 
+			joinColumns = @JoinColumn(name="user_id"), 
+			inverseJoinColumns = @JoinColumn(name="role_id"))
+	public Set<WmsRole> getRoless() {
+		return roless;
+	}
+
+	public void setRoless(Set<WmsRole> roless) {
+		this.roless = roless;
+	}
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "user_priv", 
+			joinColumns = @JoinColumn(name="user_id"), 
+			inverseJoinColumns =@JoinColumn(name="priv_id"))
+	@OrderBy(value = "orderNum")
+	public Set<Privilege> getPrivileges() {
+		return privileges;
+	}
+
+	public void setPrivileges(Set<Privilege> privileges) {
+		this.privileges = privileges;
 	}
 
 	@Override

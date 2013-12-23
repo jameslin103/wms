@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>无标题文档</title>
-<%@ include file="/help/public_css_js.jsp"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/styles/wms.css"/>
 </head>
 <body>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">

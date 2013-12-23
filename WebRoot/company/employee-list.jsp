@@ -58,7 +58,7 @@
 			
 			$("#addEmployees").click(function(){
 				$.dialog({
-					id:"addEmployees",
+					id:"enterpriseEmployees",
 					content:"url:toAddEmployees",
 					title:"${session.enterprise.fullName}-(添加企业员工信息)",
 					width:"900px",

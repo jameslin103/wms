@@ -10,8 +10,9 @@
 <head>
 <title>富民派遣系统-WMS</title>
 <base href="<%=basePath%>" />
-<link rel="shortcut icon" href="images/favicon.ico" />
 <%@ include file="/help/public_css_js.jsp"%>
+<link rel="shortcut icon" href="images/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="<%=basePath%>styles/wms.css"/>
 <script type="text/javascript">
 function go(url){
 	$("#main").attr("src",url);

@@ -3,7 +3,6 @@ package cn.fm.service.company;
 import java.util.List;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.user.WmsUser;
-import cn.fm.service.base.BaseGrid;
 import cn.fm.service.base.DAO;
 
 

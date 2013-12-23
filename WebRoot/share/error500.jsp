@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   </head>
   
-<body style="background-image: url('images/system.jpg');background-repeat:no-repeat; ">
+<body>
    				<div align="center" style="margin-top:300px;"><h2>系统繁忙，请稍后再试；或者联系技术人员!!</h2></div>
    				
    				<a href="javascript:history.go(-1)">返回</a>

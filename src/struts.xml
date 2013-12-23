@@ -55,6 +55,10 @@
 		<action name="userLogin" class="cn.fm.web.action.user.LoginAction">  
             <result name="input">/login.jsp</result>
             <result name="success">/main.jsp</result>
+       
+         <!--
+        <result name="success">/dashboard.jsp</result>
+       -->
         </action>
         <action name="toViewMenuList" class="cn.fm.web.action.user.LoginAction" method="toViewMenuList">  
             <result name="success">/left.jsp</result>
@@ -104,6 +108,16 @@
         <action name="loadWmsUser" class="cn.fm.web.action.user.PermissionAction" method="loadWmsUser">
              <result name="success"></result>
         </action>
+        
+         <action name="toAdd" class="cn.fm.web.action.user.WmsRoleAction" method="toAdd">
+             <result name="success">admin/role_add.jsp</result>
+        </action>
+        <action name="addWmsRole" class="cn.fm.web.action.user.WmsRoleAction" method="addWmsRole">
+             <result name="success">/admin/role_list.jsp</result>
+        </action>
+        
+        
+        
         <action name="isExitPhone" class="cn.fm.web.action.user.PermissionAction" method="isExitPhone">
              <result name="success"></result>
         </action>    

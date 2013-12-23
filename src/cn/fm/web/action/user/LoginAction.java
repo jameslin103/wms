@@ -5,10 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
-
 import com.google.gson.GsonBuilder;
 
-import net.sf.json.JSONArray;
 import cn.fm.bean.permissions.Menu;
 import cn.fm.bean.permissions.Role;
 import cn.fm.bean.user.WmsUser;
@@ -111,7 +109,7 @@ public class LoginAction extends BaseAction{
 			
 				loginUser=wmsUserService.find(wmsUser.getPhone());
 				if( loginUser!=null){
-					//Map<String, String> loginUserMap = (Map<String, String>) super.getApplicationAttr(Constant.LOGIN_USER_MAP);  
+					
 					System.out.println(loginUser.getUsername()+"登录系统，系统时间："+DateUtil.getCurrentTime());
 					request.getSession().setAttribute("user",loginUser);
 					if (userCookie==true) 
@@ -130,11 +128,9 @@ public class LoginAction extends BaseAction{
 	public  String toViewMenuList()
 	  {
 		  List<Menu> menuList=(List<Menu>)request.getSession().getAttribute("menuList");
-
-		  //String menu= JSONArray.fromObject(menuList).toString();
-		  //request.setAttribute("menu", menu);
-		  String json = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(menuList);
-		  request.setAttribute("menu", json);
+		  
+		  String menu = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(menuList);
+		  request.setAttribute("menu", menu);
 		  return SUCCESS;
 	  }
 		
