@@ -12,6 +12,7 @@
 <title>选项卡</title>
 <%@ include file="/help/public_css_js.jsp"%>
 <link type="text/css" href="<%=basePath%>styles/tabpanel.css" rel="stylesheet" />
+<script type="text/javascript" src="<%=basePath%>js/Math.uuid.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/tabpanel.js"></script>
 
 <script type="text/javascript">
@@ -34,7 +35,6 @@
 								});
 					});
 	function addTab(tabTitle, url) {
-	    alert(url);
 		var tabs = tabpanel.tabs;
 		var isAdded=false;
 		var tabId;

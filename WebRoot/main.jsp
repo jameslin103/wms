@@ -15,7 +15,6 @@
 <link rel="stylesheet" type="text/css" href="<%=basePath%>styles/wms.css"/>
 <script type="text/javascript">
 function go(url){
-	alert(url);
 	$("#main").attr("src",url);
 }
 </script>
