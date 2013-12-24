@@ -83,7 +83,13 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	
 	public void deleteEmployeesSalaryDetail(Integer budgetId);
 	
-	
+	/**
+	 * 统计特殊补贴五险一金
+	 * @param enterpriseId
+	 * @param budgettableId
+	 * @return
+	 */
+	public BigDecimal  getfiveServiceTotal(Integer enterpriseId, Integer budgettableId);
 	
 	/**
 	 * 计算五险一金规则

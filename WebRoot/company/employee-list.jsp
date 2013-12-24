@@ -623,6 +623,12 @@
 						</div>
 						<div class="input-container">
 							<label>
+								意外险
+							</label>
+							<input type="text" name="enterpriseEmployees.accident" maxlength="30"/>
+						</div>
+						<div class="input-container">
+							<label>
 								个税缴纳方式?
 							</label>
 							<input type="radio" name="enterpriseEmployees.paymentWay" value="0" checked="checked" />
@@ -646,12 +652,6 @@
 								服务费
 							</label>
 							<s:textfield name="enterpriseEmployees.serviceCost" />
-						</div>
-						<div class="input-container">
-							<label>
-								意外险
-							</label>
-							<input type="text" name="enterpriseEmployees.accident " maxlength="30"/>
 						</div>
 						<div class="input-container" >
 							<s:submit cssClass="btn btn-primary" value="提交" id="submit"/>
@@ -907,6 +907,12 @@
 						</div>
 						<div class="input-container">
 							<label>
+								意外险
+							</label>
+							<input type="text" name="enterpriseEmployees.accident" maxlength="30"/>
+						</div>
+						<div class="input-container">
+							<label>
 								个税缴纳方式?
 							</label>
 							<input type="radio" name="enterpriseEmployees.paymentWay" value="0" checked="checked"/>
@@ -931,13 +937,6 @@
 							</label>
 							<input type="text" name="enterpriseEmployees.serviceCost" />
 						</div>
-						<div class="input-container">
-							<label>
-								意外险
-							</label>
-							<input type="text" name="enterpriseEmployees.accident " maxlength="30"/>
-						</div>
-
 						<div class="input-container">
 							<s:submit cssClass="btn btn-primary" value="提交" />
 						</div>

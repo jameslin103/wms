@@ -8,10 +8,14 @@ import javax.servlet.http.Cookie;
 import com.google.gson.GsonBuilder;
 
 import cn.fm.bean.permissions.Menu;
+import cn.fm.bean.permissions.Privilege;
 import cn.fm.bean.permissions.Role;
+import cn.fm.bean.permissions.WmsRole;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.permissions.MenuService;
 import cn.fm.service.permissions.RoleService;
+import cn.fm.service.privilege.PrivilegeService;
+import cn.fm.service.privilege.WmsRoleService;
 import cn.fm.service.user.WmsUserService;
 import cn.fm.utils.CookieUtils;
 import cn.fm.utils.DateUtil;
@@ -36,6 +40,7 @@ public class LoginAction extends BaseAction{
 		private RoleService roleService;
 		@Resource
 		private MenuService menuService;
+		   
 		
 	
 		private Integer remember_me;
@@ -124,13 +129,14 @@ public class LoginAction extends BaseAction{
 				
 		 }
 		
-	@SuppressWarnings("unchecked")
 	public  String toViewMenuList()
 	  {
-		  List<Menu> menuList=(List<Menu>)request.getSession().getAttribute("menuList");
+		 // List<Menu> menuList=(List<Menu>)request.getSession().getAttribute("menuList");
 		  
-		  String menu = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(menuList);
-		  request.setAttribute("menu", menu);
+		 // String menu = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(menuList);
+		 
+		
+		 // request.setAttribute("menu", menu);
 		  return SUCCESS;
 	  }
 		

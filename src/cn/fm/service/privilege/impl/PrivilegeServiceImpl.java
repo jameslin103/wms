@@ -18,10 +18,10 @@ public class PrivilegeServiceImpl extends DaoSupport<Privilege> implements Privi
 
 	
 	public List<Privilege> getPrivileges() {
-		return (List<Privilege>)em.createQuery(" from Privilege p").getResultList();
+		return (List<Privilege>)em.createQuery(" from Privilege p ").getResultList();
 	}
 
-	public Set<Privilege> getPrivilegesByUserId(String userId) {
+	public Set<Privilege> getPrivilegesByUserId(Integer userId) {
 		
 		WmsUser user=em.find(WmsUser.class, userId);
 		Set<Privilege> privileges=new TreeSet<Privilege>();

@@ -9,6 +9,6 @@ import cn.fm.service.base.DAO;
 public interface PrivilegeService extends DAO<Privilege>{
 	
 	public List<Privilege> getPrivileges();
-	public Set<Privilege> getPrivilegesByUserId(String userId);
+	public Set<Privilege> getPrivilegesByUserId(Integer userId);
 
 }

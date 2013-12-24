@@ -51,16 +51,15 @@
 		</global-exception-mappings>
 		
 		<!-- 用户登录 -->
-		
 		<action name="userLogin" class="cn.fm.web.action.user.LoginAction">  
             <result name="input">/login.jsp</result>
             <result name="success">/main.jsp</result>
        
-         <!--
-        <result name="success">/dashboard.jsp</result>
-       -->
+         
+         <!--  <result name="success">/dashboard.jsp</result>-->
+        
         </action>
-        <action name="toViewMenuList" class="cn.fm.web.action.user.LoginAction" method="toViewMenuList">  
+        <action name="toViewPrivis" class="cn.fm.web.action.user.PrivilegeAction" method="toViewPrivis">  
             <result name="success">/left.jsp</result>
         </action>
         

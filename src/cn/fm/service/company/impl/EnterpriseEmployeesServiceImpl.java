@@ -770,8 +770,9 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 					"inductrialBase=?31," +
 					"housingFund=?32," +
 					"basicMedical=?33," +
-					"accumulationFund=?36," +
-					"pseudoDelete=?34 where employeesId=?35");
+					"accumulationFund=?34," +
+					"accident=?35," +
+					"pseudoDelete=?36 where employeesId=?37");
 			query.setParameter(1, enterpriseEmployees.getEmployeesName())
 			     .setParameter(2, enterpriseEmployees.getEmployeesSex())
 			     .setParameter(3, enterpriseEmployees.getHouseholdRegister())
@@ -804,9 +805,11 @@ public class EnterpriseEmployeesServiceImpl extends	DaoSupport<EnterpriseEmploye
 			     .setParameter(31, enterpriseEmployees.getInductrialBase())
 			     .setParameter(32, enterpriseEmployees.getHousingFund())
 			     .setParameter(33, enterpriseEmployees.getBasicMedical())
-			     .setParameter(34, enterpriseEmployees.getPseudoDelete())
-			     .setParameter(35, enterpriseEmployees.getEmployeesId())
-			      .setParameter(36, enterpriseEmployees.getAccumulationFund()).executeUpdate();
+			     .setParameter(34, enterpriseEmployees.getAccumulationFund())
+			     .setParameter(35, enterpriseEmployees.getAccident())
+			     .setParameter(36, enterpriseEmployees.getPseudoDelete())
+			     .setParameter(37, enterpriseEmployees.getEmployeesId())
+			     .executeUpdate();
 			
 			
 		} catch (Exception e) {

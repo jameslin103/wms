@@ -15,6 +15,7 @@
 <link rel="stylesheet" type="text/css" href="<%=basePath%>styles/wms.css"/>
 <script type="text/javascript">
 function go(url){
+	alert(url);
 	$("#main").attr("src",url);
 }
 </script>
@@ -22,7 +23,7 @@ function go(url){
 <frameset rows="61,*,24" framespacing="0" frameborder="no" border="0">
   <frame src="top.jsp" scrolling="no" noresize="noresize" />
   <frameset cols="180,*" frameborder="yes" border="1" bordercolor="green" noresize="noresize">
-  	<frame src="toViewMenuList" scrolling="yes"/>
+  	<frame src="toViewPrivis" scrolling="yes"/>
   	<frame src="tabpanel.jsp" name="mainFrame" id="main"/>
   </frameset>
   <frame src="bottom.jsp" scrolling="no" noresize="noresize" />

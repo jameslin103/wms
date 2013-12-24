@@ -127,6 +127,10 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		//统计五险一金总额
 		fiveInsuranceTotal=employeesSalaryDetailService.getEnterpriseSubtotalTotal(enterprise.getEnterpriseId(), budgetId);
 		
+		//统计特殊五险补贴总额
+		//BigDecimal oldFiveInsuranceTotal=employeesSalaryDetailService.getfiveServiceTotal(enterprise.getEnterpriseId(), budgetId);
+//		
+//		fiveInsuranceTotal=fiveInsuranceTotal.add(oldFiveInsuranceTotal).setScale(2,BigDecimal.ROUND_HALF_EVEN);
 		
 		//统计工资总额
 		
@@ -139,6 +143,14 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		BigDecimal getSpecialHealthCareSubsidiesTotal=employeesSalaryDetailService.getSpecialHealthCareSubsidiesTotal(enterprise.getEnterpriseId(), budgetId);
 		
 		BigDecimal getSpecialAccumulationFundSubsidiesTotal=employeesSalaryDetailService.getSpecialAccumulationFundSubsidiesTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		
+		//统计五险
+		fiveInsuranceTotal=fiveInsuranceTotal.subtract(getspecialUnemploymentSubsidiesTotal)
+											   .subtract(getspecialOldSubsidiesTotal)
+											   .subtract(getSpecialHealthCareSubsidiesTotal)
+											   .subtract(getSpecialAccumulationFundSubsidiesTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+												
 		
 		
 		wargeTotal=wage.add(getspecialUnemploymentSubsidiesTotal).

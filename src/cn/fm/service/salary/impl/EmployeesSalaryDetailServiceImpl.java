@@ -151,6 +151,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			employeesSalaryDetailVO.setCreateDate(detail.getCreateDate());
 			employeesSalaryDetailVO.setPersonalTax(detail.getPersonalTax());
 			employeesSalaryDetailVO.setBank(detail.getBank().trim());
+			employeesSalaryDetailVO.setAccident(detail.getAccident());
 			
 			employeesSalaryDetailVO.setSpecialOldSubsidies(detail.getSpecialOldSubsidies());
 			employeesSalaryDetailVO.setSpecialUnemploymentSubsidies(detail.getSpecialUnemploymentSubsidies());
@@ -250,30 +251,34 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			} else {
 
 				// TODO: handle exception 如果不包含个税计算方式
-				InsurancesBaseSettings base = getInsurancesBaseSettings();
+
+				
+				employeesSalaryDetailInsurances= toCalculateFiveInsurances(employeesSalaryDetail.getEnterpriseEmployees());
+				
+				employeesSalaryDetailVO.setSpecialOldSubsidies(employeesSalaryDetailInsurances.getSpecialOldSubsidies());
+				employeesSalaryDetailVO.setSpecialUnemploymentSubsidies(employeesSalaryDetailInsurances.getSpecialUnemploymentSubsidies());
+				employeesSalaryDetailVO.setSpecialHealthCareSubsidies(employeesSalaryDetailInsurances.getSpecialHealthCareSubsidies());
+				employeesSalaryDetailVO.setSpecialAccumulationFundSubsidies(employeesSalaryDetailInsurances.getSpecialAccumulationFundSubsidies());
+				
 
 				// *社会保险基数*/
-				employeesSalaryDetail.setSocialInsuranceBase(base.getSocialInsurance());
+				employeesSalaryDetailVO.setSocialInsuranceBase(employeesSalaryDetailInsurances.getSocialInsuranceBase());
 
 				// 生育保险基数
-				employeesSalaryDetail.setBirthInsuranceBase(base.getBirthInsurance());
+				employeesSalaryDetailVO.setBirthInsuranceBase(employeesSalaryDetailInsurances.getBirthInsuranceBase());
 
 				// 工伤基数
-				employeesSalaryDetail.setInductrialInjuryBase(base.getInductrialInjury());
+				employeesSalaryDetailVO.setInductrialInjuryBase(employeesSalaryDetailInsurances.getInductrialInjuryBase());
 
 				// 基本医疗保险 缴费基数
-				employeesSalaryDetail.setMedicalPaymentBase(base.getBasicMedical());
+				employeesSalaryDetailVO.setMedicalPaymentBase(employeesSalaryDetailInsurances.getMedicalPaymentBase());
 
 				// 住房公积金-缴费基数
-				employeesSalaryDetail.setHousingReserveBase(base.getHousingMPF());
+				employeesSalaryDetailVO.setHousingReserveBase(employeesSalaryDetailInsurances.getHousingReserveBase());
 				
-				EmployeesSalaryDetail employeesSalaryDetailBase= toCalculateFiveInsurances(employeesSalaryDetail.getEnterpriseEmployees());
-				
-				employeesSalaryDetailVO.setSpecialOldSubsidies(employeesSalaryDetailBase.getSpecialOldSubsidies());
-				employeesSalaryDetailVO.setSpecialUnemploymentSubsidies(employeesSalaryDetailBase.getSpecialUnemploymentSubsidies());
-				employeesSalaryDetailVO.setSpecialHealthCareSubsidies(employeesSalaryDetailBase.getSpecialHealthCareSubsidies());
-				employeesSalaryDetailVO.setSpecialAccumulationFundSubsidies(employeesSalaryDetailBase.getSpecialAccumulationFundSubsidies());
 
+				
+				
 			}
 
 			// TODO: handle exception
@@ -298,24 +303,18 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			
 			employeesSalaryDetailVO.setBeforeSalary(beforeSalary.setScale(2,BigDecimal.ROUND_HALF_DOWN));
 
-			// 合计(企业应付)=应发工资+(企业)小计+服务费+意外险
+			// 合计(企业应付)=应发工资+(企业)小计+服务费+意外险+特殊补贴
 			aggregate = shouldPayTotal.add(employeesSalaryDetail.getServiceCharge() == null ? 
-						new BigDecimal("0.00"): employeesSalaryDetail.getServiceCharge()).add(enterpriseSubtotal)
-					   .add(employeesSalaryDetailVO.getAccident()==null?new BigDecimal("0.00"):employeesSalaryDetailVO.getAccident());
+						new BigDecimal("0.00"): employeesSalaryDetail.getServiceCharge())
+						.add(enterpriseSubtotal)
+					    .add(employeesSalaryDetailVO.getAccident()==null?
+					    new BigDecimal("0.00"):employeesSalaryDetailVO.getAccident())
+					    .add(specialOldSubsidies);
+						
+						
+			
 			employeesSalaryDetailVO.setAggregate(aggregate.setScale(2, BigDecimal.ROUND_HALF_DOWN));
 
-			// 五险一金统计
-//			fiveBaseTotal = (employeesSalaryDetailVO.getPersonalPensionInsurance() == null ? new BigDecimal("0.00")
-//					: employeesSalaryDetailVO.getPersonalPensionInsurance())
-//					.add(employeesSalaryDetailVO.getPersonalUnemploymentInsurance() == null ? new BigDecimal("0.00")
-//							: employeesSalaryDetailVO.getPersonalUnemploymentInsurance())
-//					.add(employeesSalaryDetailVO.getEnterpriseBirthInsurance() == null ?  new BigDecimal("0.00")
-//							: employeesSalaryDetailVO.getEnterpriseBirthInsurance())
-//					.add(employeesSalaryDetailVO.getEnterpriseInductrialInjuryBase() == null ? new BigDecimal("0.00")
-//							: employeesSalaryDetailVO.getEnterpriseInductrialInjuryBase())
-//					.add(employeesSalaryDetailVO.getPersonalMedicalBase() == null ? new BigDecimal("0.00"): employeesSalaryDetailVO.getPersonalMedicalBase())
-//					.add(employeesSalaryDetailVO.getPersonalReserveBase() == null ? new BigDecimal("0.00"): employeesSalaryDetailVO.getPersonalReserveBase());
-							
 
 			personalTax = personalTax(Double.valueOf(beforeSalary.doubleValue()));
 			// 个税
@@ -842,8 +841,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 					// 大病统筹
 					employeesSalaryDetail
 							.setMorbidityStatistics(emp.getSeriousDisease() == null ? new BigDecimal(
-									"0.0")
-									: emp.getSeriousDisease());
+									"0.0"): emp.getSeriousDisease());
 
 					// 备注
 					employeesSalaryDetail
@@ -927,9 +925,9 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		Query query = null;
 		try {
 
-			query = em
-					.createQuery("select sum(e.shouldPay) from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");
-
+			query = em.createQuery("select sum(e.shouldPay) from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");
+					
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1014,6 +1012,21 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		return (BigDecimal) query.setParameter(1, enterpriseId).setParameter(2,
+				budgettableId).getSingleResult();
+	}
+	/**
+	 * 统计特殊补贴五险一金
+	 * @param enterpriseId
+	 * @param budgettableId
+	 * @return
+	 */
+	public BigDecimal  getfiveServiceTotal(Integer enterpriseId, Integer budgettableId)
+	{
+		
+		Query query=em.createQuery("select sum(e.specialOldSubsidies+specialUnemploymentSubsidies+specialHealthCareSubsidies+specialAccumulationFundSubsidies)" +
+				" from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");
 
 		return (BigDecimal) query.setParameter(1, enterpriseId).setParameter(2,
 				budgettableId).getSingleResult();
@@ -1302,8 +1315,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 */
 	public InsurancesBaseSettings getInsurancesBaseSettings() {
 
-		return (InsurancesBaseSettings) em.createQuery(
-				"select t from InsurancesBaseSettings t ").getSingleResult();
+		return (InsurancesBaseSettings) em.createQuery("select t from InsurancesBaseSettings t ").getSingleResult();
 
 	}
 
@@ -1347,14 +1359,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 				.setParameter(1, budgetId).getResultList();
 	}
 	
-	public BigDecimal  getSumBonus(Integer budgetId)
-	{
-		
-		
-		return null;
-		
-	}
-	
+
 	public EmployeesSalaryDetail getSumDateSalaryDeatil(CreateSalaryBudgetTable createSalaryBudgetTable)
 	{
 		EmployeesSalaryDetail employeesSalaryDetailVO=new EmployeesSalaryDetail();

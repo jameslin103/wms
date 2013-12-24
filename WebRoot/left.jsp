@@ -6,7 +6,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html>
 <html>
 <head>
-<title>无标题文档</title>
+<title>左边界面</title>
 <base href="<%=basePath%>" />
 <%@ include file="/help/public_css_js.jsp"%>
 <link rel="stylesheet" href="<%=basePath%>styles/zTreeStyle.css" type="text/css"/>
@@ -19,12 +19,12 @@ var setting = {
 				children: "children",
 				name: "name",
 				title: "",
-				url: "url"
+				url: "link"
 			},
 			simpleData: {
 				enable: true,
-				idKey: "menuId",
-				pIdKey: "type",
+				idKey: "id",
+				pIdKey: "parentId",
 				rootPId: null
 			},
 			keep: {
@@ -33,16 +33,16 @@ var setting = {
 			}
 		},
 		callback : {
-			onClick:function(event, treeId, treeNode) {
+			onClick : function(event, treeId, treeNode) {
 				if (!treeNode.isParent) {
-					top.mainFrame.addTab(treeNode.name,treeNode.url);
+					top.mainFrame.addTab(treeNode.name,treeNode.link);
 				}
 			}
 		}
 	};
 
 	$(document).ready(function() {
-		$.fn.zTree.init($("#tree"), setting,${menu});
+		$.fn.zTree.init($("#tree"), setting, ${privilege});
 	});
 </script>
 </head>

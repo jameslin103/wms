@@ -9,7 +9,7 @@
 <html>
 <head>
 <title>无标题文档</title>
-<base href="${base}" />
+<base href="<%=basePath%>" />
 <%@ include file="/help/public_css_js.jsp"%>
 <style type="text/css">
 	#back{

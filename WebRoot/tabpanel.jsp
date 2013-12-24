@@ -10,9 +10,10 @@
 <head>
 <base href="<%=basePath%>" />
 <title>选项卡</title>
-<link type="text/css" href="<%=basePath%>styles/tabpanel.css" rel="stylesheet" />
-<script type="text/javascript" src="js/tabpanel.js"></script>
 <%@ include file="/help/public_css_js.jsp"%>
+<link type="text/css" href="<%=basePath%>styles/tabpanel.css" rel="stylesheet" />
+<script type="text/javascript" src="<%=basePath%>js/tabpanel.js"></script>
+
 <script type="text/javascript">
 	var tabpanel;
 	$(document).ready(function() {
@@ -33,6 +34,7 @@
 								});
 					});
 	function addTab(tabTitle, url) {
+	    alert(url);
 		var tabs = tabpanel.tabs;
 		var isAdded=false;
 		var tabId;
@@ -49,25 +51,22 @@
 		}
 
 		if (!tabId) {
-			tabpanel
-					.addTab({
+			tabpanel.addTab({
 						title : tabTitle,
 						html : '<iframe name="ifrmMain" src='
 								+ url
 								+ ' width="100%" height="99%" frameborder="0"></iframe>'
 					});
 		} else {// 存在相同ID，则激活
-			tabpanel
-					.addTab({
+			tabpanel.addTab({
 						id : tabId,
 						title : tabTitle,
-						html : '<iframe name="ifrmMain" src='
-								+ url
-								+ ' width="100%" height="100%" frameborder="0"></iframe>'
+						html : '<iframe name="ifrmMain" src='+ url+ ' width="100%" height="100%" frameborder="0"></iframe>'
 					});
 			var position = tabpanel.getTabPosision(tabId);
 			var iframes = tabpanel.tabs[position].content.find('iframe');
 			iframes[0].src = iframes[0].src;
+			alert(iframes[0].src);
 		}
 	}
 </script>

@@ -25,7 +25,7 @@ p {
 </head>
 <body>
 	<div id="main">
-	     <marquee direction="left"><p>欢迎使用富民派遣系统<br/></p></marquee> 
+	     <marquee direction="left"><p>欢迎使用富民人力银行系统<br/></p></marquee> 
 	</div>
 </body>
 </html>
