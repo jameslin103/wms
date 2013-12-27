@@ -18,7 +18,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<div id="container">
 		<div id="header">
-		<jsp:include page="../dashboard.jsp"></jsp:include>
 		</div>
 
 		<div id="main"> 

@@ -36,7 +36,6 @@
 
 		<div id="container">
 			<div id="header">
-				<jsp:include page="../layout/header.jsp" />
 				<div id="sub-header" class="clearfix">
 					<h2>
 						<s:property value="%{#request.session.enterprise.fullName}" />

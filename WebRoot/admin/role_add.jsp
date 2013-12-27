@@ -60,8 +60,8 @@
 			</table>
 		</div>
 		<div id="opr">
-			<input type="button" value=" 新  增 " class="oprbtn" id="new" /> <input
-				type="button" value=" 取  消 " class="oprbtn" id="cancel"/>
+			<input type="button" value=" 新  增 " class="oprbtn" id="new" /> 
+			<input type="button" value=" 取  消 " class="oprbtn" id="cancel"/>
 		</div>
 		<div id="selPrives"></div>
 		</s:form>

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
 import cn.fm.bean.company.Enterprise;
-import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.bean.user.WmsUser;
@@ -259,11 +258,13 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	    public String	viewSalaryBudgetTableSummary()
 	    {
 	    	Enterprise enterprise=WebUtil.getEnterprise(request);
-	    	if(enterprise==null || enterprise.getEnterpriseId()==null){
+	    	if(enterpriseId!=null && enterpriseId!=0){
+	    		if(enterprise!=null ){
+	    			request.removeAttribute("enterprise");
+		    	}
 	    		enterprise=enterpriseService.find(enterpriseId);
 	    		request.getSession().setAttribute("enterprise", enterprise);
 	    	}
-	    	
 	    	createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
 	    	if(createSalaryBudgetTable==null)createSalaryBudgetTable=new CreateSalaryBudgetTable();
 	    	request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTable);

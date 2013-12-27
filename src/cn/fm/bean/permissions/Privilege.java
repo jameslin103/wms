@@ -1,15 +1,14 @@
 package cn.fm.bean.permissions;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 
+
 @Entity
 @Table(name = "wms_privilege")
-public class Privilege {
+public class Privilege implements Comparable<Privilege>{
 	
 	
 	private int id;

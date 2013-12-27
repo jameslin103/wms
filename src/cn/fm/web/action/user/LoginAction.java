@@ -5,17 +5,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
-import com.google.gson.GsonBuilder;
-
 import cn.fm.bean.permissions.Menu;
-import cn.fm.bean.permissions.Privilege;
 import cn.fm.bean.permissions.Role;
-import cn.fm.bean.permissions.WmsRole;
 import cn.fm.bean.user.WmsUser;
 import cn.fm.service.permissions.MenuService;
 import cn.fm.service.permissions.RoleService;
-import cn.fm.service.privilege.PrivilegeService;
-import cn.fm.service.privilege.WmsRoleService;
 import cn.fm.service.user.WmsUserService;
 import cn.fm.utils.CookieUtils;
 import cn.fm.utils.DateUtil;

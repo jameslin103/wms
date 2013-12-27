@@ -1,35 +1,24 @@
 package cn.fm.service.privilege.impl;
 
 import java.util.List;
-
+import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-
+import cn.fm.dao.RoleDAO;
 import cn.fm.bean.permissions.WmsRole;
-import cn.fm.service.base.DaoSupport;
 import cn.fm.service.privilege.WmsRoleService;
 
-
 @Service
-@SuppressWarnings("unchecked")
-public class WmsRoleServiceImpl extends DaoSupport<WmsRole> implements WmsRoleService {
+public class WmsRoleServiceImpl implements WmsRoleService{
 
-	
-	
+	@Resource
+	private RoleDAO roleDAO;
+
 	public List<WmsRole> getRoles() {
-		return em.createQuery(" from WmsRole").getResultList();
+		return roleDAO.findAll();
 	}
 
-	@Override
 	public void save(WmsRole role) {
-		super.save(role);		
+		roleDAO.save(role);		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

@@ -1,6 +1,8 @@
 package cn.fm.web.action.user;
 
 import java.util.List;
+import java.util.Set;
+
 import javax.annotation.Resource;
 import com.google.gson.GsonBuilder;
 import cn.fm.bean.permissions.Privilege;
@@ -23,9 +25,8 @@ public class PrivilegeAction extends BaseAction{
 	public String toViewPrivis() {
 		WmsUser user =(WmsUser)session.getAttribute("user");
 		
-		//Set<Privilege> privileges=privilegeService.getPrivilegesByUserId(user.getUserId());
-		List<Privilege> privilege=privilegeService.getPrivileges();
-		String privilegess= new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(privilege);
+		Set<Privilege> privileges=privilegeService.getPrivilegesByUserId(user.getUserId());
+		String privilegess= new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(privileges);
 		request.setAttribute("privilege", privilegess);
 		return SUCCESS;
 	}

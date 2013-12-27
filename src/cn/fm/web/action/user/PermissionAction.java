@@ -102,6 +102,14 @@ public class PermissionAction extends BaseAction{
 		return SUCCESS;
 	}
 	
+	public String toUserManage()
+	{
+		List<WmsUser> users=wmsUserService.getAllWmsUser();
+		request.setAttribute("users", users);
+		return SUCCESS;
+	}
+	
+	
 	public String toHelp()
 	{
 		

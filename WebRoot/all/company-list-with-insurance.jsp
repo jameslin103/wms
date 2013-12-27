@@ -19,7 +19,6 @@
 		<div id="container">
 		<div id="header">
 			<div id="header">
-				<jsp:include page="../layout/list_header.jsp" />
 			</div>
 		</div>
 		<div id="main">

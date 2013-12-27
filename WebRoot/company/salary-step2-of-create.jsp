@@ -23,7 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<div id="container">
   	<div id="header">
-   		 <jsp:include page="../layout/header.jsp"/>
    		 	<div id="sub-header" class="clearfix">
 					<h2>
 						<s:property value="%{#session.enterprise.fullName}" />

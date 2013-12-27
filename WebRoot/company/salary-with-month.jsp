@@ -29,7 +29,6 @@
 
 		<div id="container">
 			<div id="header">
-				<jsp:include page="../layout/header.jsp"></jsp:include>
 				
 
 				<div id="sub-header" class="clearfix">

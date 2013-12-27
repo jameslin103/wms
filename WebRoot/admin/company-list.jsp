@@ -70,7 +70,6 @@
 
 		<div id="container">
 			<div id="header">
-				<jsp:include page="../layout/header.jsp" />
 			</div>
 
 			<div id="main">

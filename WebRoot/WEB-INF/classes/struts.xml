@@ -51,16 +51,74 @@
 		</global-exception-mappings>
 		
 		<!-- 用户登录 -->
-		<action name="userLogin" class="cn.fm.web.action.user.LoginAction">  
+		<action name="userLogin" class="cn.fm.web.action.user.LoginAction">
             <result name="input">/login.jsp</result>
-            <result name="success">/main.jsp</result>
-       
-         
+           <!--  <result name="input">/index.jsp</result>
+            --><result name="success">/main.jsp</result>
          <!--  <result name="success">/dashboard.jsp</result>-->
-        
         </action>
-        <action name="toViewPrivis" class="cn.fm.web.action.user.PrivilegeAction" method="toViewPrivis">  
+        
+         <action name="toViewPrivis" class="cn.fm.web.action.user.PrivilegeAction" method="toViewPrivis">  
             <result name="success">/left.jsp</result>
+        </action>
+        
+         <action name="toRoleManage" class="cn.fm.web.action.user.PermissionAction" method="toRoleManage">
+            <result name="success" >/admin/role.jsp</result>
+        </action>
+        <action name="viewUserList" class="cn.fm.web.action.user.UserAction" method="viewUserList">
+            <result name="success" >/admin/user_list.jsp</result>
+        </action>
+         <action name="toAddWmsUser" class="cn.fm.web.action.user.UserAction" method="toAddWmsUser">
+            <result name="success" >/admin/user_add.jsp</result>
+        </action>
+        <action name="saveUser" class="cn.fm.web.action.user.UserAction" method="saveUser">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewUserList</param>
+            </result>
+        </action>
+         <action name="toUpdateUser" class="cn.fm.web.action.user.UserAction" method="toUpdateUser">
+            <result name="success" >/admin/user_add.jsp</result>
+        </action>
+        
+         <action name="isExistUser" class="cn.fm.web.action.user.UserAction" method="isExistUser">
+            <result name="success" ></result>
+        </action>
+        <action name="toEmpsel" class="cn.fm.web.action.user.UserAction" method="toEmpsel">
+            <result name="success" >/admin/emp_sel.jsp</result>
+        </action>
+        
+        <action name="getEmpByDeptId" class="cn.fm.web.action.permissions.EmployeeAction" method="getEmpByDeptId">
+            <result name="success" type="json">
+            	<param name="includeProperties">employees.*,</param>
+            </result>
+        </action>
+         <action name="toEmployeeManage" class="cn.fm.web.action.permissions.EmployeeAction" method="toEmployeeManage">
+            <result name="success">/admin/emp_list.jsp</result>
+        </action>
+         <action name="toAddEmployee" class="cn.fm.web.action.permissions.EmployeeAction" method="toAddEmployee">
+            <result name="success">/admin/emp_add.jsp</result>
+        </action>
+        <action name="addEmployee" class="cn.fm.web.action.permissions.EmployeeAction" method="addEmployee">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">toEmployeeManage</param>
+            </result>
+        </action>
+        
+        
+         <action name="toDepartmentManage" class="cn.fm.web.action.permissions.DepartmentAction" method="toDepartmentManage">
+            <result name="success">/admin/dept_manage.jsp</result>
+        </action>
+        <action name="jsonDepartments" class="cn.fm.web.action.permissions.DepartmentAction" method="jsonDepartments">
+            <result name="success">
+            </result>
+        </action>
+      	<action name="addDepartment" class="cn.fm.web.action.permissions.DepartmentAction" method="addDepartment">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">toDepartmentManage</param>
+            </result>
+        </action>
+        <action name="updateDepartment" class="cn.fm.web.action.permissions.DepartmentAction" method="updateDepartment">
+            <result name="success"></result>
         </action>
         
 		<action name="toPassword" class="cn.fm.web.action.user.LoginAction" method="toPassword">  
@@ -70,7 +128,7 @@
              <result name="success" type="redirectAction">
             	 <param name="actionName">userLogin</param>
             </result>
-            <result name="input"> account/password.jsp</result>
+            <result name="input">account/password.jsp</result>
         </action>
         
          <action name="loginOut"  class="cn.fm.web.action.user.WmsUserLogoutAction" method="loginOut">
@@ -90,9 +148,6 @@
         <action name="toHelp" class="cn.fm.web.action.user.PermissionAction" method="toHelp">
             <result name="success" >/help/index.jsp</result>
         </action>  
-        <action name="toRoleManage" class="cn.fm.web.action.user.PermissionAction" method="toRoleManage">
-            <result name="success" >/admin/role.jsp</result>
-        </action>
         <action name="addWmsUser" class="cn.fm.web.action.user.PermissionAction" method="addWmsUser">
            <result name="success" type="redirectAction">
             	<param name="actionName">toAuthorizationUser</param>

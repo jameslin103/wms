@@ -66,7 +66,6 @@
 			var position = tabpanel.getTabPosision(tabId);
 			var iframes = tabpanel.tabs[position].content.find('iframe');
 			iframes[0].src = iframes[0].src;
-			alert(iframes[0].src);
 		}
 	}
 </script>

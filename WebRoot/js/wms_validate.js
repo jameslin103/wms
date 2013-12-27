@@ -845,7 +845,6 @@ function reset(){
 	
 	
 }
-
-	
+		
 
 

@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,6 +23,9 @@ import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.permissions.Privilege;
 import cn.fm.bean.permissions.Role;
@@ -31,8 +33,10 @@ import cn.fm.bean.permissions.WmsRole;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 
 
+@JsonIgnoreProperties({ "employee", "roles", "privileges", "enterprise", "createSalaryBudgetTable", "roless" })
 @Entity
 public class WmsUser implements Serializable{
+	
 	private static final long serialVersionUID = 8394979715028899027L;
 	
 	private Integer userId;
@@ -53,6 +57,13 @@ public class WmsUser implements Serializable{
 
 	private Date regTime = new Date();
 	
+	private String status;
+	
+	private Date lastLoginTime;
+	
+	public final static String NORMAL = "正常";
+	public final static String ABSNORMAL = "禁用";
+	
 	private Set<Enterprise> enterprise=new HashSet<Enterprise>();
 	
 	private String roleIds;
@@ -65,7 +76,7 @@ public class WmsUser implements Serializable{
 	
 	private Set<Privilege> privileges = new HashSet<Privilege>();
 	
-	
+	private Employee employee;
 	 
     @ManyToMany(cascade={CascadeType.REFRESH},fetch=FetchType.LAZY,mappedBy="user")          
 	public Set<Enterprise> getEnterprise() {
@@ -85,6 +96,17 @@ public class WmsUser implements Serializable{
 			Set<CreateSalaryBudgetTable> createSalaryBudgetTable) {
 		this.createSalaryBudgetTable = createSalaryBudgetTable;
 	}
+	
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="employee_id")
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 
 	@Id @GeneratedValue
 	public Integer getUserId() {
@@ -103,7 +125,25 @@ public class WmsUser implements Serializable{
 	public void setRegTime(Date regTime) {
 		this.regTime = regTime;
 	}
+	@Column(length=2)
+	public String getStatus() {
+		return status;
+	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+	
+	
+	
 	public WmsUser(){}
 	
 	public WmsUser(String username){

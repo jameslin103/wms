@@ -16,7 +16,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<div id="container">
     	<div id="header">
-    		<jsp:include page="../layout/header.jsp"></jsp:include>
     	</div>
    		<div id="sub-header" class="clearfix">
 					<h2>

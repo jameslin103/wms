@@ -84,7 +84,6 @@
 	<body>
 		<div id="container">
 			<div id="header">
-				<jsp:include page="../layout/header.jsp" />
 				<div id="sub-header" class="clearfix">
 					<h2>
 						<s:property value="%{#session.enterprise.fullName}" />
@@ -137,7 +136,8 @@
 								<a href="batchExcelDataEmployee">批量录入</a>，
 							</li>
 							<li>
-								<input type="button" id="addEmployees" value="添加员工" style="border:0px;"/>
+								<!--<input type="button" id="addEmployees" value="添加员工" style="border:0px;"/>
+								-->
 								<a href="#add-employees-bnt" data-toggle="modal" onclick="reset()" >单个录入</a>
 							</li>
 							<li>
