@@ -9,10 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>选择员工</title>
  	<base href="<%=basePath%>" />
 <%@ include file="/help/public_css_js.jsp"%>
-	<link rel="stylesheet" href="<%=basePath%>styles/zTreeStyle.css" type="text/css"/>
   	<link rel="stylesheet" type="text/css" href="<%=basePath%>styles/wms.css"/>
-	<script type="text/javascript" src="<%=basePath%>js/jquery.ztree.all-3.4.js"></script>
-    
     <style type="text/css">
     	#department{
     		border:1px green dashed;

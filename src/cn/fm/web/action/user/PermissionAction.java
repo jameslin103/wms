@@ -125,7 +125,9 @@ public class PermissionAction extends BaseAction{
 	}
 	
 	public String addRole(){
-		roleService.addRole(menuIds, role);
+		if(menuIds!=null){
+			roleService.addRole(menuIds, role);
+		}
 		return SUCCESS;
 	}
 	

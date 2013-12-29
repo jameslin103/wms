@@ -11,6 +11,7 @@ import cn.fm.bean.user.Employee;
 import cn.fm.bean.user.User;
 import cn.fm.service.privilege.EmployeeService;
 import cn.fm.service.privilege.DepartmentService;
+import cn.fm.utils.StringUtil;
 import cn.fm.utils.WmsUtil;
 import cn.fm.bean.PageBean;
 
@@ -49,7 +50,8 @@ public class EmployeeAction  extends BaseAction{
 	}
 
 	public String addEmployee(){
-		if (!file.isEmpty()) {
+		
+		if (file!=null && !file.isEmpty()) {
 			String fileName =WmsUtil.getId();// 新文件名称
 			String oldFileName = file.getOriginalFilename();// 原始文件名称
 			String suffix = oldFileName.substring(oldFileName.lastIndexOf("."));
@@ -64,7 +66,13 @@ public class EmployeeAction  extends BaseAction{
 				e.printStackTrace();
 			}
 		}
-		employeeService.save(employee);
+		if(employee!=null && !StringUtil.isEmpty(employee.getName())){
+			if(department!=null && department.getId()!=null){
+				//Employee employee = new Employee();
+				employee.getDepartment().setId(department.getId());
+				employeeService.save(employee);
+			}
+		}
 		return SUCCESS;
 	}
 	

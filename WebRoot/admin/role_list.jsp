@@ -8,13 +8,13 @@
 <script type="text/javascript">
 	$(function(){
 		$("#new").click(function(){
-			location.href="${base}/role/add";
+			location.href="toAddRole";
 		});
 	});
 	
 	function del(id){
 		if(confirm("您确认删除吗?")){
-			location.href="${base}/role/del/"+id;
+			location.href="deleteRole?role.id="+id;
 		}
 	}
 </script>
@@ -40,25 +40,24 @@
 						</tr>
 					</thead>
 					<tbody>
-					<s:iterator value="#roles" var="role" status="s">
+					<s:iterator value="#request.roles" var="role" status="s">
 							<tr>
-								<td class="center"><input name="ids" type="checkbox"
-									value=${role.id} /></td>
+								<td class="center"><input name="ids" type="checkbox" value=${role.id} /></td>
 								<td class="center">${s.count}</td>
-								<td class="center">${wmsRole.name}</td>
-								<td class="center">${wmsRole.description}</td>
+								<td class="center">${role.name}</td>
+								<td class="center">${role.description}</td>
 								<td class="center"><img src="images/037.gif" width="9"
-									height="9" />[<a href="role/update/${wmsRole.id}">编辑</a>]</td>
+									height="9" />[<a href="updateRole?role.id=${role.id}">编辑</a>]</td>
 								<td class="center"><img src="images/010.gif" width="9"
-									height="9" /> [<a href="javascript:void(0)" onclick="del('${wmsRole.id}')">删除</a>]</td>
+									height="9" /> [<a href="javascript:void(0)" onclick="del('${role.id}')">删除</a>]</td>
 							</tr>
 					</s:iterator>
 					</tbody>
 				</table>
 			</div>
 			<div id="opr">
-				<input type="button" value=" 新  增 " class="oprbtn" id="new" /> <input
-					type="button" value=" 删  除 " class="oprbtn" />
+				<input type="button" value=" 新  增 " class="oprbtn" id="new" /> 
+				<input type="button" value=" 删  除 " class="oprbtn" />
 			</div>
 		</fieldset>
 	</div>

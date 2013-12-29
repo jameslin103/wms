@@ -31,6 +31,10 @@ public class DepartmentServiceImpl extends  DaoSupport<Department> implements De
 		departmentDAO.update(departmentPO);
 		
 	}
-	
+	public void deleteUpdate(Department department){
+		if(department==null || department.getId()==null)return;
+		Department departmentPO=departmentDAO.findById(department.getId());
+		departmentDAO.delete(departmentPO);
+	}
 
 }

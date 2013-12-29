@@ -19,7 +19,7 @@
 	<constant name="struts.multipart.parser" value="pell"/>
 	<constant name="struts.multipart.parser" value="jakarta"/>
 	<!--该属性指定Struts2文件上传中整个请求内容允许的最大字节数-->
-	<constant name="struts.multipart.maxSize" value="2097152"/>
+	<constant name="struts.multipart.maxSize" value="1024102400"/>
 	<!-- 当修改配置文件不需要重启服务，开发比较有用 -->
 	<constant name="struts.configuration.xml.reload" value="true" />
 	
@@ -34,7 +34,14 @@
 				</interceptor-ref>
 				<interceptor-ref name="sessionout" />
 				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="fileUpload">
+	                <param name="allowedTypes">
+	                    image/bmp,image/png,image/gif,image/jpeg,image/jpg
+	                </param>
+                <param name="maximumSize">102400</param>
+            </interceptor-ref>
 			</interceptor-stack>
+			 
 			
 		</interceptors>
 		<default-interceptor-ref name="appInterceptor" />
@@ -58,9 +65,7 @@
          <!--  <result name="success">/dashboard.jsp</result>-->
         </action>
         
-         <action name="toViewPrivis" class="cn.fm.web.action.user.PrivilegeAction" method="toViewPrivis">  
-            <result name="success">/left.jsp</result>
-        </action>
+       
         
          <action name="toRoleManage" class="cn.fm.web.action.user.PermissionAction" method="toRoleManage">
             <result name="success" >/admin/role.jsp</result>
@@ -103,7 +108,16 @@
             	<param name="actionName">toEmployeeManage</param>
             </result>
         </action>
-        
+        <action name="updateEmployees" class="cn.fm.web.action.permissions.EmployeeAction" method="updateEmployees">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">toEmployeeManage</param>
+            </result>
+        </action>
+         <action name="deleteEmployees" class="cn.fm.web.action.permissions.EmployeeAction" method="deleteEmployees">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">toEmployeeManage</param>
+            </result>
+        </action>
         
          <action name="toDepartmentManage" class="cn.fm.web.action.permissions.DepartmentAction" method="toDepartmentManage">
             <result name="success">/admin/dept_manage.jsp</result>
@@ -118,6 +132,9 @@
             </result>
         </action>
         <action name="updateDepartment" class="cn.fm.web.action.permissions.DepartmentAction" method="updateDepartment">
+            <result name="success"></result>
+        </action>
+        <action name="deleteDepartment" class="cn.fm.web.action.permissions.DepartmentAction" method="deleteDepartment">
             <result name="success"></result>
         </action>
         
@@ -163,14 +180,44 @@
              <result name="success"></result>
         </action>
         
-         <action name="toAdd" class="cn.fm.web.action.user.WmsRoleAction" method="toAdd">
+        <action name="toViewPrivis" class="cn.fm.web.action.permissions.PrivilegeAction" method="toViewPrivis">  
+            <result name="success">/left.jsp</result>
+        </action>
+        <action name="toViewPrivilegManage" class="cn.fm.web.action.permissions.PrivilegeAction" method="toViewPrivilegManage">
+             <result name="success">admin/priv_assign_byuser.jsp</result>
+        </action>
+        <action name="addByUserPrivileg" class="cn.fm.web.action.permissions.PrivilegeAction" method="addByUserPrivileg">
+             <result name="success" type="redirectAction">
+            	<param name="actionName">toViewPrivilegManage</param>
+            </result>
+        </action>
+        <action name="toByRole" class="cn.fm.web.action.permissions.PrivilegeAction" method="toByRole">
+             <result name="success">admin/priv_assign_byrole.jsp</result>
+        </action>
+         <action name="toByPrivilege" class="cn.fm.web.action.permissions.PrivilegeAction" method="toByPrivilege">
+             <result name="success">admin/priv_assign_bypriv.jsp</result>
+        </action>
+        
+        
+        <action name="toViewRoleManage" class="cn.fm.web.action.permissions.RoleAction" method="toViewRoleManage">
+             <result name="success">admin/role_list.jsp</result>
+        </action>
+        <action name="toAddRole" class="cn.fm.web.action.permissions.RoleAction" method="toAddRole">
              <result name="success">admin/role_add.jsp</result>
         </action>
-        <action name="addWmsRole" class="cn.fm.web.action.user.WmsRoleAction" method="addWmsRole">
-             <result name="success">/admin/role_list.jsp</result>
+        <action name="addRole" class="cn.fm.web.action.permissions.RoleAction" method="addRole">
+             <result name="success" type="redirectAction">
+             	<param name="actionName">viewRole</param>
+             </result>
         </action>
-        
-        
+        <action name="toUpdateRole" class="cn.fm.web.action.permissions.RoleAction" method="toUpdateRole">
+             <result name="success">admin/role_update.jsp</result>
+        </action>
+        <action name="updateRole" class="cn.fm.web.action.permissions.RoleAction" method="updateRole">
+             <result name="success" type="redirectAction">
+             	<param name="actionName">viewRole</param>
+             </result>
+        </action>
         
         <action name="isExitPhone" class="cn.fm.web.action.user.PermissionAction" method="isExitPhone">
              <result name="success"></result>

@@ -10,4 +10,5 @@ public interface DepartmentService {
 	public List<Department> getDepartments();
 	public void save(Department department);
 	public void update(Department department);
+	public void deleteUpdate(Department department);
 }

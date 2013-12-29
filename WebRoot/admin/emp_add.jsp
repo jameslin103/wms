@@ -51,7 +51,6 @@ function showMenu() {
 	var cityObj = $("#deptname");
 	var cityOffset = $("#deptname").offset();
 	$("#menuContent").css({left:cityOffset.left +"px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
-
 	$("body").bind("mousedown", onBodyDown);
 }
 
@@ -127,21 +126,21 @@ $(function(){
 <body>
  <div id="main">
   	<h1>增加新员工</h1>
-	<form method="post" action="saveEmployee" enctype="multipart/form-data" >
+	<form method="post" action="addEmployee" enctype="multipart/form-data" >
 		<div id="newdata">
 			<table width="500" border="1">
 				<tr>
 					<td width="60">姓&nbsp;&nbsp;&nbsp;&nbsp;名</td>
-					<td><input name="name" size="30"/><s:fielderror name="name"/></td>
+					<td><input name="employee.name" size="30"/><s:fielderror name="name"/></td>
 				</tr>
 				<tr>
 					<td>性&nbsp;&nbsp;&nbsp;&nbsp;别</td>
-					<td><input type="radio" name="gender" value="男" checked="checked">男&nbsp;&nbsp;
-					<input type="radio" name="gender" value="女" seelcted>女</td>
+					<td><input type="radio" name="employee.gender" value="男" checked="checked">男&nbsp;&nbsp;
+					<input type="radio" name="employee.gender" value="女">女</td>
 				</tr>
 				<tr>
 					<td>工&nbsp;&nbsp;&nbsp;&nbsp;号</td>
-					<td><input type="text" name="empNo"  size="30"/></td>
+					<td><input type="text" name="employee.empNo"  size="30"/></td>
 				</tr>
 				<tr>
 					<td>部&nbsp;&nbsp;&nbsp;&nbsp;门</td>
@@ -154,42 +153,42 @@ $(function(){
 				<tr>
 					<td>婚姻状况</td>
 					<td>
-					<input type="radio" name="marryState" value="已婚" />已婚&nbsp;&nbsp;
-					<input type="radio" name="marryState" value="未婚"/>未婚
+					<input type="radio" name="employee.marryState" value="未婚" checked="checked"/>未婚&nbsp;&nbsp;
+					<input type="radio" name="employee.marryState" value="已婚"/>已婚
 				</td>
 				</tr>
 				<tr>
 					<td>出生年月</td>
-					<td><input type="date" name="birthDate" size="30" /></td>
+					<td><input type="date" name="employee.birthDate" size="30" /></td>
 				</tr>
 				<tr>
 					<td>学&nbsp;&nbsp;&nbsp;&nbsp;历</td>
 					<td>
-					<select name="degree">
-						<option value="本科"></option>
-						<option value="专科"></option>
-						<option value="研究生"></option>
-						<option value="高中"></option>
-						<option value="初中"></option>
-						<option value="其他"></option>
+					<select name="employee.degree">
+						<option value="本科">本科</option>
+						<option value="专科">专科</option>
+						<option value="研究生">研究生</option>
+						<option value="高中">高中</option>
+						<option value="初中">初中</option>
+						<option value="其他">其他</option>
 					</select>
 					</td>
 				</tr>
 				<tr>
 					<td>身&nbsp;份&nbsp;证</td>
-					<td><input type="text" name="idCard"  size="30"/></td>
+					<td><input type="text" name="employee.idCard"  size="30"/></td>
 				</tr>
 				<tr>
 					<td>电子邮箱</td>
-					<td><input type="text" name="email"  size="30"/></td>
+					<td><input type="text" name="employee.email"  size="30"/></td>
 				</tr>
 				<tr>
 					<td>手机号码</td>
-					<td><input type="text" name="telPhone"  size="30"/></td>
+					<td><input type="text" name="employee.telPhone"  size="30"/></td>
 				</tr>
 				<tr>
 					<td>办公电话</td>
-					<td><input type="text" name="phone"  size="30"/></td>
+					<td><input type="text" name="employee.phone"  size="30"/></td>
 				</tr>
 				<tr>
 					<td>头&nbsp;&nbsp;&nbsp;&nbsp;像</td>
