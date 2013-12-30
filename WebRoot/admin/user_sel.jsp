@@ -10,6 +10,7 @@
 <head>
 <title>选择用户</title>
 <base href="<%=basePath%>" />
+<%@ include file="/help/public_css_js.jsp"%>
 <script type="text/javascript">
 	var selUser=[];
 	$(function(){
@@ -38,18 +39,18 @@
 				</tr>
 			</thead>
 			<tbody id="emplist">
-				<c:forEach items="${users}" var="user">
+				<s:iterator value="#request.users" var="user">
 					<tr>
-						<td><input type="radio" value="${user.id}" name="ids"></td>
+						<td><input type="radio" value="<s:property value="%{#user.id}"/>" name="ids"></td>
 						<td>${user.account}</td>
 						<td>${user.employee.name}</td>
 					</tr>
-				</c:forEach>
+				</s:iterator>
 			</tbody>
 		</table>
 		<div id="nav">
 			<img src="images/first.gif" id="first"/>
-			<img src="images/back.gif" id="prev">
+			<img src="images/back.gif" id="prev"/>
 			<img src="images/next.gif" id="next" /> 
 			<img src="images/last.gif" id="last">
 		</div>

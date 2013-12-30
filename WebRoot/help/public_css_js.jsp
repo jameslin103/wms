@@ -5,7 +5,7 @@
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/layout.css"/>
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/buttons.css"/>
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/styles/zTreeStyle.css">
-
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/styles/wms.css"/>
   
   <%@ taglib uri="/struts-tags" prefix="s"%>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.js"></script>

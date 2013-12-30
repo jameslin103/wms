@@ -59,7 +59,7 @@
 	        <ref bean="entityManagerFactory" />  
 	    </property>  
 	</bean>  
-   -->
+   
    
    <tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
@@ -70,7 +70,7 @@
    <aop:config>
 		<aop:advisor advice-ref="txAdvice"
 			pointcut="execution(* cn.fm.service.impl.*.*(..))" />
-		</aop:config>
+		</aop:config>-->
 	
-	  <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
+	  <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

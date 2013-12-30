@@ -1,12 +1,15 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE HTML>
 <html>
   <head>
-    <base href="${base}">
+    <base href="<%=basePath%>" />
     <title>权限分配</title>
     <%@ include file="/help/public_css_js.jsp"%>
-	<link rel="stylesheet" href="styles/zTreeStyle.css" type="text/css">
-	<script type="text/javascript" src="js/jquery.ztree.all-3.4.js"></script>
+    <link rel="stylesheet" type="text/css" href="<%=basePath%>styles/wms.css"/>
 	<script type="text/javascript">
 	var setting = {
 			check: {
@@ -20,13 +23,13 @@
 			}
 		};
 $(function(){
-		
+
 		$.fn.zTree.init($("#tree"), setting, ${privs}).expandAll(true);
 		
 		$("#selUser").click(function(){
 			$.dialog({
 				id:'selUser',
-				content:'url:user/sel',
+				content:'url:admin/user_sel.jsp',
 				width:'600px',
 				height:'400px',
 				title:'选择用户',
@@ -52,9 +55,9 @@ $(function(){
 			$("#priv").submit();
 		});
 		
-		<c:if test="${not empty msg}">
+		<s:if test=" not empty #request.msg">
 			$.dialog.tips("${msg}",2);
-		</c:if>
+		</s:if>
 	});
 	</script>
   </head>

@@ -3,6 +3,8 @@ package cn.fm.service.privilege.impl;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import cn.fm.bean.PageBean;
 import cn.fm.bean.user.Employee;
 import cn.fm.bean.user.User;
@@ -12,7 +14,7 @@ import cn.fm.service.privilege.EmployeeService;
 import cn.fm.utils.WmsUtil;
 
 
-@Service
+@Service @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
 
 	@Resource

@@ -1,13 +1,18 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+  <%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>增加新角色</title>
-<base href="${base}" />
+<base href="<%=basePath%>" />
+
 <%@ include file="/help/public_css_js.jsp"%>
-<link rel="stylesheet" href="styles/zTreeStyle.css" type="text/css">
-<script type="text/javascript" src="js/jquery.ztree.all-3.4.js"></script>
 <script type="text/javascript">
 	var setting = {
 		check: {
@@ -22,8 +27,8 @@
 	};
 	
 	$(function(){
-		
-		$.fn.zTree.init($("#tree"), setting, ${privileges}).expandAll(true);
+	
+		$.fn.zTree.init($("#tree"), setting, ${privs}).expandAll(true);
 		
 		$("#new").click(function(){
 			var treeObj = $.fn.zTree.getZTreeObj("tree");
@@ -42,16 +47,16 @@
 <body>
  <div id="main">
   	<h1>增加新角色</h1>
-	<s:form  action="addWmsRole"   method="post" >
+	<s:form  action="addRole" method="post" id="role">
 		<div id="newdata">
 			<table width="500" border="1">
 				<tr>
 					<td width="60">角色名</td>
-					<td><input type="text" name="name"  size="30"/><s:fielderror name="name"></s:fielderror></td>
+					<td><input type="text" name="role.name"  size="30"/><s:fielderror name="name"></s:fielderror></td>
 				</tr>
 				<tr>
 					<td>角色描述</td>
-					<td><textarea name="description" id="description" cols="27"></textarea></td>
+					<td><textarea name="role.description" id="description" cols="27"></textarea></td>
 				</tr>
 				<tr>
 					<td>分配权限</td>
@@ -63,6 +68,7 @@
 			<input type="button" value=" 新  增 " class="oprbtn" id="new" /> 
 			<input type="button" value=" 取  消 " class="oprbtn" id="cancel"/>
 		</div>
+		<s:hidden name=""/>
 		<div id="selPrives"></div>
 		</s:form>
 	</div>

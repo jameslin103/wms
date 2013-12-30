@@ -95,6 +95,7 @@ public class DepartmentAction extends BaseAction{
 		return NONE;
 	}
 	
+	
 	public String updateDepartment(){
 
 		try {
@@ -110,7 +111,14 @@ public class DepartmentAction extends BaseAction{
 		return NONE;
 		
 	}
-
+	public String deleteDepartment(){
+		
+		if(department!=null && department.getId()!=null)
+			departmentService.deleteUpdate(department);
+		
+		return NONE;
+		
+	}
 	
 	
 	

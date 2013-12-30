@@ -45,7 +45,7 @@
 	
 	function del(id){
 		if(confirm("您确认删除吗?")){
-			location.href="${base}/emp/del/"+id;
+			location.href="deleteEmployee?employee.id"+id;
 		}
 	}
 	
@@ -169,8 +169,8 @@
 										[<a href="javascript:void(0)" onclick="unbind(this,'${emp.id}')">解除绑定</a>]&nbsp;
 									</s:if>
 									
-									<img src="images/037.gif" width="9" height="9" />[<a href="emp/export/${emp.id}">导出</a>]&nbsp;
-									<img src="images/037.gif" width="9" height="9" />[<a href="emp/update/${emp.id}">编辑</a>]&nbsp;
+									<img src="images/037.gif" width="9" height="9" />[<a href="exportEmployees/${emp.id}">导出</a>]&nbsp;
+									<img src="images/037.gif" width="9" height="9" />[<a href="updateEmployees/${emp.id}">编辑</a>]&nbsp;
 									<img src="images/010.gif" width="9" height="9" />[<a href="javascript:void(0)" onclick="del('${emp.id}')">删除</a>]
 								</td>
 							</tr>

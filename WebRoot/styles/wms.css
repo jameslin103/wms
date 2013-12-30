@@ -129,7 +129,7 @@ label.error{
 
 #tabs1 a {
 	float: left;
-	background: url("../images/tableft1.gif") no-repeat left top;
+	background: url("../images/menu/menu_user.gif") no-repeat left top;
 	margin: 0;
 	padding: 0 0 0 4px;
 	text-decoration: none;
@@ -138,7 +138,7 @@ label.error{
 #tabs1 a span {
 	float: left;
 	display: block;
-	background: url("../images/tabright1.gif") no-repeat right top;
+	background: url("../images/menu/menu_user.gif") no-repeat right top;
 	padding: 5px 15px 4px 6px;
 	color: #627EB7;
 }

@@ -20,5 +20,17 @@ public class WmsRoleServiceImpl implements WmsRoleService{
 	public void save(WmsRole role) {
 		roleDAO.save(role);		
 	}
+	
+	public void romveRole(String id) {
+		if(id!=null){
+			WmsRole role=roleDAO.findById(id);
+			roleDAO.delete(role);	
+		}
+			
+	}
 
+	@Override
+	public WmsRole getRoleById(String id) {
+		return roleDAO.findById(id);
+	}
 }

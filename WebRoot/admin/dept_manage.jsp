@@ -12,9 +12,6 @@
 <title>部门管理</title>
 <base href="<%=basePath%>" />
 <%@ include file="/help/public_css_js.jsp"%>
-
-<link rel="stylesheet" href="styles/zTreeStyle.css" type="text/css">
-<script type="text/javascript" src="js/jquery.ztree.all-3.4.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=basePath%>styles/wms.css"/>
 
 <script type="text/javascript">
@@ -51,10 +48,10 @@ var setting = {
 		callback: {
 			/*beforeDrag: beforeDrag,
 			beforeEditName: beforeEditName,
-			beforeRemove: beforeRemove,*/
+			*/
+			onRemove: onRemove,
 			beforeRename: beforeRename,
-			/*
-			onRemove: onRemove,*/
+			beforeRemove: beforeRemove,
 			onRename: onRename
 		}
 	};
@@ -66,7 +63,34 @@ var setting = {
 			return false;
 		}
 	}
+	function beforeRemove(treeId, treeNode, newName)
+	{
+			var zTree = $.fn.zTree.getZTreeObj("tree");
+			zTree.refresh();
+			return false;
+	}
+	function onRemove(event, treeId, treeNode)
+	{
+		alert(treeNode.id);
+		$.dialog.confirm("您确认删除吗？",function(){
+			var dept={
+				"id":treeNode.id,
+				"name":treeNode.name
+			};
+			$.ajax({
+				url:'deleteDepartment?department.id='+treeNode.id,
+				type:'post',
+				contentType:'application/json',
+				dataType:'html',
+				success:function(id){
+					//var zTree = $.fn.zTree.getZTreeObj("tree");
+					//zTree.addNodes(treeNode, {id:id, pId:treeNode.id, name:dept.name});
+					$.dialog.tips("删除成功",2);
+				}
+			});
+		});
 	
+	}
 	function onRename(event, treeId, treeNode){
 		$.dialog.confirm("您确认修改吗？",function(){
 			var dept={
@@ -109,7 +133,7 @@ function addHoverDom(treeId, treeNode) {
 				var parentId=treeNode.id;
 				var dept={
 					"department.parentId":treeNode.id,
-					"department.name":$.dialog.list['adddept'].content.$("#name").val()
+					"name":$.dialog.list['adddept'].content.$("#name").val()
 				};
 				$.ajax({
 					url:'addDepartment?department.parentId='+parentId+'&name='+name,
@@ -154,7 +178,7 @@ function removeHoverDom(treeId, treeNode) {
 <div id="main">
   	<h1>部门管理</h1>
 		<div id="newdata">
-			<table width="500" border="1">
+			<table width="700" border="1">
 				<tr>
 					<td><ul id="tree" class="ztree"></ul></td>
 				</tr>
