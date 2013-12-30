@@ -127,7 +127,7 @@ $(function(){
 <body>
  <div id="main">
   	<h1>增加新员工</h1>
-	<form method="post" action="saveEmployee" enctype="multipart/form-data" >
+	<form method="post" action="addEmployee" enctype="multipart/form-data" >
 		<div id="newdata">
 			<table width="500" border="1">
 				<tr>
