@@ -9,18 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import cn.fm.bean.user.User;
 import cn.fm.dao.UserDAO;
-import cn.fm.service.base.DaoSupport;
 import cn.fm.service.user.UserService;
 
 
 
 @Service @Transactional
-public class UserServiceImpl extends DaoSupport<User> implements UserService{
+public class UserServiceImpl  implements UserService{
 
 	@Resource
 	private UserDAO userDAO;
 	
-	public void addUser(User user) {
+	public void saveUser(User user) {
+		if(user==null)return;
 		user.setStatus(User.NORMAL);
 		if(StringUtils.isBlank(user.getEmployee().getId())){
 			user.setEmployee(null);

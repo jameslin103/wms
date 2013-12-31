@@ -94,26 +94,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <body>
  <div id="main">
-  	<h1>增加新用户</h1>
+  	<h1>修改用户</h1>
 	<form method="post" action="addUser" id="userform">
 		<div id="newdata">
 			<table width="500" border="1">
 				<tr>
 					<td width="80">用户账号:</td>
-					<td><input type="text" name="user.account"  id="account" size="30"/><span id="accountmsg"></span></td>
+					<td>
+						<input type="text" name="user.account"  value="${user.account}" id="account" size="30"/>
+						<span id="accountmsg"></span>
+					</td>
 				</tr>
 				<tr>
 					<td>密&nbsp;&nbsp;&nbsp;&nbsp;码:</td>
-					<td><input type="password" name="user.password" id="password" size="30" /><span id="passwordmsg"></span></td>
+					<td><input type="password" name="user.password" value="${user.password}" id="password" size="30" /><span id="passwordmsg"></span></td>
 				</tr>
 				<tr>
 					<td>确认密码:</td>
-					<td><input type="password" name="cfmpassword" id="cfmpassword" size="30"/><span id="cfmpwdmsg"></span></td>
+					<td><input type="password" name="cfmpassword" value="${user.password}" id="cfmpassword" size="30"/><span id="cfmpwdmsg"></span></td>
 				</tr>
 				<tr>
 					<td>分配给员工:</td>
 					<td><input type="hidden" name="employee.id" id="empid">
-					<input type="text" id="empName" readonly="readonly">
+					<input type="text" id="empName" readonly="readonly" value="${user.employee.name}">
 					<input type="button" value=" 选 择 " class="oprbtn" id="selEmp"></td>
 				</tr>
 			</table>

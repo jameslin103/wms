@@ -16,7 +16,7 @@
 <script type="text/javascript">
 	$(function(){
 		$("#new").click(function(){
-			location.href="toAddWmsUser";
+			location.href="toAddUser";
 		});
 		$("#selall").click(function(){
 			$(":checkbox[name=ids]").prop("checked",$(this).prop("checked"));
@@ -36,7 +36,7 @@
 		$("a[name=dels]").each(function(index,a){
 			$(a).click(function(){
 				alert($(a).prev().val());
-				$.get("user/del/"+$(a).prev().val(),function(){
+				$.get("delUser?user.id="+$(a).prev().val(),function(){
 					$(a).parent().parent().remove();
 				});
 			});
@@ -53,7 +53,7 @@
 			</legend>
 			
 			<div id="datalist">
-				<table>
+				<table border="1px;">
 					<thead>
 						<tr id="tableheader">
 							<th width="60"><input type="checkbox" id="selall"/>选择</th>
@@ -80,7 +80,7 @@
 								
 								<td class="center">
 									<img src="images/037.gif" width="9" height="9" />[<a href="toUpdateUser?user.id=<s:property value="%{#user.id}"/>">编辑</a>]&nbsp;
-									<img src="images/010.gif" width="9" height="9" />[<input type="hidden" value="<s:property value="%{#user.userId}"/>"><a href="javascript:void(0)" name="dels">删除</a>]
+									<img src="images/010.gif" width="9" height="9" />[<input type="hidden" value="<s:property value="%{#user.id}"/>"><a href="javascript:void(0)" name="dels">删除</a>]
 								</td>
 							</tr>
 						</s:iterator>

@@ -23,7 +23,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import cn.fm.bean.company.Enterprise;
-import cn.fm.bean.user.WmsUser;
+import cn.fm.bean.user.User;
 
 
 /**
@@ -117,7 +117,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 	private Enterprise enterprise;
 	
-	private WmsUser    user;
+	private User    user;
 	
 	private String    user_operator;
 
@@ -389,14 +389,15 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.salaryTemplate = salaryTemplate;
 	}
 
+	
 	@ManyToOne(cascade={CascadeType.REFRESH},optional=false)
 	@JoinColumn(name="user_id")
 	@NotFound(action=NotFoundAction.IGNORE)
-	public WmsUser getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(WmsUser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	

@@ -19,6 +19,7 @@ import cn.fm.bean.PageBean;
 
 public class EmployeeAction  extends BaseAction{
 
+	private static final long serialVersionUID = -3123596065192471750L;
 	
 	@Resource
 	private EmployeeService employeeService;
@@ -37,7 +38,9 @@ public class EmployeeAction  extends BaseAction{
 	
 	
 	public String toEmployeeManage() {
-		request.setAttribute("pageBean",employeeService.getEmpsByPage(this.getPage(), employee));
+		
+		employees=employeeService.getEmpsByPage(this.getPage(), employee);
+		request.setAttribute("pageBean",employees);
 		return SUCCESS;
 	}
 
@@ -48,6 +51,18 @@ public class EmployeeAction  extends BaseAction{
 		
 		return SUCCESS;
 	}
+	public String toUpdateEmployees() {
+		
+		request.setAttribute("employee", employeeService.getById(employee.getId()));
+		return SUCCESS;
+	}
+	public String updateEmployees(){
+		
+		employee.getDepartment().setId(department.getId());
+		employeeService.updateEmployee(employee);
+		return SUCCESS;
+	}
+	
 
 	public String addEmployee(){
 		
@@ -68,13 +83,18 @@ public class EmployeeAction  extends BaseAction{
 		}
 		if(employee!=null && !StringUtil.isEmpty(employee.getName())){
 			if(department!=null && department.getId()!=null){
-				//Employee employee = new Employee();
 				employee.getDepartment().setId(department.getId());
 				employeeService.save(employee);
 			}
 		}
 		return SUCCESS;
 	}
+	public String deleteEmployee()
+	{
+		employeeService.deleteEmployee(employee.getId());
+		return SUCCESS;
+	}
+	
 	
 	public String empNoExist() {
 		
@@ -102,6 +122,16 @@ public class EmployeeAction  extends BaseAction{
 		
 		return SUCCESS;
 	}
+	
+	public String toSeacherEmployee()
+	{
+		
+		
+		return SUCCESS;
+	}
+	
+	
+	
 	
 	public String export(){
 		

@@ -12,7 +12,7 @@ import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
-import cn.fm.bean.user.WmsUser;
+import cn.fm.bean.user.User;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.salary.BalanceDetailService;
@@ -259,8 +259,8 @@ public class CompanylistWithSalaryAction extends BaseAction{
 //		createSalaryBudgetTablePO.setCashnumberDate(createSalaryBudgetTable.getCashnumberDate());
 //		
 //		createSalaryBudgetTableService.update(createSalaryBudgetTablePO);
-		WmsUser user=WebUtil.getWmsUser(request);
-		createSalaryBudgetTable.setUser_operator(user.getUsername());
+		User user=WebUtil.getUser(request);
+		createSalaryBudgetTable.setUser_operator(user.getEmployee().getName());
 		createSalaryBudgetTable.setBudgetId(budgetId);
 		createSalaryBudgetTableService.updateSalaryStatus(createSalaryBudgetTable);
 		

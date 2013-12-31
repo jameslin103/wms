@@ -1,41 +1,42 @@
 package cn.fm.bean.permissions;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class Role implements Serializable {
-
-	private static final long serialVersionUID = -6705978692312929071L;
+@Table(name = "wms_role")
+public class Role {
+	
+	private String id;
+	private String name;
+	private String description;
+	
+	private Set<Privilege> privileges = new HashSet<Privilege>();
 
 	@Id
-	@GeneratedValue
-	private Long roleId;
-	
-	@Column(length=255)
-	private String name;
-	
-	@Column(length=255)
-	private String menuIds;
-	
-	@Transient
-	private List<Menu> menus = new ArrayList<Menu>();
-
-	public Long getRoleId() {
-		return roleId;
+	@GenericGenerator(name = "idGenerator", strategy = "uuid")
+	@GeneratedValue(generator = "idGenerator")
+	@Column(length=32)
+	public String getId() {
+		return id;
 	}
 
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
+	public void setId(String id) {
+		this.id = id;
 	}
-
+	@Column(length=15)
 	public String getName() {
 		return name;
 	}
@@ -43,21 +44,27 @@ public class Role implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getMenuIds() {
-		return menuIds;
+	@Column(length=100)
+	public String getDescription() {
+		return description;
 	}
 
-	public void setMenuIds(String menuIds) {
-		this.menuIds = menuIds;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public List<Menu> getMenus() {
-		return menus;
+	@ManyToMany
+	@JoinTable(name = "wms_priv_role", 
+		joinColumns = @JoinColumn(name = "role_id"), 
+		inverseJoinColumns = @JoinColumn(name = "priv_id"))
+	@OrderBy(value="orderNum")
+	public Set<Privilege> getPrivileges() {
+		return privileges;
 	}
 
-	public void setMenus(List<Menu> menus) {
-		this.menus = menus;
+	public void setPrivileges(Set<Privilege> privileges) {
+		this.privileges = privileges;
 	}
 
+	
 }

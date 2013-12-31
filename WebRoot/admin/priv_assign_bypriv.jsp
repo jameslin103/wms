@@ -1,8 +1,13 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"+ request.getServerName() + ":" + request.getServerPort()+ path + "/";
+%>
+<!DOCTYPE html>
 <html>
   <head>
-    <base href="${base}">
+    <base href="<%=basePath%>" />
+	<%@ include file="/help/public_css_js.jsp"%>
     <title>权限分配</title>
 	<script type="text/javascript">
 		$(function(){
@@ -10,7 +15,6 @@
 		});
 	</script>
   </head>
-  
   <body>
   	<jsp:include page="priv_assign_nav.jsp"></jsp:include>
   	<br /><br />

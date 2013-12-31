@@ -11,9 +11,6 @@
 <base href="<%=basePath%>" />
 
 <%@ include file="/help/public_css_js.jsp"%>
-<link rel="stylesheet" type="text/css" href="<%=basePath%>styles/wms.css"/>
-
-
 <script type="text/javascript">
 var setting = {
 		view: {
@@ -125,13 +122,16 @@ $(function(){
 
 <body>
  <div id="main">
-  	<h1>增加新员工</h1>
-	<form method="post" action="addEmployee" enctype="multipart/form-data" >
+  	<h1>修改员工</h1>
+	<form method="post" action="updateEmployees" enctype="multipart/form-data" >
+		<input type="hidden" name="employee.id" value="${employee.id}"/>
 		<div id="newdata">
 			<table width="500" border="1">
 				<tr>
 					<td width="60">姓&nbsp;&nbsp;&nbsp;&nbsp;名</td>
-					<td><input name="employee.name"  maxlength="20"/><s:fielderror name="name"/></td>
+					<td style="line-height:20px;">
+						<input name="employee.name" value="${employee.name}" maxlength="20"/><s:fielderror name="name"/>
+					</td>
 				</tr>
 				<tr>
 					<td>性&nbsp;&nbsp;&nbsp;&nbsp;别</td>
@@ -140,14 +140,14 @@ $(function(){
 				</tr>
 				<tr>
 					<td>工&nbsp;&nbsp;&nbsp;&nbsp;号</td>
-					<td><input type="text" name="employee.empNo" maxlength="4"/></td>
+					<td><input type="text" name="employee.empNo" maxlength="4" value="${employee.empNo}"/></td>
 				</tr>
 				<tr>
 					<td>部&nbsp;&nbsp;&nbsp;&nbsp;门</td>
 					<td>
-						<input id="deptname" type="text" readonly value="" style="width:120px;"/>
+						<input id="deptname" type="text" readonly value="${employee.department.name}" style="width:120px;"/>
 							&nbsp;<a id="menuBtn" href="#">选择</a>
-							<input type="hidden" name="department.id" id="deptid">
+							<input type="hidden" name="department.id" value="${employee.department.id}" id="deptid">
 					</td>
 				</tr>
 				<tr>
@@ -159,12 +159,13 @@ $(function(){
 				</tr>
 				<tr>
 					<td>出生年月</td>
-					<td><input type="date" name="employee.birthDate"  maxlength="30" /></td>
+					<td><input type="date" name="employee.birthDate" value="<s:date name="#request.employee.birthDate" format="yyyy-MM-dd"/>"  maxlength="30" /></td>
 				</tr>
 				<tr>
 					<td>学&nbsp;&nbsp;&nbsp;&nbsp;历</td>
 					<td>
-					<select name="employee.degree">
+					<select name="employee.degree" >
+						<option value="">-请选择-</option>
 						<option value="本科">本科</option>
 						<option value="专科">专科</option>
 						<option value="研究生">研究生</option>
@@ -176,19 +177,19 @@ $(function(){
 				</tr>
 				<tr>
 					<td>身&nbsp;份&nbsp;证</td>
-					<td><input type="text" name="employee.idCard"  maxlength="18"/></td>
+					<td><input type="text" name="employee.idCard" value="${employee.idCard}" maxlength="18"/></td>
 				</tr>
 				<tr>
 					<td>电子邮箱</td>
-					<td><input type="text" name="employee.email"   maxlength="50"/></td>
+					<td><input type="text" name="employee.email"  value="${employee.email}" maxlength="50"/></td>
 				</tr>
 				<tr>
 					<td>手机号码</td>
-					<td><input type="text" name="employee.telPhone"  maxlength="11"/></td>
+					<td><input type="text" name="employee.telPhone" value="${employee.telPhone}" maxlength="11"/></td>
 				</tr>
 				<tr>
 					<td>办公电话</td>
-					<td><input type="text" name="employee.phone"   maxlength="13"/></td>
+					<td><input type="text" name="employee.phone"  value="${employee.phone}" maxlength="13"/></td>
 				</tr>
 				<tr>
 					<td>头&nbsp;&nbsp;&nbsp;&nbsp;像</td>
@@ -197,7 +198,7 @@ $(function(){
 			</table>
 		</div>
 		<div id="opr">
-			<input type="submit" value=" 新  增 " class="oprbtn" id="new" /> 
+			<input type="submit" value=" 修  改" class="oprbtn" id="new" /> 
 			<input type="button" value=" 取  消 " class="oprbtn" id="cancel" onclick="test()"/>
 		</div>
 		</form>

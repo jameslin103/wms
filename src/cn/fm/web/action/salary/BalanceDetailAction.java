@@ -10,7 +10,7 @@ import javax.persistence.Column;
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.BalanceDetail;
-import cn.fm.bean.user.WmsUser;
+import cn.fm.bean.user.User;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.salary.BalanceDetailService;
 import cn.fm.utils.WebUtil;
@@ -106,8 +106,8 @@ public class BalanceDetailAction extends BaseAction {
 	public String   addBalanceDetail()
 	{
 		if(balanceDetail==null)return INPUT;
-		WmsUser user=WebUtil.getWmsUser(request);
-		balanceDetail.setUserIusse(user.getUsername());
+		User user=WebUtil.getUser(request);
+		balanceDetail.setUserIusse(user.getEmployee().getName());
 		Double endblan=(balanceDetail.getWages()==null?0.00:balanceDetail.getWages().doubleValue()+
 				(balanceDetail.getServiceWith()==null?0.00:balanceDetail.getServiceWith().doubleValue())+
 				(balanceDetail.getFiveFund()==null?0.00:balanceDetail.getFiveFund().doubleValue()));

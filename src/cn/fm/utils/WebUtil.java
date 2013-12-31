@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.user.User;
-import cn.fm.bean.user.WmsUser;
 
 
 /**
@@ -24,9 +23,6 @@ public class WebUtil {
 	/**
 	 * 获取登录员工
 	 */
-	public static WmsUser getWmsUser(HttpServletRequest request){
-		return (WmsUser) request.getSession().getAttribute("user");
-	}
 	public static User getUser(HttpServletRequest request){
 		return (User) request.getSession().getAttribute("user");
 	}

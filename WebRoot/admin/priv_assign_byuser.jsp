@@ -9,7 +9,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>" />
     <title>权限分配</title>
     <%@ include file="/help/public_css_js.jsp"%>
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>styles/wms.css"/>
 	<script type="text/javascript">
 	var setting = {
 			check: {
@@ -29,7 +28,7 @@ $(function(){
 		$("#selUser").click(function(){
 			$.dialog({
 				id:'selUser',
-				content:'url:admin/user_sel.jsp',
+				content:'url:toSearchUser',
 				width:'600px',
 				height:'400px',
 				title:'选择用户',
@@ -67,7 +66,7 @@ $(function(){
   	<br /><br />
   	<div id="main">
   	<h1>为用户指定角色或权限</h1>
-	 <s:form method="post" action="byuser" id="priv">
+	 <s:form method="post" action="addUserByRoleAndByPrivilege" id="priv">
 		<div id="newdata">
 			<table width="500" border="1">
 				<tr>
@@ -80,7 +79,7 @@ $(function(){
 					<td>角色列表</td>
 					<td>
 						<ul type="none">
-							<s:iterator value="#roles" var="role">
+							<s:iterator value="#request.roles" var="role">
 								<li><input type="checkbox" name="roleIds" value="${role.id}" />${role.name}(${role.description})</li>	
 							</s:iterator>
 						</ul>

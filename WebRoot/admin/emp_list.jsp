@@ -11,7 +11,6 @@
 <title>员工列表</title>
 <base href="<%=basePath%>" />
 <%@ include file="/help/public_css_js.jsp"%>
-<link rel="stylesheet" type="text/css" href="<%=basePath%>styles/wms.css"/>
 <script type="text/javascript">
 	$(function(){
 		$("#new").click(function(){
@@ -45,7 +44,7 @@
 	
 	function del(id){
 		if(confirm("您确认删除吗?")){
-			location.href="deleteEmployee?employee.id"+id;
+			location.href="deleteEmployee?employee.id="+id;
 		}
 	}
 	
@@ -53,13 +52,13 @@
 	function bind(a,empId){
 		$.dialog({
 			id:'selUser',
-			content:'url:user/sel',
+			content:'url:toSearchUser',
 			height:'400px',
 			width:'300px',
 			title:'选择用户',
 			ok:function(){
 				var selUser=$.dialog.list['selUser'].content.selUser;
-				$.get("emp/bind/"+empId+"/"+selUser[0],function(){
+				$.get("bind?employee.id="+empId+""+selUser[0],function(){
 					$.dialog.tips("绑定用户成功！",1);
 					$(a).parent().prev().html(selUser[1]);
 					$(a).html("解除绑定");
@@ -76,7 +75,7 @@
 	
 	function unbind(a,empId){
 		$.dialog.confirm("确认解除绑定吗？",function(){
-			$.get("emp/unbind/"+empId,function(){
+			$.get("unbind??employee.id="+empId,function(){
 				$.dialog.tips("解除绑定成功！",1);
 				$(a).parent().prev().html("");
 				$(a).html("绑定用户");
@@ -104,25 +103,18 @@
 				<legend>
 					<img src="images/311.gif" />&nbsp;查询条件
 				</legend>
-				<s:form action="addEmployee" method="post">
+				<s:form action="toEmployeeManage" method="post">
 					<input type="hidden" name="page" id="page" value="1">
-					员工姓名：<input type="text" name="name" size="10"/>
-					工号：<input type="text" name="empNo" size="10"/>
-					性别：<select name="gender">
-							<option value="">不限</option>
-							<option value="男">男</option>
-							<option value="女">女</option>
-						</select>
-					学历：<select name="degree">
-							<option value="">不限</option>
-							<option value="本科"></option>
-							<option value="专科"/></option>
-							<option value="研究生"/></option>
-							<option value="高中"/></option>
-							<option value="初中"/></option>
-							<option value="其他"/></option>
-						</select>
-				 	<input type="submit" value=" 查  询 " class="oprbtn">
+					员工姓名：<s:textfield name="employee.name" size="10" cssStyle="width:150px;"/>
+					工号：<s:textfield name="employee.empNo" size="10" cssStyle="width:150px;"/>
+					性别：
+						<s:select  list="{'不限','男','女'}" theme="simple"  headerValue=""  
+							name="employee.gender" cssStyle="width:80px;" />
+							
+					学历：<s:select  list="{'不限','本科','专科','研究生','高中','初中','其他'}" 
+									theme="simple"  headerValue=""  name="employee.degree" cssStyle="width:80px;" />
+							
+				 	<input type="submit" value=" 查  询 " class="oprbtn" style="width:70px;">
 				 </s:form>
 			</fieldset>
 		</div>
@@ -131,7 +123,7 @@
 				<img src="images/311.gif" />&nbsp;员工列表
 			</legend>
 			<div id="datalist">
-				<table>
+				<table border="1px;">
 					<thead>
 						<tr id="tableheader">
 							<th width="60"><input type="checkbox" />选择</th>
@@ -160,17 +152,17 @@
 								<td class="center">${emp.user.account}</td>
 								<td class="center">
 								
-									<s:if test=" empty #emp.user.account">
+									<s:if test="#emp.user.account==null">
 										<img src="images/001.gif" width="9" height="9" />
 										[<a href="javascript:void(0)" onclick="bind(this,'${emp.id}')">绑定用户</a>]&nbsp;
 									</s:if>
-									<s:if test="not empty #emp.user.account">
+									<s:if test="#emp.user.account!=null">
 										<img src="images/005.gif" width="9" height="9" />
 										[<a href="javascript:void(0)" onclick="unbind(this,'${emp.id}')">解除绑定</a>]&nbsp;
 									</s:if>
 									
-									<img src="images/037.gif" width="9" height="9" />[<a href="exportEmployees/${emp.id}">导出</a>]&nbsp;
-									<img src="images/037.gif" width="9" height="9" />[<a href="updateEmployees/${emp.id}">编辑</a>]&nbsp;
+									<img src="images/037.gif" width="9" height="9" />[<a href="exportEmployees?employee.id=${emp.id}">导出</a>]&nbsp;
+									<img src="images/037.gif" width="9" height="9" />[<a href="toUpdateEmployees?employee.id=${emp.id}">编辑</a>]&nbsp;
 									<img src="images/010.gif" width="9" height="9" />[<a href="javascript:void(0)" onclick="del('${emp.id}')">删除</a>]
 								</td>
 							</tr>
@@ -181,10 +173,16 @@
 			 <div id="nav" >
 				<table width="80%" align="center">
 					<tr>
-						<td align="left">本页${pageBean.actualPageSize}条纪录，共${pageBean.totalNums}条记录，当前第${pageBean.page}/${pageBean.totalPage}页</td>
-						<td align="right"><img src="images/first.gif" id="first"/> <img src="images/back.gif" id="prev"> <img
-						src="images/next.gif" id="next" /> <img src="images/last.gif" id="last">
-						<select id="pagesel">
+						<td align="left" style="padding-left:263px;">
+							本页${pageBean.actualPageSize}条纪录，共${pageBean.totalNums}条记录，
+							当前第${pageBean.page}/${pageBean.totalPage}页
+						</td>
+						<td align="right">
+							<img src="images/first.gif" id="first"/> 
+							<img src="images/back.gif" id="prev"/> 
+							<img src="images/next.gif" id="next"/> 
+							<img src="images/last.gif" id="last"/>
+						<select id="pagesel" style="width:50px;height:30px;">
 							<s:iterator begin="1" end="#request.pageBean.totalPage" var="p">
 								<option value="${p}">${p}</option>
 							</s:iterator>
@@ -194,8 +192,8 @@
 				</table>
 			</div>
 			<div id="opr">
-				<input type="button" value=" 新  增 " class="oprbtn" id="new" />
-				<input type="button" value=" 删  除 " class="oprbtn" />
+				<input type="button" value=" 新  增 " class="oprbtn" id="new" style="width:70px;"/>
+				<input type="button" value=" 删  除 " class="oprbtn" style="width:70px;"/>
 			</div>
 		</fieldset>
 	</div>

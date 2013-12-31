@@ -24,7 +24,7 @@
 	<div id="main">
 		<fieldset>
 			<legend>
-				<img src="images/311.gif" />&nbsp;角色列表
+				<img src="images/311.gif"/>&nbsp;角色列表
 			</legend>
 			
 			<div id="datalist">
@@ -46,10 +46,10 @@
 								<td class="center">${s.count}</td>
 								<td class="center">${role.name}</td>
 								<td class="center">${role.description}</td>
-								<td class="center"><img src="images/037.gif" width="9"
-									height="9" />[<a href="updateRole?role.id=${role.id}">编辑</a>]</td>
-								<td class="center"><img src="images/010.gif" width="9"
-									height="9" /> [<a href="javascript:void(0)" onclick="del('${role.id}')">删除</a>]</td>
+								<td class="center"><img src="images/037.gif" width="9" height="9" />
+									[<a href="toUpdateRole?role.id=${role.id}">编辑</a>]</td>
+								<td class="center"><img src="images/010.gif" width="9" height="9" /> 
+									[<a href="javascript:void(0)" onclick="del('${role.id}')">删除</a>]</td>
 							</tr>
 					</s:iterator>
 					</tbody>

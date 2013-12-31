@@ -2,7 +2,7 @@ package cn.fm.service.company;
 
 import java.util.List;
 import cn.fm.bean.company.Enterprise;
-import cn.fm.bean.user.WmsUser;
+import cn.fm.bean.user.User;
 import cn.fm.service.base.DAO;
 
 
@@ -18,7 +18,7 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	
 	
 	
-	public List<Enterprise> getAllEnterprise(WmsUser user);
+	public List<Enterprise> getAllEnterprise(User user);
 	
 	
 	/**
@@ -26,7 +26,7 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	 * @param enterprise
 	 * @return
 	 */
-	public List<WmsUser>  getEnterpriseToBoWmsUser(List<Enterprise> enterprise);
+	public List<User>  getEnterpriseToBoWmsUser(List<Enterprise> enterprise);
 	
 	/**
 	 * 更新企业
@@ -63,7 +63,7 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	 */
 	public void removeToEnterpriseHeadUser(Integer enterpriseId,Integer userId);
 	
-	public List<Enterprise> getUserToAllEnterprise(WmsUser user);
+	public List<Enterprise> getUserToAllEnterprise(User user);
 
 
 

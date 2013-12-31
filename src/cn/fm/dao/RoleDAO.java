@@ -1,8 +1,8 @@
 package cn.fm.dao;
 
-import cn.fm.bean.permissions.WmsRole;
+import cn.fm.bean.permissions.Role;
 
 
-public interface RoleDAO extends DAO<WmsRole>{
+public interface RoleDAO extends DAO<Role>{
 
 }

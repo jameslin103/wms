@@ -13,8 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-import cn.fm.bean.user.WmsUser;
+import cn.fm.bean.user.User;
 import cn.fm.utils.WebUtil;
 
 public class LoginFilter implements Filter {
@@ -40,7 +39,7 @@ public class LoginFilter implements Filter {
 			return;
 		}
 		//2、从session(globle_user)对象中获取当前登录的用户
-		WmsUser user = WebUtil.getWmsUser(request);
+		User user = WebUtil.getUser(request);
 		if(user!=null){
 			//如果从session中获取的用户对象不为空，则放行
 			chain.doFilter(request, response);

@@ -13,6 +13,8 @@ public interface EmployeeService {
 	PageBean<Employee> getEmpsByPage(int page, Employee employee);
 
 	void save(Employee employee);
+	
+	public void deleteEmployee(String id);
 
 	boolean empNoExist(String empNo);
 
@@ -21,4 +23,6 @@ public interface EmployeeService {
 	void unbind(String empId);
 	
 	Employee getById(String empId);
+	
+	public void updateEmployee(Employee employee);
 }

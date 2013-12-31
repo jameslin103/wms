@@ -10,7 +10,7 @@ import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.company.InsurancesTax;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
-import cn.fm.bean.user.WmsUser;
+import cn.fm.bean.user.User;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.company.InsurancesTaxService;
@@ -66,14 +66,14 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	public String downloadInsuranceWithEmployeeList()
 	{
 		Enterprise enterprise=WebUtil.getEnterprise(request);
-		WmsUser    user=WebUtil.getWmsUser(request);
+		User    user=WebUtil.getUser(request);
 		if(enterprise.getEnterpriseId()==null)return INPUT;
 		List<EnterpriseEmployees> employeesList=enterpriseEmployeesService.getAllEnterpriseEmployees(enterprise.getEnterpriseId());
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		String currentPath = ServletActionContext.getServletContext().getRealPath("");
 		String images= currentPath+"/images/fullname.jpg";
 		parameters.put("title",enterprise.getFullName()); 
-		parameters.put("username",user.getUsername()); 
+		parameters.put("username",user.getEmployee().getName()); 
 		parameters.put("image",images); 
 		 //String currentPath = ServletActionContext.getServletContext().getRealPath("");
 		 //String sqlJasper= currentPath+"/report/insurance_with_employee_list.jrxml";
@@ -100,14 +100,14 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	
 	public String exportEmployeesExcel(){
 		Enterprise enterprise=WebUtil.getEnterprise(request);
-		WmsUser    user=WebUtil.getWmsUser(request);
+		User    user=WebUtil.getUser(request);
 		if(enterprise.getEnterpriseId()==null)return INPUT;
 		List<EnterpriseEmployees> employeesList=enterpriseEmployeesService.getAllEnterpriseEmployees(enterprise.getEnterpriseId());
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		String currentPath = ServletActionContext.getServletContext().getRealPath("");
 		String images= currentPath+"/images/fullname.jpg";
 		parameters.put("fullname",enterprise.getFullName()); 
-		parameters.put("username",user.getUsername()); 
+		parameters.put("username",user.getEmployee().getName()); 
 		parameters.put("image",images); 
 		String sqlJasper="employee-list.jasper";
 		 
@@ -148,7 +148,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		parameters.put("budgetName", createSalaryBudgetTable.getName());
 		parameters.put("serviceHeTotal", createSalaryBudgetTable.getServiceHeTotal());
 		parameters.put("fullname",createSalaryBudgetTable.getEnterprise().getFullName()); 
-		parameters.put("username",createSalaryBudgetTable.getUser().getUsername());
+		parameters.put("username",createSalaryBudgetTable.getUser().getEmployee().getName());
 		parameters.put("usernote",createSalaryBudgetTable.getNote());
 		parameters.put("image", images);
 		parameters.put("endowmentInsurance", InsurancesTax.getBirthEnterprise()+"%");
@@ -201,7 +201,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		if(createSalaryBudgetTable==null)createSalaryBudgetTable=new CreateSalaryBudgetTable();
 		
-		String username=(createSalaryBudgetTable.getUser()!=null)?(createSalaryBudgetTable.getUser().getUsername()):"".toString();
+		String username=(createSalaryBudgetTable.getUser()!=null)?(createSalaryBudgetTable.getUser().getEmployee().getName()):"".toString();
 		parameters.put("title",enterprise.getFullName()); 
 		parameters.put("username",username); 
 		parameters.put("salaryDate",createSalaryBudgetTable.getSalaryDate()==null?"":DateUtil.dateToString(createSalaryBudgetTable.getSalaryDate(), DateUtil.FORMAT_DATE_MONTH)+Constant.WMS_SALARY); 
@@ -229,7 +229,7 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		CreateSalaryBudgetTable createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		parameters.put("fullName",enterprise.getFullName()); 
-		parameters.put("username",createSalaryBudgetTable.getUser().getUsername()); 
+		parameters.put("username",createSalaryBudgetTable.getUser().getEmployee().getName()); 
 		parameters.put("image",images); 
 
 		String sqlJasper="salary-with-sum-of-categories.jasper";

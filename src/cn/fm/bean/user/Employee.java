@@ -2,8 +2,10 @@ package cn.fm.bean.user;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -51,9 +53,8 @@ public class Employee {
 	private String empState;
 	
 	private Department department=new Department();
-	private WmsUser user;
 	
-	private User usern;
+	private User user;
 
 	@Id
 	@GenericGenerator(name = "idGenerator", strategy ="uuid")
@@ -67,7 +68,7 @@ public class Employee {
 		this.id = id;
 	}
 
-	@Column(length=10)
+	@Column(length=20)
 	public String getName() {
 		return name;
 	}
@@ -173,22 +174,14 @@ public class Employee {
 	public void setEmpState(String empState) {
 		this.empState = empState;
 	}
-	@OneToOne(mappedBy="employee")
-	public WmsUser getUser() {
+
+	@OneToOne(mappedBy="employee",optional=false,fetch=FetchType.LAZY,cascade=CascadeType.REFRESH)
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(WmsUser user) {
+	public void setUser(User user) {
 		this.user = user;
-	}
-
-	@OneToOne(mappedBy="employee")
-	public User getUsern() {
-		return usern;
-	}
-
-	public void setUsern(User usern) {
-		this.usern = usern;
 	}
 	
 

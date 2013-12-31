@@ -1,13 +1,14 @@
 package cn.fm.web.action.permissions;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import net.sf.json.JSONArray;
 import cn.fm.bean.permissions.Privilege;
-import cn.fm.bean.permissions.WmsRole;
+import cn.fm.bean.permissions.Role;
 import cn.fm.service.privilege.PrivilegeService;
-import cn.fm.service.privilege.WmsRoleService;
+import cn.fm.service.privilege.RoleService;
 import cn.fm.web.action.BaseAction;
 
 public class RoleAction extends BaseAction {
@@ -16,14 +17,15 @@ public class RoleAction extends BaseAction {
 	
 	
 	@Resource
-	private WmsRoleService roleService;
+	private RoleService roleService;
 	@Resource
 	private PrivilegeService privilegeService;
 
 	
 	
-	private WmsRole role;
-	private int[] prives;
+	private Role role;
+	
+	private int[] priveIds;
 	
 	
 	
@@ -50,8 +52,9 @@ public class RoleAction extends BaseAction {
 	
 	
 	public String addRole() {
-		if(prives!=null){
-			for (int privId : prives) {
+		
+		if(priveIds!=null){
+			for (int privId : priveIds) {
 				Privilege privilege= new Privilege();
 				privilege.setId(privId);
 				role.getPrivileges().add(privilege);
@@ -72,38 +75,41 @@ public class RoleAction extends BaseAction {
 	public String toUpdateRole()
 	{
 		if(role.getId()!=null){
-			WmsRole rolePO=roleService.getRoleById(role.getId());
+			Role rolePO=roleService.getRoleById(role.getId());
+			List<Privilege> privileges = privilegeService.getPrivileges();
+			String privs= JSONArray.fromObject(privileges).toString();
+			request.setAttribute("privs", privs);
 			request.setAttribute("role", rolePO);
 		}
-		
-		request.setAttribute("privileges", toJson(getPrivlieges()));
 		return SUCCESS;
 	}
 	public String updateRole()
 	{
 		if(role.getId()!=null){
-			WmsRole rolePO=roleService.getRoleById(role.getId());
+			Role rolePO=roleService.getRoleById(role.getId());
 			request.setAttribute("role", rolePO);
 		}
 		
 		return SUCCESS;
 	}
 	
-	public WmsRole getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(WmsRole role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
-	public int[] getPrives() {
-		return prives;
+	public int[] getPriveIds() {
+		return priveIds;
 	}
 
-	public void setPrives(int[] prives) {
-		this.prives = prives;
+	public void setPriveIds(int[] priveIds) {
+		this.priveIds = priveIds;
 	}
+
+	
 	
 	
 	

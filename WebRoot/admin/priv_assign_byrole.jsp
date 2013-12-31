@@ -1,8 +1,13 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"+ request.getServerName() + ":" + request.getServerPort()+ path + "/";
+%>
+<!DOCTYPE html>
 <html>
   <head>
-    <base href="${base}">
+     <base href="<%=basePath%>" />
+	<%@ include file="/help/public_css_js.jsp"%>
     <title>权限分配</title>
 	<script type="text/javascript">
 		$(function(){
@@ -21,7 +26,7 @@
 			<table width="500" border="1">
 				<tr>
 					<td width="60">角色</td>
-					<td><input type="text" name="name"  size="30"/>
+					<td><input type="text" name="role.name"  size="30"/>
 					<input type="button" class="oprbtn" value="选择角色" /></td>
 				</tr>
 				<tr>

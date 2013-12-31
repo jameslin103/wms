@@ -10,13 +10,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
-import cn.fm.bean.user.WmsUser;
+import cn.fm.bean.user.User;
 import cn.fm.service.company.EnterpriseService;
-import cn.fm.service.user.WmsUserService;
+import cn.fm.service.user.UserService;
 public class EnterpriseServiceTest {
 
 	static EnterpriseService  enterpriseService;
-	static WmsUserService     wmsUserService;
+	static UserService     userService;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		try {
@@ -34,8 +34,8 @@ public class EnterpriseServiceTest {
 		
 		//Enterprise  en=enterpriseService.find(1);
 		//enterpriseService.getAllEnterprise(1);
-		WmsUser  user=new WmsUser();
-		user.setUserId(1);
+		User  user=new User();
+		user.setId("");
 		System.out.println(enterpriseService.getAllEnterprise(user).size());
 		
 		
@@ -52,9 +52,9 @@ public class EnterpriseServiceTest {
 		en.setAccountLine("69869784562456");
 		en.setAddress("罗星塔");
 		en.setFullName("枫叶科技有限公司");
-		WmsUser  user=new WmsUser();
-		user.setUserId(2);
-		en.addWmsUser(user);
+		User  user=new User();
+		user.setId("");
+		en.addUser(user);
 		enterpriseService.save(en);
 		
 	}
@@ -84,7 +84,7 @@ public class EnterpriseServiceTest {
 	Enterprise	enterprise=enterpriseService.find(17);
 	
 	
-	System.out.println(enterprise.getUser().iterator().next().getUsername());
+	System.out.println(enterprise.getUser().iterator().next().getId());
 	System.out.println(enterprise.getFullName());
 	
 	
@@ -95,7 +95,7 @@ public class EnterpriseServiceTest {
 		Enterprise	enterprise=enterpriseService.find(13);
 		System.out.println(enterprise.getUser().size());
 		
-		for(WmsUser user : enterprise.getUser()){
+		for(User user : enterprise.getUser()){
 			
 			enterprise.getUser().remove(user);
 			//user.getEnterprise().remove(enterprise);
@@ -110,9 +110,9 @@ public class EnterpriseServiceTest {
 	public void findUserToEnterprise()
 	{
 		
-		WmsUser user=wmsUserService.find(1);	
+		User user=userService.getById("");	
 		for(Enterprise enterprise:user.getEnterprise()){
-			System.out.println(user.getUserId());
+			System.out.println(user.getId());
 			System.out.println(enterprise.getFullName());
 		}
 	}
@@ -122,9 +122,9 @@ public class EnterpriseServiceTest {
 	{
 		
 		Enterprise enter=enterpriseService.find(16);	
-		for(WmsUser user:enter.getUser()){
-			System.out.println(user.getUserId());
-			System.out.println(user.getUsername());
+		for(User user:enter.getUser()){
+			System.out.println(user.getId());
+			System.out.println(user.getEmployee().getName());
 		}
 	}
 	@Test
@@ -140,8 +140,8 @@ public class EnterpriseServiceTest {
 	@Test
 	public void getUserToAllEnterprise()
 	{
-		WmsUser user=new WmsUser();
-		user.setUserId(5);
+		User user=new User();
+		user.setId("");
 		enterpriseService.getUserToAllEnterprise(user);
 		
 	}

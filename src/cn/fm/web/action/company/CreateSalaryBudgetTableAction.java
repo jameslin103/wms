@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
-import cn.fm.bean.user.WmsUser;
+import cn.fm.bean.user.User;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.salary.BalanceDetailService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
@@ -111,7 +111,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	 */
 	public String  addSalaryBudgetTable()
 	{
-			WmsUser user=WebUtil.getWmsUser(request);
+			User user=WebUtil.getUser(request);
 			Enterprise  enterprise=WebUtil.getEnterprise(request);
 			CreateSalaryBudgetTable	createSalaryBudgetTablePO=null;
 			if(createSalaryBudgetTable==null || StringUtil.isEmpty(createSalaryBudgetTable.getName()) || templateId==0){

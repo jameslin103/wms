@@ -66,7 +66,7 @@ a:hover{font-size:12px; text-decoration:none; color:#FF0000;}
 
 #bottom #nav{
 	float:right;
-	margin-top: 20px;
+	margin-top: 40px;
 }
 #bottom #nav *{
 	margin-right:10px;
@@ -74,7 +74,7 @@ a:hover{font-size:12px; text-decoration:none; color:#FF0000;}
 }
 
 #bottom #nav input{
-	width: 25px;
+	width: 30px;
 } 
 
 #search{

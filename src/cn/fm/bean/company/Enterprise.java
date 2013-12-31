@@ -28,7 +28,7 @@ import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.bean.salary.SalaryTemplate;
-import cn.fm.bean.user.WmsUser;
+import cn.fm.bean.user.User;
 
 @SuppressWarnings("serial")
 @Entity
@@ -90,7 +90,7 @@ public class Enterprise implements Serializable{
 	
 	private Set<EnterpriseEmployees> enterpriseEmployees=new HashSet<EnterpriseEmployees>();
 	
-	private Set<WmsUser> user=new HashSet<WmsUser>();
+	private Set<User> user=new HashSet<User>();
 	
 	//工资预算表
 	private Set<CreateSalaryBudgetTable> createSalaryBugetTables=new HashSet<CreateSalaryBudgetTable>();
@@ -112,10 +112,10 @@ public class Enterprise implements Serializable{
 	  @JoinTable(name = "user_enterprise",
 			   inverseJoinColumns =@JoinColumn (name ="user_id" ),//被维护端外键
               joinColumns =  @JoinColumn (name ="enterprise_id" ))//维护端外键
-	public Set<WmsUser> getUser(){
+	public Set<User> getUser(){
 		return user;
 	}
-	public void setUser(Set<WmsUser> user) {
+	public void setUser(Set<User> user) {
 		this.user = user;
 	}
 
@@ -291,15 +291,15 @@ public class Enterprise implements Serializable{
 	 * 添加企业负责人
 	 * @param wmsUser
 	 */
-	public void addWmsUser(WmsUser  wmsUser){
-	        this.user.add(wmsUser);  
+	public void addUser(User  user){
+	        this.user.add(user);  
 	}  
 	      
-	public void removeWmsUser(WmsUser wmsUser)
+	public void removeUser(User user)
 	{  
-	   if(this.user.contains(wmsUser))
+	   if(this.user.contains(user))
 	   {
-	         this.user.remove(wmsUser);  
+	         this.user.remove(user);  
 	   }  
 	}  
 	

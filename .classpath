@@ -9,8 +9,8 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-core-asl-1.9.11.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/json-lib-2.4-jdk15.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-lang3-3.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-all-3.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-lang3-3.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/hibernate-core-4.2.4.Final.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/hibernate-entitymanager-4.2.4.Final.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/hibernate-validator-4.2.0.Final.jar"/>

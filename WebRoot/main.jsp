@@ -8,23 +8,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>富民派遣系统-WMS</title>
+<title>富民人力银行</title>
 <base href="<%=basePath%>" />
 <%@ include file="/help/public_css_js.jsp"%>
 <link rel="shortcut icon" href="images/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="<%=basePath%>styles/wms.css"/>
 <script type="text/javascript">
-function go(url){
-	$("#main").attr("src",url);
-}
+	function go(url)
+	{
+		$("#main").attr("src",url);
+	}
 </script>
 </head>
 <frameset rows="61,*,24" framespacing="0" frameborder="no" border="0">
-  <frame src="top.jsp" scrolling="no" noresize="noresize" />
+  <frame src="toTop" scrolling="no" noresize="noresize" />
   <frameset cols="180,*" frameborder="yes" border="1" bordercolor="green" noresize="noresize">
   	<frame src="toViewPrivis" scrolling="yes"/>
-  	<frame src="tabpanel.jsp" name="mainFrame" id="main"/>
+  	<frame src="toTabpanel" name="mainFrame" id="main"/>
   </frameset>
-  <frame src="bottom.jsp" scrolling="no" noresize="noresize" />
+  <frame src="toBottom" scrolling="no" noresize="noresize" />
 </frameset>
 </html>

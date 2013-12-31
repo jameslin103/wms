@@ -9,7 +9,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>选择员工</title>
  	<base href="<%=basePath%>" />
 <%@ include file="/help/public_css_js.jsp"%>
-  	<link rel="stylesheet" type="text/css" href="<%=basePath%>styles/wms.css"/>
     <style type="text/css">
     	#department{
     		border:1px green dashed;

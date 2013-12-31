@@ -3,34 +3,36 @@ package cn.fm.service.privilege.impl;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
-import cn.fm.dao.RoleDAO;
-import cn.fm.bean.permissions.WmsRole;
-import cn.fm.service.privilege.WmsRoleService;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service
-public class WmsRoleServiceImpl implements WmsRoleService{
+import cn.fm.dao.RoleDAO;
+import cn.fm.service.privilege.RoleService;
+import cn.fm.bean.permissions.Role;
+
+@Service @Transactional
+public class WmsRoleServiceImpl implements RoleService{
 
 	@Resource
 	private RoleDAO roleDAO;
 
-	public List<WmsRole> getRoles() {
+	public List<Role> getRoles() {
 		return roleDAO.findAll();
 	}
 
-	public void save(WmsRole role) {
+	public void save(Role role) {
 		roleDAO.save(role);		
 	}
 	
 	public void romveRole(String id) {
 		if(id!=null){
-			WmsRole role=roleDAO.findById(id);
+			Role role=roleDAO.findById(id);
 			roleDAO.delete(role);	
 		}
 			
 	}
 
 	@Override
-	public WmsRole getRoleById(String id) {
+	public Role getRoleById(String id) {
 		return roleDAO.findById(id);
 	}
 }

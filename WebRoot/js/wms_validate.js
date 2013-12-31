@@ -842,9 +842,6 @@ function reset(){
 		        }  
 		    );  
 	//clearForm(form);
-	
-	
 }
-		
 
 

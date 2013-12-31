@@ -2,22 +2,17 @@ package cn.fm.web.action.permissions;
 
 import java.util.List;
 import java.util.Set;
-
 import javax.annotation.Resource;
 
+import com.opensymphony.oscache.util.StringUtil;
+
 import net.sf.json.JSONArray;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.google.gson.GsonBuilder;
 import cn.fm.bean.permissions.Privilege;
-import cn.fm.bean.permissions.WmsRole;
+import cn.fm.bean.permissions.Role;
 import cn.fm.bean.user.User;
-import cn.fm.bean.user.WmsUser;
 import cn.fm.service.privilege.PrivilegeService;
-import cn.fm.service.privilege.WmsRoleService;
+import cn.fm.service.privilege.RoleService;
 import cn.fm.service.user.UserService;
-import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
 public class PrivilegeAction extends BaseAction{
@@ -25,22 +20,23 @@ public class PrivilegeAction extends BaseAction{
 	private static final long serialVersionUID = -6021299187809618346L;
 	
 	@Resource
-	private WmsRoleService     roleService;
+	private RoleService     roleService;
 	@Resource
 	private PrivilegeService   privilegeService;       
 	@Resource
 	private UserService userService;
 	
-	String userId;
+	private String userId;
+	
 	private String[] roleIds;
+	
 	private int[] prives;
 	
 	
 	public String toViewPrivis() {
-		WmsUser user =(WmsUser)session.getAttribute("user");
+		User user =(User)session.getAttribute("user");
 		
-		Set<Privilege> privileges=privilegeService.getPrivilegesByUserId(user.getUserId());
-		//String privilegess= new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(privileges);
+		Set<Privilege> privileges=privilegeService.getPrivilegesByUserId(user.getId());
 		request.setAttribute("privilege", toJson(privileges));
 		return SUCCESS;
 	}
@@ -61,22 +57,25 @@ public class PrivilegeAction extends BaseAction{
 		return SUCCESS;
 	}
 	
-	public String addByUserPrivileg() {
-		User sessionuser=WebUtil.getUser(request);
-		User user=userService.getById(sessionuser.getId());
-		for (String roleId : roleIds) {
-			WmsRole role=new WmsRole();
-			role.setId(roleId);
-			user.getRoles().add(role);
-		}
-		for (int privId : prives) {
-			Privilege privilege=new Privilege();
-			privilege.setId(privId);
-			user.getPrivileges().add(privilege);
+	public String addUserByRoleAndByPrivilege() {
+		if(!StringUtil.isEmpty(userId)){
+			User user=userService.getById(userId);
+			for (String roleId : roleIds) {
+				Role role=new Role();
+				role.setId(roleId);
+				user.getRoles().add(role);
+			}
+			for (int privId : prives) {
+				Privilege privilege=new Privilege();
+				privilege.setId(privId);
+				user.getPrivileges().add(privilege);
+			}
+			
+			userService.updateUser(user);
+			request.setAttribute("msg", "分配权限成功");
 		}
 		
-		userService.updateUser(user);
-		request.setAttribute("msg", "分配权限成功");
+		
 		return SUCCESS;
 	}
 	
@@ -87,5 +86,30 @@ public class PrivilegeAction extends BaseAction{
 	public String toByPrivilege(){
 		return SUCCESS;
 	}
+	
+	
+	
+	
+	
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String[] getRoleIds() {
+		return roleIds;
+	}
+	public void setRoleIds(String[] roleIds) {
+		this.roleIds = roleIds;
+	}
+	public int[] getPrives() {
+		return prives;
+	}
+	public void setPrives(int[] prives) {
+		this.prives = prives;
+	}
+	
 	
 }

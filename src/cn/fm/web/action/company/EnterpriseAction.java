@@ -9,15 +9,13 @@ import javax.annotation.Resource;
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
-import cn.fm.bean.permissions.Role;
-import cn.fm.bean.user.WmsUser;
+import cn.fm.bean.user.User;
 import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.company.InsurancesBaseSettingsService;
 import cn.fm.service.company.InsurancesTaxService;
-import cn.fm.service.permissions.RoleService;
-import cn.fm.service.user.WmsUserService;
-import cn.fm.utils.Constant;
+import cn.fm.service.privilege.RoleService;
+import cn.fm.service.user.UserService;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
@@ -28,7 +26,7 @@ public class EnterpriseAction extends BaseAction{
 	@Resource
 	private EnterpriseService enterpriseService;
 	@Resource
-	private WmsUserService    wmsUserService;
+	private UserService    userService;
 	@Resource
 	private EnterpriseEmployeesService  enterpriseEmployeesService;
 	@Resource
@@ -79,11 +77,11 @@ public class EnterpriseAction extends BaseAction{
 	}
 	public String  addEnterprise()
 	{
-		WmsUser user=WebUtil.getWmsUser(request);
+		User user=WebUtil.getUser(request);
 		if(user==null)return INPUT;
 		if(enterprise==null)return INPUT;
 		if(enterprise!=null){
-			enterprise.addWmsUser(wmsUserService.find(user.getUserId()));
+			enterprise.addUser(userService.getById(user.getId()));
 			enterprise.setInsurancesBaseSettings(insurancesBaseSettingsService.find(1));
 			enterprise.setInsurancesTax(insurancesTaxService.find(1));
 			enterpriseService.save(enterprise); 	
@@ -95,14 +93,13 @@ public class EnterpriseAction extends BaseAction{
 	public String  viewEnterprise()
 	{
 		
-		WmsUser user=WebUtil.getWmsUser(request);
-		isSystemAdmin=isStysemUserRole(user);
+		User user=WebUtil.getUser(request);
 		
 		StringBuffer jpql = new StringBuffer("");
 		StringBuffer countjpql = new StringBuffer("");
 
-		List<WmsUser> wmsUsers=wmsUserService.getAllWmsUser();
-		if(wmsUsers.size()==0)wmsUsers=new ArrayList<WmsUser>();
+		List<User> users=userService.getUsers();
+		if(users.size()==0)users=new ArrayList<User>();
 		
 		
 		if(isSystemAdmin==true)
@@ -115,78 +112,34 @@ public class EnterpriseAction extends BaseAction{
 		{
 
 			jpql.append("select e from Enterprise e join e.user u  where u.userId=")
-			.append(user.getUserId()).append(" order by e.enterpriseId desc");
+			.append(user.getId()).append(" order by e.enterpriseId desc");
 			 countjpql.append("Enterprise e join e.user u  where u.userId=")
-			.append(user.getUserId()).append(" order by e.enterpriseId desc");
+			.append(user.getId()).append(" order by e.enterpriseId desc");
 		}
 		PageView<Enterprise> pageView = new PageView<Enterprise>(10,  this.getPage());
 		pageView.setQueryResult(enterpriseService.getScrollDataManytoMany(pageView.getFirstResult(), pageView.getMaxresult(),jpql.toString(),countjpql.toString()));
 		
 		request.setAttribute("pageView", pageView);
-		request.setAttribute("wmsUsers", wmsUsers);
+		request.setAttribute("users", users);
 		
 		return SUCCESS;
 	}
-	/**
-	 * 是否高级管理员
-	 * @param user
-	 * @return
-	 */
-	public boolean isStysemUserRole(WmsUser user)
-	{
-		boolean isSystem=false;
-		String[] userRoleIds= user.getRoleIds()!=null?user.getRoleIds().split(","):null;
-		  if(userRoleIds!=null){
-			  for (int i=0; i<userRoleIds.length;i++) 
-			  {
-				  Long roleId=Long.valueOf(userRoleIds[i]);
-					Role  role=roleService.find(roleId)==null?null:roleService.find(roleId);
-					if(role==null)return false;
-					if(roleId.equals(role.getRoleId()) && role.getName().equals(Constant.WMS_GAO_JI_GUANLI_YUAN)){
-					  isSystem=true;
-				  }
-			  }
-		  }
-		return isSystem;
-	}
-	public List<WmsUser> getTemplWmsUser(List<WmsUser> wmsUsers)
-	{
-		boolean falg=false;
-		List<WmsUser> users=new ArrayList<WmsUser>();
-		WmsUser  us=new WmsUser();
-		for (WmsUser user : wmsUsers){
-			falg=false;
-			String[] roleIds = user.getRoleIds()!=null?user.getRoleIds().split(","):null;
-			if(roleIds!=null){
-				for (int i = 0; i < roleIds.length; i++) {
-					Long roleId=Long.valueOf(roleIds[i]);
-					Role  role=roleService.find(roleId);
-					if(roleId.equals(role.getRoleId()) && role.getName().equals(Constant.WMS_GENDANYUAN)){
-						falg=true;
-					}
-				}
-			}
-			if(falg==true){
-				us=user;
-				users.add(us);
-			}
-		}
-		return users;
-	}
+
+	
 	public String toBeResponsibleEnterprise()
 	{
 		enterprise=WebUtil.getEnterprise(request);
 		if(enterprise!=null)request.getSession().removeAttribute("enterprise");
-		WmsUser user=WebUtil.getWmsUser(request);
+		User user=WebUtil.getUser(request);
 		StringBuffer jpql = new StringBuffer("");
 		StringBuffer countjpql = new StringBuffer("");
 		
 		
 		
-		jpql.append("select e from Enterprise e join e.user u  where u.userId=")
-		.append(user.getUserId()).append(" order by e.enterpriseId desc");
-		 countjpql.append("Enterprise e join e.user u  where u.userId=")
-		.append(user.getUserId()).append(" order by e.enterpriseId desc");
+		jpql.append("select e from Enterprise e join e.user u  where u.id=")
+		.append(user.getId()).append(" order by e.enterpriseId desc");
+		 countjpql.append("Enterprise e join e.user u  where u.id=")
+		.append(user.getId()).append(" order by e.enterpriseId desc");
 		 
 		PageView<Enterprise> pageView = new PageView<Enterprise>(10,  this.getPage());
 		pageView.setQueryResult(enterpriseService.getScrollDataManytoMany(pageView.getFirstResult(), pageView.getMaxresult(),jpql.toString(),countjpql.toString()));
@@ -283,13 +236,13 @@ public class EnterpriseAction extends BaseAction{
 	 */
 	public String findToIdEnterprise()
 	{
-		WmsUser  us=null;
+		User  us=null;
 		if(enterpriseId==null)return INPUT;
 		enterpriseJson=enterpriseService.find(enterpriseId);
-		for (WmsUser u : enterpriseJson.getUser()) {
-			us=new WmsUser();
-			us.setUserId(u.getUserId());
-			us.setUsername(u.getUsername());
+		for (User u : enterpriseJson.getUser()) {
+			us=new User();
+			us.setId(u.getId());
+			us.setAccount(u.getAccount());
 			user.add(us);
 		}
 		
@@ -332,7 +285,7 @@ public class EnterpriseAction extends BaseAction{
 	
 	
 	
-	private List<WmsUser> user=new ArrayList<WmsUser>();
+	private List<User> user=new ArrayList<User>();
 	
 	public int getPage() {
 		return page<1?1:page;
@@ -386,10 +339,10 @@ public class EnterpriseAction extends BaseAction{
 	
 	
 	
-	public List<WmsUser> getUser() {
+	public List<User> getUser() {
 		return user;
 	}
-	public void setUser(List<WmsUser> user) {
+	public void setUser(List<User> user) {
 		this.user = user;
 	}
 

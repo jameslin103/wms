@@ -3,12 +3,10 @@ package cn.fm.utils;
 import javax.servlet.http.Cookie;  
 import javax.servlet.http.HttpServletRequest; 
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.lang.StringUtils;
-
-import cn.fm.bean.user.WmsUser;
-import cn.fm.service.user.WmsUserService;
-import cn.fm.web.action.user.LoginAction;
+import cn.fm.bean.user.User;
+import cn.fm.service.user.UserService;
+import cn.fm.web.action.user.UserAction;
 
 
 
@@ -17,15 +15,15 @@ public class CookieUtils {
 	 public static final String USER_COOKIE = "user.cookie";  
 	  
 	    // 添加一个cookie  
-	    public Cookie addCookie(WmsUser user) {  
-	        Cookie cookie = new Cookie(USER_COOKIE, user.getPhone() + ","  
+	    public Cookie addCookie(User user) {  
+	        Cookie cookie = new Cookie(USER_COOKIE, user.getAccount()+ ","  
 	                + MD5.MD5Encode(user.getPassword()));  
 	        cookie.setMaxAge(60 * 60 * 24 * 14);// cookie保存两周  
 	        return cookie;  
 	    }  
 	  
 	    // 得到cookie  
-	    public boolean getCookie(HttpServletRequest request, WmsUserService wmsUserService) {  
+	    public boolean getCookie(HttpServletRequest request, UserService userService) {  
 	        Cookie[] cookies = request.getCookies();  
 	        System.out.println("cookies: " + cookies);  
 	        if (cookies != null) {  
@@ -37,15 +35,12 @@ public class CookieUtils {
 	                        String[] split = value.split(",");  
 	                        String phone= split[0];  
 	                        String password = split[1];
-	                        WmsUser user=null;
-	                       boolean isUser=wmsUserService.checkUser(phone, password);
-	                       if(isUser==true){
-	                    	   user=wmsUserService.find(phone);
-	                    	   if (user != null) {  
-		                            HttpSession session = request.getSession();  
-		                            session.setAttribute(LoginAction.USER_SESSION, user);// 添加用户到session中  
-		                            return true;  
-		                        }  
+	                        User user=null;
+	                      User loginUser=userService.login(phone, password);
+	                       if(loginUser!=null){
+		                         HttpSession session = request.getSession();  
+		                         session.setAttribute("user", user);// 添加用户到session中  
+		                         return true;  
 	                       }
 	                    }  
 	                }  

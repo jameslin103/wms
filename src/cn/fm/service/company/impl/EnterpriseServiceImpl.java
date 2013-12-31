@@ -10,7 +10,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import cn.fm.bean.company.Enterprise;
-import cn.fm.bean.user.WmsUser;
+import cn.fm.bean.user.User;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.company.EnterpriseService;
 
@@ -19,7 +19,7 @@ import cn.fm.service.company.EnterpriseService;
 public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements EnterpriseService {
 
 
-	public List<Enterprise> getAllEnterprise(WmsUser user)
+	public List<Enterprise> getAllEnterprise(User user)
 	{
 		if(user==null)return null;
 		List<Enterprise> enterpriseListVO=new ArrayList<Enterprise>();
@@ -55,11 +55,11 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 
 	}
 	@SuppressWarnings("unchecked")
-	public List<Enterprise> getUserToAllEnterprise(WmsUser user)
+	public List<Enterprise> getUserToAllEnterprise(User user)
 	{
 		try {
-		 return	em.createQuery("select e from Enterprise e join e.user u  where u.userId=?1 order by e.enterpriseId desc")
-		 		.setParameter(1, user.getUserId()).getResultList();
+		 return	em.createQuery("select e from Enterprise e join e.user u  where u.id=?1 order by e.enterpriseId desc")
+		 		.setParameter(1, user.getId()).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -98,20 +98,20 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 	 * @param enterprise
 	 * @return
 	 */
-	public List<WmsUser>  getEnterpriseToBoWmsUser(List<Enterprise> enterprise)
+	public List<User>  getEnterpriseToBoWmsUser(List<Enterprise> enterprise)
 	{
 		
-		List<WmsUser>  wmsUserListVO=new ArrayList<WmsUser>();
+		List<User>  userListVO=new ArrayList<User>();
 		if(enterprise.size()==0)return null;
 		for(Enterprise enter : enterprise){
 		
 			Enterprise en=em.find(Enterprise.class, enter.getEnterpriseId());
 			enter.setUser(en.getUser());
-			for(WmsUser us :enter.getUser()){
-				wmsUserListVO.add(us);
+			for(User us :enter.getUser()){
+				userListVO.add(us);
 			}
 		}
-		return wmsUserListVO;
+		return userListVO;
 	}
 	public boolean updateEnterprise(Enterprise enterprise){
 		boolean flag=false;
@@ -119,7 +119,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 			Query query=em.createQuery("update Enterprise set rferred=?1," +
 					" fullName=?2," +
 					" legalRepresentative=?3," +
-					"  accountLine=?4," +
+					" accountLine=?4," +
 					" enterpriseBankAccount=?5," +
 					" address=?6," +
 					" contact=?7," +
@@ -127,7 +127,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 					" qq=?9," +
 					" fax=?10," +
 					" email=?11," +
-					" status=?12" +
+					" status=?12," +
 					" send=?13"+
 					" where enterpriseId=?14");
 			query.setParameter(1, enterprise.getRferred())
@@ -208,9 +208,9 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 	 */
 	public void saveEnterpriseToBeResponsible(Integer enterpriseId,Integer userId){
 		if(enterpriseId==null || userId==null)return;
-		WmsUser userPo=em.find(WmsUser.class, userId);
+		User userPo=em.find(User.class, userId);
 		Enterprise enterprisePO=em.getReference(Enterprise.class, enterpriseId);
-		enterprisePO.addWmsUser(userPo);
+		enterprisePO.addUser(userPo);
 		em.persist(enterprisePO);
 	}
 	
@@ -222,9 +222,9 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 	{
 		
 		if(enterpriseId==null || userId==null)return;
-		WmsUser userPo=em.find(WmsUser.class, userId);
+		User userPo=em.find(User.class, userId);
 		Enterprise enterprisePO=em.getReference(Enterprise.class,enterpriseId);
-		enterprisePO.removeWmsUser(userPo);
+		enterprisePO.removeUser(userPo);
 	}
 	public Long findByFullName(String fullName) {
 		try {

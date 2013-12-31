@@ -73,7 +73,7 @@
 		});
 		$("#exit").click(function(){
 			window.top.frames['mainFrame'].$.dialog.confirm("您确定退出吗？",function(){
-				top.location.href="loginOut";
+				top.location.href="logout";
 			});
 		});
 		
@@ -128,7 +128,8 @@
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed;">
   <tr>
-    <td height="9" style="line-height:9px; background-image:url(images/main_04.gif)"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <td height="9" style="line-height:9px; background-image:url(images/main_04.gif)">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="97" height="9" background="images/main_01.gif">&nbsp;</td>
         <td>&nbsp;</td>
@@ -148,7 +149,9 @@
             <td height="18" background="images/main_14.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed;">
               <tr>
                 <td  style="width:1px;">&nbsp;</td>
-                <td ><span class="STYLE1">${user.username}</span></td>
+                <td ><span class="STYLE1">${user.account}</span>
+                	 <s:property value="#request.user.employee.name"/>
+                </td>
               </tr>
             </table></td>
           </tr>
@@ -156,7 +159,14 @@
         <td width="155" background="images/main_08.gif">&nbsp;</td>
         <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td height="23"><input type="button" id="back" /><input type="button" id="go" /><input type="button" id="info" /><input type="button" id="exit" /></a></td>
+            <td height="23">
+            	<a>
+            	<input type="button" id="back" />
+            	<input type="button" id="go" />
+           	 	<input type="button" id="info" />
+            	<input type="button" id="exit" />
+            	</a>
+            </td>
           </tr>
         </table></td>
         <td width="420" ><table width="100%" border="0" cellspacing="0" cellpadding="0">

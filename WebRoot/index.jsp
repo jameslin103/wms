@@ -81,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 														</div>
 													</td>
 													<td width="79%" height="30">
-													 <input type="text" id="phone" name="wmsUser.phone"  maxlength="13" placeholder="手机号码" class="input-block-level"
+													 <input type="text" id="phone" name="user.account"  maxlength="13" placeholder="手机号码" class="input-block-level"
 														style="height:18px; width:130px; border:solid 1px #cadcb2; font-size:12px; color:#81b432;">
 													</td>
 												</tr>

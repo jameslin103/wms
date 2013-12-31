@@ -11,12 +11,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>" />
     <%@ taglib uri="/struts-tags" prefix="s" %>
   <title>富民人力银行派遣系统</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="pragma" content="no-cache"/> 
+	<meta http-equiv="cache-control" content="no-cache"/> 
+	<meta http-equiv="expires" content="0"/>  
  	<%@ include file="/help/public_css_js.jsp" %>
 	<script type="text/javascript">
 		$(function(){
-		    var	phone=$("input[name='wmsUser.phone']").val();
-		    var password=$("input[name='wmsUser.password']").val();
+		    var	phone=$("input[name='user.phone']").val();
+		    var password=$("input[name='user.password']").val();
 			if(phone==""){
 				$("phone").text("手机号码必填项!");
 			}
@@ -36,16 +39,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<div class="row-fluid">
   			<div class="span4">
   			</div>
-        
   			<div class="login span4">
           <div class="inner well">
-          	 
             <form action="userLogin" method="post">
-            	
               <h2>富民派遣系统</h2>
-              <input type="text"  name="wmsUser.phone"  maxlength="13" placeholder="手机号码" cssClass="input-block-level"/>
-              <input type="password"  name="wmsUser.password"   maxlength="15" placeholder="密码"  cssClass="input-block-level"/>
-       		   <span style="color:red;"><s:fielderror name="username"/></span>
+              <s:textfield  name="user.account"  maxlength="13" placeholder="手机号码"  cssClass="input-block-level"/>
+              <s:password name="user.password"   maxlength="15" placeholder="密码"  cssClass="input-block-level"/>
+       		   <span style="color:red;">${msg}</span>
               <label class="checkbox">
                  <s:checkbox label="自动登录" name="userCookie" value="true"></s:checkbox>请记住我  
               </label> 
