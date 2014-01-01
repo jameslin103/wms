@@ -87,7 +87,11 @@ public class PrivilegeAction extends BaseAction{
 		return SUCCESS;
 	}
 	
-	
+	public String toSystemAllPrivilegeManage(){
+		
+		
+		return SUCCESS;
+	}
 	
 	
 	

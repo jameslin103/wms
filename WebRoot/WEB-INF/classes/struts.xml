@@ -203,6 +203,9 @@
         <action name="toViewPrivilegManage" class="cn.fm.web.action.permissions.PrivilegeAction" method="toViewPrivilegManage">
              <result name="success">admin/priv_assign_byuser.jsp</result>
         </action>
+        <action name="toSystemAllPrivilegeManage" class="cn.fm.web.action.permissions.PrivilegeAction" method="toSystemAllPrivilegeManage">
+             <result name="success">admin/priv_assign_byuser.jsp</result>
+        </action>
         <action name="addByUserPrivileg" class="cn.fm.web.action.permissions.PrivilegeAction" method="addByUserPrivileg">
              <result name="success" type="redirectAction">
             	<param name="actionName">toViewPrivilegManage</param>
@@ -632,7 +635,7 @@
            			enterpriseJson\.email,
            			enterpriseJson\.status,
            			user\[\d+\]\.userId,
-           			user\[\d+\]\.username
+           			user\[\d+\]\.account
             	 </param>
            </result>
             <result name="input" type="redirectAction">

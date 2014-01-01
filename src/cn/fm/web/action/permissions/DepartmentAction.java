@@ -13,8 +13,9 @@ import net.sf.json.util.PropertyFilter;
 
 public class DepartmentAction extends BaseAction{
 
-	
-	
+	private static final long serialVersionUID = 1266023526843646068L;
+
+
 	@Resource
 	private DepartmentService departmentService;
 

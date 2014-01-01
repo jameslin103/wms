@@ -40,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  url: "isExistUser?user.account="+$("#account").val(),
 				  async:false,
 				  success:function(date){
-						if(date==true){
+						if(date=='true'){
 							$("#accountmsg").html("用户帐号已经存在");
 							$("#accountmsg").addClass("input_error");
 							isExitUser= false;
