@@ -96,6 +96,11 @@
          <action name="toUpdateUser" class="cn.fm.web.action.user.UserAction" method="toUpdateUser">
             <result name="success" >/admin/user_update.jsp</result>
         </action>
+        <action name="updateUser" class="cn.fm.web.action.user.UserAction" method="updateUser">
+             <result name="success" type="redirectAction">
+            	<param name="actionName">viewUserList</param>
+            </result>
+        </action>
         
          <action name="isExistUser" class="cn.fm.web.action.user.UserAction" method="isExistUser">
             <result name="success" ></result>
@@ -171,32 +176,7 @@
             	 <param name="actionName">userLogin</param>
             </result>
         </action>  
-        
-         <!-- ========角色管理 权限============ -->
-         <!--    
-      <action name="toAuthorizationUser" class="cn.fm.web.action.user.PermissionAction" method="toAuthorizationUser">
-            <result name="success" >/admin/authorization.jsp</result>
-            <result name="input" >/admin/authorization.jsp</result>
-        </action> 
-        <action name="toHelp" class="cn.fm.web.action.user.PermissionAction" method="toHelp">
-            <result name="success" >/help/index.jsp</result>
-        </action>  
-        <action name="addWmsUser" class="cn.fm.web.action.user.PermissionAction" method="addWmsUser">
-           <result name="success" type="redirectAction">
-            	<param name="actionName">toAuthorizationUser</param>
-            </result>
-             <result name="input" type="redirectAction">
-            	<param name="actionName">toAuthorizationUser</param>
-            </result>
-        </action>
-        <action name="loadRole" class="cn.fm.web.action.user.PermissionAction" method="loadRole">
-             <result name="success"></result>
-        </action>
-        <action name="loadWmsUser" class="cn.fm.web.action.user.PermissionAction" method="loadWmsUser">
-             <result name="success"></result>
-        </action>
-        
-        -->
+        <!-- 系统权限 -->
         <action name="toViewPrivis" class="cn.fm.web.action.permissions.PrivilegeAction" method="toViewPrivis">  
             <result name="success">/left.jsp</result>
         </action>
@@ -204,8 +184,26 @@
              <result name="success">admin/priv_assign_byuser.jsp</result>
         </action>
         <action name="toSystemAllPrivilegeManage" class="cn.fm.web.action.permissions.PrivilegeAction" method="toSystemAllPrivilegeManage">
-             <result name="success">admin/priv_assign_byuser.jsp</result>
+             <result name="success">admin/priv_system_all.jsp</result>
         </action>
+         <action name="toAddSystemPrivilege" class="cn.fm.web.action.permissions.PrivilegeAction" method="toAddSystemPrivilege">
+             <result name="success">admin/priv_add_system.jsp</result>
+        </action>
+         <action name="addSystemPrivilege" class="cn.fm.web.action.permissions.PrivilegeAction" method="toAddSystemPrivilege">
+               <result name="success" type="redirectAction">
+            	<param name="actionName">toSystemAllPrivilegeManage</param>
+            </result>
+        </action>
+        <action name="toUpdatePrivilege" class="cn.fm.web.action.permissions.PrivilegeAction" method="toUpdatePrivilege">
+             <result name="success">admin/priv_update_system.jsp</result>
+        </action>
+        
+          <action name="updatePrivilege" class="cn.fm.web.action.permissions.PrivilegeAction" method="updatePrivilege">
+             <result name="success" type="redirectAction">
+            	<param name="actionName">toSystemAllPrivilegeManage</param>
+            </result>
+        </action>
+        
         <action name="addByUserPrivileg" class="cn.fm.web.action.permissions.PrivilegeAction" method="addByUserPrivileg">
              <result name="success" type="redirectAction">
             	<param name="actionName">toViewPrivilegManage</param>
@@ -269,17 +267,6 @@
             	<param name="actionName">toAuthorizationUser</param>
             </result>
         </action>
-        <!--
-        <action name="addRole" class="cn.fm.web.action.user.PermissionAction" method="addRole">
-            <result name="success" type="redirectAction">
-            	<param name="actionName">toRoleManage</param>
-            </result>
-             <result name="input" type="redirectAction">
-            	<param name="actionName">toRoleManage</param>
-            </result>
-        </action>
-      
-        -->
         
         <!-- excel Import Date -->
         <action name="addImportExcelEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="addImportExcelEmployees">
@@ -297,7 +284,6 @@
            		<param name="actionName">viewEnterpriseEmployees</param>
            	</result>
         </action> 
-        
         <action name="employeesFileExcelTempl" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="employeesFileExcelTempl">  
            <!-- 配置结果类型为stream的结果 -->  
           <result name="success" type="stream">  
@@ -594,6 +580,7 @@
          <action name="addEnterpriseToUser" class="cn.fm.web.action.company.EnterpriseAction" method="addEnterpriseToUser">
            <result name="success" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
+            	<param name="page">${page}</param>
             </result>
             <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
@@ -617,7 +604,11 @@
             <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
             </result>
-        </action> 
+        </action>
+         <action name="seacherEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="seacherEnterprise">
+            <result name="success">/company/enterprise_seacher.jsp</result>
+        </action>
+        
         <action name="findToIdEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="findToIdEnterprise">
            <result name="success" type="json">
            		<param name="includeProperties">
@@ -634,8 +625,8 @@
            			enterpriseJson\.fax,
            			enterpriseJson\.email,
            			enterpriseJson\.status,
-           			user\[\d+\]\.userId,
-           			user\[\d+\]\.account
+           			users\[\d+\]\.id,
+           			users\[\d+\]\.account
             	 </param>
            </result>
             <result name="input" type="redirectAction">
@@ -672,9 +663,6 @@
             	company/insurance-with-employee-list.jsp
             </result>
         </action>
-      
-        
-        
         <!-- InsurancesTaxAction  -->
         <action name="toViewTaxRules" class="cn.fm.web.action.company.InsurancesTaxAction" method="toViewTaxRules">
             <result name="success">admin/tax.jsp</result>

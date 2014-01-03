@@ -23,62 +23,70 @@
 				form.page.value=page;
 				form.submit();
 		  }
-		
+		$(function(){
+			$("a[name=fullname]").each(function(index,a){
+					$(a).click(function(){
+							$.dialog({
+								id:'selEnterprise',
+								content:'url:seacherEnterprise?enterprise.enterpriseId='+$(a).prev().val(),
+								width:'800px',
+								height:'500px',
+								title:'查看企业详细信息',
+								lock:true,
+								ok:false,
+						cancel:true
+						});
+						
+					});
+				});
+				
+			$("#pagesel").val("${page}");
+			$("#pagesel").change(function(){
+				topage($(this).val());
+			});
+		});
 		</script>
 
 	</head>
 	<body>
 	<div id="container">
-			<div id="header">
-			</div>
-			<div id="main">
-				<div class="row-fluid">
-
-					<div id="center-pane">
-						<ul class="nav nav-tabs">
-							<li class="active">
-								<a href="toBeResponsibleEnterprise">我负责的企业</a>
-							</li>
-							<!--<li>
-								<a href="toBeResponsibleEnterprise">所有企业</a>
-							</li>
-						--></ul>
-						<s:form action="toBeResponsibleEnterprise" method="post" id="to_enter_form">
-						<input name="page" type="hidden"/>
+			<div id="main" >
+				<div id="search">
+					<fieldset>
+						<legend>
+							<img src="images/311.gif" />&nbsp;查询条件
+						</legend>
+						<s:form action="toBeResponsibleEnterprise" method="post">
+							<input type="hidden" name="page" id="page" value="1"/>
+							企业名称：<s:textfield name="enterprise.fullName" maxlength="50"/>
+						 	<input type="submit" value=" 查  询 " class="oprbtn" style="width:70px;" />
+						 </s:form>
+					</fieldset>
+				 </div>
+				 <div id="datalist">
 						<table class="table table-striped table-bordered">
 							<thead>
-								<tr>
-									<th rowspan="2" style="text-align: center;">
+								<tr bgcolor="#CEAE71">
+									<th style="text-align: center;">
 										序号
 									</th>
-									<!--<th rowspan="2">
-										&nbsp;&nbsp;全选<br/>
-										<input type="button" id="delete" value="删除	" 
-										style="background-color:transparent; border:0px; color:#2E9AFE"/><br/>
-										&nbsp;&nbsp;<input type="checkbox" id="all_box"/>
-									</th>
-									--><th rowspan="2" style="text-align: center;">
+									<th style="text-align: center;">
 										企业
 									</th>
-									<th colspan="2" style="text-align: center;">
+									<th style="text-align: center;">
+										在职员工
+									</th>
+									<th style="text-align: center;">
 										资金往来（元）
 									</th>
-									<th rowspan="2" style="text-align: center;">
+									<th style="text-align: center;">
 										工资发放
 									</th>
-									<th rowspan="2" style="text-align: center;">
+									<th style="text-align: center;">
 										本月增减员
 									</th>
-									<th rowspan="2" style="text-align: center;">
+									<th style="text-align: center;">
 										负责人
-									</th>
-								</tr>
-								<tr>
-									<th style="text-align: center;">
-										企业
-									</th>
-									<th style="text-align: center;">
-										员工
 									</th>
 								</tr>
 							</thead>
@@ -88,27 +96,22 @@
 										<td style="text-align: center;">
 											<s:property value="%{#list.index+1}" />
 										</td>
-										<!--<td>
-											<input type="checkbox" value="<s:property  value="%{#enterprise.enterpriseId}" />"/>
-										</td>-->
 										<td class="with-complement" >
-											<a href="viewEnterpriseDetailed?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">
+											<a href="viewEnterpriseEmployees?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">
 											<s:property  value="%{#enterprise.fullName}" /></a>
 											<span class="complement">
-												  <s:property value="%{#enterprise.contact}" />
-												  电话:<s:property value="%{#enterprise.phone}" />
-												 QQ：<s:property value="%{#enterprise.qq}" /> 
+												  联系人:<s:property value="%{#enterprise.contact}" />
+												  电&nbsp;&nbsp;话:<s:property value="%{#enterprise.phone}" />
 											</span>
-											<s:set var="enterpriseId" value="%{#enterprise.enterpriseId}"></s:set>
-											<a href="#info-of-company" onclick="modalEnterprise('${enterpriseId}')" data-toggle="modal">详细信息</a>，
-											<a href="#info-for-check" data-toggle="modal" onclick="modalEnterprise('${enterpriseId}')" >修改联系人</a>
+											<s:hidden value="%{#enterprise.enterpriseId}"></s:hidden>
+											<a href="javascript:void(0)" name="fullname" title="详细信息">详细信息</a>
+										</td>
+										<td style="text-align: center;">
+											<a href="viewEnterpriseEmployees?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/> "><s:property value="%{#enterprise.count}"/></a>
 										</td>
 										<td style="text-align: center;">
 											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>" id="viewdetail">
 												<s:property  value="%{#enterprise.balanceDetailTotal}"/></a>
-										</td>
-										<td style="text-align: center;">
-											<a href="viewEnterpriseEmployees?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/> "><s:property value="%{#enterprise.count}"/></a>
 										</td>
 										<td>
 										<ol>
@@ -139,138 +142,36 @@
 											</a>
 										</td>
 										<td style="text-align: center;">
-											<s:property value="%{#session.user.username}"/>
+											<s:iterator value="#enterprise.user" id="user">
+												<s:property value="%{#user.employee.name}"/>
+											</s:iterator>
 										</td>
 									</tr>
 								</tbody>
 							</s:iterator>
 						</table>
-						<div class="pagination">
-							<%@ include file="/share/fenye.jsp" %>
-						</div>
+					</div>
+						<s:form action="toBeResponsibleEnterprise" method="post" id="to_enter_form">
+							<input name="page" type="hidden"/>
+							<div class="pagination">
+								<%@ include file="/share/fenye.jsp" %>
+								<div style="text-align: right; color:#2E9AFE">
+								  显示第：
+									<select id="pagesel" style="width:60px;height:25px;">
+										<s:iterator begin="1" end="#request.pageView.totalpage" var="p">
+											<option value="${p}">${p}</option>
+										</s:iterator>
+									</select>
+									页
+								</div>
+							</div>
 					</s:form>
-	
 					</div>
-					
-				</div>
-			</div>
-
-			<div id="footer"></div>
-
-		</div>
-
-		<div id="info-of-company" class="modal hide fade" tabindex="-1"	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-					×
-				</button>
-				<h3 id="myModalLabel">
-					企业信息
-				</h3>
-			</div>
-			<div class="modal-body">
-				<div class="row-fluid">
-					<p>
-						公司名称：<input type="text" name="enterprise.rferred" disabled="disabled"/>
-					</p>
-					<p>
-						公司全称：<input type="text" name="enterprise.fullName" disabled="disabled"/>
-					</p>
-					<p>
-						员工人数：<input type="text" name="" value="2000" disabled="disabled"/>
-					</p>
-					<p>
-						公司地址：<input type="text" name="enterprise.address" disabled="disabled"/>
-					</p>
-					<p>
-						法人代表：<input type="text" name="enterprise.legalRepresentative" disabled="disabled"/>
-					</p>
-					<p>
-						开户银行：<input type="text" name="enterprise.accountLine" disabled="disabled"/>
-					</p>
-					<p>
-						开户账号：<input type="text" name="enterprise.enterpriseBankAccount" disabled="disabled"/>
-					</p>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal" aria-hidden="true">
-					Close
-				</button>
-			</div>
-		</div>
-
-		<div id="info-for-check" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-					×
-				</button>
-				<h3 id="myModalLabel">
-					企业联系人信息
-				</h3>
-			</div>
-			<div class="modal-body">
-				<s:form action="updateEnterpriseContact" method="post">
 				
-				    <s:hidden name="enterprise.enterpriseId"></s:hidden>
-					<div class="row-fluid">
-						<p>
-							公司名称：<input type="text" name="enterprise.rferred" disabled="disabled"/>
-						</p>
-						<p>
-							公司全称：<input type="text" name="enterprise.fullName" disabled="disabled"/>
-						</p>
-						<p>
-							公司地址：<input type="text" name="enterprise.address" disabled="disabled"/>
-						</p>
+				</div>
+			<div>
+	</div>
 
-						<div class="input-container">
-							<label>
-								联系人
-							</label>
-							<input type="text" name="enterprise.contact" maxlength="20"/>
-						</div>
-
-						<div class="input-container">
-							<label>
-								电话
-							</label>
-							<input type="text" name="enterprise.phone" maxlength="20"/>
-						</div>
-						<div class="input-container">
-							<label>
-								QQ
-							</label>
-							<input type="text" name="enterprise.qq" maxlength="20"/>
-						</div>
-
-						<div class="input-container">
-							<label>
-								传真
-							</label>
-							<input type="text" name="enterprise.fax" maxlength="20"/>
-						</div>
-
-						<div class="input-container">
-							<label>
-								电子邮件
-							</label>
-							<input type="text" name="enterprise.email" maxlength="20"/>
-						</div>
-
-						<div class="input-container">
-							<s:submit cssClass="btn btn-primary"  value="提交" />
-								
-						</div>
-					</div>
-				</s:form>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal" aria-hidden="true">
-					Close
-				</button>
-			</div>
-		</div>
 	</body>
 
 </html>

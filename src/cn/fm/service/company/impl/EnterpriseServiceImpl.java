@@ -3,12 +3,14 @@ package cn.fm.service.company.impl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.Query;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.opensymphony.oscache.util.StringUtil;
+
+import cn.fm.bean.PageView;
+import cn.fm.bean.QueryResult;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.user.User;
 import cn.fm.service.base.DaoSupport;
@@ -18,40 +20,34 @@ import cn.fm.service.company.EnterpriseService;
 @Service @Transactional
 public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements EnterpriseService {
 
-
-	public List<Enterprise> getAllEnterprise(User user)
+	
+	@SuppressWarnings("unchecked")
+	public PageView<Enterprise> getAllEnterprise(int maxresult, int page,User user,Enterprise enterprise)
 	{
-		if(user==null)return null;
-		List<Enterprise> enterpriseListVO=new ArrayList<Enterprise>();
-		Set<Enterprise>  enterpriseList=user.getEnterprise();
-		if(enterpriseList.size()>0){
-			for (Enterprise enterprise : enterpriseList) {
-				Long count=getCountEmployees(enterprise.getEnterpriseId());
-				Enterprise enterpriseVO=new Enterprise();
-				enterpriseVO.setBalanceDetailTotal(findBalanceDetail(enterprise.getEnterpriseId()));
-				enterpriseVO.setAccountLine(enterprise.getAccountLine());
-				enterpriseVO.setAddress(enterprise.getAddress());
-				enterpriseVO.setContact(enterprise.getContact());
-				enterpriseVO.setEmail(enterprise.getEmail());
-				enterpriseVO.setEnterpriseBankAccount(enterprise.getEnterpriseBankAccount());
-				enterpriseVO.setFax(enterprise.getFax());
-				enterpriseVO.setFullName(enterprise.getFullName());
-				enterpriseVO.setEnterpriseId(enterprise.getEnterpriseId());
-				enterpriseVO.setLegalRepresentative(enterprise.getLegalRepresentative());
-				enterpriseVO.setQq(enterprise.getQq());
-				enterpriseVO.setPhone(enterprise.getPhone());
-				enterpriseVO.setStatus(enterprise.getStatus());
-				enterpriseVO.setRferred(enterprise.getRferred());
-				//enterpriseVO.setUserId(enterprise.getUserId());
-				enterpriseVO.setCount(count);
-				
-				enterpriseListVO.add(enterpriseVO);
-				
-				
-			}
+		
+		String sql="";
+		String countSql="";
+		if(user!=null || enterprise!=null){
+			sql="select e from Enterprise e join e.user u "+createCondition(enterprise,user)+" order by e.enterpriseId desc";
+			countSql="select count(e) from Enterprise e join e.user u "+createCondition(enterprise,user)+" order by e.enterpriseId desc";
+		}else{
+			sql="select e from Enterprise e order by e.enterpriseId desc ";
+			countSql="select count(e) from Enterprise e order by e.enterpriseId desc ";
 		}
 		
-		return enterpriseListVO;
+		PageView<Enterprise> pageView = new PageView<Enterprise>(maxresult,page);
+		QueryResult<Enterprise> qr = new QueryResult<Enterprise>();
+		Query query = em.createQuery(sql);
+	
+		if(pageView.getFirstResult()!=-1 && pageView.getMaxresult()!=-1)
+			query.setFirstResult(pageView.getFirstResult()).setMaxResults(pageView.getMaxresult());
+		qr.setResultlist(query.getResultList());
+		
+		query = em.createQuery(countSql);
+		qr.setTotalrecord((Long)query.getSingleResult());
+		pageView.setQueryResult(qr);
+		
+		return pageView;
 
 	}
 	@SuppressWarnings("unchecked")
@@ -206,7 +202,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 	 * @param enterprise
 	 * @param user
 	 */
-	public void saveEnterpriseToBeResponsible(Integer enterpriseId,Integer userId){
+	public void saveEnterpriseToBeResponsible(Integer enterpriseId,String userId){
 		if(enterpriseId==null || userId==null)return;
 		User userPo=em.find(User.class, userId);
 		Enterprise enterprisePO=em.getReference(Enterprise.class, enterpriseId);
@@ -218,7 +214,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 	 * 解除企业负责人
 	 * @return
 	 */
-	public void removeToEnterpriseHeadUser(Integer enterpriseId,Integer userId)
+	public void removeToEnterpriseHeadUser(Integer enterpriseId,String userId)
 	{
 		
 		if(enterpriseId==null || userId==null)return;
@@ -238,5 +234,55 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public PageView<Enterprise> getUserToByEnterprise(int maxresult, int page,User user,Enterprise enterprise) {
+		
+		String sql;
+		String countSql;
+		
+		if(enterprise!=null && !StringUtil.isEmpty(enterprise.getFullName())){
+			countSql="select count(e) from Enterprise e join e.user u  where 1=1 and u.id=?1 and e.fullName like '%" + enterprise.getFullName().trim() + "%' order by e.enterpriseId desc";
+			sql="select e from Enterprise e join  e.user u    where 1=1 and u.id=?1   and e.fullName like '%" + enterprise.getFullName().trim() + "%' order by e.enterpriseId desc";
+		}else{
+			countSql="select count(e) from Enterprise e join e.user u  where 1=1 and u.id=?1  order by e.enterpriseId desc";
+			sql="select e from Enterprise e join e.user u  where 1=1 and u.id=?1 order by e.enterpriseId desc";
+		}
+		
+		
+		PageView<Enterprise> pageView = new PageView<Enterprise>(maxresult,page);
+		QueryResult<Enterprise> qr = new QueryResult<Enterprise>();
+		Query query = em.createQuery(sql);
+	
+		if(pageView.getFirstResult()!=-1 && pageView.getMaxresult()!=-1)
+			query.setFirstResult(pageView.getFirstResult()).setMaxResults(pageView.getMaxresult());
+		if(user!=null && user.getId()!=null)query.setParameter(1, user.getId());
+		qr.setResultlist(query.getResultList());
+		
+		query = em.createQuery(countSql);
+		if(user!=null && user.getId()!=null)query.setParameter(1, user.getId());
+		qr.setTotalrecord((Long)query.getSingleResult());
+		pageView.setQueryResult(qr);
+		
+		return pageView;
+	}
+	
+	private String createCondition(Enterprise enterprise,User user) {
+		
+		if (enterprise == null && user==null) {
+			return "";
+		}
+		StringBuilder builder = new StringBuilder(" where 1=1 ");
+		if (enterprise.getFullName()!= null && !enterprise.getFullName().trim().equals("")) {
+			builder.append(" and e.fullName like '%" + enterprise.getFullName().trim() + "%'");
+		}
+		if (enterprise.getContatId()!= null && !enterprise.getContatId().trim().equals("")) {
+			builder.append(" and e.contatId='" + enterprise.getContatId().trim() + "'");
+		}
+		if (user.getId()!= null && !user.getId().trim().equals("") && !user.getId().equals("0")) {
+			builder.append(" and u.id='" + user.getId().trim()+ "'");
+		}
+		return builder.toString();
+	}
 
 }

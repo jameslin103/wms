@@ -32,6 +32,8 @@ public class PrivilegeAction extends BaseAction{
 	
 	private int[] prives;
 	
+	private Privilege   privilege;
+	
 	
 	public String toViewPrivis() {
 		User user =(User)session.getAttribute("user");
@@ -88,8 +90,34 @@ public class PrivilegeAction extends BaseAction{
 	}
 	
 	public String toSystemAllPrivilegeManage(){
+		List<Privilege> privileges = privilegeService.getPrivileges();
+		request.setAttribute("privileges", privileges);
 		
+		return SUCCESS;
+	}
+	public String toAddSystemPrivilege(){
 		
+		return SUCCESS;
+	}
+	public String addSystemPrivilege(){
+		
+		privilegeService.savePrivilege(privilege);
+		return SUCCESS;
+	}
+	
+	public String toUpdatePrivilege()
+	{
+		if(privilege!=null && privilege.getId()!=0)
+			privilege=privilegeService.findByIdPrivilege(privilege.getId());
+		request.setAttribute("privilege", privilege);
+		return SUCCESS;
+		
+	}
+	
+	public String updatePrivilege()
+	{
+		if(privilege!=null)
+			privilegeService.updatePrivilege(privilege);
 		return SUCCESS;
 	}
 	
@@ -113,6 +141,12 @@ public class PrivilegeAction extends BaseAction{
 	}
 	public void setPrives(int[] prives) {
 		this.prives = prives;
+	}
+	public Privilege getPrivilege() {
+		return privilege;
+	}
+	public void setPrivilege(Privilege privilege) {
+		this.privilege = privilege;
 	}
 	
 	

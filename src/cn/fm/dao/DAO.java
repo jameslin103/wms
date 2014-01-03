@@ -29,6 +29,8 @@ public interface DAO<E> {
 	 * @return
 	 */
 	public E findById(String id);
+	
+	public E findById(Integer id);
 
 	/**
 	 * 查询所有的数据

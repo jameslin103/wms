@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.fm.bean.QueryResult;
 import cn.fm.utils.GenericsUtils;
-import cn.fm.utils.StringUtil;
 
 
 @SuppressWarnings("unchecked")

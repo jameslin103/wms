@@ -49,7 +49,7 @@ public class EnterpriseAction extends BaseAction{
 	private int page;
 	private Long  isExitFullName;
 	
-	
+	private User   user;
 	
 	
 
@@ -59,8 +59,8 @@ public class EnterpriseAction extends BaseAction{
 	 */
 	public String addEnterpriseToUser()
 	{
-		if(userId==null || enterpriseId==null)return INPUT;
-		enterpriseService.saveEnterpriseToBeResponsible(enterpriseId,userId);
+		if(user==null || user.getId()==null || enterpriseId==null)return INPUT;
+		enterpriseService.saveEnterpriseToBeResponsible(enterpriseId,user.getId());
 		
 		return SUCCESS;
 	}
@@ -71,8 +71,8 @@ public class EnterpriseAction extends BaseAction{
 	 */
 	public String removeToEnterpriseHeadUser(){
 		
-		if(userId==null || enterpriseId==null)return INPUT;
-		enterpriseService.removeToEnterpriseHeadUser(enterpriseId,userId);
+		if(user==null || user.getId()==null || enterpriseId==null)return INPUT;
+		enterpriseService.removeToEnterpriseHeadUser(enterpriseId,user.getId());
 		return SUCCESS;
 	}
 	public String  addEnterprise()
@@ -81,7 +81,6 @@ public class EnterpriseAction extends BaseAction{
 		if(user==null)return INPUT;
 		if(enterprise==null)return INPUT;
 		if(enterprise!=null){
-			enterprise.addUser(userService.getById(user.getId()));
 			enterprise.setInsurancesBaseSettings(insurancesBaseSettingsService.find(1));
 			enterprise.setInsurancesTax(insurancesTaxService.find(1));
 			enterpriseService.save(enterprise); 	
@@ -93,74 +92,30 @@ public class EnterpriseAction extends BaseAction{
 	public String  viewEnterprise()
 	{
 		
-		User user=WebUtil.getUser(request);
-		
-		StringBuffer jpql = new StringBuffer("");
-		StringBuffer countjpql = new StringBuffer("");
-
 		List<User> users=userService.getUsers();
 		if(users.size()==0)users=new ArrayList<User>();
-		
-		
-		if(isSystemAdmin==true)
-		{
-			jpql.append("select e from Enterprise e ").append(" order by e.enterpriseId desc");
-			countjpql.append("Enterprise e ").append(" order by e.enterpriseId desc");
-			request.setAttribute("isSystemAdmin", isSystemAdmin);
-		}
-		if(isSystemAdmin!=true)
-		{
-
-			jpql.append("select e from Enterprise e join e.user u  where u.userId=")
-			.append(user.getId()).append(" order by e.enterpriseId desc");
-			 countjpql.append("Enterprise e join e.user u  where u.userId=")
-			.append(user.getId()).append(" order by e.enterpriseId desc");
-		}
-		PageView<Enterprise> pageView = new PageView<Enterprise>(10,  this.getPage());
-		pageView.setQueryResult(enterpriseService.getScrollDataManytoMany(pageView.getFirstResult(), pageView.getMaxresult(),jpql.toString(),countjpql.toString()));
-		
+		PageView<Enterprise>  pageView=enterpriseService.getAllEnterprise(10, this.getPage(),user,enterprise);
 		request.setAttribute("pageView", pageView);
 		request.setAttribute("users", users);
 		
 		return SUCCESS;
 	}
-
 	
 	public String toBeResponsibleEnterprise()
 	{
-		enterprise=WebUtil.getEnterprise(request);
+		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise!=null)request.getSession().removeAttribute("enterprise");
 		User user=WebUtil.getUser(request);
-		StringBuffer jpql = new StringBuffer("");
-		StringBuffer countjpql = new StringBuffer("");
 		
-		
-		
-		jpql.append("select e from Enterprise e join e.user u  where u.id=")
-		.append(user.getId()).append(" order by e.enterpriseId desc");
-		 countjpql.append("Enterprise e join e.user u  where u.id=")
-		.append(user.getId()).append(" order by e.enterpriseId desc");
-		 
-		PageView<Enterprise> pageView = new PageView<Enterprise>(10,  this.getPage());
-		pageView.setQueryResult(enterpriseService.getScrollDataManytoMany(pageView.getFirstResult(), pageView.getMaxresult(),jpql.toString(),countjpql.toString()));
+	    PageView<Enterprise>  pageView=enterpriseService.getUserToByEnterprise(10, this.getPage(), user,this.enterprise);
+	    
 		List<Enterprise> list=findToBeEnterpriseAndCreateSalaryBudgetTable(pageView.getRecords());
 		request.setAttribute("enterprises", list);
 		request.setAttribute("pageView", pageView);
 		
 		return SUCCESS;
 	}
-	/**
-	 * 查询当前用户所负责的企业
-	 * @return
-	 */
-//	public List<Enterprise> getWmsUserToBeEnterprise()
-//	{
-//		WmsUser user=WebUtil.getWmsUser(request);
-//		WmsUser userPO=wmsUserService.find(user.getUserId());
-//		List<Enterprise> enterpriseList=enterpriseService.getAllEnterprise(userPO);
-//		if(enterpriseList.size()==0)enterpriseList=new ArrayList<Enterprise>();
-//		return enterpriseList;
-//	}
+
 	
 	public List<Enterprise> findToBeEnterpriseAndCreateSalaryBudgetTable(List<Enterprise> enterpriseList)
 	{
@@ -243,7 +198,7 @@ public class EnterpriseAction extends BaseAction{
 			us=new User();
 			us.setId(u.getId());
 			us.setAccount(u.getAccount());
-			user.add(us);
+			users.add(us);
 		}
 		
 		if(enterpriseJson==null)
@@ -282,10 +237,17 @@ public class EnterpriseAction extends BaseAction{
 		return NONE;
 	}
 	
+	public String seacherEnterprise(){
+		
+		enterprise=enterpriseService.find(enterprise.getEnterpriseId());
+		enterprise.setCount(enterpriseService.getCountEmployees(enterprise.getEnterpriseId()));
+		return SUCCESS;
+	}
 	
 	
 	
-	private List<User> user=new ArrayList<User>();
+	
+	private List<User> users=new ArrayList<User>();
 	
 	public int getPage() {
 		return page<1?1:page;
@@ -339,11 +301,19 @@ public class EnterpriseAction extends BaseAction{
 	
 	
 	
-	public List<User> getUser() {
+	public User getUser() {
 		return user;
 	}
-	public void setUser(List<User> user) {
+
+	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	public Long getIsExitFullName() {

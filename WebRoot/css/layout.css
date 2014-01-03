@@ -50,19 +50,72 @@ form .input-container input[type="checkbox"] { margin: -5px 5px 0 0; margin-righ
 .list-of-items-for-delete a:hover { color: black; }
 
 
+.table {
+	background-color: rgba(155, 132, 132, 0.13)
+}
+
+.btn-primary {
+	background-image: -webkit-gradient(linear,10% 30%,50% 90%,from(#53080C),to(#CEAE71));
+	background-color: #CEAE71;
+}
+
+.btn-primary:hover {
+	background-color: #53080C;
+}
+
+
+.nav>li>a:hover {
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#53080C),to(#CEAE71));
+}
+
+.nav-list>.active>a {
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#53080C),to(#CEAE71));
+}
+
+.nav-list>.active>a:hover {
+	background-color: #CEAE71;
+}
+
+
 #container { width: 1170px; margin: 0 auto; }
  
 /*login 盒子*/
 #container .main { background: transparent url(../images/1.png) no-repeat  center top;      }
 
 #container .login {
- margin-top: 180px; padding: 25px; 
+ margin-top: 350px; padding: 25px; 
 }
+
+#container .login .well{
+ background-color: #53080c;
+ border: 1px solid #d0ac6b;
+ padding-top: 29px;
+}
+
+#container .login .btbg{}
+
+#sidebar .logo { 
+	min-height: 105px; 
+	padding: 35px;
+	background: transparent url(../images/logo1.png) no-repeat  center center; 
+}
+
+#header{ margin-bottom: 25px;}
+
+/*#center-pane { background-color: #D7D7D7; }*/
+/*#center-pane table td.bgc { background-color: #D7D7D7; }*/
+#center-pane .right { float: right; margin-left: 10px; }
+
+
+
+
+/*****************原始代码begin**************************/
 
 #header .navbar { margin-bottom: 0px; }
 #header .navbar .brand { 
-	padding-left: 40px; background: transparent url(../images/2.png) no-repeat  left center; 
+	/*padding-left: 40px; background: transparent url(../images/2.png) no-repeat  left center; */
 	color: #901707;
+
 }
 
 #header .user { float: right; margin: 10px; }
@@ -78,7 +131,6 @@ form .input-container input[type="checkbox"] { margin: -5px 5px 0 0; margin-righ
 #side-nav { height: 300px; }
 #side-nav .well { padding: 8px 0px; }
 
-#center-pane { }
 #center-pane .action-container { margin: -15px 0 5px; padding: 10px 0px; line-height: 20px; }
 #center-pane .action-container .title { font-size: 20px;  }
 #center-pane .action-container li { float: left; margin-right: 5px; }

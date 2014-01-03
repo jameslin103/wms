@@ -2,9 +2,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+ path + "/";
 %>
 
 <%@ page contentType="text/html; charset=UTF-8"%>
@@ -22,7 +20,6 @@
 				form.submit();
 		}
 		function reset_enterprise(){
-			
 			var form=$('#add_form');
 			clearForm(form);
 		}
@@ -59,7 +56,26 @@
 			 }
 				
 			});	
+				$("a[name=fullname]").each(function(index,a){
+					$(a).click(function(){
+							$.dialog({
+								id:'selEnterprise',
+								content:'url:seacherEnterprise?enterprise.enterpriseId='+$(a).prev().val(),
+								width:'800px',
+								height:'500px',
+								title:'查看企业详细信息',
+								lock:true,
+								ok:false,
+						cancel:true
+						});
+						
+					});
+				});
 				
+			$("#pagesel").val("${page}");
+			$("#pagesel").change(function(){
+				topage($(this).val());
+			});
 				
 		});
 		
@@ -67,55 +83,52 @@
 	</script>
 	</head>
 	<body>
-
-		<div id="container">
-			<div id="header">
-			</div>
-
-			<div id="main">
-				<div class="row-fluid">
-					<div id="center-pane">
-						<ul class="nav nav-tabs">
-							<li class="active">
-								<a href="viewEnterprise">所有企业</a>
-							</li>
-						</ul>
-
-						<ul class="normal action-container clearfix">
-							<li>
-								<a href="#add-enterprise-bnt" data-toggle="modal" onclick="reset_enterprise()">添加新企业</a>
-							</li>
-						</ul>
-						<div style="text-align: right">
-						<ul   class="normal clearfix">
-							<li style="color:#2E9AFE">
-								目前总共:&nbsp;<span style="color:red;">(${pageView.totalrecord})</span>&nbsp;&nbsp;家企业
-							</li>
-						</ul>
-						</div>
+	<div id="container">
+		<div id="main">
+				<div id="search">
+					<fieldset>
+						<legend>
+							<img src="images/311.gif" />&nbsp;查询条件
+						</legend>
+						<s:form action="viewEnterprise" method="post">
+							<input type="hidden" name="page" id="page" value="1"/>
+							企业名称：<s:textfield name="enterprise.fullName" size="10" cssStyle="width:150px;"/>
+							合同编号：<s:textfield name="enterprise.contatId" size="10" cssStyle="width:150px;"/>
+							负  责  人：  <s:select list="%{#request.users}" name="user.id" label="0" listKey="id"  theme="simple"
+									   listValue="employee.name"  headerKey="0" headerValue="-请选择-" cssStyle="width:90px;"/>
+						 	<input type="submit" value=" 查  询 " class="oprbtn" style="width:70px;" />
+						 </s:form>
+					</fieldset>
+				</div>
+				<div id="datalist">
+					<fieldset>
+						<legend>
+							<img src="images/311.gif" />
+							<a href="#add-enterprise-bnt" data-toggle="modal" onclick="reset_enterprise()">添加新企业</a>
+							--总<span style="color:red;">&nbsp;(${pageView.totalrecord})</span>家
+						</legend>
+					</fieldset>
 						<!-- ======================================According to  Enterprise==================================== -->
-						<s:form action="viewEnterprise" method="post" id="my_enterprise">
-							<input type="hidden" name="page"/>
-						
-						
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
-									<th width="8%" style="text-align: center;">
+									<th width="5%" style="text-align: center;">
 										序号
 									</th>
-									<!--<th width="8%">
-										&nbsp;&nbsp;&nbsp;&nbsp;全选<br/>
-										&nbsp;&nbsp;<input type="button" id="delete" value="删除	" 
-										style="background-color:transparent; border:0px; color:#2E9AFE"/><br/>
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="all_box"/>
-									</th>
-									-->
-									<th width="50%" style="text-align: center;">
-										企业
+									<th width="8%" style="text-align: center;">
+										合同编号
 									</th>
 									<th width="30%" style="text-align: center;">
+										企业
+									</th>
+									<th width="15%" style="text-align: center;">
 										负责人
+									</th>
+									<th width="10%" style="text-align: center;">
+										合同性质
+									</th>
+									<th width="20%" style="text-align: center;">
+										备注
 									</th>
 									<th width="12%" style="text-align: center;">
 										操作
@@ -126,72 +139,70 @@
 								<tbody>
 									<tr>
 										<td style="text-align: center;">
-											<s:property value="%{#list.index+1}" />
+											<s:property value="%{#enterprise.enterpriseId}"/>
 										</td>
-										<!--<td>
-											&nbsp;&nbsp;&nbsp;&nbsp;
-											<input type="checkbox" value="<s:property  value="%{#enterprise.enterpriseId}" />"/>
+										<td style="text-align: center;">
+											<s:property value="%{#enterprise.contatId}"/>
 										</td>
-										--><td class="with-complement">
-											<s:property value="%{#enterprise.fullName}" />
+										<td class="with-complement" title="详细信息">
+											<input type="hidden" value="<s:property value="%{#enterprise.enterpriseId}"/>"/>
+											<a href="javascript:void(0)" name="fullname"><s:property value="%{#enterprise.fullName}" /></a>
 											<span class="complement"> 
-													<s:property value="%{#enterprise.contact}" />  
+													联系人:<s:property value="%{#enterprise.contact}" />  
 													电话： <s:property value="%{#enterprise.phone}" /> 
-													QQ： <s:property value="%{#enterprise.qq}" /> 
 											</span>
 										</td>
 										<td class="with-complement" style="text-align: center;">
-											<s:iterator value="#request.enterprise.user" id="user">
-												<s:if test="#request.session.user==#user">
-													<s:property value="%{#user.username}" />
-												</s:if>
-												<s:elseif test="#request.isSystemAdmin==true">
-													<s:property value="%{#user.username}" />
-												</s:elseif>
-												<s:else>
-												</s:else>
+											<s:iterator value="%{#enterprise.user}" id="user">
+													<s:property value="%{#user.employee.name}" />
 											</s:iterator>
 											<s:set value="%{#enterprise.enterpriseId}" var="enterpriseId"></s:set>
 											<s:hidden value='%{#enterprise.id}' id="enterId"/>
 											<a href="#info-for-check2" data-toggle="modal"  onclick="findEnterpriseToUser('${enterpriseId}')" class="complement" >
-												<s:iterator value="#enterprise.user" id="user"> 
-													<s:iterator value="#user.role" id="role">
-														<s:property value="%{#role}"/>
-													</s:iterator>
-												</s:iterator>
-												<s:if test="#request.isSystemAdmin==true">
-														<span>增删负责人</span>
-												</s:if>
-													
+												<span>[增删负责人]</span>
 											 </a>
 										</td>
 										<td style="text-align: center;">
-											<a href="#edit-enterprise-bnt"  data-toggle="modal" id="updateto" onclick="modalEnterprise('${enterpriseId}')" >修改</a>
+											<s:if test="%{#enterprise.status==0}">
+												合约中
+											</s:if>
+											<s:elseif test="%{#enterprise.status==1}">
+												暂停中
+											</s:elseif>
+										
+										</td>
+										<td>${enterprise.note}</td>
+										<td style="text-align: center;">
+											<img src="images/037.gif" width="9" height="9" />
+											<a href="#edit-enterprise-bnt"  data-toggle="modal" id="updateto" onclick="modalEnterprise('${enterpriseId}')" >[编 辑]</a>
 										</td>
 									</tr>
 								</tbody>
 							</s:iterator>
 						</table>
-						<div class="pagination">
-							<%@ include file="/share/fenye.jsp" %>
-						</div>
+						<s:form action="viewEnterprise" method="post" id="my_enterprise">
+							<input type="hidden" name="page"/>
+							<div class="pagination" style="color:#2E9AFE">
+								<%@ include file="/share/fenye.jsp" %>
+								<div style="text-align: right;">
+								 显示第：
+									<select id="pagesel" style="width:60px;height:25px;">
+										<s:iterator begin="1" end="#request.pageView.totalpage" var="p">
+											<option value="${p}">${p}</option>
+										</s:iterator>
+									</select>
+									页
+								</div>
+							
+							
+							</div>
 						</s:form>
-						
-						<!-- ================================================End According to  Enterprise=========================== -->
-						<!--<table id="enterpriseflexigrid" style="display:none;">
-						</table>
-					
-					
-					
-					--></div>
+					</div>
 				</div>
-			</div>
-
-			<div id="footer"></div>
-
+			<div>
 		</div>
-		<div id="add-enterprise-bnt" class="modal hide fade" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	</div>
+		<div id="add-enterprise-bnt" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					×
@@ -231,14 +242,14 @@
 							<label>
 								开户行
 							</label>
-							<s:textfield name="enterprise.accountLine" />
+							<s:textfield name="enterprise.accountLine" maxlength="50"/>
 						</div>
 
 						<div class="input-container">
 							<label>
 								企业银行账号
 							</label>
-							<s:textfield name="enterprise.enterpriseBankAccount" />
+							<s:textfield name="enterprise.enterpriseBankAccount" maxlength="20"/>
 						</div>
 
 						<div class="input-container">
@@ -407,7 +418,7 @@
 							<label>
 								状态?
 							</label>
-							<input type="radio" name="enterprise.status" value="0"/>
+							<input type="radio" name="enterprise.status" value="0" checked="checked"/>
 							合约中，
 							<input type="radio" name="enterprise.status" value="1"/>
 							暂停
@@ -426,12 +437,9 @@
 			</div>
 		</div>
 		
-		
-		<div id="info-for-check2" class="modal hide fade" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="info-for-check2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					×
 				</button>
 				<h3 id="myModalLabel">
@@ -441,6 +449,7 @@
 			<div class="modal-body">
 				<div class="row-fluid">
 					<form action="addEnterpriseToUser" method="post">
+						<s:hidden name="page" value="%{#request.page}"></s:hidden>
 						<s:hidden name="enterpriseId" value=""></s:hidden>
 						<div class="input-container">
 							<label>
@@ -459,8 +468,8 @@
 							<label>
 								搜索并添加负责人
 							</label>
-							<s:select list="%{#request.wmsUsers}" name="userId" label="0" listKey="userId"
-							 listValue="username"  headerKey="0" headerValue="-请选择-"/>
+							<s:select list="%{#request.users}" name="user.id" label="0" listKey="id"
+							 listValue="employee.name"  headerKey="0" headerValue="-请选择-"/>
 						</div>
 
 						<div class="input-container">

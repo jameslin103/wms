@@ -27,22 +27,6 @@ public class EnterpriseServiceTest {
 			e.printStackTrace();
 		}
 	}
-
-	@Test
-	public void findEnterpriseBalanceDetail()
-	{
-		
-		//Enterprise  en=enterpriseService.find(1);
-		//enterpriseService.getAllEnterprise(1);
-		User  user=new User();
-		user.setId("");
-		System.out.println(enterpriseService.getAllEnterprise(user).size());
-		
-		
-		//System.out.println(en.getBalanceDetails().size());
-		
-		
-	}
 	
 	@Test
 	public void saveEnterprise()
@@ -58,22 +42,6 @@ public class EnterpriseServiceTest {
 		enterpriseService.save(en);
 		
 	}
-	@Test
-	public void addUserAndEnterpriseRelationship()
-	{
-		
-		enterpriseService.saveEnterpriseToBeResponsible(17, 3);
-
-		
-	}
-	
-	@Test
-	public void removeToEnterpriseHeadUser()
-	{
-		enterpriseService.removeToEnterpriseHeadUser(1, 1);
-		
-	}
-	
 	
 	
 	@Test

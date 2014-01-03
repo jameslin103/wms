@@ -86,9 +86,9 @@ function findEnterpriseToUser(enterpriseId)
 		      $("#fullName").html(data.enterpriseJson.fullName);
 		      $("input[name='enterpriseId']").val(data.enterpriseJson.enterpriseId);
 		      $(".list-of-items-for-delete").html('');
-			      $.each(data.user,function(i,value){
+			      $.each(data.users,function(i,value){
 			    	  $(".list-of-items-for-delete").
-			    	  append("<li>"+value.username+"<a href='removeToEnterpriseHeadUser?userId="+value.userId+"" +
+			    	  append("<li>"+value.account+"<a href='removeToEnterpriseHeadUser?user.id="+value.id+"" +
 			    	  		"&enterpriseId="+data.enterpriseJson.enterpriseId+"'style='width: 50px;'>(删除)</a></li>");
 			      });
 		     },    

@@ -1,13 +1,10 @@
 body {
 	margin:0px 2px;
-	font-size:13px;
+	font-size:14px;
 }
 h1{
 	text-align: center;
 }
-a:link {font-size:12px; text-decoration:none; color:#43860c;}
-a:visited {font-size:12px; text-decoration:none; color:#43860c;}
-a:hover{font-size:12px; text-decoration:none; color:#FF0000;}
 
 #opr{
 	margin: 5px auto;

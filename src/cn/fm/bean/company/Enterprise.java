@@ -40,6 +40,9 @@ public class Enterprise implements Serializable{
 	private  Integer  enterpriseId;
 	/*简称*/
 	private  String   rferred;
+	
+	/*合同编号*/
+	private  String   contatId;
 	/*全称*/
 	private  String   fullName;
 	/*法人代表*/
@@ -64,6 +67,8 @@ public class Enterprise implements Serializable{
 	private  String   email;
 	/*状态	0.合约  1.暂停*/
 	private  Integer   status;
+	
+	private  String   note;
 	
 	private  long      count;
 	
@@ -109,7 +114,7 @@ public class Enterprise implements Serializable{
     private InsurancesTax               insurancesTax;
 	
 	 @ManyToMany(cascade={CascadeType.REFRESH})
-	  @JoinTable(name = "user_enterprise",
+	  @JoinTable(name ="user_enterprise",
 			   inverseJoinColumns =@JoinColumn (name ="user_id" ),//被维护端外键
               joinColumns =  @JoinColumn (name ="enterprise_id" ))//维护端外键
 	public Set<User> getUser(){
@@ -397,6 +402,20 @@ public class Enterprise implements Serializable{
 	}
 	public void setInsurancesTax(InsurancesTax insurancesTax) {
 		this.insurancesTax = insurancesTax;
+	}
+	@Column(length=50)
+	public String getContatId() {
+		return contatId;
+	}
+	public void setContatId(String contatId) {
+		this.contatId = contatId;
+	}
+	@Column(length=100)
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
 	}
 	
 	

@@ -62,6 +62,32 @@ public class PrivilegeServiceImpl extends DaoSupport<Privilege> implements Privi
 		return privileges;
 	}
 
-	
+	public void savePrivilege(Privilege privilege)
+	{
+		if(privilege==null)return;
+		privilegeDAO.save(privilege);
+	}
+
+	@Override
+	public Privilege findByIdPrivilege(Integer id) {
+		if(id!=null)
+			return privilegeDAO.findById(id);
+		return null;
+	}
+
+	@Override
+	public void updatePrivilege(Privilege privilege) {
+		Privilege privilegePO=privilegeDAO.findById(privilege.getId());
+		privilegePO.setId(privilege.getId());
+		privilegePO.setIcon(privilege.getIcon());
+		privilegePO.setLink(privilege.getLink());
+		privilegePO.setName(privilege.getName());
+		privilegePO.setOrderNum(privilege.getOrderNum());
+		privilegePO.setParentId(privilege.getParentId());
+		
+		privilegeDAO.update(privilegePO);
+		
+		
+	}
 
 }

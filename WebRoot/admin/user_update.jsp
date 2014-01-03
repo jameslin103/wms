@@ -95,7 +95,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
  <div id="main">
   	<h1>修改用户</h1>
-	<form method="post" action="addUser" id="userform">
+	<form method="post" action="updateUser" id="userform">
+		<input type="hidden" name="user.id" value="${user.id}"/>
 		<div id="newdata">
 			<table width="500" border="1">
 				<tr>
@@ -115,14 +116,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</tr>
 				<tr>
 					<td>分配给员工:</td>
-					<td><input type="hidden" name="employee.id" id="empid">
+					<td><input type="hidden" name="employee.id" id="empid" value="${user.employee.id}">
 					<input type="text" id="empName" readonly="readonly" value="${user.employee.name}">
 					<input type="button" value=" 选 择 " class="oprbtn" id="selEmp"></td>
 				</tr>
 			</table>
 		</div>
 		<div id="opr">
-			<input type="submit" value="新  增 " class="oprbtn" id="new" /> <input
+			<input type="submit" value="修  改  " class="oprbtn" id="new" /> <input
 				type="button" value=" 取  消 " class="oprbtn" id="cancel"/>
 		</div>
 		</form>

@@ -35,12 +35,13 @@ import cn.fm.bean.company.Enterprise;
 		private String id;
 		private String account;
 		private String password;
-		private Employee employee=new Employee();
 		private String status;
 		private Date lastLoginTime;
 		public final static String NORMAL = "正常";
 		public final static String ABSNORMAL = "禁用";
 		
+		
+		private Employee employee=new Employee();
 		
 		private Set<Role> roles = new HashSet<Role>();
 		

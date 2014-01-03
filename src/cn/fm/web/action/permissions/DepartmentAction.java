@@ -38,7 +38,6 @@ public class DepartmentAction extends BaseAction{
 	public String jsonDepartments() {
 		
 		departments = departmentService.getDepartments();
-		
 		JsonConfig jcfg = new JsonConfig();
 		jcfg.setJsonPropertyFilter(new PropertyFilter() {
 			@Override

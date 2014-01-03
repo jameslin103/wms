@@ -35,7 +35,6 @@
 	//	alert($("a[name=dels]").length);
 		$("a[name=dels]").each(function(index,a){
 			$(a).click(function(){
-				alert($(a).prev().val());
 				$.get("delUser?user.id="+$(a).prev().val(),function(){
 					$(a).parent().parent().remove();
 				});

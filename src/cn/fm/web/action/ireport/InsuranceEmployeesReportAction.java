@@ -16,6 +16,7 @@ import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.company.InsurancesTaxService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 import cn.fm.service.salary.EmployeesSalaryDetailService;
+import cn.fm.service.user.UserService;
 import cn.fm.utils.Constant;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.WebUtil;
@@ -33,6 +34,8 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	private InsurancesTaxService				insurancesTaxService;
 	@Resource
 	private EnterpriseService					enterpriseService;
+	@Resource
+	private UserService							userService;
 	
 	
 	private InsurancesTax						InsurancesTax;
@@ -101,13 +104,14 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 	public String exportEmployeesExcel(){
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		User    user=WebUtil.getUser(request);
+		User    userPO=userService.getById(user.getId());
 		if(enterprise.getEnterpriseId()==null)return INPUT;
 		List<EnterpriseEmployees> employeesList=enterpriseEmployeesService.getAllEnterpriseEmployees(enterprise.getEnterpriseId());
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		String currentPath = ServletActionContext.getServletContext().getRealPath("");
 		String images= currentPath+"/images/fullname.jpg";
 		parameters.put("fullname",enterprise.getFullName()); 
-		parameters.put("username",user.getEmployee().getName()); 
+		parameters.put("username",userPO.getEmployee().getName()); 
 		parameters.put("image",images); 
 		String sqlJasper="employee-list.jasper";
 		 

@@ -1,6 +1,8 @@
 package cn.fm.service.company;
 
 import java.util.List;
+
+import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.user.User;
 import cn.fm.service.base.DAO;
@@ -18,7 +20,7 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	
 	
 	
-	public List<Enterprise> getAllEnterprise(User user);
+	public PageView<Enterprise> getAllEnterprise(int maxresult, int page,User user,Enterprise enterprise);
 	
 	
 	/**
@@ -53,19 +55,21 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	 * @param enterprise
 	 * @param user
 	 */
-	public void saveEnterpriseToBeResponsible(Integer enterpriseId,Integer userId);
-	
-	
+	public void saveEnterpriseToBeResponsible(Integer enterpriseId,String userId);
 	
 	/**
 	 * 解除企业负责人
 	 * @return
 	 */
-	public void removeToEnterpriseHeadUser(Integer enterpriseId,Integer userId);
+	public void removeToEnterpriseHeadUser(Integer enterpriseId,String userId);
 	
 	public List<Enterprise> getUserToAllEnterprise(User user);
 
-
-
 	public Long findByFullName(String fullName);
+	
+	/**
+	 * 每个用户负责的企业
+	 */
+	public PageView<Enterprise> getUserToByEnterprise(int maxresult, int page,User user,Enterprise enterprise);
+	
 }

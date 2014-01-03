@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	</script>
 </head>
-<body style="background-color: #0570ae;">
+<body style="background-color: #53080c;">
 
 	<div id="container"> 	
   	<div class="main">
@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <label class="checkbox">
                  <s:checkbox label="自动登录" name="userCookie" value="true"></s:checkbox>请记住我  
               </label> 
-              <button class="btn btn-large btn-primary" type="submit">登陆</button>
+              <button  class="btn-large btn-primary" type="submit">登陆</button>
             </form>            
           </div>
   			</div>

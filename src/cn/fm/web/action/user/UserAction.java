@@ -40,7 +40,14 @@ public class UserAction extends BaseAction{
 		request.setAttribute("user", userServcie.getById(user.getId()));
 		return SUCCESS;
 	}
-	
+	public String updateUser() {
+		
+		if(employee!=null && employee.getId()!=null){
+			user.getEmployee().setId(employee.getId());
+		}
+		userServcie.updateUser(user);
+		return SUCCESS;
+	}
 	
 	public String viewUserList() {
 		

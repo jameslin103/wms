@@ -99,4 +99,9 @@ public class JpaDAO<E> implements DAO<E> {
 		Query query=em.createQuery(jpql);
 		return query.getResultList();
 	}
+
+	@Override
+	public E findById(Integer id) {
+		return em.find(entityClass, id);
+	}
 }
