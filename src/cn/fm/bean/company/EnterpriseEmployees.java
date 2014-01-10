@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -219,7 +221,13 @@ public class EnterpriseEmployees{
 	public void setNote(String note) {
 		this.note = note;
 	}
-	@Id @GeneratedValue
+	
+	
+	@Id
+	@GenericGenerator(name = "idGenerator", strategy ="uuid")
+	@GeneratedValue(generator = "idGenerator")
+	@Column(length=32)
+	
 	public Integer getEmployeesId() {
 		return employeesId;
 	}

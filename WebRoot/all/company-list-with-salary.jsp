@@ -73,8 +73,6 @@
 					            <li><a href="viewCompanyListWithSaraly?month=11&year=${year}">11月</a>，</li>
 					            <li><a href="viewCompanyListWithSaraly?month=12&year=${year}">12月</a></li>
 						</ul>
-						<s:form action="viewCompanyListWithSaraly"  method="post" id="myformlist">
-							<s:hidden name="page"></s:hidden>
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -237,8 +235,10 @@
 							</s:iterator>
 							
 						</table>
-
-						<div class="pagination">
+						<s:form action="viewCompanyListWithSaraly"  method="post" id="myformlist">
+							<s:hidden name="page" value="%{#request.page}"></s:hidden>
+							<s:hidden name="year" value="%{#request.year}"></s:hidden>
+							<div class="pagination">
 							<%@include file="../share/fenye.jsp"  %>
 						</div>
 					</s:form>
@@ -315,15 +315,14 @@
 			<div class="modal-body">
 				<div class="row-fluid">
 					<form action="updateSaralyStatus" method="post">
-					   <input type="hidden" name="budgetId"/>
-					   <input type="hidden" name="page" value="${page}"/>
+						   <s:hidden name="budgetId" value="%{#request.budgetId}"/>
+						   <s:hidden name="page" value="%{#request.page}"></s:hidden>
+						   <s:hidden name="year" value="%{#request.year}"></s:hidden>
 						<div class="input-container">
 							<label>
 								民生银行
 							</label>
-							<input type="text" id="d4311"
-								name="createSalaryBudgetTable.cmbcDate"
-								 onfocus="WdatePicker(d4311)" class="Wdate" />
+							<input type="text" id="d4311" name="createSalaryBudgetTable.cmbcDate"  onfocus="WdatePicker(d4311)" class="Wdate" />
 						</div>
 						<div class="input-container">
 							<label>
@@ -333,7 +332,6 @@
 								name="createSalaryBudgetTable.heLinesDate"
 								 onfocus="WdatePicker(d4312)" class="Wdate" />
 						</div>
-						
 						<div class="input-container">
 							<label>
 								现金

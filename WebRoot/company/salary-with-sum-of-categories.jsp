@@ -28,39 +28,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         <div id="center-pane">
 				<ul class="nav nav-tabs">
-					<s:iterator value="#session.menuList" id="menu">
-						<s:if test="#menu.url=='viewEnterpriseEmployees'">
 							<li >
-								<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
+								<a href="viewEnterpriseDetailed" >
+									综合 
 								</a>
 							</li>
-						</s:if>
-						<s:if test="#menu.url=='viewSalaryBudgetTable'">
+							<li>
+								<a href="viewEnterpriseEmployees"  >
+									员工档案
+								</a>
+							</li>
 							<li class="active">
-								<a href="viewSalaryBudgetTable" >
-									<s:property value="#menu.name" />
+								<a href="viewSalaryBudgetTableSummary" >
+									工资预算表
 								</a>
-							</li>
-						</s:if>
-						<s:if test="#menu.url=='viewInsuranceWithMonth'">
-							<li >
-								<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
-								</a>
-							</li>
-						</s:if>
-						<s:if test="#menu.url=='viewBalanceDetail'">
-							<li >
-								<a href="viewBalanceDetail" ><s:property value="#menu.name" />
-								</a>
-							</li>
-						</s:if>
-						<s:if test="#menu.url=='viewEnterpriseDetailed'">
-							<li >
-								<a href="viewEnterpriseDetailed" ><s:property value="#menu.name" />
-								</a>
-							</li>
-						</s:if>
-					</s:iterator>
+						  </li>
+				</ul>
+				<ul class="normal action-container clearfix">
+					 <li>
+						<a href="newSalaryBudgetTable">新建工资预算表</a>
+					</li>
+					<li>
+						&nbsp;/&nbsp;
+					</li>
+					<li>
+						<a href="viewSalaryTemplate">工资模板</a>
+					</li>
+					<li>
+					&nbsp;/&nbsp;
+					</li>
+					<li>
+						<a href="viewCustomBonus">定制奖金与各种补贴</a>
+					</li>
 				</ul>
           <table class="table table-striped table-bordered">
             <thead>
@@ -77,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th>开票<br/>总额（元）</th>
                 <th>工资<br/>总额（元）</th>
                 <th>服务费<br/>总额（元）</th>
-                <th style="color: red;">其它方式服务费<br/>总额（元）</th>
+                <th style="color: red;">点数服务费总额（元）</th>
                 <th>五险一金<br/>总额（元）</th>
                 <th>发放<br/>人数（人）</th>
                 <th>民生<br/>银行（人）</th>
@@ -86,66 +85,67 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th>（制作、实际发放）</th>
             </thead>
             <tbody>
+             <s:iterator value="#request.createSalaryBudgetTables" id="createSalaryBudgetTable">
               <tr>
                 <td>
-                	<s:property value="%{#request.createSalaryBudgetTable.name}"/>
+                	<s:property value="%{#createSalaryBudgetTable.name}"/>
+                	<a href="returnToModifyBudgetTable?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>"><br/>(重新上传工资)</a>
                 </td>
-                <td><s:date name="%{#request.createSalaryBudgetTable.salaryDate}" format="yyyy年MM月"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.chooseTax}"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.enterprise.insurancesTax.insurancesType==0?'市医保':'省医保'}"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.makeTotal}"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.wageTotal}"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.serviceTotal}"/></td>
-                  <td><s:property value="%{#request.createSalaryBudgetTable.serviceHeTotal}"/></td>
-                <td><s:property value="%{#request.createSalaryBudgetTable.fiveInsurancesTotal}"/></td>
+                <td><s:date name="%{#createSalaryBudgetTable.salaryDate}" format="yyyy年MM月"/></td>
+                <td><s:property value="%{#createSalaryBudgetTable.chooseTax}"/></td>
+                <td><s:property value="%{#createSalaryBudgetTable.enterprise.insurancesTax.insurancesType==0?'市医保':'省医保'}"/></td>
+                <td><s:property value="%{#createSalaryBudgetTable.makeTotal}"/></td>
+                <td><s:property value="%{#createSalaryBudgetTable.wageTotal}"/></td>
+                <td><s:property value="%{#createSalaryBudgetTable.serviceTotal}"/></td>
+                  <td><s:property value="%{#createSalaryBudgetTable.serviceHeTotal}"/></td>
+                <td><s:property value="%{#createSalaryBudgetTable.fiveInsurancesTotal}"/></td>
                 <td>
-	                <s:property value="%{#request.createSalaryBudgetTable.issueNumber}"/>
+	                <s:property value="%{#createSalaryBudgetTable.issueNumber}"/>
 	                <br/>
 	                <a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}"/>">查看</a>
                 </td>
                 <td>
                 	
-		                <s:property value="%{#request.createSalaryBudgetTable.cmbc}"/><br/><span class="em">
+		                <s:property value="%{#createSalaryBudgetTable.cmbc}"/><br/><span class="em">
 		                  <s:if test="#request.createSalaryBudgetTable.cmbcDate!=null" >
 		                	（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
-		                <br/><s:date name="%{#request.createSalaryBudgetTable.cmbcDate}" format="yyyy年MM月dd日HH时"/>
+		                <br/><s:date name="%{#createSalaryBudgetTable.cmbcDate}" format="yyyy年MM月dd日HH时"/>
 	                	</s:if>
                 </td>
                 <td>
-	                <s:property value="%{#request.createSalaryBudgetTable.heLines}"/><br/><span class="em">
+	                <s:property value="%{#createSalaryBudgetTable.heLines}"/><br/><span class="em">
 	                   <s:if test="#request.createSalaryBudgetTable.heLinesDate!=null" >
-	               		（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
-	                	<br/><s:date name="%{#request.createSalaryBudgetTable.heLinesDate}" format="yyyy年MM月dd日HH时"/>
+	               		（<s:property value="%{#createSalaryBudgetTable.status}"/>）</span>
+	                	<br/><s:date name="%{#createSalaryBudgetTable.heLinesDate}" format="yyyy年MM月dd日HH时"/>
 	                  </s:if>
                 </td>
                 <td>
-
-	                <s:property value="%{#request.createSalaryBudgetTable.cashnumber}"/><br/><span class="em">
-	                <s:if test="#request.createSalaryBudgetTable.cashnumberDate!=null" >
-	                	（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）
+	                <s:property value="%{#createSalaryBudgetTable.cashnumber}"/><br/><span class="em">
+	                <s:if test="#createSalaryBudgetTable.cashnumberDate!=null" >
+	                	（<s:property value="%{#createSalaryBudgetTable.status}"/>）
 	                	</span>
 		                <br/>
-		                <s:date name="%{#request.createSalaryBudgetTable.cashnumberDate}" format="yyyy年MM月dd日HH时"/>
+		                <s:date name="%{#createSalaryBudgetTable.cashnumberDate}" format="yyyy年MM月dd日HH时"/>
 	                </s:if>
-	              
-	                
                 </td>
                 <td>
                   <ul>
-                    <li>制作:<s:property value="%{#request.createSalaryBudgetTable.user.username}"/>
+                    <li>制作:<s:property value="%{#createSalaryBudgetTable.user.employee.name}"/>
                     </li>
-                    <li>发放：<s:property value="%{#request.createSalaryBudgetTable.user_operator}"/></li>
+                    <li>发放：<s:property value="%{#createSalaryBudgetTable.user_operator}"/></li>
                   </ul>
                 </td>
                 <td>
-                  <s:set value="%{#request.createSalaryBudgetTable.budgetId}" var="budgetId"></s:set>
+                  <s:set value="%{#createSalaryBudgetTable.budgetId}" var="budgetId"></s:set>
                   <a href="#info-for-check" onclick="findToIdSalayBudegTable('${budgetId}')" data-toggle="modal">修改</a>
-                  <a href="deleteSalayBudgetTable?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}" />&enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}" />">删除</a><br>
-                  <a href="viewAllEmployeesSalaryDetail?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}"/>">查看</a>
-                  <a href="downloadSalaryWithSumOfCategoriesReport?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}" />">下载</a>
+                  <a href="deleteSalayBudgetTable?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}" />&enterpriseId=<s:property value="%{#session.enterprise.enterpriseId}" />">删除</a><br>
+                  <a href="viewAllEmployeesSalaryDetail?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">查看</a>
+                  <a href="downloadSalaryWithSumOfCategoriesReport?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}" />">下载</a>
                 </td>
               </tr>
+               </s:iterator>
             </tbody>
+          
           </table>
         </div>
   
@@ -182,8 +182,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="input-container" >
                   <label>生成哪月工资？</label>
                   <input type="text" id="d11"	onfocus="WdatePicker({skin:'whyGreen'})"  onblur="ajaxfindBeforeCurrentDateTemplate()" 
-                        name="createSalaryBudgetTable.salaryDate"  class="Wdate" value="${createSalaryBudgetTable.salaryDate}" />
-                		
+                         name="createSalaryBudgetTable.salaryDate"  class="Wdate"/>
                 </div>
                 <div class="input-container">
                   <label>选择与其他工资表合并计税</label>

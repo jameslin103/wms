@@ -40,7 +40,6 @@ public class Enterprise implements Serializable{
 	private  Integer  enterpriseId;
 	/*简称*/
 	private  String   rferred;
-	
 	/*合同编号*/
 	private  String   contatId;
 	/*全称*/
@@ -65,16 +64,25 @@ public class Enterprise implements Serializable{
 	private  String   fax;
 	/*电子邮件*/
 	private  String   email;
+	
+	/*行业类别*/
+	private String industryType;
+	
 	/*状态	0.合约  1.暂停*/
 	private  Integer   status;
 	
+	/*备注*/
 	private  String   note;
 	
 	private  long      count;
 	
+	/*创建时间*/
 	private Date       createDate=new Date();
 	
+	/*更新时间*/
 	private Date       updateDate;
+	
+
 	
 	/*统计企业资金往来*/
 	private  BigDecimal	   balanceDetailTotal ;
@@ -416,6 +424,13 @@ public class Enterprise implements Serializable{
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	@Column(length=5)
+	public String getIndustryType() {
+		return industryType;
+	}
+	public void setIndustryType(String industryType) {
+		this.industryType = industryType;
 	}
 	
 	

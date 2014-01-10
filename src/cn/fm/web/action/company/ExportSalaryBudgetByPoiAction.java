@@ -7,7 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -19,6 +22,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.CellStyle;
 import cn.fm.bean.company.CustomBonus;
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.company.CustomBonusServices;
 import cn.fm.service.salary.SalaryTemplateService;
@@ -26,7 +30,6 @@ import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
-@SuppressWarnings("serial")
 public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	
 	@Resource 
@@ -40,9 +43,12 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 	 private  InputStream excelFile;
 	
 	 private Integer  templateId;
-	
-	
 	 
+	 private  int    empIds[];
+	 private  String empNames[];
+	 private  String empCards[];
+	 
+	 private List<EnterpriseEmployees> entEmps;
 	 
 	 	
 	  public InputStream getExcelFile() {
@@ -95,9 +101,64 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			} 
+			
 	    	header();
 	        return SUCCESS;  
 	    }  
+	    
+	    
+		public List<String> getEmployeesName()
+	    {
+	    	if(empNames==null || empCards==null)return null;
+	    	List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+	    	Map<String,String> user;
+	    	for(int i=0;i<empNames.length;i++){
+	    	    user = new HashMap<String,String>();
+	    	    user.put("id",(i+1)+"");
+	    	    user.put("name",empNames[i]);
+	    	    user.put("card",empCards[i]);
+	    	    list.add(user);
+	    	}
+	    	String id;
+	    	String card;
+	    	String name;
+	    	List<String>  data=new ArrayList<String>();
+	    	
+	    	for (int i = 0; i < list.size(); i++) {
+	    		 id=list.get(i).get("id");
+	    		 name=list.get(i).get("name");
+	    		 card=list.get(i).get("card");
+	    		 data.add(id);
+	    		 data.add(name);
+	    		 data.add(card);
+			}
+	    	
+	    	
+//	    	EnterpriseEmployees emp;
+//	    	Iterator iter = map.entrySet().iterator(); 
+//	    	while (iter.hasNext()) { 
+//	    	    Map.Entry entry = (Map.Entry) iter.next(); 
+//	    	    Object key = entry.getKey(); 
+//	    	    Object val = entry.getValue(); 
+//	    	    emp=new EnterpriseEmployees();
+//	    		emp.setEmployeesName(key.toString());
+//	    	    emp.setCardNumber(val.toString());
+//	    	    this.entEmps.add(emp);
+//	    	} 
+//	    	List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+//	    	Map<String,String> user;
+//	    	String[] names;
+//	    	String[] cards;
+//	    	for(int i=0;i<names.length;i++){
+//	    	    user = new HashMap<String,String>();
+//	    	    user.put<"name",names[i]>;
+//	    	    user.put<"card",cards[i]>;
+//	    	    list.add(user);
+//	    	}
+	    	
+	    	return data;
+	    }
+	    
 	    
 	    
 	    /**
@@ -130,8 +191,8 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 			 		  
 		 	   }
 		 	  }
+		 	
 		 	 
-	 	  
 	 	  
 		    // 表头
 		    for (int i=0; i <header.size(); i++)
@@ -141,18 +202,23 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 		        // 设置表头样式
 		        setHeaderStyle(workbook, cell);
 		    }
-
-//		    // 内容
-//		    for (int i =1; i <= 30; i++) {
-//		        HSSFRow row = sheet.createRow(i);
-//		        for (int j = 0; j < 10; j++) {
-//		            HSSFCell cell = row.createCell(j);
-//		            cell.setCellValue("张三" + i + j);
-//		             
-//		            // 设置内容区样式
-//		            setContentStyle(workbook, cell);
-//		        }
-//		    }
+		    
+		    // 内容
+		    int count;
+		    for (int i =0; i<getEmployeesName().size(); i++){
+		        HSSFRow row = sheet.createRow(i+1);
+		        count=0;
+		        for (int j =0; j <3; j++){
+		        	count++;
+		        	if(count==1){
+			            HSSFCell cell = row.createCell(j);
+			            cell.setCellValue(getEmployeesName().get(i));
+			            
+			            // 设置内容区样式
+			            setContentStyle(workbook, cell);
+		        	}
+		       }
+		    }
 		    // 输出文件
 		     exprotExcel(workbook, fileName);
 		}
@@ -235,4 +301,54 @@ public class ExportSalaryBudgetByPoiAction extends BaseAction{
 			    }
 			 
 		}
+
+
+
+		public int[] getEmpIds() {
+			return empIds;
+		}
+
+
+
+		public void setEmpIds(int[] empIds) {
+			this.empIds = empIds;
+		}
+
+
+
+		public String[] getEmpNames() {
+			return empNames;
+		}
+
+
+
+		public void setEmpNames(String[] empNames) {
+			this.empNames = empNames;
+		}
+
+
+
+		public String[] getEmpCards() {
+			return empCards;
+		}
+
+
+
+		public void setEmpCards(String[] empCards) {
+			this.empCards = empCards;
+		}
+
+		public List<EnterpriseEmployees> getEntEmps() {
+			return entEmps;
+		}
+
+
+		public void setEntEmps(List<EnterpriseEmployees> entEmps) {
+			this.entEmps = entEmps;
+		}
+
+		
+		
+		
+		
 }

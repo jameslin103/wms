@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
+import cn.fm.bean.user.User;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
 
@@ -37,22 +38,33 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Integer enterpriseId,Integer year)
+	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Enterprise enterprise,Integer year)
 	{
 		try {
-			return em.createQuery("select c from CreateSalaryBudgetTable  c " +
-					"where c.enterprise.enterpriseId=?1 " +
-					" and YEAR(c.createDate)=?2 " +
-					" order by c.salaryDate desc ")
-					.setParameter(1, enterpriseId).setParameter(2,year).getResultList();
-			  
-		
+			return em.createQuery("select c from CreateSalaryBudgetTable c "+createCondition(enterprise,null,year)+"  order by c.salaryDate desc ")
+					.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 		
 	}
+	private String createCondition(Enterprise enterprise,CreateSalaryBudgetTable createSalaryBudgetTable,Integer year) {
+		
+		if (enterprise == null) {
+			return "";
+		}
+		StringBuilder builder = new StringBuilder(" where 1=1 ");
+		if (enterprise.getEnterpriseId()!= null && !enterprise.getEnterpriseId().equals("")) {
+			builder.append(" and c.enterprise.enterpriseId=" + enterprise.getEnterpriseId());
+		}
+		if (year!=null && !year.equals("")) {
+			builder.append("and YEAR(c.createDate)=" + year);
+		}
+		return builder.toString();
+	}
+	
+	
 	/**
 	 * 更新工资预算表
 	 * @param createSalaryBudgetTable

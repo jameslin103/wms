@@ -352,12 +352,37 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		
 		return SUCCESS;
 	}
+	public String getEmployeesJson()
+	{
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("employeesId", "desc");
+		StringBuffer jpql = new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if(this.enterpriseId!=null)
+		{
+			jpql.append(" o.reduction=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and o.departure=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and o.pseudoDelete=?").append(params.size()+1);
+			params.add(0);
+			jpql.append(" and o.enterprise.enterpriseId=?").append(params.size()+1);
+			params.add(this.enterpriseId);
+		 }
+			
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(25,  this.getPage());
+			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
+					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			request.setAttribute("page", page);
+			request.setAttribute("enterpriseId", enterpriseId);
+			request.setAttribute("pageView", pageView);
+			return SUCCESS;
+	}
 	/**
 	 * 参保人员
 	 * @return
 	 */
 	public String ginsengInsurance(){
-		
 		
 		if(this.enterpriseId==null || this.enterpriseId==0)
 		{

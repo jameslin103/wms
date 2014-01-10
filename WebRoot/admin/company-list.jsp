@@ -13,7 +13,7 @@
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp"%>
-	<script >
+		<script >
 		function topage(page){
 			var form = document.getElementById("my_enterprise");
 				form.page.value=page;
@@ -76,7 +76,20 @@
 			$("#pagesel").change(function(){
 				topage($(this).val());
 			});
+			
+			$("#add_en").click(function(){
+				if($("#add-enterprise-bnt").is(":hidden")){
+					$("#add-enterprise-bnt").show();
+				}else{
+					$("#add-enterprise-bnt").hide();
+				}
 				
+			});
+			$("#close,#close_1").click(function(){
+				if($("#add-enterprise-bnt").is(":visible")){
+					$("#add-enterprise-bnt").hide();
+				}
+			});
 		});
 		
 		
@@ -104,7 +117,7 @@
 					<fieldset>
 						<legend>
 							<img src="images/311.gif" />
-							<a href="#add-enterprise-bnt" data-toggle="modal" onclick="reset_enterprise()">添加新企业</a>
+							 <input type="button" id="add_en" value="添加新企业" style="border:0px;color:#2E9AFE;font-size:20px;background-color: white;"/>
 							--总<span style="color:red;">&nbsp;(${pageView.totalrecord})</span>家
 						</legend>
 					</fieldset>
@@ -202,125 +215,129 @@
 			<div>
 		</div>
 	</div>
-		<div id="add-enterprise-bnt" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-					×
+	<!-- ==================================addEnterprise====================================== -->
+		<div id="add-enterprise-bnt" style="display: none;" class="white_content ui_title_bar">
+			<div class="modal-header" style="background-color:#CEAE71">
+				<button type="button" style="color:#2E9AFE;" class="close" id="close" data-dismiss="modal" aria-hidden="true">
+					关闭
 				</button>
-				<h3 id="myModalLabel">
-					企业信息
-				</h3>
+				<h2 id="myModalLabel" align="center">
+					<span style="color:white">添加企业信息</span>
+				</h2>
 			</div>
-			<!-- ==================================addEnterprise====================================== -->
-			
-			<div class="modal-body">
-				<s:form action="addEnterprise" method="post" id="add_form">
-					<div class="row-fluid">
-						<div class="input-container">
-							<label>
-								简称
-							</label>
-							<s:textfield name="enterprise.rferred" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								全称
-							</label>
-							<s:textfield name="enterprise.fullName"  id="fullname"/>
-							<span id="errorFullName" style="color: red;">*</span>
-						</div>
-
-						<div class="input-container">
-							<label>
-								法人代表
-							</label>
-							<s:textfield name="enterprise.legalRepresentative"/>
-						</div>
-
-						<div class="input-container">
-							<label>
-								开户行
-							</label>
-							<s:textfield name="enterprise.accountLine" maxlength="50"/>
-						</div>
-
-						<div class="input-container">
-							<label>
-								企业银行账号
-							</label>
-							<s:textfield name="enterprise.enterpriseBankAccount" maxlength="20"/>
-						</div>
-
-						<div class="input-container">
-							<label>
-								地址
-							</label>
-							<s:textfield name="enterprise.address" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								联系人
-							</label>
-							<s:textfield name="enterprise.contact" />
-						</div>
-						<div class="input-container">
-							<label>
-								派遣联系人
-							</label>
-							<s:textfield name="enterprise.send" />
-						</div>
-						<div class="input-container">
-							<label>
-								电话
-							</label>
-							<s:textfield name="enterprise.phone" />
-						</div>
-						<div class="input-container">
-							<label>
-								QQ
-							</label>
-							<s:textfield name="enterprise.qq" />
-						</div>
-						<div class="input-container">
-							<label>
-								传真
-							</label>
-							<s:textfield name="enterprise.fax" />
-						</div>
-
-						<div class="input-container">
-							<label>
-								电子邮件
-							</label>
-							<s:textfield name="enterprise.email" />
-						</div>
-						<div class="input-container">
-							<label>
-								状态?
-							</label>
-							<input type="radio" name="enterprise.status" value="0"checked="checked"/>
-							合约中，
-							<input type="radio" name="enterprise.status" value="1"/>
-							暂停
-						</div>
-
-						<div class="input-container">
-							<s:submit cssClass="btn btn-primary" value="提交" />
-						</div>
-					</div>
-				</s:form>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal" aria-hidden="true">
-					Close
-				</button>
-			</div>
-		</div>
+          <form action="addEnterprise" method="post" id="add_form">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td class="bgc">企业名称</td>
+                  <td><input type="text" name="enterprise.fullName"/></td>
+                  <td class="bgc">合同编号</td>
+                  <td><input type="text" name="enterprise.contatId"/></td>
+                </tr>
+                <tr>
+                  <td class="bgc">行业分类</td>
+                  <td>
+                    <select name="enterprise.industryType">
+                      <option value="0">-请选择-</option>
+                      <option value="1">IT|通信|电子|互联网</option>
+                      <option value="2">金融业</option>
+                      <option value="3">房地产|建筑业</option>
+                      <option value="4">商业服务</option>
+                      <option value="5">贸易|批发|零售|租赁业</option>
+                      <option value="6">文体教育|工艺美术</option>
+                      <option value="7">生产|加工|制造</option>
+                      <option value="8">交通|运输|物流|仓储</option>
+                      <option value="9">服务业</option>
+                      <option value="10">文化|传媒|娱乐|体育</option>
+                      <option value="11">能源|矿产|环保</option>
+                      <option value="12">政府|非盈利机构</option>
+                      <option value="13">农|林|牧|渔|其他</option>
+                    </select>
+                  </td>
+                  <td class="bgc">合同起止时间</td>
+                  <td>
+                   <input id="d4311" class="Wdate" type="text" style="width:150px;"
+                   			onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'d4311\')||\'2020-10-01\'}',skin:'whyGreen'})" 
+                   				name="enterprise.startContractDate"></input>
+						~
+                    <input id="d4312" class="Wdate" type="text" style="width:150px;"
+                    	onfocus="WdatePicker({minDate:'#F{$dp.$D(\'d4311\')}',maxDate:'2020-10-01',skin:'whyGreen'})" 
+                    		name="enterpriseEmployees.endContractDate"></input>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="bgc">企业地址</td>
+                  <td><input type="text" name="enterprise.adress"/></td>
+                  <td class="bgc">法人代表</td>
+                  <td><input type="text" name="enterprise.legalRepresentative"/></td>
+                </tr>
+                <tr>
+                  <td class="bgc">企业联系人</td>
+                  <td><input type="text" name="enterprise.contact"/></td>
+                  <td class="bgc">开户行</td>
+                  <td><input type="text" name="enterprise.accountLine"/></td>
+                </tr>
+                <tr>
+                  <td class="bgc">联系电话</td>
+                  <td><input type="text" name="enterprise.phone"/></td>
+                  <td class="bgc">企业银行账号</td>
+                  <td><input type="text" name="enterprise.enterpriseBankAccount"/></td>
+                </tr>
+                <tr>
+                  <td class="bgc">QQ</td>
+                  <td><input type="text" name="enterprise.qq"/></td>
+                  <td class="bgc">合作项目</td>
+                  <td><input type="text" name="enterprise.projects"/></td>
+                </tr>
+                <tr>
+                  <td class="bgc">邮箱</td>
+                  <td><input type="text" name="enterprise.email"/></td>
+                  <td class="bgc">服务性质</td>
+                  <td>
+                    <select name="enterprise.serviceType">
+                      <option value="0">-请选择-</option>
+                      <option value="1">完全派遣</option>
+                      <option value="2">转移派遣</option>
+                      <option value="3">其它</option>
+                    </select>
+                    <input type="text" name="enterprise.customType" style="display:none;"/>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td>服务费</td>
+                  <td>
+                    <input type="radio" name="fee" value="1" checked="checked"/>按人头，
+                    <input class="span1" type="text" name="enterprise.serviceHead" maxlength="10"/>元/人
+                    <input type="radio" name="fee" value="0"/>按比例，
+                    <input class="span1" type="text" name="enterprise.proportion" maxlength="10"/>%
+                  </td>
+                  <td>企业状态</td>
+                   <td> 
+                   	  <input type="radio" name="enterprise.status" value="0"/>合约
+                   	  <input type="radio" name="enterprise.status" value="1"/>暂停
+                   	</td>
+                </tr>
+                <tr>
+                  <td>注意事项</td>
+                  <td><input type="text" name="enterprise.note"/></td>
+                </tr>
+                <tr>
+                	<td colspan="4" style="text-align: center;">
+                		<s:submit cssClass="btn btn-primary" value="新增" />
+                		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                		<input type="button" class="btn btn-primary" value="重置" />
+                	</td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+       	 </div>
+       	
+       	 
 		<!-- =================================updateEnterprise====================================== -->
-		<div id="edit-enterprise-bnt" class="modal hide fade" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="edit-enterprise-bnt" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					×

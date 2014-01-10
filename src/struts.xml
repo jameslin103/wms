@@ -65,6 +65,7 @@
         <action name="logout" class="cn.fm.web.action.user.UserAction" method="logout">
             <result name="success">/login.jsp</result>
         </action>
+        <!--
         <action name="toTop" class="cn.fm.web.action.user.UserAction" method="toTop">
             <result name="success">/top.jsp</result>
         </action>
@@ -74,6 +75,7 @@
         <action name="toTabpanel" class="cn.fm.web.action.user.UserAction" method="toTabpanel">
             <result name="success">/tabpanel.jsp</result>
         </action>
+        -->
         <action name="viewUserList" class="cn.fm.web.action.user.UserAction" method="viewUserList">
             <result name="success" >/admin/user_list.jsp</result>
         </action>
@@ -142,7 +144,6 @@
             	<param name="actionName">toEmployeeManage</param>
             </result>
         </action>
-        
          <action name="toDepartmentManage" class="cn.fm.web.action.permissions.DepartmentAction" method="toDepartmentManage">
             <result name="success">/admin/dept_manage.jsp</result>
         </action>
@@ -408,7 +409,10 @@
             	<param name="actionName">viewEnterpriseEmployees</param>
             	<param name="page">${page}</param>
             </result>
-        </action>  
+        </action>
+        <action name="getEmployeesJson" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="getEmployeesJson">
+            <result name="success">/base/base_table.jsp</result>
+        </action>
          <!-- 查看参保员工 -->
          <action name="ginsengInsurance" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="ginsengInsurance">
             <result name="success">/account/ginseng_insurance.jsp</result>
@@ -965,6 +969,8 @@
             <result name="success" type="redirectAction">
             	<param name="actionName">viewCompanyListWithSaraly</param>
             	<param name="page">${page}</param>
+            	<param name="year">${year}</param>
+            	<param name="budgetId">${budgetId}</param>
             </result>
         </action>
         <action name="viewCompanyListWithInsurance" class="cn.fm.web.action.salary.CompanylistWithSalaryAction" method="viewCompanyListWithInsurance">

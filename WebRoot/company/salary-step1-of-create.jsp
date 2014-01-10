@@ -16,7 +16,6 @@
 
 	</head>
 	<body>
-
 		<div id="container">
 			<div id="header">
 				<div id="sub-header" class="clearfix">
@@ -30,98 +29,83 @@
 		      <div class="row-fluid">
 		        <div id="center-pane">
 		         		<ul class="nav nav-tabs">
-							<s:iterator value="#session.menuList" id="menu">
-								<s:if test="#menu.url=='viewEnterpriseDetailed'">
 									<li >
-										<a href="viewEnterpriseDetailed"  ><s:property value="#menu.name" />
+										<a href="viewEnterpriseDetailed" >
+											综合 
 										</a>
 									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewEnterpriseEmployees'">
 									<li >
-										<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
+										<a href="viewEnterpriseEmployees">
+											员工档案
 										</a>
 									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewSalaryBudgetTable'">
 									<li class="active">
-										<a href="viewSalaryBudgetTable" >
-											<s:property value="#menu.name" />
+										<a href="viewSalaryBudgetTableSummary" >
+											工资预算表
 										</a>
 									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewInsuranceWithMonth'">
+									<li>
+										<a href="viewInsuranceWithMonth" ></a>
+									</li>
 									<li >
-										<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
+										<a href="viewBalanceDetail" >
+											资金往来
 										</a>
 									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewBalanceDetail'">
-									<li >
-										<a href="viewBalanceDetail" ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-							</s:iterator>
-					</ul>
-			<div class="span4">
-            <h3>1/3&nbsp;新建工资预算表信息</h3>
-            <s:form action="addSalaryBudgetTable" method="post">
+									
+						</ul>
+             <s:form action="addSalaryBudgetTable" method="post">
             	<s:hidden name="enterpriseId" value="%{#request.session.enterprise.enterpriseId}"></s:hidden>
             	<s:hidden value="%{#request.createSalaryBudgetTable.budgetId}" name="createSalaryBudgetTable.budgetId"/>
-              <div class="row-fluid">
-                <div class="input-container">
-                  <label>名称</label>
-                  <s:textfield name="createSalaryBudgetTable.name" id="budgetName" maxlength="30" value="%{#request.createSalaryBudgetTable.name}"/>
-                  <span style="color:red;">*</span>
-                  <span id="nameerror"></span>
-                  <s:fielderror fieldName="message" theme="simple"></s:fielderror>
-                </div>
-
-                <div class="input-container">
-                  <label>选择模板</label>
-                   <s:select  headerValue="--请选择--" headerKey="0" 
-            			 list="%{#request.salaryTemplates}" name="templateId" 
-            			 listKey="templateId" listValue="templateName" id="tempid">
-             	   </s:select><span style="color:red;">*</span><span id="temp"></span>
-                </div>
-
-                <div class="input-container" >
-                  <label>生成哪月工资？</label>
-                  <input type="text" id="d11"	name="salaryDate" onblur="ajaxfindBeforeCurrentDateTemplate()" 
-                  onclick="WdatePicker()" value="${createSalaryBudgetTable.salaryDate}" class="Wdate"  />
-                  <span style="color:red;">*</span><span id="salaryDate"></span>
-                </div>
-
-
-                <div class="input-container">
-                  <label>选择与其他工资表合并计税</label>
-                  <select id="salaryTable" name="budgetId"  disabled="disabled">
-                    <option value="0">--请选择--</option>
-                  </select>
-                </div>
-
-                <div class="input-container">
-                  <label>补充说明</label>
-                  <textarea rows="3" name="createSalaryBudgetTable.note" cols="60" >
-                  		<s:property value="%{#createSalaryBudgetTable.note}"/>
-                  </textarea>
-                </div>
-                <div class="input-container">
-                  <s:submit   value="提交" cssClass="btn btn-primary" id="sub" onclick="submin()"/>
-                </div>
-				<s:actionerror />
-              </div>
+            	<table width="700px;" align="center" cellpadding="0" cellspacing="0" border="1">
+            		<tr><td colspan="4" align="center"><h2>1/3&nbsp;新建工资预算表信息</h2></td></tr>
+            		<tr>
+            			<td>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</td>
+            			<td> 
+            				<s:textfield name="createSalaryBudgetTable.name" id="budgetName" maxlength="30" 
+            					value="%{#request.createSalaryBudgetTable.name}"/>
+            					 <span style="color:red;">*</span>
+                  				<span id="nameerror"></span>
+            			</td>
+            			<td>选择模板</td>
+            			<td>
+            				<s:select  headerValue="--请选择--" headerKey="0" 
+		            			 list="%{#request.salaryTemplates}" name="templateId" 
+		            			 listKey="templateId" listValue="templateName" id="tempid">
+             	  			 </s:select>
+             	  			 <span style="color:red;">*</span><span id="temp"></span>
+            			</td>
+            		</tr> 
+            		<tr>
+            			<td>生成哪月工资？</td>
+            			<td colspan="3">
+            				<input type="text" id="d11"	name="salaryDate" onblur="ajaxfindBeforeCurrentDateTemplate()" 
+			                 onclick="WdatePicker()" value="${createSalaryBudgetTable.salaryDate}" class="Wdate"  />
+			                 <span style="color:red;">*</span><span id="salaryDate"></span>
+            			</td>
+            			
+            		</tr>
+            		<tr>
+            			<td>补充说明</td>
+            			<td colspan="3">
+            				<textarea rows="3" name="createSalaryBudgetTable.note" cols="60" >
+                  				<s:property value="%{#createSalaryBudgetTable.note}"/>
+                  			</textarea>
+                  		</td>
+            		</tr>
+            		<tr>
+            			<td colspan="4" align="center" height="50px;">
+            				<s:submit value="提交" cssClass="btn btn-primary"  id="sub" onclick="submin()"/>
+            			</td>
+            		</tr>
+            	</table>
+               
               <s:token></s:token>
             </s:form>   
           </div>
         </div>
       </div>
     </div>
-
-		<div id="footer"></div>
-
-</div>
 </body>
 
 </html>

@@ -54,7 +54,7 @@
 										</a>
 									</li>
 									<li class="active">
-										<a href="viewSalaryBudgetTable" >
+										<a href="viewSalaryBudgetTableSummary" >
 											工资预算表
 										</a>
 									</li>

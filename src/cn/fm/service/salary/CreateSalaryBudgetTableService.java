@@ -2,13 +2,14 @@ package cn.fm.service.salary;
 
 import java.util.List;
 
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.service.base.DAO;
 
 public interface CreateSalaryBudgetTableService extends DAO<CreateSalaryBudgetTable> {
 	
 
-	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Integer enterpriseId,Integer year);
+	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Enterprise enterprise,Integer year);
 	/**
 	 * 更新工资预算表
 	 * @param createSalaryBudgetTable

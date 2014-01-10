@@ -1,9 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+	String basePath = request.getScheme() + "://"+ request.getServerName() + ":" + request.getServerPort()+ path + "/";
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -53,7 +51,6 @@
 		$(document).ready(function(){
 			$("#add-employees-bnt").on("hidden",function(){
 				clearForm(this);
-				
 			});
 			
 			$("#addEmployees").click(function(){
@@ -76,6 +73,25 @@
 					
 				 });
 			});
+			
+			
+			$("a[name=name]").each(function(index,a){
+					$(a).click(function(){
+							$.dialog({
+								id:'selEmployees',
+								content:'url:selectEnterpriseEmployeesWage?employeesId='+$(a).prev().val(),
+								width:'1200px',
+								height:'550px',
+								title:''+$(a).prev().prev().val()+'-详细信息',
+								lock:true,
+								ok:false,
+						cancel:true
+						});
+						
+					});
+				});
+			
+			
 		});
 		
 	
@@ -105,7 +121,7 @@
 								</a>
 							</li>
 							<li >
-								<a href="viewSalaryBudgetTable" >
+								<a href="viewSalaryBudgetTableSummary" >
 									工资预算表
 								</a>
 						   </li>
@@ -220,7 +236,7 @@
 
 							</thead>
 							<s:iterator value="#request.pageView.records" id="emp" status="list">
-								<tbody>
+							<tbody>
 									<tr>
 										<td>
 											<s:property value="#list.index+1"/>
@@ -231,9 +247,11 @@
 										<td>
 											<s:hidden value="%{#emp.employeesId}" name="employeesId" />
 											<s:property value='<s:hidden value="{#emp.employeesId}"/>' />
-											<a
-												href="selectEnterpriseEmployeesWage?employeesId=<s:property value="%{#emp.employeesId}"/> ">
-												<s:property value="%{#emp.employeesName}" /> </a>
+												<s:hidden value="%{#emp.employeesName}" name="empname"/>
+												<s:hidden value="%{#emp.employeesId}" name="employeesId"/>
+												<a href="javascript:void(0)" name="name">
+													<s:property value="%{#emp.employeesName}"/> 
+												</a>
 										</td>
 										<td>
 											<s:if test="#emp.employeesSex==1">

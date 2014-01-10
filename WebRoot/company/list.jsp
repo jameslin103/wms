@@ -67,27 +67,13 @@
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr bgcolor="#CEAE71">
-									<th style="text-align: center;">
-										序号
-									</th>
-									<th style="text-align: center;">
-										企业
-									</th>
-									<th style="text-align: center;">
-										在职员工
-									</th>
-									<th style="text-align: center;">
-										资金往来（元）
-									</th>
-									<th style="text-align: center;">
-										工资发放
-									</th>
-									<th style="text-align: center;">
-										本月增减员
-									</th>
-									<th style="text-align: center;">
-										负责人
-									</th>
+									<th style="text-align: center;">序号</th>
+									<th style="text-align: center;">企业</th>
+									<th style="text-align: center;">在职员工</th>
+									<th style="text-align: center;">资金往来（元）</th>
+									<th style="text-align: center;">工资发放</th>
+									<th style="text-align: center;">本月增减员</th>
+									<th style="text-align: center;">负责人</th>
 								</tr>
 							</thead>
 							<s:iterator value="#request.enterprises" id="enterprise" status="list">
@@ -102,44 +88,32 @@
 											<span class="complement">
 												  联系人:<s:property value="%{#enterprise.contact}" />
 												  电&nbsp;&nbsp;话:<s:property value="%{#enterprise.phone}" />
+												 <s:hidden value="%{#enterprise.enterpriseId}"></s:hidden>
+												 <a href="javascript:void(0)" name="fullname" title="详细信息">(详细信息)</a>
 											</span>
-											<s:hidden value="%{#enterprise.enterpriseId}"></s:hidden>
-											<a href="javascript:void(0)" name="fullname" title="详细信息">详细信息</a>
+											
 										</td>
 										<td style="text-align: center;">
 											<a href="viewEnterpriseEmployees?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/> "><s:property value="%{#enterprise.count}"/></a>
 										</td>
 										<td style="text-align: center;">
-											<a href="viewBalanceDetail?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>" id="viewdetail">
-												<s:property  value="%{#enterprise.balanceDetailTotal}"/></a>
+											<s:property  value="%{#enterprise.balanceDetailTotal}"/>
 										</td>
 										<td>
 										<ol>
-											<s:iterator value="#enterprise.createSalaryBugetTables" id="cr">
-														    <li>
-															    <a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>&budgetId=<s:property value="%{#cr.budgetId}"/>">
-																    	<s:if test="#cr.name.length()>15">
-																			<s:property value="#cr.name.substring(0,15)+'...'"/>
-																		</s:if>
-																		<s:else>
-																			<s:property value="%{#cr.name}"/>
-																		</s:else>
-																		<s:if test="#cr.note!=null && #!cr.note.isEmpty()">
-																			（<s:property value="%{#cr.note}"/>）
-																		</s:if>		    	
-															    	
-															    </a>
-														    </li>
-												</s:iterator>
+											<li>
+												预算表总共:
+												<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">
+													(<s:property  value="%{#enterprise.createSalaryBugetTables.size()}"/>)
+												</a>张
+											</li>
 										
 										</ol>
 										</td>
 										<td>
-											<a href="viewWorkersIncreased?enterprise.enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>">
-													增员<s:property value="%{#enterprise.addCount}"/>人，
-													减员<s:property value="%{#enterprise.reduction}"/>人，
-													参保<s:property value="%{#enterprise.whetherGinsengCount}"/>人
-											</a>
+											增员<s:property value="%{#enterprise.addCount}"/>人，
+											减员<s:property value="%{#enterprise.reduction}"/>人，
+											参保<s:property value="%{#enterprise.whetherGinsengCount}"/>人
 										</td>
 										<td style="text-align: center;">
 											<s:iterator value="#enterprise.user" id="user">

@@ -20,11 +20,11 @@
 </script>
 </head>
 <frameset rows="61,*,24" framespacing="0" frameborder="no" border="0">
-  <frame src="toTop" scrolling="no" noresize="noresize" />
+  <frame src="top.jsp" scrolling="no" noresize="noresize" />
   <frameset cols="180,*" frameborder="yes" border="1" bordercolor="green" noresize="noresize">
   	<frame src="toViewPrivis" scrolling="yes"/>
-  	<frame src="toTabpanel" name="mainFrame" id="main"/>
+  	<frame src="tabpanel.jsp" name="mainFrame" id="main"/>
   </frameset>
-  <frame src="toBottom" scrolling="no" noresize="noresize" />
+  <frame src="bottom.jsp" scrolling="no" noresize="noresize" />
 </frameset>
 </html>

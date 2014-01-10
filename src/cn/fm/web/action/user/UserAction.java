@@ -71,7 +71,9 @@ public class UserAction extends BaseAction{
 	}
 	
 	public String userLogin(){
-		if(user!=null && user.getAccount()!=null && user.getPassword()!=null){
+		
+		if(user!=null && user.getAccount()!=null && user.getPassword()!=null)
+		{
 			User loninUser=userServcie.login(user.getAccount(), user.getPassword());
 			if(loninUser==null){
 				request.setAttribute("msg", "用户名或密码错误!");
@@ -87,9 +89,10 @@ public class UserAction extends BaseAction{
 				}
 				session.setAttribute("user", loninUser);
 			}
-			
+			return SUCCESS;
 		}
-		return SUCCESS;
+		return INPUT;
+		
 	}
 	
 	public String logout(){

@@ -117,7 +117,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 	private Enterprise enterprise;
 	
-	private User    user;
+	private User    user=new User();
 	
 	private String    user_operator;
 
@@ -390,7 +390,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 	}
 
 	
-	@ManyToOne(cascade={CascadeType.REFRESH},optional=false)
+	@ManyToOne(cascade={CascadeType.REFRESH},optional=true)
 	@JoinColumn(name="user_id")
 	@NotFound(action=NotFoundAction.IGNORE)
 	public User getUser() {
@@ -401,8 +401,7 @@ public class CreateSalaryBudgetTable implements Serializable {
 		this.user = user;
 	}
 	
-	@OneToMany(cascade={CascadeType.ALL},
-			fetch=FetchType.LAZY,mappedBy="createSalaryBudgetTable")
+	@OneToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY,mappedBy="createSalaryBudgetTable")
 	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<EmployeesSalaryDetail> getEmployeesSalaryDetail() {
 		return employeesSalaryDetail;

@@ -77,7 +77,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			request.getSession().setAttribute("enterprise",enterprise );
 		}
 		
-		List<CreateSalaryBudgetTable> createSalaryBudgetTableList=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(enterprise.getEnterpriseId(),this.year);
+		List<CreateSalaryBudgetTable> createSalaryBudgetTableList=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(enterprise,this.year);
 		List<Object> map=null;
 		if(createSalaryBudgetTableList!=null){
 			map=reconstructToMonthGroupByTableDate(createSalaryBudgetTableList);
@@ -140,8 +140,6 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 				SalaryTemplate salaryTemplate=salaryTemplateService.find(templateId);
 				createSalaryBudgetTable.setTemplateName(salaryTemplate.getTemplateName());
 				createSalaryBudgetTable.setSalaryTemplate(salaryTemplate);
-				createSalaryBudgetTableService.save(createSalaryBudgetTable);
-				
 				try {
 					createSalaryBudgetTableService.save(createSalaryBudgetTable);
 				} catch (Exception e) {
@@ -214,14 +212,14 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	
 	public String findBeforeCurrentDateTemplate()
 	{
-		Enterprise enterprise=WebUtil.getEnterprise(request);
-		createSalaryBudgetTableList=createSalaryBudgetTableService.findBeforeCurrentDateTemplate(salaryDate,enterprise.getEnterpriseId());
-		if(createSalaryBudgetTableList==null || createSalaryBudgetTableList.size()==0){
-			createSalaryBudgetTableList=new ArrayList<CreateSalaryBudgetTable>();
-			this.addActionError("暂无记录");
-		}else{
-			this.setError("true");
-		}
+//		Enterprise enterprise=WebUtil.getEnterprise(request);
+//		createSalaryBudgetTableList=createSalaryBudgetTableService.findBeforeCurrentDateTemplate(salaryDate,enterprise.getEnterpriseId());
+//		if(createSalaryBudgetTableList==null || createSalaryBudgetTableList.size()==0){
+//			createSalaryBudgetTableList=new ArrayList<CreateSalaryBudgetTable>();
+//			this.addActionError("暂无记录");
+//		}else{
+//			this.setError("true");
+//		}
 	
 		return "createSalaryBudgetTableList";
 	
@@ -265,9 +263,8 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	    		enterprise=enterpriseService.find(enterpriseId);
 	    		request.getSession().setAttribute("enterprise", enterprise);
 	    	}
-	    	createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
-	    	if(createSalaryBudgetTable==null)createSalaryBudgetTable=new CreateSalaryBudgetTable();
-	    	request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTable);
+	    	List<CreateSalaryBudgetTable> createSalaryBudgetTables=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(enterprise,null);
+	    	request.setAttribute("createSalaryBudgetTables", createSalaryBudgetTables);
 	    	
 	    	return SUCCESS;
 	    	

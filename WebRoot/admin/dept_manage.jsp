@@ -71,7 +71,6 @@ var setting = {
 	}
 	function onRemove(event, treeId, treeNode)
 	{
-		alert(treeNode.id);
 		$.dialog.confirm("您确认删除吗？",function(){
 			var dept={
 				"id":treeNode.id,
