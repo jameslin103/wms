@@ -3,6 +3,8 @@ import java.util.List;
 import javax.persistence.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import cn.fm.bean.PageView;
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.salary.BalanceDetailService;
@@ -56,6 +58,12 @@ public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implemen
 	{
 		  em.createQuery("delete  BalanceDetail b where b.createSalaryBudgetTable.budgetId=?1")
 		  .setParameter(1, budgetId).executeUpdate();
+		
+	}
+	public PageView<BalanceDetail> getAllEnterpriseBalanceDetail()
+	{
+		
+		
 		
 	}
 }

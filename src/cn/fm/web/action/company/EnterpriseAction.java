@@ -8,20 +8,24 @@ import java.util.List;
 import javax.annotation.Resource;
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.company.EnterpriseContract;
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.bean.company.EnterpriseProjects;
 import cn.fm.bean.user.User;
+import cn.fm.service.company.EnterpriseContractService;
 import cn.fm.service.company.EnterpriseEmployeesService;
+import cn.fm.service.company.EnterpriseProjectsService;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.company.InsurancesBaseSettingsService;
 import cn.fm.service.company.InsurancesTaxService;
-import cn.fm.service.privilege.RoleService;
 import cn.fm.service.user.UserService;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.WebUtil;
 import cn.fm.web.action.BaseAction;
 
-@SuppressWarnings("serial")
 public class EnterpriseAction extends BaseAction{
+	
+	private static final long serialVersionUID = -1929516984683731909L;
 	
 	@Resource
 	private EnterpriseService enterpriseService;
@@ -30,23 +34,32 @@ public class EnterpriseAction extends BaseAction{
 	@Resource
 	private EnterpriseEmployeesService  enterpriseEmployeesService;
 	@Resource
-	private RoleService					roleService;
-	@Resource
 	private InsurancesTaxService       insurancesTaxService;
 	@Resource
 	private InsurancesBaseSettingsService insurancesBaseSettingsService;
+	@Resource
+	private EnterpriseContractService     enterpriseContractService;
+	@Resource 
+	private EnterpriseProjectsService     enterpriseProjectsService;
 	
+	private Enterprise          enterprise;
 	
-	private Enterprise        enterprise;
-	private Integer			  enterpriseId;
+	private EnterpriseContract  enterpriseContract;
+	
+	private EnterpriseProjects  enterpriseProjects;
+	
+	private Integer		  enterpriseId;
 	
 	private Enterprise enterpriseJson;
 	
 	private EnterpriseEmployees  enterpriseEmployees=new EnterpriseEmployees();
 	
 	private Integer				userId;
+	
 	private boolean      isSystemAdmin;
+	
 	private int page;
+	
 	private Long  isExitFullName;
 	
 	private User   user;
@@ -75,6 +88,13 @@ public class EnterpriseAction extends BaseAction{
 		enterpriseService.removeToEnterpriseHeadUser(enterpriseId,user.getId());
 		return SUCCESS;
 	}
+	
+	public String toAddEnterprise()
+	{
+		
+		return SUCCESS;
+	}
+	
 	public String  addEnterprise()
 	{
 		User user=WebUtil.getUser(request);
@@ -83,11 +103,42 @@ public class EnterpriseAction extends BaseAction{
 		if(enterprise!=null){
 			enterprise.setInsurancesBaseSettings(insurancesBaseSettingsService.find(1));
 			enterprise.setInsurancesTax(insurancesTaxService.find(1));
-			enterpriseService.save(enterprise); 	
+			enterprise.addEnterpriseContract(enterpriseContract);
+			enterpriseService.save(enterprise);	
 		  }
 
 		return SUCCESS;
 	}
+	
+	public String addEnterpriseContract()
+	{
+		if(enterpriseContract!=null)
+			enterpriseContract.getEnterprise().setEnterpriseId(enterpriseId);
+			enterpriseContractService.save(enterpriseContract);
+		
+		return SUCCESS;
+	}
+	public String updateEnterpriseContract()
+	{
+		enterpriseContractService.updateEnterpriseContract(enterpriseContract);
+		return SUCCESS;
+	}
+	
+	
+	public String addEnterpriseProjects()
+	{
+		if(enterpriseProjects!=null)
+			enterpriseProjects.getEnterprise().setEnterpriseId(enterpriseId);
+			enterpriseProjectsService.save(enterpriseProjects);
+		return SUCCESS;
+	}
+	public String updateEnterpriseProjects()
+	{
+		enterpriseProjectsService.updateEnterpriseContract(enterpriseProjects);
+		return SUCCESS;
+	}
+	
+	
 	
 	public String  viewEnterprise()
 	{
@@ -206,12 +257,39 @@ public class EnterpriseAction extends BaseAction{
 		
 		return SUCCESS;
 	}
+	
+	public String toUpdateEnterprise()
+	{
+		enterprise=enterpriseService.find(enterpriseId);
+		return SUCCESS;
+	}
+	
 	public String updateEnterprise()
 	{
 		
 		enterpriseService.updateEnterprise(enterprise);
 		
 		return SUCCESS;
+	}
+	
+	public String updateEnterStatus(){
+		boolean message=false;
+		if(enterprise!=null && enterprise.getEnterpriseId()!=null){
+			try {
+				String note= new String(request.getParameter("enterprise.note").getBytes("iso8859-1"),"UTF-8");
+				enterprise.setNote(note);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			User user=WebUtil.getUser(request);
+			User userPO=userService.getById(user.getId());
+			enterprise.setAudituser(userPO.getEmployee().getName());
+			message=enterpriseService.updateEnterStatus(enterprise);
+			
+		}
+		responseJson(message);
+		request.setAttribute("message", message);
+		return NONE;
 	}
 	/**
 	 * 修改企业联系人
@@ -322,6 +400,22 @@ public class EnterpriseAction extends BaseAction{
 
 	public void setIsExitFullName(Long isExitFullName) {
 		this.isExitFullName = isExitFullName;
+	}
+
+	public EnterpriseContract getEnterpriseContract() {
+		return enterpriseContract;
+	}
+
+	public void setEnterpriseContract(EnterpriseContract enterpriseContract) {
+		this.enterpriseContract = enterpriseContract;
+	}
+
+	public EnterpriseProjects getEnterpriseProjects() {
+		return enterpriseProjects;
+	}
+
+	public void setEnterpriseProjects(EnterpriseProjects enterpriseProjects) {
+		this.enterpriseProjects = enterpriseProjects;
 	}
 	
 	

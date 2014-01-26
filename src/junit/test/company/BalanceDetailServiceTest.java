@@ -2,6 +2,7 @@ package junit.test.company;
 
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -9,10 +10,14 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.BalanceDetail;
-import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.service.salary.BalanceDetailService;
+import cn.fm.ws.MobileCodeWS;
+import cn.fm.ws.MobileCodeWSSoap;
+import cn.fm.ws.WeatherWSStub;
+import cn.fm.ws.WeatherWSStub.GetRegionProvinceResponse;
+import cn.fm.ws.WeatherWSStub.GetSupportCityStringResponse;
+import cn.fm.ws.WeatherWSStub.GetWeatherResponse;
 
 public class BalanceDetailServiceTest {
 
@@ -26,14 +31,53 @@ public class BalanceDetailServiceTest {
 	}
 	
 	@Test
-	public void testAllBalanceDetail()
+	public void testAllBalanceDetail() throws Exception
 	{
-		/*List<BalanceDetail> list=balanceDetailService.getAllBalanceDetail();
+			 MobileCodeWS service = new MobileCodeWS();
+			 MobileCodeWSSoap soap = service.getMobileCodeWSSoap();
+			 System.out.println(soap.getMobileCodeInfo("13809505940", ""));
+
+			 List<String> provinces = getProvinces();
+			 for (String province : provinces) {
+			 System.out.println(province);
+			 }
+
+			List<String> cities = getCities("四川");
+			for (String city : cities) {
+				System.out.println(city);
+			}
+			
+			List<String> weathers=getWeather("成都");
+			for (int i=0;i< weathers.size();i++) {
+				System.out.println(i+"=="+weathers.get(i));
+			}
+		}
+
+		public static List<String> getProvinces() throws Exception {
+			WeatherWSStub stub = new WeatherWSStub();
+			WeatherWSStub.GetRegionProvince getRegionProvince = new WeatherWSStub.GetRegionProvince();
+			GetRegionProvinceResponse response = stub.getRegionProvince(getRegionProvince);
+			return Arrays.asList(response.getGetRegionProvinceResult().getString());
+		}
+
+		public static List<String> getCities(String province) throws Exception {
+			WeatherWSStub stub = new WeatherWSStub();
+			WeatherWSStub.GetSupportCityString getCities = new WeatherWSStub.GetSupportCityString();
+			getCities.setTheRegionCode(province);
+			GetSupportCityStringResponse response = stub
+					.getSupportCityString(getCities);
+			return Arrays.asList(response.getGetSupportCityStringResult()
+					.getString());
+		}
+
+		public static List<String> getWeather(String city) throws Exception {
+			WeatherWSStub stub = new WeatherWSStub();
+			WeatherWSStub.GetWeather getWeather = new WeatherWSStub.GetWeather();
+			getWeather.setTheCityCode(city);
+			GetWeatherResponse response = stub.getWeather(getWeather);
+			return Arrays.asList(response.getGetWeatherResult().getString());
+		}
 		
-		System.out.println(list.size());*/
-		
-		
-	}
 	@Test
 	public void update()
 	{

@@ -14,6 +14,9 @@
 		<title>富民人力银行派遣系统</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<%@ include file="/help/public_css_js.jsp"%>
+		<style>
+		  	legend{ text-align:center; width:40%\9} 
+		</style>
 		<script>
 			function topage(page)
 			{
@@ -27,52 +30,37 @@
 	<body>
 
 		<div id="container">
-			<div id="header">
-			</div>
+			<div id="search">
+					<fieldset>
+						<legend>
+							<img src="images/311.gif" />&nbsp;查询条件
+						</legend>
+						<s:form action="viewCompanyListWithSaraly" method="post">
+							<s:hidden name="page" id="page" value="1"/>
+							预算表名称：
+							<s:textfield name="createSalaryBudgetTable.name" value="%{#request.tabname}" maxlength="50" cssStyle="width:150px;"/>
+							年份时间:
+							<s:textfield id="d4324" cssClass="Wdate" type="text" cssStyle="width:150px;" onfocus="WdatePicker()" 
+                   						name="createSalaryBudgetTable.salaryDate" value="%{#request.salaryDate}"/>
+                   			制作人：
+                   			<s:select list="%{#request.users}" name="user.id" label="0" listKey="id"  theme="simple"
+									   listValue="employee.name" value="%{#request.uname}" headerKey="0" headerValue="-请选择-" cssStyle="width:90px;"/>
+                   						
+						 	<input type="submit" value=" 查  询 " class="oprbtn" style="width:70px;" />
+						 </s:form>
+					</fieldset>
+		  </div>
 			<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">
-			<ul class="nav nav-tabs">
-		          <s:iterator value="#session.menuList" id="menu">
-		         		 <s:if test="#menu.url=='viewCompanyListWithSaraly'">
-				            <li  class="active">
-							  	<a href="viewCompanyListWithSaraly">工资</a>
-							</li>
-						</s:if>
-						  <s:if test="#menu.url=='viewCompanyListWithInsurance'">
-							<li> 
-							  <a href="viewCompanyListWithInsurance">增减员与参保</a>
-							</li>
-						</s:if>
-						<s:if test="#menu.url=='viewCompanyListWithBalance'">
-							<li>
-								<a href="viewCompanyListWithBalance">资金往来</a>	
-							</li>
-						</s:if>
-					 </s:iterator>
-          </ul>
-						
-						
-						<ul class="normal action-container clearfix">
-							<li class="right">
-							<form action="viewCompanyListWithSaraly" class="select-for-year" method="post" id="myform1">
-									按年份查询:<input type="text" name="year"  value="${year}"  maxlength="4" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-									
-							</form>	
-							</li>
-								<li><a href="viewCompanyListWithSaraly?month=1&year=${year}">1月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=2&year=${year}">2月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=3&year=${year}">3月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=4&year=${year}">4月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=5&year=${year}">5月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=6&year=${year}">6月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=7&year=${year}">7月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=8&year=${year}">8月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=9&year=${year}">9月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=10&year=${year}">10月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=11&year=${year}">11月</a>，</li>
-					            <li><a href="viewCompanyListWithSaraly?month=12&year=${year}">12月</a></li>
-						</ul>
+						<ul class="nav nav-tabs">
+							<li  class="active">
+							 <a href="viewCompanyListWithSaraly">工资</a>
+						  </li>
+						  <li >
+							<a href="viewCompanyListWithBalance">资金往来</a>
+						</li>
+         				 </ul>
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -100,9 +88,9 @@
 										状态
 									</th>
 								</tr>
+								<tr>
 								<th>
-									开票
-									<br/>
+									开票<br/>
 									总额（元）
 								</th>
 								<th>
@@ -141,6 +129,7 @@
 								<th>
 									（制作、审核、实际发放）
 								</th>
+								</tr>
 							</thead>
 						<s:iterator value="#request.pageView.records" id="createSalaryBudgetTable" status="list">
 							<tbody>
@@ -219,7 +208,7 @@
 									<td>
 										<ul>
 											<li>
-												制作：<s:property value="#createSalaryBudgetTable.user.username"/>，
+												制作：<s:property value="#createSalaryBudgetTable.user.employee.name"/>，
 												<s:date name="%{#createSalaryBudgetTable.createDate}" format="yyyy-MM-dd,HH:ss"/>
 											</li>
 											<li>
@@ -237,7 +226,9 @@
 						</table>
 						<s:form action="viewCompanyListWithSaraly"  method="post" id="myformlist">
 							<s:hidden name="page" value="%{#request.page}"></s:hidden>
-							<s:hidden name="year" value="%{#request.year}"></s:hidden>
+							<s:hidden name="createSalaryBudgetTable.name" value="%{#request.tabname}"></s:hidden>
+							<s:hidden name="createSalaryBudgetTable.salaryDate" value="%{#request.salaryDate}"></s:hidden>
+							<s:hidden name="user.id" value="%{#request.uname}"></s:hidden>
 							<div class="pagination">
 							<%@include file="../share/fenye.jsp"  %>
 						</div>

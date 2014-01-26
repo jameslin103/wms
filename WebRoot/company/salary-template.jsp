@@ -4,14 +4,34 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@ page contentType="text/html; charset=UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 	<head>
 		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <%@ include file="/help/public_css_js.jsp" %>
+ 		<%@ include file="/help/public_css_js.jsp" %>
+ 		<script type="text/javascript">
+		$(function(){
+			$("#submit").click(function(){
+				var pro=$("#proj").val();
+					if(pro==0){
+						$("#error").text("必选项!");
+						$("#error").css("color","red")
+						return false;
+					}else{
+						$("#error").text(" ");
+						$("#error").css("");
+						return true;
+					}
+			});
+		
+		});
+
+</script>
 </head>
+
+
 <body>
 
   <div id="container">
@@ -27,42 +47,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <div class="row-fluid">
 
         <div id="center-pane">
-         								<ul class="nav nav-tabs">
-							<s:iterator value="#session.menuList" id="menu">
-								<s:if test="#menu.url=='viewEnterpriseDetailed'">
-									<li >
-										<a href="viewEnterpriseDetailed"  ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewEnterpriseEmployees'">
-									<li >
-										<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewSalaryBudgetTable'">
-									<li class="active">
-										<a href="viewSalaryBudgetTable" >
-											<s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewInsuranceWithMonth'">
-									<li >
-										<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewBalanceDetail'">
-									<li >
-										<a href="viewBalanceDetail" ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-							</s:iterator>
+         			<ul class="nav nav-tabs">
+							<li >
+								<a href="viewEnterpriseDetailed" >
+									综合 
+								</a>
+							</li>
+							<li>
+								<a href="viewEnterpriseEmployees"  >
+									员工档案
+								</a>
+							</li>
+							<li class="active">
+								<a href="viewSalaryBudgetTableSummary" >
+									工资预算表
+								</a>
+						  </li>
 					</ul>
- 
           <ul class="normal action-container clearfix">
             <li><a href="#info-for-check" data-toggle="modal"> 新建工资模板</a></li>
           </ul>
@@ -85,8 +86,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td><s:property value="%{#salary.templateName}"/></td>
                 <td>
                   <ol>
-                  	  <s:generator separator="," val="%{#salary.subsidyList}" var="sub" /> 
-					   <s:iterator status="sl" value="#request.sub" id="sal">
+                		<s:generator separator="," val="%{#salary.subsidyList}" var="sub" /> 
+					    <s:iterator status="sl" value="#request.sub" id="sal">
 					   		<s:iterator value="#request.customBonus" id="customBonus">
 					   			<s:if test="#request.sal==#customBonus.id">
    	 								<li><s:property value="%{#customBonus.bonusName}"/></li><br/>
@@ -96,7 +97,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    	 							
    	 							</s:else>
                 			</s:iterator>
-						</s:iterator>            
+						</s:iterator>  
                   </ol>
                 </td>
                 <td>
@@ -153,16 +154,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <h3 id="myModalLabel">新建/修改工资模板</h3>
       </div>
       <div class="modal-body">
-        <s:form action="addSalaryTemplate" method="post">
+        <s:form action="addSalaryTemplate" method="post" onclick="return valite()">
           <div class="row-fluid">
             <div class="input-container">
-              <label>名称</label>
-              	<s:textfield name="salaryTemplate.templateName"/>
+              <label>请选择项目:</label>
+              	  <s:select list="%{#request.enterprisePO.enterpriseProjects}" name="enterpriseProjects.projects" label="0" listKey="id"  theme="simple"
+								  listValue="projects"  headerKey="0" headerValue="-请选择-" id="proj"/>
+				<span style="color: red" id="error">*</span>
             </div>
-			
 			<s:iterator value="#request.customBonus" id="customBonus">
             <div class="input-container">
-              	<label class="checkbox">&nbsp;</label> 
+              	<label class="checkbox">&nbsp;</label>
              	 <input type="checkbox" value="<s:property value='%{#customBonus.id}'/>" name="salaryTemplate.subsidyList" />
              	 <s:property value="%{#customBonus.bonusName}"/>
             </div>
@@ -186,7 +188,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             <div class="input-container">
               <label>&nbsp;</label>
-              <s:submit value="提交" cssClass="btn btn-primary"/>
+              <s:submit value="提交" cssClass="btn btn-primary" id="submit"/>
             </div>
           </div>
         </s:form>              

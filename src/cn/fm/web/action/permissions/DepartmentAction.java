@@ -83,7 +83,6 @@ public class DepartmentAction extends BaseAction{
 	public String addDepartment(){
 		try {
 			name= new String(request.getParameter("name").getBytes("iso8859-1"),"UTF-8");
-			System.out.println(name);
 			department.setName(name);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

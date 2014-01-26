@@ -1,8 +1,8 @@
 package cn.fm.web.action.salary;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +17,7 @@ import cn.fm.service.company.EnterpriseEmployeesService;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.salary.BalanceDetailService;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
+import cn.fm.service.user.UserService;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.StringUtil;
 import cn.fm.utils.WebUtil;
@@ -35,6 +36,12 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	private   BalanceDetailService balanceDetailService;
 	@Resource
 	private   EnterpriseService    enterpriseService;
+	@Resource
+	private UserService    userService;
+	
+	private Enterprise  enterprise;
+	
+	private User       user;
 	
 	
 	private  CreateSalaryBudgetTable   createSalaryBudgetTable;
@@ -51,7 +58,9 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	private int page;
 	private Integer   budgetId;
 	
-	
+	private   Date   salaryDate;
+	private   String  uname;
+	private   String  tabname;
 
 
 	/**
@@ -60,35 +69,21 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	 */
 	public String viewCompanyListWithSaraly()
 	{
-		if(year==null)
-		{
-			this.year=DateUtil.getCurrentTime().toString().substring(0, 4);
-		}
-		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-		orderby.put("budgetId", "desc");
-		StringBuffer jpql = new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
 		
-		if(!StringUtil.isEmpty(year))
-		{
-			if(month!=null && month!=0){
-				
-				jpql.append(" month(o.salaryDate)=?").append(params.size()+1);
-				params.add(month);
-				jpql.append(" and year(o.salaryDate)=?").append(params.size()+1);
-				params.add(Integer.parseInt(year));
-			}else{
-
-				jpql.append(" year(o.salaryDate)=?").append(params.size()+1);
-				params.add(Integer.parseInt(year));
-				
+			List<User> users=userService.getUsers();
+			if(createSalaryBudgetTable==null)createSalaryBudgetTable=new CreateSalaryBudgetTable();
+			if(user==null)user=new User();
+			if(!StringUtil.isEmpty(createSalaryBudgetTable.getName()) || createSalaryBudgetTable.getSalaryDate()!=null){
+				this.setTabname(createSalaryBudgetTable.getName());
+				this.setSalaryDate(createSalaryBudgetTable.getSalaryDate());
 			}
-		}
-		
-		PageView<CreateSalaryBudgetTable> pageView = new PageView<CreateSalaryBudgetTable>(5,  this.getPage());
-		pageView.setQueryResult(createSalaryBudgetTableService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			if(!StringUtil.isEmpty(user.getId())){
+				this.setUname(user.getId());
+			}
+			PageView<CreateSalaryBudgetTable> pageView=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(10,this.getPage(),enterprise,createSalaryBudgetTable,user);	
 			request.setAttribute("pageView", pageView);
+			request.setAttribute("users", users);
+			
 			
 		return SUCCESS;
 	}
@@ -383,4 +378,46 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	public void setEmployeesRecution(List<EnterpriseEmployees> employeesRecution) {
 		this.employeesRecution = employeesRecution;
 	}
+
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Date getSalaryDate() {
+		return salaryDate;
+	}
+
+	public void setSalaryDate(Date salaryDate) {
+		this.salaryDate = salaryDate;
+	}
+
+	public String getUname() {
+		return uname;
+	}
+
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
+
+	public String getTabname() {
+		return tabname;
+	}
+
+	public void setTabname(String tabname) {
+		this.tabname = tabname;
+	}
+	
+	
 }

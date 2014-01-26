@@ -1,6 +1,4 @@
 package cn.fm.bean.salary;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -16,20 +14,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-
-import cn.fm.bean.company.CustomBonus;
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.company.EnterpriseProjects;
 
 
-@SuppressWarnings("serial")
 @Entity
-public class SalaryTemplate implements Serializable {
+public class SalaryTemplate {
 
 	private Integer  templateId;
 	
@@ -56,7 +52,9 @@ public class SalaryTemplate implements Serializable {
 	
 	private Enterprise   enterprise;
 	
-	private Set<CustomBonus>  customBonus=new HashSet<CustomBonus>();
+	//private Set<CustomBonus>  customBonus=new HashSet<CustomBonus>();
+	
+	private EnterpriseProjects enterpriseProjects;
 	
 	@ManyToOne(cascade=CascadeType.REFRESH,optional=true)
 	@JoinColumn(name="enterpriseId")
@@ -151,22 +149,32 @@ public class SalaryTemplate implements Serializable {
 			this.romveCreateSalaryBudgetTable(createSalaryBudgetTable);
 		}
 	}
-	@OneToMany(cascade={CascadeType.REFRESH},fetch=FetchType.EAGER,mappedBy="salaryTemplate")
-	@NotFound(action=NotFoundAction.IGNORE)
-	public Set<CustomBonus> getCustomBonus() {
-		return customBonus;
+//	@OneToMany(cascade={CascadeType.REFRESH},fetch=FetchType.LAZY,mappedBy="salaryTemplate")
+//	@NotFound(action=NotFoundAction.IGNORE)
+//	public Set<CustomBonus> getCustomBonus(){
+//		return customBonus;
+//	}
+//	public void setCustomBonus(Set<CustomBonus> customBonus) {
+//		this.customBonus = customBonus;
+//	}
+//	
+//	public void addCustomBonus(CustomBonus customBonus){
+//		this.customBonus.add(customBonus);	
+//	}
+//	
+//	public void rovmeCustomBonus(CustomBonus customBonus){
+//		if(this.customBonus.contains(customBonus)){
+//			this.customBonus.remove(customBonus);
+//		}
+//	}
+	@OneToOne(cascade=CascadeType.REFRESH,fetch=FetchType.LAZY)
+	@JoinColumn(name="custom_id")
+	public EnterpriseProjects getEnterpriseProjects() {
+		return enterpriseProjects;
 	}
-	public void setCustomBonus(Set<CustomBonus> customBonus) {
-		this.customBonus = customBonus;
+	public void setEnterpriseProjects(EnterpriseProjects enterpriseProjects) {
+		this.enterpriseProjects = enterpriseProjects;
 	}
 	
-	public void addCustomBonus(CustomBonus customBonus){
-		this.customBonus.add(customBonus);	
-	}
 	
-	public void rovmeCustomBonus(CustomBonus customBonus){
-		if(this.customBonus.contains(customBonus)){
-			this.customBonus.remove(customBonus);
-		}
-	}
 }

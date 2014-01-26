@@ -17,7 +17,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -224,9 +223,10 @@ public class EnterpriseEmployees{
 	
 	
 	@Id
-	@GenericGenerator(name = "idGenerator", strategy ="uuid")
-	@GeneratedValue(generator = "idGenerator")
-	@Column(length=32)
+	@GeneratedValue
+//	@GenericGenerator(name = "idGenerator", strategy ="uuid")
+//	@GeneratedValue(generator = "idGenerator")
+//	@Column(length=32)
 	
 	public Integer getEmployeesId() {
 		return employeesId;
@@ -361,7 +361,7 @@ public class EnterpriseEmployees{
 	public void setLevelEducation(String levelEducation) {
 		this.levelEducation = levelEducation;
 	}
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	public Date getStartContractDeadline() {
 		return startContractDeadline;
 	}
@@ -514,7 +514,7 @@ public class EnterpriseEmployees{
 	public void setWhetherGinsengCount(long whetherGinsengCount) {
 		this.whetherGinsengCount = whetherGinsengCount;
 	}
-	@OneToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY,mappedBy="enterpriseEmployees")
+	@OneToMany(cascade={CascadeType.REFRESH},fetch=FetchType.LAZY,mappedBy="enterpriseEmployees")
 	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<EmployeesSalaryDetail> getEmployeesSalaryDetails() {
 		return employeesSalaryDetails;

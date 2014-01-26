@@ -18,58 +18,131 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 	<%@ include file="/help/public_css_js.jsp"%>
   </head>
+  <style>
+  	legend{ text-align:center; width:40%\9} 
+  </style>
   	<script type="text/javascript">
   		$(function(){
-  			$("#sumit1").click(function(){
-  			
-  				alert("xxx");
-  				if(confirm("您确定要关闭本页吗？")){
-					//window.opener=null;
-					window.open('addEnterpriseEmployees','');
-					window.close();
-					this.close();
-					var DG = frameElement.lhgDG;
-					DG.cancel();  //关闭窗口
-				}
-  				//var list = $.dialog.list;
-  				//alert(list);
-				//for( var i in list ){
-				 //   list[i].close();
-				//}
- 
-  			});
-  		
+				$("#cancel").click(function(){
+					history.go(-1);
+				});
+				
+		/**$("#employeesName").blur(validateEmployeesName);
+		$("#carnumber").blur(validateCarnumber);
+		$("#addentemp").submit(function(){
+			var t=validateCarnumber();
+			var b=validateEmployeesName();
+			return (b && t);
+			
   		});
-  	
+  	  function validateEmployeesName(){
+		var b=true;
+		if($("#employeesName").val()==""){
+			$("#namemsg").html("用户名不能为空");
+			$("#namemsg").addClass("input_error");
+			return false;
+		}else{
+			$.ajax({
+				  type: "get",
+				  url: "isExistEmployees?enterpriseEmployees.cardNumber"+$("#carnumber").val(),
+				  async:false,
+				  success:function(r){
+						if(r==true){
+							$("#namemsg").html("身份证号码已经存在");
+							$("#namemsg").addClass("input_error");
+							b= false;
+						}else{
+							$("#namemsg").html("&nbsp;");
+							$("#namemsg").addClass("input_ok");
+						}
+				}
+		   });
+		   
+		}
+		return b;
+	}
+	
+	function validateCarnumber(){
+		if($("#carnumber").val()==""){
+			$("#carnumber").html("身份证号码不能为空");
+			$("#carnumbermsg").addClass("input_error");
+			return false;
+		}
+		return true;
+	}**/
+	
+	jQuery.validator.addMethod("isTelPhone",function(value,element){
+		//var length=value.length;
+		var telphone=/^1[3|4|5|8]\d{9}$/;
+		return this.optional(element) || telphone.test(value);
+	},"输入的手机号不合法");
+	
+	$("#addentemp").validate({
+		/**rules:{
+			employeesName:{
+				required:true,
+				maxlength:15
+			},
+			cardNumber:{
+				//remote:"emp/empnoexist"
+				required:true,
+				maxlength:18
+			},
+			phone:{
+				isTelPhone:true
+			}
+		},**/
+		messages:{
+			employeesName:{
+				required:"员工姓名不能为空",
+				max:$.format("员工姓名长度大于{0}位")
+			},
+			cardNumber:{
+				required:"身份证号不能为空",
+				max:$.format("身份证号码至少{0}位")
+			}
+		}
+	});
+	
+  });
   	</script>
-  <body>
-  	<div class="modal-body">
-  	  <s:form action="addEnterpriseEmployees" method="post" id="addempForm">
-  		<table width="90%" align="center" style="text-align:left;">
+  	
+  <body style="background-color:#F1EEEE;">
+  	<br/>
+  	<center>
+		<fieldset style="border:2px groove #F0F0F0; width:1100px;">
+			<legend style="text-align:center;">
+				<span style="font-size:30px;" ><s:property value="%{#session.enterprise.fullName}" /></span>
+			</legend>
+			 <h3>添加企业员工信息</h3>
+	  	  <s:form action="addEnterpriseEmployees" method="post" id="addentemp">
+	  		<table width="900" style="text-align:left;">
   			  <tr>
   			  	  <td>合同编号:</td>
   			  	  <td>
-  			  	  	<s:textfield name="enterpriseEmployees.contractNo" cssClass="required email" id="input_e"/>
+  			  	  	<s:textfield name="enterpriseEmployees.contractNo"  maxlength="25" id="input_e"/>
   			  	  </td>
   			  </tr>
   			  <tr>
   			  	  <td>姓&nbsp;&nbsp;&nbsp;名:</td>
   			  	  <td>
-  			  	  	<s:textfield name="enterpriseEmployees.employeesName" id="employeesName"/>
+  			  	  	<s:textfield name="enterpriseEmployees.employeesName" cssClass="required employeesName" id="employeesName" maxlength="20"/>
+  			  	  	<s:fielderror fieldName="employeesName"></s:fielderror>
   			  	  </td>
   			  	  <td>身 份 证:</td>
 				  <td>
-				  	<s:textfield name="enterpriseEmployees.cardNumber" id="carnumber"/>
+				  	<s:textfield name="enterpriseEmployees.cardNumber" id="carnumber" cssClass="required cardNumber" maxlength="19" />
+				  	
 				  </td>
   			  </tr>
   			  <tr>
   			  	<td> 籍&nbsp;&nbsp;&nbsp;贯:</td>
 				  <td>
-				  	<s:textfield name="enterpriseEmployees.nativePlace" />
+				  	<s:textfield name="enterpriseEmployees.nativePlace" maxlength="10"/>
 				  </td>
   			  	<td>家庭住址:</td>
 				  <td>
-					<s:textfield name="enterpriseEmployees.homeAddress" />
+					<s:textfield name="enterpriseEmployees.homeAddress" maxlength="50"/>
 				  </td>
 				  
   			  </tr>
@@ -100,24 +173,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			  <tr>
   			  	<td style="padding-top:10px;">电&nbsp;&nbsp;&nbsp;话:</td>
   			  	<td style="padding-top:10px;">
-					<s:textfield name="enterpriseEmployees.phone" />
+					<s:textfield name="enterpriseEmployees.phone" maxlength="20" onkeyup="value=value.replace(/[^\d]/g,'')"/>
   			  	</td>
   			  	<td style="padding-top:10px;">银行卡号:</td>
   			  	<td style="padding-top:10px;">
-					<s:textfield name="enterpriseEmployees.bankCardNumber" />
+					<s:textfield name="enterpriseEmployees.bankCardNumber" maxlength="20" onkeyup="value=value.replace(/[^\d]/g,'')"/>
   			  	</td>
   			  </tr>
   			  <tr>
   			  	<td>开户银行</td>
-  			  	<td><s:textfield name="enterpriseEmployees.bank" /></td>
+  			  	<td><s:textfield name="enterpriseEmployees.bank" maxlength="30"/></td>
   			  	<td>行&nbsp;&nbsp;&nbsp;业</td>
-  			  	<td><s:textfield name="enterpriseEmployees.industry" /></td>
+  			  	<td><s:textfield name="enterpriseEmployees.industry" maxlength="20"/></td>
   			  </tr>
   			  <tr>
   			  	<td>岗&nbsp;&nbsp;&nbsp;位</td>
-  			  	<td><s:textfield name="enterpriseEmployees.jobs" /></td>
+  			  	<td><s:textfield name="enterpriseEmployees.jobs" maxlength="20"/></td>
   			  	<td>文化程度</td>
-  			  	<td><s:textfield name="enterpriseEmployees.levelEducation" /></td>
+  			  	<td><s:textfield name="enterpriseEmployees.levelEducation" maxlength="15"/></td>
   			  </tr>
   			  <tr>
   			  	<td>合同期限-(起):</td>
@@ -150,7 +223,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			  	<td>
 					<input type="radio" name="enterpriseEmployees.ginsengProtectNature" value="1" checked="checked" />新增，
 					<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="2" />续保
-					<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="3" />无参保
+					<input type="radio"	name="enterpriseEmployees.ginsengProtectNature" value="0" />无参保
   			  	</td>
   			  	<td>开始参保日期:</td>
   			  	<td style="padding-top:10px;">
@@ -164,23 +237,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<input type="radio" name="enterpriseEmployees.base" value="1" />个性设置
   			  	</td>
   			  	<td>住房公积金基数</td>
-  			  	<td><s:textfield name="enterpriseEmployees.housingFund" /></td>
+  			  	<td><s:textfield name="enterpriseEmployees.housingFund" maxlength="20" onkeyup="value=value.replace(/[^\d]/g,'')"/></td>
   			  </tr>
   			   <tr>
   			  	<td>社会保险基数</td>
   			  	<td>
-  			  		<s:textfield name="enterpriseEmployees.socialInsurance" />
+  			  		<s:textfield name="enterpriseEmployees.socialInsurance" maxlength="20" onkeyup="value=value.replace(/[^\d]/g,'')"/>
   			  	</td>
   			  	<td>生育保险基数</td>
-  			  	<td><s:textfield name="enterpriseEmployees.fertilityInsurance" /></td>
+  			  	<td><s:textfield name="enterpriseEmployees.fertilityInsurance" maxlength="20" onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
   			  </tr>
   			  <tr>
   			  	<td>工伤基数</td>
   			  	<td>
-  			  		<s:textfield name="enterpriseEmployees.inductrialBase" />
+  			  		<s:textfield name="enterpriseEmployees.inductrialBase" maxlength="20" onkeyup="value=value.replace(/[^\d]/g,'')" />
   			  	</td>
   			  	<td>基本医疗保险基数</td>
-  			  	<td><s:textfield name="enterpriseEmployees.basicMedical" /></td>
+  			  	<td><s:textfield name="enterpriseEmployees.basicMedical" maxlength="20" onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
   			  </tr>
   			  
   			   <tr>
@@ -197,22 +270,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			  
   			  </tr>
   			  <tr>
-  			  	<td>服务费</td>
-  			  	<td style="padding-top:10px;">
-  			  		<input type="text" name="enterpriseEmployees.serviceCost" />
-  			  	</td>
   			  	<td>意外险</td>
-  			  	<td style="padding-top:10px;"><input type="text" name="enterpriseEmployees.accident " maxlength="30"/></td>
-  			  </tr>
-  			  <tr>
-  			  	<td colspan="4" align="center">
-  			  		<s:submit cssClass="btn btn-primary"  value="提交" id="submit" cssStyle="width:80px;"/>
-  			  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  			  		<input type="button" class="btn btn-primary" style="width:80px;" value="重置" id="sumit1">
+  			  	<td style="padding-top:10px;" colspan="3">
+  			  		<input type="text" name="enterpriseEmployees.accident " maxlength="30" onKeyUp="value=value.replace(/[^\d]/g,'') "/>
   			  	</td>
   			  </tr>
   		</table>
+  			 <div id="opr">
+					<input type="submit" value=" 新   增" class="oprbtn" id="ok" />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" value=" 取  消 " class="oprbtn" id="cancel"/>
+			</div>
   	</s:form>
-  	</div>
+  	</fieldset>
+  	</center>
   </body>
 </html>

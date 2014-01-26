@@ -16,6 +16,7 @@
 		<meta http-equiv="cache-control" content="no-cache"/> 
 		<meta http-equiv="expires" content="0"/>  
 		<%@ include file="/help/public_css_js.jsp"%>
+		<link rel="stylesheet" type="text/css" href="styles/wms.css"/>
 		
 		<script>
 			function topage(page){
@@ -63,7 +64,7 @@
 						 </s:form>
 					</fieldset>
 				 </div>
-				 <div id="datalist">
+				 <div>
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr bgcolor="#CEAE71">
@@ -88,8 +89,10 @@
 											<span class="complement">
 												  联系人:<s:property value="%{#enterprise.contact}" />
 												  电&nbsp;&nbsp;话:<s:property value="%{#enterprise.phone}" />
+												 <!--
 												 <s:hidden value="%{#enterprise.enterpriseId}"></s:hidden>
 												 <a href="javascript:void(0)" name="fullname" title="详细信息">(详细信息)</a>
+												 -->
 											</span>
 											
 										</td>
@@ -99,6 +102,7 @@
 										<td style="text-align: center;">
 											<s:property  value="%{#enterprise.balanceDetailTotal}"/>
 										</td>
+										
 										<td>
 										<ol>
 											<li>

@@ -175,7 +175,7 @@ public class Employee {
 		this.empState = empState;
 	}
 
-	@OneToOne(mappedBy="employee",optional=false,fetch=FetchType.LAZY,cascade=CascadeType.REFRESH)
+	@OneToOne(mappedBy="employee",fetch=FetchType.LAZY,cascade=CascadeType.REFRESH)
 	public User getUser() {
 		return user;
 	}

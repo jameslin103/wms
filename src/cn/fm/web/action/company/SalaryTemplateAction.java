@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import cn.fm.bean.company.CustomBonus;
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.company.EnterpriseProjects;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.company.CustomBonusServices;
 import cn.fm.service.company.EnterpriseService;
@@ -26,6 +27,8 @@ public class SalaryTemplateAction extends BaseAction {
 	private CustomBonusServices   customBonusService;
 	@Resource 
 	private EnterpriseService   enterpriseService;
+	
+	private EnterpriseProjects   enterpriseProjects;
 	
 	private SalaryTemplate       salaryTemplate;
 	private CustomBonus          customBonus;
@@ -71,9 +74,9 @@ public class SalaryTemplateAction extends BaseAction {
 	public String viewSalaryTemplate()
 	{
 		
-	
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null)return INPUT;
+		Enterprise enterprisePO=enterpriseService.find(enterprise.getEnterpriseId());
 		List<CustomBonus> customBonus=customBonusService.getStatusEnableCustomBonus(enterprise.getEnterpriseId());
 		List<SalaryTemplate> salaryTemplate=salaryTemplateService.getAllSalaryTemplate(enterprise.getEnterpriseId());
 		if(salaryTemplate==null || salaryTemplate.size()==0)
@@ -82,7 +85,7 @@ public class SalaryTemplateAction extends BaseAction {
 			customBonus=new ArrayList<CustomBonus>();
 		request.setAttribute("customBonus", customBonus);
 		request.setAttribute("salaryTemplate",salaryTemplate);
-		
+		request.setAttribute("enterprisePO",enterprisePO);
 		return SUCCESS;
 	}
 	
@@ -90,8 +93,10 @@ public class SalaryTemplateAction extends BaseAction {
 	{
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null)return INPUT;
-		if(salaryTemplate==null || StringUtil.isEmpty(salaryTemplate.getTemplateName()))return INPUT;
-		salaryTemplate.setEnterprise(enterpriseService.find(enterprise.getEnterpriseId()));
+		if(salaryTemplate==null || StringUtil.isEmpty(enterpriseProjects.getProjects()))return INPUT;
+		salaryTemplate.setEnterprise(enterprise);
+		salaryTemplate.setEnterpriseProjects(enterpriseProjects);
+		salaryTemplate.setTemplateName(enterpriseProjects.getProjects());
 		salaryTemplateService.save(salaryTemplate);
 		
 		return SUCCESS;
@@ -108,6 +113,14 @@ public class SalaryTemplateAction extends BaseAction {
 		
 		salaryTemplateService.updateSalaryTemplate(salaryTemplate);
 		return SUCCESS;
+	}
+
+	public EnterpriseProjects getEnterpriseProjects() {
+		return enterpriseProjects;
+	}
+
+	public void setEnterpriseProjects(EnterpriseProjects enterpriseProjects) {
+		this.enterpriseProjects = enterpriseProjects;
 	}
 	
 }

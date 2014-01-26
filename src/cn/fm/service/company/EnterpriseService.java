@@ -37,6 +37,8 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	 */
 	public boolean updateEnterprise(Enterprise enterprise);
 	
+	public boolean updateEnterStatus(Enterprise enterprise);
+	
 	/**
 	 * 修改企业联系人
 	 * @param enterprise

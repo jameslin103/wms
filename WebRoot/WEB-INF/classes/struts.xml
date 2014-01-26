@@ -107,6 +107,29 @@
          <action name="isExistUser" class="cn.fm.web.action.user.UserAction" method="isExistUser">
             <result name="success" ></result>
         </action>
+        <action name="getOnlineUsers" class="cn.fm.web.action.user.ChatAction" method="getOnlineUsers">
+            <result name="success" ></result>
+        </action>
+         <action name="getWeather" class="cn.fm.web.action.WeatherAction" method="getWeather">
+            <result name="success" ></result>
+        </action>
+         <action name="getcites" class="cn.fm.web.action.WeatherAction" method="getcites">
+            <result name="success" ></result>
+        </action>
+        <action name="getProvinces" class="cn.fm.web.action.WeatherAction" method="getProvinces">
+            <result name="success"  type="json"></result>
+        </action>
+         <action name="getCities" class="cn.fm.web.action.WeatherAction" method="getCities">
+            <result name="success"  type="json"></result>
+        </action>
+        
+         <action name="phoneAddress" class="cn.fm.web.action.WeatherAction" method="phoneAddress">
+            <result name="success">util/phone_address</result>
+        </action>
+        
+       
+        
+        
         <action name="toEmpsel" class="cn.fm.web.action.user.UserAction" method="toEmpsel">
             <result name="success" >/admin/emp_sel.jsp</result>
         </action>
@@ -190,7 +213,7 @@
          <action name="toAddSystemPrivilege" class="cn.fm.web.action.permissions.PrivilegeAction" method="toAddSystemPrivilege">
              <result name="success">admin/priv_add_system.jsp</result>
         </action>
-         <action name="addSystemPrivilege" class="cn.fm.web.action.permissions.PrivilegeAction" method="toAddSystemPrivilege">
+         <action name="addSystemPrivilege" class="cn.fm.web.action.permissions.PrivilegeAction" method="addSystemPrivilege">
                <result name="success" type="redirectAction">
             	<param name="actionName">toSystemAllPrivilegeManage</param>
             </result>
@@ -311,78 +334,16 @@
          <action name="toAddEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="toAddEmployees">
             <result name="success">account/addEmployees.jsp</result>
         </action> 
-        
-        
-         <action name="findIdToEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="findIdToEmployees">
-            <result name="success" type="json">
-            	 <param name="includeProperties">
-            	    employeesContract\.contractid,
-            	 	employeesContract\.contractNo,
-            	 	employeesContract\.contractStatrDate,
-           			employeesContract\.contractEndDate,
-            	 	enterpriseEmployeesJson\.employeesId,
-            	 	enterpriseEmployeesJson\.contractNo,
-            	 	enterpriseEmployeesJson\.employeesName,
-            	 	enterpriseEmployeesJson\.cardNumber,
-            	 	enterpriseEmployeesJson\.employeesSex,
-            	 	enterpriseEmployeesJson\.householdRegister,
-            	 	enterpriseEmployeesJson\.photo,
-            	 	enterpriseEmployeesJson\.phone,
-            	 	enterpriseEmployeesJson\.homeAddress,
-            	 	enterpriseEmployeesJson\.bankCardNumber,
-            	 	enterpriseEmployeesJson\.bank,
-            	 	enterpriseEmployeesJson\.nativePlace,
-            	 	enterpriseEmployeesJson\.industry,
-            	 	enterpriseEmployeesJson\.jobs,
-            	 	enterpriseEmployeesJson\.maritalStatus,
-            	 	enterpriseEmployeesJson\.levelEducation,
-            	 	enterpriseEmployeesJson\.startContractDeadline,
-            	 	enterpriseEmployeesJson\.endContractDeadline,
-            	 	enterpriseEmployeesJson\.whetherGinseng,
-            	 	enterpriseEmployeesJson\.sociaSecurity,
-            	 	enterpriseEmployeesJson\.healthCare,
-            	 	enterpriseEmployeesJson\.accumulationFund,
-            	 	enterpriseEmployeesJson\.ginsengProtectNature,
-            	 	enterpriseEmployeesJson\.cinsengDate,
-            	 	enterpriseEmployeesJson\.base,
-            	 	enterpriseEmployeesJson\.socialInsurance,
-            	 	enterpriseEmployeesJson\.fertilityInsurance,
-            	 	enterpriseEmployeesJson\.inductrialBase,
-            	 	enterpriseEmployeesJson\.basicMedical,
-            	 	enterpriseEmployeesJson\.housingFund,
-            	 	enterpriseEmployeesJson\.paymentWay,
-            	 	enterpriseEmployeesJson\.pseudoDelete,
-            	 	enterpriseEmployeesJson\.serviceCost,
-            	 	enterpriseEmployeesJson\.accident,
-            	 	enterpriseEmployeesJson\.seriousDisease
-            	 	
-            	 	
-            	 </param>   
-            </result>
+         <action name="toUpdateEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="toUpdateEnterpriseEmployees">
+            <result name="success">company/update_enter_employees.jsp </result>
         </action> 
-        <action name="updateEnterpriseEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="updateEnterpriseEmployees">
-            <result name="success" type="redirectAction">
-            	<param name="actionName">viewEnterpriseEmployees</param>
-            	<param name="page">${page}</param>
-            </result>
-            <result name="input" type="redirectAction">
-            	<param name="actionName">viewEnterpriseEmployees</param>
-            	<param name="page">${page}</param>
-            </result>
-        </action>
-        <action name="findContractJson"  class="cn.fm.web.action.company.EmployeesContractAction" method="findContractJson">
-        	<result name="success" type="json">
-        		<param name="includeProperties">
-        			employeesContract\.contractid,
-        			employeesContract\.contractNo,
-        			employeesContract\.contractStatrDate,
-        			employeesContract\.contractEndDate,
-        			employeesContract\.actualTerminationDate,
-        			employeesContract\.status
-        			
-        		</param>
+        
+        <action name="updateEnterEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="updateEnterEmployees">
+        	<result name="success" type="redirectAction">
+        		<param name="actionName">viewEnterpriseEmployees</param>
         	</result>
         </action>
+        
         <!-- 续签合同 -->
          <action name="updateEmployeesContract" class="cn.fm.web.action.company.EmployeesContractAction" method="updateEmployeesContract">
              <result name="success" type="redirectAction">
@@ -601,11 +562,43 @@
          <action name="toBeResponsibleEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="toBeResponsibleEnterprise">
             <result name="success">company/list.jsp</result>
         </action>
+         	
+        <action name="toAddEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="toAddEnterprise">
+        	<result name="success">company/add_enterprise.jsp</result>
+        </action>
         <action name="addEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="addEnterprise">
             <result name="success" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
             </result>
             <result name="input" type="redirectAction">
+            	<param name="actionName">viewEnterprise</param>
+            </result>
+        </action>
+         <action name="toUpdateEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="toUpdateEnterprise">
+        	<result name="success">company/update_enterprise.jsp</result>
+        </action>
+        <action name="updateEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterprise">
+        	 <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterprise</param>
+           </result>
+        </action>
+         <action name="addEnterpriseProjects" class="cn.fm.web.action.company.EnterpriseAction" method="addEnterpriseProjects">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterprise</param>
+            </result>
+        </action>
+        <action name="updateEnterpriseProjects" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterpriseProjects">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterprise</param>
+            </result>
+        </action>
+         <action name="addEnterpriseContract" class="cn.fm.web.action.company.EnterpriseAction" method="addEnterpriseContract">
+            <result name="success" type="redirectAction">
+            	<param name="actionName">viewEnterprise</param>
+            </result>
+        </action>
+         <action name="updateEnterpriseContract" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterpriseContract">
+            <result name="success" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
             </result>
         </action>
@@ -617,6 +610,7 @@
            <result name="success" type="json">
            		<param name="includeProperties">
            			enterpriseJson\.enterpriseId,
+           			enterpriseJson\.contatId,
            			enterpriseJson\.rferred,
            			enterpriseJson\.fullName,
            			enterpriseJson\.legalRepresentative,
@@ -648,6 +642,9 @@
            <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
             </result>
+        </action>
+        <action name="updateEnterStatus" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterStatus">
+           <result name="success" ></result>
         </action>
          <action name="updateEnterpriseContact" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterpriseContact">
            <result name="success" type="redirectAction">
@@ -767,10 +764,7 @@
             	<param name="actionName">viewSalaryTemplate</param>
             </result>
         </action> 
-        <action name="viewSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="viewSalaryBudgetTable">
-            <result name="success" >company/salary-with-month.jsp</result>
-             <result name="input" >company/salary-with-month.jsp</result>
-        </action> 
+        
          <action name="newSalaryBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="newSalaryBudgetTable">
             <result name="success" >company/salary-step1-of-create.jsp</result>
             <result name="input">company/salary-step1-of-create.jsp</result>
@@ -850,9 +844,10 @@
         </action>
          <action name="deleteSalayBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="deleteSalayBudgetTable">
             <result name="success" type="redirectAction">
-            	<param name="actionName">viewSalaryBudgetTable</param>
+            	<param name="actionName">viewSalaryBudgetTableSummary</param>
             	<param name="enterpriseId">${enterpriseId}</param>
             	<param name="budgetId">${budgetId}</param>
+            	<param name="createSalaryBudgetTable.salaryDate">${createSalaryBudgetTable.salaryDate}</param>
             </result>
         </action>
         

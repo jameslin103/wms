@@ -42,7 +42,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			<div class="login span4">
           <div class="inner well">
             <form action="userLogin" method="post">
-              <h2>富民派遣系统</h2>
               <s:textfield  name="user.account"  maxlength="13" placeholder="手机号码"  cssClass="input-block-level"/>
               <s:password name="user.password"   maxlength="15" placeholder="密码"  cssClass="input-block-level"/>
        		   <span style="color:red;">${msg}</span>

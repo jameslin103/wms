@@ -3,6 +3,8 @@ package cn.fm.web.action.user;
 import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import com.opensymphony.oscache.util.StringUtil;
+
+import cn.fm.utils.DateUtil;
 import cn.fm.web.action.BaseAction;
 import cn.fm.service.user.UserService;
 import cn.fm.bean.user.Employee;
@@ -88,7 +90,9 @@ public class UserAction extends BaseAction{
 					return INPUT;
 				}
 				session.setAttribute("user", loninUser);
+				System.out.println("用户登录:"+loninUser.getEmployee().getName()+"- 时间:"+DateUtil.getCurrentTime());
 			}
+			
 			return SUCCESS;
 		}
 		return INPUT;

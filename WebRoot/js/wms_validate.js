@@ -13,6 +13,9 @@ $(document).ready( function() {
 //          
 //    $(this).parent().find("td").each(function(i){ $(this).css({color:"red",background: '#cccccc' }) });  
 //    });  
+	
+	
+	
 });  
 /**
  * json 请求查询企业信息
@@ -30,6 +33,7 @@ function modalEnterprise(enterpriseId)
 		    dataType:'json',    
 		    success:function(data){
 		      $("input[name='enterprise.enterpriseId']").val(data.enterpriseJson.enterpriseId);
+		      $("input[name='enterprise.contatId']").val(data.enterpriseJson.contatId);
 		      $("input[name='enterprise.rferred']").val(data.enterpriseJson.rferred);
 		      $("input[name='enterprise.fullName']").val(data.enterpriseJson.fullName);
 		      $("input[name='enterprise.legalRepresentative']").val(data.enterpriseJson.legalRepresentative);
@@ -100,40 +104,6 @@ function findEnterpriseToUser(enterpriseId)
 
 }
 
-
-
-function ajaxfindBeforeCurrentDateTemplate()
-{
-
-		var template=$("#d11").val();
-		if(template!=""){
-			$.ajax( {    
-			    url:'findBeforeCurrentDateTemplate',// 跳转到 action  
-			    data:{ salaryDate:template},    
-			    type:'post',    
-			    cache:false,
-			    dataType:'json',    
-			    success:function(data){
-			    	 $("#salaryTable").html("");
-		        	  $("#salaryTable").css('');
-		        	  $("#noDate").text("");
-			        if(data.error=="true" ){
-			        	$("#salaryTable").append("<option value='0'>--请选择--</option>")
-			        	  $(data.createSalaryBudgetTableList).each(function(i, value){
-			        		  $("#salaryTable").append("<option value='" +value.budgetId+"'>"
-			        				  + value.name + "</option>");  
-			        	  });
-			        }else{    
-			        	 $("#noDate").text(" 无数据 ");
-			        	 //$("#salaryTable").css("background-color", "yellow");
-			        }    
-			     },    
-			     error : function() {  
-			          alert("异常！");    
-			     }    
-		});	
-		}
-}
 /**
  * 查找修改的基数
  * @param taxId
@@ -346,14 +316,9 @@ function findToIdSalayBudegTable(budgetId)
 		    	$("input[name='createSalaryBudgetTable.serviceHeTotal']").val(data.createSalaryBudgetTable.serviceHeTotal);
 		    	$("input[name='createSalaryBudgetTable.serviceTotal']").val(data.createSalaryBudgetTable.serviceTotal); 
 		    	$("#templateName").text(data.createSalaryBudgetTable.templateName)
-		    	$("input[name='createSalaryBudgetTable.name']").val(data.createSalaryBudgetTable.name==null?"":data.createSalaryBudgetTable.name); 
-		    	(new Date(data.book.otherPublishDate)).format("yyyy-MM-dd")
-		    	$("input[name='createSalaryBudgetTable.salaryDate']").val(data.book.otherPublishDate);  
+		    	$("#budname").val(data.createSalaryBudgetTable.name==null?"":data.createSalaryBudgetTable.name); 
+		    	$("#saldate").val(data.createSalaryBudgetTable.salaryDate);  
 		    	$("#salaryTable").empty();
-		    	$("#salaryTable").append("<option>"+data.createSalaryBudgetTable.chooseTax+"</option>");
-		    	
-		    	//$("#salaryTable").attr("value",'test');
-		    
 		    	$("#note").val(data.createSalaryBudgetTable.note);
 		    
 		    

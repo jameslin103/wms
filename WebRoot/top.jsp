@@ -102,7 +102,7 @@
 				});
 		});
 		
-		$.get("",function(provinces){
+		$.get("getProvinces",function(provinces){
 			for(var i=0;i<provinces.length;i++){
 				$("#provinces").append("<option value="+provinces[i].code+">"+provinces[i].name+"</option>");
 			}
@@ -110,7 +110,7 @@
 		
 		$("#provinces").change(function(){
 			$("#cities").empty();
-			$.get("util/getcites/"+$(this).val(),function(cities){
+			$.get("getCities?province="+$(this).val(),function(cities){
 				for(var i=0;i<cities.length;i++){
 					$("#cities").append("<option value="+cities[i].code+">"+cities[i].name+"</option>");
 				}
@@ -118,7 +118,7 @@
 		});
 		
 		$("#cities").change(function(){
-			$.get("util/getweather/"+$(this).val(),function(weather){
+			$.get("getWeather?city="+$(this).val(),function(weather){
 				$("#weather").html(weather[4]);
 			},'json');
 		});
@@ -149,8 +149,8 @@
             <td height="18" background="images/main_14.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed;">
               <tr>
                 <td  style="width:1px;">&nbsp;</td>
-                <td ><span class="STYLE1">${user.account}</span>
-                	 <s:property value="#request.user.employee.name"/>
+                <td >
+                	<span class="STYLE1">${user.employee.name}</span>
                 </td>
               </tr>
             </table></td>
@@ -169,29 +169,32 @@
             </td>
           </tr>
         </table></td>
-        <td width="420" ><table width="100%" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td width="11%" height="23"><img src="images/chat.gif" alt="聊天" id="chat"></td>
-            <!--
-            <td width="60%" valign="bottom">
-            	<select id="provinces">
-            	</select>
-            	<select id="cities">
-            	</select>
-            </td>
-            --><td><span id="weather"></span></td>
-          </tr>
-        </table></td>
+        <td width="400" >
+        	<table width="80%" border="0" cellspacing="0" cellpadding="0">
+		          <tr>
+		            <td width="11%" height="23"><img src="images/chat.gif" alt="在线聊天" id="chat"></td>
+		            <td width="60%" valign="bottom">
+		            	<select id="provinces" style="width:60px;"></select>
+		            	<select id="cities" style="width:60px;"></select>
+		            </td>
+		            <td>
+		            	<span id="weather"></span>
+		            </td>
+		          </tr>
+          </table>
+        </td>
       </tr>
     </table></td>
   </tr>
   <tr>
-    <td height="5" style="line-height:5px; background-image:url(images/main_18.gif)"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td width="180" background="images/main_16.gif"  style="line-height:5px;">&nbsp;</td>
-        <td>&nbsp;</td>
-      </tr>
-    </table></td>
+    <td height="5" style="line-height:5px; background-image:url(images/main_18.gif)">
+	    <table width="80%" border="1" cellspacing="0" cellpadding="0">
+	      <tr>
+	        <td width="180" background="images/main_16.gif"  style="line-height:5px;">&nbsp;</td>
+	        <td>&nbsp;</td>
+	      </tr>
+	    </table>
+    </td>
   </tr>
 </table>
 </html>

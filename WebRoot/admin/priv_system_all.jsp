@@ -8,10 +8,10 @@
   <head>
     <base href="<%=basePath%>" />
 	<%@ include file="/help/public_css_js.jsp"%>
+	<link rel="stylesheet" type="text/css" href="styles/wms.css"/>
     <title>系统权限列表</title>
 	<script type="text/javascript">
 		$(function(){
-			$("#menu3").addClass("current");
 			$("#ok").click(function (){
 				location.href="toAddSystemPrivilege";
 			

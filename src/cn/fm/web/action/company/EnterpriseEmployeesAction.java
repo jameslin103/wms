@@ -69,172 +69,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
    
     
 	
-   public String getEmployees_id() {
-	return employees_id;
-	}
-	public void setEmployees_id(String employeesId) {
-		employees_id = employeesId;
-	}
-	public String getErrorMessage() {
-	   return errorMessage;
-   }
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-	public EnterpriseEmployees getEnterpriseEmployeesJson()
-	{
-		return enterpriseEmployeesJson;
-	}
-	public void setEnterpriseEmployeesJson(EnterpriseEmployees enterpriseEmployeesJson) {
-		this.enterpriseEmployeesJson = enterpriseEmployeesJson;
-	}
-	public Integer getDeparture()
-	{
-		return departure;
-	}
-	public void setDeparture(Integer departure) 
-	{
-		this.departure = departure;
-	}
-	public Integer getPseudoDelete()
-	{
-		return pseudoDelete;
-	}
-	public void setPseudoDelete(Integer pseudoDelete) {
-		this.pseudoDelete = pseudoDelete;
-	}
-	public Integer getStaff_renewal_reduction() {
-		return staff_renewal_reduction;
-	}
-	public void setStaff_renewal_reduction(Integer staffRenewalReduction) {
-		staff_renewal_reduction = staffRenewalReduction;
-	}
-	public EnterpriseEmployeesService getEnterpriseEmployeesService() {
-		return enterpriseEmployeesService;
-	}
-	public void setEnterpriseEmployeesService(
-			EnterpriseEmployeesService enterpriseEmployeesService) {
-		this.enterpriseEmployeesService = enterpriseEmployeesService;
-	}
-	public EnterpriseEmployees getEnterpriseEmployees() {
-		return enterpriseEmployees;
-	}
-	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
-		this.enterpriseEmployees = enterpriseEmployees;
-	}
-	public String getEndContractDeadline() {
-		return endContractDeadline;
-	}
-	public void setEndContractDeadline(String endContractDeadline) {
-		this.endContractDeadline = endContractDeadline;
-	}
-	public String getStartContractDeadline() {
-		return startContractDeadline;
-	}
-	public void setStartContractDeadline(String startContractDeadline) {
-		this.startContractDeadline = startContractDeadline;
-	}
-	public String getCinsengDate() {
-		return cinsengDate;
-	}
-	public void setCinsengDate(String cinsengDate) {
-		this.cinsengDate = cinsengDate;
-	}
-	public EmployeesContract getEmployeesContract() {
-		return employeesContract;
-	}
-	public void setEmployeesContract(EmployeesContract employeesContract) {
-		this.employeesContract = employeesContract;
-	}
-	public int getPage() {
-		return page<1?1:page;
-	}
-	public void setPage(int page) {
-		this.page = page;
-	}
-	public Integer getYear() {
-		return year;
-	}
-	public void setYear(Integer year) {
-		this.year = year;
-	}
-	public Integer getMonth() {
-		return month;
-	}
-	public void setMonth(Integer month) {
-		this.month = month;
-	}
-	public String getEmployeeFileName() {
-		return employeeFileName;
-	}
-	public void setEmployeeFileName(String employeeFileName) {
-		this.employeeFileName = employeeFileName;
-	}
-	public String getEmployessName() {
-		return employessName;
-	}
-	public void setEmployessName(String employessName) {
-		this.employessName = employessName;
-	}
-	public Integer getEnterpriseId() {
-		return enterpriseId;
-	}
-	public void setEnterpriseId(Integer enterpriseId) {
-		this.enterpriseId = enterpriseId;
-	}
-	public String getExcelName() {
-		return excelName;
-	}
-	public void setExcelName(String excelName) throws UnsupportedEncodingException {
-		this.excelName = new String(excelName.getBytes("ISO8859-1"), "utf-8");
-	}
-	public String getInputPath() {  
-	       return inputPath;  
-	 }  
-	 public void setInputPath(String inputPath) {  
-	        this.inputPath = inputPath;  
-	 }  
-
-	public File getFile() {
-		return file;
-	}
-
-	public void setFile(File file) {
-		this.file = file;
-	}
-	
-
-	public Integer getEmployeesId() {
-		return employeesId;
-	}
-
-	public void setEmployeesId(Integer employeesId) {
-		this.employeesId = employeesId;
-	}
-	
-	
-	public Integer getInsurance() {
-		return insurance;
-	}
-
-	public void setInsurance(Integer insurance) {
-		this.insurance = insurance;
-	}
-	
-	
-	public String getInsuranceYear() {
-		return insuranceYear;
-	}
-	public void setInsuranceYear(String insuranceYear) {
-		this.insuranceYear = insuranceYear;
-	}
-	public Integer getAll() {
-		return all;
-	}
-
-	public void setAll(Integer all) {
-		this.all = all;
-	}
+ 
 
 	public void prepare() throws Exception {
 		
@@ -370,7 +205,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 			params.add(this.enterpriseId);
 		 }
 			
-			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(25,  this.getPage());
+			PageView<EnterpriseEmployees> pageView = new PageView<EnterpriseEmployees>(30,  this.getPage());
 			pageView.setQueryResult(enterpriseEmployeesService.getScrollData(pageView.getFirstResult(), 
 					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("page", page);
@@ -676,7 +511,6 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		return SUCCESS;
 	}
 	
-	
 	public String selectEnterpriseEmployeesWage()
 	{
 		EnterpriseEmployees employees=getAccordingToIdEmployees();
@@ -924,7 +758,7 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		this.setEmployeeFileName("增员续保信息表.xls");
     	try {
 			excelName = new String(employeeFileName.getBytes(), "iso8859-1");//解决中文 文件名问题
-		} catch (UnsupportedEncodingException e) {
+		} catch (UnsupportedEncodingException e){
 			e.printStackTrace();
 		}
 		
@@ -950,47 +784,23 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 		
 		return SUCCESS;
 	}
-	
-	public String updateEnterpriseEmployees()
+	public String toUpdateEnterpriseEmployees()
 	{
-		if(enterpriseEmployees==null)return SUCCESS;
-		
-		String sex=Integer.parseInt(enterpriseEmployees.getEmployeesSex())==1?"男":"女";
-		enterpriseEmployees.setEmployeesSex(sex);
-		enterpriseEmployeesService.updateEnterpriseEmployees(enterpriseEmployees);
-	
-		employeesContractService.updateEmployeesContract(employeesContract);
+		enterpriseEmployees=enterpriseEmployeesService.find(employeesId);
 		return SUCCESS;
 	}
 	
-	/**
-	 * 日期转换格式
-	 */
-	
-	public void ConversionTypeFiled()
+	public String updateEnterEmployees()
 	{
-		if(!StringUtil.isEmpty(this.startContractDeadline)){
-			Date startDate=DateUtil.StringToDate(this.startContractDeadline, DateUtil.FORMAT_DATE);
-			if(startDate!=null){
-				enterpriseEmployees.setStartContractDeadline(startDate);
-			}
-				
+		if(enterpriseEmployees!=null){
+			enterpriseEmployeesService.updateEnterpriseEmployees(enterpriseEmployees);
+			employeesContractService.updateEmployeesContract(employeesContract);
 		}
-		if(StringUtil.isEmpty(this.endContractDeadline)){
-			Date endDate=DateUtil.StringToDate(this.endContractDeadline, DateUtil.FORMAT_DATE);
-			if(endDate!=null){
-				enterpriseEmployees.setStartContractDeadline(endDate);
-			}
-				
-		}
-		if(!StringUtil.isEmpty(this.cinsengDate)){
-			Date cinseng=DateUtil.StringToDate(this.cinsengDate, DateUtil.FORMAT_DATE);
-			if(cinseng!=null){
-				enterpriseEmployees.setCinsengDate(cinseng);
-			}
-				
-		}
+		
+		return SUCCESS;
 	}
+	
+
 	
 	/**
 	 * 下载减员信息模板
@@ -1042,4 +852,175 @@ public class EnterpriseEmployeesAction extends BaseAction implements Preparable{
 	    Pattern pattern = Pattern.compile("[0-9]*"); 
 	    return pattern.matcher(str).matches();    
 	 } 
+	
+	
+	
+	
+	
+	  public String getEmployees_id() {
+			return employees_id;
+			}
+			public void setEmployees_id(String employeesId) {
+				employees_id = employeesId;
+			}
+			public String getErrorMessage() {
+			   return errorMessage;
+		   }
+			public void setErrorMessage(String errorMessage) {
+				this.errorMessage = errorMessage;
+			}
+			public EnterpriseEmployees getEnterpriseEmployeesJson()
+			{
+				return enterpriseEmployeesJson;
+			}
+			public void setEnterpriseEmployeesJson(EnterpriseEmployees enterpriseEmployeesJson) {
+				this.enterpriseEmployeesJson = enterpriseEmployeesJson;
+			}
+			public Integer getDeparture()
+			{
+				return departure;
+			}
+			public void setDeparture(Integer departure) 
+			{
+				this.departure = departure;
+			}
+			public Integer getPseudoDelete()
+			{
+				return pseudoDelete;
+			}
+			public void setPseudoDelete(Integer pseudoDelete) {
+				this.pseudoDelete = pseudoDelete;
+			}
+			public Integer getStaff_renewal_reduction() {
+				return staff_renewal_reduction;
+			}
+			public void setStaff_renewal_reduction(Integer staffRenewalReduction) {
+				staff_renewal_reduction = staffRenewalReduction;
+			}
+			public EnterpriseEmployeesService getEnterpriseEmployeesService() {
+				return enterpriseEmployeesService;
+			}
+			public void setEnterpriseEmployeesService(
+					EnterpriseEmployeesService enterpriseEmployeesService) {
+				this.enterpriseEmployeesService = enterpriseEmployeesService;
+			}
+			public EnterpriseEmployees getEnterpriseEmployees() {
+				return enterpriseEmployees;
+			}
+			public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
+				this.enterpriseEmployees = enterpriseEmployees;
+			}
+			public String getEndContractDeadline() {
+				return endContractDeadline;
+			}
+			public void setEndContractDeadline(String endContractDeadline) {
+				this.endContractDeadline = endContractDeadline;
+			}
+			public String getStartContractDeadline() {
+				return startContractDeadline;
+			}
+			public void setStartContractDeadline(String startContractDeadline) {
+				this.startContractDeadline = startContractDeadline;
+			}
+			public String getCinsengDate() {
+				return cinsengDate;
+			}
+			public void setCinsengDate(String cinsengDate) {
+				this.cinsengDate = cinsengDate;
+			}
+			public EmployeesContract getEmployeesContract() {
+				return employeesContract;
+			}
+			public void setEmployeesContract(EmployeesContract employeesContract) {
+				this.employeesContract = employeesContract;
+			}
+			public int getPage() {
+				return page<1?1:page;
+			}
+			public void setPage(int page) {
+				this.page = page;
+			}
+			public Integer getYear() {
+				return year;
+			}
+			public void setYear(Integer year) {
+				this.year = year;
+			}
+			public Integer getMonth() {
+				return month;
+			}
+			public void setMonth(Integer month) {
+				this.month = month;
+			}
+			public String getEmployeeFileName() {
+				return employeeFileName;
+			}
+			public void setEmployeeFileName(String employeeFileName) {
+				this.employeeFileName = employeeFileName;
+			}
+			public String getEmployessName() {
+				return employessName;
+			}
+			public void setEmployessName(String employessName) {
+				this.employessName = employessName;
+			}
+			public Integer getEnterpriseId() {
+				return enterpriseId;
+			}
+			public void setEnterpriseId(Integer enterpriseId) {
+				this.enterpriseId = enterpriseId;
+			}
+			public String getExcelName() {
+				return excelName;
+			}
+			public void setExcelName(String excelName) throws UnsupportedEncodingException {
+				this.excelName = new String(excelName.getBytes("ISO8859-1"), "utf-8");
+			}
+			public String getInputPath() {  
+			       return inputPath;  
+			 }  
+			 public void setInputPath(String inputPath) {  
+			        this.inputPath = inputPath;  
+			 }  
+
+			public File getFile() {
+				return file;
+			}
+
+			public void setFile(File file) {
+				this.file = file;
+			}
+			
+
+			public Integer getEmployeesId() {
+				return employeesId;
+			}
+
+			public void setEmployeesId(Integer employeesId) {
+				this.employeesId = employeesId;
+			}
+			
+			
+			public Integer getInsurance() {
+				return insurance;
+			}
+
+			public void setInsurance(Integer insurance) {
+				this.insurance = insurance;
+			}
+			
+			
+			public String getInsuranceYear() {
+				return insuranceYear;
+			}
+			public void setInsuranceYear(String insuranceYear) {
+				this.insuranceYear = insuranceYear;
+			}
+			public Integer getAll() {
+				return all;
+			}
+
+			public void setAll(Integer all) {
+				this.all = all;
+			}
 }

@@ -60,7 +60,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  
           <div class="span4">
             <h3>3/3&nbsp;新建工资预算表信息</h3>
-            <form action="viewSalaryBudgetTable" method="post">
+            <form action="viewSalaryBudgetTableSummary" method="post">
               <div class="row-fluid">
 
                 <div class="alert">

@@ -25,51 +25,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<div id="container">
 			<div id="header">
+				<fieldset>
+						<legend>
+							<img src="images/311.gif" />&nbsp;查询条件
+						</legend>
+						<s:form action="viewCompanyListWithSaraly" method="post">
+							年份时间:
+							<s:textfield id="d4324" cssClass="Wdate" type="text" cssStyle="width:150px;" onfocus="WdatePicker()" 
+                   						name="createSalaryBudgetTable.salaryDate" value="%{#request.salaryDate}"/>
+                   			企业名称:<s:textfield name="enterprise.fullName"></s:textfield>	
+						 	<input type="submit" value=" 查  询 " class="oprbtn" style="width:70px;" />
+						 </s:form>
+					</fieldset>
 			</div>
 		<div id="main"> 
 			<div class="row-fluid">
 				<div id="center-pane">
-				
-          <ul class="nav nav-tabs">
-	          <s:iterator value="#session.menuList" id="menu">
-			          <s:if test="#menu.url=='viewCompanyListWithSaraly'">
-					        <li>
-								<a href="viewCompanyListWithSaraly">工资</a>
-							</li>
-							</s:if>
-							  <s:if test="#menu.url=='viewCompanyListWithInsurance'">
-								<li> 
-								  <a href="viewCompanyListWithInsurance">增减员与参保</a>
-								</li>
-							</s:if>
-							<s:if test="#menu.url=='viewCompanyListWithBalance'">
-								<li  class="active">
-									<a href="viewCompanyListWithBalance">资金往来</a>
-								</li>
-							</s:if>
-				 </s:iterator>
-          </ul>
+         			 <ul class="nav nav-tabs">
+					     <li>
+							 <a href="viewCompanyListWithSaraly">工资</a>
+						  </li>
+						  <li  class="active">
+							<a href="viewCompanyListWithBalance">资金往来</a>
+						</li>
+         			 </ul>
          
 		<form action="viewCompanyListWithBalance" class="select-for-year" method="post" id="myform1">
 			<input type="hidden" name="page"/>
-          <ul class="normal action-container clearfix">
-            <li class="right">
-				按年份查询:
-				<input type="text"  name="year" value="${year}" maxlength="4" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-            </li>
-            <li><a href="viewCompanyListWithBalance?month=1&year=${year}">1月</a>，</li>
-            <li><a href="viewCompanyListWithBalance?month=2&year=${year}">2月</a>，</li>
-            <li><a href="viewCompanyListWithBalance?month=3&year=${year}">3月</a>，</li>
-            <li><a href="viewCompanyListWithBalance?month=4&year=${year}">4月</a>，</li>
-            <li><a href="viewCompanyListWithBalance?month=5&year=${year}">5月</a>，</li>
-            <li><a href="viewCompanyListWithBalance?month=6&year=${year}">6月</a>，</li>
-            <li><a href="viewCompanyListWithBalance?month=7&year=${year}">7月</a>，</li>
-            <li><a href="viewCompanyListWithBalance?month=8&year=${year}">8月</a>，</li>
-            <li><a href="viewCompanyListWithBalance?month=9&year=${year}">9月</a>，</li>
-            <li><a href="viewCompanyListWithBalance?month=10&year=${year}">10月</a>，</li>
-            <li><a href="viewCompanyListWithBalance?month=11&year=${year}">11月</a>，</li>
-            <li><a href="viewCompanyListWithBalance?month=12&year=${year}">12月</a></li>
-          </ul>
 		</form>
           <table class="table table-striped table-bordered">
             <thead>
@@ -97,8 +79,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 		</div>
-
-		<div id="footer"></div>
 	</div>
 </body>
 

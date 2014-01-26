@@ -216,7 +216,6 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 			downloadExcel(sqlJasper, enterprise.getFullName()+"-"+salaryDate+"-(银行发放信息表)", parameters,employeesSalaryDetailList);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -230,10 +229,10 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 		String currentPath = ServletActionContext.getServletContext().getRealPath("");
 		String images= currentPath+"/images/fullname.jpg";
 		List<CreateSalaryBudgetTable> wageBudgetSummaryList=createSalaryBudgetTableService.getFindCreateSalaryBudgetTables(budgetId);
-		CreateSalaryBudgetTable createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		//CreateSalaryBudgetTable createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		parameters.put("fullName",enterprise.getFullName()); 
-		parameters.put("username",createSalaryBudgetTable.getUser().getEmployee().getName()); 
+		//parameters.put("username",createSalaryBudgetTable.getUser().getEmployee().getName()); 
 		parameters.put("image",images); 
 
 		String sqlJasper="salary-with-sum-of-categories.jasper";
@@ -242,7 +241,6 @@ public class InsuranceEmployeesReportAction extends ReportAction {
 			downloadExcel(sqlJasper, "工资预算表汇总信息表", parameters,wageBudgetSummaryList);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

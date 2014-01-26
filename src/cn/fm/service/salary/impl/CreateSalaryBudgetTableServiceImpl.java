@@ -9,12 +9,15 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.fm.bean.PageView;
+import cn.fm.bean.QueryResult;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.bean.user.User;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.salary.CreateSalaryBudgetTableService;
+import cn.fm.utils.DateUtil;
 
 @Service @Transactional
 public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryBudgetTable> implements	CreateSalaryBudgetTableService {
@@ -38,32 +41,47 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Enterprise enterprise,Integer year)
+	public PageView<CreateSalaryBudgetTable>  getAllCreateSalaryBudgetTable(int maxresult, int page,Enterprise enterprise,CreateSalaryBudgetTable createSalaryBudgetTable,User user)
 	{
-		try {
-			return em.createQuery("select c from CreateSalaryBudgetTable c "+createCondition(enterprise,null,year)+"  order by c.salaryDate desc ")
-					.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		String sql="select c from CreateSalaryBudgetTable c "+createCondition(enterprise,createSalaryBudgetTable,user)+"  order by c.salaryDate desc ";
+		String countsql="select count(c) from CreateSalaryBudgetTable c "+createCondition(enterprise,createSalaryBudgetTable,user)+"  order by c.salaryDate desc ";
+		PageView<CreateSalaryBudgetTable> pageView = new PageView<CreateSalaryBudgetTable>(maxresult,page);
+		QueryResult<CreateSalaryBudgetTable> qr = new QueryResult<CreateSalaryBudgetTable>();
+		Query query = em.createQuery(sql);
+	
+		if(pageView.getFirstResult()!=-1 && pageView.getMaxresult()!=-1)
+			query.setFirstResult(pageView.getFirstResult()).setMaxResults(pageView.getMaxresult());
+		qr.setResultlist(query.getResultList());
+		
+		query = em.createQuery(countsql);
+		qr.setTotalrecord((Long)query.getSingleResult());
+		pageView.setQueryResult(qr);
+		
+		return pageView;
 		
 	}
-	private String createCondition(Enterprise enterprise,CreateSalaryBudgetTable createSalaryBudgetTable,Integer year) {
+	
+	private String createCondition(Enterprise enterprise,CreateSalaryBudgetTable createSalaryBudgetTable,User user) {
 		
-		if (enterprise == null) {
-			return "";
-		}
 		StringBuilder builder = new StringBuilder(" where 1=1 ");
-		if (enterprise.getEnterpriseId()!= null && !enterprise.getEnterpriseId().equals("")) {
+		if (enterprise!=null && enterprise.getEnterpriseId()!= null && !enterprise.getEnterpriseId().equals("")) {
 			builder.append(" and c.enterprise.enterpriseId=" + enterprise.getEnterpriseId());
 		}
-		if (year!=null && !year.equals("")) {
-			builder.append("and YEAR(c.createDate)=" + year);
+		if (createSalaryBudgetTable!=null && createSalaryBudgetTable.getName()!= null && !createSalaryBudgetTable.getName().equals("")) {
+			builder.append(" and c.name like '%" + createSalaryBudgetTable.getName().trim()+"%'");
+		}
+		if(createSalaryBudgetTable!=null && createSalaryBudgetTable.getSalaryDate()!=null && !createSalaryBudgetTable.getSalaryDate().equals(""))
+		{
+			String dateYear=DateUtil.dateToString(createSalaryBudgetTable.getSalaryDate(), DateUtil.FORMAT_DATE);
+			builder.append(" and YEAR(c.salaryDate)=" +dateYear.substring(0,4));
+			builder.append(" and month(c.salaryDate)=" +dateYear.substring(5,7));
+		}
+		if(user!=null && user.getId()!=null && !user.getId().equals("") && !user.getId().equals("0")){
+			builder.append(" and c.user.id='" + user.getId().trim()+"'");
+			
 		}
 		return builder.toString();
 	}
-	
 	
 	/**
 	 * 更新工资预算表
@@ -198,16 +216,7 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 	}
 	
 
-	/**
-	 * 所有企业工资预算表汇总
-	 * 
-	 */
-	@SuppressWarnings("unchecked")
-	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable() {
-		
-		return em.createQuery("select c from CreateSalaryBudgetTable c").getResultList();
-		 
-	}
+	
 	/**
 	 * 获取工资预算表
 	 * @param date 时间段获取
@@ -266,6 +275,8 @@ public class CreateSalaryBudgetTableServiceImpl extends	DaoSupport<CreateSalaryB
 				.setParameter(5, createSalaryBudgetTable.getStatus())
 				.setParameter(6, createSalaryBudgetTable.getBudgetId()).executeUpdate();
 	}
+
+	
 
 
 }

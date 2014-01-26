@@ -47,7 +47,7 @@ var setting = {
 </script>
 </head>
 
-<body>
+<body style="background-color:#EBF4E1">
 	<table width="177" height="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td height="26" background="images/main_21.gif">&nbsp;</td>

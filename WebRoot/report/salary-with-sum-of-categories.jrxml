@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salary-with-sum-of-categories" language="groovy" pageWidth="1070" pageHeight="750" columnWidth="1030" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="7a95c57d-eca8-4d8d-b77e-e80701fe06a7">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="128"/>
+	<property name="ireport.x" value="232"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fullName" class="java.lang.String"/>
 	<parameter name="username" class="java.lang.String"/>
@@ -9,6 +9,9 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<field name="balanceDetail" class="cn.fm.bean.salary.BalanceDetail">
+		<fieldDescription><![CDATA[balanceDetail]]></fieldDescription>
+	</field>
 	<field name="budgetId" class="java.lang.Integer">
 		<fieldDescription><![CDATA[budgetId]]></fieldDescription>
 	</field>
@@ -17,6 +20,9 @@
 	</field>
 	<field name="cashnumberDate" class="java.util.Date">
 		<fieldDescription><![CDATA[cashnumberDate]]></fieldDescription>
+	</field>
+	<field name="cashnumber_status" class="java.lang.String">
+		<fieldDescription><![CDATA[cashnumber_status]]></fieldDescription>
 	</field>
 	<field name="chooseTax" class="java.lang.String">
 		<fieldDescription><![CDATA[chooseTax]]></fieldDescription>
@@ -48,8 +54,14 @@
 	<field name="heLinesDate" class="java.util.Date">
 		<fieldDescription><![CDATA[heLinesDate]]></fieldDescription>
 	</field>
+	<field name="heLines_status" class="java.lang.String">
+		<fieldDescription><![CDATA[heLines_status]]></fieldDescription>
+	</field>
 	<field name="isTax" class="java.lang.Integer">
 		<fieldDescription><![CDATA[isTax]]></fieldDescription>
+	</field>
+	<field name="issue" class="java.lang.Integer">
+		<fieldDescription><![CDATA[issue]]></fieldDescription>
 	</field>
 	<field name="issueNumber" class="java.lang.Integer">
 		<fieldDescription><![CDATA[issueNumber]]></fieldDescription>
@@ -75,6 +87,9 @@
 	<field name="salaryTemplate" class="cn.fm.bean.salary.SalaryTemplate">
 		<fieldDescription><![CDATA[salaryTemplate]]></fieldDescription>
 	</field>
+	<field name="serviceHeTotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[serviceHeTotal]]></fieldDescription>
+	</field>
 	<field name="serviceTotal" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[serviceTotal]]></fieldDescription>
 	</field>
@@ -87,8 +102,11 @@
 	<field name="updateDate" class="java.util.Date">
 		<fieldDescription><![CDATA[updateDate]]></fieldDescription>
 	</field>
-	<field name="user" class="cn.fm.bean.user.WmsUser">
+	<field name="user" class="cn.fm.bean.user.User">
 		<fieldDescription><![CDATA[user]]></fieldDescription>
+	</field>
+	<field name="user_operator" class="java.lang.String">
+		<fieldDescription><![CDATA[user_operator]]></fieldDescription>
 	</field>
 	<field name="wageTotal" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[wageTotal]]></fieldDescription>
@@ -136,18 +154,19 @@
 			<textField>
 				<reportElement uuid="b0cd690b-0b6c-4934-865d-19528fff8ec4" x="70" y="21" width="101" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$P{username}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{user}.employee.name+"")]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="47" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="ec017f1d-7bfe-4e53-a0b8-b7b3c5255235" mode="Opaque" x="0" y="0" width="79" height="46" backcolor="#CCCCCC"/>
+				<reportElement uuid="ec017f1d-7bfe-4e53-a0b8-b7b3c5255235" mode="Opaque" x="0" y="0" width="79" height="46" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
@@ -155,10 +174,10 @@
 				<text><![CDATA[工资预算表名称]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="92c7c421-e68c-4b6c-bde2-d38ee76f01ed" mode="Opaque" x="79" y="0" width="79" height="46" backcolor="#FFFFFF"/>
+				<reportElement uuid="92c7c421-e68c-4b6c-bde2-d38ee76f01ed" mode="Opaque" x="79" y="0" width="79" height="46" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -168,10 +187,10 @@
 				<text><![CDATA[工资所属月份]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="827d5ba6-9e98-4500-8a8c-2d1379f3f342" mode="Opaque" x="158" y="0" width="79" height="46" backcolor="#CCCCCC"/>
+				<reportElement uuid="827d5ba6-9e98-4500-8a8c-2d1379f3f342" mode="Opaque" x="158" y="0" width="79" height="46" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -181,10 +200,10 @@
 				<text><![CDATA[合并计税工资表]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="09aa3874-e734-4bad-947d-688e2a606f0d" mode="Opaque" x="237" y="0" width="31" height="46" backcolor="#CCCCCC"/>
+				<reportElement uuid="09aa3874-e734-4bad-947d-688e2a606f0d" mode="Opaque" x="237" y="0" width="31" height="46" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -194,10 +213,10 @@
 				<text><![CDATA[性质]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6d0542dc-716d-468f-b584-f2801b6705be" mode="Opaque" x="268" y="20" width="79" height="26" backcolor="#FF3300"/>
+				<reportElement uuid="6d0542dc-716d-468f-b584-f2801b6705be" mode="Opaque" x="268" y="20" width="79" height="26" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -207,10 +226,10 @@
 				<text><![CDATA[开票总额（元）]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="10dcd29a-de53-403f-9066-e48487f91b77" mode="Opaque" x="347" y="20" width="76" height="26" backcolor="#009966"/>
+				<reportElement uuid="10dcd29a-de53-403f-9066-e48487f91b77" mode="Opaque" x="347" y="20" width="76" height="26" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -220,10 +239,10 @@
 				<text><![CDATA[工资总额（元）]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="480238c2-ce0d-4d1b-b5a0-4cddf4a2fff6" mode="Opaque" x="423" y="20" width="80" height="26" backcolor="#FF3300"/>
+				<reportElement uuid="480238c2-ce0d-4d1b-b5a0-4cddf4a2fff6" mode="Opaque" x="423" y="20" width="80" height="26" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -233,10 +252,10 @@
 				<text><![CDATA[服务费总额（元）]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="69dcfdcb-37b7-429d-8ae4-6f0ff30d4862" mode="Opaque" x="503" y="20" width="92" height="26" backcolor="#33FF33"/>
+				<reportElement uuid="69dcfdcb-37b7-429d-8ae4-6f0ff30d4862" mode="Opaque" x="503" y="20" width="92" height="26" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -246,10 +265,10 @@
 				<text><![CDATA[五险一金总额（元）]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="07c2be73-af50-410e-a441-d47daab40616" mode="Opaque" x="595" y="20" width="76" height="26" backcolor="#FFFF00"/>
+				<reportElement uuid="07c2be73-af50-410e-a441-d47daab40616" mode="Opaque" x="595" y="20" width="76" height="26" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -259,10 +278,10 @@
 				<text><![CDATA[发放人数（人）]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="388e115b-d06d-48c2-86a5-4b9a61b65912" mode="Opaque" x="671" y="20" width="72" height="26" backcolor="#999999"/>
+				<reportElement uuid="388e115b-d06d-48c2-86a5-4b9a61b65912" mode="Opaque" x="671" y="20" width="72" height="26" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -272,10 +291,10 @@
 				<text><![CDATA[民生银行（人）]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b461be78-1a1c-4ac6-b482-6861e63bb3a4" mode="Opaque" x="743" y="20" width="43" height="26" backcolor="#FFFF00"/>
+				<reportElement uuid="b461be78-1a1c-4ac6-b482-6861e63bb3a4" mode="Opaque" x="743" y="20" width="43" height="26" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -285,21 +304,23 @@
 				<text><![CDATA[他行(人)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="aae32938-d08e-4537-bd25-56f2ef3fbe92" mode="Opaque" x="786" y="20" width="53" height="26" backcolor="#FFFF00"/>
+				<reportElement uuid="aae32938-d08e-4537-bd25-56f2ef3fbe92" mode="Opaque" x="786" y="20" width="53" height="26" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[现金（人）]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fcac591e-e445-4c56-9563-b84b8cce6d81" mode="Opaque" x="839" y="20" width="190" height="26" backcolor="#00CCCC"/>
+				<reportElement uuid="fcac591e-e445-4c56-9563-b84b8cce6d81" mode="Opaque" x="839" y="20" width="190" height="26" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -309,11 +330,11 @@
 				<text><![CDATA[（制作、实际发放）]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="21f7880a-c08a-4212-baf2-efc4cd08f5d9" mode="Opaque" x="268" y="0" width="327" height="20" backcolor="#666600"/>
+				<reportElement uuid="21f7880a-c08a-4212-baf2-efc4cd08f5d9" mode="Opaque" x="268" y="0" width="327" height="20" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -322,11 +343,11 @@
 				<text><![CDATA[工资预算表汇总信息]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f85bf061-cc62-4a78-a437-de8f7f194b71" mode="Opaque" x="595" y="0" width="244" height="20" backcolor="#99FFCC"/>
+				<reportElement uuid="f85bf061-cc62-4a78-a437-de8f7f194b71" mode="Opaque" x="595" y="0" width="244" height="20" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -335,11 +356,11 @@
 				<text><![CDATA[发放明细]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2c736723-82df-468e-9e0f-13638709e6db" mode="Opaque" x="839" y="0" width="190" height="20" backcolor="#009933"/>
+				<reportElement uuid="2c736723-82df-468e-9e0f-13638709e6db" mode="Opaque" x="839" y="0" width="190" height="20" forecolor="#000000" backcolor="#999999"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -482,9 +503,9 @@
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["制作人："+($F{user}.username)+"\n"+
+				<textFieldExpression><![CDATA["制作人："+($F{user}.employee.name)+"\n"+
 "时  间:"+($F{createDate}==null?"":$F{createDate})+"\n"+
-"发放人："+($F{user}.username)]]></textFieldExpression>
+"发放人："+($F{user_operator}==null?"":$F{user_operator})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

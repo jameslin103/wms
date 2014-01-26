@@ -16,6 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
+	<%@ include file="/help/public_css_js.jsp"%>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -23,8 +24,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
 <body>
-   				<div align="center" style="margin-top:300px;"><h2>系统繁忙，请稍后再试；或者联系技术人员!!</h2></div>
+	<div id="container"> 
+		<div class="row-fluid">
+			<div class="span3"></div>
+	      	<div class="span6" style="min-height:400px; min-width:200px; background-color: #EBF4E1; border: 1px solid #d0ac6b; margin-top: 90px; border-radius: 25px;">
+	       	 	<h1 style=" text-align: center;">系统提示!</h1><br/><br/>
+	       	 	<div style=" text-align: center; margin-top:30px">
+	       	 		<h2>未知的系统错误；请联系技术人员!<br/><br/><br/><br/>
+	       	 		<a href="javascript:history.go(-1)" style="margin-top:30px">返回</a></h2>
+	      		</div>
+	      	</div>
+  		</div>  	
+	</div>
    				
-   				<a href="javascript:history.go(-1)">返回</a>
+   				
+   				
+   				
   </body>
 </html>

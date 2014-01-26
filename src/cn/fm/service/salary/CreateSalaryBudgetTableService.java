@@ -2,14 +2,16 @@ package cn.fm.service.salary;
 
 import java.util.List;
 
+import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
+import cn.fm.bean.user.User;
 import cn.fm.service.base.DAO;
 
 public interface CreateSalaryBudgetTableService extends DAO<CreateSalaryBudgetTable> {
 	
 
-	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable(Enterprise enterprise,Integer year);
+	public PageView<CreateSalaryBudgetTable>  getAllCreateSalaryBudgetTable(int maxresult, int page,Enterprise enterprise,CreateSalaryBudgetTable createSalaryBudgetTable,User user);
 	/**
 	 * 更新工资预算表
 	 * @param createSalaryBudgetTable
@@ -39,11 +41,6 @@ public interface CreateSalaryBudgetTableService extends DAO<CreateSalaryBudgetTa
 	
 	public void deleteCreateSalaryBudgetTable(CreateSalaryBudgetTable createSalaryBudgetTable);
 	
-	/**
-	 * 所有企业的汇总情况
-	 * @return  List<CreateSalaryBudgetTable>
-	 */
-	public List<CreateSalaryBudgetTable> getAllCreateSalaryBudgetTable();
 	
 	/**
 	 * 获取工资预算表

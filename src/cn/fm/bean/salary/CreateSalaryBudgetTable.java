@@ -125,7 +125,6 @@ public class CreateSalaryBudgetTable implements Serializable {
 	
 	private BalanceDetail   balanceDetail;
 	
-
 	
 	
 	

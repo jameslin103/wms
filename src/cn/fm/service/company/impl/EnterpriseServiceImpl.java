@@ -2,6 +2,7 @@ package cn.fm.service.company.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		
 		String sql="";
 		String countSql="";
-		if(user!=null || enterprise!=null){
+		if(user!=null && !user.getId().equals("0") && !user.getId().equals("") || enterprise!=null && !StringUtil.isEmpty(enterprise.getFullName())){
 			sql="select e from Enterprise e join e.user u "+createCondition(enterprise,user)+" order by e.enterpriseId desc";
 			countSql="select count(e) from Enterprise e join e.user u "+createCondition(enterprise,user)+" order by e.enterpriseId desc";
 		}else{
@@ -109,6 +110,21 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 		}
 		return userListVO;
 	}
+	
+	public boolean updateEnterStatus(Enterprise enterprise){
+		if(enterprise==null || enterprise.getEnterpriseId()==null)return false;
+			Enterprise enterprisePO=em.find(Enterprise.class,enterprise.getEnterpriseId());
+			enterprisePO.setAuditStatus(enterprise.getAuditStatus());
+			enterprisePO.setAudituser(enterprise.getAudituser());
+			enterprisePO.setAuditDate(new Date());
+			enterprisePO.setNote(enterprise.getNote().trim());
+			
+		return true;
+		
+	}
+	
+	
+	
 	public boolean updateEnterprise(Enterprise enterprise){
 		boolean flag=false;
 		try {
@@ -124,8 +140,10 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 					" fax=?10," +
 					" email=?11," +
 					" status=?12," +
-					" send=?13"+
-					" where enterpriseId=?14");
+					" send=?13,"+
+					" contatId=?14," +
+					" industryType=?15" +
+					" where enterpriseId=?16");
 			query.setParameter(1, enterprise.getRferred())
 				 .setParameter(2, enterprise.getFullName())
 				 .setParameter(3, enterprise.getLegalRepresentative())
@@ -139,7 +157,9 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 				 .setParameter(11, enterprise.getEmail())
 				 .setParameter(12, enterprise.getStatus())
 				 .setParameter(13, enterprise.getSend())
-				 .setParameter(14, enterprise.getEnterpriseId())
+				 .setParameter(14, enterprise.getContatId())
+				 .setParameter(15, enterprise.getIndustryType())
+				 .setParameter(16, enterprise.getEnterpriseId())
 				 .executeUpdate();
 			flag=true;
 			
@@ -269,14 +289,12 @@ public class EnterpriseServiceImpl extends DaoSupport<Enterprise> implements Ent
 	
 	private String createCondition(Enterprise enterprise,User user) {
 		
-		if (enterprise == null && user==null) {
-			return "";
-		}
+		
 		StringBuilder builder = new StringBuilder(" where 1=1 ");
-		if (enterprise.getFullName()!= null && !enterprise.getFullName().trim().equals("")) {
+		if (enterprise!=null && enterprise.getFullName()!= null && !enterprise.getFullName().trim().equals("")) {
 			builder.append(" and e.fullName like '%" + enterprise.getFullName().trim() + "%'");
 		}
-		if (enterprise.getContatId()!= null && !enterprise.getContatId().trim().equals("")) {
+		if (enterprise!=null && enterprise.getContatId()!= null && !enterprise.getContatId().trim().equals("")) {
 			builder.append(" and e.contatId='" + enterprise.getContatId().trim() + "'");
 		}
 		if (user.getId()!= null && !user.getId().trim().equals("") && !user.getId().equals("0")) {

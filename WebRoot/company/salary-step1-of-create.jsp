@@ -57,7 +57,7 @@
              <s:form action="addSalaryBudgetTable" method="post">
             	<s:hidden name="enterpriseId" value="%{#request.session.enterprise.enterpriseId}"></s:hidden>
             	<s:hidden value="%{#request.createSalaryBudgetTable.budgetId}" name="createSalaryBudgetTable.budgetId"/>
-            	<table width="700px;" align="center" cellpadding="0" cellspacing="0" border="1">
+            	<table width="700px;" align="center">
             		<tr><td colspan="4" align="center"><h2>1/3&nbsp;新建工资预算表信息</h2></td></tr>
             		<tr>
             			<td>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</td>
@@ -79,7 +79,7 @@
             		<tr>
             			<td>生成哪月工资？</td>
             			<td colspan="3">
-            				<input type="text" id="d11"	name="salaryDate" onblur="ajaxfindBeforeCurrentDateTemplate()" 
+            				<input type="text" id="d11"	name="salaryDate"  
 			                 onclick="WdatePicker()" value="${createSalaryBudgetTable.salaryDate}" class="Wdate"  />
 			                 <span style="color:red;">*</span><span id="salaryDate"></span>
             			</td>

@@ -78,10 +78,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		                 }
 					});
 			 }
-			// $(enterpriseEmployees).each(function(i,value){
-			 //	alert(value.id);
-			// });
-			
 		 });
 	
 	})

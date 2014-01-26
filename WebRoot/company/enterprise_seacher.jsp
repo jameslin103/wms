@@ -36,19 +36,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<div class="datalist">
   		<table width="95%" align="center" border="1px;" style="margin-left:20px;margin-top:30px;line-height:30px;">
-  			 <tr><td colspan="4" align="center"><h2>${enterprise.fullName}</h2></td></tr>
+  			 <tr style="background-color:#C09853;">
+  				 <td colspan="4" align="center"><h2>${enterprise.fullName}</h2></td>
+  			 </tr>
   			  <tr>
-  			  	  <td>合同编号:</td>
+  			  	  <td><b>合同编号:</b></td>
   			  	  <td colspan="3">
   			  	  	 ${enterprise.contatId}
   			  	  </td>
+  			  	  
   			  </tr>
+  			  
   			  <tr>
-  			  	  <td>企业简称:</td>
+  			  	  <td><b>跟单员:</b></td>
   			  	  <td>
-  			  	  	${enterprise.rferred}
+  			  	  	<s:iterator value="%{#request.enterprise.user}" id="user">
+  			  	  		${user.employee.name}
+  			  	  	</s:iterator>
   			  	  </td>
-  			  	  <td>企业全称:</td>
+  			  	  <td>企业名称:</td>
 				  <td>
 				  	${enterprise.fullName}
 				  </td>
@@ -120,13 +126,91 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			  	</td>
   			  </tr>
   			  <tr>
+  			  	<td>创建时间:</td>
+  			  	<td><s:date name="%{#request.enterprise.createDate}" format="yyyy-MM-dd HH:mm:dd"/></td>
+  			  	<td>更新时间:</td>
+  			  	<td><s:date name="%{#request.enterprise.updateDate}" format="yyyy-MM-dd HH:mm:dd"/></td>
+  			  </tr>
+  			  <tr>
   			  	  <td title="详细信息"> 目前有职工:</td>
   			  	  <td colspan="3">
   			  	  	 <input type="hidden" value="${enterprise.enterpriseId}"/>
   			  	  	 <a href="javascript:void(0)" id="fullname">[${enterprise.count}]</a>人
   			  	  </td>
-  			  	  
   			  </tr>
+  		</table>
+  		<table width="95%" align="center" border="1px;" style="margin-left:20px;line-height:30px;">
+  			<thead>
+  				<tr style="background-color:#C09853;"><th colspan="8" align="center" style="font-size:25px;">合作项目详细表</th></tr>
+  				<tr>
+  					<th>序号</th>
+  					<th>项目名称</th>
+  					<th>服务性质</th>
+  					<th>服务类型</th>
+  					<th>服务费</th> 
+  					<th>创建时间</th>
+  					<th>修改时间</th>
+  					<th>注意事项</th>
+  				</tr>
+  			</thead>
+  			<s:iterator value="#request.enterprise.enterpriseProjects" id="enterpriseProjects" status="list">
+	  			<tbody>
+	  				<tr>
+	  				<td align="center">${list.index+1}</td>
+	  				<td>${enterpriseProjects.projects}</td>
+	  				<td>
+	  				 <s:if test="#enterpriseProjects.serviceType==3">
+	  					 ${enterpriseProjects.customType}
+	  				 </s:if>
+	  				 <s:if test="#enterpriseProjects.serviceType==1">
+	  				 	 完全派遣
+	  				 </s:if>
+	  				 <s:if test="#enterpriseProjects.serviceType==2">
+	  				 	转移派遣
+	  				 </s:if>
+	  				</td>
+	  				<s:if test="#enterpriseProjects.fee==0">
+	  					<td>按人头</td>
+	  					<td>${enterpriseProjects.serviceHead}</td>
+	  				</s:if>
+	  				<s:if test="#enterpriseProjects.fee==1">
+	  					<td>按比例</td>
+	  					<td>${enterpriseProjects.proportion}</td>
+	  				</s:if>
+	  				<td><s:date name="%{#enterpriseProjects.createDate}" format="yyyy-MM-dd:HH:mm:dd"/></td>
+	  				<td><s:date name="%{#enterpriseProjects.updateDate}" format="yyyy-MM-dd:HH:mm:dd"/></td>
+	  				<td>${enterpriseProjects.note}</td>
+	  			</tr>
+	  			</tbody>
+  			</s:iterator>
+  		</table>
+  		<table width="95%" align="center" border="1px;" style="margin-left:20px;line-height:30px;">
+  			<thead>
+  				<tr style="background-color:#C09853;"><th colspan="7" align="center" style="font-size:25px;">企业合同资料</th></tr>
+  				<tr>
+  					<th>序号</th>
+  					<th>合同开始日期</th>
+  					<th>合同结束日期</th>
+  					<th>签订合同时间</th>
+  					<th>修改合同时间</th>
+  					<th>状&nbsp;&nbsp;态</th>
+  					<th>备&nbsp;&nbsp;注</th>
+  				</tr>
+  			</thead>
+  			<s:iterator value="%{#request.enterprise.enterpriseContract}" id="enterpriseContract" status="list">
+	  			<tbody>
+	  				<tr>
+	  				<td align="center">${#list.index+1}</td>
+	  				<td><s:date name="%{#enterpriseContract.startContractDate}" format="yyyy-MM-dd"/></td>
+	  				<td><s:date name="%{#enterpriseContract.endContractDate}" format="yyyy-MM-dd"/></td>
+	  				<td><s:date name="%{#enterpriseContract.createDate}" format="yyyy-MM-dd HH:mm:dd"/></td>
+	  				<td><s:date name="%{#enterpriseContract.updateDate}" format="yyyy-MM-dd HH:mm:dd"/></td>
+	  				<td>${enterpriseContract.status}</td>
+	  				<td>${enterpriseContract.note}</td>
+	  				
+	  			</tr>
+	  			</tbody>
+  			</s:iterator>
   		</table>
   	</div>
   </body>

@@ -36,6 +36,7 @@ public class PrivilegeAction extends BaseAction{
 	
 	
 	public String toViewPrivis() {
+		
 		User user =(User)session.getAttribute("user");
 		
 		Set<Privilege> privileges=privilegeService.getPrivilegesByUserId(user.getId());
@@ -100,8 +101,9 @@ public class PrivilegeAction extends BaseAction{
 		return SUCCESS;
 	}
 	public String addSystemPrivilege(){
-		
-		privilegeService.savePrivilege(privilege);
+		if(privilege!=null){
+			privilegeService.savePrivilege(privilege);
+		}
 		return SUCCESS;
 	}
 	

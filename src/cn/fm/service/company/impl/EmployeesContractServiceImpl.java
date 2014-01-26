@@ -13,9 +13,11 @@ public class EmployeesContractServiceImpl extends DaoSupport<EmployeesContract>i
 	
 	
 	public void updateEmployeesContract(EmployeesContract employeesContract){
+		if(employeesContract!=null && employeesContract.getContractStatrDate()!=null && employeesContract.getContractEndDate()!=null){
 		em.createQuery("update EmployeesContract e set e.contractStatrDate=?1,e.contractEndDate=?2 where e.contractid=?3")
 					  .setParameter(1, employeesContract.getContractStatrDate()).setParameter(2, employeesContract.getContractEndDate())
 					  .setParameter(3, employeesContract.getContractid()).executeUpdate();
+		}
 	}
 
 }

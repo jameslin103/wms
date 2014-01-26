@@ -27,7 +27,6 @@ import org.hibernate.annotations.NotFoundAction;
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
-import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.bean.user.User;
 
 @SuppressWarnings("serial")
@@ -71,24 +70,24 @@ public class Enterprise implements Serializable{
 	/*状态	0.合约  1.暂停*/
 	private  Integer   status;
 	
+	
 	/*备注*/
 	private  String   note;
 	
 	private  long      count;
-	
 	/*创建时间*/
 	private Date       createDate=new Date();
-	
 	/*更新时间*/
 	private Date       updateDate;
-	
-
+	/*审核时间*/
+	private Date       auditDate;
+	/*审核状态*/
+	private Integer    auditStatus=0;
 	
 	/*统计企业资金往来*/
 	private  BigDecimal	   balanceDetailTotal ;
-	
 
-	/**增员**/
+	/*增员*/
 	private  long addCount=0;
 	
 	/**续保**/
@@ -99,7 +98,10 @@ public class Enterprise implements Serializable{
 	
 	/**统计减员**/
 	private long  reductionTotal=0;
-	     
+	 
+	/*审核人*/
+	private String audituser;
+	
 	
 	private Set<EnterpriseEmployees> enterpriseEmployees=new HashSet<EnterpriseEmployees>();
 	
@@ -110,18 +112,33 @@ public class Enterprise implements Serializable{
 	
 	private Set<BalanceDetail>           balanceDetail=new HashSet<BalanceDetail>();
 	
-	//工资模板
-	private Set<SalaryTemplate>  salaryTemplates=new HashSet<SalaryTemplate>();
-	
-	private Set<CustomBonus>   customBonus=new HashSet<CustomBonus>();
-
     private Set<EmployeesSalaryDetail>  employeesSalaryDetails=new HashSet<EmployeesSalaryDetail>();
+    
+    private Set<CustomBonus>   customBonus=new HashSet<CustomBonus>();
 	
     private InsurancesBaseSettings      insurancesBaseSettings;
     
     private InsurancesTax               insurancesTax;
+    
+    private Set<EnterpriseContract> enterpriseContract=new HashSet<EnterpriseContract>();
 	
-	 @ManyToMany(cascade={CascadeType.REFRESH})
+    private Set<EnterpriseProjects>	enterpriseProjects=new HashSet<EnterpriseProjects>();
+    
+    @OneToMany(cascade={CascadeType.ALL},mappedBy="enterprise",fetch=FetchType.LAZY)
+	public Set<EnterpriseContract> getEnterpriseContract() {
+		return enterpriseContract;
+	}
+	public void setEnterpriseContract(Set<EnterpriseContract> enterpriseContract) {
+		this.enterpriseContract = enterpriseContract;
+	}
+	@OneToMany(cascade={CascadeType.ALL},mappedBy="enterprise",fetch=FetchType.LAZY)
+	public Set<EnterpriseProjects> getEnterpriseProjects() {
+		return enterpriseProjects;
+	}
+	public void setEnterpriseProjects(Set<EnterpriseProjects> enterpriseProjects) {
+		this.enterpriseProjects = enterpriseProjects;
+	}
+	@ManyToMany(cascade={CascadeType.REFRESH})
 	  @JoinTable(name ="user_enterprise",
 			   inverseJoinColumns =@JoinColumn (name ="user_id" ),//被维护端外键
               joinColumns =  @JoinColumn (name ="enterprise_id" ))//维护端外键
@@ -132,14 +149,6 @@ public class Enterprise implements Serializable{
 		this.user = user;
 	}
 
-	@OneToMany(cascade={CascadeType.ALL},mappedBy="enterprise")
-	public Set<SalaryTemplate> getSalaryTemplates() {
-		return salaryTemplates;
-	}
-	public void setSalaryTemplates(Set<SalaryTemplate> salaryTemplates) {
-		this.salaryTemplates = salaryTemplates;
-	}
-	
 	@Id @GeneratedValue @Column(length=36)
 	public Integer getEnterpriseId() {
 		return enterpriseId;
@@ -354,18 +363,7 @@ public class Enterprise implements Serializable{
 		this.reductionTotal = reductionTotal;
 	}
 	
-	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.PERSIST},fetch=FetchType.LAZY,mappedBy="enterprise")
-	@NotFound(action=NotFoundAction.IGNORE)
-	public Set<CustomBonus> getCustomBonus() {
-		return customBonus;
-	}
-	public void setCustomBonus(Set<CustomBonus> customBonus) {
-		this.customBonus = customBonus;
-	}
-	
-	
-	
-	@OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.LAZY, mappedBy = "enterprise")
+	@OneToMany(cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY, mappedBy = "enterprise")
 	public Set<BalanceDetail> getBalanceDetail(){
 		return balanceDetail;
 	}
@@ -384,7 +382,7 @@ public class Enterprise implements Serializable{
 			this.balanceDetail.remove(balanceDetail);
 
 	}
-	@OneToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY, mappedBy = "enterprise")
+	@OneToMany(cascade={CascadeType.REFRESH},fetch = FetchType.LAZY, mappedBy = "enterprise")
 	public Set<EmployeesSalaryDetail> getEmployeesSalaryDetails() {
 		return employeesSalaryDetails;
 	}
@@ -432,7 +430,41 @@ public class Enterprise implements Serializable{
 	public void setIndustryType(String industryType) {
 		this.industryType = industryType;
 	}
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getAuditDate() {
+		return auditDate;
+	}
+	public void setAuditDate(Date auditDate) {
+		this.auditDate = auditDate;
+	}
+	@Column(length=1)
+	public Integer getAuditStatus() {
+		return auditStatus;
+	}
+	public void setAuditStatus(Integer auditStatus) {
+		this.auditStatus = auditStatus;
+	}
+	@Column(length=36)
+	public String getAudituser() {
+		return audituser;
+	}
+	public void setAudituser(String audituser) {
+		this.audituser = audituser;
+	}
 	
-	
+	public void addEnterpriseContract(EnterpriseContract enterpriseContract)
+	{
+		enterpriseContract.setEnterprise(this);
+		this.enterpriseContract.add(enterpriseContract);
+		
+	}
+	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.PERSIST},fetch=FetchType.LAZY,mappedBy="enterprise")
+	@NotFound(action=NotFoundAction.IGNORE)
+	public Set<CustomBonus> getCustomBonus() {
+		return customBonus;
+	}
+	public void setCustomBonus(Set<CustomBonus> customBonus) {
+		this.customBonus = customBonus;
+	}
 	
 }

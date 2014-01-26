@@ -95,7 +95,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</li>
 					</ul>
           <div>
-          	<table width="1000px;" align="center" border="1" style="line-height: 30px;">
+          	<table width="1000px;" align="center"  style="line-height: 30px;">
           		<tr>
           			<td colspan="4" align="center"><h2>2/3&nbsp;新建工资预算表信息</h2></td>
           		</tr>
@@ -129,15 +129,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           		<tr>
           			<td colspan="4">上传新工资预算表</td>
           		</tr>
+          		<s:form action="uploadEmployeesSalaryDetail" cssClass="form-search" method="post" enctype="multipart/form-data">
           		<tr>
           			<td colspan="4">
-          				<s:form action="uploadEmployeesSalaryDetail" cssClass="form-search" method="post" enctype="multipart/form-data">
                       	 	<s:hidden value="%{#request.createSalaryBudgetTable.salaryTemplate.templateId}" name="templateId"></s:hidden>
                       	 	<s:hidden value="%{#request.createSalaryBudgetTable.budgetId}" name="budgetId"/>
                       	  	<s:hidden value="%{#request.createSalaryBudgetTable.salaryDate}" name="salaryDate"/>
                       	 	<s:hidden name="file" value="file"></s:hidden>
                          <input type="file" name="file" id="filevalue"/><br/>
-                      </s:form>
+                     
           			</td>
           		</tr>
           		<tr>
@@ -145,6 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           			 <s:submit  cssClass="btn btn-primary" id="uploadFile" value="上传"/>
           			</td>
           		</tr>
+          		 </s:form>
           		<s:iterator value="#request.employeesNames" id="names">
           		 <tr>
           		 	<td colspan="4"><span style="color: red">${names}</span></td>

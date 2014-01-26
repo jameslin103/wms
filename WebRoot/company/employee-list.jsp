@@ -131,12 +131,10 @@
 								新员工档案：
 							</li>
 							<li>
-								<a href="batchExcelDataEmployee">批量录入</a>，
+								<a href="batchExcelDataEmployee">批量添加员工</a>，
 							</li>
 							<li>
-								<input type="button" id="addEmployees" value="添加员工" style="border:0px;"/>
-								
-								<a href="#add-employees-bnt" data-toggle="modal" onclick="reset()" >单个录入</a>
+								<a href="toAddEmployees" >单个添加员工</a>
 							</li>
 							<li>
 								&nbsp;/&nbsp;
@@ -167,8 +165,6 @@
 								</s:form>
 							</li>
 						</ul>
-					<s:form action="viewEnterpriseEmployees" method="post" id="myform">
-						 <input type="hidden" name="page"/>
 						<table class="table table-striped table-bordered">
 							<thead>
 								<tr>
@@ -357,14 +353,14 @@
 											
 										</td>
 										<td>
-											<s:set value="%{#emp.employeesId}" var="employeesId"></s:set>
-											<a href="#edit-employees-bnt" onclick="findIdToEmployees('${employeesId}')" data-toggle="modal">修改</a>
+											<a href="toUpdateEnterpriseEmployees?employeesId=${emp.employeesId}">修改</a>
 										</td>
 									</tr>
 								</tbody>
 							</s:iterator>
 						</table>
-
+						<s:form action="viewEnterpriseEmployees" method="post" id="myform">
+						 <input type="hidden" name="page"/>
 						<div class="pagination">
 							<%@ include file="/share/fenye.jsp" %>
 						</div>
@@ -372,9 +368,6 @@
 					</div>
 				</div>
 			</div>
-
-			<div id="footer"></div>
-
 		</div>
 		<!-- ================================== AddEnterpriseEmpoloyess ===============================-->
 		<div id="add-employees-bnt" class="modal hide fade" tabindex="-1"

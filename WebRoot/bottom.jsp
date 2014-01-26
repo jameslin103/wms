@@ -17,7 +17,7 @@
 						<td>
 							<table width="100%" border="0" cellspacing="0" cellpadding="0" >
 								<tr>
-									<td width="369"><marquee direction="left">欢迎您！${user.account}!</marquee></td>
+									<td width="369"><marquee direction="left">欢迎您！${user.employee.name}!</marquee></td>
 									<td width="814" >&nbsp;</td>
 									<td width="185" nowrap="nowrap">
 									<div align="center">

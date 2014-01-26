@@ -8,11 +8,14 @@
   <head>
     <base href="<%=basePath%>" />
 	<%@ include file="/help/public_css_js.jsp"%>
+	<link rel="stylesheet" type="text/css" href="styles/wms.css"/>
     <title>系统权限列表</title>
 	<script type="text/javascript">
 		$(function(){
 			$("#menu3").addClass("current");
-			
+			$("#cancel").click(function(){
+				history.go(-1);
+			});
 			
 		});
 	</script>
@@ -47,8 +50,8 @@
 			</table>
 		</div>
 		<div id="opr">
-			<input type="button" value=" 新  增 " class="oprbtn" id="ok" /> <input
-				type="button" value=" 取  消 " class="oprbtn" id="cancel"/>
+			<input type="submit" value=" 新  增 " class="oprbtn" id="ok" />
+			<input type="button" value=" 取  消 " class="oprbtn" id="cancel"/>
 		</div>
 		<div id="selPrives"></div>
 		</form>

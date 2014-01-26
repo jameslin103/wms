@@ -1,6 +1,5 @@
 package cn.fm.bean.company;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -19,22 +18,20 @@ import org.hibernate.annotations.NotFoundAction;
 import cn.fm.bean.salary.SalaryTemplate;
 
 
-@SuppressWarnings("serial")
 @Entity
 /**
  * 定制各种奖金
  */
-public class CustomBonus implements Serializable{
+public class CustomBonus{
 
 	private Integer id;
 	private String  bonusName;
 	private Integer state;
 	private Date     createDate=new Date();
 	
-	
 	private Enterprise   enterprise;
 	
-	private SalaryTemplate   salaryTemplate;
+	
 	
 	@Id @GeneratedValue
 	public Integer getId() {
@@ -64,6 +61,7 @@ public class CustomBonus implements Serializable{
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	
 	@ManyToOne(cascade={CascadeType.REFRESH},optional=true)
 	@JoinColumn(name="enterprise_id")
 	@NotFound(action=NotFoundAction.IGNORE)
@@ -73,17 +71,6 @@ public class CustomBonus implements Serializable{
 	public void setEnterprise(Enterprise enterprise) {
 		this.enterprise = enterprise;
 	}
-	
-	@ManyToOne(cascade={CascadeType.REFRESH,CascadeType.MERGE},optional=true)
-	@JoinColumn(name="template_id")
-	@NotFound(action=NotFoundAction.IGNORE)
-	public SalaryTemplate getSalaryTemplate(){
-		return salaryTemplate;
-	}
-	public void setSalaryTemplate(SalaryTemplate salaryTemplate) {
-		this.salaryTemplate = salaryTemplate;
-	}
-	
 	
 	
 	@Override

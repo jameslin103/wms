@@ -2,10 +2,10 @@ package cn.fm.web.action.company;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.Resource;
+
+import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
@@ -36,7 +36,9 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	
 	private CreateSalaryBudgetTable      createSalaryBudgetTable;
 	
-	List<CreateSalaryBudgetTable>  createSalaryBudgetTableList;
+	private List<CreateSalaryBudgetTable>  createSalaryBudgetTableList;
+	
+	private User  user;
 	
 
 	private String excelName;
@@ -57,52 +59,8 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	
 	private Integer  year;
 	
-	
+	private int page;
 
-	/**
-	 * 查看当前企业的预算表
-	 * @return
-	 */
-	public String viewSalaryBudgetTable()
-	{
-		
-		if(year==null)
-		{
-			this.year=Integer.parseInt(DateUtil.getCurrentTime().toString().substring(0, 4));
-		}
-		
-		Enterprise enterprise=WebUtil.getEnterprise(request);
-		if(enterprise==null || enterprise.getEnterpriseId()==null){
-			enterprise=enterpriseService.find(enterpriseId);
-			request.getSession().setAttribute("enterprise",enterprise );
-		}
-		
-		List<CreateSalaryBudgetTable> createSalaryBudgetTableList=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(enterprise,this.year);
-		List<Object> map=null;
-		if(createSalaryBudgetTableList!=null){
-			map=reconstructToMonthGroupByTableDate(createSalaryBudgetTableList);
-		}
-		
-		request.setAttribute("map", map);
-		return SUCCESS;
-	}
-	
-	public List<Object> reconstructToMonthGroupByTableDate(List<CreateSalaryBudgetTable> createSalaryBudgetTableList)
-	{
-		List<Object> list=new ArrayList<Object>();
-		Map<String, Object> map=null;
-		for (CreateSalaryBudgetTable table : createSalaryBudgetTableList) {
-			map=new HashMap<String, Object>();
-			String date=table.getSalaryDate()==null?"":table.getSalaryDate().toString();
-			map.put("date", date);
-			map.put("createSalaryBudgetTable", table);
-			list.add(map);
-		}
-		
-		
-		return list;
-	}
-	
 	
 	
 	/**
@@ -209,21 +167,6 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 			salaryTemplateList=new ArrayList<SalaryTemplate>();
 		request.setAttribute("salaryTemplates", salaryTemplateList);
 	}
-	
-	public String findBeforeCurrentDateTemplate()
-	{
-//		Enterprise enterprise=WebUtil.getEnterprise(request);
-//		createSalaryBudgetTableList=createSalaryBudgetTableService.findBeforeCurrentDateTemplate(salaryDate,enterprise.getEnterpriseId());
-//		if(createSalaryBudgetTableList==null || createSalaryBudgetTableList.size()==0){
-//			createSalaryBudgetTableList=new ArrayList<CreateSalaryBudgetTable>();
-//			this.addActionError("暂无记录");
-//		}else{
-//			this.setError("true");
-//		}
-	
-		return "createSalaryBudgetTableList";
-	
-	}
 
 	
 	public String downloadSalaryBudgetTable()
@@ -263,8 +206,8 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	    		enterprise=enterpriseService.find(enterpriseId);
 	    		request.getSession().setAttribute("enterprise", enterprise);
 	    	}
-	    	List<CreateSalaryBudgetTable> createSalaryBudgetTables=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(enterprise,null);
-	    	request.setAttribute("createSalaryBudgetTables", createSalaryBudgetTables);
+	    	PageView<CreateSalaryBudgetTable>  pageView=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(10,this.getPage(),enterprise, createSalaryBudgetTable,null);
+	    	request.setAttribute("pageView", pageView);
 	    	
 	    	return SUCCESS;
 	    	
@@ -402,6 +345,19 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		public void setCreateSalaryBudgetTableService(
 				CreateSalaryBudgetTableService createSalaryBudgetTableService) {
 			this.createSalaryBudgetTableService = createSalaryBudgetTableService;
+		}
+		
+		public int getPage() {
+			return page<1?1:page;
+		}
+		public void setPage(int page) {
+			this.page = page;
+		}
+		public User getUser() {
+			return user;
+		}
+		public void setUser(User user) {
+			this.user = user;
 		}
 		
 }

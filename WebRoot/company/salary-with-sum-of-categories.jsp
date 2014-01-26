@@ -10,8 +10,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<%@ include file="/help/public_css_js.jsp" %>
-
+		<%@ include file="/help/public_css_js.jsp" %>
+		<script>
+			function topage(page){
+				var form = document.getElementById("myform");
+				form.page.value=page;
+				form.submit();
+		  }
+		</script>
 </head>
 <body>
 	 <div id="container">
@@ -21,11 +27,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<s:property value="%{#request.session.enterprise.fullName}" />
 					</h2>
 			</div>
+			<div id="search">
+					<fieldset>
+						<legend>
+							<img src="images/311.gif" />&nbsp;查询条件
+						</legend>
+						<s:form action="viewSalaryBudgetTableSummary" method="post">
+							<s:hidden name="page" id="page" value="1"/>
+							预算表名称：
+							<s:textfield name="createSalaryBudgetTable.name" maxlength="50" cssStyle="width:150px;"/>
+							年份时间:
+							<s:textfield id="d4324" cssClass="Wdate" type="text" cssStyle="width:150px;" onfocus="WdatePicker()" 
+                   						name="createSalaryBudgetTable.salaryDate"/>
+						 	<input type="submit" value=" 查  询 " class="oprbtn" style="width:70px;" />
+						 </s:form>
+					</fieldset>
+		  </div>
     </div>
 
     <div id="main">
       <div class="row-fluid">
-
         <div id="center-pane">
 				<ul class="nav nav-tabs">
 							<li >
@@ -85,7 +106,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th>（制作、实际发放）</th>
             </thead>
             <tbody>
-             <s:iterator value="#request.createSalaryBudgetTables" id="createSalaryBudgetTable">
+             <s:iterator value="#request.pageView.records" id="createSalaryBudgetTable">
               <tr>
                 <td>
                 	<s:property value="%{#createSalaryBudgetTable.name}"/>
@@ -102,7 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td>
 	                <s:property value="%{#createSalaryBudgetTable.issueNumber}"/>
 	                <br/>
-	                <a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#request.createSalaryBudgetTable.budgetId}"/>">查看</a>
+	                <a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">查看</a>
                 </td>
                 <td>
                 	
@@ -138,7 +159,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td>
                   <s:set value="%{#createSalaryBudgetTable.budgetId}" var="budgetId"></s:set>
                   <a href="#info-for-check" onclick="findToIdSalayBudegTable('${budgetId}')" data-toggle="modal">修改</a>
-                  <a href="deleteSalayBudgetTable?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}" />&enterpriseId=<s:property value="%{#session.enterprise.enterpriseId}" />">删除</a><br>
+                  <a href="deleteSalayBudgetTable?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}" />&createSalaryBudgetTable.salaryDate=<s:property value="%{#createSalaryBudgetTable.salaryDate}" />&enterpriseId=<s:property value="%{#session.enterprise.enterpriseId}" />">删除</a><br>
                   <a href="viewAllEmployeesSalaryDetail?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">查看</a>
                   <a href="downloadSalaryWithSumOfCategoriesReport?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}" />">下载</a>
                 </td>
@@ -147,6 +168,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </tbody>
           
           </table>
+          		<s:form action="viewSalaryBudgetTableSummary" method="post" id="myform">
+					<s:hidden  name="page"/>
+					<s:hidden  name="createSalaryBudgetTable.name"></s:hidden>
+					<s:hidden  name="createSalaryBudgetTable.salaryDate"></s:hidden>
+					<div class="pagination">
+						<%@ include file="/share/fenye.jsp" %>
+					</div>
+				</s:form>
         </div>
   
       </div>
@@ -171,7 +200,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <div class="row-fluid">
                 <div class="input-container">
                   <label>名称</label>
-                  <s:textfield name="createSalaryBudgetTable.name" />
+                  <s:textfield name="createSalaryBudgetTable.name" id="budname"/>
                 </div>
 
                 <div class="input-container">
@@ -181,14 +210,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                 <div class="input-container" >
                   <label>生成哪月工资？</label>
-                  <input type="text" id="d11"	onfocus="WdatePicker({skin:'whyGreen'})"  onblur="ajaxfindBeforeCurrentDateTemplate()" 
-                         name="createSalaryBudgetTable.salaryDate"  class="Wdate"/>
-                </div>
-                <div class="input-container">
-                  <label>选择与其他工资表合并计税</label>
-                  <select id="salaryTable" name="createSalaryBudgetTable.chooseTax" >
-                    <option value="0">--请选择--</option>
-                  </select>
+                  <input type="text" id="d11"	onfocus="WdatePicker({skin:'whyGreen'})"
+                         name="createSalaryBudgetTable.salaryDate"  class="Wdate" id="saldate"/>
                 </div>
                 <div class="input-container">
                   <label>其它方式服务费</label>
