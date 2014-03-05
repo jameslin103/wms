@@ -1,6 +1,8 @@
 package junit.test.company;
 
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -8,7 +10,9 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.company.EnterpriseContract;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.user.User;
 import cn.fm.service.company.EnterpriseService;
@@ -45,19 +49,66 @@ public class EnterpriseServiceTest {
 	
 	
 	@Test
-	
 	public void findEnterprise()
 	{
 		
-	Enterprise	enterprise=enterpriseService.find(17);
+	//Enterprise	enterprise=enterpriseService.find(17);
+		User user=new User();
+		Enterprise	enterprise=new Enterprise();
+		PageView<Enterprise>  pageView=enterpriseService.getAllEnterprise(10, 1,user,enterprise);
+		
+		for (Enterprise ent: pageView.getRecords()) {
+			
+			EnterpriseContract con=(EnterpriseContract)enterpriseService.getEndContractDateDay(ent.getEnterpriseId());
+			System.out.println(ent.getEnterpriseId()+"------"+ent.getFullName()+"天数="+con.getEnterprise().getToDay()+"合同结束日期："+con.getEndContractDate());
+			
+			
+			
+			//System.out.println(con.getEndContractDate());
+			
+		}
 	
-	
-	System.out.println(enterprise.getUser().iterator().next().getId());
-	System.out.println(enterprise.getFullName());
 	
 	
 	
 	}
+//	public void calculateMaxAndMin(Enterprise enterprise)
+//	{
+//		
+//		Double max=0d;
+//		Double  min=0d;
+//		Set<EnterpriseContract>  content=enterprise.getEnterpriseContract();
+//		
+//		max=Collections.max(content,new Comparator<EnterpriseContract>() {
+//			@Override
+//			public int compare(EnterpriseContract con, EnterpriseContract con2) {
+//				if(con.getStatus()>con2.getStatus())
+//				{
+//					return 1;
+//				}else{
+//					return -1;
+//				}
+//				
+//			}}).getStatus();
+//		min=Collections.min(content,new Comparator<EnterpriseContract>() {
+//			@Override
+//			public int compare(EnterpriseContract con, EnterpriseContract con2) {
+//				if(con.getStatus()>con2.getStatus())
+//				{
+//					return 1;
+//				}else{
+//					return -1;
+//				}
+//				
+//			}}).getStatus();
+//		
+//		
+//		
+//		
+//	}	
+	
+	
+	
 	@Test
 	public void deleteEnterprise(){
 		Enterprise	enterprise=enterpriseService.find(13);
@@ -70,7 +121,6 @@ public class EnterpriseServiceTest {
 			
 			
 		}
-		enterpriseService.delete(enterprise);
 		
 	}
 	

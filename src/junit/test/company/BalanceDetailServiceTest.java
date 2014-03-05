@@ -114,6 +114,13 @@ public class BalanceDetailServiceTest {
 	@Test
 	public void save1(){
 		System.out.println("====");
+		BigDecimal tax=new BigDecimal("4.5");
+		BigDecimal proportion = new BigDecimal(100);
+		BigDecimal resultsTax = tax.divide(proportion, 3,BigDecimal.ROUND_HALF_UP);
+	
+		System.out.println(resultsTax);
+		
+		
 	}
 	
 }

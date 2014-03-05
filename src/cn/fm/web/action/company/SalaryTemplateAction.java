@@ -10,6 +10,7 @@ import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseProjects;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.company.CustomBonusServices;
+import cn.fm.service.company.EnterpriseProjectsService;
 import cn.fm.service.company.EnterpriseService;
 import cn.fm.service.salary.SalaryTemplateService;
 import cn.fm.utils.StringUtil;
@@ -27,6 +28,8 @@ public class SalaryTemplateAction extends BaseAction {
 	private CustomBonusServices   customBonusService;
 	@Resource 
 	private EnterpriseService   enterpriseService;
+	@Resource 
+	private EnterpriseProjectsService   enterpriseProjectsService;
 	
 	private EnterpriseProjects   enterpriseProjects;
 	
@@ -93,8 +96,9 @@ public class SalaryTemplateAction extends BaseAction {
 	{
 		Enterprise enterprise=WebUtil.getEnterprise(request);
 		if(enterprise==null)return INPUT;
-		if(salaryTemplate==null || StringUtil.isEmpty(enterpriseProjects.getProjects()))return INPUT;
+		if(salaryTemplate==null || StringUtil.isEmpty(enterpriseProjects.getId()))return INPUT;
 		salaryTemplate.setEnterprise(enterprise);
+		enterpriseProjects=enterpriseProjectsService.getByIdEnterpriseProjects(enterpriseProjects.getId());
 		salaryTemplate.setEnterpriseProjects(enterpriseProjects);
 		salaryTemplate.setTemplateName(enterpriseProjects.getProjects());
 		salaryTemplateService.save(salaryTemplate);

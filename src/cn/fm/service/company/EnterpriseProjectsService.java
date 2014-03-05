@@ -14,6 +14,8 @@ public void save(EnterpriseProjects enterpriseProjects);
 	public void updateEnterpriseContract(EnterpriseProjects enterpriseProjects);
 	
 	public EnterpriseProjects  getByIdEnterpriseProjects(String id);
+
+	public void deleteEnterpriseProjects(String id);
 	
 	
 	

@@ -1,6 +1,5 @@
 package cn.fm.bean.company;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -29,12 +28,11 @@ import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
 import cn.fm.bean.user.User;
 
-@SuppressWarnings("serial")
 @Entity
 /**
  * 企业实体类
  */
-public class Enterprise implements Serializable{
+public class Enterprise{
 	
 	private  Integer  enterpriseId;
 	/*简称*/
@@ -102,6 +100,8 @@ public class Enterprise implements Serializable{
 	/*审核人*/
 	private String audituser;
 	
+	/*合同到期天数*/
+	private Integer toDay;
 	
 	private Set<EnterpriseEmployees> enterpriseEmployees=new HashSet<EnterpriseEmployees>();
 	
@@ -268,7 +268,13 @@ public class Enterprise implements Serializable{
 	public void setCount(long count) {
 		this.count = count;
 	}
-
+	@Transient
+	public Integer getToDay() {
+		return toDay;
+	}
+	public void setToDay(Integer toDay) {
+		this.toDay = toDay;
+	}
 	@OneToMany(cascade ={CascadeType.ALL},fetch=FetchType.LAZY, mappedBy = "enterprise")
 	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<CreateSalaryBudgetTable> getCreateSalaryBugetTables() {
@@ -363,7 +369,7 @@ public class Enterprise implements Serializable{
 		this.reductionTotal = reductionTotal;
 	}
 	
-	@OneToMany(cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY, mappedBy = "enterprise")
+	@OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.LAZY, mappedBy = "enterprise")
 	public Set<BalanceDetail> getBalanceDetail(){
 		return balanceDetail;
 	}
@@ -382,7 +388,7 @@ public class Enterprise implements Serializable{
 			this.balanceDetail.remove(balanceDetail);
 
 	}
-	@OneToMany(cascade={CascadeType.REFRESH},fetch = FetchType.LAZY, mappedBy = "enterprise")
+	@OneToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY, mappedBy = "enterprise")
 	public Set<EmployeesSalaryDetail> getEmployeesSalaryDetails() {
 		return employeesSalaryDetails;
 	}
@@ -390,7 +396,7 @@ public class Enterprise implements Serializable{
 			Set<EmployeesSalaryDetail> employeesSalaryDetails) {
 		this.employeesSalaryDetails = employeesSalaryDetails;
 	}
-	@ManyToOne(cascade=CascadeType.REFRESH,fetch=FetchType.LAZY,optional=true)
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY,optional=true)
 	@JoinColumn(name="insurancesbase_id")
 	@NotFound(action=NotFoundAction.IGNORE)
 	public InsurancesBaseSettings getInsurancesBaseSettings() {
@@ -400,7 +406,7 @@ public class Enterprise implements Serializable{
 			InsurancesBaseSettings insurancesBaseSettings) {
 		this.insurancesBaseSettings = insurancesBaseSettings;
 	}
-	@ManyToOne(cascade=CascadeType.REFRESH,fetch=FetchType.LAZY,optional=true)
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY,optional=true)
 	@JoinColumn(name="tax_id")
 	@NotFound(action=NotFoundAction.IGNORE)
 	public InsurancesTax getInsurancesTax() {
@@ -458,7 +464,7 @@ public class Enterprise implements Serializable{
 		this.enterpriseContract.add(enterpriseContract);
 		
 	}
-	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.PERSIST},fetch=FetchType.LAZY,mappedBy="enterprise")
+	@OneToMany(cascade={CascadeType.ALL,CascadeType.PERSIST},fetch=FetchType.LAZY,mappedBy="enterprise")
 	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<CustomBonus> getCustomBonus() {
 		return customBonus;

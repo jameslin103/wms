@@ -514,7 +514,7 @@ public class EnterpriseEmployees{
 	public void setWhetherGinsengCount(long whetherGinsengCount) {
 		this.whetherGinsengCount = whetherGinsengCount;
 	}
-	@OneToMany(cascade={CascadeType.REFRESH},fetch=FetchType.LAZY,mappedBy="enterpriseEmployees")
+	@OneToMany(cascade={CascadeType.ALL},fetch=FetchType.LAZY,mappedBy="enterpriseEmployees")
 	@NotFound(action=NotFoundAction.IGNORE)
 	public Set<EmployeesSalaryDetail> getEmployeesSalaryDetails() {
 		return employeesSalaryDetails;

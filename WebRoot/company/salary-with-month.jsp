@@ -119,6 +119,7 @@
 												<a href="viewSalaryBudgetTableSummary?enterpriseId=<s:property value="%{#request.session.enterprise.enterpriseId}"/>
 													&budgetId=<s:property value="#value.createSalaryBudgetTable.budgetId"/>">
 													<s:if test="#value.date.substring(5,7)==#month">
+							
 														<li>
 															<s:if test="#value.createSalaryBudgetTable.name.length()>15">
 																<s:property value="#value.createSalaryBudgetTable.name.substring(0,15)+'...'"/>

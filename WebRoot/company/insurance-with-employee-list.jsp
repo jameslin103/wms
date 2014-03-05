@@ -1,9 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+	String basePath = request.getScheme() + "://"+ request.getServerName() + ":" + request.getServerPort()+ path + "/";
 %>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -30,45 +28,13 @@
 					</h2>
 				</div>
 			</div>
-
-
 			<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
-							<s:iterator value="#session.menuList" id="menu">
-								<s:if test="#menu.url=='viewEnterpriseDetailed'">
-									<li >
-										<a href="viewEnterpriseDetailed"  ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewEnterpriseEmployees'">
-									<li >
-										<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewSalaryBudgetTable'">
-									<li >
-										<a href="viewSalaryBudgetTable" >
-											<s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewInsuranceWithMonth'">
-									<li class="active">
-										<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewBalanceDetail'">
-									<li >
-										<a href="viewBalanceDetail" ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-							</s:iterator>
+							<li class="active">
+								<a href="viewInsuranceWithMonth" >增减员与参保明细表</a>
+							</li>
 					</ul>
 						
 						<s:form action="insuranceWithEmployeeList" method="post" id="myforminsurance">

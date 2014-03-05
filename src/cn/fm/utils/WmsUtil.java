@@ -1,5 +1,7 @@
 package cn.fm.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -23,5 +25,15 @@ public class WmsUtil{
 		for (int i = 0; i < 10; i++) {
 			System.out.println(getId());
 		}
+		
+	}
+	public static String  getURLDecoder(String str){
+		
+		try {
+			str=URLDecoder.decode(str.trim(),"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			return "";
+		}
+		return str;
 	}
 }

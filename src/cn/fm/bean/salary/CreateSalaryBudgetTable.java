@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -34,6 +35,10 @@ import cn.fm.bean.user.User;
  */
 @SuppressWarnings("serial")
 @Entity
+
+
+
+@JsonIgnoreProperties(value={ "enterprise", "balanceDetail", "user","salaryTemplate","employeesSalaryDetail" })
 public class CreateSalaryBudgetTable implements Serializable {
 
 	

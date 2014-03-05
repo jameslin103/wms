@@ -32,7 +32,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 */
 	@SuppressWarnings( { "unchecked", "static-access" })
 	public List<String> saveEmployeesSalaryDetail(File file, String fileName,int number, 
-			int readRows,EmployeesSalaryDetail employeesSalaryDetail, Integer templateId,Integer enterpriseId) {
+			int readRows,EmployeesSalaryDetail employeesSalaryDetail, SalaryTemplate salaryTemplate,Integer enterpriseId) {
 		List<String> employeesName = new ArrayList<String>();
 		List<EmployeesSalaryDetail> detailList = new ArrayList<EmployeesSalaryDetail>();
 		List<EnterpriseEmployees> enterpriseEmployeesListPO = getAllEnterpriseEmployees(enterpriseId);
@@ -58,10 +58,12 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 					// 记录封装每个字段
 					EmployeesSalaryDetail employeesSalaryDetailBySalaryDetail = recordEnterpriseEmployeesBySalaryDetail(enterpriseEmployeesListPO, data, number);
 					// 计算工资
-					EmployeesSalaryDetail employeesSalaryDetailVO = structureEmployeesSalaryDetail(employeesSalaryDetailBySalaryDetail, templateId);
+					EmployeesSalaryDetail employeesSalaryDetailVO = structureEmployeesSalaryDetail(employeesSalaryDetailBySalaryDetail, salaryTemplate);
 					employeesSalaryDetailVO.setSalaryDate(employeesSalaryDetail.getSalaryDate());
 					employeesSalaryDetailVO.setEnterprise(employeesSalaryDetail.getEnterprise());
-					employeesSalaryDetailVO.setBudgettableId(employeesSalaryDetail.getBudgettableId());detailList.add(employeesSalaryDetailVO);
+					employeesSalaryDetailVO.setBudgettableId(employeesSalaryDetail.getBudgettableId());
+					employeesSalaryDetailVO.setServiceCharge(employeesSalaryDetail.getServiceCharge());
+					detailList.add(employeesSalaryDetailVO);
 				}
 
 			}
@@ -71,7 +73,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			employeesName.add("文件出错!!");
+			employeesName.add("文件格式出错!!");
 
 		}
 		return employeesName;
@@ -83,7 +85,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * 
 	 * @return
 	 */
-	public List<String> duplicateData(List list) {
+	public List<String> duplicateData(List  list) {
 
 		if (list == null || list.size() == 0)
 			return null;
@@ -168,14 +170,11 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * 
 	 * @return EmployeesSalaryDetail 2013-10-13
 	 */
-	public EmployeesSalaryDetail refactoringEmployeesSalaryDetailDate(
-			String[] fileDate) {
+	public EmployeesSalaryDetail refactoringEmployeesSalaryDetailDate(String[] fileDate) {
+		
 		EmployeesSalaryDetail salaryDetailExcelDate = new EmployeesSalaryDetail();
-
-		salaryDetailExcelDate.setEmployeesName(fileDate[1] == null ? ""
-				: fileDate[1].toString());
-		salaryDetailExcelDate.setCardNumber(fileDate[2] == null ? ""
-				: fileDate[2].toString());
+		salaryDetailExcelDate.setEmployeesName(fileDate[1] == null ? "": fileDate[1].toString());
+		salaryDetailExcelDate.setCardNumber(fileDate[2] == null ? "": fileDate[2].toString());
 
 		return salaryDetailExcelDate;
 	}
@@ -185,7 +184,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * @date 2013-09-01
 	 * @return EmployeesSalaryDetail 计算工资，
 	 */
-	public EmployeesSalaryDetail structureEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail, Integer templateId) {
+	public EmployeesSalaryDetail structureEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail, SalaryTemplate salaryTemplate) {
 		BigDecimal subsidies =new BigDecimal("0.00"); // 补贴
 		BigDecimal wage=new BigDecimal("0.00"); // 基本工资
 		BigDecimal enterpriseSubtotal=new BigDecimal("0.00"); // 企业小计
@@ -217,12 +216,11 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			employeesSalaryDetailVO.setEnterpriseEmployees(employeesSalaryDetail.getEnterpriseEmployees());
 			employeesSalaryDetailVO.setNote(employeesSalaryDetail.getNote());
 			employeesSalaryDetailVO.setBank(employeesSalaryDetail.getBank());
-			employeesSalaryDetailVO.setServiceCharge(employeesSalaryDetail.getServiceCharge());
 			employeesSalaryDetailVO.setBankCardNumber(employeesSalaryDetail.getBankCardNumber());
 			employeesSalaryDetailVO.setAccident(employeesSalaryDetail.getAccident());
 
 			// 计算五险一金规则
-			SalaryTemplate salaryTemplate = getIsFiveBase(templateId);
+			
 			EmployeesSalaryDetail employeesSalaryDetailInsurances = new EmployeesSalaryDetail();
 
 			if (salaryTemplate != null && salaryTemplate.getStatus() == 1 && salaryTemplate.getFiveInsurances() == 1) {
@@ -304,14 +302,13 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 			employeesSalaryDetailVO.setBeforeSalary(beforeSalary.setScale(2,BigDecimal.ROUND_HALF_DOWN));
 
 			// 合计(企业应付)=应发工资+(企业)小计+服务费+意外险+特殊补贴
-			aggregate = shouldPayTotal.add(employeesSalaryDetail.getServiceCharge() == null ? 
-						new BigDecimal("0.00"): employeesSalaryDetail.getServiceCharge())
+		
+				aggregate = shouldPayTotal.add(employeesSalaryDetailVO.getServiceCharge() == null ? new BigDecimal("0.00"): employeesSalaryDetailVO.getServiceCharge())
 						.add(enterpriseSubtotal)
-					    .add(employeesSalaryDetailVO.getAccident()==null?
-					    new BigDecimal("0.00"):employeesSalaryDetailVO.getAccident())
+					    .add(employeesSalaryDetailVO.getAccident()==null? new BigDecimal("0.00"):employeesSalaryDetailVO.getAccident())
 					    .add(specialOldSubsidies);
 						
-						
+				
 			
 			employeesSalaryDetailVO.setAggregate(aggregate.setScale(2, BigDecimal.ROUND_HALF_DOWN));
 
@@ -719,9 +716,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * @return
 	 */
 	public SalaryTemplate getIsFiveBase(Integer templateId) {
-		return (SalaryTemplate) em.createQuery(
-				"select s from SalaryTemplate s where templateId=?")
-				.setParameter(1, templateId).getSingleResult();
+		return (SalaryTemplate) em.createQuery("select s from SalaryTemplate s where templateId=?").setParameter(1, templateId).getSingleResult();
 
 	}
 
@@ -730,12 +725,11 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * 
 	 * @return
 	 */
-	public TaxOfPerson getTaxOfPerson() {
+	public TaxOfPerson getTaxOfPerson(){
 		try {
 			Query query = em.createQuery("select t from TaxOfPerson t ");
 			return (TaxOfPerson) query.getSingleResult();
 		} catch (Exception e) {
-
 			e.printStackTrace();
 			return null;
 		}
@@ -749,44 +743,31 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * @date 2013-09-01 上传的员工进行匹配
 	 */
 
-	public List<String> isExitUploadEnterpriseEmployees(
-			List<EnterpriseEmployees> enterpriseEmployeesListPO,
-			EmployeesSalaryDetail employeesSalaryDetailVO) {
+	public List<String> isExitUploadEnterpriseEmployees(List<EnterpriseEmployees> enterpriseEmployeesListPO,EmployeesSalaryDetail employeesSalaryDetailVO) {
 
 		List<String> employeesName = new ArrayList<String>();
-		int count = 0; // 记录存在几个相同名字
-		int cardnumber = 0; // 记录存在几个相同身份证
-		boolean falg = false; // 记录是否匹配
-		int templCar = 0; // 记录总共多少个相同身份证号码
+	
+		String employeName="";
 		boolean isCar = false;
-
-		String detailName = employeesSalaryDetailVO.getEmployeesName();
+		int isExitCount=0;
+		
 		String detailCar = employeesSalaryDetailVO.getCardNumber();
 
 		for (EnterpriseEmployees enterpriseEmployees : enterpriseEmployeesListPO) {
-			String empCard = enterpriseEmployees.getCardNumber() == null ? ""
-					: enterpriseEmployees.getCardNumber();
-			String employeName = enterpriseEmployees.getEmployeesName() == null ? "": enterpriseEmployees.getEmployeesName();
-			if (detailName.equals(employeName)) {
-				falg = true;
-				count++;
-				if (count > 0) {
-					if (empCard.equals(detailCar)) {
-						cardnumber++;
-						if (cardnumber > 1) {
-							templCar++;
-							isCar = true;
-						}
-					}
-				}
+			String empCard = enterpriseEmployees.getCardNumber() == null ? "": enterpriseEmployees.getCardNumber();
+			employeName = enterpriseEmployees.getEmployeesName() == null ? "": enterpriseEmployees.getEmployeesName();
+			if (empCard.equals(detailCar))
+			{
+					isCar = true;
+					isExitCount++;
 			}
 		}
-		if (falg == false) {
-			employeesName.add("数据库无法匹配不存在此员工: " + detailName);
+		
+		if (isCar == false) {
+			employeesName.add("数据库无法匹配不存在此员工:"+employeName+"请核实身份证?");
 		}
-		if (isCar == true) {
-			employeesName.add("数据库存在：" + count + "个: " + detailName + " 身份证号:"
-					+ detailCar + " 相同 : " + templCar + " 个");
+		if(isExitCount>1){
+			employeesName.add("数据库存在重复员工:"+employeName+"请核实身份证?");
 		}
 		return employeesName;
 	}
@@ -798,9 +779,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * @param employeesSalaryDetailVO
 	 * @return
 	 */
-	public EmployeesSalaryDetail recordEnterpriseEmployeesBySalaryDetail(
-			List<EnterpriseEmployees> enterpriseEmployeesListPO,
-			String[] fileDate, int number) {
+	public EmployeesSalaryDetail recordEnterpriseEmployeesBySalaryDetail(List<EnterpriseEmployees> enterpriseEmployeesListPO,String[] fileDate, int number) {
 
 		Double bonusesTotal = 0.0;
 		String carNumber = null; // 身份证
@@ -808,45 +787,30 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		EmployeesSalaryDetail employeesSalaryDetail = new EmployeesSalaryDetail();
 		carNumber = fileDate[2] == null ? "" : fileDate[2].toString();
 		String note = fileDate[4] == null ? "" : fileDate[4].toString();
-		if (!StringUtil.isEmpty(fileDate[1].toString())) {
+		
+		if (!StringUtil.isEmpty(carNumber)) {
 			for (EnterpriseEmployees emp : enterpriseEmployeesListPO) {
-				if (fileDate[1].equals(emp.getEmployeesName())) {
-					if (StringUtil.isEmpty(emp.getCardNumber())) {
-
-						if (StringUtil.isEmpty(carNumber))
-							return null;
-						if (!StringUtil.isEmpty(carNumber)) {
-							EnterpriseEmployees tempEmployees = new EnterpriseEmployees();
-							tempEmployees.setCardNumber(carNumber);
-							tempEmployees.setEmployeesId(emp.getEmployeesId());
-							// 更新员工的身份证号码
-							updateEmployeesCarNumber(tempEmployees);
-						}
-
-					}
-					employeesSalaryDetail.setWage(new BigDecimal(fileDate[3].equals("")?"0.00":fileDate[3].toString()));
-					employeesSalaryDetail.setCardNumber(carNumber.trim());
-					employeesSalaryDetail.setEnterpriseEmployees(emp);
-					employeesSalaryDetail.setEmployeesName(emp.getEmployeesName().trim());
-					employeesSalaryDetail.setBankCardNumber(emp.getBankCardNumber().trim());
-					employeesSalaryDetail.setBank(emp.getBank().trim());
-					employeesSalaryDetail.setNote(note.trim());
-					employeesSalaryDetail.setAccident(emp.getAccident());
+					if (carNumber.equals(emp.getCardNumber())) {
+					
+						employeesSalaryDetail.setWage(new BigDecimal(fileDate[3].equals("")?"0.00":fileDate[3].toString()));
+						employeesSalaryDetail.setCardNumber(carNumber.trim());
+						employeesSalaryDetail.setEnterpriseEmployees(emp);
+						employeesSalaryDetail.setEmployeesName(emp.getEmployeesName().trim());
+						employeesSalaryDetail.setBankCardNumber(emp.getBankCardNumber().trim());
+						employeesSalaryDetail.setBank(emp.getBank().trim());
+						employeesSalaryDetail.setNote(note.trim());
+						employeesSalaryDetail.setAccident(emp.getAccident());
 
 					// 服务费
-					employeesSalaryDetail.setServiceCharge(new BigDecimal(emp
-							.getServiceCost() == null ? "0.0" : emp
-							.getServiceCost().toString()));
+					//employeesSalaryDetail.setServiceCharge(new BigDecimal(emp
+						//	.getServiceCost() == null ? "0.0" : emp
+						//	.getServiceCost().toString()));
 
 					// 大病统筹
-					employeesSalaryDetail
-							.setMorbidityStatistics(emp.getSeriousDisease() == null ? new BigDecimal(
-									"0.0"): emp.getSeriousDisease());
+					employeesSalaryDetail.setMorbidityStatistics(emp.getSeriousDisease() == null ? new BigDecimal("0.0"): emp.getSeriousDisease());
 
 					// 备注
-					employeesSalaryDetail
-							.setNote(fileDate[4].toString() == null ? "0.0"
-									: fileDate[4].toString());
+					employeesSalaryDetail.setNote(fileDate[4].toString() == null ? "0.0": fileDate[4].toString());
 
 					// 统计excel导入各种奖金
 					if (number > 5) {
@@ -859,34 +823,16 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 
 						}
 					}
-					employeesSalaryDetail.setBonus(new BigDecimal(
-							(bonusesTotal == null ? 0.00 : bonusesTotal
-									.doubleValue())));
+					employeesSalaryDetail.setBonus(new BigDecimal((bonusesTotal == null ? 0.00 : bonusesTotal.doubleValue())));
 
 					// 电脑补贴
 					employeesSalaryDetail.setSubsidies(new BigDecimal(0.00));
 				}
 			}
-
+			
 		}
 
 		return employeesSalaryDetail;
-	}
-
-	/**
-	 * 更新员工的身份证号码
-	 */
-	public void updateEmployeesCarNumber(EnterpriseEmployees enterpriseEmployees) {
-		try {
-			em.createQuery(
-							"update EnterpriseEmployees set cardNumber=?1 where employeesId=?2")
-					.setParameter(1, enterpriseEmployees.getCardNumber())
-					.setParameter(2, enterpriseEmployees.getEmployeesId())
-					.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	/**
@@ -1127,8 +1073,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		Query query = null;
 		try {
 
-			query = em
-					.createQuery("select sum(e.serviceCharge) from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");
+			query = em.createQuery("select sum(e.serviceCharge) from EmployeesSalaryDetail e where e.enterprise.enterpriseId=?1 and e.budgettableId=?2");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1298,8 +1243,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 */
 	public InsurancesTax getCustomBonus() {
 		try {
-			return (InsurancesTax) em.createQuery(
-					"select t from InsurancesTax t ").getSingleResult();
+			return (InsurancesTax) em.createQuery("select t from InsurancesTax t ").getSingleResult();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -1326,11 +1270,9 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<EnterpriseEmployees> getAllEnterpriseEmployees(
-			Integer enterpriseId) {
+	public List<EnterpriseEmployees> getAllEnterpriseEmployees(Integer enterpriseId) {
 		try {
-			Query query = em
-					.createQuery("select e from EnterpriseEmployees e where e.enterprise.enterpriseId=?1  and e.departure=0 and e.pseudoDelete=0 ");
+			Query query = em.createQuery("select e from EnterpriseEmployees e where 1=1 and e.enterprise.enterpriseId=?1  and e.departure=0 and e.pseudoDelete=0 ");
 			return query.setParameter(1, enterpriseId).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -1353,8 +1295,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<EmployeesSalaryDetail> getBankEmployeesSalaryDetail(
-			Integer budgetId) {
+	public List<EmployeesSalaryDetail> getBankEmployeesSalaryDetail(Integer budgetId) {
 		return em.createQuery("select e from EmployeesSalaryDetail e where e.budgettableId=?1 order by e.salaryId desc ")
 				.setParameter(1, budgetId).getResultList();
 	}
@@ -1471,7 +1412,7 @@ public class EmployeesSalaryDetailServiceImpl extends DaoSupport<EmployeesSalary
 		
 		return employeesSalaryDetailVO;
 	}
-	
+
 	
 
 }

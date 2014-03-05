@@ -5,9 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.fm.bean.PageView;
+import cn.fm.bean.QueryResult;
+import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.service.base.DaoSupport;
 import cn.fm.service.salary.BalanceDetailService;
+import cn.fm.utils.StringUtil;
 
 @Service @Transactional
 public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implements BalanceDetailService {
@@ -60,9 +63,35 @@ public class BalanceDetailServiceImpl extends DaoSupport<BalanceDetail>	implemen
 		  .setParameter(1, budgetId).executeUpdate();
 		
 	}
-	public PageView<BalanceDetail> getAllEnterpriseBalanceDetail()
+	public PageView<BalanceDetail> getAllEnterpriseBalanceDetail(int maxresult, int page,Enterprise enterprsie)
 	{
+		String fullName="";
+		if(enterprsie!=null && !StringUtil.isEmpty(enterprsie.getFullName())){
+			fullName=enterprsie.getFullName();
+		}
+		String sql=" select b.enterprise.enterpriseId, sum(b.balance) from BalanceDetail b where 1=1  group by b.enterprise.enterpriseId order by b.enterprise.enterpriseId desc ";
+		String countSql="select  b.enterprise.enterpriseId, sum(b.balance) from BalanceDetail b where 1=1 group by b.enterprise.enterpriseId";
 		
+		PageView<BalanceDetail> pageView = new PageView<BalanceDetail>(maxresult,page);
+		QueryResult<BalanceDetail> qr = new QueryResult<BalanceDetail>();
+		Query query = em.createQuery(sql);
+	
+		if(pageView.getFirstResult()!=-1 && pageView.getMaxresult()!=-1)
+			query.setFirstResult(pageView.getFirstResult()).setMaxResults(pageView.getMaxresult());
+		qr.setResultlist(query.getResultList());
+		
+		query = em.createQuery(countSql);
+		List list=query.getResultList();
+		if(list!=null && list.size()!=0){
+			qr.setTotalrecord(list.size());
+		}else{
+			qr.setTotalrecord(0l);
+		}
+		//qr.setTotalrecord((Long)query.getSingleResult());
+		pageView.setQueryResult(qr);
+		
+		return pageView;
+
 		
 		
 	}

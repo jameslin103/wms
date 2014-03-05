@@ -20,6 +20,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<style>
   		legend{ text-align:center; width:40%\9} 
    </style>
+   <script>
+   	$(function(){
+   		$("#fullname").blur(function (){
+			var fullname=$("#fullname").val();
+			if(fullname=="")
+			{
+				$("#errorFullName").text("企业名称必填项");
+				return;
+			}else{
+				$("#errorFullName").text("");
+				$("#errorFullName").text("*");
+				
+				$.getJSON("isExitFullname",{"enterprise.fullName":encodeURI(fullname,"utf-8")}).success(function(data)
+				{
+					if(data>1){
+						$("#errorFullName").text("此企业已存在!");
+					}
+			   
+			    });
+				
+			 }
+				
+		});	
+   	
+   	})
+   
+   </script>
+   
+   
+   
   </head>
   
   <body style="background-color:#F1EEEE">
@@ -36,7 +66,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <tbody>
                 <tr>
                   <td class="bgc">企业名称</td>
-                  <td><input type="text" name="enterprise.fullName"/></td>
+                  <td><input type="text" name="enterprise.fullName" id="fullname"/>
+                  	<span style="color:red;" id="errorFullName">*</span>
+                  </td>
                   <td class="bgc">合同编号</td>
                   <td><input type="text" name="enterprise.contatId"/></td>
                 </tr>
@@ -106,9 +138,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </tr>
                 <tr>
                	 	<td>状态?</td>
-	                <td colspan="3">
+	                <td>
 	                	<input type="radio" name="enterprise.status" value="0" checked="checked"/>合约中，
 						<input type="radio" name="enterprise.status" value="1"/>暂停
+	                </td>
+	                <td>备注:</td>
+	                <td>
+	                	<input type="text" name="enterprise.note" maxlength="30"/>
 	                </td>
                 </tr>
               </tbody>

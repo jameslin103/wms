@@ -85,7 +85,7 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
 			}
 		});
 		String json = gb.create().toJson(obj);
-		System.out.println(json);
+		//System.out.println(json);
 		return json;
 	}
 }

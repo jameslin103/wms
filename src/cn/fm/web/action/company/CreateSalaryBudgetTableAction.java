@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
+
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.bean.user.User;
@@ -99,6 +102,11 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 				createSalaryBudgetTable.setTemplateName(salaryTemplate.getTemplateName());
 				createSalaryBudgetTable.setSalaryTemplate(salaryTemplate);
 				try {
+					BalanceDetail balanceDetail=new BalanceDetail();
+					balanceDetail.setCreateSalaryBudgetTable(createSalaryBudgetTable);
+					balanceDetail.setNote(createSalaryBudgetTable.getNote());
+					balanceDetail.setEnterprise(enterprise);
+					createSalaryBudgetTable.setBalanceDetail(balanceDetail);
 					createSalaryBudgetTableService.save(createSalaryBudgetTable);
 				} catch (Exception e) {
 						e.printStackTrace();
@@ -138,7 +146,7 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		
 	}
 	public String returnToModifyBudgetTable(){
-		createSalaryBudgetTable=createSalaryBudgetTableService.find(budgetId);
+		createSalaryBudgetTable=createSalaryBudgetTableService.find(createSalaryBudgetTable.getBudgetId());
 		request.setAttribute("createSalaryBudgetTable",createSalaryBudgetTable );
 		return SUCCESS;
 	}
@@ -212,7 +220,25 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 	    	return SUCCESS;
 	    	
 	    }
-		
+		public String seacher(){
+			
+			Enterprise enterprise=WebUtil.getEnterprise(request);
+	    	if(enterpriseId!=null && enterpriseId!=0){
+	    		if(enterprise!=null ){
+	    			request.removeAttribute("enterprise");
+		    	}
+	    		enterprise=enterpriseService.find(enterpriseId);
+	    		request.getSession().setAttribute("enterprise", enterprise);
+	    	}
+	    	PageView<CreateSalaryBudgetTable>  pageView=createSalaryBudgetTableService.getAllCreateSalaryBudgetTable(10,this.getPage(),enterprise, createSalaryBudgetTable,null);
+			
+	    	//responseJson(pageView);
+	    	String s1 = JSONArray.fromObject(pageView).toString();
+	    	request.setAttribute("s1", s1);
+	    	
+	    	return SUCCESS;
+			
+		}
 		public String findToIdSalayBudegTable()
 		{
 			
@@ -227,13 +253,6 @@ public class CreateSalaryBudgetTableAction extends BaseAction {
 		public String updateSalayBudgetTable()
 		{
 			
-			BigDecimal maketotal=createSalaryBudgetTable.getMakeTotal()==null?new BigDecimal("0.00"):createSalaryBudgetTable.getMakeTotal();
-			BigDecimal serviceHeTotal=createSalaryBudgetTable.getServiceHeTotal()==null?new BigDecimal("0.00"):createSalaryBudgetTable.getServiceHeTotal();
-			BigDecimal serviceTotal=createSalaryBudgetTable.getServiceTotal()==null?new BigDecimal("0.00"):createSalaryBudgetTable.getServiceTotal();
-			BigDecimal summaketotal=serviceHeTotal.add(maketotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
-			BigDecimal sumServiceTotal=serviceTotal.add(serviceHeTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
-			createSalaryBudgetTable.setMakeTotal(summaketotal);
-			createSalaryBudgetTable.setServiceTotal(sumServiceTotal);
 			createSalaryBudgetTableService.updateSalaryBudgetTable(createSalaryBudgetTable);
 			return SUCCESS;
 		}

@@ -1,11 +1,14 @@
 package cn.fm.web.action.company;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.annotation.Resource;
+import com.opensymphony.oscache.util.StringUtil;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseContract;
@@ -21,6 +24,7 @@ import cn.fm.service.company.InsurancesTaxService;
 import cn.fm.service.user.UserService;
 import cn.fm.utils.DateUtil;
 import cn.fm.utils.WebUtil;
+import cn.fm.utils.WmsUtil;
 import cn.fm.web.action.BaseAction;
 
 public class EnterpriseAction extends BaseAction{
@@ -54,7 +58,7 @@ public class EnterpriseAction extends BaseAction{
 	
 	private EnterpriseEmployees  enterpriseEmployees=new EnterpriseEmployees();
 	
-	private Integer				userId;
+	private String				userId;
 	
 	private boolean      isSystemAdmin;
 	
@@ -62,9 +66,11 @@ public class EnterpriseAction extends BaseAction{
 	
 	private Long  isExitFullName;
 	
-	private User   user;
+	private User   user=new User();
 	
+	private String fullName;
 	
+	private String contatId;
 
 	/**
 	 * 分配负责人
@@ -109,7 +115,13 @@ public class EnterpriseAction extends BaseAction{
 
 		return SUCCESS;
 	}
-	
+	public String deteleEnterprise()
+	{
+		enterpriseService.delete(enterpriseId);
+		//enterpriseService.deteleEnterprise(enterpriseId);
+		
+		return SUCCESS;
+	}
 	public String addEnterpriseContract()
 	{
 		if(enterpriseContract!=null)
@@ -118,10 +130,19 @@ public class EnterpriseAction extends BaseAction{
 		
 		return SUCCESS;
 	}
-	public String updateEnterpriseContract()
+	public String updateEnterpriseContract() throws UnsupportedEncodingException
 	{
-		enterpriseContractService.updateEnterpriseContract(enterpriseContract);
-		return SUCCESS;
+		if(enterpriseContract!=null){
+			String note= new String(request.getParameter("enterpriseContract.note").getBytes("iso8859-1"),"UTF-8");
+			enterpriseContract.setNote(WmsUtil.getURLDecoder(note));
+			enterpriseContractService.updateEnterpriseContract(enterpriseContract);
+		}
+		return NONE;
+	}
+	public String deleteEnterpriseContract()
+	{
+		enterpriseContractService.delete(enterpriseContract.getId());
+		return NONE;
 	}
 	
 	
@@ -132,10 +153,33 @@ public class EnterpriseAction extends BaseAction{
 			enterpriseProjectsService.save(enterpriseProjects);
 		return SUCCESS;
 	}
+	
+	public String toUpdateEnterpriseProjects()
+	{
+		
+		enterpriseProjects=enterpriseProjectsService.getByIdEnterpriseProjects(enterpriseProjects.getId());
+		return SUCCESS;
+	}
 	public String updateEnterpriseProjects()
 	{
-		enterpriseProjectsService.updateEnterpriseContract(enterpriseProjects);
-		return SUCCESS;
+		if(enterpriseProjects!=null){
+			try {
+				String note= new String(request.getParameter("enterpriseProjects.note").getBytes("iso8859-1"),"UTF-8");
+				String projects= new String(request.getParameter("enterpriseProjects.projects").getBytes("iso8859-1"),"UTF-8");
+				enterpriseProjects.setNote(note);
+				enterpriseProjects.setProjects(projects);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			enterpriseProjectsService.updateEnterpriseContract(enterpriseProjects);
+		}
+	
+		return NONE;
+	}
+	public String deleteEnterpriseProjects()
+	{
+		enterpriseProjectsService.deleteEnterpriseProjects(enterpriseProjects.getId());
+		return NONE;
 	}
 	
 	
@@ -145,10 +189,43 @@ public class EnterpriseAction extends BaseAction{
 		
 		List<User> users=userService.getUsers();
 		if(users.size()==0)users=new ArrayList<User>();
+		if(!StringUtil.isEmpty(userId))user.setId(userId);
+		if(enterprise!=null && !StringUtil.isEmpty(enterprise.getFullName()))this.setFullName(enterprise.getFullName());
+		if(enterprise!=null && !StringUtil.isEmpty(enterprise.getContatId()))this.setContatId(enterprise.getContatId());
 		PageView<Enterprise>  pageView=enterpriseService.getAllEnterprise(10, this.getPage(),user,enterprise);
 		request.setAttribute("pageView", pageView);
 		request.setAttribute("users", users);
 		
+		return SUCCESS;
+	}
+	
+	public String contractDateDay()
+	{
+		
+		EnterpriseContract enterpriseContract=enterpriseService.getEndContractDateDay(enterprise.getEnterpriseId());
+		
+		toJson(enterpriseContract);
+		
+		return NONE;
+	}
+	
+	
+	
+	public String toUpdateEnterprise()
+	{
+		enterprise=enterpriseService.find(enterpriseId);
+		
+		return SUCCESS;
+	}
+	
+	public String updateEnterprise()
+	{
+		if(enterpriseContract.getStartContractDate()!=null && !enterpriseContract.getStartContractDate().equals("") &&
+				enterpriseContract.getEndContractDate()!=null && !enterpriseContract.getEndContractDate().equals("")){
+			enterpriseContract.setEnterprise(enterprise);
+			enterpriseContractService.save(enterpriseContract);
+		}
+		enterpriseService.updateEnterprise(enterprise);
 		return SUCCESS;
 	}
 	
@@ -258,19 +335,6 @@ public class EnterpriseAction extends BaseAction{
 		return SUCCESS;
 	}
 	
-	public String toUpdateEnterprise()
-	{
-		enterprise=enterpriseService.find(enterpriseId);
-		return SUCCESS;
-	}
-	
-	public String updateEnterprise()
-	{
-		
-		enterpriseService.updateEnterprise(enterprise);
-		
-		return SUCCESS;
-	}
 	
 	public String updateEnterStatus(){
 		boolean message=false;
@@ -303,13 +367,7 @@ public class EnterpriseAction extends BaseAction{
 	}
 	public String isExitFullname(){
 		
-		String name=null;
-		try {
-			name=URLDecoder.decode(enterprise.getFullName().trim(),"utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		isExitFullName=enterpriseService.findByFullName(name);
+		isExitFullName=enterpriseService.findByFullName(WmsUtil.getURLDecoder(enterprise.getFullName().trim()));
 		responseJson(isExitFullName);
 		
 		return NONE;
@@ -370,15 +428,29 @@ public class EnterpriseAction extends BaseAction{
 	public void setEnterpriseEmployees(EnterpriseEmployees enterpriseEmployees) {
 		this.enterpriseEmployees = enterpriseEmployees;
 	}
-	public Integer getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(Integer userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	
-	
-	
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getContatId() {
+		return contatId;
+	}
+
+	public void setContatId(String contatId) {
+		this.contatId = contatId;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -417,7 +489,6 @@ public class EnterpriseAction extends BaseAction{
 	public void setEnterpriseProjects(EnterpriseProjects enterpriseProjects) {
 		this.enterpriseProjects = enterpriseProjects;
 	}
-	
-	
+
 
 }

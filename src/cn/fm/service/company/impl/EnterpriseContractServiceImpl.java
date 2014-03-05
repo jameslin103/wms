@@ -1,5 +1,6 @@
 package cn.fm.service.company.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -41,8 +42,8 @@ public class EnterpriseContractServiceImpl implements EnterpriseContractService{
 		enterpriseContractPO.setEndContractDate(enterpriseContract.getEndContractDate());
 		enterpriseContractPO.setStartContractDate(enterpriseContract.getStartContractDate());
 		enterpriseContractPO.setNote(enterpriseContract.getNote());
-		enterpriseContractPO.setUpdateDate(enterpriseContract.getUpdateDate());
-		enterpriseContractDAO.save(enterpriseContractPO);
+		enterpriseContractPO.setUpdateDate(new Date());
+		enterpriseContractDAO.update(enterpriseContractPO);
 		
 		
 		
@@ -51,6 +52,13 @@ public class EnterpriseContractServiceImpl implements EnterpriseContractService{
 	@Override
 	public EnterpriseContract getByIdEnterpriseContract(String id) {
 		return enterpriseContractDAO.findById(id);
+	}
+
+	@Override
+	public void delete(String id) {
+		
+		EnterpriseContract	enterpriseContract=enterpriseContractDAO.findById(id);
+		enterpriseContractDAO.delete(enterpriseContract);
 	}
 
 	

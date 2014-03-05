@@ -13,8 +13,9 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 public class SessionIterceptor extends AbstractInterceptor {
 	
-	
-	 @SuppressWarnings("unchecked")
+	private static final long serialVersionUID = 5032610408458777296L;
+
+	@SuppressWarnings("unchecked")
 	public String intercept(ActionInvocation actionInvocation) throws Exception {  
 		 
 	        ActionContext ctx = ActionContext.getContext(); 

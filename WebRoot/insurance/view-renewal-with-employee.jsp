@@ -24,53 +24,20 @@
 	<body>
 		<div id="container">
 			<div id="header">
-				<jsp:include page="../layout/header.jsp" />
 				<div id="sub-header" class="clearfix">
 					<h2>
 						<s:property value="%{#session.enterprise.fullName}" />
 					</h2>
 				</div>
 			</div>
-
-
 			<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">
 						<ul class="nav nav-tabs">
-							<s:iterator value="#session.menuList" id="menu">
-								<s:if test="#menu.url=='viewEnterpriseDetailed'">
-									<li >
-										<a href="viewEnterpriseDetailed"  ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewEnterpriseEmployees'">
-									<li >
-										<a href="viewEnterpriseEmployees"  ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewSalaryBudgetTable'">
-									<li >
-										<a href="viewSalaryBudgetTable" >
-											<s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewInsuranceWithMonth'">
-									<li class="active">
-										<a href="viewInsuranceWithMonth" ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-								<s:if test="#menu.url=='viewBalanceDetail'">
-									<li >
-										<a href="viewBalanceDetail" ><s:property value="#menu.name" />
-										</a>
-									</li>
-								</s:if>
-							</s:iterator>
-					</ul>
+							<li class="active">
+								<a href="viewInsuranceWithMonth" >增减员与参保明细</a>
+							</li>
+					   </ul>
 						
 						<s:form action="viewRenewal" method="post" id="viewRenewal">
 							<s:hidden name="page"/>

@@ -4,8 +4,8 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@ page contentType="text/html; charset=UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML>
+<html>
 	<head>
 		<base href="<%=basePath%>" />
 		<title>富民人力银行派遣系统</title>
@@ -44,8 +44,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</fieldset>
 		  </div>
     </div>
-
-    <div id="main">
       <div class="row-fluid">
         <div id="center-pane">
 				<ul class="nav nav-tabs">
@@ -87,38 +85,56 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <tr>
                 <th rowspan="2">工资预算表<br/>名称</th>
                 <th rowspan="2" style="text-align:center">工资所属月份</th>
-                <th rowspan="2" style="text-align:center">合并计税工资表</th>
+                <th rowspan="2" style="text-align:center">合作项目</th>
                 <th rowspan="2" style="text-align:center">性质</th>
                 <th colspan="5" style="text-align:center">工资预算表汇总信息</th>
                 <th colspan="4" style="text-align:center">发放明细</th>
                 <th colspan="1" style="text-align:center">状态</th>
                 <th rowspan="2">操作</th>
               </tr>
+              <tr>
                 <th>开票<br/>总额（元）</th>
                 <th>工资<br/>总额（元）</th>
                 <th>服务费<br/>总额（元）</th>
-                <th style="color: red;">点数服务费总额（元）</th>
+                <th style="color: red;">比例(%)<br/>人头(元)</th>
                 <th>五险一金<br/>总额（元）</th>
                 <th>发放<br/>人数（人）</th>
                 <th>民生<br/>银行（人）</th>
                 <th>他行<br/>（人）</th>
                 <th>现金（人）</th>
                 <th>（制作、实际发放）</th>
+               </tr>
             </thead>
             <tbody>
              <s:iterator value="#request.pageView.records" id="createSalaryBudgetTable">
               <tr>
                 <td>
-                	<s:property value="%{#createSalaryBudgetTable.name}"/>
-                	<a href="returnToModifyBudgetTable?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>"><br/>(重新上传工资)</a>
+                	<s:if test="#createSalaryBudgetTable.name.length()>5">
+                		<s:property value="#createSalaryBudgetTable.name.substring(0,6)+'...'"/>
+                	</s:if>
+                	<s:else>
+                		<s:property value="%{#createSalaryBudgetTable.name}"/>
+                	</s:else>
+                	<a href="returnToModifyBudgetTable?createSalaryBudgetTable.budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>"><br/>(重新上传工资)</a>
                 </td>
                 <td><s:date name="%{#createSalaryBudgetTable.salaryDate}" format="yyyy年MM月"/></td>
-                <td><s:property value="%{#createSalaryBudgetTable.chooseTax}"/></td>
+                <td>${createSalaryBudgetTable.salaryTemplate.enterpriseProjects.projects}</td>
                 <td><s:property value="%{#createSalaryBudgetTable.enterprise.insurancesTax.insurancesType==0?'市医保':'省医保'}"/></td>
                 <td><s:property value="%{#createSalaryBudgetTable.makeTotal}"/></td>
                 <td><s:property value="%{#createSalaryBudgetTable.wageTotal}"/></td>
                 <td><s:property value="%{#createSalaryBudgetTable.serviceTotal}"/></td>
-                  <td><s:property value="%{#createSalaryBudgetTable.serviceHeTotal}"/></td>
+                <td>
+                	<s:property value="%{}"/>
+                	<s:if test="#createSalaryBudgetTable.salaryTemplate.enterpriseProjects.fee==0">
+                		${createSalaryBudgetTable.salaryTemplate.enterpriseProjects.serviceHead}
+                	</s:if>
+                	<s:elseif test="#createSalaryBudgetTable.salaryTemplate.enterpriseProjects.fee==1">
+                		 ${createSalaryBudgetTable.salaryTemplate.enterpriseProjects.proportion} %
+                	</s:elseif>
+               		<s:else>
+               		
+               		</s:else>
+                </td>
                 <td><s:property value="%{#createSalaryBudgetTable.fiveInsurancesTotal}"/></td>
                 <td>
 	                <s:property value="%{#createSalaryBudgetTable.issueNumber}"/>
@@ -126,8 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                <a href="viewSalaryWithBankPersonalNumber?budgetId=<s:property value="%{#createSalaryBudgetTable.budgetId}"/>">查看</a>
                 </td>
                 <td>
-                	
-		                <s:property value="%{#createSalaryBudgetTable.cmbc}"/><br/><span class="em">
+		               <s:property value="%{#createSalaryBudgetTable.cmbc}"/><br/><span class="em">
 		                  <s:if test="#request.createSalaryBudgetTable.cmbcDate!=null" >
 		                	（<s:property value="%{#request.createSalaryBudgetTable.status}"/>）</span>
 		                <br/><s:date name="%{#createSalaryBudgetTable.cmbcDate}" format="yyyy年MM月dd日HH时"/>
@@ -181,8 +196,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </div>
     </div>
 
-    <div id="footer"></div>
-  </div>
+
+
   <!-- ======================================================================== -->
   <div id="info-for-check" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
@@ -211,16 +226,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="input-container" >
                   <label>生成哪月工资？</label>
                   <input type="text" id="d11"	onfocus="WdatePicker({skin:'whyGreen'})"
-                         name="createSalaryBudgetTable.salaryDate"  class="Wdate" id="saldate"/>
-                </div>
-                <div class="input-container">
-                  <label>其它方式服务费</label>
-                  <s:textfield name="createSalaryBudgetTable.serviceHeTotal" maxlength="30"/>
+                         name="createSalaryBudgetTable.salaryDate" value="${createSalaryBudgetTable.salaryDate}"  class="Wdate" id="saldate"/>
                 </div>
                 <div class="input-container">
                   <label>补充说明</label>
-                  <textarea rows="3" name="createSalaryBudgetTable.note" cols="30" id="note">
-                  			
+                  <textarea rows="3" name="createSalaryBudgetTable.note" cols="30" id="note" >
+                  			${createSalaryBudgetTable.note}
                   </textarea>
                 </div>
 

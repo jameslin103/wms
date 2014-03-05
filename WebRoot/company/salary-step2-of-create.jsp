@@ -88,14 +88,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<a href="viewEnterpriseDetailed" >综合 </a>
 					</li>
 					<li>
-						<a href="viewEnterpriseEmployees"  >员工档案</a>
+						<a href="viewEnterpriseEmployees" >员工档案</a>
 					</li>
 						<li class="active">
 							<a href="viewSalaryBudgetTableSummary" >工资预算表</a>
 						</li>
 					</ul>
           <div>
-          	<table width="1000px;" align="center"  style="line-height: 30px;">
+          	<table width="1000px;" align="center"  style="line-height: 30px;" border="1px;">
           		<tr>
           			<td colspan="4" align="center"><h2>2/3&nbsp;新建工资预算表信息</h2></td>
           		</tr>

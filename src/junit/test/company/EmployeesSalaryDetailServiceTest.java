@@ -257,31 +257,6 @@ public class EmployeesSalaryDetailServiceTest {
 	   
    }
    @Test
-   public void updateEmployeesCarNumber()
-   {
-	  EnterpriseEmployees employees=new  EnterpriseEmployees();
-	  employees.setEmployeesId(2);
-	  employees.setCardNumber("110");
-	  
-	  employeesSalaryDetailService.updateEmployeesCarNumber(employees);
-	   
-   }
-   @Test
-   public void structureEmployeesSalaryDetail(){
-	   
-	   EmployeesSalaryDetail ed=new EmployeesSalaryDetail();
-	   ed.setWage(new BigDecimal(4900));
-	   ed.setBonus(new BigDecimal(500));
-	   ed.setSubsidies(new BigDecimal(100));
-	   ed.setCardNumber("555999");
-	   
-	   EmployeesSalaryDetail eDetail=employeesSalaryDetailService.structureEmployeesSalaryDetail(ed,1);
-	   
-	   System.out.println(eDetail.getShouldPay());
-	   System.out.println(eDetail.getBonus());
-	   System.out.println(eDetail.getPersonalTax());
-   }
-   @Test
 	public void proportionToCalculate()
 	{
 	    BigDecimal proportion=new BigDecimal(100);

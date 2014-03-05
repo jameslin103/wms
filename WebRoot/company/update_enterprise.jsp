@@ -31,6 +31,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				history.go(-1);
 			});
 			
+			
+		$("#t").val("${enterprise.industryType}");
+			
 		});
 	</script>
   </head>
@@ -41,12 +44,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<fieldset style="border:2px groove #F0F0F0; width:1100px;">
 		<br/>
 			<legend>
-				<span style="font-size:30px;">修改企业信息</span>
+				<span style="font-size:30px;">${enterprise.fullName}</span>
 			</legend>
-			<br/>
-         <form action="updateEnterprise" method="post" id="add_form">
-          <input  type="hidden" name="enterprise.enterpriseId" value="${enterprise.enterpriseId}"/>
-            <table width="1000">
+			修改企业信息
+         <s:form action="updateEnterprise" method="post">
+        	<s:hidden name="page" value="%{#request.page}"></s:hidden>
+        	<s:hidden name="fullName" value="%{#request.fullName}"></s:hidden>
+			<s:hidden name="contatId" value="%{#request.contatId}"></s:hidden>
+			<s:hidden name="userId" value="%{#request.userId}" ></s:hidden>
+         	 <input  type="hidden" name="enterprise.enterpriseId" value="${enterprise.enterpriseId}"/>
+           	 <table width="1000">
               <tbody>
                 <tr>
                   <td class="bgc">企业名称</td>
@@ -54,8 +61,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <td class="bgc">合同编号</td>
                   <td><input type="text" name="enterprise.contatId" value="${enterprise.contatId}"/></td>
                 </tr>
-                
-                
                 <tr>
                   <td class="bgc">行业分类</td>
                   <td>
@@ -67,7 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   					theme="simple" listKey="'1','2'">
                   	</s:select>
                   -->
-                   <select name="enterprise.industryType">
+                   <select name="enterprise.industryType" id="t">
                       <option value="0">-请选择-</option>
                       <option value="1">IT|通信|电子|互联网</option>
                       <option value="2">金融业</option>
@@ -127,7 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </tr>
                 <tr>
                	 	<td>状态?</td>
-	                <td colspan="3">
+	                <td>
 	                	<s:if test="#request.enterprise.status==0">
 	                		<input type="radio" name="enterprise.status" value="0" checked="checked"/>合约中，
 							<input type="radio" name="enterprise.status" value="1"/>暂停
@@ -137,15 +142,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                		<input type="radio" name="enterprise.status" value="1" checked="checked"/>暂停
 	                	</s:elseif>
 	                </td>
+	                <td>备注:</td>
+	                <td>
+	                	<input type="text" name="enterprise.note" value="${enterprise.note}" maxlength="30"/>
+	                </td>
                 </tr>
               </tbody>
-            </table>
+           </table>
              <div id="opr">
-					<input type="submit" value=" 修  改 " class="oprbtn" id="ok" />
+					<s:submit  value=" 修  改 " cssClass="oprbtn" id="ok" />
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="button" value=" 取  消 " class="oprbtn" id="cancel"/>
 			</div>
-          </form>
+          </s:form>
 	</fieldset>
 	</center>
   </body>

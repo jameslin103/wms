@@ -20,53 +20,59 @@
 				form.page.value=page;
 				form.submit();
 		}
-		function reset_enterprise(){
-			var form=$('#add_form');
-			clearForm(form);
-		}
-		function reset(){
-			$("#add-enterprise-bnt,#edit-enterprise-bnt").on("hidden",function(){
-				$("form :checkbox",this).removeAttr("checked");
-				$("form",this)[0].reset();
-				clearForm(this);
-			});
-		
-		}
 		
 		$(function(){
-		
-			$("#fullname").blur(function (){
-			
-			var fullname=$("#fullname").val();
-			if(fullname=="")
-			{
-				$("#errorFullName").text("企业名称必填项");
-				return;
-			}else{
-				$("#errorFullName").text("");
-				$("#errorFullName").text("*");
-				
-				$.getJSON("isExitFullname",{"enterprise.fullName":encodeURI(fullname,"utf-8")}).success(function(data)
-				{
-					if(data==1){
-						$("#errorFullName").text("此企业已存在!");
-					}
-			   
-			    });
-				
-			 }
-				
-			});	
-				$("a[name=fullname]").each(function(index,a){
+			$("a[name=fullname]").each(function(index,a){
 					$(a).click(function(){
 							$.dialog({
 								id:'selEnterprise',
 								content:'url:seacherEnterprise?enterprise.enterpriseId='+$(a).prev().val(),
-								width:'900px',
+								width:'1200px',
 								height:'700px',
 								title:'查看企业详细信息',
 								lock:true,
-								ok:false,
+								ok:function(){
+									var selStat=$.dialog.list['selEnterprise'].content.$("#status").is(':checked');
+									var selStat1=$.dialog.list['selEnterprise'].content.$("#status1").is(':checked');
+									var selStat2=$.dialog.list['selEnterprise'].content.$("#status2").is(':checked');
+									
+									var status;
+									if(selStat==true){
+										status=0;
+									}
+									if(selStat1==true){
+										status=1;
+									}
+									if(selStat2==true){
+										status=2;
+									}
+									var selNote=$.dialog.list['selEnterprise'].content.$("#note").val();
+									var enterpriseId=$(a).prev().val();
+									var dept={
+											"enterprise.enterpriseId":$(a).prev().prev().val(),
+											"enterprise.note":selNote,
+											"enterprise.auditStatus":selStat
+										};
+									$.ajax({
+											url:'updateEnterStatus?enterprise.enterpriseId='+enterpriseId+'&enterprise.auditStatus='+status+'&enterprise.note='+selNote,
+											type:'post',
+											data:JSON.stringify(dept),
+											contentType:'application/json',
+											dataType:'html',
+											success:function(isOk){
+												if(isOk=="true"){
+													$.dialog.alert('审核成功!',function(){
+													   //this.reload().time(2);
+													   window.self.location="viewEnterprise?page="+${page};  
+													});
+												}else{
+													$.dialog.alert('审核失败!',function(){
+													   //this.reload().time(2);
+													});
+												}
+											}
+										});
+									},
 						cancel:true
 						});
 						
@@ -153,9 +159,9 @@
 											"enterprise.note":selNote,
 											"enterprise.auditStatus":selStat
 										};
-									
 									$.ajax({
-											url:'updateEnterStatus?enterprise.enterpriseId='+enterpriseId+'&enterprise.auditStatus='+status+'&enterprise.note='+selNote,
+											
+											url:'updateEnterStatus?page='+${page}+'&enterprise.enterpriseId='+enterpriseId+'&enterprise.auditStatus='+status+'&enterprise.note='+selNote,
 											type:'post',
 											data:JSON.stringify(dept),
 											contentType:'application/json',
@@ -182,6 +188,15 @@
 					});
 				});
 			
+			$("#bili").focus(function(){
+				$("#b").attr("checked",true); 
+			
+			});
+			$("#rentou").focus(function(){
+				$("#r").attr("checked",true); 
+			});
+			
+			
 			
 			
 			
@@ -201,18 +216,17 @@
 						</legend>
 						<s:form action="viewEnterprise" method="post">
 								<input type="hidden" name="page" id="page" value="1"/>
-							企业名称：<s:textfield name="enterprise.fullName" size="10" cssStyle="width:150px;"/>
-							合同编号：<s:textfield name="enterprise.contatId" size="10" cssStyle="width:150px;"/>
-							负  责  人：  <s:select list="%{#request.users}" name="user.id" label="0" listKey="id"  theme="simple"
-									   listValue="employee.name"  headerKey="0" headerValue="-请选择-" cssStyle="width:90px;"/>
+							企业名称：<s:textfield name="enterprise.fullName" size="10" value="%{#request.fullName}"  cssStyle="width:150px;"/>
+							合同编号：<s:textfield name="enterprise.contatId" size="10"  value="%{#request.contatId}" cssStyle="width:150px;"/>
+							负  责  人：  <s:select list="%{#request.users}" name="userId" label="0" listKey="id"  theme="simple"
+									   listValue="employee.name"  headerKey="0" headerValue="-请选择-" cssStyle="width:90px;" value="%{#request.userId}"/>
 						 	<input type="submit" value=" 查  询 " class="oprbtn" style="width:70px;" />
 						 </s:form>
 					</fieldset>
 				</div>
 				<div>
 						<!-- ======================================According to  Enterprise==================================== -->
-					<s:form action="viewEnterprise" method="post" id="my_enterprise">
-						<input type="hidden" name="page"/>
+					
 						<table class="table table-bordered">
 							<thead>
 								<tr  style="background-color:#C09853;">
@@ -237,7 +251,7 @@
 									<th width="15%" style="text-align: center;">
 										备注
 									</th>
-									<th width="10%" style="text-align: center;">
+									<th width="20%" style="text-align: center;">
 										操作
 									</th>
 								</tr>
@@ -252,7 +266,9 @@
 											<s:property value="%{#enterprise.contatId}"/>
 											<br/>
 											<s:hidden name="" value="%{#enterprise.enterpriseId}"></s:hidden>
-											<a href="javascript:void(0)" name="project">[添加项目]</a>
+											<s:if test="#enterprise.auditStatus!=1">
+												<a href="javascript:void(0)" name="project">[添加项目]</a>
+											</s:if>
 										</td>
 										<td class="with-complement" title="详细信息">
 											<input type="hidden" value="<s:property value="%{#enterprise.enterpriseId}"/>"/>
@@ -260,6 +276,15 @@
 											<br/><span>创建时间:<s:date name="%{#enterprise.createDate}" format="yyyy-MM-dd:HH:mm:ss"/></span>
 										</td>
 										<td style="text-align: center;">
+											<input type="hidden" value="${enterprise.enterpriseId}"/>
+											
+											
+											
+											<s:iterator value="#enterprise.enterpriseContract" id="enterpriseContract">
+												<s:property value="%{#enterpriseContract.endContractDate}" />
+												<s:property value="%{#enterpriseContract.toDay}" />
+											</s:iterator>
+											
 											<s:if test="%{#enterprise.status==0}">
 												合约中
 											</s:if>
@@ -280,9 +305,7 @@
 										</td>
 										<td>
 											<s:if test="#enterprise.auditStatus==0">
-												<s:hidden name="" value="%{#enterprise.enterpriseId}"></s:hidden>
-												<input type="hidden" value="<s:property value="%{#enterprise.fullName}"/>"/>
-												<a href="javascript:void(0)" name="review">待审核</a>
+												<span style="color:green" >待审核</span>
 											</s:if>
 											<s:elseif test="#enterprise.auditStatus==1">
 												<span style="color:red">
@@ -290,9 +313,7 @@
 												</span>
 											</s:elseif>
 											<s:elseif test="#enterprise.auditStatus==2">
-												<s:hidden name="" value="%{#enterprise.enterpriseId}"></s:hidden>
-												<input type="hidden" value="<s:property value="%{#enterprise.fullName}"/>"/>
-												<a href="javascript:void(0)" name="review">审核不通过</a>
+												<span style="color:olive" >审核不通过</span>
 											</s:elseif>
 											<s:else>
 												
@@ -300,21 +321,26 @@
 											<br/><b>时间:</b><s:date name="%{#enterprise.auditDate}" format="yyyy-MM-dd HH:mm:ss"/>
 											<br/><b>审核人:</b>${enterprise.audituser}
 										</td>
-										<td>${enterprise.note}</td>
-										<td style="text-align: center;">
-											<img src="images/037.gif" width="9" height="9" />
-											<a href="toUpdateEnterprise?enterpriseId=${enterprise.enterpriseId}">[编 &nbsp;&nbsp;辑]</a>
-										</td>
+										<td><s:property value="%{#enterprise.note}"/></td>
+										<s:if test="#enterprise.auditStatus!=1">
+											<td style="text-align: center;">
+												<img src="images/037.gif" width="9" height="9" />
+												<a href="toUpdateEnterprise?enterpriseId=<s:property value="%{#enterprise.enterpriseId}"/>
+												&page=${page}&userId=${userId}">[编 辑]</a>
+												<a href="deteleEnterprise?enterpriseId=${enterprise.enterpriseId}">[删 除]</a>
+											</td>
+										</s:if>
 									</tr>
 								</tbody>
 							</s:iterator>
 						</table>
-					
-							<!--
-							<s:hidden name="enterprise.fullName" value="%{#request.enterprise.fullName}"></s:hidden>
-							<s:hidden name="enterprise.contatId" value="%{#request.enterprise.contatId}"></s:hidden>
-							-->
-							<s:hidden name="user.id" ></s:hidden>
+						
+						<s:form action="viewEnterprise" method="post" id="my_enterprise">
+							<s:hidden name="page" value="%{#request.page}"></s:hidden>
+							
+							<s:hidden name="enterprise.fullName" value="%{#request.fullName}"></s:hidden>
+							<s:hidden name="enterprise.contatId" value="%{#request.contatId}"></s:hidden>
+							<s:hidden name="userId" value="%{#request.userId}" ></s:hidden>
 							
 							<div class="pagination" style="color:#2E9AFE">
 								<%@ include file="/share/fenye.jsp" %>
@@ -348,6 +374,7 @@
 			</div>
           <form action="addEnterpriseProjects" method="post" id="add_form">
           	<s:hidden name="enterpriseId" id="en_id"></s:hidden>
+          	<s:hidden name="page" value="%{#request.page}"></s:hidden>
             <table class="table table-bordered" >
               <tbody>
                 <tr>
@@ -376,10 +403,10 @@
                 <tr>
                   <td>服务费:</td>
                   <td colspan="3">
-                    <input type="radio" name="enterpriseProjects.fee" value="0" checked="checked"/>按人头，
-                    <input class="span1" type="text" name="enterpriseProjects.serviceHead" maxlength="10"/>元/人
-                    <input type="radio" name="enterpriseProjects.fee" value="1"/>按比例，
-                    <input class="span1" type="text" name="enterpriseProjects.proportion" maxlength="10"/>%
+                    <input type="radio"  name="enterpriseProjects.fee" value="0" checked="checked" id="r"/>按人头，
+                    <input class="span1" type="text" name="enterpriseProjects.serviceHead" maxlength="10" id="rentou"/>元/人
+                    <input type="radio"  name="enterpriseProjects.fee" value="1" id="b"/>按比例，
+                    <input class="span1" type="text" name="enterpriseProjects.proportion" maxlength="10" id="bili"/>%
                   </td>
                 </tr>
                 <tr>

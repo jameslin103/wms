@@ -1,4 +1,5 @@
 package cn.fm.bean.company;
+import java.beans.Transient;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +33,9 @@ public class EnterpriseContract {
 	/*备注*/
 	private  String   note;
 	
+	private  Integer  toDay;
 	
+	private  boolean  isOutTime;
 	
 	private Enterprise enterprise=new Enterprise();
 	
@@ -66,9 +69,16 @@ public class EnterpriseContract {
 	}
 	@Temporal(TemporalType.DATE)
 	public Date getEndContractDate() {
+		
 		return endContractDate;
 	}
 	public void setEndContractDate(Date endContractDate) {
+		long day=0;
+		day=(endContractDate.getTime()-new Date().getTime())/(24*60*60*1000);
+		this.setToDay(Integer.parseInt(day+""));
+		if(day<=60){
+			isOutTime=true;
+		}
 		this.endContractDate = endContractDate;
 	}
 	
@@ -100,5 +110,22 @@ public class EnterpriseContract {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	@Transient
+	public Integer getToDay() {
+		return toDay;
+	}
+	public void setToDay(Integer toDay) {
+		this.toDay = toDay;
+	}
+	@Transient
+	public boolean isOutTime() {
+		return isOutTime;
+	}
+	public void setOutTime(boolean isOutTime) {
+		this.isOutTime = isOutTime;
+	}
+	
+	
 	
 }

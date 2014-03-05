@@ -353,14 +353,14 @@
 											
 										</td>
 										<td>
-											<a href="toUpdateEnterpriseEmployees?employeesId=${emp.employeesId}">修改</a>
+											<a href="toUpdateEnterpriseEmployees?employeesId=${emp.employeesId}&page=${page}">修改</a>
 										</td>
 									</tr>
 								</tbody>
 							</s:iterator>
 						</table>
 						<s:form action="viewEnterpriseEmployees" method="post" id="myform">
-						 <input type="hidden" name="page"/>
+						<s:hidden name="page"></s:hidden>
 						<div class="pagination">
 							<%@ include file="/share/fenye.jsp" %>
 						</div>

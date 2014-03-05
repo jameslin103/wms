@@ -680,6 +680,7 @@ $(function(){
                           }  
                       }) ;
 	    			  //将要集体删除的数据 传递给action处理   
+	    			  
 	    			  window.self.location="deleteEmpoyeesCheckbox?employees_id="+ array;  
 	    		  }
 	            

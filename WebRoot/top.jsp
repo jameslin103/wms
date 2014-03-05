@@ -102,7 +102,7 @@
 				});
 		});
 		
-		$.get("getProvinces",function(provinces){
+		/**$.get("getProvinces",function(provinces){
 			for(var i=0;i<provinces.length;i++){
 				$("#provinces").append("<option value="+provinces[i].code+">"+provinces[i].name+"</option>");
 			}
@@ -121,7 +121,7 @@
 			$.get("getWeather?city="+$(this).val(),function(weather){
 				$("#weather").html(weather[4]);
 			},'json');
-		});
+		});**/
 	}); 
 </script>
 </head>

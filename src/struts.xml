@@ -46,7 +46,7 @@
 		</interceptors>
 		<default-interceptor-ref name="appInterceptor" />
 		<global-results>
-			<result name="login">/login.jsp</result>
+			<result name="login">/share/session_time_out.jsp</result>
 			<result name="message">/share/message.jsp</result>
 			<result name="directUrl">/share/directUrl.jsp</result>
 			<result name="error404">/share/error404.jsp</result>
@@ -341,6 +341,7 @@
         <action name="updateEnterEmployees" class="cn.fm.web.action.company.EnterpriseEmployeesAction" method="updateEnterEmployees">
         	<result name="success" type="redirectAction">
         		<param name="actionName">viewEnterpriseEmployees</param>
+        		<param name="page">${page}</param>
         	</result>
         </action>
         
@@ -539,9 +540,27 @@
         <action name="viewEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="viewEnterprise">
             <result name="success">admin/company-list.jsp</result>
         </action>
+        
+        <action name="toUpdateEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="toUpdateEnterprise">
+        	<result name="success">company/update_enterprise.jsp</result>
+        </action>
+        <action name="updateEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterprise">
+        	<result name="success" type="redirectAction">
+        		<param name="actionName">viewEnterprise</param>
+        		<param name="page">${page}</param>
+        		<param name="fullName">${fullName}</param>
+        		<param name="userId">${userId}</param>
+        		<param name="contatId">${contatId}</param>
+        	</result>
+        </action>
         <action name="isExitFullname" class="cn.fm.web.action.company.EnterpriseAction" method="isExitFullname">
         	<result name="success" type="json"></result>
         </action>
+        <action name="deleteEnterpriseContract" class="cn.fm.web.action.company.EnterpriseAction" method="deleteEnterpriseContract">
+        	<result name="success" type="json"></result>
+        </action>
+        
+        
          <action name="addEnterpriseToUser" class="cn.fm.web.action.company.EnterpriseAction" method="addEnterpriseToUser">
            <result name="success" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
@@ -574,33 +593,29 @@
             	<param name="actionName">viewEnterprise</param>
             </result>
         </action>
-         <action name="toUpdateEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="toUpdateEnterprise">
-        	<result name="success">company/update_enterprise.jsp</result>
-        </action>
-        <action name="updateEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterprise">
-        	 <result name="success" type="redirectAction">
-            	<param name="actionName">viewEnterprise</param>
-           </result>
-        </action>
          <action name="addEnterpriseProjects" class="cn.fm.web.action.company.EnterpriseAction" method="addEnterpriseProjects">
             <result name="success" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
+            	<param name="page">${page}</param>
             </result>
         </action>
         <action name="updateEnterpriseProjects" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterpriseProjects">
-            <result name="success" type="redirectAction">
-            	<param name="actionName">viewEnterprise</param>
-            </result>
+            <result name="success" type="json"></result>
         </action>
+         <action name="toUpdateEnterpriseProjects" class="cn.fm.web.action.company.EnterpriseAction" method="toUpdateEnterpriseProjects">
+            <result name="success">/company/update_projects.jsp</result>
+        </action>
+        <action name="deleteEnterpriseProjects" class="cn.fm.web.action.company.EnterpriseAction" method="deleteEnterpriseProjects">
+            <result name="success" type="json"></result>
+        </action>
+        
          <action name="addEnterpriseContract" class="cn.fm.web.action.company.EnterpriseAction" method="addEnterpriseContract">
             <result name="success" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
             </result>
         </action>
          <action name="updateEnterpriseContract" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterpriseContract">
-            <result name="success" type="redirectAction">
-            	<param name="actionName">viewEnterprise</param>
-            </result>
+            <result name="success" type="json"></result>
         </action>
          <action name="seacherEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="seacherEnterprise">
             <result name="success">/company/enterprise_seacher.jsp</result>
@@ -631,20 +646,13 @@
             	<param name="actionName">viewEnterprise</param>
             </result>
         </action>
-        <action name="findEnterpriseGrid" class="cn.fm.web.action.company.EnterpriseAction" method="findEnterpriseGrid">
-           <result type="json" name="success"></result>
-        </action>
-         
-         <action name="updateEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterprise">
+        <action name="deteleEnterprise" class="cn.fm.web.action.company.EnterpriseAction" method="deteleEnterprise">
            <result name="success" type="redirectAction">
-            	<param name="actionName">viewEnterprise</param>
-            </result>
-           <result name="input" type="redirectAction">
             	<param name="actionName">viewEnterprise</param>
             </result>
         </action>
         <action name="updateEnterStatus" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterStatus">
-           <result name="success" ></result>
+           <result name="success" type="json"></result>
         </action>
          <action name="updateEnterpriseContact" class="cn.fm.web.action.company.EnterpriseAction" method="updateEnterpriseContact">
            <result name="success" type="redirectAction">
@@ -783,7 +791,6 @@
                 <interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
            		<interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
            		<result name="invalid.token">company/salary-step2-of-create.jsp</result>
-               <result name="input"> company/salary-step2-of-create.jsp</result>
         </action> 
          <action name="returnToModifyBudgetTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="returnToModifyBudgetTable">
                <result name="success"> company/salary-step2-of-create.jsp</result>
@@ -818,6 +825,9 @@
         <!-- ===========Wage-budget-salary 2013-08-28============ -->
          <action name="viewSalaryBudgetTableSummary" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="viewSalaryBudgetTableSummary">
             <result name="success">company/salary-with-sum-of-categories.jsp</result>
+        </action>
+         <action name="seacher" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="seacher">
+            <result name="success">assets/create_table_grid.jsp</result>
         </action>
         <action name="findToIdSalayBudegTable" class="cn.fm.web.action.company.CreateSalaryBudgetTableAction" method="findToIdSalayBudegTable">
             <result name="success" type="json">

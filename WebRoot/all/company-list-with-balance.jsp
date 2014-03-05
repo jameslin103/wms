@@ -11,6 +11,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<title>富民人力银行派遣系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<%@ include file="/help/public_css_js.jsp" %>
+		<style>
+		  	legend{ text-align:center; width:40%\9} 
+		</style>
 		<script>
 			function topage(page)
 			{
@@ -24,20 +27,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 
 	<div id="container">
-			<div id="header">
-				<fieldset>
+			<div id="search">
+				<!--<fieldset>
 						<legend>
 							<img src="images/311.gif" />&nbsp;查询条件
-						</legend>
-						<s:form action="viewCompanyListWithSaraly" method="post">
+							<s:form action="viewCompanyListWithBalance" method="post">
 							年份时间:
 							<s:textfield id="d4324" cssClass="Wdate" type="text" cssStyle="width:150px;" onfocus="WdatePicker()" 
                    						name="createSalaryBudgetTable.salaryDate" value="%{#request.salaryDate}"/>
                    			企业名称:<s:textfield name="enterprise.fullName"></s:textfield>	
 						 	<input type="submit" value=" 查  询 " class="oprbtn" style="width:70px;" />
 						 </s:form>
+						</legend>
+						
 					</fieldset>
-			</div>
+				--></div>
 		<div id="main"> 
 			<div class="row-fluid">
 				<div id="center-pane">
@@ -49,10 +53,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<a href="viewCompanyListWithBalance">资金往来</a>
 						</li>
          			 </ul>
-         
-		<form action="viewCompanyListWithBalance" class="select-for-year" method="post" id="myform1">
-			<input type="hidden" name="page"/>
-		</form>
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
@@ -72,11 +72,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </tbody>
            
           </table>
-
-          <div class="pagination">
-           <%@include file="../share/fenye.jsp" %>
-          </div>
-				</div>
+		
+	          <div class="pagination">
+		          <form action="viewCompanyListWithBalance" class="select-for-year" method="post" id="myform1">
+				 	 <input type="hidden" name="page"/>
+		           <%@include file="../share/fenye.jsp" %>
+		           </form>
+	          </div>
+			</div>
 			</div>
 		</div>
 	</div>

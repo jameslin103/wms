@@ -95,7 +95,7 @@ public class EmployeesContract {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	@ManyToOne(cascade=CascadeType.REFRESH,optional=false)
+	@ManyToOne(cascade=CascadeType.REFRESH,optional=true)
 	@JoinColumn(name="employees_id")
 	@NotFound(action=NotFoundAction.IGNORE)
 	public EnterpriseEmployees getEnterpriseEmployees() {

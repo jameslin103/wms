@@ -19,6 +19,65 @@
 				form.page.value=page;
 				form.submit();
 			}
+			$(function (){
+					$("a[name=ba]").each(function(index,a){
+						$(a).click(function(){
+							//alert($(a).parent().prev().prev().prev().prev().text());
+							//var cc=$(a).parent().prev().prev().prev().prev().text();
+							$.dialog({
+								id:'ba',
+								content:'<table align="center" border="1px;" width="350px;">'+
+										'<tr><td>实收款项:</td><td><input type="text" id="shishou" /></td></tr>'+
+										'<tr><td>工&nbsp;&nbsp;资</td><td><input type="text"  id="wage"/></td></tr>'+
+										'<tr><td>服&nbsp;务&nbsp;费</td><td><input type="text"  id="service"/></td></tr>'+
+										'<tr><td>五险一金</td><td><input type="text"  id="five"/></td></tr>'+
+										'</table>',
+								width:'500px',
+								height:'300px',
+								title:'分配余额',
+								lock:true,
+								max: false,
+    							min: false,
+								ok:function(){
+									var shishou=$("#shishou").val();
+									var wage=$("#wage").val();
+									var service=$("#service").val();
+									var five=$("#five").val();
+									
+									$.ajax({
+											url:'addBalanceDetail?balanceDetail.detailId='+$(a).prev().val()+'&balanceDetail.receivedFunds='+shishou+'&balanceDetail.wages='+wage+
+												'&balanceDetail.serviceWith='+service+'&balanceDetail.fiveFund='+five,
+											type:'post',
+											//data:JSON.stringify(dept),
+											contentType:'application/json;charset=UTF-8"',
+											dataType:'html',
+											success:function(isOk)
+											{
+												$.dialog.alert('修改成功!',function(){
+													 window.self.location="viewBalanceDetail?page="+${page};  
+													 //this.reload().time(2);
+													   
+												});
+												
+											}
+										});
+									},
+						cancel:true
+							});
+						});
+  					});
+					
+			
+			
+			
+			
+			
+			
+			});
+			
+			
+			
+			
 		</script>
 	</head>
 	<body>
@@ -34,26 +93,27 @@
 			<div id="main">
 				<div class="row-fluid">
 					<div id="center-pane">
-						<ul class="nav nav-tabs">
+						<ul class="nav nav-tabs" >
 							<li >
 								<a href="viewEnterpriseDetailed" >
 									综合 
 								</a>
 							</li>
 							<li>
-								<a href="viewEnterpriseEmployees"  >
-									员工档案
+								<a href="viewCompanyListWithSaraly"  >
+									工资
 								</a>
 							</li>
-							<li >
-								<a href="viewSalaryBudgetTableSummary" >
-									工资预算表
+							<li class="active">
+							
+								<a href="viewBalanceDetail" >
+									资金往来明细
 								</a>
 						  </li>
 						</ul>
 					<s:form action="viewBalanceDetail" method="post" id="myform">
 					<s:hidden name="page"/>
-						<table class="table table-striped table-bordered">
+						<table class="table table-striped table-bordered" >
 							<thead>
 								<tr>
 									<th rowspan="2">
@@ -136,17 +196,17 @@
 										<s:property value="%{#balanceDetail.endingBalance}"/>
 									</td>
 									<td>
-										<s:property value="%{#balanceDetail.wages}"/>
+										${balanceDetail.wages}
 									</td>
 									<td>
 										<s:property value="%{#balanceDetail.serviceWith}"/>
 									</td>
 									<td>
-										<s:property value="%{#balanceDetail.fiveFund}"/>
+										${balanceDetail.fiveFund}
 									</td>
 									<td rowspan="2">
-									<s:set value="%{#balanceDetail.detailId}" var="detailId"></s:set>
-										<a href="#info-for-check" onclick="findToIdBalanceDetail('${detailId}')" data-toggle="modal">填写</a>
+										<input type="hidden" value="${balanceDetail.detailId}"/>
+										<a href="javascript:void(0)" name="ba">填写</a>
 									</td>
 								</tr>
 								<tr>

@@ -14,6 +14,7 @@ import org.apache.struts2.json.annotations.JSON;
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.company.EnterpriseEmployees;
+import cn.fm.bean.company.EnterpriseProjects;
 import cn.fm.bean.salary.BalanceDetail;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
@@ -110,16 +111,19 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		employeesSalaryDetail.setCreateSalaryBudgetTable(createSalaryBudgetTablePO);
 		
 		 int count=0;
-		 SalaryTemplate salaryTemplate=salaryTemplateService.find(templateId);
-		 if(salaryTemplate==null)salaryTemplate=new SalaryTemplate();
-		 if(!StringUtil.isEmpty(salaryTemplate.getSubsidyList())){
-		 	 String[] customt=salaryTemplate.getSubsidyList().split(",");
-			 count=customt.length+5;
-		 }else{
-			 count+=5; 
-		 }
+		 SalaryTemplate salaryTemplatePO=salaryTemplateService.find(templateId);
+		 BigDecimal service=salaryTemplatePO.getEnterpriseProjects().getServiceHead()==null?new BigDecimal("0.00"):salaryTemplatePO.getEnterpriseProjects().getServiceHead();
+		 employeesSalaryDetail.setServiceCharge(service);
+		
+			 if(!StringUtil.isEmpty(salaryTemplatePO.getSubsidyList())){
+			 	 String[] customt=salaryTemplatePO.getSubsidyList().split(",");
+				 count=customt.length+5;
+			 }else{
+				 count+=5; 
+			 }
+		
 		//上传的名字是否重复
-		List<String> employeesNames=employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "员工基本工资信息表", count,1,employeesSalaryDetail,createSalaryBudgetTablePO.getSalaryTemplate().getTemplateId(),enterprise.getEnterpriseId());
+		List<String> employeesNames=employeesSalaryDetailService.saveEmployeesSalaryDetail(file, "员工基本工资信息表", count,1,employeesSalaryDetail,salaryTemplatePO,enterprise.getEnterpriseId());
 		if(employeesNames!=null && employeesNames.size()>0){request.setAttribute("employeesNames", employeesNames);return INPUT;}
 		
 		
@@ -147,9 +151,9 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		
 		//统计五险
 		fiveInsuranceTotal=fiveInsuranceTotal.subtract(getspecialUnemploymentSubsidiesTotal)
-											   .subtract(getspecialOldSubsidiesTotal)
-											   .subtract(getSpecialHealthCareSubsidiesTotal)
-											   .subtract(getSpecialAccumulationFundSubsidiesTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+											 .subtract(getspecialOldSubsidiesTotal)
+											 .subtract(getSpecialHealthCareSubsidiesTotal)
+											 .subtract(getSpecialAccumulationFundSubsidiesTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
 												
 		
 		
@@ -159,11 +163,19 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 					add(getSpecialAccumulationFundSubsidiesTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
 		
 		//统计服务费
-		serviceTotal=employeesSalaryDetailService.getServiceTotal(enterprise.getEnterpriseId(), budgetId);
+		
+		if(salaryTemplatePO!=null && salaryTemplatePO.getEnterpriseProjects()!=null && salaryTemplatePO.getEnterpriseProjects().getFee()==1){
+			BigDecimal dianshu=salaryTemplatePO.getEnterpriseProjects().getProportion().divide(new BigDecimal("100")).setScale(3,BigDecimal.ROUND_DOWN);
+			serviceTotal=wargeTotal.multiply(dianshu).setScale(2,BigDecimal.ROUND_DOWN);
+			
+		}else{
+			serviceTotal=employeesSalaryDetailService.getServiceTotal(enterprise.getEnterpriseId(), budgetId);
+		}
+		
 		
 		
 		//统计开票总额
-		bonusTotal=wargeTotal.add(serviceTotal).add(fiveInsuranceTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+		bonusTotal=wargeTotal.add(serviceTotal==null?new BigDecimal("0.00"):serviceTotal).add(fiveInsuranceTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
 
 		numberPeopleTotal=employeesSalaryDetailService.getNumberPersonlTotal(enterprise.getEnterpriseId(), budgetId);
 		
@@ -191,18 +203,15 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 		createSalaryBudgetTableService.updateCreateSalaryBudgetTableSummary(createSalaryBudgetTableSummary);	
 		
 		//统计上传员工工资的总额,保险，开票总额 记录到<资金往来这个表中>
-		BalanceDetail   balanceDetail=new BalanceDetail();
+		
+		BalanceDetail balanceDetail=balanceDetailService.find(createSalaryBudgetTablePO.getBalanceDetail().getDetailId());
 		balanceDetail.setBallotsToal(bonusTotal);
 		balanceDetail.setWagesToal(wargeTotal);
 		balanceDetail.setServiceToal(serviceTotal);
 		balanceDetail.setReceivableFiveFund(fiveInsuranceTotal);
 		balanceDetail.setYearMonth(createSalaryBudgetTablePO.getSalaryDate());
-		balanceDetail.setCreateSalaryBudgetTable(createSalaryBudgetTablePO);
-		balanceDetail.setBudgetId(createSalaryBudgetTablePO.getBudgetId());
-		balanceDetail.setNote(createSalaryBudgetTablePO.getNote());
-		balanceDetail.setEnterprise(enterprise);
 		
-		balanceDetailService.save(balanceDetail);
+		balanceDetailService.update(balanceDetail);
 		
 		CreateSalaryBudgetTable createSalaryBudgetTableNew=createSalaryBudgetTableService.find(budgetId);
 		request.setAttribute("createSalaryBudgetTable", createSalaryBudgetTableNew);
@@ -227,7 +236,7 @@ public class EmployeesSalaryDetailAction extends BaseAction{
 			
 			PageView<EmployeesSalaryDetail> pageView = new PageView<EmployeesSalaryDetail>(10,  this.getPage());
 			pageView.setQueryResult(employeesSalaryDetailService.getScrollData(pageView.getFirstResult(), 
-					pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
+			pageView.getMaxresult(),jpql.toString(),params.toArray(), orderby));
 			request.setAttribute("employeesId", employeesId);
 			request.setAttribute("pageView", pageView);
 			request.setAttribute("enterpriseEmployees", enterpriseEmployees);

@@ -7,6 +7,7 @@ import java.util.List;
 import cn.fm.bean.company.EnterpriseEmployees;
 import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.salary.EmployeesSalaryDetail;
+import cn.fm.bean.salary.SalaryTemplate;
 import cn.fm.service.base.DAO;
 
 public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail> {
@@ -19,7 +20,7 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	 * @author jameslin
 	 * @date   2013-09-01
 	 */
-	public List<String> saveEmployeesSalaryDetail(File file , String fileName,int number,int readRows, EmployeesSalaryDetail employeesSalaryDetail,Integer templateId,Integer enterpriseId);
+	public List<String> saveEmployeesSalaryDetail(File file , String fileName,int number,int readRows, EmployeesSalaryDetail employeesSalaryDetail,SalaryTemplate salaryTemplate,Integer enterpriseId);
 
 	/**
 	 * 获取当前企业的员工工资明细表
@@ -102,9 +103,7 @@ public interface EmployeesSalaryDetailService extends DAO<EmployeesSalaryDetail>
 	public List<String> isExitUploadEnterpriseEmployees(List<EnterpriseEmployees> enterpriseEmployeesListPO,EmployeesSalaryDetail employeesSalaryDetailVO);
 
 	
-	public void updateEmployeesCarNumber(EnterpriseEmployees enterpriseEmployees);
-	
-	public EmployeesSalaryDetail structureEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail ,Integer templateId);
+	public EmployeesSalaryDetail structureEmployeesSalaryDetail(EmployeesSalaryDetail employeesSalaryDetail ,SalaryTemplate salaryTemplate);
 	
 	public  List<EmployeesSalaryDetail>   getPayrollStaff(Integer budgetId);
 

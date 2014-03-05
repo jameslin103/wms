@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.annotation.Resource;
-import javax.persistence.Column;
-
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
 import cn.fm.bean.salary.BalanceDetail;
@@ -88,7 +86,7 @@ public class BalanceDetailAction extends BaseAction {
 		List<Object> params = new ArrayList<Object>();
 		if(enterprise.getEnterpriseId()!=null)
 		{
-			jpql.append(" o.enterprise.enterpriseId=?").append(params.size()+1);
+			jpql.append("o.enterprise.enterpriseId=?").append(params.size()+1);
 			params.add(enterprise.getEnterpriseId());
 			PageView<BalanceDetail> pageView = new PageView<BalanceDetail>(10,  this.getPage());
 			pageView.setQueryResult(balanceDetailService.getScrollData(pageView.getFirstResult(), 

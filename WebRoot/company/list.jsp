@@ -62,6 +62,7 @@
 							企业名称：<s:textfield name="enterprise.fullName" maxlength="50"/>
 						 	<input type="submit" value=" 查  询 " class="oprbtn" style="width:70px;" />
 						 </s:form>
+						 <a href="seacher?enterpriseId=1">jqgrid</a>
 					</fieldset>
 				 </div>
 				 <div>

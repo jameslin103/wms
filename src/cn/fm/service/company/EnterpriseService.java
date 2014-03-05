@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.fm.bean.PageView;
 import cn.fm.bean.company.Enterprise;
+import cn.fm.bean.company.EnterpriseContract;
 import cn.fm.bean.user.User;
 import cn.fm.service.base.DAO;
 
@@ -46,11 +47,6 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	 */
 	public boolean updateEnterpriseContact(Enterprise enterprise);
 	
-	/**
-	 * 查询所有企业
-	 * @return
-	 */
-	public List<Enterprise>  getAllEnterprise();
 	
 	/**
 	 * 增加企业负责人
@@ -73,5 +69,12 @@ public interface EnterpriseService extends DAO<Enterprise> {
 	 * 每个用户负责的企业
 	 */
 	public PageView<Enterprise> getUserToByEnterprise(int maxresult, int page,User user,Enterprise enterprise);
+
+
+
+	public void deteleEnterprise(Integer enterpriseId);
+	
+	
+	public EnterpriseContract   getEndContractDateDay(Integer id);
 	
 }

@@ -27,7 +27,7 @@ import cn.fm.bean.salary.CreateSalaryBudgetTable;
 import cn.fm.bean.company.Enterprise;
 	
 
-@JsonIgnoreProperties({ "employee", "roles", "privileges" })
+@JsonIgnoreProperties(value={ "employee", "roles", "privileges" })
 @Entity
 @Table(name ="wms_user")
 	public class User {

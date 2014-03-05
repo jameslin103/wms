@@ -131,13 +131,12 @@ public class SalaryTemplate {
 	public void setSubsidys(List<String> subsidys) {
 		this.subsidys = subsidys;
 	}
-	@OneToMany(cascade={CascadeType.REFRESH},fetch=FetchType.EAGER,mappedBy="salaryTemplate")
+	@OneToMany(cascade={CascadeType.REFRESH},fetch=FetchType.LAZY,mappedBy="salaryTemplate")
 	@NotFound(action=NotFoundAction.IGNORE)
-	public Set<CreateSalaryBudgetTable> getCreateSalaryBudgetTable() {
+	public Set<CreateSalaryBudgetTable> getCreateSalaryBudgetTable(){
 		return createSalaryBudgetTable;
 	}
-	public void setCreateSalaryBudgetTable(
-			Set<CreateSalaryBudgetTable> createSalaryBudgetTable) {
+	public void setCreateSalaryBudgetTable(Set<CreateSalaryBudgetTable> createSalaryBudgetTable) {
 		this.createSalaryBudgetTable = createSalaryBudgetTable;
 	}
 	
@@ -167,8 +166,8 @@ public class SalaryTemplate {
 //			this.customBonus.remove(customBonus);
 //		}
 //	}
-	@OneToOne(cascade=CascadeType.REFRESH,fetch=FetchType.LAZY)
-	@JoinColumn(name="custom_id")
+	@OneToOne(cascade=CascadeType.REFRESH,fetch=FetchType.LAZY,optional=true)
+	@JoinColumn(name="project_id")
 	public EnterpriseProjects getEnterpriseProjects() {
 		return enterpriseProjects;
 	}

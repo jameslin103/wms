@@ -25,12 +25,12 @@ public class EnterpriseProjects {
 	private String id;
 	
 	/*按人头服务费*/
-	private BigDecimal serviceHead;
+	private BigDecimal serviceHead=new BigDecimal("0.00");
 	
 	private Integer    fee;
 	
 	/*按比例服务费*/
-	private BigDecimal proportion;
+	private BigDecimal proportion=new BigDecimal("0.00");
 	
 	/*服务性质*/
 	private String   serviceType;
@@ -133,7 +133,7 @@ public class EnterpriseProjects {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	@OneToOne(cascade=CascadeType.REFRESH,mappedBy="enterpriseProjects")
+	@OneToOne(cascade=CascadeType.REFRESH,mappedBy="enterpriseProjects",optional=true)
 	public SalaryTemplate getSalaryTemplate() {
 		return salaryTemplate;
 	}

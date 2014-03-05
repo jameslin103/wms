@@ -71,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <thead>
               <tr>
                 <th>序</th>
-                <th>名称</th>
+                <th>项目名称</th>
                 <th>包含奖金与补贴项</th>
                 <th>包含五险一金</th>
                 <th>包含个税</th>
@@ -158,7 +158,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="row-fluid">
             <div class="input-container">
               <label>请选择项目:</label>
-              	  <s:select list="%{#request.enterprisePO.enterpriseProjects}" name="enterpriseProjects.projects" label="0" listKey="id"  theme="simple"
+              	  <s:select list="%{#request.enterprisePO.enterpriseProjects}" name="enterpriseProjects.id" label="0" listKey="id"  theme="simple"
 								  listValue="projects"  headerKey="0" headerValue="-请选择-" id="proj"/>
 				<span style="color: red" id="error">*</span>
             </div>

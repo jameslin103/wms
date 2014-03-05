@@ -126,8 +126,6 @@ public class CompanylistWithSalaryAction extends BaseAction{
 			List<Object> map=getEnterpriseEmployees(pageView.getRecords());
 			if(map==null)map=new ArrayList<Object>();
 			request.setAttribute("map", map);
-			request.setAttribute("pageView", pageView);
-			request.setAttribute("year", year);
 		return SUCCESS;
 	}
 	
@@ -172,35 +170,14 @@ public class CompanylistWithSalaryAction extends BaseAction{
 	 */
 	public String viewCompanyListWithBalance()
 	{
-		if(year==null)
-		{
-			this.year=DateUtil.getCurrentTime().toString().substring(0, 4);
-		}
-		String formCurrentSql=" o.enterprise.enterpriseId, SUM(o.balance)";
-		String groupby="   group by o.enterprise.enterpriseId order by o.enterprise.enterpriseId desc ";
-		String groupCount="group by o.enterprise.enterpriseId";
-		StringBuffer jpql = new StringBuffer("");
 		
-		List<Object> params = new ArrayList<Object>();
-		if(!StringUtil.isEmpty(year))
-		{
+		PageView<BalanceDetail> pageView =balanceDetailService.getAllEnterpriseBalanceDetail(10, this.getPage(), enterprise);
+		request.setAttribute("pageView", pageView);
+		request.setAttribute("balanceDetailList", treconstructBalanceDetail( pageView.getRecords()));
 		
-			if(month!=null && month!=0){
-				jpql.append(" month(o.yearMonth)=?").append(params.size()+1).append(" and");
-				params.add(month);
-			}
-			jpql.append(" year(o.yearMonth)=?").append(params.size()+1);
-			params.add(Integer.parseInt(year));
-		}
-		PageView<BalanceDetail> pageView = new PageView<BalanceDetail>(10,  this.getPage());
-		pageView.setQueryResult(balanceDetailService.getScrollDataSum(pageView.getFirstResult(), pageView.getMaxresult(),jpql.toString(),params.toArray(), groupby,formCurrentSql));
-			request.setAttribute("pageView", pageView);
-			request.setAttribute("balanceDetailList", treconstructBalanceDetail( pageView.getRecords()));
-			request.setAttribute("year", year);
-			request.setAttribute("month", month);
-			
 		return SUCCESS;
 	}
+
 	private List<Object> treconstructBalanceDetail(List<BalanceDetail> balanceDetailList) {
 		
 		Map<String, Object>  map;
@@ -217,7 +194,7 @@ public class CompanylistWithSalaryAction extends BaseAction{
 
 		return list;
 	}
-
+	
 	public String findEnterpriseEmployeesRecution()
 	{
 		

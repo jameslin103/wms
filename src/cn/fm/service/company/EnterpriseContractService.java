@@ -4,7 +4,7 @@ import java.util.List;
 
 import cn.fm.bean.company.EnterpriseContract;
 
-public interface EnterpriseContractService {
+public interface EnterpriseContractService{
 
 	public void save(EnterpriseContract enterpriseContract);
 	
@@ -15,7 +15,7 @@ public interface EnterpriseContractService {
 	public EnterpriseContract  getByIdEnterpriseContract(String id);
 	
 	
-	
+	public void delete(String id);
 	
 	
 }

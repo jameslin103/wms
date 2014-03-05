@@ -43,6 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</legend>
 			 <h3>修改员工信息</h3>
 	  	  <form action="updateEnterEmployees" method="post">
+	  	  	 <s:hidden name="page" value="%{#request.page}"></s:hidden>
 	  	 	 <s:hidden  name="enterpriseEmployees.employeesId" value="%{#request.enterpriseEmployees.employeesId}"/>
 	  		<table width="900px;" style="text-align: left;">
   			  <tr>
@@ -66,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  <td>
 				  	<input type="text" name="enterpriseEmployees.nativePlace" value="${enterpriseEmployees.nativePlace}" />
 				  </td>
-  			  	<td>家庭住址:</td>
+  			  	  <td>家庭住址:</td>
 				  <td>
 					<input type="text" name="enterpriseEmployees.homeAddress"  value="${enterpriseEmployees.homeAddress}"/>
 				  </td>
@@ -88,7 +89,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			  	 	<input type="radio" name="enterpriseEmployees.householdRegister" value="2"
   			  	 		<s:if test="%{(#request.enterpriseEmployees.householdRegister!= null) &&
   			  	 		(\"2\" == #request.enterpriseEmployees.householdRegister)}">checked</s:if> />农村
-					
   			  	  </td>
   			  </tr>
   			  <tr>

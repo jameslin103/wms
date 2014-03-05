@@ -1,5 +1,6 @@
 package cn.fm.service.company.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -42,9 +43,18 @@ public class EnterpriseProjectsServiceImpl implements EnterpriseProjectsService{
 		enterpriseProjectsPO.setProportion(enterpriseProjects.getProportion());
 		enterpriseProjectsPO.setServiceHead(enterpriseProjects.getServiceHead());
 		enterpriseProjectsPO.setServiceType(enterpriseProjects.getServiceType());
-		enterpriseProjectsPO.setUpdateDate(enterpriseProjects.getUpdateDate());
+		enterpriseProjectsPO.setNote(enterpriseProjects.getNote());
+		enterpriseProjectsPO.setUpdateDate(new Date());
 		
 		enterpriseProjectsDAO.update(enterpriseProjectsPO);
+	}
+
+	@Override
+	public void deleteEnterpriseProjects(String id) {
+		
+		EnterpriseProjects enterpriseProjects=enterpriseProjectsDAO.findById(id);
+		enterpriseProjectsDAO.delete(enterpriseProjects);
+		
 	}
 	
 
